@@ -54,6 +54,7 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("buildWall", new Func<int, JsValue>(GetBuildWallSpellAction));
             jsEngine.SetValue("heat", new Func<int, JsValue>(GetHeatAreaSpellAction));
             jsEngine.SetValue("cool", new Func<int, JsValue>(GetCoolAreaSpellAction));
+            jsEngine.SetValue("push", new Func<string, int, JsValue>(GetPushSpellAction));
         }
 
         public ISpellAction Execute(IAreaMap map, Point position, CodeSpell spell, Journal journal)
@@ -258,6 +259,11 @@ namespace CodeMagic.Core.Spells.Script
         private JsValue GetCoolAreaSpellAction(int value)
         {
             return CoolAreaSpellAction.GetJson(value).ToJson(jsEngine);
+        }
+
+        private JsValue GetPushSpellAction(string direction, int force)
+        {
+            return PushSpellAction.GetJson(direction, force).ToJson(jsEngine);
         }
 
         #endregion

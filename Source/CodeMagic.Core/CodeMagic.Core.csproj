@@ -51,7 +51,7 @@
     <Compile Include="Area\Temperature.cs" />
     <Compile Include="Area\VisibleArea.cs" />
     <Compile Include="Common\Direction.cs" />
-    <Compile Include="CreaturesLogic\CreatureMovementHelper.cs" />
+    <Compile Include="CreaturesLogic\MovementHelper.cs" />
     <Compile Include="CreaturesLogic\CreaturesVisibilityHelper.cs" />
     <Compile Include="CreaturesLogic\MovementStrategies\ICreatureMovementStrategy.cs" />
     <Compile Include="CreaturesLogic\MovementStrategies\SimpleCreatureMovementStrategy.cs" />
@@ -118,6 +118,7 @@
     <Compile Include="Spells\SpellActions\HeatAreaSpellAction.cs" />
     <Compile Include="Spells\SpellActions\ISpellAction.cs" />
     <Compile Include="Spells\SpellActions\MoveSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\PushSpellAction.cs" />
     <Compile Include="Spells\SpellActions\SpellActionsFactory.cs" />
     <Compile Include="Spells\SpellException.cs" />
     <Compile Include="Spells\SpellHellper.cs" />

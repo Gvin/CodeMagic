@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
+using CodeMagic.Core.CreaturesLogic;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
@@ -23,26 +25,18 @@ namespace CodeMagic.Core.Spells.SpellActions
             this.spell = spell;
         }
 
-        public Point Perform(IAreaMap map, Point position)
+        public Point Perform(IAreaMap map, Point position, Journal journal)
         {
             var currentPosition = position;
-            var currentCell = map.GetCell(currentPosition);
 
             for (var step = 1; step <= distance; step++)
             {
                 var newPosition = Point.GetAdjustedPoint(currentPosition, direction);
-                if (!map.ContainsCell(newPosition))
+                var success = MovementHelper.MoveSpell(spell, map, currentPosition, newPosition);
+                if (!success)
                     break;
-
-                var newCell = map.GetCell(newPosition);
-                if (newCell.BlocksProjectiles)
-                    break;
-
-                currentCell.Objects.Remove(spell);
-                newCell.Objects.Add(spell);
 
                 currentPosition = newPosition;
-                currentCell = newCell;
             }
 
             return currentPosition;

@@ -33,7 +33,7 @@ namespace CodeMagic.Core.Spells
 
                 if (action.ManaCost <= Mana)
                 {
-                    currentPosition = action.Perform(map, position);
+                    currentPosition = action.Perform(map, position, journal);
                     Mana -= action.ManaCost;
                 }
                 else

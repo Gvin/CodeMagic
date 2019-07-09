@@ -20,6 +20,7 @@
 // buildWall(time: int): Action - Places an energy wall in current spell location. Wall will exist for the specified time.
 // heat(temperature: int): Action - Heats current area for <temperature> degrees.
 // cool(temperature: int): Action - Cools current area for <temperature> degrees.
+// push(direction: string, force: int): Action - Pushes object in current area to specified direction with specified force.
 //
 // List of custom types
 //

@@ -17,6 +17,8 @@
                     return new HeatAreaSpellAction(actionData);
                 case CoolAreaSpellAction.ActionType:
                     return new CoolAreaSpellAction(actionData);
+                case PushSpellAction.ActionType:
+                    return new PushSpellAction(actionData);
             }
 
             throw new SpellException($"Action type \"{actionData.type}\" is not supported.");

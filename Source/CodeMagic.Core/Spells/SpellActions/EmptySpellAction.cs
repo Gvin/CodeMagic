@@ -1,11 +1,12 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 
 namespace CodeMagic.Core.Spells.SpellActions
 {
     public class EmptySpellAction : ISpellAction
     {
-        public Point Perform(IAreaMap map, Point position)
+        public Point Perform(IAreaMap map, Point position, Journal journal)
         {
             // Do nothing
             return position;
