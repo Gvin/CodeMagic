@@ -41,8 +41,13 @@ namespace CodeMagic.UI.Console.Views
                 case ConsoleKey.C:
                     OpenSpellBook();
                     break;
-                case ConsoleKey.F1:
+                case ConsoleKey.F2:
                     game.Player.Health += 10;
+                    break;
+                case ConsoleKey.Escape:
+                    var menu = new MenuView();
+                    menu.Show();
+                    Close();
                     break;
                 default:
                     ActivateKeyAssignedPlayerAction(keyInfo.Key);

@@ -75,6 +75,9 @@ namespace CodeMagic.UI.Console.Views
         {
             switch (keyInfo.Key)
             {
+                case ConsoleKey.Escape:
+                    ViewsManager.Current.Exit();
+                    break;
                 case ConsoleKey.W:
                 case ConsoleKey.UpArrow:
                     selectedIndex--;

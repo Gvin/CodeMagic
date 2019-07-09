@@ -100,6 +100,14 @@ namespace CodeMagic.UI.Console.Drawing
             Writer.WriteLine($"Damage: {player.Equipment.MinDamage} - {player.Equipment.MaxDamage}", Color.White);
             Writer.CursorLeft = leftPosition;
             Writer.WriteLine($"Protection: {player.Equipment.Protection}", Color.White);
+
+            Writer.CursorTop += 2;
+            Writer.CursorLeft = leftPosition;
+            Writer.WriteLine("Actions:", Color.White);
+            Writer.CursorLeft = leftPosition;
+            Writer.WriteLine("[F] - Mele Attack", Color.White);
+            Writer.CursorLeft = leftPosition;
+            Writer.WriteLine("[C] - Spell Book", Color.White);
         }
 
         public void DrawGame(GameCore game)
