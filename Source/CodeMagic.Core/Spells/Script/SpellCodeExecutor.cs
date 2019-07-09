@@ -4,6 +4,8 @@ using System.Dynamic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Spells.SpellActions;
@@ -54,12 +56,12 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("cool", new Func<int, JsValue>(GetCoolAreaSpellAction));
         }
 
-        public ISpellAction Execute(IAreaMap map, Point position, CodeSpell spell)
+        public ISpellAction Execute(IAreaMap map, Point position, CodeSpell spell, Journal journal)
         {
-            var result = ExecuteCode(map, position, spell);
+            var result = ExecuteCode(map, position, spell, journal);
             if (result == null)
             {
-                throw new SpellException("Main spell function did not return spell action.");
+                return new EmptySpellAction();
             }
 
             var action = new SpellActionsFactory().GetSpellAction(result, spell);
@@ -73,9 +75,9 @@ namespace CodeMagic.Core.Spells.Script
             return action;
         }
 
-        private dynamic ExecuteCode(IAreaMap map, Point position, CodeSpell spell)
+        private dynamic ExecuteCode(IAreaMap map, Point position, CodeSpell spell, Journal journal)
         {
-            ConfigureDynamicEngineFunctions(map, position, spell);
+            ConfigureDynamicEngineFunctions(map, position, spell, journal);
 
             JsValue mainFunction = null;
             try
@@ -113,20 +115,45 @@ namespace CodeMagic.Core.Spells.Script
             return result;
         }
 
-        private void ConfigureDynamicEngineFunctions(IAreaMap map, Point position, CodeSpell spell)
+        private void ConfigureDynamicEngineFunctions(IAreaMap map, Point position, CodeSpell spell, Journal journal)
         {
+            jsEngine.SetValue("log", new Action<object>(message => LogMessage(journal, spell, message)));
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
             jsEngine.SetValue("getPosition", new Func<JsValue>(() => ConvertPoint(position)));
             jsEngine.SetValue("getTemperature", new Func<int>(() => map.GetCell(position).Temperature.Value));
             jsEngine.SetValue("getIsSolidWall",
                 new Func<string, bool>((direction) => GetIfCellIsSolid(map, position, direction)));
-            jsEngine.SetValue("getAreObjectsUnder", new Func<bool>(() => GetAreObjectsUnder(map, position)));
+            jsEngine.SetValue("getObjectsUnder", new Func<JsValue[]>(() => GetObjectsUnder(map, position)));
 
             jsEngine.SetValue("scanForWalls",
                 new Func<int, bool[][]>(radius => ScanForWalls(map, position, radius, spell)));
             jsEngine.SetValue("scanForObjects",
                 new Func<int, JsValue[][][]>(radius => ScanForObjects(map, position, radius, spell)));
+        }
 
+        private void LogMessage(Journal journal, CodeSpell spell, object message)
+        {
+            journal.Write(new SpellLogMessage(spell.Name, GetMessageString(message)));
+        }
+
+        private string GetMessageString(object message)
+        {
+            switch (message)
+            {
+                case null:
+                    return "null";
+                case string text:
+                    return text;
+                case int number:
+                    return number.ToString();
+                case object[] array:
+                    var processedArray = string.Join(", ", array.Select(GetMessageString));
+                    return $"[{processedArray}]";
+                case ExpandoObject complex:
+                    return "object";
+                default:
+                    return message.ToString();
+            }
         }
 
         private JsValue[][][] ScanForObjects(IAreaMap map, Point position, int radius, CodeSpell spell)
@@ -161,10 +188,11 @@ namespace CodeMagic.Core.Spells.Script
                 .ToArray();
         }
 
-        private bool GetAreObjectsUnder(IAreaMap map, Point position)
+        private JsValue[] GetObjectsUnder(IAreaMap map, Point position)
         {
             var cell = map.GetCell(position);
-            return cell.Objects.OfType<IDestroyableObject>().Any();
+            return cell.Objects.OfType<IDestroyableObject>().Select(obj => ConvertDestroyable(obj).ToJson(jsEngine))
+                .ToArray();
         }
 
         private JsValue ConvertPoint(Point point)

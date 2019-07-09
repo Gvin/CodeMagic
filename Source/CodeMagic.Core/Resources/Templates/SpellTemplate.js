@@ -1,11 +1,12 @@
 ﻿// List of supported functions:
 //
+// log(message: string) - Logs specified message to the journal.
 // getMana(): int - Gets current spell mana level.
 // getCaster(): Creature - Gets spell caster.
 // getPosition(): Point - Gets current spell position.
 // getTemperature(): int - Gets temperature in current spell position.
 // getIsSolidWall(direction: string): bool - Gets if there is a wall in specified direction.
-// getAreObjectsUnder(): bool - Gets if there are any objects in current spell position.
+// getObjectsUnder(): Object[] - Gets all objects in current spell position.
 //
 // storeValue(key: string, value: object) - Stores specified value for the specified key. This value can be used on further iterations.
 // getStoredValue(key: string): object - Get previously stored value.

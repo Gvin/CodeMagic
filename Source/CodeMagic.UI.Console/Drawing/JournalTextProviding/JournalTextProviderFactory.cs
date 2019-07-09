@@ -24,7 +24,8 @@ namespace CodeMagic.UI.Console.Drawing.JournalTextProviding
                 {typeof(NotEnoughManaMessage), GetNotEnoughManaText},
                 {typeof(EnvironmentDamageMessage), GetEnvironmentDamageText},
                 {typeof(SpellErrorMessage), GetSpellErrorText},
-                {typeof(BurningDamageMessage), GetBurningDamageText}
+                {typeof(BurningDamageMessage), GetBurningDamageText},
+                {typeof(SpellLogMessage), GetSpellLogText}
             };
         }
 
@@ -40,6 +41,12 @@ namespace CodeMagic.UI.Console.Drawing.JournalTextProviding
         {
             var provider = GetTextProvider(message.GetType());
             return provider(message);
+        }
+
+        private string GetSpellLogText(IJournalMessage message)
+        {
+            var logMessage = (SpellLogMessage) message;
+            return $"Spell \"{logMessage.SpellName}\" sends message: {logMessage.Message}";
         }
 
         private string GetBurningDamageText(IJournalMessage message)

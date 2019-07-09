@@ -71,6 +71,7 @@
     <Compile Include="Game\Journaling\Messages\NotEnoughManaMessage.cs" />
     <Compile Include="Game\Journaling\Messages\SpellCastMessage.cs" />
     <Compile Include="Game\Journaling\Messages\SpellErrorMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\SpellLogMessage.cs" />
     <Compile Include="Game\Journaling\Messages\SpellOutOfManaMessage.cs" />
     <Compile Include="Game\MapGenerator.cs" />
     <Compile Include="Game\PlayerActions\CastSpellAction.cs" />
@@ -108,12 +109,12 @@
     <Compile Include="Objects\StationaryObjects\StationaryObjectConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spells\CodeSpell.cs" />
-    <Compile Include="Spells\Data\Creature.cs" />
     <Compile Include="Spells\Script\JsonData.cs" />
     <Compile Include="Spells\Script\SpellCodeExecutor.cs" />
     <Compile Include="Spells\Spell.cs" />
     <Compile Include="Spells\SpellActions\BuildWallSpellAction.cs" />
     <Compile Include="Spells\SpellActions\CoolAreaSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\EmptySpellAction.cs" />
     <Compile Include="Spells\SpellActions\HeatAreaSpellAction.cs" />
     <Compile Include="Spells\SpellActions\ISpellAction.cs" />
     <Compile Include="Spells\SpellActions\MoveSpellAction.cs" />

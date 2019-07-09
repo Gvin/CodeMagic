@@ -29,7 +29,7 @@ namespace CodeMagic.Core.Spells
             var currentPosition = position;
             try
             {
-                var action = codeExecutor.Execute(map, position, this);
+                var action = codeExecutor.Execute(map, position, this, journal);
 
                 if (action.ManaCost <= Mana)
                 {
