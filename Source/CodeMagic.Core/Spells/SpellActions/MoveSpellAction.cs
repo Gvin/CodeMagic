@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
-using CodeMagic.Core.CreaturesLogic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Objects;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
@@ -44,7 +44,7 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         private Direction ParseDirection(string directionString)
         {
-            var parsedDirection = SpellHellper.ParseDirection(directionString);
+            var parsedDirection = SpellHelper.ParseDirection(directionString);
             if (!parsedDirection.HasValue)
                 throw new SpellException($"Unknown move direction: {directionString}");
             return parsedDirection.Value;
@@ -59,7 +59,7 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         public static JsonData GetJson(string direction, int distance)
         {
-            var parsedDirection = SpellHellper.ParseDirection(direction);
+            var parsedDirection = SpellHelper.ParseDirection(direction);
             if (!parsedDirection.HasValue)
                 throw new SpellException($"Unknown move direction: {direction}");
             if (distance <= 0)

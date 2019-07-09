@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Objects.SolidObjects;
 
 namespace CodeMagic.Core.Game
 {
-    public class VisibilityManager
+    public static class VisibilityHelper
     {
-        public VisibleArea GetVisibleArea(int visibilityRange, Point viewerPosition, IAreaMap map)
+        public static AreaMapFragment GetVisibleArea(int visibilityRange, Point viewerPosition, IAreaMap map)
         {
             var areaOfVisibility = map.GetMapPart(viewerPosition, visibilityRange);
             var visibilityBlockers = GetVisibilityBlockers(areaOfVisibility);
             ApplyVisibilityBlockers(areaOfVisibility, visibilityBlockers);
-            return new VisibleArea(areaOfVisibility);
+
+            var visibilityDiameter = visibilityRange * 2 + 1;
+            return new AreaMapFragment(areaOfVisibility, visibilityDiameter, visibilityDiameter);
         }
 
-        private void ApplyVisibilityBlockers(AreaMapCell[][] visibleArea, Point[] visibilityBlockers)
+        private static void ApplyVisibilityBlockers(AreaMapCell[][] visibleArea, Point[] visibilityBlockers)
         {
             var center = (visibleArea.Length - 1) / 2;
             var viewerPosition = new Point(center, center);
@@ -33,14 +34,14 @@ namespace CodeMagic.Core.Game
             }
         }
 
-        private bool GetIfVisibilityBlocked(Point position, Point[] visibilityBlockers, Point objectPosition)
+        private static bool GetIfVisibilityBlocked(Point position, Point[] visibilityBlockers, Point objectPosition)
         {
             return visibilityBlockers.Any(blocker =>
                 !position.Equals(blocker) && 
                 Point.IsOnLine(objectPosition, position, blocker));
         }
 
-        private Point[] GetVisibilityBlockers(AreaMapCell[][] visibleArea)
+        private static Point[] GetVisibilityBlockers(AreaMapCell[][] visibleArea)
         {
             var result = new List<Point>();
             for (var y = 0; y < visibleArea.Length; y++)
@@ -57,37 +58,6 @@ namespace CodeMagic.Core.Game
             }
 
             return result.ToArray();
-        }
-
-        private AreaMapCell[][] GetCellsInVisibilityRange(int visibilityRange, Point playerPosition, IAreaMap map)
-        {
-            var result = map.GetMapPart(playerPosition, visibilityRange);
-            foreach (var row in result)
-            {
-                for (var x = 0; x < row.Length; x++)
-                {
-                    if (row[x] == null)
-                    {
-                        row[x] = new AreaMapCell {FloorType = FloorTypes.Hole};
-                    }
-                    else
-                    {
-                        row[x] = row[x].Clone();
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        private void MarkCellAsInvisible(AreaMapCell cell)
-        {
-            cell.Objects.Clear();
-            cell.Objects.Add(new SolidObject(new SolidObjectConfiguration
-            {
-                Name = "Unknown",
-                Type = SolidObjectConfiguration.ObjectTypeHole
-            }));
         }
     }
 }

@@ -83,7 +83,7 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         private Direction ParseDirection(string directionString)
         {
-            var parsedDirection = SpellHellper.ParseDirection(directionString);
+            var parsedDirection = SpellHelper.ParseDirection(directionString);
             if (!parsedDirection.HasValue)
                 throw new SpellException($"Unknown push direction: {directionString}");
             return parsedDirection.Value;
@@ -98,7 +98,7 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         public static JsonData GetJson(string direction, int force)
         {
-            var parsedDirection = SpellHellper.ParseDirection(direction);
+            var parsedDirection = SpellHelper.ParseDirection(direction);
             if (!parsedDirection.HasValue)
                 throw new SpellException($"Unknown push direction: {direction}");
             if (force <= 0)

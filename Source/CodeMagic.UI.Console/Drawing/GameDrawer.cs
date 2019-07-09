@@ -118,13 +118,13 @@ namespace CodeMagic.UI.Console.Drawing
 
             var visibleArea = game.GetVisibleArea();
 
-            foreach (var visibleRow in visibleArea.Cells)
+            for (var y = 0; y < visibleArea.Height; y++)
             {
-                foreach (var visibleCell in visibleRow)
+                for (var x = 0; x < visibleArea.Width; x++)
                 {
+                    var visibleCell = visibleArea.GetCell(x, y);
                     DrawCell(drawer, visibleCell);
                 }
-
                 Writer.CursorTop += SymbolsImage.Size;
                 Writer.CursorLeft = GameScreenLeftShift;
             }

@@ -226,7 +226,7 @@ namespace CodeMagic.Core.Spells.Script
 
         private bool GetIfCellIsSolid(IAreaMap map, Point position, string directionString)
         {
-            var parsedDirection = SpellHellper.ParseDirection(directionString);
+            var parsedDirection = SpellHelper.ParseDirection(directionString);
             if (!parsedDirection.HasValue)
                 throw new SpellException($"Unknown direction value: {directionString}");
 

@@ -54,7 +54,7 @@ namespace CodeMagic.UI.Console.Views
             DrawSpellDetails(Book.Spells[selectedSpellIndex]);
         }
 
-        private void DrawSpell(Spell spell, int index)
+        private void DrawSpell(BookSpell spell, int index)
         {
             Writer.CursorLeft = 5;
 
@@ -110,7 +110,7 @@ namespace CodeMagic.UI.Console.Views
             }
         }
 
-        private void DrawSpellDetails(Spell spell)
+        private void DrawSpellDetails(BookSpell spell)
         {
             DrawingHelper.WriteAt(LineTypes.SingleHorizontalAndDown, SpellDetailsLeftShift - 1, 3, Color.Gray);
             DrawingHelper.DrawVerticalLine(SpellDetailsLeftShift - 1, 4, Writer.WindowHeight - 3, false, Color.Gray);
@@ -243,7 +243,7 @@ namespace CodeMagic.UI.Console.Views
                     var trimmedName = spellDetailsView.Name.Length > SpellNameMaxWidth
                         ? spellDetailsView.Name.Substring(0, SpellNameMaxWidth)
                         : spellDetailsView.Name;
-                    Book.Spells[selectedSpellIndex] = new Spell { Code = fileContent, ManaCost = spellDetailsView.ManaLevel, Name = trimmedName };
+                    Book.Spells[selectedSpellIndex] = new BookSpell { Code = fileContent, ManaCost = spellDetailsView.ManaLevel, Name = trimmedName };
                 };
                 spellDetailsView.Show();
             };

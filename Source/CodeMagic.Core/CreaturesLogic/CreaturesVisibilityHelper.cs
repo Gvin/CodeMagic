@@ -1,7 +1,5 @@
-﻿using System;
-using CodeMagic.Core.Area;
+﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.CreaturesLogic
 {
@@ -12,11 +10,11 @@ namespace CodeMagic.Core.CreaturesLogic
             if (!GetIfPointInVisibilityRange(position, viewDistance, checkPoint))
                 return false;
 
-            var visibleArea = new VisibilityManager().GetVisibleArea(viewDistance, position, map);
+            var visibleArea = VisibilityHelper.GetVisibleArea(viewDistance, position, map);
             var relativeX = checkPoint.X - position.X + viewDistance;
             var relativeY = checkPoint.Y - position.Y + viewDistance;
 
-            var checkCell = visibleArea.Cells[relativeY][relativeX];
+            var checkCell = visibleArea.GetCell(relativeX, relativeY);
             if (checkCell == null)
                 return false;
 

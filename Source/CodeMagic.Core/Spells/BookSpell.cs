@@ -2,7 +2,7 @@
 
 namespace CodeMagic.Core.Spells
 {
-    public class Spell
+    public class BookSpell
     {
         public string Name { get; set; }
 

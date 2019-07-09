@@ -4,7 +4,6 @@ using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures.Implementations;
 using CodeMagic.Core.Objects.PlayerData;
-using CodeMagic.Core.Objects.SolidObjects;
 
 namespace CodeMagic.UI.Console
 {
@@ -42,6 +41,32 @@ namespace CodeMagic.UI.Console
             }
         }
 
+        private WeaponItem CreateWoodenSword()
+        {
+            return new WeaponItem(new WeaponItemConfiguration
+            {
+                Name = "Wooden Sword",
+                Key = "wooden_sword",
+                DamageMin = 2,
+                DamageMax = 5,
+                Rareness = ItemRareness.Trash,
+                Weight = 10
+            });
+        }
+
+        private WeaponItem CreateElvesBlade()
+        {
+            return new WeaponItem(new WeaponItemConfiguration
+            {
+                Name = "Elves Blade",
+                Key = "elves_blade",
+                DamageMin = 10,
+                DamageMax = 25,
+                Rareness = ItemRareness.Rare,
+                Weight = 7
+            });
+        }
+
         private IMapObject CreateGoblin()
         {
             return new GoblinCreatureObject(new GoblinCreatureObjectConfiguration
@@ -53,25 +78,6 @@ namespace CodeMagic.UI.Console
                 MaxDamage = 5,
                 ViewDistance = 3
             });
-        }
-
-        private AreaMap CreateFakeMap(out Point playerPosition)
-        {
-            var map = new AreaMap(7, 7);
-            map.GetCell(2, 2).Objects.Add(new SolidObject(new SolidObjectConfiguration
-            {
-                Type = SolidObjectConfiguration.ObjectTypeWallStone
-            }));
-            map.GetCell(2, 3).Objects.Add(new SolidObject(new SolidObjectConfiguration
-            {
-                Type = SolidObjectConfiguration.ObjectTypeWallStone
-            }));
-            map.GetCell(3, 3).Objects.Add(new SolidObject(new SolidObjectConfiguration
-            {
-                Type = SolidObjectConfiguration.ObjectTypeWallStone
-            }));
-            playerPosition = new Point(0, 0);
-            return map;
         }
 
         private IPlayer CreatePlayer()
@@ -95,6 +101,9 @@ namespace CodeMagic.UI.Console
             });
 
             player.Equipment.SpellBook = spellBook;
+
+            var weapon = CreateWoodenSword();
+            player.Equipment.Weapon = weapon;
 
             return player;
         }

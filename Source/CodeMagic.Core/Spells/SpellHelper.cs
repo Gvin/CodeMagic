@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CodeMagic.Core.Spells
 {
-    public static class SpellHellper
+    public static class SpellHelper
     {
         private static readonly string[] DirectionsUp = { "up", "top", "above" };
         private static readonly string[] DirectionsDown = { "down", "bottom", "below" };

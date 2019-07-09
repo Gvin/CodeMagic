@@ -49,9 +49,9 @@
     <Compile Include="Area\FloorTypes.cs" />
     <Compile Include="Area\IAreaMap.cs" />
     <Compile Include="Area\Temperature.cs" />
-    <Compile Include="Area\VisibleArea.cs" />
+    <Compile Include="Area\AreaMapFragment.cs" />
     <Compile Include="Common\Direction.cs" />
-    <Compile Include="CreaturesLogic\MovementHelper.cs" />
+    <Compile Include="Objects\MovementHelper.cs" />
     <Compile Include="CreaturesLogic\CreaturesVisibilityHelper.cs" />
     <Compile Include="CreaturesLogic\MovementStrategies\ICreatureMovementStrategy.cs" />
     <Compile Include="CreaturesLogic\MovementStrategies\SimpleCreatureMovementStrategy.cs" />
@@ -81,7 +81,7 @@
     <Compile Include="Game\PlayerActions\MovePlayerAction.cs" />
     <Compile Include="Game\Point.cs" />
     <Compile Include="Game\RandomHelper.cs" />
-    <Compile Include="Game\VisibilityManager.cs" />
+    <Compile Include="Game\VisibilityHelper.cs" />
     <Compile Include="Items\SpellBook.cs" />
     <Compile Include="Objects\Creatures\ICreatureObject.cs" />
     <Compile Include="Objects\Creatures\Implementations\GoblinCreatureObject.cs" />
@@ -98,7 +98,6 @@
     <Compile Include="Items\WeaponItem.cs" />
     <Compile Include="Objects\DecorativeObjects\DecorativeObject.cs" />
     <Compile Include="Objects\DestroyableObject.cs" />
-    <Compile Include="Objects\DestroyableObjectConfiguration.cs" />
     <Compile Include="Objects\IDestroyableObject.cs" />
     <Compile Include="Objects\PlayerData\IPlayer.cs" />
     <Compile Include="Objects\PlayerData\Player.cs" />
@@ -111,7 +110,7 @@
     <Compile Include="Spells\CodeSpell.cs" />
     <Compile Include="Spells\Script\JsonData.cs" />
     <Compile Include="Spells\Script\SpellCodeExecutor.cs" />
-    <Compile Include="Spells\Spell.cs" />
+    <Compile Include="Spells\BookSpell.cs" />
     <Compile Include="Spells\SpellActions\BuildWallSpellAction.cs" />
     <Compile Include="Spells\SpellActions\CoolAreaSpellAction.cs" />
     <Compile Include="Spells\SpellActions\EmptySpellAction.cs" />
@@ -121,7 +120,7 @@
     <Compile Include="Spells\SpellActions\PushSpellAction.cs" />
     <Compile Include="Spells\SpellActions\SpellActionsFactory.cs" />
     <Compile Include="Spells\SpellException.cs" />
-    <Compile Include="Spells\SpellHellper.cs" />
+    <Compile Include="Spells\SpellHelper.cs" />
     <Compile Include="Statuses\IObjectStatus.cs" />
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />
     <Compile Include="Statuses\OnFireObjectStatus.cs" />

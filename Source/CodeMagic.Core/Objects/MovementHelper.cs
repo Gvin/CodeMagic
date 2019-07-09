@@ -1,11 +1,10 @@
 ﻿using System;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Spells;
 
-namespace CodeMagic.Core.CreaturesLogic
+namespace CodeMagic.Core.Objects
 {
     public static class MovementHelper
     {

@@ -48,9 +48,9 @@ namespace CodeMagic.Core.Game
             Map.Update(Journal);
         }
 
-        public VisibleArea GetVisibleArea()
+        public AreaMapFragment GetVisibleArea()
         {
-            return new VisibilityManager().GetVisibleArea(Player.VisionRange, PlayerPosition, Map);
+            return VisibilityHelper.GetVisibleArea(Player.VisionRange, PlayerPosition, Map);
         }
     }
 }

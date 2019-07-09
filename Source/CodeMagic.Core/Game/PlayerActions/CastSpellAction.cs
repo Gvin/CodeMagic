@@ -8,9 +8,9 @@ namespace CodeMagic.Core.Game.PlayerActions
 {
     public class CastSpellAction : IPlayerAction
     {
-        private readonly Spell spell;
+        private readonly BookSpell spell;
 
-        public CastSpellAction(Spell spell)
+        public CastSpellAction(BookSpell spell)
         {
             this.spell = spell;
         }

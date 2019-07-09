@@ -7,10 +7,10 @@ namespace CodeMagic.Core.Items
         public SpellBook(SpellBookConfiguration configuration) 
             : base(configuration)
         {
-            Spells = new Spell[configuration.Size];
+            Spells = new BookSpell[configuration.Size];
         }
 
-        public Spell[] Spells { get; }
+        public BookSpell[] Spells { get; }
 
         public int Size => Spells.Length;
     }
