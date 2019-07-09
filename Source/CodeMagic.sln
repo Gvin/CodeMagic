@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.UI.Console", "CodeMagic.UI.Console\CodeMagic.UI.Console.csproj", "{8289E83B-17F7-4969-8DB5-222D3440E781}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{760CD6FD-9541-47FD-9978-7B683ED43AA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.Core.Tests", "CodeMagic.Core.Tests\CodeMagic.Core.Tests.csproj", "{CBA5CCDB-8C1C-4C9F-AE9E-DEA4AB7326B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.Core", "CodeMagic.Core\CodeMagic.Core.csproj", "{5755A604-1BD8-4863-B0C7-4A15E5E1A6AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8289E83B-17F7-4969-8DB5-222D3440E781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8289E83B-17F7-4969-8DB5-222D3440E781}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8289E83B-17F7-4969-8DB5-222D3440E781}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8289E83B-17F7-4969-8DB5-222D3440E781}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBA5CCDB-8C1C-4C9F-AE9E-DEA4AB7326B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA5CCDB-8C1C-4C9F-AE9E-DEA4AB7326B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA5CCDB-8C1C-4C9F-AE9E-DEA4AB7326B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA5CCDB-8C1C-4C9F-AE9E-DEA4AB7326B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5755A604-1BD8-4863-B0C7-4A15E5E1A6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5755A604-1BD8-4863-B0C7-4A15E5E1A6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5755A604-1BD8-4863-B0C7-4A15E5E1A6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5755A604-1BD8-4863-B0C7-4A15E5E1A6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CBA5CCDB-8C1C-4C9F-AE9E-DEA4AB7326B4} = {760CD6FD-9541-47FD-9978-7B683ED43AA0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {662A9124-7E0E-492A-B405-C1C9896E2250}
+	EndGlobalSection
+EndGlobal

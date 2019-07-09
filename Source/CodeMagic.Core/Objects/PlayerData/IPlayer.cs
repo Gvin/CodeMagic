@@ -1,0 +1,20 @@
+﻿using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects.Creatures;
+
+namespace CodeMagic.Core.Objects.PlayerData
+{
+    public interface IPlayer : IDestroyableObject, ICreatureObject
+    {
+        int Mana { get; set; }
+
+        int MaxMana { get; set; }
+
+        int ManaRegeneration { get; set; }
+
+        int VisionRange { get; set; }
+
+        Inventory Inventory { get; }
+
+        Equipment Equipment { get; }
+    }
+}
