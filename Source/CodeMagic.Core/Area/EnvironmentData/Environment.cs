@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Game.Journaling;
+﻿using System;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 
@@ -6,6 +7,8 @@ namespace CodeMagic.Core.Area.EnvironmentData
 {
     public class Environment
     {
+        private const double TemperatureToPressureMultiplier = 0.6d;
+
         private readonly Temperature temperature;
         private readonly Pressure pressure;
 
@@ -18,7 +21,14 @@ namespace CodeMagic.Core.Area.EnvironmentData
         public int Temperature
         {
             get => temperature.Value;
-            set => temperature.Value = value;
+            set
+            {
+                var oldValue = temperature.Value;
+                temperature.Value = value;
+                var diff = temperature.Value - oldValue;
+                var pressureDiff = (int) Math.Round(diff * TemperatureToPressureMultiplier);
+                Pressure += pressureDiff;
+            }
         }
 
         public int Pressure

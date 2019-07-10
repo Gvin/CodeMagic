@@ -153,8 +153,6 @@ namespace CodeMagic.UI.Console.Drawing
             var realX = x * SymbolsImage.Size + GameScreenLeftShift;
             var realY = y * SymbolsImage.Size + GameScreenTopShift;
             DrawingHelper.DrawImageAt(realX, realY, image, background);
-
-            DrawPressure(cell, realX, realY);
         }
 
         private void DrawPressure(AreaMapCell cell, int x, int y)
