@@ -16,7 +16,7 @@ namespace CodeMagic.Core.Objects
 
         void OnDeath(IAreaMap map, Point position);
 
-        void Damage(int value, Element? element);
+        void Damage(int value, Element? element = null);
 
         ObjectStatusesCollection Statuses { get; }
     }

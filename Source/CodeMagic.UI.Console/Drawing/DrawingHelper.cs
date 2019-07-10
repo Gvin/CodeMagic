@@ -5,6 +5,29 @@ namespace CodeMagic.UI.Console.Drawing
 {
     public static class DrawingHelper
     {
+        public static void DrawImageAt(int x, int y, SymbolsImage image, Color defaultBackgroundColor)
+        {
+            if (image == null)
+                return;
+
+            Writer.CursorTop = y;
+            Writer.CursorLeft = x;
+
+            for (var indexY = 0; indexY < SymbolsImage.Size; indexY++)
+            {
+                for (var indexX = 0; indexX < SymbolsImage.Size; indexX++)
+                {
+                    var pixel = image.Pixels[indexY][indexX];
+                    Writer.BackgroundColor = pixel.BackgroundColor.HasValue ? pixel.BackgroundColor.Value : defaultBackgroundColor;
+                    Writer.ForegroundColor = pixel.Color;
+                    Writer.Write(pixel.Symbol);
+                }
+
+                Writer.CursorTop++;
+                Writer.CursorLeft = x;
+            }
+        }
+
         public static void DrawVerticalLine(int x, int startY, int endY, bool @double, Color? color = null,
             Color? backColor = null)
         {

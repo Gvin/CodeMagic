@@ -1,4 +1,5 @@
 ﻿using CodeMagic.Core.Area;
+using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 
@@ -29,18 +30,19 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         public string Name => "Fire";
         public bool BlocksMovement => false;
         public bool BlocksProjectiles => false;
+        public bool BlocksEnvironment => false;
         public bool IsVisible => true;
         public bool BlocksVisibility => false;
         public void Update(IAreaMap map, Point position, Journal journal)
         {
             var cell = map.GetCell(position);
-            if (cell.Temperature.Value < Temperature.WoodBurnTemperature)
+            if (cell.Environment.Temperature < Temperature.WoodBurnTemperature)
             {
                 cell.Objects.Remove(this);
                 return;
             }
 
-            Type = GetFireType(cell.Temperature.Value);
+            Type = GetFireType(cell.Environment.Temperature);
         }
 
         public bool Updated { get; set; }

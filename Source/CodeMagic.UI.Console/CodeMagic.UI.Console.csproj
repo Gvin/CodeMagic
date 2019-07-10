@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleFontHelper.cs" />
-    <Compile Include="Drawing\ConsoleDrawer.cs" />
     <Compile Include="Drawing\DrawingHelper.cs" />
     <Compile Include="Drawing\DrawingProcessors\DrawingProcessorsFactory.cs" />
     <Compile Include="Drawing\DrawingProcessors\IDrawingProcessor.cs" />
@@ -65,7 +64,6 @@
     <Compile Include="Drawing\DrawingProcessors\ProcessorsImplementation\StationaryObjectDrawingProcessor.cs" />
     <Compile Include="Drawing\FloorColorFactory.cs" />
     <Compile Include="Drawing\GameDrawer.cs" />
-    <Compile Include="Drawing\IConsoleDrawer.cs" />
     <Compile Include="Drawing\ItemDrawingHelper.cs" />
     <Compile Include="Drawing\JournalTextProviding\JournalTextProviderFactory.cs" />
     <Compile Include="Drawing\LineTypes.cs" />

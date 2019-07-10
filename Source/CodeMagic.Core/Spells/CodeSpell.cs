@@ -61,5 +61,6 @@ namespace CodeMagic.Core.Spells
         public bool IsVisible => true;
         public bool BlocksVisibility => false;
         public bool BlocksProjectiles => false;
+        public bool BlocksEnvironment => false;
     }
 }

@@ -182,19 +182,20 @@ namespace CodeMagic.Core.Area
 
         private void MergeCellEnvironment(Point position, AreaMapCell cell, List<CellsPair> mergedCells)
         {
-            
-            SpreadTemperature(position, cell, mergedCells);
+            if (cell.BlocksEnvironment)
+                return;
+            SpreadEnvironment(position, cell, mergedCells);
         }
 
-        private void SpreadTemperature(Point position, AreaMapCell cell, List<CellsPair> mergedCells)
+        private void SpreadEnvironment(Point position, AreaMapCell cell, List<CellsPair> mergedCells)
         {
-            TrySpreadTemperature(position, Direction.Up, cell, mergedCells);
-            TrySpreadTemperature(position, Direction.Down, cell, mergedCells);
-            TrySpreadTemperature(position, Direction.Left, cell, mergedCells);
-            TrySpreadTemperature(position, Direction.Right, cell, mergedCells);
+            TrySpreadEnvironment(position, Direction.Up, cell, mergedCells);
+            TrySpreadEnvironment(position, Direction.Down, cell, mergedCells);
+            TrySpreadEnvironment(position, Direction.Left, cell, mergedCells);
+            TrySpreadEnvironment(position, Direction.Right, cell, mergedCells);
         }
 
-        private void TrySpreadTemperature(Point position, Direction direction, AreaMapCell cell, List<CellsPair> mergedCells)
+        private void TrySpreadEnvironment(Point position, Direction direction, AreaMapCell cell, List<CellsPair> mergedCells)
         {
             var nextPosition = Point.GetAdjustedPoint(position, direction);
             if (!ContainsCell(nextPosition))
@@ -204,10 +205,10 @@ namespace CodeMagic.Core.Area
             if (mergedCells.Any(merge => merge.ContainsPair(cell, nextCell)))
                 return;
             mergedCells.Add(new CellsPair(cell, nextCell));
-            if (nextCell.BlocksMovement)
+            if (nextCell.BlocksEnvironment)
                 return;
 
-            cell.Temperature.Balance(nextCell.Temperature);
+            cell.Environment.Balance(nextCell.Environment);
         }
 
         private class CellsPair

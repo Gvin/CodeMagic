@@ -31,6 +31,8 @@ namespace CodeMagic.Core.Objects.SolidObjects
         public bool BlocksProjectiles => true;
         public bool IsVisible => true;
         public bool BlocksVisibility => false;
+
+        public bool BlocksEnvironment => true;
     }
 
     public class EnergyWallConfiguration

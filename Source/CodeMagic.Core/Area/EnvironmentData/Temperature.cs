@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using CodeMagic.Core.Game;
 
-namespace CodeMagic.Core.Area
+namespace CodeMagic.Core.Area.EnvironmentData
 {
-    [DebuggerDisplay("{Value} C")]
+    [DebuggerDisplay("{" + nameof(Value) + "} C")]
     public class Temperature
     {
         public const int WaterEvaporationTemperature = 100;
@@ -22,7 +22,7 @@ namespace CodeMagic.Core.Area
 
         public const int NormalTemperature = 25;
 
-        public const int TransferValue = 10;
+        public const int TransferValue = 20;
 
         public const int NormalizeTemperatureSpeed = 5;
 

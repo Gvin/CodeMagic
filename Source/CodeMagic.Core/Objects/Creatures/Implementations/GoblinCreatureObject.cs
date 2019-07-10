@@ -35,6 +35,8 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
         private bool GetIfPlayerVisible(IAreaMap map, Point position)
         {
             var playerPosition = map.GetObjectPosition<IPlayer>();
+            if (playerPosition == null)
+                return false;
             return
                 CreaturesVisibilityHelper.GetIfPointIsVisible(map, position, ViewDistance, playerPosition);
         }

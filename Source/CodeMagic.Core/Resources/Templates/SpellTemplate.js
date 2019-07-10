@@ -1,8 +1,9 @@
-﻿// List of supported functions:
+﻿//------------------------------------------------------------------------------------
+// List of supported functions:
 //
 // log(message: string) - Logs specified message to the journal.
 // getMana(): int - Gets current spell mana level.
-// getCaster(): Creature - Gets spell caster.
+// getCaster(): Object - Gets spell caster.
 // getPosition(): Point - Gets current spell position.
 // getTemperature(): int - Gets temperature in current spell position.
 // getIsSolidWall(direction: string): bool - Gets if there is a wall in specified direction.
@@ -13,7 +14,7 @@
 //
 // scanForWalls(radius: int): bool[][] - Scans map in specified radius for walls and returns map. Will return null if not enough mana.
 // scanForObjects(radius: int): Object[][][] - Scans map in specified radius for objects or creatures. Will return null if not enough mana.
-//
+//------------------------------------------------------------------------------------
 // List of supported actions:
 //
 // move(direction: string, distance: int): Action - Moves spell in specified direction for specified distance.
@@ -21,13 +22,15 @@
 // heat(temperature: int): Action - Heats current area for <temperature> degrees.
 // cool(temperature: int): Action - Cools current area for <temperature> degrees.
 // push(direction: string, force: int): Action - Pushes object in current area to specified direction with specified force.
-//
+// compress(pressure: int): Action - Increases air pressure in current spell location for <pressure> kPa.
+// decompress(pressure: int): Action - Decreases air pressure in current spell location for <pressure> kPa.
+//------------------------------------------------------------------------------------
 // List of custom types
 //
 // Point { x: int, y: int }
-// Object { id: string, health: int, maxHealth: int }
-// Creature { id: string, health: int, maxHealth: int, direction: string }
+// Object { id: string, health: int, maxHealth: int, direction: string }
 // Action { type: string, manaCost: int }
+//------------------------------------------------------------------------------------
 
 function main(lifeTime) {
     // Write your code here.

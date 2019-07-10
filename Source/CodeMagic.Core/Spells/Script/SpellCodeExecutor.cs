@@ -12,6 +12,7 @@ using CodeMagic.Core.Spells.SpellActions;
 using Jint;
 using Jint.Native;
 using Jint.Parser;
+using Jint.Parser.Ast;
 using Jint.Runtime;
 
 namespace CodeMagic.Core.Spells.Script
@@ -55,6 +56,8 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("heat", new Func<int, JsValue>(GetHeatAreaSpellAction));
             jsEngine.SetValue("cool", new Func<int, JsValue>(GetCoolAreaSpellAction));
             jsEngine.SetValue("push", new Func<string, int, JsValue>(GetPushSpellAction));
+            jsEngine.SetValue("compress", new Func<int, JsValue>(GetCompressSpellAction));
+            jsEngine.SetValue("decompress", new Func<int, JsValue>(GetDecompressSpellAction));
         }
 
         public ISpellAction Execute(IAreaMap map, Point position, CodeSpell spell, Journal journal)
@@ -121,7 +124,7 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("log", new Action<object>(message => LogMessage(journal, spell, message)));
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
             jsEngine.SetValue("getPosition", new Func<JsValue>(() => ConvertPoint(position)));
-            jsEngine.SetValue("getTemperature", new Func<int>(() => map.GetCell(position).Temperature.Value));
+            jsEngine.SetValue("getTemperature", new Func<int>(() => map.GetCell(position).Environment.Temperature));
             jsEngine.SetValue("getIsSolidWall",
                 new Func<string, bool>((direction) => GetIfCellIsSolid(map, position, direction)));
             jsEngine.SetValue("getObjectsUnder", new Func<JsValue[]>(() => GetObjectsUnder(map, position)));
@@ -264,6 +267,16 @@ namespace CodeMagic.Core.Spells.Script
         private JsValue GetPushSpellAction(string direction, int force)
         {
             return PushSpellAction.GetJson(direction, force).ToJson(jsEngine);
+        }
+
+        private JsValue GetCompressSpellAction(int pressure)
+        {
+            return CompressSpellAction.GetJson(pressure).ToJson(jsEngine);
+        }
+
+        private JsValue GetDecompressSpellAction(int pressure)
+        {
+            return DecompressSpellAction.GetJson(pressure).ToJson(jsEngine);
         }
 
         #endregion

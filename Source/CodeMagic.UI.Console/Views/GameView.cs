@@ -16,10 +16,9 @@ namespace CodeMagic.UI.Console.Views
         {
             this.game = game;
 
-            var drawer = new ConsoleDrawer();
             var factory = new DrawingProcessorsFactory();
             var floorColorFactory = new FloorColorFactory();
-            gameDrawer = new GameDrawer(factory, drawer, floorColorFactory);
+            gameDrawer = new GameDrawer(factory, floorColorFactory);
         }
 
         public override void DrawStatic()
@@ -43,6 +42,9 @@ namespace CodeMagic.UI.Console.Views
                     break;
                 case ConsoleKey.F2:
                     game.Player.Health += 10;
+                    break;
+                case ConsoleKey.F3:
+                    game.Player.Mana += 100;
                     break;
                 case ConsoleKey.Escape:
                     var menu = new MenuView();

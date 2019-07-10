@@ -11,5 +11,7 @@
         bool IsVisible { get; }
 
         bool BlocksVisibility { get; }
+
+        bool BlocksEnvironment { get; }
     }
 }

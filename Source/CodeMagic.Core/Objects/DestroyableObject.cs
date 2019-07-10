@@ -35,6 +35,8 @@ namespace CodeMagic.Core.Objects
 
         public virtual bool BlocksProjectiles => false;
 
+        public virtual bool BlocksEnvironment => false;
+
         public ObjectStatusesCollection Statuses { get; }
 
         public int Health
@@ -69,7 +71,7 @@ namespace CodeMagic.Core.Objects
             }
         }
 
-        public virtual void Damage(int damage, Element? element)
+        public virtual void Damage(int damage, Element? element = null)
         {
             if (damage < 0)
                 throw new ArgumentException($"Damage should be greater or equal 0. Got {damage}.");

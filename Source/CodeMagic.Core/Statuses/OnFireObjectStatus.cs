@@ -24,7 +24,7 @@ namespace CodeMagic.Core.Statuses
             var damage = RandomHelper.GetRandomValue(FireDamageMin, FireDamageMax);
             journal.Write(new BurningDamageMessage(owner, damage));
             owner.Damage(damage, Element.Fire);
-            cell.Temperature.Value += CellTemperatureIncrease;
+            cell.Environment.Temperature += CellTemperatureIncrease;
             return true;
         }
 

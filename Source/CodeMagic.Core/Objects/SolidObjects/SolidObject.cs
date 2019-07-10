@@ -19,6 +19,8 @@
         public bool BlocksVisibility => true;
 
         public bool BlocksProjectiles => true;
+
+        public bool BlocksEnvironment => true;
     }
 
     public class SolidObjectConfiguration

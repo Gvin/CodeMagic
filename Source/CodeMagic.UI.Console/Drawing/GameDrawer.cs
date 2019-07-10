@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
@@ -23,14 +24,12 @@ namespace CodeMagic.UI.Console.Drawing
         private static readonly SymbolsImage EmptyImage = new SymbolsImage();
 
         private readonly IDrawingProcessorsFactory processorsFactory;
-        private readonly IConsoleDrawer drawer;
         private readonly FloorColorFactory floorColorFactory;
         private readonly JournalTextProviderFactory journalTextProviderFactory;
 
-        public GameDrawer(IDrawingProcessorsFactory processorsFactory, IConsoleDrawer drawer, FloorColorFactory floorColorFactory)
+        public GameDrawer(IDrawingProcessorsFactory processorsFactory, FloorColorFactory floorColorFactory)
         {
             this.processorsFactory = processorsFactory;
-            this.drawer = drawer;
             this.floorColorFactory = floorColorFactory;
 
             journalTextProviderFactory = new JournalTextProviderFactory();
@@ -113,8 +112,6 @@ namespace CodeMagic.UI.Console.Drawing
         public void DrawGame(GameCore game)
         {
             Writer.BackgroundColor = Color.Black;
-            Writer.CursorTop = GameScreenTopShift;
-            Writer.CursorLeft = GameScreenLeftShift;
 
             var visibleArea = game.GetVisibleArea();
 
@@ -123,10 +120,8 @@ namespace CodeMagic.UI.Console.Drawing
                 for (var x = 0; x < visibleArea.Width; x++)
                 {
                     var visibleCell = visibleArea.GetCell(x, y);
-                    DrawCell(drawer, visibleCell);
+                    DrawCell(visibleCell, x, y);
                 }
-                Writer.CursorTop += SymbolsImage.Size;
-                Writer.CursorLeft = GameScreenLeftShift;
             }
 
             DrawJournal(game.Journal);
@@ -150,11 +145,36 @@ namespace CodeMagic.UI.Console.Drawing
             }
         }
 
-        private void DrawCell(IConsoleDrawer consoleDrawer, AreaMapCell cell)
+        private void DrawCell(AreaMapCell cell, int x, int y)
         {
-            var image = GetCellImage(cell);
+            var image = GetCellImage(cell) ?? EmptyImage;
             var background = floorColorFactory.GetFloorColor(cell?.FloorType ?? FloorTypes.Hole);
-            consoleDrawer.Draw(image ?? EmptyImage, background);
+
+            var realX = x * SymbolsImage.Size + GameScreenLeftShift;
+            var realY = y * SymbolsImage.Size + GameScreenTopShift;
+            DrawingHelper.DrawImageAt(realX, realY, image, background);
+
+            DrawPressure(cell, realX, realY);
+        }
+
+        private void DrawPressure(AreaMapCell cell, int x, int y)
+        {
+            if (cell == null)
+                return;
+
+            Writer.CursorTop = y;
+            Writer.CursorLeft = x;
+            Writer.Write((int)Math.Round(cell.Environment.Pressure / 10d), Color.Red);
+        }
+
+        private void DrawTemperature(AreaMapCell cell, int x, int y)
+        {
+            if (cell == null)
+                return;
+
+            Writer.CursorTop = y;
+            Writer.CursorLeft = x;
+            Writer.Write((int)Math.Round(cell.Environment.Temperature / 10d), Color.Red);
         }
 
         private SymbolsImage GetCellImage(AreaMapCell cell)

@@ -46,9 +46,11 @@
   <ItemGroup>
     <Compile Include="Area\AreaMap.cs" />
     <Compile Include="Area\AreaMapCell.cs" />
+    <Compile Include="Area\EnvironmentData\Environment.cs" />
+    <Compile Include="Area\EnvironmentData\Pressure.cs" />
     <Compile Include="Area\FloorTypes.cs" />
     <Compile Include="Area\IAreaMap.cs" />
-    <Compile Include="Area\Temperature.cs" />
+    <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Area\AreaMapFragment.cs" />
     <Compile Include="Common\Direction.cs" />
     <Compile Include="Objects\MovementHelper.cs" />
@@ -112,7 +114,9 @@
     <Compile Include="Spells\Script\SpellCodeExecutor.cs" />
     <Compile Include="Spells\BookSpell.cs" />
     <Compile Include="Spells\SpellActions\BuildWallSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\CompressSpellAction.cs" />
     <Compile Include="Spells\SpellActions\CoolAreaSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\DecompressSpellAction.cs" />
     <Compile Include="Spells\SpellActions\EmptySpellAction.cs" />
     <Compile Include="Spells\SpellActions\HeatAreaSpellAction.cs" />
     <Compile Include="Spells\SpellActions\ISpellAction.cs" />

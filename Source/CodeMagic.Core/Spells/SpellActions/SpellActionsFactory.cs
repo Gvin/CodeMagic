@@ -19,6 +19,10 @@
                     return new CoolAreaSpellAction(actionData);
                 case PushSpellAction.ActionType:
                     return new PushSpellAction(actionData);
+                case CompressSpellAction.ActionType:
+                    return new CompressSpellAction(actionData);
+                case DecompressSpellAction.ActionType:
+                    return new DecompressSpellAction(actionData);
             }
 
             throw new SpellException($"Action type \"{actionData.type}\" is not supported.");

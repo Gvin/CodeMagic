@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
@@ -14,10 +15,10 @@ namespace CodeMagic.Core.Area
         {
             Objects = new List<IMapObject>();
             FloorType = FloorTypes.Stone;
-            Temperature = new Temperature();
+            Environment = new Environment();
         }
 
-        public Temperature Temperature { get; }
+        public Environment Environment { get; }
 
         public List<IMapObject> Objects { get; }
 
@@ -26,6 +27,11 @@ namespace CodeMagic.Core.Area
         public bool BlocksMovement
         {
             get { return Objects.Any(obj => obj.BlocksMovement); }
+        }
+
+        public bool BlocksEnvironment
+        {
+            get { return Objects.Any(obj => obj.BlocksEnvironment); }
         }
 
         public bool BlocksVisibility
@@ -43,11 +49,11 @@ namespace CodeMagic.Core.Area
             ProcessDynamicObjects(map, position, journal);
             ProcessDestroyableObjects(map, position, journal);
 
-            Temperature.Normalize();
+            Environment.Normalize();
 
-            if (Temperature.Value >= Temperature.WoodBurnTemperature && !Objects.OfType<FireDecorativeObject>().Any())
+            if (Environment.Temperature >= Temperature.WoodBurnTemperature && !Objects.OfType<FireDecorativeObject>().Any())
             {
-                Objects.Add(new FireDecorativeObject(Temperature.Value));
+                Objects.Add(new FireDecorativeObject(Environment.Temperature));
             }
         }
 
@@ -73,7 +79,7 @@ namespace CodeMagic.Core.Area
         {
             var destroyableObjects = Objects.OfType<IDestroyableObject>().ToArray();
             ProcessStatuses(destroyableObjects, journal);
-            ApplyEnvironmentDamage(destroyableObjects, journal);
+            Environment.ApplyEnvironment(destroyableObjects, journal);
 
             var deadObjects = destroyableObjects.Where(obj => obj.Health <= 0).ToArray();
             foreach (var deadObject in deadObjects)
@@ -91,30 +97,6 @@ namespace CodeMagic.Core.Area
             {
                 destroyableObject.Statuses.Update(destroyableObject, this, journal);
             }
-        }
-
-        private void ApplyEnvironmentDamage(IDestroyableObject[] destroyableObjects, Journal journal)
-        {
-            var temperatureDamage = Temperature.GetTemperatureDamage(out var element);
-
-            foreach (var destroyableObject in destroyableObjects)
-            {
-                if (temperatureDamage > 0)
-                {
-                    journal.Write(new EnvironmentDamageMessage(destroyableObject, temperatureDamage, element));
-                    destroyableObject.Damage(temperatureDamage, element);
-                }
-            }
-        }
-
-        public AreaMapCell Clone()
-        {
-            var result = new AreaMapCell
-            {
-                FloorType = FloorType
-            };
-            result.Objects.AddRange(Objects);
-            return result;
         }
     }
 }

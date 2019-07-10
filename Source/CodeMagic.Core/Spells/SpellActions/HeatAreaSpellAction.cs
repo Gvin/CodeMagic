@@ -22,7 +22,7 @@ namespace CodeMagic.Core.Spells.SpellActions
         public Point Perform(IAreaMap map, Point position, Journal journal)
         {
             var cell = map.GetCell(position);
-            cell.Temperature.Value += temperature;
+            cell.Environment.Temperature += temperature;
             return position;
         }
 

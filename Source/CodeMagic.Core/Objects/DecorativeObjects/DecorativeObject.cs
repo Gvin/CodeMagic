@@ -20,6 +20,8 @@
         public bool BlocksVisibility => false;
 
         public bool BlocksProjectiles => false;
+
+        public bool BlocksEnvironment => false;
     }
 
     public class DecorativeObjectConfiguration
