@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Statuses;
 
@@ -7,7 +8,8 @@ namespace CodeMagic.Core.Objects
 {
     public class DestroyableObject : IDestroyableObject
     {
-        private const int CatchFireChanceMultiplier = 1;
+        private const int DefaultCatchFireChanceMultiplier = 1;
+        private const int DefaultSelfExtinguishChance = 15;
 
         private int health;
         private int maxHealth;
@@ -38,6 +40,8 @@ namespace CodeMagic.Core.Objects
         public virtual bool BlocksEnvironment => false;
 
         public ObjectStatusesCollection Statuses { get; }
+
+        public int SelfExtinguishChance => DefaultSelfExtinguishChance;
 
         public int Health
         {
@@ -71,6 +75,8 @@ namespace CodeMagic.Core.Objects
             }
         }
 
+        protected virtual int CatchFireChanceMultiplier => DefaultCatchFireChanceMultiplier;
+
         public virtual void Damage(int damage, Element? element = null)
         {
             if (damage < 0)
@@ -84,12 +90,23 @@ namespace CodeMagic.Core.Objects
             }
         }
 
+        protected virtual OnFireObjectStatusConfiguration GetFireConfiguration()
+        {
+            return new OnFireObjectStatusConfiguration
+            {
+                BurnBeforeExtinguishCheck = 3,
+                BurningTemperature = Temperature.WoodBurnTemperature,
+                FireDamageMax = 6,
+                FireDamageMin = 2
+            };
+        }
+
         private void CheckCatchFire(int damage)
         {
             var catchFireChance = damage * CatchFireChanceMultiplier;
             if (RandomHelper.CheckChance(catchFireChance))
             {
-                Statuses.Add(new OnFireObjectStatus());
+                Statuses.Add(new OnFireObjectStatus(GetFireConfiguration()));
             }
         }
 

@@ -19,5 +19,7 @@ namespace CodeMagic.Core.Objects
         void Damage(int value, Element? element = null);
 
         ObjectStatusesCollection Statuses { get; }
+
+        int SelfExtinguishChance { get; }
     }
 }
