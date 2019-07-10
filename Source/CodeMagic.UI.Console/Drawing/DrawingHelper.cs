@@ -19,8 +19,7 @@ namespace CodeMagic.UI.Console.Drawing
                 {
                     var pixel = image.Pixels[indexY][indexX];
                     Writer.BackgroundColor = pixel.BackgroundColor.HasValue ? pixel.BackgroundColor.Value : defaultBackgroundColor;
-                    Writer.ForegroundColor = pixel.Color;
-                    Writer.Write(pixel.Symbol);
+                    Writer.Write(pixel.Symbol, pixel.Color);
                 }
 
                 Writer.CursorTop++;

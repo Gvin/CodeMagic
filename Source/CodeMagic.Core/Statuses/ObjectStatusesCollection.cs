@@ -18,8 +18,13 @@ namespace CodeMagic.Core.Statuses
         public void Add(IObjectStatus status)
         {
             if (statuses.ContainsKey(status.Type))
-                return;
-            statuses.Add(status.Type, status);
+            {
+                statuses[status.Type] = status;
+            }
+            else
+            {
+                statuses.Add(status.Type, status);
+            }
         }
 
         public void Remove(string statusType)

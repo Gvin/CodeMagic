@@ -1,12 +1,35 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Area.Liquids;
+using CodeMagic.Core.Objects.DecorativeObjects;
 
 namespace CodeMagic.UI.Console.Drawing
 {
     public class FloorColorFactory
     {
-        public Color GetFloorColor(FloorTypes type)
+        private static readonly Color WaterColor = Color.CadetBlue;
+
+        private static readonly Color IceColor = Color.Aquamarine;
+
+        public Color GetFloorColor(AreaMapCell cell)
+        {
+            if (cell == null)
+                return Color.Black;
+
+            var iceObject = cell.Objects.OfType<IceObject>().FirstOrDefault();
+            if (iceObject != null && iceObject.Volume >= IceObject.MinVolumeForEffect)
+                return IceColor;
+
+            var waterLevel = cell.Liquids.GetLiquidVolume<WaterLiquid>();
+            if (waterLevel >= WaterLiquid.MinVolumeForEffect)
+                return WaterColor;
+
+            return GetStandardFloorColor(cell.FloorType);
+        }
+
+        private Color GetStandardFloorColor(FloorTypes type)
         {
             switch (type)
             {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area.EnvironmentData;
+using CodeMagic.Core.Area.Liquids;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
@@ -16,9 +17,12 @@ namespace CodeMagic.Core.Area
             Objects = new List<IMapObject>();
             FloorType = FloorTypes.Stone;
             Environment = new Environment();
+            Liquids = new LiquidsData();
         }
 
         public Environment Environment { get; }
+
+        public LiquidsData Liquids { get; }
 
         public List<IMapObject> Objects { get; }
 
@@ -50,6 +54,7 @@ namespace CodeMagic.Core.Area
             ProcessDestroyableObjects(map, position, journal);
 
             Environment.Normalize();
+            Liquids.UpdateLiquids(this);
 
             if (Environment.Temperature >= Temperature.WoodBurnTemperature && !Objects.OfType<FireDecorativeObject>().Any())
             {
@@ -78,8 +83,7 @@ namespace CodeMagic.Core.Area
         private void ProcessDestroyableObjects(IAreaMap map, Point position, Journal journal)
         {
             var destroyableObjects = Objects.OfType<IDestroyableObject>().ToArray();
-            ProcessStatuses(destroyableObjects, journal);
-            Environment.ApplyEnvironment(destroyableObjects, journal);
+            ProcessStatusesAndEnvironment(destroyableObjects, journal);
 
             var deadObjects = destroyableObjects.Where(obj => obj.Health <= 0).ToArray();
             foreach (var deadObject in deadObjects)
@@ -91,11 +95,13 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void ProcessStatuses(IDestroyableObject[] destroyableObjects, Journal journal)
+        private void ProcessStatusesAndEnvironment(IDestroyableObject[] destroyableObjects, Journal journal)
         {
             foreach (var destroyableObject in destroyableObjects)
             {
                 destroyableObject.Statuses.Update(destroyableObject, this, journal);
+                Environment.ApplyEnvironment(destroyableObject, journal);
+                Liquids.ApplyLiquids(destroyableObject);
             }
         }
     }

@@ -52,7 +52,11 @@
     <Compile Include="Area\IAreaMap.cs" />
     <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Area\AreaMapFragment.cs" />
+    <Compile Include="Area\Liquids\ILiquid.cs" />
+    <Compile Include="Area\Liquids\LiquidsData.cs" />
+    <Compile Include="Area\Liquids\WaterLiquid.cs" />
     <Compile Include="Common\Direction.cs" />
+    <Compile Include="Objects\DecorativeObjects\IceObject.cs" />
     <Compile Include="Objects\MovementHelper.cs" />
     <Compile Include="CreaturesLogic\CreaturesVisibilityHelper.cs" />
     <Compile Include="CreaturesLogic\MovementStrategies\ICreatureMovementStrategy.cs" />
@@ -116,6 +120,7 @@
     <Compile Include="Spells\SpellActions\BuildWallSpellAction.cs" />
     <Compile Include="Spells\SpellActions\CompressSpellAction.cs" />
     <Compile Include="Spells\SpellActions\CoolAreaSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\CreateWaterSpellAction.cs" />
     <Compile Include="Spells\SpellActions\DecompressSpellAction.cs" />
     <Compile Include="Spells\SpellActions\EmptySpellAction.cs" />
     <Compile Include="Spells\SpellActions\HeatAreaSpellAction.cs" />
@@ -128,6 +133,7 @@
     <Compile Include="Statuses\IObjectStatus.cs" />
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />
     <Compile Include="Statuses\OnFireObjectStatus.cs" />
+    <Compile Include="Statuses\WetObjectStatus.cs" />
     <Content Include="Resources\Templates\SpellTemplate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

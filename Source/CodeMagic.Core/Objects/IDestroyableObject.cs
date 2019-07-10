@@ -20,6 +20,6 @@ namespace CodeMagic.Core.Objects
 
         ObjectStatusesCollection Statuses { get; }
 
-        int SelfExtinguishChance { get; }
+        int GetSelfExtinguishChance();
     }
 }

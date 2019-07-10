@@ -43,24 +43,21 @@ namespace CodeMagic.Core.Area.EnvironmentData
             pressure.Normalize();
         }
 
-        public void ApplyEnvironment(IDestroyableObject[] objects, Journal journal)
+        public void ApplyEnvironment(IDestroyableObject destroyable, Journal journal)
         {
             var temperatureDamage = temperature.GetTemperatureDamage(out var temperDamageElement);
             var pressureDamage = pressure.GetPressureDamage();
 
-            foreach (var destroyableObject in objects)
+            if (temperatureDamage > 0)
             {
-                if (temperatureDamage > 0)
-                {
-                    journal.Write(new EnvironmentDamageMessage(destroyableObject, temperatureDamage, temperDamageElement));
-                    destroyableObject.Damage(temperatureDamage, temperDamageElement);
-                }
+                journal.Write(new EnvironmentDamageMessage(destroyable, temperatureDamage, temperDamageElement));
+                destroyable.Damage(temperatureDamage, temperDamageElement);
+            }
 
-                if (pressureDamage > 0)
-                {
-                    journal.Write(new EnvironmentDamageMessage(destroyableObject, pressureDamage));
-                    destroyableObject.Damage(pressureDamage);
-                }
+            if (pressureDamage > 0)
+            {
+                journal.Write(new EnvironmentDamageMessage(destroyable, pressureDamage));
+                destroyable.Damage(pressureDamage);
             }
         }
 

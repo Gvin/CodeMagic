@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Area.Liquids;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
@@ -73,12 +74,12 @@ namespace CodeMagic.UI.Console.Drawing
             Writer.CursorTop += 2;
             Writer.CursorLeft = leftPosition;
             Writer.Write("HP:   ", Color.White);
-            Writer.Write($"{player.Health} / {player.MaxHealth}", Color.Red);
+            Writer.Write($"{player.Health} / {player.MaxHealth}   ", Color.Red);
 
             Writer.CursorTop++;
             Writer.CursorLeft = leftPosition;
             Writer.Write("Mana: ", Color.White);
-            Writer.Write($"{player.Mana} / {player.MaxMana}", Color.Blue);
+            Writer.Write($"{player.Mana} / {player.MaxMana}     ", Color.Blue);
 
             Writer.CursorTop += 2;
             Writer.CursorLeft = leftPosition;
@@ -148,11 +149,15 @@ namespace CodeMagic.UI.Console.Drawing
         private void DrawCell(AreaMapCell cell, int x, int y)
         {
             var image = GetCellImage(cell) ?? EmptyImage;
-            var background = floorColorFactory.GetFloorColor(cell?.FloorType ?? FloorTypes.Hole);
+            var background = floorColorFactory.GetFloorColor(cell);
 
             var realX = x * SymbolsImage.Size + GameScreenLeftShift;
             var realY = y * SymbolsImage.Size + GameScreenTopShift;
             DrawingHelper.DrawImageAt(realX, realY, image, background);
+
+//            DrawPressure(cell, realX, realY);
+//            DrawTemperature(cell, realX, realY);
+//            DrawWaterLevel(cell, realX, realY);
         }
 
         private void DrawPressure(AreaMapCell cell, int x, int y)
@@ -162,7 +167,8 @@ namespace CodeMagic.UI.Console.Drawing
 
             Writer.CursorTop = y;
             Writer.CursorLeft = x;
-            Writer.Write((int)Math.Round(cell.Environment.Pressure / 10d), Color.Red);
+            Writer.BackgroundColor = Color.Black;
+            Writer.Write((int)Math.Round(cell.Environment.Pressure / 10d), Color.Violet);
         }
 
         private void DrawTemperature(AreaMapCell cell, int x, int y)
@@ -170,9 +176,21 @@ namespace CodeMagic.UI.Console.Drawing
             if (cell == null)
                 return;
 
-            Writer.CursorTop = y;
+            Writer.CursorTop = y + 1;
             Writer.CursorLeft = x;
+            Writer.BackgroundColor = Color.Black;
             Writer.Write((int)Math.Round(cell.Environment.Temperature / 10d), Color.Red);
+        }
+
+        private void DrawWaterLevel(AreaMapCell cell, int x, int y)
+        {
+            if (cell == null)
+                return;
+
+            Writer.CursorTop = y + 2;
+            Writer.CursorLeft = x;
+            Writer.BackgroundColor = Color.Black;
+            Writer.Write(cell.Liquids.GetLiquidVolume<WaterLiquid>(), Color.DeepSkyBlue);
         }
 
         private SymbolsImage GetCellImage(AreaMapCell cell)
@@ -206,7 +224,12 @@ namespace CodeMagic.UI.Console.Drawing
         {
             if (destroyable.Statuses.Contains(OnFireObjectStatus.StatusType))
             {
-                image.SetPixel(2, 2, '\u2248', Color.Red, Color.Orange);
+                image.SetPixel(2, 2, '\u00C3', Color.Red, Color.Orange);
+            }
+
+            if (destroyable.Statuses.Contains(WetObjectStatus.StatusType))
+            {
+                image.SetPixel(2, 2, '\u2248', Color.White, Color.DeepSkyBlue);
             }
         }
     }

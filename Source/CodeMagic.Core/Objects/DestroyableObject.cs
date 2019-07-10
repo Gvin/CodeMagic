@@ -8,9 +8,6 @@ namespace CodeMagic.Core.Objects
 {
     public class DestroyableObject : IDestroyableObject
     {
-        private const int DefaultCatchFireChanceMultiplier = 1;
-        private const int DefaultSelfExtinguishChance = 15;
-
         private int health;
         private int maxHealth;
 
@@ -21,6 +18,8 @@ namespace CodeMagic.Core.Objects
             Name = configuration.Name;
             MaxHealth = configuration.MaxHealth;
             Health = configuration.Health;
+            SelfExtinguishChance = configuration.SelfExtinguishChance;
+            CatchFireChanceMultiplier = configuration.CatchFireChanceMultiplier;
 
             Statuses = new ObjectStatusesCollection();
         }
@@ -41,7 +40,14 @@ namespace CodeMagic.Core.Objects
 
         public ObjectStatusesCollection Statuses { get; }
 
-        public int SelfExtinguishChance => DefaultSelfExtinguishChance;
+        private int SelfExtinguishChance { get; }
+
+        public int GetSelfExtinguishChance()
+        {
+            if (Statuses.Contains(WetObjectStatus.StatusType))
+                return SelfExtinguishChance + WetObjectStatus.SelfExtinguishChanceBonus;
+            return SelfExtinguishChance;
+        }
 
         public int Health
         {
@@ -75,7 +81,7 @@ namespace CodeMagic.Core.Objects
             }
         }
 
-        protected virtual int CatchFireChanceMultiplier => DefaultCatchFireChanceMultiplier;
+        private int CatchFireChanceMultiplier { get; }
 
         public virtual void Damage(int damage, Element? element = null)
         {
@@ -104,6 +110,10 @@ namespace CodeMagic.Core.Objects
         private void CheckCatchFire(int damage)
         {
             var catchFireChance = damage * CatchFireChanceMultiplier;
+            if (Statuses.Contains(WetObjectStatus.StatusType))
+            {
+                catchFireChance -= WetObjectStatus.CatchFireChancePenalty;
+            }
             if (RandomHelper.CheckChance(catchFireChance))
             {
                 Statuses.Add(new OnFireObjectStatus(GetFireConfiguration()));
@@ -117,10 +127,23 @@ namespace CodeMagic.Core.Objects
 
     public class DestroyableObjectConfiguration
     {
+        private const int DefaultCatchFireChanceMultiplier = 1;
+        private const int DefaultSelfExtinguishChance = 15;
+
+        public DestroyableObjectConfiguration()
+        {
+            CatchFireChanceMultiplier = DefaultCatchFireChanceMultiplier;
+            SelfExtinguishChance = DefaultSelfExtinguishChance;
+        }
+
         public string Name { get; set; }
 
         public int Health { get; set; }
 
         public int MaxHealth { get; set; }
+
+        public int CatchFireChanceMultiplier { get; set; }
+
+        public int SelfExtinguishChance { get; set; }
     }
 }

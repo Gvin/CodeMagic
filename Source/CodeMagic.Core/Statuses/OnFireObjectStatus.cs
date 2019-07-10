@@ -32,7 +32,7 @@ namespace CodeMagic.Core.Statuses
         {
             if (burnTime >= burnBeforeExtinguishCheck)
             {
-                if (RandomHelper.CheckChance(owner.SelfExtinguishChance))
+                if (RandomHelper.CheckChance(owner.GetSelfExtinguishChance()))
                 {
                     return false;
                 }

@@ -58,6 +58,7 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("push", new Func<string, int, JsValue>(GetPushSpellAction));
             jsEngine.SetValue("compress", new Func<int, JsValue>(GetCompressSpellAction));
             jsEngine.SetValue("decompress", new Func<int, JsValue>(GetDecompressSpellAction));
+            jsEngine.SetValue("createWater", new Func<int, JsValue>(GetCreateWaterSpellAction));
         }
 
         public ISpellAction Execute(IAreaMap map, Point position, CodeSpell spell, Journal journal)
@@ -277,6 +278,11 @@ namespace CodeMagic.Core.Spells.Script
         private JsValue GetDecompressSpellAction(int pressure)
         {
             return DecompressSpellAction.GetJson(pressure).ToJson(jsEngine);
+        }
+
+        private JsValue GetCreateWaterSpellAction(int volume)
+        {
+            return CreateWaterSpellAction.GetJson(volume).ToJson(jsEngine);
         }
 
         #endregion

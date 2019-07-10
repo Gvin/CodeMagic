@@ -23,6 +23,8 @@
                     return new CompressSpellAction(actionData);
                 case DecompressSpellAction.ActionType:
                     return new DecompressSpellAction(actionData);
+                case CreateWaterSpellAction.ActionType:
+                    return new CreateWaterSpellAction(actionData);
             }
 
             throw new SpellException($"Action type \"{actionData.type}\" is not supported.");

@@ -24,6 +24,7 @@
 // push(direction: string, force: int): Action - Pushes object in current area to specified direction with specified force.
 // compress(pressure: int): Action - Increases air pressure in current spell location for <pressure> kPa.
 // decompress(pressure: int): Action - Decreases air pressure in current spell location for <pressure> kPa.
+// createWater(volume: int): Action - Creates <volume> liters of water in current spell location.
 //------------------------------------------------------------------------------------
 // List of custom types
 //
