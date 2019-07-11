@@ -5,8 +5,8 @@ namespace CodeMagic.Core.Spells
 {
     public static class SpellHelper
     {
-        private static readonly string[] DirectionsUp = { "up", "top", "above" };
-        private static readonly string[] DirectionsDown = { "down", "bottom", "below" };
+        private static readonly string[] DirectionsUp = { "up", "top", "above", "forward", "front" };
+        private static readonly string[] DirectionsDown = { "down", "bottom", "below", "backward", "back" };
         private static readonly string[] DirectionsLeft = { "left" };
         private static readonly string[] DirectionsRight = { "right" };
 
