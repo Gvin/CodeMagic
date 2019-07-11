@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Spells;
@@ -8,7 +10,8 @@ namespace CodeMagic.Core.Objects
 {
     public static class MovementHelper
     {
-        public static bool MoveCreature(ICreatureObject creature, IAreaMap map, Point startPoint, Point endPoint, bool changeDirection = true)
+        public static MovementResult MoveCreature(ICreatureObject creature, IGameCore game, Point startPoint,
+            Point endPoint, bool processStepReaction = true, bool changeDirection = true)
         {
             if (changeDirection)
             {
@@ -18,37 +21,70 @@ namespace CodeMagic.Core.Objects
                 creature.Direction = movementDirection.Value;
             }
 
-            return MoveObject(creature, map, startPoint, endPoint);
+            return MoveObject(creature, game, startPoint, endPoint, processStepReaction);
         }
 
-        public static bool MoveObject(IMapObject mapObject, IAreaMap map, Point startPoint, Point endPoint)
+        public static MovementResult MoveCreature(ICreatureObject creature, IGameCore game, Point startPoint,
+            Direction direction, bool processStepReaction = true, bool changeDirection = true)
         {
-            return MoveMapObject(mapObject, map, startPoint, endPoint, cell => !cell.BlocksMovement);
+            if (changeDirection)
+            {
+                creature.Direction = direction;
+            }
+            var endPoint = Point.GetAdjustedPoint(startPoint, direction);
+            return MoveObject(creature, game, startPoint, endPoint, processStepReaction);
         }
 
-        public static bool MoveSpell(CodeSpell spell, IAreaMap map, Point startPoint, Point endPoint)
+        public static MovementResult MoveObject(IMapObject mapObject, IGameCore game, Point startPoint, Point endPoint, bool processStepReaction = true)
         {
-            return MoveMapObject(spell, map, startPoint, endPoint, cell => !cell.BlocksProjectiles);
+            return MoveMapObject(mapObject, game, startPoint, endPoint, cell => !cell.BlocksMovement, processStepReaction);
         }
 
-        private static bool MoveMapObject(IMapObject mapObject, IAreaMap map, Point startPoint, Point endPoint,
-            Func<AreaMapCell, bool> canPassFilter)
+        public static MovementResult MoveSpell(CodeSpell spell, IGameCore game, Point startPoint, Point endPoint)
+        {
+            return MoveMapObject(spell, game, startPoint, endPoint, cell => !cell.BlocksProjectiles, false);
+        }
+
+        private static MovementResult MoveMapObject(IMapObject mapObject, IGameCore game, Point startPoint, Point endPoint,
+            Func<AreaMapCell, bool> canPassFilter, bool processStepReaction)
         {
             if (!Point.IsAdjustedPoint(startPoint, endPoint))
                 throw new ArgumentException("Movement points are not adjusted.");
 
-            if (!map.ContainsCell(endPoint))
-                return false;
+            if (!game.Map.ContainsCell(endPoint))
+                return new MovementResult(startPoint, false);
 
-            var nextCell = map.GetCell(endPoint);
+            var nextCell = game.Map.GetCell(endPoint);
             if (!canPassFilter(nextCell))
-                return false;
+                return new MovementResult(startPoint, false);
 
-            var currentCell = map.GetCell(startPoint);
+            var currentCell = game.Map.GetCell(startPoint);
 
             currentCell.Objects.Remove(mapObject);
             nextCell.Objects.Add(mapObject);
-            return true;
+
+            if (!processStepReaction || !(mapObject is ICreatureObject creature))
+                return new MovementResult(endPoint, true);
+
+            var stepReactionObject = nextCell.Objects.OfType<IStepReactionObject>().FirstOrDefault();
+            if (stepReactionObject == null)
+                return new MovementResult(endPoint, true);
+
+            var newPosition = stepReactionObject.ProcessStepOn(game, endPoint, creature, startPoint);
+            return new MovementResult(newPosition, true);
         }
+    }
+
+    public class MovementResult
+    {
+        public MovementResult(Point newPosition, bool success)
+        {
+            NewPosition = newPosition;
+            Success = success;
+        }
+
+        public Point NewPosition { get; }
+
+        public bool Success { get; }
     }
 }

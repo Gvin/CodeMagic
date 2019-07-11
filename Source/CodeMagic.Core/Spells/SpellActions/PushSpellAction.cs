@@ -2,9 +2,7 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
-using CodeMagic.Core.CreaturesLogic;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Spells.Script;
@@ -26,41 +24,41 @@ namespace CodeMagic.Core.Spells.SpellActions
             force = (int) actionData.force;
         }
 
-        public Point Perform(IAreaMap map, Point position, Journal journal)
+        public Point Perform(IGameCore game, Point position)
         {
-            var target = GetTarget(map, position);
+            var target = GetTarget(game.Map, position);
             if (target == null)
                 return position;
 
-            var remainingForce = TryPush(target, map, position, out var currentPosition);
+            var remainingForce = TryPush(target, game, position, out var currentPosition);
             if (remainingForce == 0)
                 return position;
 
             var collideCellPosition = Point.GetAdjustedPoint(currentPosition, direction);
-            var collideTarget = GetTarget(map, collideCellPosition);
+            var collideTarget = GetTarget(game.Map, collideCellPosition);
 
             var damage = remainingForce * PushDamageMultiplier;
 
-            target.Damage(damage, null);
-            journal.Write(new EnvironmentDamageMessage(target, damage, null));
+            target.Damage(damage);
+            game.Journal.Write(new EnvironmentDamageMessage(target, damage));
 
             if (collideTarget != null)
             {
-                collideTarget.Damage(damage, null);
-                journal.Write(new EnvironmentDamageMessage(collideTarget, damage, null));
+                collideTarget.Damage(damage);
+                game.Journal.Write(new EnvironmentDamageMessage(collideTarget, damage));
             }
 
             return position;
         }
 
-        private int TryPush(IDestroyableObject target, IAreaMap map, Point position, out Point currentPosition)
+        private int TryPush(IDestroyableObject target, IGameCore game, Point position, out Point currentPosition)
         {
             currentPosition = position;
             for (var remainingForce = force; remainingForce > 0; remainingForce--)
             {
                 var nextPosition = Point.GetAdjustedPoint(currentPosition, direction);
-                var success = MovementHelper.MoveObject(target, map, currentPosition, nextPosition);
-                if (!success)
+                var movementResult = MovementHelper.MoveObject(target, game, currentPosition, nextPosition);
+                if (!movementResult.Success)
                     return remainingForce;
 
                 currentPosition = nextPosition;

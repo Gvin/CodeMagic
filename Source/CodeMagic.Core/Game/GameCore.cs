@@ -7,7 +7,7 @@ using CodeMagic.Core.Objects.PlayerData;
 
 namespace CodeMagic.Core.Game
 {
-    public class GameCore : ITurnProvider
+    public class GameCore : ITurnProvider, IGameCore
     {
         public GameCore(IAreaMap map, Point playerPosition)
         {
@@ -31,11 +31,12 @@ namespace CodeMagic.Core.Game
 
         public Journal Journal { get; }
 
-        public Point PlayerPosition { get; }
+        public Point PlayerPosition { get; private set; }
 
         public void PerformPlayerAction(IPlayerAction action)
         {
-            var endsTurn = action.Perform(Player, PlayerPosition, Map, Journal);
+            var endsTurn = action.Perform(Player, PlayerPosition, this, out var newPosition);
+            PlayerPosition = newPosition;
             if (endsTurn)
             {
                 UpdateMap();
@@ -45,7 +46,7 @@ namespace CodeMagic.Core.Game
 
         private void UpdateMap()
         {
-            Map.Update(Journal);
+            Map.Update(this);
         }
 
         public AreaMapFragment GetVisibleArea()

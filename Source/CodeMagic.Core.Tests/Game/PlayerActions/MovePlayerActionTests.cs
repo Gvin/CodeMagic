@@ -19,10 +19,11 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
         [TestCase(0, 0, Direction.Right, 1, 0)]
         public void PerformValidMovementTest(int startX, int startY, Direction direction, int endX, int endY)
         {
-            var turnProviderMock = new Mock<ITurnProvider>();
             var playerMock = new Mock<IPlayer>();
             var playerPosition = new Point(startX, startY);
             var mapMock = new Mock<IAreaMap>();
+            var gameMock = new Mock<IGameCore>();
+            gameMock.SetupGet(game => game.Map).Returns(mapMock.Object);
 
             var cell1 = new AreaMapCell();
             cell1.Objects.Add(playerMock.Object);
@@ -43,7 +44,7 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
 
             var action = new MovePlayerAction(direction);
 
-            action.Perform(playerMock.Object, playerPosition, mapMock.Object, new Journal(turnProviderMock.Object));
+            action.Perform(playerMock.Object, playerPosition, gameMock.Object, out var endPosition);
 
             CollectionAssert.IsEmpty(cell1.Objects);
             CollectionAssert.Contains(cell2.Objects, playerMock.Object);
@@ -52,10 +53,11 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
         [Test]
         public void PerformOutOfMapTest()
         {
-            var turnProviderMock = new Mock<ITurnProvider>();
             var playerMock = new Mock<IPlayer>();
             var playerPosition = new Point(0, 0);
             var mapMock = new Mock<IAreaMap>();
+            var gameMock = new Mock<IGameCore>();
+            gameMock.SetupGet(game => game.Map).Returns(mapMock.Object);
 
             mapMock.Setup(map => map.ContainsCell(
                     It.IsAny<Point>()))
@@ -63,7 +65,7 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
 
             var action = new MovePlayerAction(Direction.Down);
 
-            action.Perform(playerMock.Object, playerPosition, mapMock.Object, new Journal(turnProviderMock.Object));
+            action.Perform(playerMock.Object, playerPosition, gameMock.Object, out var endPosition);
 
             mapMock.Verify(map => map.GetCell(It.IsAny<Point>()), Times.Never);
         }
@@ -71,10 +73,11 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
         [Test]
         public void PerformBlockedCellTest()
         {
-            var turnProviderMock = new Mock<ITurnProvider>();
             var playerMock = new Mock<IPlayer>();
             var playerPosition = new Point(0, 0);
             var mapMock = new Mock<IAreaMap>();
+            var gameMock = new Mock<IGameCore>();
+            gameMock.SetupGet(game => game.Map).Returns(mapMock.Object);
 
             var cell1 = new AreaMapCell();
             cell1.Objects.Add(playerMock.Object);
@@ -99,7 +102,7 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
 
             var action = new MovePlayerAction(Direction.Down);
 
-            action.Perform(playerMock.Object, playerPosition, mapMock.Object, new Journal(turnProviderMock.Object));
+            action.Perform(playerMock.Object, playerPosition, gameMock.Object, out var endPosition);
 
             CollectionAssert.DoesNotContain(cell2.Objects, playerMock.Object);
             CollectionAssert.Contains(cell1.Objects, playerMock.Object);

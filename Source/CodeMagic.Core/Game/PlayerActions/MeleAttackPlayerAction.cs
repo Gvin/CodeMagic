@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using CodeMagic.Core.Area;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.PlayerData;
@@ -9,13 +7,14 @@ namespace CodeMagic.Core.Game.PlayerActions
 {
     public class MeleAttackPlayerAction : IPlayerAction
     {
-        public bool Perform(IPlayer player, Point playerPosition, IAreaMap map, Journal journal)
+        public bool Perform(IPlayer player, Point playerPosition, IGameCore game, out Point newPosition)
         {
+            newPosition = playerPosition;
             var targetPoint = Point.GetAdjustedPoint(playerPosition, player.Direction);
-            if (!map.ContainsCell(targetPoint))
+            if (!game.Map.ContainsCell(targetPoint))
                 return true;
 
-            var targetCell = map.GetCell(targetPoint);
+            var targetCell = game.Map.GetCell(targetPoint);
             var possibleTargets = targetCell.Objects.OfType<IDestroyableObject>().ToArray();
 
             var target = GetAttackTarget(possibleTargets);
@@ -24,7 +23,7 @@ namespace CodeMagic.Core.Game.PlayerActions
 
             var damage = GetDamage(player);
             target.Health -= damage;
-            journal.Write(new DealDamageMessage(player, target, damage));
+            game.Journal.Write(new DealDamageMessage(player, target, damage));
             return true;
         }
 

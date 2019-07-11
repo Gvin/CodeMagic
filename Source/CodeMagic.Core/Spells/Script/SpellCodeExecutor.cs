@@ -61,9 +61,9 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("createWater", new Func<int, JsValue>(GetCreateWaterSpellAction));
         }
 
-        public ISpellAction Execute(IAreaMap map, Point position, CodeSpell spell, Journal journal)
+        public ISpellAction Execute(IGameCore game, Point position, CodeSpell spell)
         {
-            var result = ExecuteCode(map, position, spell, journal);
+            var result = ExecuteCode(game, position, spell);
             if (result == null)
             {
                 return new EmptySpellAction();
@@ -80,9 +80,9 @@ namespace CodeMagic.Core.Spells.Script
             return action;
         }
 
-        private dynamic ExecuteCode(IAreaMap map, Point position, CodeSpell spell, Journal journal)
+        private dynamic ExecuteCode(IGameCore game, Point position, CodeSpell spell)
         {
-            ConfigureDynamicEngineFunctions(map, position, spell, journal);
+            ConfigureDynamicEngineFunctions(game, position, spell);
 
             JsValue mainFunction = null;
             try
@@ -120,20 +120,20 @@ namespace CodeMagic.Core.Spells.Script
             return result;
         }
 
-        private void ConfigureDynamicEngineFunctions(IAreaMap map, Point position, CodeSpell spell, Journal journal)
+        private void ConfigureDynamicEngineFunctions(IGameCore game, Point position, CodeSpell spell)
         {
-            jsEngine.SetValue("log", new Action<object>(message => LogMessage(journal, spell, message)));
+            jsEngine.SetValue("log", new Action<object>(message => LogMessage(game.Journal, spell, message)));
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
             jsEngine.SetValue("getPosition", new Func<JsValue>(() => ConvertPoint(position)));
-            jsEngine.SetValue("getTemperature", new Func<int>(() => map.GetCell(position).Environment.Temperature));
+            jsEngine.SetValue("getTemperature", new Func<int>(() => game.Map.GetCell(position).Environment.Temperature));
             jsEngine.SetValue("getIsSolidWall",
-                new Func<string, bool>((direction) => GetIfCellIsSolid(map, position, direction)));
-            jsEngine.SetValue("getObjectsUnder", new Func<JsValue[]>(() => GetObjectsUnder(map, position)));
+                new Func<string, bool>((direction) => GetIfCellIsSolid(game.Map, position, direction)));
+            jsEngine.SetValue("getObjectsUnder", new Func<JsValue[]>(() => GetObjectsUnder(game.Map, position)));
 
             jsEngine.SetValue("scanForWalls",
-                new Func<int, bool[][]>(radius => ScanForWalls(map, position, radius, spell)));
+                new Func<int, bool[][]>(radius => ScanForWalls(game.Map, position, radius, spell)));
             jsEngine.SetValue("scanForObjects",
-                new Func<int, JsValue[][][]>(radius => ScanForObjects(map, position, radius, spell)));
+                new Func<int, JsValue[][][]>(radius => ScanForObjects(game.Map, position, radius, spell)));
         }
 
         private void LogMessage(Journal journal, CodeSpell spell, object message)

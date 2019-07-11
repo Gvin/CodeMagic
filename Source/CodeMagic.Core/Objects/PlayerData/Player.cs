@@ -78,7 +78,7 @@ namespace CodeMagic.Core.Objects.PlayerData
             }
         }
 
-        public void Update(IAreaMap map, Point position, Journal journal)
+        public void Update(IGameCore game, Point position)
         {
             Mana += ManaRegeneration;
         }

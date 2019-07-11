@@ -1,6 +1,4 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
+﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
@@ -24,16 +22,16 @@ namespace CodeMagic.Core.Spells
 
         public int Mana { get; set; }
 
-        public void Update(IAreaMap map, Point position, Journal journal)
+        public void Update(IGameCore game, Point position)
         {
             var currentPosition = position;
             try
             {
-                var action = codeExecutor.Execute(map, position, this, journal);
+                var action = codeExecutor.Execute(game, position, this);
 
                 if (action.ManaCost <= Mana)
                 {
-                    currentPosition = action.Perform(map, position, journal);
+                    currentPosition = action.Perform(game, position);
                     Mana -= action.ManaCost;
                 }
                 else
@@ -44,14 +42,14 @@ namespace CodeMagic.Core.Spells
                 if (Mana != 0)
                     return;
 
-                journal.Write(new SpellOutOfManaMessage(Name));
-                var cell = map.GetCell(currentPosition);
+                game.Journal.Write(new SpellOutOfManaMessage(Name));
+                var cell = game.Map.GetCell(currentPosition);
                 cell.Objects.Remove(this);
             }
             catch (SpellException ex)
             {
-                journal.Write(new SpellErrorMessage(Name, ex.Message));
-                var cell = map.GetCell(currentPosition);
+                game.Journal.Write(new SpellErrorMessage(Name, ex.Message));
+                var cell = game.Map.GetCell(currentPosition);
                 cell.Objects.Remove(this);
             }
         }

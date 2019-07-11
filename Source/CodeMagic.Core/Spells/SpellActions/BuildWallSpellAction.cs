@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Spells.Script;
 
@@ -19,9 +17,9 @@ namespace CodeMagic.Core.Spells.SpellActions
             time = (int) actionData.time;
         }
 
-        public Point Perform(IAreaMap map, Point position, Journal journal)
+        public Point Perform(IGameCore game, Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = game.Map.GetCell(position);
             if (cell.BlocksMovement)
                 return position;
 

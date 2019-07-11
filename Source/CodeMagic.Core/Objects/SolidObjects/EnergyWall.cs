@@ -1,6 +1,4 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
+﻿using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
@@ -12,13 +10,13 @@ namespace CodeMagic.Core.Objects.SolidObjects
             EnergyLeft = configuration.LifeTime;
         }
 
-        public void Update(IAreaMap map, Point position, Journal journal)
+        public void Update(IGameCore game, Point position)
         {
             EnergyLeft--;
             if (EnergyLeft > 0)
                 return;
 
-            var cell = map.GetCell(position);
+            var cell = game.Map.GetCell(position);
             cell.Objects.Remove(this);
         }
 

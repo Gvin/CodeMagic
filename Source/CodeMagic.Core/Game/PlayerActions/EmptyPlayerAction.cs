@@ -1,14 +1,13 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Objects.PlayerData;
+﻿using CodeMagic.Core.Objects.PlayerData;
 
 namespace CodeMagic.Core.Game.PlayerActions
 {
     public class EmptyPlayerAction : IPlayerAction
     {
-        public bool Perform(IPlayer player, Point playerPosition, IAreaMap map, Journal journal)
+        public bool Perform(IPlayer player, Point playerPosition, IGameCore game, out Point newPosition)
         {
             // Do nothing.
+            newPosition = playerPosition;
             return true;
         }
     }

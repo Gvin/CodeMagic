@@ -19,9 +19,9 @@ namespace CodeMagic.Core.Spells.SpellActions
             volume = (int)actionData.volume;
         }
 
-        public Point Perform(IAreaMap map, Point position, Journal journal)
+        public Point Perform(IGameCore game, Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = game.Map.GetCell(position);
             cell.Liquids.AddLiquid(new WaterLiquid(volume));
             return position;
         }

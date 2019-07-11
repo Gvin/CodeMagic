@@ -1,6 +1,5 @@
 ﻿using System;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
@@ -19,7 +18,7 @@ namespace CodeMagic.Core.Area
 
         bool ContainsCell(Point point);
 
-        void Update(Journal journal);
+        void Update(IGameCore game);
 
         void RegisterDestroyableObject(IDestroyableObject @object);
 

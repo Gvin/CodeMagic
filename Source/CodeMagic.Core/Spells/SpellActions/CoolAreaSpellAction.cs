@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
@@ -19,9 +17,9 @@ namespace CodeMagic.Core.Spells.SpellActions
             temperature = (int) actionData.temperature;
         }
 
-        public Point Perform(IAreaMap map, Point position, Journal journal)
+        public Point Perform(IGameCore game, Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = game.Map.GetCell(position);
             cell.Environment.Temperature -= temperature;
             return position;
         }

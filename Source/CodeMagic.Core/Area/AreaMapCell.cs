@@ -48,10 +48,19 @@ namespace CodeMagic.Core.Area
             get { return Objects.Any(obj => obj.BlocksProjectiles); }
         }
 
-        public void Update(IAreaMap map, Point position, Journal journal)
+        public IDestroyableObject GetBiggestDestroyable()
         {
-            ProcessDynamicObjects(map, position, journal);
-            ProcessDestroyableObjects(map, position, journal);
+            var destroyable = Objects.OfType<IDestroyableObject>().ToArray();
+            var bigDestroyable = destroyable.FirstOrDefault(obj => obj.BlocksMovement);
+            if (bigDestroyable != null)
+                return bigDestroyable;
+            return destroyable.LastOrDefault();
+        }
+
+        public void Update(IGameCore game, Point position)
+        {
+            ProcessDynamicObjects(game, position);
+            ProcessDestroyableObjects(game, position);
 
             Environment.Normalize();
             Liquids.UpdateLiquids(this);
@@ -70,28 +79,28 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void ProcessDynamicObjects(IAreaMap map, Point position, Journal journal)
+        private void ProcessDynamicObjects(IGameCore game, Point position)
         {
             var dynamicObjects = Objects.OfType<IDynamicObject>().Where(obj => !obj.Updated).ToArray();
             foreach (var dynamicObject in dynamicObjects)
             {
-                dynamicObject.Update(map, position, journal);
+                dynamicObject.Update(game, position);
                 dynamicObject.Updated = true;
             }
         }
 
-        private void ProcessDestroyableObjects(IAreaMap map, Point position, Journal journal)
+        private void ProcessDestroyableObjects(IGameCore game, Point position)
         {
             var destroyableObjects = Objects.OfType<IDestroyableObject>().ToArray();
-            ProcessStatusesAndEnvironment(destroyableObjects, journal);
+            ProcessStatusesAndEnvironment(destroyableObjects, game.Journal);
 
             var deadObjects = destroyableObjects.Where(obj => obj.Health <= 0).ToArray();
             foreach (var deadObject in deadObjects)
             {
                 Objects.Remove(deadObject);
-                map.UnregisterDestroyableObject(deadObject);
-                journal.Write(new DeathMessage(deadObject));
-                deadObject.OnDeath(map, position);
+                game.Map.UnregisterDestroyableObject(deadObject);
+                game.Journal.Write(new DeathMessage(deadObject));
+                deadObject.OnDeath(game.Map, position);
             }
         }
 

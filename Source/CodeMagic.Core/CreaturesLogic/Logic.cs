@@ -4,7 +4,6 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.CreaturesLogic.Strategies;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.Creatures;
 
 namespace CodeMagic.Core.CreaturesLogic
@@ -29,18 +28,18 @@ namespace CodeMagic.Core.CreaturesLogic
             rules.Add(new ChangeStrategyRule(source, target, condition));
         }
 
-        public void Update(INonPlayableCreatureObject creature, IAreaMap map, Point position, Journal journal)
+        public void Update(INonPlayableCreatureObject creature, IGameCore game, Point position)
         {
             var endTurn = false;
             while (!endTurn)
             {
-                var nextStrategy = GetNextStrategy(map, position);
+                var nextStrategy = GetNextStrategy(game.Map, position);
                 if (nextStrategy != null)
                 {
                     currentStrategy = nextStrategy;
                 }
 
-                endTurn = currentStrategy.Update(creature, map, position, journal);
+                endTurn = currentStrategy.Update(creature, game, position);
             }
         }
 

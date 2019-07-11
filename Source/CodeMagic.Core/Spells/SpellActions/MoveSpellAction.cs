@@ -25,15 +25,15 @@ namespace CodeMagic.Core.Spells.SpellActions
             this.spell = spell;
         }
 
-        public Point Perform(IAreaMap map, Point position, Journal journal)
+        public Point Perform(IGameCore game, Point position)
         {
             var currentPosition = position;
 
             for (var step = 1; step <= distance; step++)
             {
                 var newPosition = Point.GetAdjustedPoint(currentPosition, direction);
-                var success = MovementHelper.MoveSpell(spell, map, currentPosition, newPosition);
-                if (!success)
+                var movementResult = MovementHelper.MoveSpell(spell, game, currentPosition, newPosition);
+                if (!movementResult.Success)
                     break;
 
                 currentPosition = newPosition;

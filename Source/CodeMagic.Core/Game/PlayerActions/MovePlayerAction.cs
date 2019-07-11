@@ -1,7 +1,5 @@
-﻿using System.ComponentModel;
-using CodeMagic.Core.Area;
-using CodeMagic.Core.Common;
-using CodeMagic.Core.Game.Journaling;
+﻿using CodeMagic.Core.Common;
+using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.PlayerData;
 
 namespace CodeMagic.Core.Game.PlayerActions
@@ -15,36 +13,17 @@ namespace CodeMagic.Core.Game.PlayerActions
             this.direction = direction;
         }
 
-        public bool Perform(IPlayer player, Point playerPosition, IAreaMap map, Journal journal)
+        public bool Perform(IPlayer player, Point playerPosition, IGameCore game, out Point newPosition)
         {
             if (player.Direction != direction)
             {
                 player.Direction = direction;
+                newPosition = playerPosition;
                 return false;
             }
-
-            var newCellPosition = Point.GetAdjustedPoint(playerPosition, direction);
-            var newCell = SafeGetNewCell(newCellPosition, map);
-            if (newCell == null || newCell.BlocksMovement)
-                return true;
-
-            var playerCell = map.GetCell(playerPosition);
-            playerCell.Objects.Remove(player);
-            newCell.Objects.Add(player);
-
-            playerPosition.X = newCellPosition.X;
-            playerPosition.Y = newCellPosition.Y;
-            return true;
-        }
-
-        private AreaMapCell SafeGetNewCell(Point newCellPosition, IAreaMap map)
-        {
-            if (map.ContainsCell(newCellPosition))
-            {
-                return map.GetCell(newCellPosition);
-            }
-
-            return null;
+            var moveResult = MovementHelper.MoveCreature(player, game, playerPosition, direction, true, true);
+            newPosition = moveResult.NewPosition;
+            return moveResult.Success;
         }
     }
 }

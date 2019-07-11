@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
@@ -144,11 +143,11 @@ namespace CodeMagic.Core.Area
             return result;
         }
 
-        public void Update(Journal journal)
+        public void Update(IGameCore game)
         {
             objectPositionCache.Clear();
 
-            PerformForEachCell((point, cell) => cell.Update(this, point, journal));
+            PerformForEachCell((point, cell) => cell.Update(game, point));
             MergeCellsEnvironment();
         }
 

@@ -1,10 +1,6 @@
-﻿using System.Linq;
-using CodeMagic.Core.Area;
-using CodeMagic.Core.CreaturesLogic.MovementStrategies;
+﻿using CodeMagic.Core.CreaturesLogic.MovementStrategies;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Objects.PlayerData;
 
 namespace CodeMagic.Core.CreaturesLogic.Strategies
 {
@@ -17,25 +13,24 @@ namespace CodeMagic.Core.CreaturesLogic.Strategies
             this.movementStrategy = movementStrategy;
         }
 
-        public bool Update(INonPlayableCreatureObject creature, IAreaMap map, Point position, Journal journal)
+        public bool Update(INonPlayableCreatureObject creature, IGameCore game, Point position)
         {
-            var playerPosition = map.GetObjectPosition<IPlayer>();
+            var playerPosition = game.PlayerPosition;
             var adjustedPlayerDirection = Point.GetAdjustedPointRelativeDirection(position, playerPosition);
             if (adjustedPlayerDirection.HasValue)
             {
                 creature.Direction = adjustedPlayerDirection.Value;
-                var player = map.GetCell(playerPosition).Objects.OfType<IPlayer>().Single();
-                creature.Attack(player, journal);
+                creature.Attack(game.Player, game.Journal);
                 return true;
             }
 
-            TryMoveToPlayer(creature, position, playerPosition, map);
+            TryMoveToPlayer(creature, position, playerPosition, game);
             return true;
         }
 
-        private void TryMoveToPlayer(INonPlayableCreatureObject creature, Point position, Point playerPosition, IAreaMap map)
+        private void TryMoveToPlayer(INonPlayableCreatureObject creature, Point position, Point playerPosition, IGameCore game)
         {
-            movementStrategy.TryMove(creature, map, position, playerPosition);
+            movementStrategy.TryMove(creature, game, position, playerPosition);
         }
     }
 }

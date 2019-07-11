@@ -1,4 +1,5 @@
 ﻿using CodeMagic.Core.Area;
+using CodeMagic.Core.Area.Liquids;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
@@ -11,7 +12,7 @@ namespace CodeMagic.UI.Console
     {
         public GameCore StartGame()
         {
-            var map = new MapGenerator(FloorTypes.Stone).Generate(31, 31, out var playerPosition);
+            var map = new MapGenerator(FloorTypes.Stone).Generate(31, 31, out var playerPosition); //CreateFakeMap(out var playerPosition);//
 
             var player = CreatePlayer();
             map.AddObject(playerPosition, player);
@@ -19,6 +20,33 @@ namespace CodeMagic.UI.Console
             PlaceTestGoblins(20, map);
 
             return new GameCore(map, playerPosition);
+        }
+
+        private IAreaMap CreateFakeMap(out Point playerPosition)
+        {
+            playerPosition = new Point(0, 0);
+
+            var map = new AreaMap(10, 10);
+
+            var cell1 = map.GetCell(1, 0);
+            cell1.Environment.Temperature = -100;
+            cell1.Liquids.AddLiquid(new WaterLiquid(100));
+
+            var cell2 = map.GetCell(2, 0);
+            cell2.Environment.Temperature = -100;
+            cell2.Liquids.AddLiquid(new WaterLiquid(100));
+
+            var cell3 = map.GetCell(3, 0);
+            map.AddObject(new Point(3, 0), new GoblinCreatureObject(new GoblinCreatureObjectConfiguration
+            {
+                Health = 2,
+                MaxHealth = 2,
+                ViewDistance = 0
+            }));
+//            cell3.Environment.Temperature = -100;
+//            cell3.Liquids.AddLiquid(new WaterLiquid(100));
+
+            return map;
         }
 
         private void PlaceTestGoblins(int count, IAreaMap map)

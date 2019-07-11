@@ -1,7 +1,5 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Area.EnvironmentData;
+﻿using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 
 namespace CodeMagic.Core.Objects.DecorativeObjects
 {
@@ -33,9 +31,10 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         public bool BlocksEnvironment => false;
         public bool IsVisible => true;
         public bool BlocksVisibility => false;
-        public void Update(IAreaMap map, Point position, Journal journal)
+
+        public void Update(IGameCore game, Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = game.Map.GetCell(position);
             if (cell.Environment.Temperature < Temperature.WoodBurnTemperature)
             {
                 cell.Objects.Remove(this);
