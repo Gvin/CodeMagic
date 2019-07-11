@@ -28,6 +28,11 @@
         public const char SingleVerticalAndRight = '\u251C';
 
         /// <summary>
+        /// ┤ u2524
+        /// </summary>
+        public const char SingleVerticalAndLeft = '\u2524';
+
+        /// <summary>
         /// ┌ u250C
         /// </summary>
         public const char SingleDownRight = '\u250C';

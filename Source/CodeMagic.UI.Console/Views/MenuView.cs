@@ -19,7 +19,7 @@ namespace CodeMagic.UI.Console.Views
 
             Writer.WriteLine("     <- Code Magic ->", Color.BlueViolet);
             Writer.CursorLeft = leftPos;
-            Writer.Write("        |  \'   | `", Color.DarkRed);
+            Writer.Write("        |  \'   | `", Color.Red);
         }
 
         private int GetLeftPosition()

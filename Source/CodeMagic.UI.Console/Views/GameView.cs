@@ -17,7 +17,7 @@ namespace CodeMagic.UI.Console.Views
             this.game = game;
 
             var factory = new DrawingProcessorsFactory();
-            var floorColorFactory = new FloorColorFactory();
+            var floorColorFactory = new FloorFactory();
             gameDrawer = new GameDrawer(factory, floorColorFactory);
         }
 

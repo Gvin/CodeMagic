@@ -25,13 +25,13 @@ namespace CodeMagic.UI.Console.Drawing
         private static readonly SymbolsImage EmptyImage = new SymbolsImage();
 
         private readonly IDrawingProcessorsFactory processorsFactory;
-        private readonly FloorColorFactory floorColorFactory;
+        private readonly FloorFactory floorFactory;
         private readonly JournalTextProviderFactory journalTextProviderFactory;
 
-        public GameDrawer(IDrawingProcessorsFactory processorsFactory, FloorColorFactory floorColorFactory)
+        public GameDrawer(IDrawingProcessorsFactory processorsFactory, FloorFactory floorFactory)
         {
             this.processorsFactory = processorsFactory;
-            this.floorColorFactory = floorColorFactory;
+            this.floorFactory = floorFactory;
 
             journalTextProviderFactory = new JournalTextProviderFactory();
         }
@@ -148,8 +148,12 @@ namespace CodeMagic.UI.Console.Drawing
 
         private void DrawCell(AreaMapCell cell, int x, int y)
         {
-            var image = GetCellImage(cell) ?? EmptyImage;
-            var background = floorColorFactory.GetFloorColor(cell);
+            var image = GetCellImage(cell);
+            if (image == null)
+            {
+                image = floorFactory.GetFloorImage(cell);
+            }
+            var background = floorFactory.GetFloorColor(cell);
 
             var realX = x * SymbolsImage.Size + GameScreenLeftShift;
             var realY = y * SymbolsImage.Size + GameScreenTopShift;

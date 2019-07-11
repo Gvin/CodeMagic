@@ -6,7 +6,6 @@
         Wood,
         Grass,
         Dirt,
-        BurnedWood,
         Hole
     }
 }
