@@ -10,16 +10,28 @@ namespace CodeMagic.UI.Console
 {
     public class GameManager
     {
+        private const int GoblinsCount = 20;
+        private const int MapSize = 31; // uneven value only!
+        private const bool UseFakeMap = false;
+
         public GameCore StartGame()
         {
-            var map = new MapGenerator(FloorTypes.Stone).Generate(31, 31, out var playerPosition); //CreateFakeMap(out var playerPosition);//
+            var map = CreateMap(UseFakeMap, out var playerPosition);
 
             var player = CreatePlayer();
             map.AddObject(playerPosition, player);
 
-            PlaceTestGoblins(20, map);
-
             return new GameCore(map, playerPosition);
+        }
+
+        private IAreaMap CreateMap(bool fake, out Point playerPosition)
+        {
+            if (fake)
+                return CreateFakeMap(out playerPosition);
+
+            var realMap = new MapGenerator(FloorTypes.Stone).Generate(MapSize, MapSize, out playerPosition);
+            PlaceTestGoblins(GoblinsCount, realMap, playerPosition);
+            return realMap;
         }
 
         private IAreaMap CreateFakeMap(out Point playerPosition)
@@ -37,19 +49,21 @@ namespace CodeMagic.UI.Console
             cell2.Liquids.AddLiquid(new WaterLiquid(100));
 
             var cell3 = map.GetCell(3, 0);
-            map.AddObject(new Point(3, 0), new GoblinCreatureObject(new GoblinCreatureObjectConfiguration
-            {
-                Health = 2,
-                MaxHealth = 2,
-                ViewDistance = 0
-            }));
-//            cell3.Environment.Temperature = -100;
-//            cell3.Liquids.AddLiquid(new WaterLiquid(100));
+            cell3.Environment.Temperature = -100;
+            cell3.Liquids.AddLiquid(new WaterLiquid(100));
+
+            var cell4 = map.GetCell(4, 0);
+            cell4.Environment.Temperature = -100;
+            cell4.Liquids.AddLiquid(new WaterLiquid(100));
+
+            var cell5 = map.GetCell(5, 0);
+            cell5.Environment.Temperature = -100;
+            cell5.Liquids.AddLiquid(new WaterLiquid(100));
 
             return map;
         }
 
-        private void PlaceTestGoblins(int count, IAreaMap map)
+        private void PlaceTestGoblins(int count, IAreaMap map, Point playerPosition)
         {
             var placed = 0;
             while (placed < count)
@@ -57,6 +71,9 @@ namespace CodeMagic.UI.Console
                 var x = RandomHelper.GetRandomValue(0, 30);
                 var y = RandomHelper.GetRandomValue(0, 30);
                 if (!map.ContainsCell(x, y))
+                    continue;
+
+                if (playerPosition.X == x && playerPosition.Y == y)
                     continue;
 
                 var cell = map.GetCell(x, y);

@@ -22,9 +22,10 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         public const int NormalTemperature = 25;
 
-        public const int TransferValue = 20;
+        private const int MaxTransferValue = 50;
+        private const double TransferValueToDifferenceMultiplier = 0.05d;
 
-        public const int NormalizeTemperatureSpeed = 5;
+        public const int NormalizeTemperatureSpeed = 1;
 
         private int value;
 
@@ -82,18 +83,24 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
             var mediana = (int)Math.Round((Value + other.Value) / 2d);
             var difference = Math.Abs(Value - mediana);
-            difference = Math.Min(difference, TransferValue);
+            var transferValue = GetTemperatureTransferValue(difference);
 
             if (Value > other.Value)
             {
-                Value -= difference;
-                other.Value += difference;
+                Value -= transferValue;
+                other.Value += transferValue;
             }
             else
             {
-                Value += difference;
-                other.Value -= difference;
+                Value += transferValue;
+                other.Value -= transferValue;
             }
+        }
+
+        private int GetTemperatureTransferValue(int difference)
+        {
+            var result = (int)Math.Round(difference * TransferValueToDifferenceMultiplier);
+            return Math.Min(result, MaxTransferValue);
         }
 
         public int GetTemperatureDamage(out Element? damageElement)
