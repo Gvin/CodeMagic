@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using CodeMagic.Core.Area;
+﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Spells.Script;
 
@@ -12,7 +11,7 @@ namespace CodeMagic.Core.Spells.SpellActions
     {
         public const string ActionType = "move";
 
-        private const int ManaCostMultiplier = 1;
+        private const int ManaCostPower = 2;
 
         private readonly Direction direction;
         private readonly int distance;
@@ -52,9 +51,14 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         public int ManaCost => GetManaCost(distance);
 
+        /// <remarks>
+        /// 1 - 1
+        /// 2 - 4
+        /// 3 - 8
+        /// </remarks>
         private static int GetManaCost(int distance)
         {
-            return distance * ManaCostMultiplier;
+            return (int) Math.Pow(distance, ManaCostPower);
         }
 
         public static JsonData GetJson(string direction, int distance)

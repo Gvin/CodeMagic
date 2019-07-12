@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using CodeMagic.Core.Area;
+﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Area.Liquids;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
@@ -10,7 +9,8 @@ namespace CodeMagic.Core.Spells.SpellActions
     public class CreateWaterSpellAction : ISpellAction
     {
         public const string ActionType = "create_water";
-        private const int ManaCostMultiplier = 1;
+        private const int ManaCostPower = 2;
+        private const double ManaCostMultiplier = 0.2d;
 
         private readonly int volume;
 
@@ -28,9 +28,17 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         public int ManaCost => GetManaCost(volume);
 
+        ///<remarks>
+        /// 1-5 - 1
+        /// 6-10 - 4
+        /// 11-15 - 9
+        /// 16-20 - 16
+        /// 21-25 - 25
+        /// </remarks>
         private static int GetManaCost(int volume)
         {
-            return ManaCostMultiplier * volume;
+            var basement = (int) Math.Ceiling(volume * ManaCostMultiplier);
+            return (int) Math.Pow(basement, ManaCostPower);
         }
 
         public static JsonData GetJson(int volume)

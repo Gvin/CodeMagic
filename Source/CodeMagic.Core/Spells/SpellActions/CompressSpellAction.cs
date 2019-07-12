@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
@@ -10,7 +8,8 @@ namespace CodeMagic.Core.Spells.SpellActions
     public class CompressSpellAction : ISpellAction
     {
         public const string ActionType = "compress";
-        private const double ManaCostMultiplier = 0.1d;
+        private const double ManaCostMultiplier = 0.04d;
+        private const int ManaCostPower = 2;
 
         private readonly int pressure;
 
@@ -28,9 +27,15 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         public int ManaCost => GetManaCost(pressure);
 
+        /// <remarks>
+        /// 100 - 16
+        /// 200 - 64
+        /// 300 - 121
+        /// </remarks>>
         private static int GetManaCost(int pressure)
         {
-            return (int)Math.Ceiling(pressure * ManaCostMultiplier);
+            var basement = (int)Math.Ceiling(pressure * ManaCostMultiplier);
+            return (int) Math.Pow(basement, ManaCostPower);
         }
 
         public static JsonData GetJson(int pressure)

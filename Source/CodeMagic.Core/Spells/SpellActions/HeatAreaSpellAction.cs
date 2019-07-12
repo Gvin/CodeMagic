@@ -8,7 +8,8 @@ namespace CodeMagic.Core.Spells.SpellActions
     public class HeatAreaSpellAction : ISpellAction
     {
         public const string ActionType = "heat_area";
-        private const double ManaCostMultiplier = 0.05;
+        private const double ManaCostMultiplier = 0.01;
+        private const int ManaCostPower = 2;
 
         private readonly int temperature;
 
@@ -28,7 +29,8 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         private static int GetManaCost(int temperature)
         {
-            return (int) Math.Ceiling(temperature * ManaCostMultiplier);
+            var basement = (int)Math.Ceiling(temperature * ManaCostMultiplier);
+            return (int)Math.Pow(basement, ManaCostPower);
         }
 
         public static JsonData GetJson(int temperature)

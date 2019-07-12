@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
@@ -13,6 +14,7 @@ namespace CodeMagic.Core.Spells.SpellActions
     {
         public const string ActionType = "push";
         private const int ManaCostMultiplier = 10;
+        private const int ManaCostPower = 2;
         private const int PushDamageMultiplier = 1;
 
         private readonly Direction direction;
@@ -61,6 +63,8 @@ namespace CodeMagic.Core.Spells.SpellActions
                 if (!movementResult.Success)
                     return remainingForce;
 
+                if (!movementResult.NewPosition.Equals(nextPosition))
+                    return 0;
                 currentPosition = nextPosition;
             }
 
@@ -91,7 +95,7 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         private static int GetManaCost(int force)
         {
-            return force * ManaCostMultiplier;
+            return (int) Math.Pow(force, ManaCostPower);
         }
 
         public static JsonData GetJson(string direction, int force)

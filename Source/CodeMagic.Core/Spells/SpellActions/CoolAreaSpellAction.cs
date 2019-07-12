@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Spells.Script;
 
@@ -8,7 +9,8 @@ namespace CodeMagic.Core.Spells.SpellActions
     {
         public const string ActionType = "cool_area";
 
-        private const int ManaCostMultiplier = 1;
+        private const int ManaCostPower = 2;
+        private const double ManaCostMultiplier = 0.2d;
 
         private readonly int temperature;
 
@@ -26,9 +28,17 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         public int ManaCost => GetManaCost(temperature);
 
+        /// <remarks>
+        /// 1-5 - 1
+        /// 6-10 - 4
+        /// 11-15 - 9
+        /// 16-20 - 16
+        /// 21-25 - 25
+        /// </remarks>
         private static int GetManaCost(int temperature)
         {
-            return ManaCostMultiplier * temperature;
+            var basement = (int) Math.Ceiling(ManaCostMultiplier * temperature);
+            return (int) Math.Pow(basement, ManaCostPower);
         }
 
         public static JsonData GetJson(int temperature)

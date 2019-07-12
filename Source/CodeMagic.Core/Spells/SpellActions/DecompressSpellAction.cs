@@ -8,7 +8,8 @@ namespace CodeMagic.Core.Spells.SpellActions
     public class DecompressSpellAction : ISpellAction
     {
         public const string ActionType = "decompress";
-        private const double ManaCostMultiplier = 0.1d;
+        private const double ManaCostMultiplier = 0.04d;
+        private const int ManaCostPower = 2;
 
         private readonly int pressure;
 
@@ -26,9 +27,15 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         public int ManaCost => GetManaCost(pressure);
 
+        /// <remarks>
+        /// 100 - 16
+        /// 200 - 64
+        /// 300 - 121
+        /// </remarks>>
         private static int GetManaCost(int pressure)
         {
-            return (int)Math.Ceiling(pressure * ManaCostMultiplier);
+            var basement = (int)Math.Ceiling(pressure * ManaCostMultiplier);
+            return (int)Math.Pow(basement, ManaCostPower);
         }
 
         public static JsonData GetJson(int pressure)

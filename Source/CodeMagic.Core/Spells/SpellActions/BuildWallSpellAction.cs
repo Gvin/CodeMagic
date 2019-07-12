@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Spells.Script;
@@ -8,7 +9,7 @@ namespace CodeMagic.Core.Spells.SpellActions
     public class BuildWallSpellAction : ISpellAction
     {
         public const string ActionType = "build_wall";
-        private const int ManaCostMultiplier = 2;
+        private const int ManaCostPower = 2;
 
         private readonly int time;
 
@@ -34,9 +35,14 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         public int ManaCost => GetManaCost(time);
 
+        /// <remarks>
+        /// 1 - 1
+        /// 2 - 4
+        /// 3 - 8
+        /// </remarks>
         private static int GetManaCost(int time)
         {
-            return time * ManaCostMultiplier;
+            return (int)Math.Pow(time, ManaCostPower);
         }
 
         public static JsonData GetJson(int time)
