@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
 {
-    public class BuildWallSpellAction : ISpellAction
+    public class BuildWallSpellAction : SpellActionBase
     {
         public const string ActionType = "build_wall";
-        private const int ManaCostPower = 2;
 
         private readonly int time;
 
         public BuildWallSpellAction(dynamic actionData)
+            : base(ActionType)
         {
             time = (int) actionData.time;
         }
 
-        public Point Perform(IGameCore game, Point position)
+        public override Point Perform(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);
             if (cell.BlocksMovement)
@@ -33,17 +32,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             return position;
         }
 
-        public int ManaCost => GetManaCost(time);
-
-        /// <remarks>
-        /// 1 - 1
-        /// 2 - 4
-        /// 3 - 8
-        /// </remarks>
-        private static int GetManaCost(int time)
-        {
-            return (int)Math.Pow(time, ManaCostPower);
-        }
+        public override int ManaCost => GetManaCost(time);
 
         public static JsonData GetJson(int time)
         {
@@ -54,7 +43,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             {
                 {"type", ActionType},
                 {"time", time},
-                {"manaCost", GetManaCost(time)}
+                {"manaCost", GetManaCost(ActionType, time)}
             });
         }
     }

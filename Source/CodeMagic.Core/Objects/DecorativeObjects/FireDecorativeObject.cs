@@ -1,10 +1,13 @@
-﻿using CodeMagic.Core.Area.EnvironmentData;
-using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects.DecorativeObjects
 {
     public class FireDecorativeObject : IMapObject, IDynamicObject
     {
+        private const int MediumFireTemperature = 1200;
+        private const int BigFireTemperature = 1500;
+        public const int SmallFireTemperature = 600;
+
         public const string ObjectTypeSmallFile = "SmallFire";
         public const string ObjectTypeMediumFile = "MediumFire";
         public const string ObjectTypeBigFile = "BigFire";
@@ -16,9 +19,9 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
 
         private string GetFireType(int temperature)
         {
-            if (temperature >= Temperature.MetalMeltTemperature)
+            if (temperature >= BigFireTemperature)
                 return ObjectTypeBigFile;
-            if (temperature >= Temperature.StoneMeltTemperature)
+            if (temperature >= MediumFireTemperature)
                 return ObjectTypeMediumFile;
             return ObjectTypeSmallFile;
         }
@@ -35,7 +38,7 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         public void Update(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);
-            if (cell.Environment.Temperature < Temperature.WoodBurnTemperature)
+            if (cell.Environment.Temperature < SmallFireTemperature)
             {
                 cell.Objects.Remove(this);
                 return;

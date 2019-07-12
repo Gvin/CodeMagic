@@ -1,5 +1,7 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Area.Liquids;
+using CodeMagic.Core.Configuration;
+using CodeMagic.Core.Configuration.Xml;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
@@ -16,6 +18,9 @@ namespace CodeMagic.UI.Console
 
         public GameCore StartGame()
         {
+            var config = XmlConfigurationProviderType.LoadConfiguration(@".\Configuration.xml");
+            ConfigurationManager.InitializeConfiguration(config);
+
             var map = CreateMap(UseFakeMap, out var playerPosition);
 
             var player = CreatePlayer();

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
@@ -7,24 +6,23 @@ using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
 {
-    public class MoveSpellAction : ISpellAction
+    public class MoveSpellAction : SpellActionBase
     {
         public const string ActionType = "move";
-
-        private const int ManaCostPower = 2;
 
         private readonly Direction direction;
         private readonly int distance;
         private readonly CodeSpell spell;
 
         public MoveSpellAction(dynamic actionData, CodeSpell spell)
+            :base(ActionType)
         {
             direction = ParseDirection((string)actionData.direction);
             distance = (int)actionData.distance;
             this.spell = spell;
         }
 
-        public Point Perform(IGameCore game, Point position)
+        public override Point Perform(IGameCore game, Point position)
         {
             var currentPosition = position;
 
@@ -49,17 +47,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             return parsedDirection.Value;
         }
 
-        public int ManaCost => GetManaCost(distance);
-
-        /// <remarks>
-        /// 1 - 1
-        /// 2 - 4
-        /// 3 - 8
-        /// </remarks>
-        private static int GetManaCost(int distance)
-        {
-            return (int) Math.Pow(distance, ManaCostPower);
-        }
+        public override int ManaCost => GetManaCost(distance);
 
         public static JsonData GetJson(string direction, int distance)
         {
@@ -74,7 +62,7 @@ namespace CodeMagic.Core.Spells.SpellActions
                 {"type", ActionType},
                 {"direction", direction},
                 {"distance", distance},
-                {"manaCost", GetManaCost(distance)}
+                {"manaCost", GetManaCost(ActionType, distance)}
             });
         }
     }

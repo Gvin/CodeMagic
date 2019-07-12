@@ -1,39 +1,24 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using CodeMagic.Core.Configuration;
 
 namespace CodeMagic.Core.Area.EnvironmentData
 {
+    [DebuggerDisplay("{" + nameof(Value) + "} kPa")]
     public class Pressure
     {
-        private const int MinPressure = 0;
-        private const int MaxPressure = 4000;
-
-        private const int NormalPressure = 100;
-
-        private const int SmallDamagePressure = 600;
-        private const int MediumDamagePressure = 1300;
-        private const int HighDamagePressure = 2000;
-
-        private const int NormalizePressureSpeed = 50;
-
-        private const int SmallDamage = 1;
-        private const int MediumDamage = 5;
-        private const int HighDamage = 10;
-
-        private const int SmallDamagePressureChange = 300;
-        private const int MediumDamagePressureChange = 900;
-        private const int HighDamagePressureChange = 1500;
-
-        private const int SmallDamageChange = 10;
-        private const int MediumDamageChange = 30;
-        private const int HighDamageChange = 70;
-
         private int value;
         private int oldValue;
 
+        private readonly IPressureConfiguration configuration;
+
         public Pressure()
         {
-            value = NormalPressure;
-            oldValue = NormalPressure;
+            configuration = ConfigurationManager.Current.PressureConfiguration;
+
+            value = configuration.NormalValue;
+            oldValue = configuration.NormalValue;
         }
 
         public int Value
@@ -41,15 +26,15 @@ namespace CodeMagic.Core.Area.EnvironmentData
             get => value;
             set
             {
-                if (value < MinPressure)
+                if (value < configuration.MinValue)
                 {
-                    this.value = MinPressure;
+                    this.value = configuration.MinValue;
                     return;
                 }
 
-                if (value > MaxPressure)
+                if (value > configuration.MaxValue)
                 {
-                    this.value = MaxPressure;
+                    this.value = configuration.MaxValue;
                     return;
                 }
 
@@ -59,18 +44,18 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         public void Normalize()
         {
-            if (Value == NormalPressure)
+            if (Value == configuration.NormalValue)
                 return;
 
-            var difference = Math.Abs(NormalPressure - Value);
-            difference = Math.Min(difference, NormalizePressureSpeed);
+            var difference = Math.Abs(configuration.NormalValue - Value);
+            difference = Math.Min(difference, configuration.NormalizeSpeed);
 
-            if (Value > NormalPressure)
+            if (Value > configuration.NormalValue)
             {
                 Value -= difference;
             }
 
-            if (Value < NormalPressure)
+            if (Value < configuration.NormalValue)
             {
                 Value += difference;
             }
@@ -99,24 +84,41 @@ namespace CodeMagic.Core.Area.EnvironmentData
         private int GetPressureChangeDamage()
         {
             var difference = Math.Abs(Value - oldValue);
-            if (difference >= HighDamagePressureChange)
-                return HighDamageChange;
-            if (difference >= MediumDamagePressureChange)
-                return MediumDamageChange;
-            if (difference >= SmallDamagePressureChange)
-                return SmallDamageChange;
+
+            if (difference <= 0)
+                return 0;
+
+            foreach (var damageConfiguration in configuration.ChangePressureDamageConfiguration.OrderByDescending(config =>
+                config.Pressure))
+            {
+                if (difference >= damageConfiguration.Pressure)
+                    return damageConfiguration.Damage;
+            }
 
             return 0;
         }
 
         private int GetPurePressureDamage()
         {
-            if (Value >= HighDamagePressure)
-                return HighDamage;
-            if (Value >= MediumDamagePressure)
-                return MediumDamage;
-            if (Value >= SmallDamagePressure)
-                return SmallDamage;
+            if (value < configuration.NormalValue)
+            {
+                foreach (var damageConfiguration in configuration.LowPressureDamageConfiguration.OrderBy(config =>
+                    config.Pressure))
+                {
+                    if (value <= damageConfiguration.Pressure)
+                        return damageConfiguration.Damage;
+                }
+            }
+
+            if (value > configuration.NormalValue)
+            {
+                foreach (var damageConfiguration in configuration.HighPressureDamageConfiguration.OrderByDescending(config =>
+                    config.Pressure))
+                {
+                    if (value >= damageConfiguration.Pressure)
+                        return damageConfiguration.Damage;
+                }
+            }
 
             return 0;
         }

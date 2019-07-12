@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
+using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Area.EnvironmentData
@@ -7,31 +9,14 @@ namespace CodeMagic.Core.Area.EnvironmentData
     [DebuggerDisplay("{" + nameof(Value) + "} C")]
     public class Temperature
     {
-        public const int WaterEvaporationTemperature = 100;
-        public const int HeatDamageTemperature = WaterEvaporationTemperature;
-        public const int WoodBurnTemperature = 600;
-        public const int StoneMeltTemperature = 1200;
-        public const int MetalMeltTemperature = 1500;
-        public const int MaxTemperature = 3000;
-
-        public const int WaterFreezingPoint = 0;
-
-        public const int ColdDamageTemperature = -70;
-        public const int FreezingTemperature = -100;
-        public const int TotalFreezeTemperature = -200;
-
-        public const int NormalTemperature = 25;
-
-        private const int MaxTransferValue = 50;
-        private const double TransferValueToDifferenceMultiplier = 0.05d;
-
-        public const int NormalizeTemperatureSpeed = 1;
-
         private int value;
+
+        private readonly ITemperatureConfiguration configuration;
 
         public Temperature()
         {
-            value = NormalTemperature;
+            configuration = ConfigurationManager.Current.TemperatureConfiguration;
+            value = configuration.NormalValue;
         }
 
         public Temperature(int value)
@@ -44,15 +29,15 @@ namespace CodeMagic.Core.Area.EnvironmentData
             get => value;
             set
             {
-                if (value < TotalFreezeTemperature)
+                if (value < configuration.MinValue)
                 {
-                    this.value = TotalFreezeTemperature;
+                    this.value = configuration.MinValue;
                     return;
                 }
 
-                if (value > MaxTemperature)
+                if (value > configuration.MaxValue)
                 {
-                    this.value = MaxTemperature;
+                    this.value = configuration.MaxValue;
                     return;
                 }
 
@@ -62,15 +47,15 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         public void Normalize()
         {
-            var difference = Math.Abs(NormalTemperature - Value);
-            difference = Math.Min(difference, NormalizeTemperatureSpeed);
+            var difference = Math.Abs(configuration.NormalValue - Value);
+            difference = Math.Min(difference, configuration.NormalizeSpeed);
 
-            if (Value > NormalTemperature)
+            if (Value > configuration.NormalValue)
             {
                 Value -= difference;
             }
 
-            if (Value < NormalTemperature)
+            if (Value < configuration.NormalValue)
             {
                 Value += difference;
             }
@@ -99,52 +84,34 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         private int GetTemperatureTransferValue(int difference)
         {
-            var result = (int)Math.Round(difference * TransferValueToDifferenceMultiplier);
-            return Math.Min(result, MaxTransferValue);
+            var result = (int)Math.Round(difference * configuration.TransferValueToDifferenceMultiplier);
+            return Math.Min(result, configuration.MaxTransferValue);
         }
 
         public int GetTemperatureDamage(out Element? damageElement)
         {
-            if (value <= TotalFreezeTemperature)
+            if (value < 0)
             {
-                damageElement = Element.Frost;
-                return 20;
+                foreach (var damageConfiguration in configuration.ColdDamageConfiguration.OrderBy(config => config.Temperature))
+                {
+                    if (value <= damageConfiguration.Temperature)
+                    {
+                        damageElement = Element.Frost;
+                        return damageConfiguration.Damage;
+                    }
+                }
             }
 
-            if (value <= FreezingTemperature)
+            if (value > 0)
             {
-                damageElement = Element.Frost;
-                return 5;
-            }
-
-            if (value <= ColdDamageTemperature)
-            {
-                damageElement = Element.Frost;
-                return 1;
-            }
-
-            if (value >= MetalMeltTemperature)
-            {
-                damageElement = Element.Fire;
-                return 30;
-            }
-
-            if (value >= StoneMeltTemperature)
-            {
-                damageElement = Element.Fire;
-                return 15;
-            }
-
-            if (value >= WoodBurnTemperature)
-            {
-                damageElement = Element.Fire;
-                return 5;
-            }
-
-            if (value >= HeatDamageTemperature)
-            {
-                damageElement = Element.Fire;
-                return 1;
+                foreach (var damageConfiguration in configuration.HeatDamageConfiguration.OrderByDescending(config => config.Temperature))
+                {
+                    if (value >= damageConfiguration.Temperature)
+                    {
+                        damageElement = Element.Fire;
+                        return damageConfiguration.Damage;
+                    }
+                }
             }
 
             damageElement = null;

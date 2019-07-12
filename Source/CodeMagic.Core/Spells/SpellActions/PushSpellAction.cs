@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
@@ -10,23 +9,22 @@ using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
 {
-    public class PushSpellAction : ISpellAction
+    public class PushSpellAction : SpellActionBase
     {
         public const string ActionType = "push";
-        private const int ManaCostMultiplier = 10;
-        private const int ManaCostPower = 2;
         private const int PushDamageMultiplier = 1;
 
         private readonly Direction direction;
         private readonly int force;
 
         public PushSpellAction(dynamic actionData)
+            :base(ActionType)
         {
             direction = ParseDirection(actionData.direction);
             force = (int) actionData.force;
         }
 
-        public Point Perform(IGameCore game, Point position)
+        public override  Point Perform(IGameCore game, Point position)
         {
             var target = GetTarget(game.Map, position);
             if (target == null)
@@ -91,12 +89,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             return parsedDirection.Value;
         }
 
-        public int ManaCost => GetManaCost(force);
-
-        private static int GetManaCost(int force)
-        {
-            return (int) Math.Pow(force, ManaCostPower);
-        }
+        public override int ManaCost => GetManaCost(force);
 
         public static JsonData GetJson(string direction, int force)
         {
@@ -111,7 +104,7 @@ namespace CodeMagic.Core.Spells.SpellActions
                 {"type", ActionType},
                 {"direction", direction},
                 {"force", force},
-                {"manaCost", GetManaCost(force)}
+                {"manaCost", GetManaCost(ActionType, force)}
             });
         }
     }

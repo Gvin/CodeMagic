@@ -59,6 +59,11 @@ namespace CodeMagic.Core.Statuses
 
     public class OnFireObjectStatusConfiguration
     {
+        public OnFireObjectStatusConfiguration()
+        {
+            BurningTemperature = 600;
+        }
+
         public int BurningTemperature { get; set; }
         public int FireDamageMin { get; set; }
         public int FireDamageMax { get; set; }

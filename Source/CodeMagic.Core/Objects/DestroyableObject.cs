@@ -1,6 +1,5 @@
 ﻿using System;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Statuses;
 
@@ -101,7 +100,6 @@ namespace CodeMagic.Core.Objects
             return new OnFireObjectStatusConfiguration
             {
                 BurnBeforeExtinguishCheck = 3,
-                BurningTemperature = Temperature.WoodBurnTemperature,
                 FireDamageMax = 6,
                 FireDamageMin = 2
             };

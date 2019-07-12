@@ -1,37 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
 {
-    public class HeatAreaSpellAction : ISpellAction
+    public class HeatAreaSpellAction : SpellActionBase
     {
         public const string ActionType = "heat_area";
-        private const double ManaCostMultiplier = 0.01;
-        private const int ManaCostPower = 2;
 
         private readonly int temperature;
 
         public HeatAreaSpellAction(dynamic actionData)
+            :base(ActionType)
         {
             temperature = (int)actionData.temperature;
         }
 
-        public Point Perform(IGameCore game, Point position)
+        public override Point Perform(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);
             cell.Environment.Temperature += temperature;
             return position;
         }
 
-        public int ManaCost => GetManaCost(temperature);
-
-        private static int GetManaCost(int temperature)
-        {
-            var basement = (int)Math.Ceiling(temperature * ManaCostMultiplier);
-            return (int)Math.Pow(basement, ManaCostPower);
-        }
+        public override int ManaCost => GetManaCost(temperature);
 
         public static JsonData GetJson(int temperature)
         {
@@ -42,7 +34,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             {
                 {"type", ActionType},
                 {"temperature", temperature},
-                {"manaCost", GetManaCost(temperature)}
+                {"manaCost", GetManaCost(ActionType, temperature)}
             });
         }
     }

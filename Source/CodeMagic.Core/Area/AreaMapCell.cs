@@ -65,7 +65,7 @@ namespace CodeMagic.Core.Area
             Environment.Normalize();
             Liquids.UpdateLiquids(this);
 
-            if (Environment.Temperature >= Temperature.WoodBurnTemperature && !Objects.OfType<FireDecorativeObject>().Any())
+            if (Environment.Temperature >= FireDecorativeObject.SmallFireTemperature && !Objects.OfType<FireDecorativeObject>().Any())
             {
                 Objects.Add(new FireDecorativeObject(Environment.Temperature));
             }

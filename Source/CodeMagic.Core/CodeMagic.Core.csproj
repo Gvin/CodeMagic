@@ -56,6 +56,19 @@
     <Compile Include="Area\Liquids\LiquidsData.cs" />
     <Compile Include="Area\Liquids\WaterLiquid.cs" />
     <Compile Include="Common\Direction.cs" />
+    <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Configuration\IConfigurationProvider.cs" />
+    <Compile Include="Configuration\IPressureConfiguration.cs" />
+    <Compile Include="Configuration\IPressureDamageConfiguration.cs" />
+    <Compile Include="Configuration\ISpellConfiguration.cs" />
+    <Compile Include="Configuration\ITemperatureConfiguration.cs" />
+    <Compile Include="Configuration\ITemperatureDamageConfiguration.cs" />
+    <Compile Include="Configuration\Xml\XmlConfigurationProviderType.cs" />
+    <Compile Include="Configuration\Xml\XmlPressureConfigurationType.cs" />
+    <Compile Include="Configuration\Xml\XmlPressureDamageConfigurationType.cs" />
+    <Compile Include="Configuration\Xml\XmlSpellConfigurationType.cs" />
+    <Compile Include="Configuration\Xml\XmlTemperatureConfigurationType.cs" />
+    <Compile Include="Configuration\Xml\XmlTemperatureDamageConfigurationType.cs" />
     <Compile Include="Game\IGameCore.cs" />
     <Compile Include="Objects\DecorativeObjects\IceObject.cs" />
     <Compile Include="Objects\IStepReactionObject.cs" />
@@ -129,6 +142,7 @@
     <Compile Include="Spells\SpellActions\ISpellAction.cs" />
     <Compile Include="Spells\SpellActions\MoveSpellAction.cs" />
     <Compile Include="Spells\SpellActions\PushSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\SpellActionBase.cs" />
     <Compile Include="Spells\SpellActions\SpellActionsFactory.cs" />
     <Compile Include="Spells\SpellException.cs" />
     <Compile Include="Spells\SpellHelper.cs" />
@@ -136,6 +150,9 @@
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />
     <Compile Include="Statuses\OnFireObjectStatus.cs" />
     <Compile Include="Statuses\WetObjectStatus.cs" />
+    <Content Include="Configuration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Templates\SpellTemplate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
