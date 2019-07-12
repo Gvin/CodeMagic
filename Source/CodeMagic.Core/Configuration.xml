@@ -40,7 +40,7 @@
   </pressure>
   <spells>
     <spell type="heat_area">
-      <mana-cost-multiplier>0.04</mana-cost-multiplier>
+      <mana-cost-multiplier>0.03</mana-cost-multiplier>
       <mana-cost-power>2</mana-cost-power>
     </spell>
     <spell type="build_wall">
@@ -48,7 +48,7 @@
       <mana-cost-power>2</mana-cost-power>
     </spell>
     <spell type="compress">
-      <mana-cost-multiplier>0.04</mana-cost-multiplier>
+      <mana-cost-multiplier>0.03</mana-cost-multiplier>
       <mana-cost-power>2</mana-cost-power>
     </spell>
     <spell type="cool_area">
@@ -60,7 +60,7 @@
       <mana-cost-power>2</mana-cost-power>
     </spell>
     <spell type="decompress">
-      <mana-cost-multiplier>0.04</mana-cost-multiplier>
+      <mana-cost-multiplier>0.03</mana-cost-multiplier>
       <mana-cost-power>2</mana-cost-power>
     </spell>
     <spell type="move">
