@@ -46,6 +46,12 @@ namespace CodeMagic.UI.Console.Views
                 case ConsoleKey.F3:
                     game.Player.Mana += 100;
                     break;
+                case ConsoleKey.PageUp:
+                    gameDrawer.JournalScroll++;
+                    break;
+                case ConsoleKey.PageDown:
+                    gameDrawer.JournalScroll--;
+                    break;
                 case ConsoleKey.Escape:
                     var menu = new MenuView();
                     menu.Show();

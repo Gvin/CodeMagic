@@ -24,6 +24,13 @@ namespace CodeMagic.Core.Game.Journaling
         {
             return messages.Skip(Math.Max(0, messages.Count - count)).ToArray();
         }
+
+        public JournalMessageData[] GetMessages(int startPosition, int count)
+        {
+            return messages.Skip(Math.Max(0, messages.Count - startPosition)).Take(count).ToArray();
+        }
+
+        public JournalMessageData[] Messages => messages.ToArray();
     }
 
     public class JournalMessageData

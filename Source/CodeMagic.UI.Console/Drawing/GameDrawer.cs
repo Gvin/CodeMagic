@@ -28,12 +28,32 @@ namespace CodeMagic.UI.Console.Drawing
         private readonly FloorFactory floorFactory;
         private readonly JournalTextProviderFactory journalTextProviderFactory;
 
+        private int journalScroll;
+
         public GameDrawer(IDrawingProcessorsFactory processorsFactory, FloorFactory floorFactory)
         {
             this.processorsFactory = processorsFactory;
             this.floorFactory = floorFactory;
 
             journalTextProviderFactory = new JournalTextProviderFactory();
+
+            journalScroll = 0;
+        }
+
+        public int JournalScroll
+        {
+            get => journalScroll;
+            set
+            {
+                if (value < 0)
+                {
+                    journalScroll = 0;
+                }
+                else
+                {
+                    journalScroll = value;
+                }
+            }
         }
 
         public void DrawStaticElements()
@@ -134,16 +154,46 @@ namespace CodeMagic.UI.Console.Drawing
             Writer.CursorTop = Writer.WindowHeight - JournalBottomShift + 1;
             Writer.BackgroundColor = Color.Black;
 
-            var messages = journal.GetLastMessages(MaxJournalMessagesCount);
-            foreach (var message in messages)
+            var messages = journal.GetMessages(JournalScroll + MaxJournalMessagesCount, MaxJournalMessagesCount);
+
+            for (var index = 0; index < MaxJournalMessagesCount; index++)
             {
-                var text = $"[{message.Turn}] " + journalTextProviderFactory.GetMessageText(message.Message);
-                text = text.Length > Writer.WindowWidth - 1 ? text.Substring(0, Writer.WindowWidth - 1) : text;
-                Writer.CursorLeft = GameScreenLeftShift;
-                while (text.Length < Writer.WindowWidth - 2)
-                    text += " ";
-                Writer.WriteLine(text, Color.DarkGray);
+                var message = messages.Length > index ? messages[index] : null;
+                if (message != null)
+                {
+                    var text = $"[{message.Turn}] " + journalTextProviderFactory.GetMessageText(message.Message);
+                    text = text.Length > Writer.WindowWidth - 2 ? text.Substring(0, Writer.WindowWidth - 2) : text;
+                    Writer.CursorLeft = GameScreenLeftShift + 1;
+                    while (text.Length < Writer.WindowWidth - 3)
+                        text += " ";
+                    Writer.WriteLine(text, Color.DarkGray);
+                }
+                else
+                {
+                    Writer.CursorLeft = GameScreenLeftShift + 1;
+                    for (var x = Writer.CursorLeft; x < Writer.WindowWidth - 2; x++)
+                    {
+                        Writer.Write(" ");
+                    }
+
+                    Writer.CursorTop = Writer.CursorTop < Writer.WindowHeight - 1 ? Writer.CursorTop + 1 : 0;
+                }
             }
+
+            var messagesCount = journal.Messages.Length;
+            if (JournalScroll > journal.Messages.Length - MaxJournalMessagesCount)
+            {
+                JournalScroll = messagesCount - MaxJournalMessagesCount;
+            }
+
+            Writer.CursorTop = Writer.WindowHeight - JournalBottomShift + 1;
+            Writer.CursorLeft = GameScreenLeftShift;
+            var messagesToTheUp = messagesCount - JournalScroll;
+            Writer.Write('\u25B2', messagesToTheUp > MaxJournalMessagesCount ? Color.Yellow : Color.Gray);
+
+            Writer.CursorTop = Writer.WindowHeight - 3;
+            Writer.CursorLeft = GameScreenLeftShift;
+            Writer.Write('\u25BC', JournalScroll > 0 ? Color.Yellow : Color.Gray);
         }
 
         private void DrawCell(AreaMapCell cell, int x, int y)
