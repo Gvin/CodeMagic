@@ -78,7 +78,7 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
             blockCell = null;
             for (var remainingSpeed = MaxSlideDistance; remainingSpeed > 0; remainingSpeed--)
             {
-                var nextPosition = Point.GetAdjustedPoint(newPosition, direction);
+                var nextPosition = Point.GetPointInDirection(newPosition, direction);
                 if (!game.Map.ContainsCell(nextPosition))
                     return 0;
                 var nextCell = game.Map.GetCell(nextPosition);

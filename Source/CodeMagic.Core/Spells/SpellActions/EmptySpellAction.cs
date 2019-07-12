@@ -1,5 +1,6 @@
-﻿using CodeMagic.Core.Area;
+﻿using System;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
 {
@@ -12,5 +13,10 @@ namespace CodeMagic.Core.Spells.SpellActions
         }
 
         public int ManaCost => 1;
+
+        public JsonData GetJson()
+        {
+            throw new InvalidOperationException("Empty spell action cannot produce json");
+        }
     }
 }

@@ -140,6 +140,7 @@
     <Compile Include="Spells\SpellActions\EmptySpellAction.cs" />
     <Compile Include="Spells\SpellActions\HeatAreaSpellAction.cs" />
     <Compile Include="Spells\SpellActions\ISpellAction.cs" />
+    <Compile Include="Spells\SpellActions\LongCastSpellAction.cs" />
     <Compile Include="Spells\SpellActions\MoveSpellAction.cs" />
     <Compile Include="Spells\SpellActions\PushSpellAction.cs" />
     <Compile Include="Spells\SpellActions\SpellActionBase.cs" />

@@ -28,7 +28,7 @@ namespace CodeMagic.Core.Spells.SpellActions
 
             for (var step = 1; step <= distance; step++)
             {
-                var newPosition = Point.GetAdjustedPoint(currentPosition, direction);
+                var newPosition = Point.GetPointInDirection(currentPosition, direction);
                 var movementResult = MovementHelper.MoveSpell(spell, game, currentPosition, newPosition);
                 if (!movementResult.Success)
                     break;
@@ -64,6 +64,11 @@ namespace CodeMagic.Core.Spells.SpellActions
                 {"distance", distance},
                 {"manaCost", GetManaCost(ActionType, distance)}
             });
+        }
+
+        public override JsonData GetJson()
+        {
+            return GetJson(JsonData.GetDirectionString(direction), distance);
         }
     }
 }

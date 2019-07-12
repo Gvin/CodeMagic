@@ -196,7 +196,7 @@ namespace CodeMagic.Core.Area
 
         private void TrySpreadEnvironment(Point position, Direction direction, AreaMapCell cell, List<CellsPair> mergedCells)
         {
-            var nextPosition = Point.GetAdjustedPoint(position, direction);
+            var nextPosition = Point.GetPointInDirection(position, direction);
             if (!ContainsCell(nextPosition))
                 return;
 

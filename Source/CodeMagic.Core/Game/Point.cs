@@ -49,18 +49,18 @@ namespace CodeMagic.Core.Game
             return null;
         }
 
-        public static Point GetAdjustedPoint(Point point, Direction direction)
+        public static Point GetPointInDirection(Point point, Direction direction, int distance = 1)
         {
             switch (direction)
             {
                 case Direction.Up:
-                    return new Point(point.X, point.Y - 1);
+                    return new Point(point.X, point.Y - distance);
                 case Direction.Down:
-                    return new Point(point.X, point.Y + 1);
+                    return new Point(point.X, point.Y + distance);
                 case Direction.Left:
-                    return new Point(point.X - 1, point.Y);
+                    return new Point(point.X - distance, point.Y);
                 case Direction.Right:
-                    return new Point(point.X + 1, point.Y);
+                    return new Point(point.X + distance, point.Y);
                 default:
                     throw new InvalidEnumArgumentException($"Unknown direction: {direction}");
             }

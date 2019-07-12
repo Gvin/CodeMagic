@@ -10,7 +10,7 @@ namespace CodeMagic.Core.Game.PlayerActions
         public bool Perform(IPlayer player, Point playerPosition, IGameCore game, out Point newPosition)
         {
             newPosition = playerPosition;
-            var targetPoint = Point.GetAdjustedPoint(playerPosition, player.Direction);
+            var targetPoint = Point.GetPointInDirection(playerPosition, player.Direction);
             if (!game.Map.ContainsCell(targetPoint))
                 return true;
 

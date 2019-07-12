@@ -31,7 +31,7 @@ namespace CodeMagic.Core.Objects
             {
                 creature.Direction = direction;
             }
-            var endPoint = Point.GetAdjustedPoint(startPoint, direction);
+            var endPoint = Point.GetPointInDirection(startPoint, direction);
             return MoveObject(creature, game, startPoint, endPoint, processStepReaction);
         }
 

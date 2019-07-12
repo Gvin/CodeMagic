@@ -68,8 +68,12 @@
       <mana-cost-power>2</mana-cost-power>
     </spell>
     <spell type="push">
-      <mana-cost-multiplier>5</mana-cost-multiplier>
+      <mana-cost-multiplier>3</mana-cost-multiplier>
       <mana-cost-power>2</mana-cost-power>
+    </spell>
+    <spell type="long_cast">
+      <mana-cost-multiplier>2</mana-cost-multiplier>
+      <mana-cost-power>1</mana-cost-power>
     </spell>
   </spells>
 </configuration>

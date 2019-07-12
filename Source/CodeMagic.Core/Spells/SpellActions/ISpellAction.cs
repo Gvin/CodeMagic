@@ -1,5 +1,5 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Game;
+using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
 {
@@ -8,5 +8,7 @@ namespace CodeMagic.Core.Spells.SpellActions
         Point Perform(IGameCore game, Point position);
 
         int ManaCost { get; }
+
+        JsonData GetJson();
     }
 }

@@ -34,6 +34,11 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         public override int ManaCost => GetManaCost(time);
 
+        public override JsonData GetJson()
+        {
+            return GetJson(time);
+        }
+
         public static JsonData GetJson(int time)
         {
             if (time <= 0)

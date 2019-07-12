@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
 {
@@ -41,5 +42,7 @@ namespace CodeMagic.Core.Spells.SpellActions
 
             return GetManaCost(value, configuration.ManaCostMultiplier, configuration.ManaCostPower);
         }
+
+        public abstract JsonData GetJson();
     }
 }

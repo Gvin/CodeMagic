@@ -25,25 +25,25 @@ namespace CodeMagic.Core.Spells.Script
 
         public JsValue ToJson(Engine jsEngine)
         {
-            var jsonString = GetJsonString();
+            var jsonString = GetJsonString(jsEngine);
             return new JsonParser(jsEngine).Parse(jsonString);
         }
 
-        private string GetJsonString()
+        private string GetJsonString(Engine jsEngine)
         {
             var builder = new StringBuilder();
             builder.AppendLine("{");
 
             foreach (var pair in Data)
             {
-                builder.AppendLine($"\"{pair.Key}\": {GetJsonValue(pair.Value)},");
+                builder.AppendLine($"\"{pair.Key}\": {GetJsonValue(pair.Value, jsEngine)},");
             }
 
             builder.AppendLine("}");
             return builder.ToString();
         }
 
-        private string GetJsonValue(object value)
+        private string GetJsonValue(object value, Engine jsEngine)
         {
             if (value is int number)
             {
@@ -65,6 +65,11 @@ namespace CodeMagic.Core.Spells.Script
                 return $"\"{GetDirectionString(direction)}\"";
             }
 
+            if (value is JsonData json)
+            {
+                return json.GetJsonString(jsEngine);
+            }
+
             return $"\"{value}\"";
         }
 
@@ -73,7 +78,7 @@ namespace CodeMagic.Core.Spells.Script
             return $"{{ \"x\": {point.X}, \"y\": {point.Y} }}";
         }
 
-        private string GetDirectionString(Direction direction)
+        public static string GetDirectionString(Direction direction)
         {
             switch (direction)
             {

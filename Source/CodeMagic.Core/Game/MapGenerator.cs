@@ -159,7 +159,7 @@ namespace CodeMagic.Core.Game
 
                 room.Walls[neighborDirection.Value] = false;
                 
-                currentRoomPos = Point.GetAdjustedPoint(currentRoomPos, neighborDirection.Value);
+                currentRoomPos = Point.GetPointInDirection(currentRoomPos, neighborDirection.Value);
                 roomsStack.Push(currentRoomPos);
                 room = map[currentRoomPos.Y][currentRoomPos.X];
                 var negatedDirection = GetNegatedDirection(neighborDirection.Value);
@@ -179,7 +179,7 @@ namespace CodeMagic.Core.Game
                     directionValue = 0;
 
                 var direction = (Direction) directionValue;
-                var newLocation = Point.GetAdjustedPoint(location, direction);
+                var newLocation = Point.GetPointInDirection(location, direction);
                 if (newLocation.X < 0 || newLocation.X >= width || newLocation.Y < 0 || newLocation.Y >= height)
                     continue;
 

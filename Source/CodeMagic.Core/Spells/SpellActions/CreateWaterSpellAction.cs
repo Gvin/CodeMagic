@@ -20,11 +20,19 @@ namespace CodeMagic.Core.Spells.SpellActions
         public override Point Perform(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);
+            if (cell.BlocksMovement)
+                return position;
+
             cell.Liquids.AddLiquid(new WaterLiquid(volume));
             return position;
         }
 
         public override int ManaCost => GetManaCost(volume);
+
+        public override JsonData GetJson()
+        {
+            return GetJson(volume);
+        }
 
         public static JsonData GetJson(int volume)
         {

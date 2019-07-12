@@ -25,6 +25,8 @@
                     return new DecompressSpellAction(actionData);
                 case CreateWaterSpellAction.ActionType:
                     return new CreateWaterSpellAction(actionData);
+                case LongCastSpellAction.ActionType:
+                    return new LongCastSpellAction(actionData, spell);
             }
 
             throw new SpellException($"Action type \"{actionData.type}\" is not supported.");

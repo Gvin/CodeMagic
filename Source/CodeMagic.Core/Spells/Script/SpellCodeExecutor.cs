@@ -12,7 +12,6 @@ using CodeMagic.Core.Spells.SpellActions;
 using Jint;
 using Jint.Native;
 using Jint.Parser;
-using Jint.Parser.Ast;
 using Jint.Runtime;
 
 namespace CodeMagic.Core.Spells.Script
@@ -59,6 +58,7 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("compress", new Func<int, JsValue>(GetCompressSpellAction));
             jsEngine.SetValue("decompress", new Func<int, JsValue>(GetDecompressSpellAction));
             jsEngine.SetValue("createWater", new Func<int, JsValue>(GetCreateWaterSpellAction));
+            jsEngine.SetValue("longCast", new Func<dynamic, string, int, JsValue>(GetLongCastSpellAction));
         }
 
         public ISpellAction Execute(IGameCore game, Point position, CodeSpell spell)
@@ -234,7 +234,7 @@ namespace CodeMagic.Core.Spells.Script
             if (!parsedDirection.HasValue)
                 throw new SpellException($"Unknown direction value: {directionString}");
 
-            var checkPosition = Point.GetAdjustedPoint(position, parsedDirection.Value);
+            var checkPosition = Point.GetPointInDirection(position, parsedDirection.Value);
             if (!map.ContainsCell(checkPosition))
                 return true;
 
@@ -283,6 +283,11 @@ namespace CodeMagic.Core.Spells.Script
         private JsValue GetCreateWaterSpellAction(int volume)
         {
             return CreateWaterSpellAction.GetJson(volume).ToJson(jsEngine);
+        }
+
+        private JsValue GetLongCastSpellAction(dynamic actionData, string direction, int distance)
+        {
+            return LongCastSpellAction.GetJson(actionData, direction, distance).ToJson(jsEngine);
         }
 
         #endregion

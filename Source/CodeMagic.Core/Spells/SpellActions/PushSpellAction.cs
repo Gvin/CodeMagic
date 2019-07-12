@@ -34,7 +34,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             if (remainingForce == 0)
                 return position;
 
-            var collideCellPosition = Point.GetAdjustedPoint(currentPosition, direction);
+            var collideCellPosition = Point.GetPointInDirection(currentPosition, direction);
             var collideTarget = GetTarget(game.Map, collideCellPosition);
 
             var damage = remainingForce * PushDamageMultiplier;
@@ -56,7 +56,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             currentPosition = position;
             for (var remainingForce = force; remainingForce > 0; remainingForce--)
             {
-                var nextPosition = Point.GetAdjustedPoint(currentPosition, direction);
+                var nextPosition = Point.GetPointInDirection(currentPosition, direction);
                 var movementResult = MovementHelper.MoveObject(target, game, currentPosition, nextPosition);
                 if (!movementResult.Success)
                     return remainingForce;
@@ -90,6 +90,11 @@ namespace CodeMagic.Core.Spells.SpellActions
         }
 
         public override int ManaCost => GetManaCost(force);
+
+        public override JsonData GetJson()
+        {
+            return GetJson(JsonData.GetDirectionString(direction), force);
+        }
 
         public static JsonData GetJson(string direction, int force)
         {
