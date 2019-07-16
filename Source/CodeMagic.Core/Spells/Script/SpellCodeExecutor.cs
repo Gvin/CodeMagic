@@ -84,7 +84,7 @@ namespace CodeMagic.Core.Spells.Script
         {
             ConfigureDynamicEngineFunctions(game, position, spell);
 
-            JsValue mainFunction = null;
+            JsValue mainFunction;
             try
             {
                 mainFunction = jsEngine.Execute(code).GetValue("main");

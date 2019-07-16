@@ -50,7 +50,7 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
                 new []{ '\u2018', '\u2591', '`'},
                 new []{' ', '"', '`'}
             });
-            image.SetColorMap(new Color?[][]
+            image.SetColorMap(new[]
             {
                 new Color?[] {Color.Orange, null, Color.Orange},
                 new Color?[] {null, null, null},

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CodeMagic.UI.Console.Drawing.DrawingProcessors
+﻿namespace CodeMagic.UI.Console.Drawing.DrawingProcessors
 {
     public interface IDrawingProcessor
     {

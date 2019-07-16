@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using Writer = Colorful.Console;
+using CodeMagic.UI.Console.Drawing.Writing;
 
 namespace CodeMagic.UI.Console.Views
 {
@@ -33,18 +33,18 @@ namespace CodeMagic.UI.Console.Views
 
         private bool GetData()
         {
-            Writer.CursorTop = 3;
+            Writer.CursorY = 3;
             if (!RequestManaCost())
                 return false;
 
-            Writer.CursorTop++;
+            Writer.CursorY++;
 
             return RequestName();
         }
 
         private bool RequestManaCost()
         {
-            Writer.CursorLeft = 3;
+            Writer.CursorX = 3;
             Writer.Write("Enter spell mana level", TextColor);
             if (InitialManaLevel.HasValue)
             {
@@ -52,9 +52,9 @@ namespace CodeMagic.UI.Console.Views
             }
             Writer.WriteLine(":", TextColor);
 
-            Writer.CursorLeft = 3;
-            Writer.ForegroundColor = ManaColor;
-            var manaLevelString = Writer.ReadLine();
+            Writer.CursorX = 3;
+            Writer.ForeColor = ManaColor;
+            var manaLevelString = Colorful.Console.ReadLine();
             if (string.IsNullOrEmpty(manaLevelString) && InitialManaLevel.HasValue)
             {
                 ManaLevel = InitialManaLevel.Value;
@@ -71,7 +71,7 @@ namespace CodeMagic.UI.Console.Views
 
         private bool RequestName()
         {
-            Writer.CursorLeft = 3;
+            Writer.CursorX = 3;
             Writer.Write("Enter spell name", TextColor);
             if (!string.IsNullOrEmpty(Name))
             {
@@ -79,9 +79,9 @@ namespace CodeMagic.UI.Console.Views
             }
             Writer.WriteLine(":", TextColor);
 
-            Writer.CursorLeft = 3;
-            Writer.ForegroundColor = NameColor;
-            var newName = Writer.ReadLine();
+            Writer.CursorX = 3;
+            Writer.ForeColor = NameColor;
+            var newName = Colorful.Console.ReadLine();
             if (string.IsNullOrEmpty(newName) && !string.IsNullOrEmpty(Name))
             {
                 return true;
@@ -93,12 +93,12 @@ namespace CodeMagic.UI.Console.Views
 
         private void ClearInputArea()
         {
-            Writer.BackgroundColor = Color.Black;   
+            Writer.BackColor = Color.Black;   
             for (var y = 3; y < 7; y++)
             {
-                Writer.CursorTop = y;
-                Writer.CursorLeft = 1;
-                for (var x = 1; x < Writer.WindowWidth - 2; x++)
+                Writer.CursorY = y;
+                Writer.CursorX = 1;
+                for (var x = 1; x < Writer.ScreenWidth - 2; x++)
                 {
                     Writer.Write(" ");
                 }

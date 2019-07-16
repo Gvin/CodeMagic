@@ -46,7 +46,7 @@ namespace CodeMagic.Core.Tests.Area
 
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                var cell = map.GetCell(checkX, checkY);
+                map.GetCell(checkX, checkY);
             });
             StringAssert.StartsWith($"Coordinate {errorArgument} value", exception.Message);
         }

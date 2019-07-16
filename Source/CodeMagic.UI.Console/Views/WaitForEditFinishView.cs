@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using Writer = Colorful.Console;
+using CodeMagic.UI.Console.Drawing.Writing;
 
 namespace CodeMagic.UI.Console.Views
 {
@@ -10,8 +10,8 @@ namespace CodeMagic.UI.Console.Views
         {
             base.DrawStatic();
 
-            Writer.CursorTop = 3;
-            Writer.CursorLeft = 3;
+            Writer.CursorY = 3;
+            Writer.CursorX = 3;
             Writer.Write("Press ENTER to finish editing...", Color.White);
         }
 

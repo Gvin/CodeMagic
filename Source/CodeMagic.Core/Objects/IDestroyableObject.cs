@@ -8,8 +8,6 @@ namespace CodeMagic.Core.Objects
     {
         string Id { get; }
 
-        string Name { get; }
-
         int Health { get; set; }
 
         int MaxHealth { get; set; }

@@ -173,9 +173,9 @@ namespace CodeMagic.UI.Console.Drawing
 
             image.SetSymbolMap(new[]
             {
-                new[] {LineTypes.SingleVertical, LineTypes.SingleVerticalAndRight, LineTypes.SingleVerticalAndLeft},
-                new[] {LineTypes.SingleVerticalAndRight, LineTypes.SingleVerticalAndLeft, LineTypes.SingleVertical},
-                new[] {LineTypes.SingleVerticalAndLeft, LineTypes.SingleVertical, LineTypes.SingleVerticalAndRight }
+                new[] {LineTypes.SingleVertical, LineTypes.SingleVerticalRight, LineTypes.SingleVerticalLeft},
+                new[] {LineTypes.SingleVerticalRight, LineTypes.SingleVerticalLeft, LineTypes.SingleVertical},
+                new[] {LineTypes.SingleVerticalLeft, LineTypes.SingleVertical, LineTypes.SingleVerticalRight }
             });
 
             return image;

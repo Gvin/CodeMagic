@@ -1,40 +1,72 @@
 ﻿using System;
-using CodeMagic.Core.Common;
+using System.Drawing;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.PlayerActions;
+using CodeMagic.UI.Console.Controls;
 using CodeMagic.UI.Console.Drawing;
-using CodeMagic.UI.Console.Drawing.DrawingProcessors;
+using CodeMagic.UI.Console.Drawing.Writing;
 
 namespace CodeMagic.UI.Console.Views
 {
     public class GameView : View
     {
-        private readonly GameDrawer gameDrawer;
+        private static readonly Color FrameColor = Color.Gray;
+
         private readonly GameCore game;
+
+        private PlayerStatusPanel playerStatusPanel;
+        private JournalPanel journalPanel;
+        private GameAreaControl gameArea;
 
         public GameView(GameCore game)
         {
             this.game = game;
 
-            var factory = new DrawingProcessorsFactory();
-            var floorColorFactory = new FloorFactory();
-            gameDrawer = new GameDrawer(factory, floorColorFactory);
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            playerStatusPanel = new PlayerStatusPanel(game.Player, FrameColor)
+            {
+                X = Writer.ScreenWidth - 47,
+                Y = 0,
+                Width = 46,
+                Height = Writer.ScreenHeight - 8
+            };
+            Controls.Add(playerStatusPanel);
+
+            journalPanel = new JournalPanel(game.Journal, FrameColor)
+            {
+                X = 0,
+                Y = Writer.ScreenHeight - 8,
+                Width = Writer.ScreenWidth,
+                Height = 7
+            };
+            Controls.Add(journalPanel);
+
+            gameArea = new GameAreaControl(game)
+            {
+                X = 1,
+                Y = 1,
+                Width = Writer.ScreenWidth - 46,
+                Height = Writer.ScreenHeight - 8
+            };
+            Controls.Add(gameArea);
         }
 
         public override void DrawStatic()
         {
             base.DrawStatic();
-            gameDrawer.DrawStaticElements();
-        }
 
-        public override void DrawDynamic()
-        {
-            base.DrawDynamic();
-            gameDrawer.DrawGame(game);
+            var x = playerStatusPanel.X;
+            var y = journalPanel.Y;
+            Writer.WriteAt(x, y, LineTypes.SingleHorizontalUp, FrameColor, Color.Black);
         }
 
         public override void ProcessKey(ConsoleKeyInfo keyInfo)
         {
+            base.ProcessKey(keyInfo);
+
             switch (keyInfo.Key)
             {
                 case ConsoleKey.C:
@@ -46,29 +78,11 @@ namespace CodeMagic.UI.Console.Views
                 case ConsoleKey.F3:
                     game.Player.Mana += 100;
                     break;
-                case ConsoleKey.PageUp:
-                    gameDrawer.JournalScroll++;
-                    break;
-                case ConsoleKey.PageDown:
-                    gameDrawer.JournalScroll--;
-                    break;
                 case ConsoleKey.Escape:
                     var menu = new MenuView();
                     menu.Show();
                     Close();
                     break;
-                default:
-                    ActivateKeyAssignedPlayerAction(keyInfo.Key);
-                    break;
-            }  
-        }
-
-        private void ActivateKeyAssignedPlayerAction(ConsoleKey key)
-        {
-            var action = GetPlayerAction(key);
-            if (action != null)
-            {
-                game.PerformPlayerAction(action);
             }
         }
 
@@ -79,31 +93,6 @@ namespace CodeMagic.UI.Console.Views
 
             var spellBookView = new SpellBookView(game);
             spellBookView.Show();
-        }
-
-        private IPlayerAction GetPlayerAction(ConsoleKey key)
-        {
-            switch (key)
-            {
-                case ConsoleKey.W:
-                case ConsoleKey.UpArrow:
-                    return new MovePlayerAction(Direction.Up);
-                case ConsoleKey.S:
-                case ConsoleKey.DownArrow:
-                    return new MovePlayerAction(Direction.Down);
-                case ConsoleKey.A:
-                case ConsoleKey.LeftArrow:
-                    return new MovePlayerAction(Direction.Left);
-                case ConsoleKey.D:
-                case ConsoleKey.RightArrow:
-                    return new MovePlayerAction(Direction.Right);
-                case ConsoleKey.Spacebar:
-                    return new EmptyPlayerAction();
-                case ConsoleKey.F:
-                    return new MeleAttackPlayerAction();
-            }
-
-            return null;
         }
     }
 }

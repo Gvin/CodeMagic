@@ -3,7 +3,7 @@ using CodeMagic.Core.Objects.Creatures;
 
 namespace CodeMagic.Core.Objects.PlayerData
 {
-    public interface IPlayer : IDestroyableObject, ICreatureObject
+    public interface IPlayer : ICreatureObject
     {
         int Mana { get; set; }
 

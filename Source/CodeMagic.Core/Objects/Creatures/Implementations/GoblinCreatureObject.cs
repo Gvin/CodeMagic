@@ -44,7 +44,7 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
         public override void Attack(IDestroyableObject target, Journal journal)
         {
             var damage = RandomHelper.GetRandomValue(MinDamage, MaxDamage);
-            target.Damage(damage, null);
+            target.Damage(damage);
             journal.Write(new DealDamageMessage(this, target, damage));
         }
 

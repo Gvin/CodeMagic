@@ -1,6 +1,4 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
+﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
 
 namespace CodeMagic.Core.Objects

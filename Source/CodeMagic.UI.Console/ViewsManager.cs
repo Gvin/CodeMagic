@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using CodeMagic.UI.Console.Drawing;
+using CodeMagic.UI.Console.Drawing.Writing;
 using CodeMagic.UI.Console.Views;
-using Writer = Colorful.Console;
 
 namespace CodeMagic.UI.Console
 {
@@ -59,10 +58,9 @@ namespace CodeMagic.UI.Console
 
         private void DrawUI()
         {
-            Writer.BackgroundColor = Color.Black;
+            Writer.BackColor = Color.Black;
             Writer.CursorVisible = false;
             Writer.Clear();
-            Writer.BufferHeight = Writer.WindowHeight;
 
             DrawFrame();
             var lastView = viewsStack.LastOrDefault();
@@ -92,41 +90,10 @@ namespace CodeMagic.UI.Console
 
         private void DrawFrame()
         {
-            DrawTopHintBox();
-            DrawSideLines();
-            DrawBottomLine();
-        }
+            Writer.DrawFrame(0, 0, Writer.ScreenWidth, Writer.ScreenHeight - 1, true, FrameColor, Color.Black);
 
-        private void DrawTopHintBox()
-        {
-            Writer.CursorTop = 0;
-            Writer.CursorLeft = 0;
-            Writer.BackgroundColor = Color.Black;
-            Writer.Write("" + LineTypes.DoubleDownAndRight + LineTypes.DoubleHorizontal, FrameColor);
-            Writer.Write("[F5-Refresh UI]", Color.White);
-            Writer.Write(LineTypes.DoubleHorizontal, FrameColor);
-            Writer.Write("[ESC-Exit]", Color.White);
-            DrawingHelper.DrawHorizontalLine(Writer.CursorTop, Writer.CursorLeft, Writer.WindowWidth - 2, true, FrameColor);
-            Writer.Write(LineTypes.DoubleDownAndLeft, FrameColor);
-        }
-
-        private void DrawSideLines()
-        {
-            for (var top = 1; top < Writer.WindowHeight - 2; top++)
-            {
-                Writer.CursorTop = top;
-                Writer.CursorLeft = 0;
-                Writer.Write(LineTypes.DoubleVertical, FrameColor);
-                Writer.CursorLeft = Writer.WindowWidth - 1;
-                Writer.Write(LineTypes.DoubleVertical, FrameColor);
-            }
-        }
-
-        private void DrawBottomLine()
-        {
-            Writer.Write(LineTypes.DoubleUpAndRight, FrameColor);
-            DrawingHelper.DrawHorizontalLine(Writer.CursorTop, 1, Writer.WindowWidth - 2, true, FrameColor);
-            Writer.Write(LineTypes.DoubleUpAndLeft, FrameColor);
+            Writer.WriteAt(2, 0, "[F5-Refresh UI]", Color.White);
+            Writer.WriteAt(Writer.ScreenWidth - 12, 0, "[ESC-Exit]", Color.White);
         }
     }
 }

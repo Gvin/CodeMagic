@@ -33,7 +33,7 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
                 new []{ '\u25A0', '\u2588', '\u25A0'},
                 new []{' ', '\u2580', ' '}
             });
-            image.SetColorMap(new Color?[][]
+            image.SetColorMap(new[]
             {
                 new Color?[]{null, Color.FromArgb(79, 73, 66), Color.SaddleBrown},
                 new Color?[]{ Color.FromArgb(89, 57, 0), Color.FromArgb(66, 46, 19), Color.SaddleBrown},

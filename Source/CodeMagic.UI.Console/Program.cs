@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using CodeMagic.UI.Console.Drawing.Writing;
+using CodeMagic.UI.Console.Drawing.Writing.WriterImplementation;
 
 namespace CodeMagic.UI.Console
 {
@@ -10,7 +12,9 @@ namespace CodeMagic.UI.Console
             Colorful.Console.Title = "Code Spell";
             Colorful.Console.OutputEncoding = Encoding.Unicode;
             Colorful.Console.CursorVisible = false;
-            Colorful.Console.WindowHeight = 50;
+
+            Writer.Initialize(new ColorfulConsoleWriter());
+            Writer.ScreenHeight = 50;
 
             ViewsManager.Current.Start();
         }

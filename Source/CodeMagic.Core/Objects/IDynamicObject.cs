@@ -1,5 +1,4 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects
 {

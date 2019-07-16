@@ -50,7 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleFontHelper.cs" />
-    <Compile Include="Drawing\DrawingHelper.cs" />
+    <Compile Include="Controls\ConsoleControl.cs" />
+    <Compile Include="Controls\GameAreaControl.cs" />
+    <Compile Include="Controls\IConsoleControl.cs" />
+    <Compile Include="Controls\JournalPanel.cs" />
+    <Compile Include="Controls\PlayerStatusPanel.cs" />
+    <Compile Include="Controls\SpellDetailsPanel.cs" />
+    <Compile Include="Controls\StaticTextBlockControl.cs" />
+    <Compile Include="Controls\VerticalMenuControl.cs" />
     <Compile Include="Drawing\DrawingProcessors\DrawingProcessorsFactory.cs" />
     <Compile Include="Drawing\DrawingProcessors\IDrawingProcessor.cs" />
     <Compile Include="Drawing\DrawingProcessors\IDrawingProcessorsFactory.cs" />
@@ -63,11 +70,15 @@
     <Compile Include="Drawing\DrawingProcessors\ProcessorsImplementation\SolidObjectDrawingProcessor.cs" />
     <Compile Include="Drawing\DrawingProcessors\ProcessorsImplementation\StationaryObjectDrawingProcessor.cs" />
     <Compile Include="Drawing\FloorFactory.cs" />
-    <Compile Include="Drawing\GameDrawer.cs" />
     <Compile Include="Drawing\ItemDrawingHelper.cs" />
     <Compile Include="Drawing\JournalTextProviding\JournalTextProviderFactory.cs" />
     <Compile Include="Drawing\LineTypes.cs" />
     <Compile Include="Drawing\SymbolsImage.cs" />
+    <Compile Include="Drawing\Writing\Writer.cs" />
+    <Compile Include="Drawing\Writing\WriterImplementation\ColorfulConsoleWriter.cs" />
+    <Compile Include="Drawing\Writing\ControlWriter.cs" />
+    <Compile Include="Drawing\Writing\IControlWriter.cs" />
+    <Compile Include="Drawing\Writing\WriterImplementation\IWriterImplementation.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

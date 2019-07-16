@@ -1,5 +1,4 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Area.EnvironmentData;
+﻿using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
 using NUnit.Framework;
 

@@ -5,159 +5,81 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Spells;
+using CodeMagic.UI.Console.Controls;
 using CodeMagic.UI.Console.Drawing;
-using Writer = Colorful.Console;
+using CodeMagic.UI.Console.Drawing.Writing;
 
 namespace CodeMagic.UI.Console.Views
 {
     public class SpellBookView : View
     {
-        private const int SpellDetailsLeftShift = 80;
         private const int SpellNameMaxWidth = 60;
 
         private readonly GameCore game;
-        private int selectedSpellIndex;
+
+        private VerticalMenuControl<BookSpell> spellsMenu;
+        private SpellDetailsPanel spellDetailsPanel;
 
         public SpellBookView(GameCore game)
         {
             this.game = game;
-            selectedSpellIndex = 0;
+
+            InitializeControls();
+        }
+
+        private void InitializeControls()
+        {
+            spellDetailsPanel = new SpellDetailsPanel
+            {
+                X = 80,
+                Y = 3,
+                Width = 40,
+                Height = Writer.ScreenHeight - 5
+            };
+            Controls.Add(spellDetailsPanel);
+
+            spellsMenu = new VerticalMenuControl<BookSpell>
+            {
+                X = 2,
+                Y = 5,
+                ItemWidth = 60,
+                TextColor = Color.Lime,
+                SelectedFrameColor = Color.Yellow
+            };
+
+            RebuildSpellsMenu();
+
+            spellsMenu.SelectedItemIndex = 0;
+            spellsMenu.SelectionChanged += spellsMenu_SelectionChanged;
+
+            Controls.Add(spellsMenu);
+        }
+
+        private void spellsMenu_SelectionChanged(object sender, EventArgs args)
+        {
+            spellDetailsPanel.Spell = spellsMenu.SelectedItem.Data;
+        }
+
+        private string GetSpellName(BookSpell spell, int index)
+        {
+            var initialName = spell?.Name ?? "Empty";
+            var indexText = index < 10 ? $"0{index}" : index.ToString();
+            return $" {indexText} - {initialName}";
         }
 
         private SpellBook Book => game.Player.Equipment.SpellBook;
 
         public override void DrawStatic()
         {
-            base.DrawStatic();
-
-            Writer.CursorTop = 2;
-            Writer.CursorLeft = 5;
+            Writer.CursorY = 2;
+            Writer.CursorX = 5;
             Writer.Write("Spell book: ", Color.White);
             Writer.WriteLine(Book.Name, ItemDrawingHelper.GetItemNameColor(Book));
-            DrawingHelper.WriteAt(LineTypes.DoubleVerticalAndSingleRight, 0, 3, Color.Gray);
-            DrawingHelper.DrawHorizontalLine(3, 1, Writer.WindowWidth - 2, LineTypes.SingleHorizontal, Color.Gray);
-            DrawingHelper.WriteAt(LineTypes.DoubleVerticalAndSingleLeft, Writer.WindowWidth - 1, 3, Color.Gray);
-        }
+            Writer.WriteAt(0, 3, LineTypes.DoubleVerticalSingleRight, Color.Gray);
+            Writer.DrawHorizontalLine(3, 1, Writer.ScreenWidth - 2, LineTypes.SingleHorizontal, Color.Gray);
+            Writer.WriteAt(Writer.ScreenWidth - 1, 3, LineTypes.DoubleVerticalSingleLeft, Color.Gray);
 
-        public override void DrawDynamic()
-        {
-            base.DrawDynamic();
-
-            Writer.CursorTop = 5;
-
-            for (var index = 0; index < Book.Spells.Length; index++)
-            {
-                var spell = Book.Spells[index];
-                DrawSpell(spell, index);
-            }
-
-            DrawSpellDetails(Book.Spells[selectedSpellIndex]);
-        }
-
-        private void DrawSpell(BookSpell spell, int index)
-        {
-            Writer.CursorLeft = 5;
-
-            var selected = selectedSpellIndex == index;
-
-            if (selected)
-            {
-                Writer.Write(LineTypes.SingleDownRight, Color.Yellow);
-                DrawingHelper.DrawHorizontalLine(Writer.CursorTop, 6, SpellNameMaxWidth + 5,
-                    LineTypes.SingleHorizontal, Color.Yellow);
-                Writer.Write(LineTypes.SingleDownLeft, Color.Yellow);
-                Writer.CursorTop++;
-            }
-            else
-            {
-                for (var i = 0; i < SpellNameMaxWidth + 4; i++)
-                {
-                    Writer.Write(" ", Color.DarkGray);
-                }
-
-                Writer.CursorTop++;
-            }
-
-            Writer.CursorLeft = 2;
-            Writer.Write($"{index + 1}", Color.LimeGreen);
-            Writer.CursorLeft = 5;
-            Writer.Write(selected ? LineTypes.SingleVertical : ' ', Color.Yellow);
-            var spellName = spell?.Name ?? "Empty";
-            while (spellName.Length < SpellNameMaxWidth)
-                spellName += " ";
-            Writer.Write(spellName, Color.LimeGreen);
-            Writer.Write(selected ? LineTypes.SingleVertical : ' ', Color.Yellow);
-            Writer.Write($" {spell?.ManaCost}", Color.Blue);
-            Writer.CursorTop++;
-
-            Writer.CursorLeft = 5;
-            if (selected)
-            {
-                Writer.Write(LineTypes.SingleUpRight, Color.Yellow);
-                DrawingHelper.DrawHorizontalLine(Writer.CursorTop, 6, SpellNameMaxWidth + 5,
-                    LineTypes.SingleHorizontal, Color.Yellow);
-                Writer.Write(LineTypes.SingleUpLeft, Color.Yellow);
-                Writer.CursorTop++;
-            }
-            else
-            {
-                for (var i = 0; i < SpellNameMaxWidth + 2; i++)
-                {
-                    Writer.Write(" ", Color.DarkGray);
-                }
-
-                Writer.CursorTop++;
-            }
-        }
-
-        private void DrawSpellDetails(BookSpell spell)
-        {
-            DrawingHelper.WriteAt(LineTypes.SingleHorizontalAndDown, SpellDetailsLeftShift - 1, 3, Color.Gray);
-            DrawingHelper.DrawVerticalLine(SpellDetailsLeftShift - 1, 4, Writer.WindowHeight - 3, false, Color.Gray);
-            DrawingHelper.WriteAt(LineTypes.DoubleHorizontalAndSingleUp, SpellDetailsLeftShift - 1, Writer.WindowHeight - 2, Color.Gray);
-
-            Writer.CursorLeft = SpellDetailsLeftShift;
-            Writer.CursorTop = 5;
-
-            Writer.WriteLine("Selected spell details:", Color.White);
-            DrawingHelper.DrawHorizontalLine(6, SpellDetailsLeftShift, Writer.WindowWidth - 2, false, Color.Gray);
-            DrawingHelper.WriteAt(LineTypes.DoubleVerticalAndSingleLeft, Writer.WindowWidth - 1, 6, Color.Gray);
-            DrawingHelper.WriteAt(LineTypes.SingleVerticalAndRight, SpellDetailsLeftShift - 1, 6, Color.Gray);
-            Writer.CursorTop++;
-            Writer.CursorLeft = SpellDetailsLeftShift;
-
-            if (spell == null)
-            {
-                Writer.WriteLine("Spell not selected", Color.DarkGray);
-            }
-            else
-            {
-                Writer.Write("Mana Cost: ", Color.White);
-                Writer.WriteLine($"{spell.ManaCost}            ", Color.Blue);
-            }
-
-            Writer.CursorLeft = SpellDetailsLeftShift;
-            Writer.CursorTop = 11;
-            Writer.CursorLeft = SpellDetailsLeftShift;
-            Writer.WriteLine("Actions:", Color.White);
-            Writer.CursorLeft = SpellDetailsLeftShift;
-
-            Writer.WriteLine("[E] - Edit", Color.White);
-            Writer.CursorLeft = SpellDetailsLeftShift;
-            if (spell == null)
-            {
-                Writer.WriteLine("              ", Color.White);
-                Writer.CursorLeft = SpellDetailsLeftShift;
-                Writer.WriteLine("              ", Color.White);
-                Writer.CursorLeft = SpellDetailsLeftShift;
-                Writer.WriteLine("              ", Color.White);
-            }
-            else
-            {
-                Writer.WriteLine("[R] - Remove", Color.White);
-                Writer.CursorLeft = SpellDetailsLeftShift;
-                Writer.WriteLine("[C] - Cast", Color.White);
-            }
+            base.DrawStatic();
         }
 
         public override void ProcessKey(ConsoleKeyInfo keyInfo)
@@ -169,14 +91,6 @@ namespace CodeMagic.UI.Console.Views
                 case ConsoleKey.Escape:
                     Close();
                     break;
-                case ConsoleKey.W:
-                case ConsoleKey.UpArrow:
-                    selectedSpellIndex--;
-                    break;
-                case ConsoleKey.S:
-                case ConsoleKey.DownArrow:
-                    selectedSpellIndex++;
-                    break;
                 case ConsoleKey.C:
                     ProcessCKey();
                     break;
@@ -187,16 +101,11 @@ namespace CodeMagic.UI.Console.Views
                     ProcessRKey();
                     break;
             }
-
-            if (selectedSpellIndex < 0)
-                selectedSpellIndex = Book.Size - 1;
-            if (selectedSpellIndex >= Book.Size)
-                selectedSpellIndex = 0;
         }
 
         private void ProcessCKey()
         {
-            var spell = Book.Spells[selectedSpellIndex];
+            var spell = spellsMenu.SelectedItem?.Data;
             if (spell != null)
             {
                 game.PerformPlayerAction(new CastSpellAction(spell));
@@ -211,12 +120,13 @@ namespace CodeMagic.UI.Console.Views
 
         private void ProcessRKey()
         {
-            Book.Spells[selectedSpellIndex] = null;
+            Book.Spells[spellsMenu.SelectedItemIndex] = null;
+            RefreshSpellsMenu();
         }
 
         private void CreateOrEditSpell()
         {
-            var spell = Book.Spells[selectedSpellIndex];
+            var spell = spellsMenu.SelectedItem?.Data;
             var spellFilePath = $"{Path.GetTempFileName()}.js";
 
             if (spell == null)
@@ -243,13 +153,33 @@ namespace CodeMagic.UI.Console.Views
                     var trimmedName = spellDetailsView.Name.Length > SpellNameMaxWidth
                         ? spellDetailsView.Name.Substring(0, SpellNameMaxWidth)
                         : spellDetailsView.Name;
-                    Book.Spells[selectedSpellIndex] = new BookSpell { Code = fileContent, ManaCost = spellDetailsView.ManaLevel, Name = trimmedName };
+                    var newSpell = new BookSpell { Code = fileContent, ManaCost = spellDetailsView.ManaLevel, Name = trimmedName };
+                    Book.Spells[spellsMenu.SelectedItemIndex] = newSpell;
+                    RefreshSpellsMenu();
                 };
                 spellDetailsView.Show();
             };
             waitDialog.Show();
 
             StartEditor(spellFilePath);
+        }
+
+        private void RebuildSpellsMenu()
+        {
+            spellsMenu.Items.Clear();
+            for (var index = 0; index < Book.Spells.Length; index++)
+            {
+                var spell = Book.Spells[index];
+                var item = new SpellMenuItem(GetSpellName(spell, index + 1), spell);
+                spellsMenu.Items.Add(item);
+            }
+        }
+
+        private void RefreshSpellsMenu()
+        {
+            var storedIndex = spellsMenu.SelectedItemIndex;
+            RebuildSpellsMenu();
+            spellsMenu.SelectedItemIndex = storedIndex;
         }
 
         private void StartEditor(string spellFilePath)
@@ -262,6 +192,29 @@ namespace CodeMagic.UI.Console.Views
             else
             {
                 System.Diagnostics.Process.Start(editorPath, spellFilePath);
+            }
+        }
+
+        private class SpellMenuItem : MenuItem<BookSpell>
+        {
+            public SpellMenuItem(string text, BookSpell data) 
+                : base(text, data)
+            {
+            }
+
+            public override void WriteText(int x, int y, int maxLength, Color textColor, IControlWriter writer)
+            {
+                if (Data == null)
+                {
+                    base.WriteText(x, y, maxLength, textColor, writer);
+                    return;
+                }
+
+                var manaText = $" {Data.ManaCost} ";
+                var nameText = CutText(Text, maxLength - manaText.Length);
+
+                writer.WriteAt(x, y, nameText, textColor, Color.Black);
+                writer.Write(manaText, Color.Blue, Color.Black);
             }
         }
     }

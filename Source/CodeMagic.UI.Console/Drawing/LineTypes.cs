@@ -15,22 +15,22 @@
         /// <summary>
         /// ┬ u252C
         /// </summary>
-        public const char SingleHorizontalAndDown = '\u252C';
+        public const char SingleHorizontalDown = '\u252C';
 
         /// <summary>
         /// ┴ u2534
         /// </summary>
-        public const char SingleHorizontalAndUp = '\u2534';
+        public const char SingleHorizontalUp = '\u2534';
 
         /// <summary>
         /// ├ u251C
         /// </summary>
-        public const char SingleVerticalAndRight = '\u251C';
+        public const char SingleVerticalRight = '\u251C';
 
         /// <summary>
         /// ┤ u2524
         /// </summary>
-        public const char SingleVerticalAndLeft = '\u2524';
+        public const char SingleVerticalLeft = '\u2524';
 
         /// <summary>
         /// ┌ u250C
@@ -55,37 +55,37 @@
         /// <summary>
         /// ╧ u2567
         /// </summary>
-        public const char DoubleHorizontalAndSingleUp = '\u2567';
+        public const char DoubleHorizontalSingleUp = '\u2567';
 
         /// <summary>
         /// ╢ u2562
         /// </summary>
-        public const char DoubleVerticalAndSingleLeft = '\u2562';
+        public const char DoubleVerticalSingleLeft = '\u2562';
 
         /// <summary>
         /// ╞ u255E
         /// </summary>
-        public const char SingleVerticalAndDoubleRight = '\u255E';
+        public const char SingleVerticalDoubleRight = '\u255E';
 
         /// <summary>
         /// ╟ u255F
         /// </summary>
-        public const char DoubleVerticalAndSingleRight = '\u255F';
+        public const char DoubleVerticalSingleRight = '\u255F';
 
         /// <summary>
         /// ╤ u2564
         /// </summary>
-        public const char DoubleHorizontalAndSingleDown = '\u2564';
+        public const char DoubleHorizontalSingleDown = '\u2564';
 
         /// <summary>
         /// ╔ u2554
         /// </summary>
-        public const char DoubleDownAndRight = '\u2554';
+        public const char DoubleDownRight = '\u2554';
 
         /// <summary>
         /// ╗ u2557
         /// </summary>
-        public const char DoubleDownAndLeft = '\u2557';
+        public const char DoubleDownLeft = '\u2557';
 
         /// <summary>
         /// ═ u2550
@@ -100,11 +100,11 @@
         /// <summary>
         /// ╚ u255A
         /// </summary>
-        public const char DoubleUpAndRight = '\u255A';
+        public const char DoubleUpRight = '\u255A';
 
         /// <summary>
         /// ╝ u255D
         /// </summary>
-        public const char DoubleUpAndLeft = '\u255D';
+        public const char DoubleUpLeft = '\u255D';
     }
 }

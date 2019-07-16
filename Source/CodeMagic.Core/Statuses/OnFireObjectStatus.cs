@@ -18,7 +18,7 @@ namespace CodeMagic.Core.Statuses
         private readonly int fireDamageMax;
         private readonly int burnBeforeExtinguishCheck;
 
-        private int burnTime = 0;
+        private int burnTime;
 
         public OnFireObjectStatus(OnFireObjectStatusConfiguration configuration)
         {
@@ -26,6 +26,8 @@ namespace CodeMagic.Core.Statuses
             fireDamageMin = configuration.FireDamageMin;
             fireDamageMax = configuration.FireDamageMax;
             burnBeforeExtinguishCheck = configuration.BurnBeforeExtinguishCheck;
+
+            burnTime = 0;
         }
 
         public bool Update(IDestroyableObject owner, AreaMapCell cell, Journal journal)

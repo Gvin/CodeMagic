@@ -1,90 +1,69 @@
 ﻿using System;
 using System.Drawing;
-using CodeMagic.UI.Console.Drawing;
-using Writer = Colorful.Console;
+using CodeMagic.UI.Console.Controls;
+using CodeMagic.UI.Console.Drawing.Writing;
 
 namespace CodeMagic.UI.Console.Views
 {
     public class MenuView : View
     {
-        private static readonly Color SelectedFrameColor = Color.Yellow;
+        private StaticTextBlockControl logoTextBox;
+        private VerticalMenuControl<int> menu;
 
-        private int selectedIndex = 0;
+        public MenuView()
+        {
+            InitializeControls();
+        }
 
-        public override void DrawStatic()
+        private void InitializeControls()
         {
             var leftPos = GetLeftPosition();
-            Writer.CursorTop = 3;
-            Writer.CursorLeft = leftPos;
 
-            Writer.WriteLine("     <- Code Magic ->", Color.BlueViolet);
-            Writer.CursorLeft = leftPos;
-            Writer.Write("        |  \'   | `", Color.Red);
+            logoTextBox = new StaticTextBlockControl
+            {
+                X = leftPos,
+                Y = 3,
+                Lines = new []
+                {
+                    "     <- Code Magic ->",
+                    "        |  \'   | `"
+                },
+                TextColor = new []
+                {
+                    Color.BlueViolet,
+                    Color.Red
+                }
+            };
+
+            Controls.Add(logoTextBox);
+
+            menu = new VerticalMenuControl<int>
+            {
+                X = leftPos,
+                Y = 10,
+                SelectedFrameColor = Color.Yellow,
+                TextColor = Color.Green
+            };
+            menu.Items.Add(new MenuItem<int>("       Start Game       ", 0));
+            menu.Items.Add(new MenuItem<int>("          Exit          ", 1));
+            menu.SelectedItemIndex = 0;
+
+            Controls.Add(menu);
         }
 
         private int GetLeftPosition()
         {
-            return (int)Math.Floor(Writer.WindowWidth / 2d) - 12;
-        }
-
-        private void DrawOption(string text, int index, int leftPosition)
-        {
-            Writer.CursorLeft = leftPosition;
-            
-            if (index == selectedIndex)
-            {
-                Writer.Write(LineTypes.SingleDownRight, SelectedFrameColor);
-                DrawingHelper.DrawHorizontalLine(Writer.CursorTop, leftPosition + 1, leftPosition + 24, false, SelectedFrameColor);
-                Writer.Write(LineTypes.SingleDownLeft, SelectedFrameColor);
-            }
-            else
-            {
-                Writer.Write("                                                      ");
-            }
-
-            Writer.CursorLeft = leftPosition;
-            Writer.CursorTop++;
-            Writer.Write(index == selectedIndex ? LineTypes.SingleVertical : ' ', SelectedFrameColor);
-            Writer.Write(text, Color.Green);
-            Writer.Write(index == selectedIndex ? LineTypes.SingleVertical : ' ', SelectedFrameColor);
-            Writer.CursorTop++;
-
-            Writer.CursorLeft = leftPosition;
-            if (index == selectedIndex)
-            {
-                Writer.Write(LineTypes.SingleUpRight, SelectedFrameColor);
-                DrawingHelper.DrawHorizontalLine(Writer.CursorTop, leftPosition + 1, leftPosition + 24, false, SelectedFrameColor);
-                Writer.Write(LineTypes.SingleUpLeft, SelectedFrameColor);
-            }
-            else
-            {
-                Writer.Write("                                                      ");
-            }
-        }
-
-        public override void DrawDynamic()
-        {
-            var leftPos = GetLeftPosition();
-            Writer.CursorTop = 10;
-            DrawOption("       Start Game       ", 0, leftPos);
-            Writer.CursorTop++;
-            DrawOption("          Exit          ", 1, leftPos);
+            return (int)Math.Floor(Writer.ScreenWidth / 2d) - 12;
         }
 
         public override void ProcessKey(ConsoleKeyInfo keyInfo)
         {
+            base.ProcessKey(keyInfo);
+
             switch (keyInfo.Key)
             {
                 case ConsoleKey.Escape:
                     ViewsManager.Current.Exit();
-                    break;
-                case ConsoleKey.W:
-                case ConsoleKey.UpArrow:
-                    selectedIndex--;
-                    break;
-                case ConsoleKey.S:
-                case ConsoleKey.DownArrow:
-                    selectedIndex++;
                     break;
                 case ConsoleKey.Spacebar:
                 case ConsoleKey.Enter:
@@ -92,15 +71,11 @@ namespace CodeMagic.UI.Console.Views
                     break;
             }
 
-            if (selectedIndex > 1)
-                selectedIndex = 0;
-            if (selectedIndex < 0)
-                selectedIndex = 1;
         }
 
         private void ProcessSelectedOption()
         {
-            switch (selectedIndex)
+            switch (menu.SelectedItem.Data)
             {
                 case 0:
                     ProcessStartGame();
