@@ -27,6 +27,8 @@
                     return new CreateWaterSpellAction(actionData);
                 case LongCastSpellAction.ActionType:
                     return new LongCastSpellAction(actionData, spell);
+                case TransmuteWaterSpellAction.ActionType:
+                    return new TransmuteWaterSpellAction(actionData);
             }
 
             throw new SpellException($"Action type \"{actionData.type}\" is not supported.");

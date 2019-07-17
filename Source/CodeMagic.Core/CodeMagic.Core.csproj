@@ -149,6 +149,7 @@
     <Compile Include="Spells\SpellActions\PushSpellAction.cs" />
     <Compile Include="Spells\SpellActions\SpellActionBase.cs" />
     <Compile Include="Spells\SpellActions\SpellActionsFactory.cs" />
+    <Compile Include="Spells\SpellActions\TransmuteWaterSpellAction.cs" />
     <Compile Include="Spells\SpellException.cs" />
     <Compile Include="Spells\SpellHelper.cs" />
     <Compile Include="Statuses\IObjectStatus.cs" />

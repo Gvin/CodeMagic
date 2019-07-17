@@ -49,6 +49,8 @@ namespace CodeMagic.UI.Console.Controls
             writer.CursorX = 2;
             writer.CursorY = 4;
 
+            writer.BackColor = Color.Black;
+
             writer.Write("HP:   ", Color.White);
             writer.Write($"{player.Health} / {player.MaxHealth}   ", Color.Red);
 
