@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area.Liquids
@@ -71,11 +72,11 @@ namespace CodeMagic.Core.Area.Liquids
             target.AddLiquid(separated);
         }
 
-        public void ApplyLiquids(IDestroyableObject destroyable)
+        public void ApplyLiquids(IDestroyableObject destroyable, Journal journal)
         {
             foreach (var liquid in liquids.Values)
             {
-                liquid.ApplyEffect(destroyable);
+                liquid.ApplyEffect(destroyable, journal);
             }
         }
 

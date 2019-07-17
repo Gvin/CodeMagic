@@ -52,6 +52,8 @@
     <Compile Include="Area\IAreaMap.cs" />
     <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Area\AreaMapFragment.cs" />
+    <Compile Include="Area\Liquids\AbstractLiquid.cs" />
+    <Compile Include="Area\Liquids\AcidLiquid.cs" />
     <Compile Include="Area\Liquids\ILiquid.cs" />
     <Compile Include="Area\Liquids\LiquidsData.cs" />
     <Compile Include="Area\Liquids\WaterLiquid.cs" />
@@ -70,6 +72,8 @@
     <Compile Include="Configuration\Xml\XmlTemperatureConfigurationType.cs" />
     <Compile Include="Configuration\Xml\XmlTemperatureDamageConfigurationType.cs" />
     <Compile Include="Game\IGameCore.cs" />
+    <Compile Include="Objects\DecorativeObjects\AbstractIceObject.cs" />
+    <Compile Include="Objects\DecorativeObjects\AcidIceObject.cs" />
     <Compile Include="Objects\DecorativeObjects\IceObject.cs" />
     <Compile Include="Objects\IStepReactionObject.cs" />
     <Compile Include="Objects\MovementHelper.cs" />

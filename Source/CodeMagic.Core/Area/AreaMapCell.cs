@@ -110,7 +110,7 @@ namespace CodeMagic.Core.Area
             {
                 destroyableObject.Statuses.Update(destroyableObject, this, journal);
                 Environment.ApplyEnvironment(destroyableObject, journal);
-                Liquids.ApplyLiquids(destroyableObject);
+                Liquids.ApplyLiquids(destroyableObject, journal);
             }
         }
     }

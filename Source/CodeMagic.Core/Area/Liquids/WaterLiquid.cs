@@ -1,75 +1,47 @@
 ﻿using System;
 using System.Linq;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Area.Liquids
 {
-    public class WaterLiquid : ILiquid
+    public class WaterLiquid : AbstractLiquid
     {
+        public const int WaterFreezingPoint = 0;
+        private const int WaterBoilingPoint = 100;
+
         private const int WaterMaxVolume = 100;
         private const int WaterMaxSpreadVolume = 3;
 
-        private const int BoilingTemperature = 100;
         private const int WaterRequiredPerDegrees = 1;
         private const int SteamToPressureMultiplier = 6;
 
         public const int MinVolumeForEffect = 50;
-        public const int FreezingPoint = 0;
-
-        private int volume;
-
+        
         public WaterLiquid(int volume)
+            : base(volume)
         {
-            this.volume = volume;
         }
 
-        public int Volume
-        {
-            get => volume;
-            set
-            {
-                if (value < 0)
-                {
-                    volume = 0;
-                    return;
-                }
+        public override int MaxVolume => WaterMaxVolume;
 
-                volume = value;
-            }
-        }
+        public override int MaxSpreadVolume => WaterMaxSpreadVolume;
 
-        public int MaxVolume => WaterMaxVolume;
+        protected override int FreezingPoint => WaterFreezingPoint;
 
-        public int MaxSpreadVolume => WaterMaxSpreadVolume;
+        protected override int BoilingPoint => WaterBoilingPoint;
 
-        public ILiquid Separate(int separateVolume)
+        public override ILiquid Separate(int separateVolume)
         {
             Volume -= separateVolume;
             return new WaterLiquid(separateVolume);
         }
 
-        public void Update(AreaMapCell cell)
+        protected override void ProcessBoiling(AreaMapCell cell)
         {
-            if (Volume == 0)
-                return;
-
-            if (cell.Environment.Temperature <= FreezingPoint)
-            {
-                ProcessFreezing(cell);
-                return;
-            }
-
-            if (cell.Environment.Temperature >= BoilingTemperature)
-            {
-                ProcessBoiling(cell);
-            }
-        }
-
-        private void ProcessBoiling(AreaMapCell cell)
-        {
-            var excessTemperature = cell.Environment.Temperature - BoilingTemperature;
+            var excessTemperature = cell.Environment.Temperature - WaterBoilingPoint;
             var steamVolume = Math.Min(excessTemperature * WaterRequiredPerDegrees, Volume);
             var heatLoss = steamVolume / WaterRequiredPerDegrees;
 
@@ -78,7 +50,7 @@ namespace CodeMagic.Core.Area.Liquids
             Volume -= steamVolume;
         }
 
-        private void ProcessFreezing(AreaMapCell cell)
+        protected override void ProcessFreezing(AreaMapCell cell)
         {
             var ice = cell.Objects.OfType<IceObject>().FirstOrDefault();
             if (ice == null)
@@ -91,7 +63,7 @@ namespace CodeMagic.Core.Area.Liquids
             Volume = 0;
         }
 
-        public void ApplyEffect(IDestroyableObject destroyable)
+        public override void ApplyEffect(IDestroyableObject destroyable, Journal journal)
         {
             if (Volume < MinVolumeForEffect)
                 return;

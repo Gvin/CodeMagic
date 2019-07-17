@@ -109,6 +109,8 @@ namespace CodeMagic.UI.Console.Drawing.JournalTextProviding
                     return "fire";
                 case Element.Frost:
                     return "frost";
+                case Element.Acid:
+                    return "acid";
             }
             throw new InvalidEnumArgumentException($"Unknown element type: {element.Value}");
         }

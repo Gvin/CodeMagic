@@ -3,6 +3,7 @@
     public enum Element
     {
         Fire,
-        Frost
+        Frost,
+        Acid
     }
 }

@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Objects;
+﻿using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area.Liquids
 {
@@ -14,6 +15,6 @@ namespace CodeMagic.Core.Area.Liquids
 
         void Update(AreaMapCell cell);
 
-        void ApplyEffect(IDestroyableObject destroyable);
+        void ApplyEffect(IDestroyableObject destroyable, Journal journal);
     }
 }

@@ -10,7 +10,11 @@ namespace CodeMagic.UI.Console.Drawing
     public class FloorFactory
     {
         private static readonly Color WaterColor = Color.CadetBlue;
-        private static readonly Color IceColor = Color.DarkTurquoise;
+        private static readonly Color WaterIceColor = Color.DarkTurquoise;
+
+        private static readonly Color AcidColor = Color.GreenYellow;
+        private static readonly Color AcidIceColor = Color.LightGreen;
+
         private static readonly Color DirtColor = Color.FromArgb(107, 83, 49);
         private static readonly Color WoodColor = Color.FromArgb(99, 63, 11);
 
@@ -19,13 +23,21 @@ namespace CodeMagic.UI.Console.Drawing
             if (cell == null)
                 return Color.Black;
 
-            var iceObject = cell.Objects.OfType<IceObject>().FirstOrDefault();
-            if (iceObject != null && iceObject.Volume >= IceObject.MinVolumeForEffect)
-                return IceColor;
+            var waterIce = cell.Objects.OfType<IceObject>().FirstOrDefault();
+            if (waterIce != null && waterIce.Volume >= IceObject.WaterIceMinVolumeForEffect)
+                return WaterIceColor;
+
+            var acidIce = cell.Objects.OfType<AcidIceObject>().FirstOrDefault();
+            if (acidIce != null && acidIce.Volume >= AcidIceObject.AcidIceMinVolumeForEffect)
+                return AcidIceColor;
 
             var waterLevel = cell.Liquids.GetLiquidVolume<WaterLiquid>();
             if (waterLevel >= WaterLiquid.MinVolumeForEffect)
                 return WaterColor;
+
+            var acidLevel = cell.Liquids.GetLiquidVolume<AcidLiquid>();
+            if (acidLevel >= AcidLiquid.MinVolumeForEffect)
+                return AcidColor;
 
             return GetStandardFloorColor(cell.FloorType);
         }
@@ -51,13 +63,21 @@ namespace CodeMagic.UI.Console.Drawing
 
         public SymbolsImage GetFloorImage(AreaMapCell cell)
         {
-            var iceObject = cell.Objects.OfType<IceObject>().FirstOrDefault();
-            if (iceObject != null && iceObject.Volume >= IceObject.MinVolumeForEffect)
-                return GetIceFloorImage();
+            var waterIce = cell.Objects.OfType<IceObject>().FirstOrDefault();
+            if (waterIce != null && waterIce.Volume >= IceObject.WaterIceMinVolumeForEffect)
+                return GetWaterIceFloorImage();
+
+            var acidIce = cell.Objects.OfType<AcidIceObject>().FirstOrDefault();
+            if (acidIce != null && acidIce.Volume >= AcidIceObject.AcidIceMinVolumeForEffect)
+                return GetAcidIceFloorImage();
 
             var waterLevel = cell.Liquids.GetLiquidVolume<WaterLiquid>();
             if (waterLevel >= WaterLiquid.MinVolumeForEffect)
                 return GetWaterFloorImage();
+
+            var acidLevel = cell.Liquids.GetLiquidVolume<AcidLiquid>();
+            if (acidLevel >= AcidLiquid.MinVolumeForEffect)
+                return GetAcidFloorImage();
 
             return GetStandardFloorImage(cell.FloorType);
         }
@@ -79,11 +99,11 @@ namespace CodeMagic.UI.Console.Drawing
             }
         }
 
-        private SymbolsImage GetIceFloorImage()
+        private SymbolsImage GetWaterIceFloorImage()
         {
             var image = new SymbolsImage();
 
-            image.SetDefaultBackColor(IceColor);
+            image.SetDefaultBackColor(WaterIceColor);
             image.SetDefaultColor(Color.White);
 
             image.SetSymbolMap(new[]
@@ -91,6 +111,40 @@ namespace CodeMagic.UI.Console.Drawing
                 new[] {' ', '/', ' '},
                 new[] {' ', ' ', ' '},
                 new[] {'/', ' ', '/'}
+            });
+
+            return image;
+        }
+
+        private SymbolsImage GetAcidIceFloorImage()
+        {
+            var image = new SymbolsImage();
+
+            image.SetDefaultBackColor(AcidIceColor);
+            image.SetDefaultColor(Color.White);
+
+            image.SetSymbolMap(new[]
+            {
+                new[] {' ', '/', ' '},
+                new[] {' ', ' ', ' '},
+                new[] {'/', ' ', '/'}
+            });
+
+            return image;
+        }
+
+        private SymbolsImage GetAcidFloorImage()
+        {
+            var image = new SymbolsImage();
+
+            image.SetDefaultBackColor(AcidColor);
+            image.SetDefaultColor(Color.White);
+
+            image.SetSymbolMap(new[]
+            {
+                new[] {' ', '\u2248', ' '},
+                new[] {'\u2248', ' ', '\u2248'},
+                new[] {' ', '\u2248', ' '}
             });
 
             return image;
