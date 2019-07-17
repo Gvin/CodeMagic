@@ -2,8 +2,8 @@
 using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Area.Liquids;
-using CodeMagic.Core.Objects.DecorativeObjects;
+using CodeMagic.Core.Objects.IceObjects;
+using CodeMagic.Core.Objects.LiquidObjects;
 
 namespace CodeMagic.UI.Console.Drawing
 {
@@ -23,20 +23,20 @@ namespace CodeMagic.UI.Console.Drawing
             if (cell == null)
                 return Color.Black;
 
-            var waterIce = cell.Objects.OfType<IceObject>().FirstOrDefault();
-            if (waterIce != null && waterIce.Volume >= IceObject.WaterIceMinVolumeForEffect)
+            var waterIce = cell.Objects.OfType<WaterIceObject>().FirstOrDefault();
+            if (waterIce != null && waterIce.Volume >= WaterIceObject.WaterIceMinVolumeForEffect)
                 return WaterIceColor;
 
             var acidIce = cell.Objects.OfType<AcidIceObject>().FirstOrDefault();
             if (acidIce != null && acidIce.Volume >= AcidIceObject.AcidIceMinVolumeForEffect)
                 return AcidIceColor;
 
-            var waterLevel = cell.Liquids.GetLiquidVolume<WaterLiquid>();
-            if (waterLevel >= WaterLiquid.MinVolumeForEffect)
+            var waterLevel = cell.Objects.GetLiquidVolume<WaterLiquidObject>();
+            if (waterLevel >= WaterLiquidObject.WaterMinVolumeForEffect)
                 return WaterColor;
 
-            var acidLevel = cell.Liquids.GetLiquidVolume<AcidLiquid>();
-            if (acidLevel >= AcidLiquid.MinVolumeForEffect)
+            var acidLevel = cell.Objects.GetLiquidVolume<AcidLiquidObject>();
+            if (acidLevel >= AcidLiquidObject.AcidMinVolumeForEffect)
                 return AcidColor;
 
             return GetStandardFloorColor(cell.FloorType);
@@ -63,20 +63,20 @@ namespace CodeMagic.UI.Console.Drawing
 
         public SymbolsImage GetFloorImage(AreaMapCell cell)
         {
-            var waterIce = cell.Objects.OfType<IceObject>().FirstOrDefault();
-            if (waterIce != null && waterIce.Volume >= IceObject.WaterIceMinVolumeForEffect)
+            var waterIce = cell.Objects.OfType<WaterIceObject>().FirstOrDefault();
+            if (waterIce != null && waterIce.Volume >= WaterIceObject.WaterIceMinVolumeForEffect)
                 return GetWaterIceFloorImage();
 
             var acidIce = cell.Objects.OfType<AcidIceObject>().FirstOrDefault();
             if (acidIce != null && acidIce.Volume >= AcidIceObject.AcidIceMinVolumeForEffect)
                 return GetAcidIceFloorImage();
 
-            var waterLevel = cell.Liquids.GetLiquidVolume<WaterLiquid>();
-            if (waterLevel >= WaterLiquid.MinVolumeForEffect)
+            var waterLevel = cell.Objects.GetLiquidVolume<WaterLiquidObject>();
+            if (waterLevel >= WaterLiquidObject.WaterMinVolumeForEffect)
                 return GetWaterFloorImage();
 
-            var acidLevel = cell.Liquids.GetLiquidVolume<AcidLiquid>();
-            if (acidLevel >= AcidLiquid.MinVolumeForEffect)
+            var acidLevel = cell.Objects.GetLiquidVolume<AcidLiquidObject>();
+            if (acidLevel >= AcidLiquidObject.AcidMinVolumeForEffect)
                 return GetAcidFloorImage();
 
             return GetStandardFloorImage(cell.FloorType);

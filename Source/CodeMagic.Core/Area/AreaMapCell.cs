@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using CodeMagic.Core.Area.EnvironmentData;
-using CodeMagic.Core.Area.Liquids;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.DecorativeObjects;
+using CodeMagic.Core.Objects.LiquidObjects;
+using Environment = CodeMagic.Core.Area.EnvironmentData.Environment;
 
 namespace CodeMagic.Core.Area
 {
@@ -14,17 +14,14 @@ namespace CodeMagic.Core.Area
     {
         public AreaMapCell()
         {
-            Objects = new List<IMapObject>();
+            Objects = new MapObjectsCollection();
             FloorType = FloorTypes.Stone;
             Environment = new Environment();
-            Liquids = new LiquidsData();
         }
 
         public Environment Environment { get; }
 
-        public LiquidsData Liquids { get; }
-
-        public List<IMapObject> Objects { get; }
+        public MapObjectsCollection Objects { get; }
 
         public FloorTypes FloorType { get; set; }
 
@@ -63,7 +60,6 @@ namespace CodeMagic.Core.Area
             ProcessDestroyableObjects(game, position);
 
             Environment.Normalize();
-            Liquids.UpdateLiquids(this);
 
             if (Environment.Temperature >= FireDecorativeObject.SmallFireTemperature && !Objects.OfType<FireDecorativeObject>().Any())
             {
@@ -110,8 +106,36 @@ namespace CodeMagic.Core.Area
             {
                 destroyableObject.Statuses.Update(destroyableObject, this, journal);
                 Environment.ApplyEnvironment(destroyableObject, journal);
-                Liquids.ApplyLiquids(destroyableObject, journal);
             }
+        }
+
+        public void CheckLiquidSpreading(AreaMapCell other)
+        {
+            var localLiquids = Objects.OfType<ILiquidObject>().ToArray();
+            var otherLiquids = Objects.OfType<ILiquidObject>().ToArray();
+
+            foreach (var liquid in localLiquids)
+            {
+                if (liquid.Volume >= liquid.MaxVolumeBeforeSpread)
+                {
+                    SpreadLiquid(liquid, other);
+                }
+            }
+
+            foreach (var otherLiquid in otherLiquids)
+            {
+                if (otherLiquid.Volume >= otherLiquid.MaxVolumeBeforeSpread)
+                {
+                    SpreadLiquid(otherLiquid, other);
+                }
+            }
+        }
+
+        private void SpreadLiquid(ILiquidObject liquid, AreaMapCell target)
+        {
+            var spreadAmount = Math.Min(liquid.MaxSpreadVolume, liquid.Volume - liquid.MaxVolumeBeforeSpread);
+            var separated = liquid.Separate(spreadAmount);
+            target.Objects.AddLiquid(separated);
         }
     }
 }

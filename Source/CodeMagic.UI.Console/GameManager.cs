@@ -1,11 +1,11 @@
 ﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Area.Liquids;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Xml;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures.Implementations;
+using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
 
 namespace CodeMagic.UI.Console
@@ -47,23 +47,23 @@ namespace CodeMagic.UI.Console
 
             var cell1 = map.GetCell(1, 0);
             cell1.Environment.Temperature = -100;
-            cell1.Liquids.AddLiquid(new WaterLiquid(100));
+            cell1.Objects.AddLiquid(new WaterLiquidObject(100));
 
             var cell2 = map.GetCell(2, 0);
             cell2.Environment.Temperature = -100;
-            cell2.Liquids.AddLiquid(new WaterLiquid(100));
+            cell2.Objects.AddLiquid(new WaterLiquidObject(100));
 
             var cell3 = map.GetCell(3, 0);
             cell3.Environment.Temperature = -100;
-            cell3.Liquids.AddLiquid(new WaterLiquid(100));
+            cell3.Objects.AddLiquid(new WaterLiquidObject(100));
 
             var cell4 = map.GetCell(4, 0);
             cell4.Environment.Temperature = -100;
-            cell4.Liquids.AddLiquid(new WaterLiquid(100));
+            cell4.Objects.AddLiquid(new WaterLiquidObject(100));
 
             var cell5 = map.GetCell(5, 0);
             cell5.Environment.Temperature = -100;
-            cell5.Liquids.AddLiquid(new WaterLiquid(100));
+            cell5.Objects.AddLiquid(new WaterLiquidObject(100));
 
             return map;
         }

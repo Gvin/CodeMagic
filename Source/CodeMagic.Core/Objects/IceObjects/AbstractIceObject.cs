@@ -1,25 +1,40 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Area.Liquids;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Core.Objects.LiquidObjects;
 
-namespace CodeMagic.Core.Objects.DecorativeObjects
+namespace CodeMagic.Core.Objects.IceObjects
 {
-    public abstract class AbstractIceObject : IMapObject, IDynamicObject, IStepReactionObject
+    public abstract class AbstractIceObject<TLiquid> : IIceObject where TLiquid : ILiquidObject
     {
         private const int MaxSlideDistance = 3;
         private const int SlideSpeedDamageMultiplier = 1;
 
+        private int volume;
+
         protected AbstractIceObject(int volume)
         {
-            Volume = volume;
+            this.volume = volume;
         }
 
-        public int Volume { get; set; }
+        public int Volume
+        {
+            get => volume;
+            set
+            {
+                if (value < 0)
+                {
+                    volume = 0;
+                    return;
+                }
+
+                volume = value;
+            }
+        }
 
         protected abstract int MinVolumeForEffect { get; }
 
@@ -37,17 +52,19 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
 
         public bool BlocksEnvironment => false;
 
+        public bool SupportsSlide => Volume >= MinVolumeForEffect;
+
         public void Update(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);
             if (cell.Environment.Temperature > FreezingTemperature)
             {
-                cell.Liquids.AddLiquid(CreateLiquid(Volume));
+                cell.Objects.AddLiquid(CreateLiquid(Volume));
                 cell.Objects.Remove(this);
             }
         }
 
-        protected abstract ILiquid CreateLiquid(int volume);
+        protected abstract TLiquid CreateLiquid(int volume);
 
         public bool Updated { get; set; }
 
@@ -108,7 +125,7 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
 
         private bool CellContainsIce(AreaMapCell cell)
         {
-            var iceObject = cell.Objects.OfType<AbstractIceObject>().FirstOrDefault();
+            var iceObject = cell.Objects.OfType<IIceObject>().FirstOrDefault();
             if (iceObject == null)
                 return false;
 

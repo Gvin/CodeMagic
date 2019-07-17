@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeMagic.Core.Area.Liquids;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
@@ -27,21 +27,21 @@ namespace CodeMagic.Core.Spells.SpellActions
                 return position;
 
             var targetCell = game.Map.GetCell(position);
-            var waterVolume = targetCell.Liquids.GetLiquidVolume<WaterLiquid>();
+            var waterVolume = targetCell.Objects.GetLiquidVolume<WaterLiquidObject>();
             var transmutingVolume = Math.Min(waterVolume, volume);
 
-            targetCell.Liquids.RemoveLiquid<WaterLiquid>(transmutingVolume);
-            targetCell.Liquids.AddLiquid(CreateTargetLiquid(transmutingVolume));
+            targetCell.Objects.RemoveLiquidVolume<WaterLiquidObject>(transmutingVolume);
+            targetCell.Objects.AddLiquid(CreateTargetLiquid(transmutingVolume));
 
             return position;
         }
 
-        private ILiquid CreateTargetLiquid(int targetVolume)
+        private ILiquidObject CreateTargetLiquid(int targetVolume)
         {
             switch (result.ToLower())
             {
                 case LiquidNameAcid:
-                    return new AcidLiquid(targetVolume);
+                    return new AcidLiquidObject(targetVolume);
                 default:
                     throw new SpellException($"Unknown liquid result: {result}");
             }

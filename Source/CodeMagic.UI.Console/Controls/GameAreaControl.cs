@@ -2,11 +2,11 @@
 using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Area.Liquids;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Statuses;
 using CodeMagic.UI.Console.Drawing;
 using CodeMagic.UI.Console.Drawing.DrawingProcessors;
@@ -144,7 +144,7 @@ namespace CodeMagic.UI.Console.Controls
             writer.CursorY = y + 2;
             writer.CursorX = x;
             writer.BackColor = Color.Black;
-            writer.Write(cell.Liquids.GetLiquidVolume<WaterLiquid>(), Color.DeepSkyBlue);
+            writer.Write(cell.Objects.GetLiquidVolume<WaterLiquidObject>(), Color.DeepSkyBlue);
         }
 
         private SymbolsImage GetCellImage(AreaMapCell cell)

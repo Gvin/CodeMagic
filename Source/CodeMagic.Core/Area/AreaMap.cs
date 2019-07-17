@@ -207,7 +207,7 @@ namespace CodeMagic.Core.Area
             if (nextCell.BlocksEnvironment)
                 return;
 
-            cell.Liquids.CheckLiquidSpreading(nextCell.Liquids);
+            cell.CheckLiquidSpreading(nextCell);
             cell.Environment.Balance(nextCell.Environment);
         }
 
