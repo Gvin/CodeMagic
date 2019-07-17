@@ -14,7 +14,7 @@ namespace CodeMagic.UI.Console
     {
         private const int GoblinsCount = 20;
         private const int MapSize = 31; // uneven value only!
-        private const bool UseFakeMap = true;
+        private const bool UseFakeMap = false;
 
         public GameCore StartGame()
         {
