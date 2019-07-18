@@ -56,17 +56,15 @@
     <Compile Include="Common\Direction.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />
+    <Compile Include="Configuration\Liquids\ILiquidConfiguration.cs" />
+    <Compile Include="Configuration\Liquids\ILiquidsConfiguration.cs" />
+    <Compile Include="Configuration\IPhysicsConfiguration.cs" />
     <Compile Include="Configuration\IPressureConfiguration.cs" />
     <Compile Include="Configuration\IPressureDamageConfiguration.cs" />
     <Compile Include="Configuration\ISpellConfiguration.cs" />
+    <Compile Include="Configuration\ISpellsConfiguration.cs" />
     <Compile Include="Configuration\ITemperatureConfiguration.cs" />
     <Compile Include="Configuration\ITemperatureDamageConfiguration.cs" />
-    <Compile Include="Configuration\Xml\XmlConfigurationProviderType.cs" />
-    <Compile Include="Configuration\Xml\XmlPressureConfigurationType.cs" />
-    <Compile Include="Configuration\Xml\XmlPressureDamageConfigurationType.cs" />
-    <Compile Include="Configuration\Xml\XmlSpellConfigurationType.cs" />
-    <Compile Include="Configuration\Xml\XmlTemperatureConfigurationType.cs" />
-    <Compile Include="Configuration\Xml\XmlTemperatureDamageConfigurationType.cs" />
     <Compile Include="Game\IGameCore.cs" />
     <Compile Include="Objects\IceObjects\AbstractIceObject.cs" />
     <Compile Include="Objects\IceObjects\AcidIceObject.cs" />
@@ -157,9 +155,6 @@
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />
     <Compile Include="Statuses\OnFireObjectStatus.cs" />
     <Compile Include="Statuses\WetObjectStatus.cs" />
-    <Content Include="Configuration.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\Templates\SpellTemplate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

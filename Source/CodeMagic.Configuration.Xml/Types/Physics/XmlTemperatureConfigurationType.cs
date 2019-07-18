@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using System.Xml.Serialization;
+using CodeMagic.Core.Configuration;
 
-namespace CodeMagic.Core.Configuration.Xml
+namespace CodeMagic.Configuration.Xml.Types.Physics
 {
     public class XmlTemperatureConfigurationType : ITemperatureConfiguration
     {

@@ -6,22 +6,23 @@ namespace CodeMagic.Core.Statuses
 {
     public class WetObjectStatus : IObjectStatus
     {
-        private const int TimeToWearOut = 3;
         public const string StatusType = "wet";
 
         public const int SelfExtinguishChanceBonus = 30;
         public const int CatchFireChancePenalty = 10;
 
+        private readonly int maxLifeTime;
         private int lifeTime;
 
-        public WetObjectStatus()
+        public WetObjectStatus(int maxLifeTime)
         {
+            this.maxLifeTime = maxLifeTime;
             lifeTime = 0;
         }
 
         public bool Update(IDestroyableObject owner, AreaMapCell cell, Journal journal)
         {
-            if (lifeTime >= TimeToWearOut)
+            if (lifeTime >= maxLifeTime)
             {
                 return false;
             }

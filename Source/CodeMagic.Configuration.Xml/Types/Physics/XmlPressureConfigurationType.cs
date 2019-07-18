@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Serialization;
+using CodeMagic.Core.Configuration;
 
-namespace CodeMagic.Core.Configuration.Xml
+namespace CodeMagic.Configuration.Xml.Types.Physics
 {
     [Serializable]
     public class XmlPressureConfigurationType : IPressureConfiguration

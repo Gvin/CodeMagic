@@ -8,6 +8,8 @@
 
         int MaxSpreadVolume { get; }
 
+        int MinVolumeForEffect { get; }
+
         ILiquidObject Separate(int volume);
     }
 }

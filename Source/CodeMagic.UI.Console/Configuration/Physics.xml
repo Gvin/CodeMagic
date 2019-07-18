@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<physics-configuration>
+  <temperature>
+    <min-value>-200</min-value>
+    <max-value>4000</max-value>
+    <normal-value>25</normal-value>
+    <max-transfer-value>50</max-transfer-value>
+    <transfer-value-difference-multiplier>0.05</transfer-value-difference-multiplier>
+    <normalize-speed>1</normalize-speed>
+    <cold-damage>
+      <line temperature="-70" damage="1"/>
+      <line temperature="-100" damage="5"/>
+      <line temperature="-180" damage="20"/>
+    </cold-damage>
+    <heat-damage>
+      <line temperature="100" damage="1"/>
+      <line temperature="600" damage="5"/>
+      <line temperature="1200" damage="15"/>
+      <line temperature="1500" damage="30"/>
+    </heat-damage>
+  </temperature>
+  <pressure>
+    <min-value>0</min-value>
+    <max-value>4000</max-value>
+    <normal-value>100</normal-value>
+    <normalize-speed>50</normalize-speed>
+    <low-pressure-damage>
+      <line pressure="20" damage="5"/>
+    </low-pressure-damage>
+    <high-pressure-damage>
+      <line pressure="600" damage="1"/>
+      <line pressure="1300" damage="5"/>
+      <line pressure="2000" damage="10"/>
+    </high-pressure-damage>
+    <change-pressure-damage>
+      <line pressure="300" damage="10"/>
+      <line pressure="900" damage="30"/>
+      <line pressure="1500" damage="70"/>
+    </change-pressure-damage>
+  </pressure>
+</physics-configuration>

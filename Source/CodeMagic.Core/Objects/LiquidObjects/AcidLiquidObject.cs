@@ -8,44 +8,20 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 {
     public class AcidLiquidObject : AbstractLiquidObject<AcidIceObject>
     {
-        public const int AcidFreezingPoint = -10;
-        private const int AcidBoilingPoint = 337;
-
-        private const int AcidMaxVolumeBeforeSpread = 100;
-        private const int AcidMaxSpreadVolume = 3;
-
-        private const int AcidRequiredPerDegrees = 1;
-        private const int AcidSteamToPressureMultiplier = 6;
-
-        public const int AcidMinVolumeForEffect = 50;
-
-        private const double AcidDamageToVolumeMultiplier = 0.3d;
+        private const string CustomValueDamageToVolumeMultiplier = "DamageToVolumeMultiplier";
+        public const string LiquidType = "acid";
 
         public AcidLiquidObject(int volume) 
-            : base(volume)
+            : base(volume, LiquidType)
         {
         }
 
         public override string Name => "Acid";
 
-        protected override int FreezingPoint => AcidFreezingPoint;
-
-        protected override int BoilingPoint => AcidBoilingPoint;
-
-        protected override int MinVolumeForEffect => AcidMinVolumeForEffect;
-
-        protected override int LiquidConsumptionPerTemperature => AcidRequiredPerDegrees;
-
-        protected override int SteamToPressureMultiplier => AcidSteamToPressureMultiplier;
-
         protected override AcidIceObject CreateIce(int volume)
         {
             return new AcidIceObject(volume);
         }
-
-        public override int MaxVolumeBeforeSpread => AcidMaxVolumeBeforeSpread;
-
-        public override int MaxSpreadVolume => AcidMaxSpreadVolume;
 
         public override ILiquidObject Separate(int volume)
         {
@@ -64,13 +40,20 @@ namespace CodeMagic.Core.Objects.LiquidObjects
                 if (Volume < MinVolumeForEffect)
                     return;
 
-                var damage = (int)Math.Ceiling(AcidDamageToVolumeMultiplier * Volume);
+                var damageMultiplier = GetAcidDamageMultiplier();
+                var damage = (int)Math.Ceiling(damageMultiplier * Volume);
                 if (damage == 0)
                     return;
 
                 destroyable.Damage(damage, Element.Acid);
                 game.Journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Acid));
             }
+        }
+
+        private double GetAcidDamageMultiplier()
+        {
+            var stringValue = GetCustomConfigurationValue(CustomValueDamageToVolumeMultiplier);
+            return double.Parse(stringValue);
         }
     }
 }

@@ -2,6 +2,8 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
+using CodeMagic.Core.Configuration;
+using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects.Creatures;
@@ -14,10 +16,15 @@ namespace CodeMagic.Core.Objects.IceObjects
         private const int MaxSlideDistance = 3;
         private const int SlideSpeedDamageMultiplier = 1;
 
+        private readonly ILiquidConfiguration configuration;
         private int volume;
 
-        protected AbstractIceObject(int volume)
+        protected AbstractIceObject(int volume, string liquidType)
         {
+            configuration = ConfigurationManager.GetLiquidConfiguration(liquidType);
+            if (configuration == null)
+                throw new ApplicationException($"Unable to find liquid configuration for liquid type \"{liquidType}\".");
+
             this.volume = volume;
         }
 
@@ -38,8 +45,6 @@ namespace CodeMagic.Core.Objects.IceObjects
 
         protected abstract int MinVolumeForEffect { get; }
 
-        protected abstract int FreezingTemperature { get; }
-
         public abstract string Name { get; }
 
         public bool BlocksMovement => false;
@@ -57,7 +62,7 @@ namespace CodeMagic.Core.Objects.IceObjects
         public void Update(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);
-            if (cell.Environment.Temperature > FreezingTemperature)
+            if (cell.Environment.Temperature > configuration.FreezingPoint)
             {
                 cell.Objects.AddLiquid(CreateLiquid(Volume));
                 cell.Objects.Remove(this);

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.Core.Tests", "Cod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.Core", "CodeMagic.Core\CodeMagic.Core.csproj", "{5755A604-1BD8-4863-B0C7-4A15E5E1A6AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.Configuration.Xml", "CodeMagic.Configuration.Xml\CodeMagic.Configuration.Xml.csproj", "{9ACDC6A3-A058-4567-B013-FA45090616B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{5755A604-1BD8-4863-B0C7-4A15E5E1A6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5755A604-1BD8-4863-B0C7-4A15E5E1A6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5755A604-1BD8-4863-B0C7-4A15E5E1A6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ACDC6A3-A058-4567-B013-FA45090616B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ACDC6A3-A058-4567-B013-FA45090616B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ACDC6A3-A058-4567-B013-FA45090616B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ACDC6A3-A058-4567-B013-FA45090616B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,11 +1,13 @@
-﻿namespace CodeMagic.Core.Configuration
+﻿using CodeMagic.Core.Configuration.Liquids;
+
+namespace CodeMagic.Core.Configuration
 {
     public interface IConfigurationProvider
     {
-        ISpellConfiguration[] SpellsConfiguration { get; }
+        ISpellsConfiguration Spells { get; }
 
-        ITemperatureConfiguration TemperatureConfiguration { get; }
+        IPhysicsConfiguration Physics { get; }
 
-        IPressureConfiguration PressureConfiguration { get; }
+        ILiquidsConfiguration Liquids { get; }
     }
 }

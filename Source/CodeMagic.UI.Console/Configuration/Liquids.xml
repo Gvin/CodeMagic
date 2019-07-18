@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<liquids-configuration>
+  <liquid type="water">
+    <freezing-point>0</freezing-point>
+    <boiling-point>100</boiling-point>
+    <min-volume-for-effect>30</min-volume-for-effect>
+    <max-volume-before-spread>50</max-volume-before-spread>
+    <max-spread-volume>3</max-spread-volume>
+    <evaporation-multiplier>3</evaporation-multiplier>
+    <steam-pressure-multiplier>6</steam-pressure-multiplier>
+    <custom>
+      <value key="WetStatusLifeTime">5</value>
+    </custom>
+  </liquid>
+  <liquid type="acid">
+    <freezing-point>-10</freezing-point>
+    <boiling-point>337</boiling-point>
+    <min-volume-for-effect>30</min-volume-for-effect>
+    <max-volume-before-spread>50</max-volume-before-spread>
+    <max-spread-volume>3</max-spread-volume>
+    <evaporation-multiplier>3</evaporation-multiplier>
+    <steam-pressure-multiplier>6</steam-pressure-multiplier>
+    <custom>
+      <value key="DamageToVolumeMultiplier">0.3</value>
+    </custom>
+  </liquid>
+</liquids-configuration>

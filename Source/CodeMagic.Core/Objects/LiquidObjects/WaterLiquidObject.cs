@@ -7,40 +7,21 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 {
     public class WaterLiquidObject : AbstractLiquidObject<WaterIceObject>
     {
-        public const int WaterFreezingPoint = 0;
-        private const int WaterBoilingPoint = 100;
-        public const int WaterMinVolumeForEffect = 50;
-        private const int WaterMaxVolumeBeforeSpread = 100;
-        private const int WaterMaxSpreadVolume = 3;
-
-        private const int WaterRequiredPerDegrees = 1;
-        private const int WaterSteamToPressureMultiplier = 6;
+        public const string LiquidType = "water";
+        private const string CustomValueWetStatusLifeTime = "WetStatusLifeTime";
 
         public WaterLiquidObject(int volume) 
-            : base(volume)
+            : base(volume, LiquidType)
         {
         }
 
         public override string Name => "Water";
 
-        protected override int FreezingPoint => WaterFreezingPoint;
-
-        protected override int BoilingPoint => WaterBoilingPoint;
-
-        protected override int MinVolumeForEffect => WaterMinVolumeForEffect;
-
-        protected override int LiquidConsumptionPerTemperature => WaterRequiredPerDegrees;
-
-        protected override int SteamToPressureMultiplier => WaterSteamToPressureMultiplier;
 
         protected override WaterIceObject CreateIce(int volume)
         {
             return new WaterIceObject(volume);
         }
-
-        public override int MaxVolumeBeforeSpread => WaterMaxVolumeBeforeSpread;
-
-        public override int MaxSpreadVolume => WaterMaxSpreadVolume;
 
         public override ILiquidObject Separate(int volume)
         {
@@ -64,8 +45,15 @@ namespace CodeMagic.Core.Objects.LiquidObjects
                     destroyable.Statuses.Remove(OnFireObjectStatus.StatusType);
                 }
 
-                destroyable.Statuses.Add(new WetObjectStatus());
+                var lifeTime = GetWetStatusLifeTime();
+                destroyable.Statuses.Add(new WetObjectStatus(lifeTime));
             }
+        }
+
+        private int GetWetStatusLifeTime()
+        {
+            var stringValue = GetCustomConfigurationValue(CustomValueWetStatusLifeTime);
+            return int.Parse(stringValue);
         }
     }
 }

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<spells-configuration>
+  <spell type="heat_area">
+    <mana-cost-multiplier>0.03</mana-cost-multiplier>
+    <mana-cost-power>2</mana-cost-power>
+  </spell>
+  <spell type="build_wall">
+    <mana-cost-multiplier>1</mana-cost-multiplier>
+    <mana-cost-power>2</mana-cost-power>
+  </spell>
+  <spell type="compress">
+    <mana-cost-multiplier>0.03</mana-cost-multiplier>
+    <mana-cost-power>2</mana-cost-power>
+  </spell>
+  <spell type="cool_area">
+    <mana-cost-multiplier>0.2</mana-cost-multiplier>
+    <mana-cost-power>2</mana-cost-power>
+  </spell>
+  <spell type="create_water">
+    <mana-cost-multiplier>0.1</mana-cost-multiplier>
+    <mana-cost-power>2</mana-cost-power>
+  </spell>
+  <spell type="decompress">
+    <mana-cost-multiplier>0.03</mana-cost-multiplier>
+    <mana-cost-power>2</mana-cost-power>
+  </spell>
+  <spell type="move">
+    <mana-cost-multiplier>1</mana-cost-multiplier>
+    <mana-cost-power>2</mana-cost-power>
+  </spell>
+  <spell type="push">
+    <mana-cost-multiplier>3</mana-cost-multiplier>
+    <mana-cost-power>2</mana-cost-power>
+  </spell>
+  <spell type="long_cast">
+    <mana-cost-multiplier>2</mana-cost-multiplier>
+    <mana-cost-power>1</mana-cost-power>
+  </spell>
+  <spell type="transmute_water">
+    <mana-cost-multiplier>0.2</mana-cost-multiplier>
+    <mana-cost-power>2</mana-cost-power>
+  </spell>
+</spells-configuration>

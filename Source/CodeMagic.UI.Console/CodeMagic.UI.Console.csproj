@@ -105,10 +105,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodeMagic.Configuration.Xml\CodeMagic.Configuration.Xml.csproj">
+      <Project>{9acdc6a3-a058-4567-b013-fa45090616b6}</Project>
+      <Name>CodeMagic.Configuration.Xml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">
       <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
       <Name>CodeMagic.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configuration\Liquids.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\Spells.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\Physics.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

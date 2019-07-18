@@ -15,7 +15,7 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         public Temperature()
         {
-            configuration = ConfigurationManager.Current.TemperatureConfiguration;
+            configuration = ConfigurationManager.Current.Physics.TemperatureConfiguration;
             value = configuration.NormalValue;
         }
 

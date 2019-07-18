@@ -7,13 +7,11 @@ namespace CodeMagic.Core.Objects.IceObjects
         public const int WaterIceMinVolumeForEffect = 50;
 
         public WaterIceObject(int volume)
-            : base(volume)
+            : base(volume, WaterLiquidObject.LiquidType)
         {
         }
 
         protected override int MinVolumeForEffect => WaterIceMinVolumeForEffect;
-
-        protected override int FreezingTemperature => WaterLiquidObject.WaterFreezingPoint;
 
         public override string Name => "Ice";
 

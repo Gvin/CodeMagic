@@ -1,6 +1,7 @@
-﻿using CodeMagic.Core.Area;
+﻿using System.IO;
+using CodeMagic.Configuration.Xml;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Configuration;
-using CodeMagic.Core.Configuration.Xml;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
@@ -18,7 +19,7 @@ namespace CodeMagic.UI.Console
 
         public GameCore StartGame()
         {
-            var config = XmlConfigurationProviderType.LoadConfiguration(@".\Configuration.xml");
+            var config = LoadConfiguration();
             ConfigurationManager.InitializeConfiguration(config);
 
             var map = CreateMap(UseFakeMap, out var playerPosition);
@@ -27,6 +28,16 @@ namespace CodeMagic.UI.Console
             map.AddObject(playerPosition, player);
 
             return new GameCore(map, playerPosition);
+        }
+
+        private IConfigurationProvider LoadConfiguration()
+        {
+            using (var spellsConfig = File.OpenRead(@".\Configuration\Spells.xml"))
+            using (var physicsConfig = File.OpenRead(@".\Configuration\Physics.xml"))
+            using (var liquidsConfig = File.OpenRead(@".\Configuration\Liquids.xml"))
+            {
+                return ConfigurationProvider.Load(spellsConfig, physicsConfig, liquidsConfig);
+            }
         }
 
         private IAreaMap CreateMap(bool fake, out Point playerPosition)

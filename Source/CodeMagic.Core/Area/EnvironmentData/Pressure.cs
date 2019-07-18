@@ -15,7 +15,7 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         public Pressure()
         {
-            configuration = ConfigurationManager.Current.PressureConfiguration;
+            configuration = ConfigurationManager.Current.Physics.PressureConfiguration;
 
             value = configuration.NormalValue;
             oldValue = configuration.NormalValue;
