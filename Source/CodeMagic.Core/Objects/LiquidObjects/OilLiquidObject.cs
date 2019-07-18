@@ -38,6 +38,8 @@ namespace CodeMagic.Core.Objects.LiquidObjects
             this.volume = volume;
         }
 
+        public ZIndex ZIndex => ZIndex.FloorCover;
+
         public string Name => "Oil";
 
         public void Update(IGameCore game, Point position)

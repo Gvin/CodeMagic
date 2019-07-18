@@ -26,7 +26,7 @@ namespace CodeMagic.UI.Console.Drawing.Writing
         void DrawHorizontalLine(int y, int startX, int endX, bool @double, Color? color = null,
             Color? backColor = null);
 
-        void DrawImageAt(int x, int y, SymbolsImage image, Color defaultBackgroundColor);
+        void DrawImageAt(int x, int y, SymbolsImage image, Color defaultForeColor, Color defaultBackgroundColor);
 
         int CursorX { get; set; }
 

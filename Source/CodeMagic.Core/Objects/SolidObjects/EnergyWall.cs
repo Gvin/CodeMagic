@@ -31,6 +31,8 @@ namespace CodeMagic.Core.Objects.SolidObjects
         public bool BlocksVisibility => false;
 
         public bool BlocksEnvironment => true;
+
+        public ZIndex ZIndex => ZIndex.Wall;
     }
 
     public class EnergyWallConfiguration

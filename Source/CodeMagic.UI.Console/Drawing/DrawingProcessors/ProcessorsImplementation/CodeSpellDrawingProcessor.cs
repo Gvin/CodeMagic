@@ -19,9 +19,9 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
             image.SetDefaultColor(color);
             image.SetSymbolMap(new []
             {
-                new []{'\\', '|', '/'},
-                new []{'-', '*', '-'},
-                new []{'/', '|', '\\'}
+                new char?[]{'\\', '|', '/'},
+                new char?[]{'-', '*', '-'},
+                new char?[]{'/', '|', '\\'}
             });
 
             image.SetPixel(1, 1, '\u263C', color);

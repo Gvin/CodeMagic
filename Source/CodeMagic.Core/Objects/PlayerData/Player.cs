@@ -21,6 +21,8 @@ namespace CodeMagic.Core.Objects.PlayerData
 
             Inventory = new Inventory(configuration.MaxWeight);
             Equipment = new Equipment();
+
+            Direction = Direction.Up;
         }
 
         public Equipment Equipment { get; }

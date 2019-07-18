@@ -28,9 +28,9 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
 
             image.SetSymbolMap(new []
             {
-                new []{LineTypes.SingleDownRight, ' ', LineTypes.SingleDownLeft},
-                new []{' ', ' ', ' '},
-                new []{LineTypes.SingleUpRight, ' ', LineTypes.SingleUpLeft }
+                new char?[]{LineTypes.SingleDownRight, null, LineTypes.SingleDownLeft},
+                new char?[]{null, null, null},
+                new char?[]{LineTypes.SingleUpRight, null, LineTypes.SingleUpLeft }
             });
 
             image.SetPixel(1, 1, '\u263A', PlayerFaceColor, PlayerBodyColor);

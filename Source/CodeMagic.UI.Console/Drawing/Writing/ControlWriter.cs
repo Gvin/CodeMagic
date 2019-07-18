@@ -67,9 +67,9 @@ namespace CodeMagic.UI.Console.Drawing.Writing
             Writer.DrawHorizontalLine(y + shiftY, startX + shiftX, endX + shiftX, @double, color, backColor);
         }
 
-        public void DrawImageAt(int x, int y, SymbolsImage image, Color defaultBackgroundColor)
+        public void DrawImageAt(int x, int y, SymbolsImage image, Color defaultForeColor, Color defaultBackgroundColor)
         {
-            Writer.DrawImageAt(x + shiftX, y + shiftY, image, defaultBackgroundColor);
+            Writer.DrawImageAt(x + shiftX, y + shiftY, image, defaultForeColor, defaultBackgroundColor);
         }
 
         public int CursorX

@@ -46,9 +46,9 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
 
             image.SetSymbolMap(new []
             {
-                new []{'.', '\u201E', ' '},
-                new []{ '\u2018', '\u2591', '`'},
-                new []{' ', '"', '`'}
+                new char?[]{'.', '\u201E', null},
+                new char?[]{ '\u2018', '\u2591', '`'},
+                new char?[]{null, '"', '`'}
             });
             image.SetColorMap(new[]
             {

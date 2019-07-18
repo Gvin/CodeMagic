@@ -11,6 +11,7 @@ namespace CodeMagic.Core.Objects.Creatures
             : base(configuration)
         {
             Logic = new Logic();
+            Direction = Direction.Up;
         }
 
         public Direction Direction { get; set; }

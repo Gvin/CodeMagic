@@ -42,7 +42,7 @@ namespace CodeMagic.UI.Console.Drawing.Writing
             implementation.WriteLine(text, foreColor, backColor);
         }
 
-        public static void DrawImageAt(int x, int y, SymbolsImage image, Color defaultBackgroundColor)
+        public static void DrawImageAt(int x, int y, SymbolsImage image, Color defaultForeColor, Color defaultBackgroundColor)
         {
             if (image == null)
                 return;
@@ -56,7 +56,7 @@ namespace CodeMagic.UI.Console.Drawing.Writing
                 {
                     var pixel = image.Pixels[indexY][indexX];
                     BackColor = pixel.BackgroundColor.HasValue ? pixel.BackgroundColor.Value : defaultBackgroundColor;
-                    Write(pixel.Symbol, pixel.Color);
+                    Write(pixel.Symbol ?? ' ', pixel.Color ?? defaultForeColor);
                 }
 
                 CursorY++;

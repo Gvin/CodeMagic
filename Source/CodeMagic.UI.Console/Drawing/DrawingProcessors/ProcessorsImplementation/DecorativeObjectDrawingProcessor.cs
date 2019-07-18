@@ -6,6 +6,12 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
 {
     public class DecorativeObjectDrawingProcessor : IDrawingProcessor
     {
+        private static readonly Color RedBloodLightColor = Color.Red;
+        private static readonly Color RedBloodDarkColor = Color.DarkRed;
+
+        private static readonly Color GreenBloodLightColor = Color.GreenYellow;
+        private static readonly Color GreenBloodDarkColor = Color.Green;
+
         public SymbolsImage GetImage(object @object)
         {
             return GetImage((DecorativeObject)@object);
@@ -21,6 +27,14 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
                     return GetBloodMediumImage();
                 case DecorativeObjectConfiguration.ObjectTypeBloodBig:
                     return GetBloodBigImage();
+
+                case DecorativeObjectConfiguration.ObjectTypeGoblinBloodSmall:
+                    return GetGoblinBloodSmallImage();
+                case DecorativeObjectConfiguration.ObjectTypeGoblinBloodMedium:
+                    return GetGoblinBloodMediumImage();
+                case DecorativeObjectConfiguration.ObjectTypeGoblinBloodBig:
+                    return GetGoblinBloodBigImage();
+
                 case DecorativeObjectConfiguration.ObjectTypeWoodPieces:
                     return GetWoodPiecesImage();
                 default:
@@ -32,10 +46,10 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
         {
             var image = new SymbolsImage();
 
-            image.SetPixel(0, 0, '.', Color.DarkRed);
-            image.SetPixel(1, 1, ',', Color.Red);
-            image.SetPixel(0, 2, '`', Color.Red);
-            image.SetPixel(2, 2, '\'', Color.DarkRed);
+            image.SetPixel(0, 0, '.', RedBloodDarkColor);
+            image.SetPixel(1, 1, ',', RedBloodLightColor);
+            image.SetPixel(0, 2, '`', RedBloodLightColor);
+            image.SetPixel(2, 2, '\'', RedBloodDarkColor);
 
             return image;
         }
@@ -44,10 +58,10 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
         {
             var image = new SymbolsImage();
 
-            image.SetPixel(0, 0, ',', Color.DarkRed);
-            image.SetPixel(1, 1, '>', Color.Red, Color.DarkRed);
-            image.SetPixel(2, 1, '=', Color.DarkRed);
-            image.SetPixel(1, 2, '\'', Color.DarkRed);
+            image.SetPixel(0, 0, ',', RedBloodDarkColor);
+            image.SetPixel(1, 1, '>', RedBloodLightColor, RedBloodDarkColor);
+            image.SetPixel(2, 1, '•', RedBloodDarkColor);
+            image.SetPixel(1, 2, '\'', RedBloodDarkColor);
 
             return image;
         }
@@ -56,12 +70,50 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
         {
             var image = new SymbolsImage();
 
-            image.SetPixel(0, 0, ',', Color.DarkRed);
-            image.SetPixel(2, 0, '.', Color.DarkRed);
-            image.SetPixel(0, 1, '&', Color.Red, Color.DarkRed);
-            image.SetPixel(1, 1, '#', Color.Red, Color.DarkRed);
-            image.SetPixel(2, 1, '%', Color.DarkRed);
-            image.SetPixel(1, 2, '\'', Color.DarkRed);
+            image.SetPixel(0, 0, ',', RedBloodDarkColor);
+            image.SetPixel(2, 0, '·', RedBloodDarkColor);
+            image.SetPixel(0, 1, '&', RedBloodLightColor, RedBloodDarkColor);
+            image.SetPixel(1, 1, '#', RedBloodLightColor, RedBloodDarkColor);
+            image.SetPixel(2, 1, '∂', RedBloodDarkColor);
+            image.SetPixel(1, 2, '˘', RedBloodDarkColor);
+
+            return image;
+        }
+
+        private static SymbolsImage GetGoblinBloodSmallImage()
+        {
+            var image = new SymbolsImage();
+
+            image.SetPixel(0, 0, '.', GreenBloodDarkColor);
+            image.SetPixel(1, 1, ',', GreenBloodLightColor);
+            image.SetPixel(0, 2, '`', GreenBloodLightColor);
+            image.SetPixel(2, 2, '\'', GreenBloodDarkColor);
+
+            return image;
+        }
+
+        private static SymbolsImage GetGoblinBloodMediumImage()
+        {
+            var image = new SymbolsImage();
+
+            image.SetPixel(0, 0, ',', GreenBloodDarkColor);
+            image.SetPixel(1, 1, '>', GreenBloodLightColor, GreenBloodDarkColor);
+            image.SetPixel(2, 1, '•', GreenBloodDarkColor);
+            image.SetPixel(1, 2, '\'', GreenBloodDarkColor);
+
+            return image;
+        }
+
+        private static SymbolsImage GetGoblinBloodBigImage()
+        {
+            var image = new SymbolsImage();
+
+            image.SetPixel(0, 0, ',', GreenBloodDarkColor);
+            image.SetPixel(2, 0, '·', GreenBloodDarkColor);
+            image.SetPixel(0, 1, '&', GreenBloodLightColor, GreenBloodDarkColor);
+            image.SetPixel(1, 1, '#', GreenBloodLightColor, GreenBloodDarkColor);
+            image.SetPixel(2, 1, '∂', GreenBloodDarkColor);
+            image.SetPixel(1, 2, '˘', GreenBloodDarkColor);
 
             return image;
         }

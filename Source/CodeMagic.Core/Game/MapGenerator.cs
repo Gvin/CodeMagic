@@ -46,7 +46,7 @@ namespace CodeMagic.Core.Game
                     currentMapX++;
                     if (room.Walls[Direction.Right])
                     {
-                        map.GetCell(currentMapX, currentMapY).Objects.Add(CreateWall());
+                        map.AddObject(currentMapX, currentMapY, CreateWall());
                     }
                     currentMapX++;
                 }
@@ -58,10 +58,10 @@ namespace CodeMagic.Core.Game
                 {
                     if (room.Walls[Direction.Down])
                     {
-                        map.GetCell(currentMapX, currentMapY).Objects.Add(CreateWall());
+                        map.AddObject(currentMapX, currentMapY, CreateWall());
                     }
                     currentMapX++;
-                    map.GetCell(currentMapX, currentMapY).Objects.Add(CreateWall());
+                    map.AddObject(currentMapX, currentMapY, CreateWall());
                     currentMapX++;
                 }
 
@@ -70,12 +70,12 @@ namespace CodeMagic.Core.Game
 
             for (var y = 0; y < map.Height; y++)
             {
-                map.GetCell(0, y).Objects.Add(CreateWall());
+                map.AddObject(0, y, CreateWall());
             }
 
             for (var x = 0; x < map.Width; x++)
             {
-                map.GetCell(x, 0).Objects.Add(CreateWall());
+                map.AddObject(x, 0, CreateWall());
             }
 
             for (var x = 0; x < map.Width; x++)
@@ -170,15 +170,16 @@ namespace CodeMagic.Core.Game
 
         private Direction? GetUnvisitedNeighborDirection(Room[][] map, Point location, int width, int height)
         {
-            var directionValue = RandomHelper.GetRandomValue(0, 3);
+            var directionValue = RandomHelper.GetRandomValue(-2, 2);
+            while (directionValue == 0)
+            {
+                directionValue = RandomHelper.GetRandomValue(-2, 2);
+            }
 
+            var direction = (Direction)directionValue;
             for (var counter = 0; counter < 4; counter++)
             {
-                directionValue += counter;
-                if (directionValue > 3)
-                    directionValue = 0;
-
-                var direction = (Direction) directionValue;
+                direction = GetNextDirection(direction);
                 var newLocation = Point.GetPointInDirection(location, direction);
                 if (newLocation.X < 0 || newLocation.X >= width || newLocation.Y < 0 || newLocation.Y >= height)
                     continue;
@@ -191,6 +192,23 @@ namespace CodeMagic.Core.Game
             }
 
             return null;
+        }
+
+        private Direction GetNextDirection(Direction initial)
+        {
+            var value = (int) initial;
+            value++;
+            if (value == 0)
+            {
+                value = 1;
+            }
+
+            if (value > 2)
+            {
+                value = -2;
+            }
+
+            return (Direction) value;
         }
 
         private Direction GetNegatedDirection(Direction direction)

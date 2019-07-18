@@ -19,9 +19,9 @@ namespace CodeMagic.UI.Console.Drawing.DrawingProcessors.ProcessorsImplementatio
 
             image.SetSymbolMap(new []
             {
-                new []{ '\u250C', '-', '\u2510'},
-                new []{'|', '\u263C', '|'},
-                new []{ '\u2514', '-', '\u2518' }
+                new char?[]{ '\u250C', '-', '\u2510'},
+                new char?[]{'|', '\u263C', '|'},
+                new char?[]{ '\u2514', '-', '\u2518' }
             });
 
             image.SetPixel(1, 1, '\u263C', color, Color.LightBlue);

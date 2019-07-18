@@ -27,7 +27,7 @@ namespace CodeMagic.UI.Console.Drawing
             pixel.BackgroundColor = backgroundColor;
         }
 
-        public void SetSymbolMap(char[][] symbolMap)
+        public void SetSymbolMap(char?[][] symbolMap)
         {
             for (var y = 0; y < Size; y++)
             {
@@ -73,18 +73,15 @@ namespace CodeMagic.UI.Console.Drawing
             }
         }
 
-        public void SetDefaultValues(char? symbol, Color? symbolColor, Color? backgroundColor)
+        public void SetDefaultValues(char symbol, Color symbolColor, Color backgroundColor)
         {
             for (var y = 0; y < Size; y++)
             {
                 for (var x = 0; x < Size; x++)
                 {
-                    if (symbol.HasValue)
-                        Pixels[y][x].Symbol = symbol.Value;
-                    if (symbolColor.HasValue)
-                        Pixels[y][x].Color = symbolColor.Value;
-                    if (backgroundColor.HasValue)
-                        Pixels[y][x].BackgroundColor = backgroundColor.Value;
+                    Pixels[y][x].Symbol = symbol;
+                    Pixels[y][x].Color = symbolColor;
+                    Pixels[y][x].BackgroundColor = backgroundColor;
                 }
             }
         }
@@ -96,17 +93,30 @@ namespace CodeMagic.UI.Console.Drawing
             return Pixels[y][x];
         }
 
-        public class Pixel
+        public static SymbolsImage Combine(SymbolsImage bottom, SymbolsImage top)
         {
-            public Pixel()
+            var result = new SymbolsImage();
+
+            for (var x = 0; x < Size; x++)
+            for (var y = 0; y < Size; y++)
             {
-                Symbol = ' ';
-                Color = Color.White;
+                var pixel = result.GetPixel(x, y);
+                var bottomPixel = bottom.GetPixel(x, y);
+                var topPixel = top.GetPixel(x, y);
+
+                pixel.Symbol = topPixel.Symbol ?? bottomPixel.Symbol;
+                pixel.Color = topPixel.Symbol.HasValue ? topPixel.Color : bottomPixel.Color;
+                pixel.BackgroundColor = topPixel.BackgroundColor ?? bottomPixel.BackgroundColor;
             }
 
-            public char Symbol { get; set; }
+            return result;
+        }
 
-            public Color Color { get; set; }
+        public class Pixel
+        {
+            public char? Symbol { get; set; }
+
+            public Color? Color { get; set; }
 
             public Color? BackgroundColor { get; set; }
         }

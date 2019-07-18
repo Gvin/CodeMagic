@@ -5,6 +5,7 @@ using CodeMagic.Core.CreaturesLogic.Strategies;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.PlayerData;
 
 namespace CodeMagic.Core.Objects.Creatures.Implementations
@@ -55,6 +56,21 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
         private int ViewDistance { get; }
 
         public override bool BlocksMovement => true;
+
+        protected override IMapObject CreateDeathRemains()
+        {
+            var type = DecorativeObjectConfiguration.ObjectTypeGoblinBloodMedium;
+            var typeRoll = RandomHelper.GetRandomValue(1, 2);
+            if (typeRoll == 2)
+                type = DecorativeObjectConfiguration.ObjectTypeGoblinBloodBig;
+
+            return new DecorativeObject(new DecorativeObjectConfiguration
+            {
+                Name = "Goblin Blood",
+                Type = type,
+                ZIndex = ZIndex.GroundDecoration
+            });
+        }
     }
 
     public class GoblinCreatureObjectConfiguration : NonPlayableCreatureObjectConfiguration

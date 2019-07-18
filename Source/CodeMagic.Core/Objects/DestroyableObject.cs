@@ -19,6 +19,7 @@ namespace CodeMagic.Core.Objects
             Health = configuration.Health;
             SelfExtinguishChance = configuration.SelfExtinguishChance;
             CatchFireChanceMultiplier = configuration.CatchFireChanceMultiplier;
+            ZIndex = configuration.ZIndex;
 
             Statuses = new ObjectStatusesCollection();
         }
@@ -40,6 +41,8 @@ namespace CodeMagic.Core.Objects
         public ObjectStatusesCollection Statuses { get; }
 
         private int SelfExtinguishChance { get; }
+
+        public ZIndex ZIndex { get; }
 
         public int GetSelfExtinguishChance()
         {
@@ -127,8 +130,18 @@ namespace CodeMagic.Core.Objects
             }
         }
 
+        protected virtual IMapObject CreateDeathRemains()
+        {
+            return null;
+        }
+
         public virtual void OnDeath(IAreaMap map, Point position)
         {
+            var remains = CreateDeathRemains();
+            if (remains != null)
+            {
+                map.AddObject(position, remains);
+            }
         }
     }
 
@@ -141,6 +154,7 @@ namespace CodeMagic.Core.Objects
         {
             CatchFireChanceMultiplier = DefaultCatchFireChanceMultiplier;
             SelfExtinguishChance = DefaultSelfExtinguishChance;
+            ZIndex = ZIndex.BigDecoration;
         }
 
         public string Name { get; set; }
@@ -152,5 +166,7 @@ namespace CodeMagic.Core.Objects
         public int CatchFireChanceMultiplier { get; set; }
 
         public int SelfExtinguishChance { get; set; }
+
+        public ZIndex ZIndex { get; set; }
     }
 }

@@ -59,6 +59,8 @@ namespace CodeMagic.Core.Objects.IceObjects
 
         public bool SupportsSlide => Volume >= MinVolumeForEffect;
 
+        public ZIndex ZIndex => ZIndex.FloorCover;
+
         public void Update(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);

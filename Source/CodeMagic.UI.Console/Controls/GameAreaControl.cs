@@ -96,16 +96,39 @@ namespace CodeMagic.UI.Console.Controls
 
         private void DrawCell(IControlWriter writer, AreaMapCell cell, int x, int y)
         {
-            var image = GetCellImage(cell) ?? floorFactory.GetFloorImage(cell);
-            var background = floorFactory.GetFloorColor(cell);
+            var image = GetCellDrawImage(cell);
 
             var realX = x * SymbolsImage.Size;
             var realY = y * SymbolsImage.Size;
-            writer.DrawImageAt(realX, realY, image, background);
+            writer.DrawImageAt(realX, realY, image, Color.White, Color.Black);
 
             DrawPressure(writer, cell, realX, realY);
             DrawTemperature(writer, cell, realX, realY);
             DrawWaterLevel(writer, cell, realX, realY);
+        }
+
+        private SymbolsImage GetCellDrawImage(AreaMapCell cell)
+        {
+            if (cell == null)
+                return EmptyImage;
+
+            var floorImage = floorFactory.GetFloorImage(cell) ?? EmptyImage;
+            var cellImages = GetCellImages(cell);
+
+            var image = floorImage;
+            foreach (var symbolsImage in cellImages)
+            {
+                image = SymbolsImage.Combine(image, symbolsImage);
+            }
+
+            return image;
+        }
+
+        private SymbolsImage[] GetCellImages(AreaMapCell cell)
+        {
+            return cell.Objects.OrderBy(obj => obj.ZIndex)
+                .Select(GetObjectImage)
+                .Where(image => image != null).ToArray();
         }
 
         private void DrawPressure(IControlWriter writer, AreaMapCell cell, int x, int y)
@@ -145,19 +168,6 @@ namespace CodeMagic.UI.Console.Controls
             writer.CursorX = x;
             writer.BackColor = Color.Black;
             writer.Write(cell.Objects.GetLiquidVolume<WaterLiquidObject>(), Color.DeepSkyBlue);
-        }
-
-        private SymbolsImage GetCellImage(AreaMapCell cell)
-        {
-            if (cell == null)
-                return EmptyImage;
-            var bigObject = cell.Objects.FirstOrDefault(obj => obj.BlocksMovement);
-            if (bigObject != null)
-            {
-                return GetObjectImage(bigObject);
-            }
-
-            return cell.Objects.Select(GetObjectImage).LastOrDefault(obj => obj != null);
         }
 
         private SymbolsImage GetObjectImage(object @object)

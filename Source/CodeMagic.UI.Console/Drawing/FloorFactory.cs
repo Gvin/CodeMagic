@@ -115,9 +115,9 @@ namespace CodeMagic.UI.Console.Drawing
 
             image.SetSymbolMap(new[]
             {
-                new[] {' ', '≈', ' '},
-                new[] { '≈', ' ', '≈'},
-                new[] {' ', '≈', ' '}
+                new char?[] {null, '≈', null},
+                new char?[] { '≈', null, '≈'},
+                new char?[] {null, '≈', null}
             });
 
             return image;
@@ -132,9 +132,9 @@ namespace CodeMagic.UI.Console.Drawing
 
             image.SetSymbolMap(new[]
             {
-                new[] {' ', '/', ' '},
-                new[] {' ', ' ', ' '},
-                new[] {'/', ' ', '/'}
+                new char?[] {null, '/', null},
+                new char?[] {null, null, null},
+                new char?[] {'/', null, '/'}
             });
 
             return image;
@@ -149,9 +149,9 @@ namespace CodeMagic.UI.Console.Drawing
 
             image.SetSymbolMap(new[]
             {
-                new[] {' ', '/', ' '},
-                new[] {' ', ' ', ' '},
-                new[] {'/', ' ', '/'}
+                new char?[] {null, '/', null},
+                new char?[] {null, null, null},
+                new char?[] {'/', null, '/'}
             });
 
             return image;
@@ -166,9 +166,9 @@ namespace CodeMagic.UI.Console.Drawing
 
             image.SetSymbolMap(new[]
             {
-                new[] {' ', '\u2248', ' '},
-                new[] {'\u2248', ' ', '\u2248'},
-                new[] {' ', '\u2248', ' '}
+                new char?[] {null, '≈', null},
+                new char?[] { '≈', null, '≈'},
+                new char?[] {null, '≈', null}
             });
 
             return image;
@@ -183,9 +183,9 @@ namespace CodeMagic.UI.Console.Drawing
 
             image.SetSymbolMap(new[]
             {
-                new[] {' ', '\u2248', ' '},
-                new[] {'\u2248', ' ', '\u2248'},
-                new[] {' ', '\u2248', ' '}
+                new char?[] {null, '≈', null},
+                new char?[] { '≈', null, '≈'},
+                new char?[] {null, '≈', null}
             });
 
             return image;
@@ -200,9 +200,9 @@ namespace CodeMagic.UI.Console.Drawing
 
             image.SetSymbolMap(new[]
             {
-                new[] {'/', '/', '/'},
-                new[] {'/', '/', '/'},
-                new[] {'/', '/', '/'}
+                new char?[] {'/', '/', '/'},
+                new char?[] {'/', '/', '/'},
+                new char?[] {'/', '/', '/'}
             });
 
             return image;
@@ -217,9 +217,9 @@ namespace CodeMagic.UI.Console.Drawing
 
             image.SetSymbolMap(new[]
             {
-                new[] {' ', ' ', ','},
-                new[] {'.', ' ', ' '},
-                new[] {' ', ' ', '`'}
+                new char?[] {null, null, ','},
+                new char?[] {'.', null, null},
+                new char?[] {null, null, '`'}
             });
 
             return image;
@@ -234,9 +234,9 @@ namespace CodeMagic.UI.Console.Drawing
 
             image.SetSymbolMap(new[]
             {
-                new[] {' ', ' ', ','},
-                new[] {'.', ' ', ' '},
-                new[] {' ', ' ', '`'}
+                new char?[] {null, null, ','},
+                new char?[] {'.', null, null},
+                new char?[] {null, null, '`'}
             });
 
             return image;
@@ -251,9 +251,9 @@ namespace CodeMagic.UI.Console.Drawing
 
             image.SetSymbolMap(new[]
             {
-                new[] {LineTypes.SingleVertical, LineTypes.SingleVerticalRight, LineTypes.SingleVerticalLeft},
-                new[] {LineTypes.SingleVerticalRight, LineTypes.SingleVerticalLeft, LineTypes.SingleVertical},
-                new[] {LineTypes.SingleVerticalLeft, LineTypes.SingleVertical, LineTypes.SingleVerticalRight }
+                new char?[] {LineTypes.SingleVertical, LineTypes.SingleVerticalRight, LineTypes.SingleVerticalLeft},
+                new char?[] {LineTypes.SingleVerticalRight, LineTypes.SingleVerticalLeft, LineTypes.SingleVertical},
+                new char?[] {LineTypes.SingleVerticalLeft, LineTypes.SingleVertical, LineTypes.SingleVerticalRight }
             });
 
             return image;

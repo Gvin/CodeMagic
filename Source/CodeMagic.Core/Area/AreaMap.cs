@@ -65,6 +65,11 @@ namespace CodeMagic.Core.Area
             return cells[y][x];
         }
 
+        public void AddObject(int x, int y, IMapObject @object)
+        {
+            AddObject(new Point(x, y), @object);
+        }
+
         public void AddObject(Point position, IMapObject @object)
         {
             if (@object is IDestroyableObject destroyableObject)
@@ -73,6 +78,11 @@ namespace CodeMagic.Core.Area
             }
 
             GetCell(position).Objects.Add(@object);
+
+            if (@object is IPlacedHandler placedHandler)
+            {
+                placedHandler.OnPlaced(this, position);
+            }
         }
 
         public Point GetObjectPosition<T>() where T : IMapObject

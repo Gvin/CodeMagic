@@ -33,6 +33,8 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public bool BlocksEnvironment => false;
 
+        public ZIndex ZIndex => ZIndex.FloorCover;
+
         public void Update(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);

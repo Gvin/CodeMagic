@@ -13,5 +13,7 @@
         bool BlocksVisibility { get; }
 
         bool BlocksEnvironment { get; }
+
+        ZIndex ZIndex { get; }
     }
 }

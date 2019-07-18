@@ -48,5 +48,7 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         }
 
         public bool Updated { get; set; }
+
+        public ZIndex ZIndex => ZIndex.AreaDecoration;
     }
 }
