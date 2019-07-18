@@ -16,7 +16,7 @@ namespace CodeMagic.UI.Console.Controls
 {
     public class GameAreaControl : ConsoleControl
     {
-        private const bool DebugDrawTemperature = true;
+        private const bool DebugDrawTemperature = false;
         private const bool DebugDrawPressure = false;
         private const bool DebugDrawWaterLevel = false;
 
