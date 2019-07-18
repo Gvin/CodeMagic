@@ -6,15 +6,16 @@ using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
 {
-    public class TransmuteWaterSpellAction : SpellActionBase
+    public class TransformWaterSpellAction : SpellActionBase
     {
         private const string LiquidNameAcid = "acid";
+        private const string LiquidNameOil = "oil";
 
-        public const string ActionType = "transmute_water";
+        public const string ActionType = "transform_water";
         private readonly string result;
         private readonly int volume;
 
-        public TransmuteWaterSpellAction(dynamic actionData) 
+        public TransformWaterSpellAction(dynamic actionData) 
             : base(ActionType)
         {
             result = (string) actionData.result;
@@ -28,6 +29,9 @@ namespace CodeMagic.Core.Spells.SpellActions
 
             var targetCell = game.Map.GetCell(position);
             var waterVolume = targetCell.Objects.GetLiquidVolume<WaterLiquidObject>();
+            if (waterVolume <= 0)
+                return position;
+
             var transmutingVolume = Math.Min(waterVolume, volume);
 
             targetCell.Objects.RemoveLiquidVolume<WaterLiquidObject>(transmutingVolume);
@@ -42,6 +46,8 @@ namespace CodeMagic.Core.Spells.SpellActions
             {
                 case LiquidNameAcid:
                     return new AcidLiquidObject(targetVolume);
+                case LiquidNameOil:
+                    return new OilLiquidObject(targetVolume);
                 default:
                     throw new SpellException($"Unknown liquid result: {result}");
             }
@@ -57,7 +63,8 @@ namespace CodeMagic.Core.Spells.SpellActions
         private static bool CheckKnownLiquid(string result)
         {
             var liquidName = result.ToLower();
-            return string.Equals(liquidName, LiquidNameAcid);
+            return string.Equals(liquidName, LiquidNameAcid) ||
+                   string.Equals(liquidName, LiquidNameOil);
         }
 
         public static JsonData GetJson(string result, int volume)

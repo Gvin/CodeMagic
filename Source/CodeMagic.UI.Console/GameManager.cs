@@ -15,7 +15,7 @@ namespace CodeMagic.UI.Console
     {
         private const int GoblinsCount = 20;
         private const int MapSize = 31; // uneven value only!
-        private const bool UseFakeMap = false;
+        private const bool UseFakeMap = true;
 
         public GameCore StartGame()
         {
@@ -57,24 +57,24 @@ namespace CodeMagic.UI.Console
             var map = new AreaMap(10, 10);
 
             var cell1 = map.GetCell(1, 0);
-            cell1.Environment.Temperature = -100;
-            cell1.Objects.AddLiquid(new WaterLiquidObject(100));
+            //cell1.Environment.Temperature = ;
+            cell1.Objects.AddLiquid(new OilLiquidObject(100));
 
             var cell2 = map.GetCell(2, 0);
-            cell2.Environment.Temperature = -100;
-            cell2.Objects.AddLiquid(new WaterLiquidObject(100));
+            //cell2.Environment.Temperature = -100;
+            cell2.Objects.AddLiquid(new OilLiquidObject(100));
 
             var cell3 = map.GetCell(3, 0);
-            cell3.Environment.Temperature = -100;
-            cell3.Objects.AddLiquid(new WaterLiquidObject(100));
+            cell3.Environment.Temperature = 300;
+            cell3.Objects.AddLiquid(new OilLiquidObject(100));
 
             var cell4 = map.GetCell(4, 0);
-            cell4.Environment.Temperature = -100;
-            cell4.Objects.AddLiquid(new WaterLiquidObject(100));
+            //cell4.Environment.Temperature = -100;
+            cell4.Objects.AddLiquid(new OilLiquidObject(100));
 
             var cell5 = map.GetCell(5, 0);
-            cell5.Environment.Temperature = -100;
-            cell5.Objects.AddLiquid(new WaterLiquidObject(100));
+            //cell5.Environment.Temperature = -100;
+            cell5.Objects.AddLiquid(new OilLiquidObject(100));
 
             return map;
         }

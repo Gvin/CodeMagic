@@ -10,16 +10,13 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 {
     public abstract class AbstractLiquidObject<TIce> : ILiquidObject where TIce : IIceObject
     {
-        private readonly ILiquidConfiguration configuration;
+        protected readonly ILiquidConfiguration Configuration;
         private readonly string type;
         private int volume;
 
         protected AbstractLiquidObject(int volume, string type)
         {
-            configuration = ConfigurationManager.GetLiquidConfiguration(type);
-            if (configuration == null)
-                throw new ApplicationException($"Unable to find liquid configuration for liquid type \"{type}\".");
-
+            Configuration = ConfigurationManager.GetLiquidConfiguration(type);
             this.type = type;
             this.volume = volume;
         }
@@ -46,12 +43,12 @@ namespace CodeMagic.Core.Objects.LiquidObjects
                 return;
             }
 
-            if (cell.Environment.Temperature >= configuration.BoilingPoint)
+            if (cell.Environment.Temperature >= Configuration.BoilingPoint)
             {
                 ProcessBoiling(cell);
             }
 
-            if (cell.Environment.Temperature <= configuration.FreezingPoint)
+            if (cell.Environment.Temperature <= Configuration.FreezingPoint)
             {
                 ProcessFreezing(cell);
             }
@@ -66,12 +63,12 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         private void ProcessBoiling(AreaMapCell cell)
         {
-            var excessTemperature = cell.Environment.Temperature - configuration.BoilingPoint;
-            var steamVolume = Math.Min(excessTemperature * configuration.EvaporationMultiplier, Volume);
-            var heatLoss = steamVolume / configuration.EvaporationMultiplier;
+            var excessTemperature = cell.Environment.Temperature - Configuration.BoilingPoint;
+            var steamVolume = Math.Min(excessTemperature * Configuration.EvaporationMultiplier, Volume);
+            var heatLoss = steamVolume / Configuration.EvaporationMultiplier;
 
             cell.Environment.Temperature -= heatLoss;
-            cell.Environment.Pressure += steamVolume * configuration.SteamPressureMultiplier;
+            cell.Environment.Pressure += steamVolume * Configuration.SteamPressureMultiplier;
             Volume -= steamVolume;
         }
 
@@ -107,17 +104,17 @@ namespace CodeMagic.Core.Objects.LiquidObjects
             }
         }
 
-        public int MaxVolumeBeforeSpread => configuration.MaxVolumeBeforeSpread;
+        public int MaxVolumeBeforeSpread => Configuration.MaxVolumeBeforeSpread;
 
-        public int MinVolumeForEffect => configuration.MinVolumeForEffect;
+        public int MinVolumeForEffect => Configuration.MinVolumeForEffect;
 
-        public int MaxSpreadVolume => configuration.MaxSpreadVolume;
+        public int MaxSpreadVolume => Configuration.MaxSpreadVolume;
 
         public abstract ILiquidObject Separate(int volume);
 
         protected string GetCustomConfigurationValue(string key)
         {
-            var stringValue = configuration.CustomValues
+            var stringValue = Configuration.CustomValues
                 .FirstOrDefault(value => string.Equals(value.Key, key))?.Value;
             if (string.IsNullOrEmpty(stringValue))
                 throw new ApplicationException($"Custom value {key} not found in the configuration for \"{type}\".");

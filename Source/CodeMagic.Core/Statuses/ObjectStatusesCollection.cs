@@ -27,6 +27,11 @@ namespace CodeMagic.Core.Statuses
             }
         }
 
+        public TStatus[] GetStatuses<TStatus>()
+        {
+            return statuses.Values.OfType<TStatus>().ToArray();
+        }
+
         public void Remove(string statusType)
         {
             if (statuses.ContainsKey(statusType))

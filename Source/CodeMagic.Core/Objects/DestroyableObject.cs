@@ -43,9 +43,15 @@ namespace CodeMagic.Core.Objects
 
         public int GetSelfExtinguishChance()
         {
-            if (Statuses.Contains(WetObjectStatus.StatusType))
-                return SelfExtinguishChance + WetObjectStatus.SelfExtinguishChanceBonus;
-            return SelfExtinguishChance;
+            var result = SelfExtinguishChance;
+
+            var burningRelatesStatuses = Statuses.GetStatuses<IBurningRelatedStatus>();
+            foreach (var burningRelatesStatus in burningRelatesStatuses)
+            {
+                result += burningRelatesStatus.SelfExtinguishChanceModifier;
+            }
+
+            return result;
         }
 
         public int Health
@@ -108,10 +114,13 @@ namespace CodeMagic.Core.Objects
         private void CheckCatchFire(int damage)
         {
             var catchFireChance = damage * CatchFireChanceMultiplier;
-            if (Statuses.Contains(WetObjectStatus.StatusType))
+
+            var burningRelatesStatuses = Statuses.GetStatuses<IBurningRelatedStatus>();
+            foreach (var burningRelatesStatus in burningRelatesStatuses)
             {
-                catchFireChance -= WetObjectStatus.CatchFireChancePenalty;
+                catchFireChance += burningRelatesStatus.CatchFireChanceModifier;
             }
+
             if (RandomHelper.CheckChance(catchFireChance))
             {
                 Statuses.Add(new OnFireObjectStatus(GetFireConfiguration()));

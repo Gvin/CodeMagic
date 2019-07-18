@@ -26,7 +26,7 @@
 // decompress(pressure: int): Action - Decreases air pressure in current spell location for <pressure> kPa.
 // createWater(volume: int): Action - Creates <volume> liters of water in current spell location.
 // longCast(action: Action, direction: string, distance: int): Action - Casts specified action in place located to <distance> meters in specified direction. This will cost much more mana.
-// transmuteWater(targetLiquidName: string, volume: int): Action - Transforms specified volume of water in current spell location into the same volume of specified liquid.
+// transformWater(targetLiquidName: string, volume: int): Action - Transforms specified volume of water in current spell location into the same volume of specified liquid. targetLiquidName can be oil or acid.
 //------------------------------------------------------------------------------------
 // List of custom types
 //

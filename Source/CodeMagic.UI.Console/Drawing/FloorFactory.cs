@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.IceObjects;
 using CodeMagic.Core.Objects.LiquidObjects;
 
@@ -9,6 +10,8 @@ namespace CodeMagic.UI.Console.Drawing
 {
     public class FloorFactory
     {
+        private static readonly Color OilColor = Color.FromArgb(29, 43, 66);
+
         private static readonly Color WaterColor = Color.CadetBlue;
         private static readonly Color WaterIceColor = Color.DarkTurquoise;
 
@@ -23,21 +26,20 @@ namespace CodeMagic.UI.Console.Drawing
             if (cell == null)
                 return Color.Black;
 
-            var waterIce = cell.Objects.OfType<WaterIceObject>().FirstOrDefault();
-            if (waterIce != null && waterIce.Volume >= WaterIceObject.WaterIceMinVolumeForEffect)
+            if (CellContainsObject<WaterIceObject>(cell))
                 return WaterIceColor;
 
-            var acidIce = cell.Objects.OfType<AcidIceObject>().FirstOrDefault();
-            if (acidIce != null && acidIce.Volume >= AcidIceObject.AcidIceMinVolumeForEffect)
+            if (CellContainsObject<AcidIceObject>(cell))
                 return AcidIceColor;
 
-            var waterObject = cell.Objects.OfType<WaterLiquidObject>().FirstOrDefault();
-            if (waterObject != null && waterObject.IsVisible)
+            if (CellContainsObject<WaterLiquidObject>(cell))
                 return WaterColor;
 
-            var acidObject = cell.Objects.OfType<AcidLiquidObject>().FirstOrDefault();
-            if (acidObject!= null && acidObject.IsVisible)
+            if (CellContainsObject<AcidLiquidObject>(cell))
                 return AcidColor;
+
+            if (CellContainsObject<OilLiquidObject>(cell))
+                return OilColor;
 
             return GetStandardFloorColor(cell.FloorType);
         }
@@ -63,23 +65,28 @@ namespace CodeMagic.UI.Console.Drawing
 
         public SymbolsImage GetFloorImage(AreaMapCell cell)
         {
-            var waterIce = cell.Objects.OfType<WaterIceObject>().FirstOrDefault();
-            if (waterIce != null && waterIce.Volume >= WaterIceObject.WaterIceMinVolumeForEffect)
+            if (CellContainsObject<WaterIceObject>(cell))
                 return GetWaterIceFloorImage();
 
-            var acidIce = cell.Objects.OfType<AcidIceObject>().FirstOrDefault();
-            if (acidIce != null && acidIce.Volume >= AcidIceObject.AcidIceMinVolumeForEffect)
+            if (CellContainsObject<AcidIceObject>(cell))
                 return GetAcidIceFloorImage();
 
-            var waterObject = cell.Objects.OfType<WaterLiquidObject>().FirstOrDefault();
-            if (waterObject != null && waterObject.IsVisible)
+            if (CellContainsObject<WaterLiquidObject>(cell))
                 return GetWaterFloorImage();
 
-            var acidObject = cell.Objects.OfType<AcidLiquidObject>().FirstOrDefault();
-            if (acidObject != null && acidObject.IsVisible)
+            if (CellContainsObject<AcidLiquidObject>(cell))
                 return GetAcidFloorImage();
 
+            if (CellContainsObject<OilLiquidObject>(cell))
+                return GetOilFloorImage();
+
             return GetStandardFloorImage(cell.FloorType);
+        }
+
+        private bool CellContainsObject<TObject>(AreaMapCell cell) where TObject : IMapObject
+        {
+            var liquidObject = cell.Objects.OfType<TObject>().FirstOrDefault();
+            return liquidObject != null && liquidObject.IsVisible;
         }
 
         private SymbolsImage GetStandardFloorImage(FloorTypes type)
@@ -97,6 +104,23 @@ namespace CodeMagic.UI.Console.Drawing
                 default:
                     return new SymbolsImage();
             }
+        }
+
+        private SymbolsImage GetOilFloorImage()
+        {
+            var image = new SymbolsImage();
+
+            image.SetDefaultBackColor(OilColor);
+            image.SetDefaultColor(Color.Gray);
+
+            image.SetSymbolMap(new[]
+            {
+                new[] {' ', '≈', ' '},
+                new[] { '≈', ' ', '≈'},
+                new[] {' ', '≈', ' '}
+            });
+
+            return image;
         }
 
         private SymbolsImage GetWaterIceFloorImage()

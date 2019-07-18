@@ -5,7 +5,7 @@
     <max-value>4000</max-value>
     <normal-value>25</normal-value>
     <max-transfer-value>50</max-transfer-value>
-    <transfer-value-difference-multiplier>0.05</transfer-value-difference-multiplier>
+    <transfer-value-difference-multiplier>0.07</transfer-value-difference-multiplier>
     <normalize-speed>1</normalize-speed>
     <cold-damage>
       <line temperature="-70" damage="1"/>

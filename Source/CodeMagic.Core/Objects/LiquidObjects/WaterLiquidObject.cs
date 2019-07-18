@@ -8,8 +8,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
     public class WaterLiquidObject : AbstractLiquidObject<WaterIceObject>
     {
         public const string LiquidType = "water";
-        private const string CustomValueWetStatusLifeTime = "WetStatusLifeTime";
-
+        
         public WaterLiquidObject(int volume) 
             : base(volume, LiquidType)
         {
@@ -40,20 +39,11 @@ namespace CodeMagic.Core.Objects.LiquidObjects
                 if (Volume < MinVolumeForEffect)
                     return;
 
-                if (destroyable.Statuses.Contains(OnFireObjectStatus.StatusType))
-                {
-                    destroyable.Statuses.Remove(OnFireObjectStatus.StatusType);
-                }
+                destroyable.Statuses.Remove(OnFireObjectStatus.StatusType);
+                destroyable.Statuses.Remove(OilyObjectStatus.StatusType);
 
-                var lifeTime = GetWetStatusLifeTime();
-                destroyable.Statuses.Add(new WetObjectStatus(lifeTime));
+                destroyable.Statuses.Add(new WetObjectStatus(Configuration));
             }
-        }
-
-        private int GetWetStatusLifeTime()
-        {
-            var stringValue = GetCustomConfigurationValue(CustomValueWetStatusLifeTime);
-            return int.Parse(stringValue);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace CodeMagic.UI.Console.Controls
 {
     public class GameAreaControl : ConsoleControl
     {
-        private const bool DebugDrawTemperature = false;
+        private const bool DebugDrawTemperature = true;
         private const bool DebugDrawPressure = false;
         private const bool DebugDrawWaterLevel = false;
 
@@ -176,6 +176,11 @@ namespace CodeMagic.UI.Console.Controls
 
         private void AddStatusImage(IDestroyableObject destroyable, SymbolsImage image)
         {
+            if (destroyable.Statuses.Contains(OilyObjectStatus.StatusType))
+            {
+                image.SetPixel(2, 2, '•', Color.Black, Color.Gray);
+            }
+
             if (destroyable.Statuses.Contains(OnFireObjectStatus.StatusType))
             {
                 image.SetPixel(2, 2, '\u00C3', Color.Red, Color.Orange);

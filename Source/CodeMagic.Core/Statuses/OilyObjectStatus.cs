@@ -8,22 +8,22 @@ using CodeMagic.Core.Objects.LiquidObjects;
 
 namespace CodeMagic.Core.Statuses
 {
-    public class WetObjectStatus : IObjectStatus, IBurningRelatedStatus
+    public class OilyObjectStatus : IObjectStatus, IBurningRelatedStatus
     {
-        public const string StatusType = "wet";
+        private const string CustomValueOilyStatusLifeTime = "OilyStatus.LifeTime";
+        private const string CustomValueOilyStatusCatchFireChanceModifier = "OilyStatus.CatchFireChanceModifier";
+        private const string CustomValueOilyStatusSelfExtinguishChanceModifier = "OilyStatus.SelfExtinguishChanceModifier";
 
-        private const string CustomValueWetStatusLifeTime = "WetStatus.LifeTime";
-        private const string CustomValueWetStatusCatchFileChanceModifier = "WetStatus.CatchFireChanceModifier";
-        private const string CustomValueWetStatusSelfExtinguishChanceModifier = "WetStatus.SelfExtinguishChanceModifier";
+        public const string StatusType = "oily";
 
         private readonly int maxLifeTime;
         private int lifeTime;
 
-        public WetObjectStatus(ILiquidConfiguration configuration)
+        public OilyObjectStatus(ILiquidConfiguration configuration)
         {
-            maxLifeTime = int.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusLifeTime));
-            CatchFireChanceModifier = int.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusCatchFileChanceModifier));
-            SelfExtinguishChanceModifier = int.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusSelfExtinguishChanceModifier));
+            maxLifeTime = int.Parse(GetCustomConfigurationValue(configuration, CustomValueOilyStatusLifeTime));
+            CatchFireChanceModifier = int.Parse(GetCustomConfigurationValue(configuration, CustomValueOilyStatusCatchFireChanceModifier));
+            SelfExtinguishChanceModifier = int.Parse(GetCustomConfigurationValue(configuration, CustomValueOilyStatusSelfExtinguishChanceModifier));
 
             lifeTime = 0;
         }
@@ -50,9 +50,10 @@ namespace CodeMagic.Core.Statuses
             var stringValue = configuration.CustomValues
                 .FirstOrDefault(value => string.Equals(value.Key, key))?.Value;
             if (string.IsNullOrEmpty(stringValue))
-                throw new ApplicationException($"Custom value {key} not found in the configuration for \"{WaterLiquidObject.LiquidType}\".");
+                throw new ApplicationException($"Custom value {key} not found in the configuration for \"{OilLiquidObject.LiquidType}\".");
 
             return stringValue;
         }
+
     }
 }

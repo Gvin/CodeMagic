@@ -51,7 +51,7 @@ namespace CodeMagic.Core.Objects.IceObjects
 
         public bool BlocksProjectiles => false;
 
-        public bool IsVisible => true;
+        public bool IsVisible => Volume >= MinVolumeForEffect;
 
         public bool BlocksVisibility => false;
 

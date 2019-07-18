@@ -59,7 +59,7 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("decompress", new Func<int, JsValue>(GetDecompressSpellAction));
             jsEngine.SetValue("createWater", new Func<int, JsValue>(GetCreateWaterSpellAction));
             jsEngine.SetValue("longCast", new Func<dynamic, string, int, JsValue>(GetLongCastSpellAction));
-            jsEngine.SetValue("transmuteWater", new Func<string, int, JsValue>(GetTransmuteWaterSpellAction));
+            jsEngine.SetValue("transformWater", new Func<string, int, JsValue>(GetTransformWaterSpellAction));
         }
 
         public ISpellAction Execute(IGameCore game, Point position, CodeSpell spell)
@@ -291,9 +291,9 @@ namespace CodeMagic.Core.Spells.Script
             return LongCastSpellAction.GetJson(actionData, direction, distance).ToJson(jsEngine);
         }
 
-        private JsValue GetTransmuteWaterSpellAction(string resultLiquid, int volume)
+        private JsValue GetTransformWaterSpellAction(string resultLiquid, int volume)
         {
-            return TransmuteWaterSpellAction.GetJson(resultLiquid, volume).ToJson(jsEngine);
+            return TransformWaterSpellAction.GetJson(resultLiquid, volume).ToJson(jsEngine);
         }
 
         #endregion

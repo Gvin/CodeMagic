@@ -9,7 +9,9 @@
     <evaporation-multiplier>3</evaporation-multiplier>
     <steam-pressure-multiplier>6</steam-pressure-multiplier>
     <custom>
-      <value key="WetStatusLifeTime">5</value>
+      <value key="WetStatus.LifeTime">5</value>
+      <value key="WetStatus.CatchFireChanceModifier">-30</value>
+      <value key="WetStatus.SelfExtinguishChanceModifier">30</value>
     </custom>
   </liquid>
   <liquid type="acid">
@@ -22,6 +24,20 @@
     <steam-pressure-multiplier>6</steam-pressure-multiplier>
     <custom>
       <value key="DamageToVolumeMultiplier">0.3</value>
+    </custom>
+  </liquid>
+  <liquid type="oil">
+    <min-volume-for-effect>30</min-volume-for-effect>
+    <max-volume-before-spread>50</max-volume-before-spread>
+    <max-spread-volume>1</max-spread-volume>
+    <custom>
+      <value key="IgnitionTemperature">230</value>
+      <value key="BurningTemperature">950</value>
+      <value key="BurningRate">0.02</value>
+      <value key="HeatSpeed">300</value>
+      <value key="OilyStatus.LifeTime">8</value>
+      <value key="OilyStatus.CatchFireChanceModifier">50</value>
+      <value key="OilyStatus.SelfExtinguishChanceModifier">-30</value>
     </custom>
   </liquid>
 </liquids-configuration>
