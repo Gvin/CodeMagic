@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Configuration;
+using CodeMagic.Core.Configuration.Spells;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Spells.Script;
 

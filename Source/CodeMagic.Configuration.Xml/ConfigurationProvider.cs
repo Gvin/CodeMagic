@@ -5,6 +5,7 @@ using CodeMagic.Configuration.Xml.Types.Physics;
 using CodeMagic.Configuration.Xml.Types.Spells;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Liquids;
+using CodeMagic.Core.Configuration.Spells;
 
 namespace CodeMagic.Configuration.Xml
 {

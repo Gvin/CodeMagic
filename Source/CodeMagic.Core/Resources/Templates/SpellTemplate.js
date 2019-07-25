@@ -27,6 +27,7 @@
 // createWater(volume: int): Action - Creates <volume> liters of water in current spell location.
 // longCast(action: Action, direction: string, distance: int): Action - Casts specified action in place located to <distance> meters in specified direction. This will cost much more mana.
 // transformWater(targetLiquidName: string, volume: int): Action - Transforms specified volume of water in current spell location into the same volume of specified liquid. targetLiquidName can be oil or acid.
+// shock(power: int): Action - Performs electric shock of specified power in current spell location.
 //------------------------------------------------------------------------------------
 // List of custom types
 //

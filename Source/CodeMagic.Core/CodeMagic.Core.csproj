@@ -61,8 +61,8 @@
     <Compile Include="Configuration\IPhysicsConfiguration.cs" />
     <Compile Include="Configuration\IPressureConfiguration.cs" />
     <Compile Include="Configuration\IPressureDamageConfiguration.cs" />
-    <Compile Include="Configuration\ISpellConfiguration.cs" />
-    <Compile Include="Configuration\ISpellsConfiguration.cs" />
+    <Compile Include="Configuration\Spells\ISpellConfiguration.cs" />
+    <Compile Include="Configuration\Spells\ISpellsConfiguration.cs" />
     <Compile Include="Configuration\ITemperatureConfiguration.cs" />
     <Compile Include="Configuration\ITemperatureDamageConfiguration.cs" />
     <Compile Include="Game\IGameCore.cs" />
@@ -149,8 +149,9 @@
     <Compile Include="Spells\SpellActions\LongCastSpellAction.cs" />
     <Compile Include="Spells\SpellActions\MoveSpellAction.cs" />
     <Compile Include="Spells\SpellActions\PushSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\ShockSpellAction.cs" />
     <Compile Include="Spells\SpellActions\SpellActionBase.cs" />
-    <Compile Include="Spells\SpellActions\SpellActionsFactory.cs" />
+    <Compile Include="Spells\SpellActionsFactory.cs" />
     <Compile Include="Spells\SpellActions\TransformWaterSpellAction.cs" />
     <Compile Include="Spells\SpellException.cs" />
     <Compile Include="Spells\SpellHelper.cs" />

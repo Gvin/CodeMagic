@@ -4,6 +4,7 @@
     {
         Fire,
         Frost,
-        Acid
+        Acid,
+        Electricity
     }
 }

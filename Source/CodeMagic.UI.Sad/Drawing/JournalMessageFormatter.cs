@@ -26,6 +26,7 @@ namespace CodeMagic.UI.Sad.Drawing
         private static readonly Color FireDamageColor = Color.Orange;
         private static readonly Color FrostDamageColor = Color.LightBlue;
         private static readonly Color AcidDamageColor = Color.Lime;
+        private static readonly Color ElectricityDamageColor = Color.Yellow;
 
         private static readonly ColoredString ManaString = new ColoredString("Mana", ManaColor, BackgroundColor);
 
@@ -184,6 +185,8 @@ namespace CodeMagic.UI.Sad.Drawing
                     return FrostDamageColor;
                 case Element.Acid:
                     return AcidDamageColor;
+                case Element.Electricity:
+                    return ElectricityDamageColor;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(element), $"Unknown damage element: {element}");
             }
@@ -202,6 +205,8 @@ namespace CodeMagic.UI.Sad.Drawing
                     return "Frost";
                 case Element.Acid:
                     return "Acid";
+                case Element.Electricity:
+                    return "Electric";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(element), $"Unknown damage element: {element}");
             }

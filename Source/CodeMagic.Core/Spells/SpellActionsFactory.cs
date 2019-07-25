@@ -1,4 +1,6 @@
-﻿namespace CodeMagic.Core.Spells.SpellActions
+﻿using CodeMagic.Core.Spells.SpellActions;
+
+namespace CodeMagic.Core.Spells
 {
     public class SpellActionsFactory
     {
@@ -29,6 +31,8 @@
                     return new LongCastSpellAction(actionData, spell);
                 case TransformWaterSpellAction.ActionType:
                     return new TransformWaterSpellAction(actionData);
+                case ShockSpellAction.ActionType:
+                    return new ShockSpellAction(actionData);
             }
 
             throw new SpellException($"Action type \"{actionData.type}\" is not supported.");

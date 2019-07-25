@@ -60,6 +60,7 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("createWater", new Func<int, JsValue>(GetCreateWaterSpellAction));
             jsEngine.SetValue("longCast", new Func<dynamic, string, int, JsValue>(GetLongCastSpellAction));
             jsEngine.SetValue("transformWater", new Func<string, int, JsValue>(GetTransformWaterSpellAction));
+            jsEngine.SetValue("shock", new Func<int, JsValue>(GetShockSpellAction));
         }
 
         public ISpellAction Execute(IGameCore game, Point position, ICodeSpell spell)
@@ -155,7 +156,7 @@ namespace CodeMagic.Core.Spells.Script
                 case object[] array:
                     var processedArray = string.Join(", ", array.Select(GetMessageString));
                     return $"[{processedArray}]";
-                case ExpandoObject complex:
+                case ExpandoObject _:
                     return "object";
                 default:
                     return message.ToString();
@@ -294,6 +295,11 @@ namespace CodeMagic.Core.Spells.Script
         private JsValue GetTransformWaterSpellAction(string resultLiquid, int volume)
         {
             return TransformWaterSpellAction.GetJson(resultLiquid, volume).ToJson(jsEngine);
+        }
+
+        private JsValue GetShockSpellAction(int power)
+        {
+            return ShockSpellAction.GetJson(power).ToJson(jsEngine);
         }
 
         #endregion

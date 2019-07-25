@@ -40,4 +40,12 @@
     <mana-cost-multiplier>0.2</mana-cost-multiplier>
     <mana-cost-power>2</mana-cost-power>
   </spell>
+  <spell type="shock">
+    <mana-cost-multiplier>1</mana-cost-multiplier>
+    <mana-cost-power>2</mana-cost-power>
+    <custom>
+      <value key="WaterTransferMultiplier">0.8</value>
+      <value key="HeatMultiplier">5</value>
+    </custom>
+  </spell>
 </spells-configuration>

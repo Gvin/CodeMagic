@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.Core.Configuration;
+using CodeMagic.Core.Configuration.Spells;
 
 namespace CodeMagic.Configuration.Xml.Types.Spells
 {
@@ -15,5 +16,23 @@ namespace CodeMagic.Configuration.Xml.Types.Spells
 
         [XmlElement("mana-cost-power")]
         public int ManaCostPower { get; set; }
+
+        [XmlIgnore]
+        public ISpellConfigurationCustomValue[] CustomValues =>
+            CustomValuesData.ToArray<ISpellConfigurationCustomValue>();
+
+        [XmlArray("custom")]
+        [XmlArrayItem("value")]
+        public XmlSpellConfigurationCustomValue[] CustomValuesData { get; set; }
+    }
+
+    [Serializable]
+    public class XmlSpellConfigurationCustomValue : ISpellConfigurationCustomValue
+    {
+        [XmlAttribute("key")]
+        public string Key { get; set; }
+
+        [XmlText]
+        public string Value { get; set; }
     }
 }

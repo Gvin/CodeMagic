@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using CodeMagic.Core.Configuration;
+using CodeMagic.Core.Configuration.Spells;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Spells.Script;
 
@@ -8,10 +11,13 @@ namespace CodeMagic.Core.Spells.SpellActions
     {
         private readonly double manaCostMultiplier;
         private readonly int manaCostPower;
+        private readonly string actionType;
+        private readonly ISpellConfiguration configuration;
 
         protected SpellActionBase(string actionType)
         {
-            var configuration = Configuration.ConfigurationManager.GetSpellConfiguration(actionType);
+            this.actionType = actionType;
+            configuration = ConfigurationManager.GetSpellConfiguration(actionType);
             if (configuration == null)
                 throw new ApplicationException($"Configuration for spell action \"{actionType}\" not found.");
 
@@ -36,11 +42,20 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         protected static int GetManaCost(string actionType, int value)
         {
-            var configuration = Configuration.ConfigurationManager.GetSpellConfiguration(actionType);
+            var configuration = ConfigurationManager.GetSpellConfiguration(actionType);
             if (configuration == null)
                 throw new ApplicationException($"Configuration for spell action \"{actionType}\" not found.");
 
             return GetManaCost(value, configuration.ManaCostMultiplier, configuration.ManaCostPower);
+        }
+
+        protected string GetCustomValue(string key)
+        {
+            var value = configuration.CustomValues.FirstOrDefault(v => string.Equals(v.Key, key))?.Value;
+            if (string.IsNullOrEmpty(value))
+                throw new ApplicationException($"Custom value {key} not found in the configuration for \"{actionType}\" spell action.");
+
+            return value;
         }
 
         public abstract JsonData GetJson();
