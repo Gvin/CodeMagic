@@ -47,7 +47,7 @@ namespace CodeMagic.UI.Sad.Controls
             Surface.Fill(6, 3, 10, BackgroundColor, BackgroundColor, null);
             Surface.Print(6, 3, new ColoredString($"{player.Health} / {player.MaxHealth}", Color.Red, BackgroundColor));
             Surface.Print(2, 4, "Mana:");
-            Surface.Fill(8, 4, 10, BackgroundColor, BackgroundColor, null);
+            Surface.Fill(8, 4, 15, BackgroundColor, BackgroundColor, null);
             Surface.Print(8, 4, new ColoredString($"{player.Mana} / {player.MaxMana}", Color.Blue, BackgroundColor));
         }
     }
