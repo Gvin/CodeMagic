@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Spells.Script;
 
@@ -45,9 +46,9 @@ namespace CodeMagic.Core.Spells.SpellActions
             switch (result.ToLower())
             {
                 case LiquidNameAcid:
-                    return new AcidLiquidObject(targetVolume);
+                    return MapObjectsFactory.CreateLiquidObject<AcidLiquidObject>(targetVolume);
                 case LiquidNameOil:
-                    return new OilLiquidObject(targetVolume);
+                    return MapObjectsFactory.CreateLiquidObject<OilLiquidObject>(targetVolume);
                 default:
                     throw new SpellException($"Unknown liquid result: {result}");
             }

@@ -32,5 +32,9 @@ namespace CodeMagic.Core.Objects.Creatures
 
     public class NonPlayableCreatureObjectConfiguration : DestroyableObjectConfiguration
     {
+        public NonPlayableCreatureObjectConfiguration()
+        {
+            ZIndex = ZIndex.Creature;
+        }
     }
 }

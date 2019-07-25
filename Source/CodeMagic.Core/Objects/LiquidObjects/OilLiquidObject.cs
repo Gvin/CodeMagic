@@ -17,7 +17,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public const string LiquidType = "oil";
 
-        private readonly ILiquidConfiguration configuration;
+        protected readonly ILiquidConfiguration Configuration;
 
         private readonly int ignitionTemperature;
         private readonly int burningTemperature;
@@ -28,7 +28,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public OilLiquidObject(int volume)
         {
-            configuration = ConfigurationManager.GetLiquidConfiguration(LiquidType);
+            Configuration = ConfigurationManager.GetLiquidConfiguration(LiquidType);
 
             ignitionTemperature = GetCustomInt(CustomValueIgnitionTemperature);
             burningTemperature = GetCustomInt(CustomValueBurningTemperature);
@@ -68,7 +68,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)
             {
-                destroyable.Statuses.Add(new OilyObjectStatus(configuration));
+                destroyable.Statuses.Add(new OilyObjectStatus(Configuration));
             }
         }
 
@@ -94,7 +94,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
         private string GetCustomString(string key)
         {
             var stringValue =
-                configuration.CustomValues.FirstOrDefault(value =>
+                Configuration.CustomValues.FirstOrDefault(value =>
                     string.Equals(value.Key, key))?.Value;
             if (string.IsNullOrEmpty(stringValue))
                 throw new ArgumentException(
@@ -123,11 +123,11 @@ namespace CodeMagic.Core.Objects.LiquidObjects
             }
         }
 
-        public int MaxVolumeBeforeSpread => configuration.MaxVolumeBeforeSpread;
+        public int MaxVolumeBeforeSpread => Configuration.MaxVolumeBeforeSpread;
 
-        public int MaxSpreadVolume => configuration.MaxSpreadVolume;
+        public int MaxSpreadVolume => Configuration.MaxSpreadVolume;
 
-        public int MinVolumeForEffect => configuration.MinVolumeForEffect;
+        public int MinVolumeForEffect => Configuration.MinVolumeForEffect;
 
         public ILiquidObject Separate(int separateVolume)
         {

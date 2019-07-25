@@ -6,7 +6,12 @@ using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells
 {
-    public class CodeSpell : IDynamicObject, IMapObject
+    public interface ICodeSpell : IMapObject
+    {
+        int Mana { get; set; }
+    }
+
+    public class CodeSpell : IDynamicObject, ICodeSpell
     {
         private readonly SpellCodeExecutor codeExecutor;
 

@@ -6,6 +6,7 @@ using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.LiquidObjects;
+using CodeMagic.Core.Objects.SolidObjects;
 using Environment = CodeMagic.Core.Area.EnvironmentData.Environment;
 
 namespace CodeMagic.Core.Area
@@ -29,6 +30,8 @@ namespace CodeMagic.Core.Area
         {
             get { return Objects.Any(obj => obj.BlocksMovement); }
         }
+
+        public bool HasSolidObjects => Objects.OfType<SolidObject>().Any();
 
         public bool BlocksEnvironment
         {
@@ -63,7 +66,7 @@ namespace CodeMagic.Core.Area
 
             if (Environment.Temperature >= FireDecorativeObject.SmallFireTemperature && !Objects.OfType<FireDecorativeObject>().Any())
             {
-                Objects.Add(new FireDecorativeObject(Environment.Temperature));
+                Objects.Add(MapObjectsFactory.CreateFire(Environment.Temperature));
             }
         }
 

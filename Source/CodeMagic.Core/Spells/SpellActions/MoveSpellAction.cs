@@ -12,9 +12,9 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         private readonly Direction direction;
         private readonly int distance;
-        private readonly CodeSpell spell;
+        private readonly ICodeSpell spell;
 
-        public MoveSpellAction(dynamic actionData, CodeSpell spell)
+        public MoveSpellAction(dynamic actionData, ICodeSpell spell)
             :base(ActionType)
         {
             direction = ParseDirection((string)actionData.direction);

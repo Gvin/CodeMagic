@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Objects.Creatures;
+﻿using CodeMagic.Core.Objects;
+using CodeMagic.Core.Objects.Creatures;
 
 namespace CodeMagic.Core.Spells
 {
@@ -10,9 +11,9 @@ namespace CodeMagic.Core.Spells
 
         public int ManaCost { get; set; }
 
-        public CodeSpell CreateCodeSpell(ICreatureObject caster)
+        public ICodeSpell CreateCodeSpell(ICreatureObject caster)
         {
-            return new CodeSpell(caster, Name, Code, ManaCost);
+            return MapObjectsFactory.CreateCodeSpell(caster, Name, Code, ManaCost);
         }
     }
 }

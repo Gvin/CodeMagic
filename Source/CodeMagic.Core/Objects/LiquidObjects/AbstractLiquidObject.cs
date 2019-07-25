@@ -27,7 +27,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public bool BlocksProjectiles => false;
 
-        public bool IsVisible => Volume >= MinVolumeForEffect;
+        public bool IsVisible => true;
 
         public bool BlocksVisibility => false;
 

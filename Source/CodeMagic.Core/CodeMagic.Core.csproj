@@ -77,6 +77,7 @@
     <Compile Include="Objects\LiquidObjects\ILiquidObject.cs" />
     <Compile Include="Objects\LiquidObjects\OilLiquidObject.cs" />
     <Compile Include="Objects\LiquidObjects\WaterLiquidObject.cs" />
+    <Compile Include="Objects\MapObjectsFactory.cs" />
     <Compile Include="Objects\MovementHelper.cs" />
     <Compile Include="CreaturesLogic\CreaturesVisibilityHelper.cs" />
     <Compile Include="CreaturesLogic\MovementStrategies\ICreatureMovementStrategy.cs" />
@@ -99,7 +100,6 @@
     <Compile Include="Game\Journaling\Messages\SpellErrorMessage.cs" />
     <Compile Include="Game\Journaling\Messages\SpellLogMessage.cs" />
     <Compile Include="Game\Journaling\Messages\SpellOutOfManaMessage.cs" />
-    <Compile Include="Game\MapGenerator.cs" />
     <Compile Include="Game\PlayerActions\CastSpellAction.cs" />
     <Compile Include="Game\PlayerActions\MeleAttackPlayerAction.cs" />
     <Compile Include="Game\PlayerActions\IPlayerAction.cs" />

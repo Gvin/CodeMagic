@@ -59,12 +59,12 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
 
         protected override IMapObject CreateDeathRemains()
         {
-            var type = DecorativeObjectConfiguration.ObjectTypeGoblinBloodMedium;
+            var type = DecorativeObjectConfiguration.ObjectTypeGreenBloodMedium;
             var typeRoll = RandomHelper.GetRandomValue(1, 2);
             if (typeRoll == 2)
-                type = DecorativeObjectConfiguration.ObjectTypeGoblinBloodBig;
+                type = DecorativeObjectConfiguration.ObjectTypeGreenBloodBig;
 
-            return new DecorativeObject(new DecorativeObjectConfiguration
+            return MapObjectsFactory.CreateDecorativeObject(new DecorativeObjectConfiguration
             {
                 Name = "Goblin Blood",
                 Type = type,

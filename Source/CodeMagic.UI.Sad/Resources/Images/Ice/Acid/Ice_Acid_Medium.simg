@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
+  <row>
+    <pixel />
+    <pixel>
+      <background-color>
+        <R>157</R>
+        <G>255</G>
+        <B>157</B>
+      </background-color>
+    </pixel>
+    <pixel />
+  </row>
+  <row>
+    <pixel>
+      <background-color>
+        <R>157</R>
+        <G>255</G>
+        <B>157</B>
+      </background-color>
+    </pixel>
+    <pixel symbol=".">
+      <color>
+        <R>255</R>
+        <G>255</G>
+        <B>255</B>
+      </color>
+      <background-color>
+        <R>157</R>
+        <G>255</G>
+        <B>157</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>157</R>
+        <G>255</G>
+        <B>157</B>
+      </background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel />
+    <pixel>
+      <background-color>
+        <R>157</R>
+        <G>255</G>
+        <B>157</B>
+      </background-color>
+    </pixel>
+    <pixel />
+  </row>
+</symbols-image>

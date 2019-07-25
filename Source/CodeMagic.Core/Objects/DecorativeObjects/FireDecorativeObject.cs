@@ -2,15 +2,19 @@
 
 namespace CodeMagic.Core.Objects.DecorativeObjects
 {
-    public class FireDecorativeObject : IMapObject, IDynamicObject
+    public interface IFireDecorativeObject : IMapObject
+    {
+    }
+
+    public class FireDecorativeObject : IFireDecorativeObject, IDynamicObject
     {
         private const int MediumFireTemperature = 1200;
         private const int BigFireTemperature = 1500;
         public const int SmallFireTemperature = 600;
 
-        public const string ObjectTypeSmallFile = "SmallFire";
-        public const string ObjectTypeMediumFile = "MediumFire";
-        public const string ObjectTypeBigFile = "BigFire";
+        public const string ObjectTypeSmallFire = "SmallFire";
+        public const string ObjectTypeMediumFire = "MediumFire";
+        public const string ObjectTypeBigFire = "BigFire";
 
         public FireDecorativeObject(int temperature)
         {
@@ -20,10 +24,10 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         private string GetFireType(int temperature)
         {
             if (temperature >= BigFireTemperature)
-                return ObjectTypeBigFile;
+                return ObjectTypeBigFire;
             if (temperature >= MediumFireTemperature)
-                return ObjectTypeMediumFile;
-            return ObjectTypeSmallFile;
+                return ObjectTypeMediumFire;
+            return ObjectTypeSmallFire;
         }
 
         public string Type { get; private set; }

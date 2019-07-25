@@ -2,7 +2,11 @@
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public class EnergyWall : IMapObject, IDynamicObject
+    public interface IEnergyWall : IMapObject
+    {
+    }
+
+    public class EnergyWall : IEnergyWall, IDynamicObject
     {
         public EnergyWall(EnergyWallConfiguration configuration)
         {

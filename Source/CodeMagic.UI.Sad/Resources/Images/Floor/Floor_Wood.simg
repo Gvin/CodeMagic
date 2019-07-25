@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
+  <row>
+    <pixel symbol="│">
+      <color>
+        <R>61</R>
+        <G>44</G>
+        <B>20</B>
+      </color>
+      <background-color>
+        <R>99</R>
+        <G>63</G>
+        <B>11</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="├">
+      <color>
+        <R>61</R>
+        <G>44</G>
+        <B>20</B>
+      </color>
+      <background-color>
+        <R>99</R>
+        <G>63</G>
+        <B>11</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="┤">
+      <color>
+        <R>61</R>
+        <G>44</G>
+        <B>20</B>
+      </color>
+      <background-color>
+        <R>99</R>
+        <G>63</G>
+        <B>11</B>
+      </background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel symbol="├">
+      <color>
+        <R>61</R>
+        <G>44</G>
+        <B>20</B>
+      </color>
+      <background-color>
+        <R>99</R>
+        <G>63</G>
+        <B>11</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="┤">
+      <color>
+        <R>61</R>
+        <G>44</G>
+        <B>20</B>
+      </color>
+      <background-color>
+        <R>99</R>
+        <G>63</G>
+        <B>11</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="│">
+      <color>
+        <R>61</R>
+        <G>44</G>
+        <B>20</B>
+      </color>
+      <background-color>
+        <R>99</R>
+        <G>63</G>
+        <B>11</B>
+      </background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel symbol="┤">
+      <color>
+        <R>61</R>
+        <G>44</G>
+        <B>20</B>
+      </color>
+      <background-color>
+        <R>99</R>
+        <G>63</G>
+        <B>11</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="│">
+      <color>
+        <R>61</R>
+        <G>44</G>
+        <B>20</B>
+      </color>
+      <background-color>
+        <R>99</R>
+        <G>63</G>
+        <B>11</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="├">
+      <color>
+        <R>61</R>
+        <G>44</G>
+        <B>20</B>
+      </color>
+      <background-color>
+        <R>99</R>
+        <G>63</G>
+        <B>11</B>
+      </background-color>
+    </pixel>
+  </row>
+</symbols-image>

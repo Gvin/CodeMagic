@@ -8,13 +8,13 @@ namespace CodeMagic.Core.Objects.SolidObjects
 {
     public class SolidObject : IMapObject, IPlacedHandler
     {
-        private readonly List<Direction> connectedTiles;
+        private readonly List<Point> connectedTiles;
 
         public SolidObject(SolidObjectConfiguration configuration)
         {
             Name = configuration.Name;
             Type = configuration.Type;
-            connectedTiles = new List<Direction>();
+            connectedTiles = new List<Point>();
         }
 
         public string Name { get; }
@@ -33,43 +33,38 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public ZIndex ZIndex => ZIndex.Wall;
 
-        public bool HasConnectedTile(Direction direction)
+        public bool HasConnectedTile(int relativeX, int relativeY)
         {
-            return connectedTiles.Contains(direction);
-        }
-
-        public void RegisterConnectedTile(Direction direction)
-        {
-            if (!connectedTiles.Contains(direction))
-                connectedTiles.Add(direction);
+            return connectedTiles.Any(point => point.X == relativeX && point.Y == relativeY);
         }
 
         public void OnPlaced(IAreaMap map, Point position)
         {
-            CheckWallInDirection(map, position, Direction.Up);
-            CheckWallInDirection(map, position, Direction.Down);
-            CheckWallInDirection(map, position, Direction.Left);
-            CheckWallInDirection(map, position, Direction.Right);
+            CheckWallInDirection(map, position, -1, -1); // Top Left
+            CheckWallInDirection(map, position, 0, -1); // Top
+            CheckWallInDirection(map, position, 1, -1); // Top Right
+
+            CheckWallInDirection(map, position, -1, 0); // Left
+            CheckWallInDirection(map, position, 1, 0); // Right
+
+            CheckWallInDirection(map, position, 1, 1); // Bottom Left
+            CheckWallInDirection(map, position, 0, 1); // Bottom
+            CheckWallInDirection(map, position, 1, 1); // Bottom Right
         }
 
-        private void CheckWallInDirection(IAreaMap map, Point position, Direction direction)
+        private void CheckWallInDirection(IAreaMap map, Point position, int relativeX, int relativeY)
         {
-            var wallUp = GetWallNear(map, position, direction);
+            var wallUp = GetWall(map, position, relativeX, relativeY);
             if (wallUp != null)
             {
-                connectedTiles.Add(direction);
-                wallUp.RegisterConnectedTile(NegateDirection(direction));
+                connectedTiles.Add(new Point(relativeX, relativeY));
+                wallUp.connectedTiles.Add(new Point(relativeX* (-1), relativeY * (-1)));
             }
         }
 
-        private Direction NegateDirection(Direction direction)
+        private SolidObject GetWall(IAreaMap map, Point position, int relativeX, int relativeY)
         {
-            return (Direction) ((int)direction * -1);
-        }
-
-        private SolidObject GetWallNear(IAreaMap map, Point position, Direction direction)
-        {
-            var nearPosition = Point.GetPointInDirection(position, direction);
+            var nearPosition = new Point(position.X + relativeX, position.Y + relativeY);
             if (!map.ContainsCell(nearPosition))
                 return null;
 
@@ -80,8 +75,8 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
     public class SolidObjectConfiguration
     {
-        public const string ObjectTypeWallWood = "WallWood";
-        public const string ObjectTypeWallStone = "WallStone";
+        public const string ObjectTypeWallWood = "Wood";
+        public const string ObjectTypeWallStone = "Stone";
         public const string ObjectTypeHole = "Hole";
 
         public string Name { get; set; }

@@ -20,13 +20,13 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         protected override AcidIceObject CreateIce(int volume)
         {
-            return new AcidIceObject(volume);
+            return MapObjectsFactory.CreateIceObject<AcidIceObject>(volume);
         }
 
         public override ILiquidObject Separate(int volume)
         {
             Volume -= volume;
-            return new AcidLiquidObject(volume);
+            return MapObjectsFactory.CreateLiquidObject<AcidLiquidObject>(volume);
         }
 
         protected override void UpdateLiquid(IGameCore game, Point position)

@@ -40,7 +40,7 @@ namespace CodeMagic.Core.Objects
             return MoveMapObject(mapObject, game, startPoint, endPoint, cell => !cell.BlocksMovement, processStepReaction);
         }
 
-        public static MovementResult MoveSpell(CodeSpell spell, IGameCore game, Point startPoint, Point endPoint)
+        public static MovementResult MoveSpell(ICodeSpell spell, IGameCore game, Point startPoint, Point endPoint)
         {
             return MoveMapObject(spell, game, startPoint, endPoint, cell => !cell.BlocksProjectiles, false);
         }

@@ -62,7 +62,7 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("transformWater", new Func<string, int, JsValue>(GetTransformWaterSpellAction));
         }
 
-        public ISpellAction Execute(IGameCore game, Point position, CodeSpell spell)
+        public ISpellAction Execute(IGameCore game, Point position, ICodeSpell spell)
         {
             var result = ExecuteCode(game, position, spell);
             if (result == null)
@@ -81,7 +81,7 @@ namespace CodeMagic.Core.Spells.Script
             return action;
         }
 
-        private dynamic ExecuteCode(IGameCore game, Point position, CodeSpell spell)
+        private dynamic ExecuteCode(IGameCore game, Point position, ICodeSpell spell)
         {
             ConfigureDynamicEngineFunctions(game, position, spell);
 
@@ -121,7 +121,7 @@ namespace CodeMagic.Core.Spells.Script
             return result;
         }
 
-        private void ConfigureDynamicEngineFunctions(IGameCore game, Point position, CodeSpell spell)
+        private void ConfigureDynamicEngineFunctions(IGameCore game, Point position, ICodeSpell spell)
         {
             jsEngine.SetValue("log", new Action<object>(message => LogMessage(game.Journal, spell, message)));
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
@@ -137,7 +137,7 @@ namespace CodeMagic.Core.Spells.Script
                 new Func<int, JsValue[][][]>(radius => ScanForObjects(game.Map, position, radius, spell)));
         }
 
-        private void LogMessage(Journal journal, CodeSpell spell, object message)
+        private void LogMessage(Journal journal, ICodeSpell spell, object message)
         {
             journal.Write(new SpellLogMessage(spell.Name, GetMessageString(message)));
         }
@@ -162,7 +162,7 @@ namespace CodeMagic.Core.Spells.Script
             }
         }
 
-        private JsValue[][][] ScanForObjects(IAreaMap map, Point position, int radius, CodeSpell spell)
+        private JsValue[][][] ScanForObjects(IAreaMap map, Point position, int radius, ICodeSpell spell)
         {
             var cost = radius * ScanForObjectsManaCostMultiplier;
             if (spell.Mana < cost)
@@ -179,7 +179,7 @@ namespace CodeMagic.Core.Spells.Script
                         .ToArray()).ToArray()).ToArray();
         }
 
-        private bool[][] ScanForWalls(IAreaMap map, Point position, int radius, CodeSpell spell)
+        private bool[][] ScanForWalls(IAreaMap map, Point position, int radius, ICodeSpell spell)
         {
             var cost = radius * ScanForWallsManaCostMultiplier;
             if (spell.Mana < cost)

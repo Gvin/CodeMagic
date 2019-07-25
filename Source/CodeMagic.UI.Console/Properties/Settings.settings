@@ -1,9 +1,0 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CodeMagic.UI.Console.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="EditingToolPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Program Files (x86)\Notepad++\notepad++.exe</Value>
-    </Setting>
-  </Settings>
-</SettingsFile>

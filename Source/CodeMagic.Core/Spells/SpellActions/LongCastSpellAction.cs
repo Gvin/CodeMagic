@@ -14,12 +14,12 @@ namespace CodeMagic.Core.Spells.SpellActions
         private readonly ISpellAction action;
         private readonly Direction direction;
         private readonly int distance;
-        private readonly CodeSpell spell;
+        private readonly ICodeSpell spell;
 
         private readonly double manaCostMultiplier;
         private readonly int manaCostPower;
 
-        public LongCastSpellAction(dynamic actionData, CodeSpell spell)
+        public LongCastSpellAction(dynamic actionData, ICodeSpell spell)
         {
             var configuration = GetConfiguration();
             manaCostMultiplier = configuration.ManaCostMultiplier;

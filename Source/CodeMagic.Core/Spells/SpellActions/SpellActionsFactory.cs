@@ -2,7 +2,7 @@
 {
     public class SpellActionsFactory
     {
-        public ISpellAction GetSpellAction(dynamic actionData, CodeSpell spell)
+        public ISpellAction GetSpellAction(dynamic actionData, ICodeSpell spell)
         {
             if (string.IsNullOrEmpty(actionData.type))
                 throw new SpellException("Action type cannot be empty.");

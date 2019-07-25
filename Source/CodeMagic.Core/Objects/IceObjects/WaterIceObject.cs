@@ -17,7 +17,7 @@ namespace CodeMagic.Core.Objects.IceObjects
 
         protected override WaterLiquidObject CreateLiquid(int volume)
         {
-            return new WaterLiquidObject(volume);
+            return MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(volume);
         }
     }
 }

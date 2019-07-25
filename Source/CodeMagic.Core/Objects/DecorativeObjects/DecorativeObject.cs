@@ -1,6 +1,10 @@
 ﻿namespace CodeMagic.Core.Objects.DecorativeObjects
 {
-    public class DecorativeObject : IMapObject
+    public interface IDecorativeObject : IMapObject
+    {
+    }
+
+    public class DecorativeObject : IDecorativeObject
     {
         public DecorativeObject(DecorativeObjectConfiguration configuration)
         {
@@ -33,9 +37,9 @@
         public const string ObjectTypeBloodMedium = "BloodMedium";
         public const string ObjectTypeBloodBig = "BloodBig";
 
-        public const string ObjectTypeGoblinBloodSmall = "GoblinBloodSmall";
-        public const string ObjectTypeGoblinBloodMedium = "GoblinBloodMedium";
-        public const string ObjectTypeGoblinBloodBig = "GoblinBloodBig";
+        public const string ObjectTypeGreenBloodSmall = "GreenBloodSmall";
+        public const string ObjectTypeGreenBloodMedium = "GreenBloodMedium";
+        public const string ObjectTypeGreenBloodBig = "GreenBloodBig";
 
         public const string ObjectTypeWoodPieces = "WoodPieces";
 

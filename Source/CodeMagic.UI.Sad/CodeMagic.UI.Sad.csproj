@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{43564371-4626-46E9-8862-DA95914E919D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>CodeMagic.UI.Sad</RootNamespace>
+    <AssemblyName>CodeMagic.UI.Sad</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.7.1.189\lib\net45\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SadConsole, Version=8.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SadConsole.8.7.1\lib\netstandard2.0\SadConsole.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\GameAreaControl.cs" />
+    <Compile Include="Controls\JournalBoxControl.cs" />
+    <Compile Include="Controls\PlayerStatsControl.cs" />
+    <Compile Include="Controls\SpellDetailsControl.cs" />
+    <Compile Include="Drawing\CellImageHelper.cs" />
+    <Compile Include="Drawing\ImageProviding\ImagesFactory.cs" />
+    <Compile Include="Drawing\ImagesStorage.cs" />
+    <Compile Include="Drawing\ItemDrawingHelper.cs" />
+    <Compile Include="Drawing\JournalMessageFormatter.cs" />
+    <Compile Include="GameProcess\EditSpellHelper.cs" />
+    <Compile Include="GameProcess\GameConfigurator.cs" />
+    <Compile Include="GameProcess\GameManager.cs" />
+    <Compile Include="Views\EditSpellView.cs" />
+    <Compile Include="Views\GameView.cs" />
+    <Compile Include="Views\MainMenuView.cs" />
+    <Compile Include="Views\SpellBookView.cs" />
+    <Compile Include="Views\View.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\ViewsManager.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeMagic.Configuration.Xml\CodeMagic.Configuration.Xml.csproj">
+      <Project>{9acdc6a3-a058-4567-b013-fa45090616b6}</Project>
+      <Name>CodeMagic.Configuration.Xml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">
+      <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
+      <Name>CodeMagic.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.MapGeneration\CodeMagic.MapGeneration.csproj">
+      <Project>{a4f02790-b78a-42d2-b1b2-bed6547e7fc3}</Project>
+      <Name>CodeMagic.MapGeneration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.Objects.Implementation\CodeMagic.Objects.Implementation.csproj">
+      <Project>{be94a033-ed03-4142-b634-563a110dd8bb}</Project>
+      <Name>CodeMagic.Objects.Implementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.UI.Images\CodeMagic.UI.Images.csproj">
+      <Project>{c5a8ee43-bc81-4e88-b990-d2ae962c3205}</Project>
+      <Name>CodeMagic.UI.Images</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.UI.Sad.Common\CodeMagic.UI.Sad.Common.csproj">
+      <Project>{30048299-507d-4591-b6ca-18d247ae5cf1}</Project>
+      <Name>CodeMagic.UI.Sad.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configuration\Liquids.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\Physics.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuration\Spells.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\MonoGame.Framework.DesktopGL.3.7.1.189\build\MonoGame.Framework.DesktopGL.targets" Condition="Exists('..\packages\MonoGame.Framework.DesktopGL.3.7.1.189\build\MonoGame.Framework.DesktopGL.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MonoGame.Framework.DesktopGL.3.7.1.189\build\MonoGame.Framework.DesktopGL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MonoGame.Framework.DesktopGL.3.7.1.189\build\MonoGame.Framework.DesktopGL.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y $(ProjectDir)Resources $(TargetDir)Resources /E</PostBuildEvent>
+  </PropertyGroup>
+</Project>

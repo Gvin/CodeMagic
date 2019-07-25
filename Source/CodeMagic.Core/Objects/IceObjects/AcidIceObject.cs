@@ -17,7 +17,7 @@ namespace CodeMagic.Core.Objects.IceObjects
 
         protected override AcidLiquidObject CreateLiquid(int volume)
         {
-            return new AcidLiquidObject(volume);
+            return MapObjectsFactory.CreateLiquidObject<AcidLiquidObject>(volume);
         }
     }
 }
