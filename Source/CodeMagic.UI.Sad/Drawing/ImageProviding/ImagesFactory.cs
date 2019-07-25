@@ -1,10 +1,16 @@
-﻿using CodeMagic.Objects.Implementation;
+﻿using CodeMagic.Core.Objects;
+using CodeMagic.Core.Statuses;
+using CodeMagic.Objects.Implementation;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.UI.Sad.Drawing.ImageProviding
 {
     public class ImagesFactory
     {
+        private const string ImageStatusOnFire = "Status_OnFire";
+        private const string ImageStatusOily = "Status_Oily";
+        private const string ImageStatusWet = "Status_Wet";
+
         private readonly IImagesStorage imagesStorage;
 
         public ImagesFactory(IImagesStorage imagesStorage)
@@ -13,6 +19,46 @@ namespace CodeMagic.UI.Sad.Drawing.ImageProviding
         }
 
         public SymbolsImage GetImage(object objectToDraw)
+        {
+            var objectImage = GetObjectImage(objectToDraw);
+            if (objectImage == null)
+                return null;
+
+            if (objectToDraw is IDestroyableObject destroyable)
+            {
+                objectImage = ApplyDestroyableStatuses(destroyable, objectImage);
+            }
+
+            return objectImage;
+        }
+
+        private SymbolsImage ApplyDestroyableStatuses(IDestroyableObject destroyable, SymbolsImage image)
+        {
+            if (destroyable.Statuses.Contains(OnFireObjectStatus.StatusType))
+            {
+                return ApplyStatusImage(image, ImageStatusOnFire);
+            }
+
+            if (destroyable.Statuses.Contains(OilyObjectStatus.StatusType))
+            {
+                return ApplyStatusImage(image, ImageStatusOily);
+            }
+
+            if (destroyable.Statuses.Contains(WetObjectStatus.StatusType))
+            {
+                return ApplyStatusImage(image, ImageStatusWet);
+            }
+
+            return image;
+        }
+
+        private SymbolsImage ApplyStatusImage(SymbolsImage initialImage, string statusImageName)
+        {
+            var statusImage = imagesStorage.GetImage(statusImageName);
+            return SymbolsImage.Combine(initialImage, statusImage);
+        }
+
+        private SymbolsImage GetObjectImage(object objectToDraw)
         {
             if (objectToDraw is IImageProvider selfProvider)
             {
