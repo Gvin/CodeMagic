@@ -8,12 +8,14 @@ using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.IceObjects;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Core.Objects.SteamObjects;
 using CodeMagic.Core.Spells;
 using CodeMagic.Objects.Implementation;
 using CodeMagic.Objects.Implementation.DecorativeObjects;
 using CodeMagic.Objects.Implementation.IceObjects;
 using CodeMagic.Objects.Implementation.LiquidObjects;
 using CodeMagic.Objects.Implementation.SolidObjects;
+using CodeMagic.Objects.Implementation.SteamObjects;
 using CodeMagic.UI.Sad.Drawing;
 
 namespace CodeMagic.UI.Sad.GameProcess
@@ -57,7 +59,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                 return new DecorativeObjectImpl(configuration);
             }
 
-            public TIce CreateIceObject<TIce>(int volume) where TIce : class, IIceObject
+            public TIce CreateIce<TIce>(int volume) where TIce : class, IIceObject
             {
                 var iceType = typeof(TIce);
                 if (iceType == typeof(WaterIceObject))
@@ -68,7 +70,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                 throw new ApplicationException($"Unknown ice type: {iceType.FullName}");
             }
 
-            public TLiquid CreateLiquidObject<TLiquid>(int volume) where TLiquid : class, ILiquidObject
+            public TLiquid CreateLiquid<TLiquid>(int volume) where TLiquid : class, ILiquidObject
             {
                 var liquidType = typeof(TLiquid);
                 if (liquidType == typeof(WaterLiquidObject))
@@ -79,6 +81,17 @@ namespace CodeMagic.UI.Sad.GameProcess
                     return new OilLiquidImpl(volume) as TLiquid;
 
                 throw new ApplicationException($"Unknown liquid type: {liquidType.FullName}");
+            }
+
+            public TSteam CreateSteam<TSteam>(int volume) where TSteam : class, ISteamObject
+            {
+                var steamType = typeof(TSteam);
+                if (steamType == typeof(WaterSteamObject))
+                    return new WaterSteamImpl(volume) as TSteam;
+                if (steamType == typeof(AcidSteamObject))
+                    return new AcidSteamImpl(volume) as TSteam;
+
+                throw new ApplicationException($"Unknown steam type: {steamType.FullName}");
             }
 
             public IEnergyWall CreateEnergyWall(int lifeTime)

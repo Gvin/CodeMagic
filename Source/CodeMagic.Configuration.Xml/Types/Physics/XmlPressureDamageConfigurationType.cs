@@ -7,10 +7,10 @@ namespace CodeMagic.Configuration.Xml.Types.Physics
     [Serializable]
     public class XmlPressureDamageConfigurationType : IPressureDamageConfiguration
     {
-        [XmlAttribute("pressure")]
-        public int Pressure { get; set; }
+        [XmlElement("pressure-level")]
+        public int PressureLevel { get; set; }
 
-        [XmlAttribute("damage")]
-        public int Damage { get; set; }
+        [XmlElement("damage-multiplier")]
+        public double DamageMultiplier { get; set; }
     }
 }

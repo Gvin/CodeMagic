@@ -34,5 +34,14 @@ namespace CodeMagic.UI.Sad.Properties {
                 this["SpellEditorPath"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DebugDrawTemperature {
+            get {
+                return ((bool)(this["DebugDrawTemperature"]));
+            }
+        }
     }
 }

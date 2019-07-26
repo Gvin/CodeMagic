@@ -143,7 +143,7 @@ namespace CodeMagic.UI.Sad.Drawing
         {
             return new[]
             {
-                new ColoredString($"{GetMapObjectName(message.Object)} is dead", TextColor, BackgroundColor)
+                new ColoredString($"{GetMapObjectName(message.Object)} died", TextColor, BackgroundColor)
             };
         }
 

@@ -8,7 +8,8 @@
         AreaDecoration = 3,
         BigDecoration = 4,
         Wall = 5,
+        Spell = 6,
         Creature = 7,
-        Spell = 6
+        Air = 8
     }
 }

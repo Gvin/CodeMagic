@@ -3,13 +3,14 @@ using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects.IceObjects;
+using CodeMagic.Core.Objects.SteamObjects;
 
 namespace CodeMagic.Core.Objects.LiquidObjects
 {
-    public class AcidLiquidObject : AbstractLiquidObject<AcidIceObject>
+    public class AcidLiquidObject : AbstractLiquidObject
     {
         private const string CustomValueDamageToVolumeMultiplier = "DamageToVolumeMultiplier";
-        public const string LiquidType = "acid";
+        public const string LiquidType = "AcidLiquid";
 
         public AcidLiquidObject(int volume) 
             : base(volume, LiquidType)
@@ -18,12 +19,17 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public override string Name => "Acid";
 
-        protected override AcidIceObject CreateIce(int volume)
+        protected override IIceObject CreateIce(int volume)
         {
             return MapObjectsFactory.CreateIceObject<AcidIceObject>(volume);
         }
 
-        public override ILiquidObject Separate(int volume)
+        protected override ISteamObject CreateSteam(int volume)
+        {
+            return MapObjectsFactory.CreateSteam<AcidSteamObject>(volume);
+        }
+
+        public override ISpreadingObject Separate(int volume)
         {
             Volume -= volume;
             return MapObjectsFactory.CreateLiquidObject<AcidLiquidObject>(volume);
@@ -33,18 +39,16 @@ namespace CodeMagic.Core.Objects.LiquidObjects
         {
             base.UpdateLiquid(game, position);
 
+            var damageMultiplier = GetAcidDamageMultiplier();
+            var damage = (int)Math.Ceiling(damageMultiplier * Volume);
+            if (damage == 0)
+                return;
+
             var cell = game.Map.GetCell(position);
+
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)
             {
-                if (Volume < MinVolumeForEffect)
-                    return;
-
-                var damageMultiplier = GetAcidDamageMultiplier();
-                var damage = (int)Math.Ceiling(damageMultiplier * Volume);
-                if (damage == 0)
-                    return;
-
                 destroyable.Damage(damage, Element.Acid);
                 game.Journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Acid));
             }

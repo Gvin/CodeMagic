@@ -29,14 +29,14 @@ namespace CodeMagic.Core.Spells.SpellActions
                 return position;
 
             var targetCell = game.Map.GetCell(position);
-            var waterVolume = targetCell.Objects.GetLiquidVolume<WaterLiquidObject>();
+            var waterVolume = targetCell.Objects.GetVolume<WaterLiquidObject>();
             if (waterVolume <= 0)
                 return position;
 
             var transmutingVolume = Math.Min(waterVolume, volume);
 
-            targetCell.Objects.RemoveLiquidVolume<WaterLiquidObject>(transmutingVolume);
-            targetCell.Objects.AddLiquid(CreateTargetLiquid(transmutingVolume));
+            targetCell.Objects.RemoveVolume<WaterLiquidObject>(transmutingVolume);
+            targetCell.Objects.AddVolumeObject(CreateTargetLiquid(transmutingVolume));
 
             return position;
         }

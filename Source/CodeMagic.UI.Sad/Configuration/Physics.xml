@@ -8,15 +8,12 @@
     <transfer-value-difference-multiplier>0.07</transfer-value-difference-multiplier>
     <normalize-speed>1</normalize-speed>
     <cold-damage>
-      <line temperature="-70" damage="1"/>
-      <line temperature="-100" damage="5"/>
-      <line temperature="-180" damage="20"/>
+      <temperature-level>-70</temperature-level>
+      <damage-multiplier>0.2</damage-multiplier>
     </cold-damage>
     <heat-damage>
-      <line temperature="100" damage="1"/>
-      <line temperature="600" damage="5"/>
-      <line temperature="1200" damage="15"/>
-      <line temperature="1500" damage="30"/>
+      <temperature-level>100</temperature-level>
+      <damage-multiplier>0.03</damage-multiplier>
     </heat-damage>
   </temperature>
   <pressure>
@@ -25,17 +22,16 @@
     <normal-value>100</normal-value>
     <normalize-speed>50</normalize-speed>
     <low-pressure-damage>
-      <line pressure="20" damage="5"/>
+      <pressure-level>50</pressure-level>
+      <damage-multiplier>0.1</damage-multiplier>
     </low-pressure-damage>
     <high-pressure-damage>
-      <line pressure="600" damage="1"/>
-      <line pressure="1300" damage="5"/>
-      <line pressure="2000" damage="10"/>
+      <pressure-level>500</pressure-level>
+      <damage-multiplier>0.01</damage-multiplier>
     </high-pressure-damage>
     <change-pressure-damage>
-      <line pressure="300" damage="10"/>
-      <line pressure="900" damage="30"/>
-      <line pressure="1500" damage="70"/>
+      <pressure-level>100</pressure-level>
+      <damage-multiplier>0.1</damage-multiplier>
     </change-pressure-damage>
   </pressure>
 </physics-configuration>

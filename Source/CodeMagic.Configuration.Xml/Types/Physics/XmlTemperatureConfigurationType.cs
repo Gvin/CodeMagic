@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 using CodeMagic.Core.Configuration;
 
 namespace CodeMagic.Configuration.Xml.Types.Physics
@@ -25,19 +24,15 @@ namespace CodeMagic.Configuration.Xml.Types.Physics
         public int NormalizeSpeed { get; set; }
 
         [XmlIgnore]
-        public ITemperatureDamageConfiguration[] ColdDamageConfiguration =>
-            ColdDamageConfigurationData.ToArray<ITemperatureDamageConfiguration>();
+        public ITemperatureDamageConfiguration ColdDamageConfiguration =>ColdDamageConfigurationData;
 
-        [XmlArray("cold-damage")]
-        [XmlArrayItem("line")]
-        public XmlTemperatureDamageConfigurationType[] ColdDamageConfigurationData { get; set; }
+        [XmlElement("cold-damage")]
+        public XmlTemperatureDamageConfigurationType ColdDamageConfigurationData { get; set; }
 
         [XmlIgnore]
-        public ITemperatureDamageConfiguration[] HeatDamageConfiguration =>
-            HeatDamageConfigurationData.ToArray<ITemperatureDamageConfiguration>();
+        public ITemperatureDamageConfiguration HeatDamageConfiguration => HeatDamageConfigurationData;
 
-        [XmlArray("heat-damage")]
-        [XmlArrayItem("line")]
-        public XmlTemperatureDamageConfigurationType[] HeatDamageConfigurationData { get; set; }
+        [XmlElement("heat-damage")]
+        public XmlTemperatureDamageConfigurationType HeatDamageConfigurationData { get; set; }
     }
 }

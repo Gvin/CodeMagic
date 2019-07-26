@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimationManager.cs" />
+    <Compile Include="AnimationsBatchManager.cs" />
     <Compile Include="CodeSpellImpl.cs" />
     <Compile Include="Creatures\NonPlayable\GoblinImpl.cs" />
     <Compile Include="DecorativeObjects\DecorativeObjectImpl.cs" />
@@ -57,6 +59,8 @@
     <Compile Include="SolidObjects\EnergyWallImpl.cs" />
     <Compile Include="SolidObjects\WallImpl.cs" />
     <Compile Include="SolidObjects\TorchWallImpl.cs" />
+    <Compile Include="SteamObjects\AcidSteamImpl.cs" />
+    <Compile Include="SteamObjects\WaterSteamImpl.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">

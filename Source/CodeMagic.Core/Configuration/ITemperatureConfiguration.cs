@@ -14,8 +14,8 @@
 
         int NormalizeSpeed { get; }
 
-        ITemperatureDamageConfiguration[] ColdDamageConfiguration { get; }
+        ITemperatureDamageConfiguration ColdDamageConfiguration { get; }
 
-        ITemperatureDamageConfiguration[] HeatDamageConfiguration { get; }
+        ITemperatureDamageConfiguration HeatDamageConfiguration { get; }
     }
 }

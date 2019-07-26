@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
 using CodeMagic.Core.Configuration;
 
@@ -21,27 +20,21 @@ namespace CodeMagic.Configuration.Xml.Types.Physics
         public int NormalizeSpeed { get; set; }
 
         [XmlIgnore]
-        public IPressureDamageConfiguration[] LowPressureDamageConfiguration =>
-            LowPressureDamageConfigurationData.ToArray<IPressureDamageConfiguration>();
+        public IPressureDamageConfiguration LowPressureDamageConfiguration => LowPressureDamageConfigurationData;
 
-        [XmlArray("low-pressure-damage")]
-        [XmlArrayItem("line")]
-        public XmlPressureDamageConfigurationType[] LowPressureDamageConfigurationData { get; set; }
+        [XmlElement("low-pressure-damage")]
+        public XmlPressureDamageConfigurationType LowPressureDamageConfigurationData { get; set; }
 
         [XmlIgnore]
-        public IPressureDamageConfiguration[] HighPressureDamageConfiguration =>
-            HighPressureDamageConfigurationData.ToArray<IPressureDamageConfiguration>();
+        public IPressureDamageConfiguration HighPressureDamageConfiguration => HighPressureDamageConfigurationData;
 
-        [XmlArray("high-pressure-damage")]
-        [XmlArrayItem("line")]
-        public XmlPressureDamageConfigurationType[] HighPressureDamageConfigurationData { get; set; }
+        [XmlElement("high-pressure-damage")]
+        public XmlPressureDamageConfigurationType HighPressureDamageConfigurationData { get; set; }
 
         [XmlIgnore]
-        public IPressureDamageConfiguration[] ChangePressureDamageConfiguration =>
-            ChangePressureDamageConfigurationData.ToArray<IPressureDamageConfiguration>();
+        public IPressureDamageConfiguration ChangePressureDamageConfiguration => ChangePressureDamageConfigurationData;
 
-        [XmlArray("change-pressure-damage")]
-        [XmlArrayItem("line")]
-        public XmlPressureDamageConfigurationType[] ChangePressureDamageConfigurationData { get; set; }
+        [XmlElement("change-pressure-damage")]
+        public XmlPressureDamageConfigurationType ChangePressureDamageConfigurationData { get; set; }
     }
 }

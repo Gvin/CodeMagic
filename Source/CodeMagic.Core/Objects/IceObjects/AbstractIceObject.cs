@@ -11,7 +11,7 @@ using CodeMagic.Core.Objects.LiquidObjects;
 
 namespace CodeMagic.Core.Objects.IceObjects
 {
-    public abstract class AbstractIceObject<TLiquid> : IIceObject where TLiquid : ILiquidObject
+    public abstract class AbstractIceObject : IIceObject
     {
         private const int MaxSlideDistance = 3;
         private const int SlideSpeedDamageMultiplier = 1;
@@ -27,6 +27,8 @@ namespace CodeMagic.Core.Objects.IceObjects
 
             this.volume = volume;
         }
+
+        public abstract string Type { get; }
 
         public int Volume
         {
@@ -64,14 +66,29 @@ namespace CodeMagic.Core.Objects.IceObjects
         public void Update(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);
+            if (Volume <= 0)
+                cell.Objects.Remove(this);
+
             if (cell.Environment.Temperature > Configuration.FreezingPoint)
             {
-                cell.Objects.AddLiquid(CreateLiquid(Volume));
-                cell.Objects.Remove(this);
+                ProcessMelting(cell);
             }
         }
 
-        protected abstract TLiquid CreateLiquid(int volume);
+        private void ProcessMelting(AreaMapCell cell)
+        {
+            var excessTemperature = cell.Environment.Temperature - Configuration.FreezingPoint;
+            var volumeToLowerTemp = (int)Math.Floor(excessTemperature * Configuration.MeltingTemperatureMultiplier);
+            var volumeToMelt = Math.Min(volumeToLowerTemp, Volume);
+            var heatLoss = (int)Math.Floor(volumeToMelt * Configuration.MeltingTemperatureMultiplier);
+
+            cell.Environment.Temperature -= heatLoss;
+            Volume -= volumeToMelt;
+
+            cell.Objects.AddVolumeObject(CreateLiquid(volumeToMelt));
+        }
+
+        protected abstract ILiquidObject CreateLiquid(int volume);
 
         public bool Updated { get; set; }
 

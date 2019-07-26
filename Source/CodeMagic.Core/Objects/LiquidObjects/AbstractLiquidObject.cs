@@ -5,23 +5,25 @@ using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.IceObjects;
+using CodeMagic.Core.Objects.SteamObjects;
 
 namespace CodeMagic.Core.Objects.LiquidObjects
 {
-    public abstract class AbstractLiquidObject<TIce> : ILiquidObject where TIce : IIceObject
+    public abstract class AbstractLiquidObject : ILiquidObject, IDynamicObject
     {
         protected readonly ILiquidConfiguration Configuration;
-        private readonly string type;
         private int volume;
 
         protected AbstractLiquidObject(int volume, string type)
         {
             Configuration = ConfigurationManager.GetLiquidConfiguration(type);
-            this.type = type;
+            Type = type;
             this.volume = volume;
         }
 
         public abstract string Name { get; }
+
+        public string Type { get; }
 
         public bool BlocksMovement => false;
 
@@ -66,28 +68,35 @@ namespace CodeMagic.Core.Objects.LiquidObjects
         private void ProcessBoiling(AreaMapCell cell)
         {
             var excessTemperature = cell.Environment.Temperature - Configuration.BoilingPoint;
-            var steamVolume = Math.Min(excessTemperature * Configuration.EvaporationMultiplier, Volume);
-            var heatLoss = steamVolume / Configuration.EvaporationMultiplier;
+            var volumeToLowerTemp = (int)Math.Floor(excessTemperature * Configuration.EvaporationTemperatureMultiplier);
+            var volumeToBecomeSteam = Math.Min(volumeToLowerTemp, Volume);
+            var heatLoss = (int)Math.Floor(volumeToBecomeSteam * Configuration.EvaporationTemperatureMultiplier);
 
             cell.Environment.Temperature -= heatLoss;
-            cell.Environment.Pressure += steamVolume * Configuration.SteamPressureMultiplier;
-            Volume -= steamVolume;
+            Volume -= volumeToBecomeSteam;
+
+            var steamVolume = volumeToBecomeSteam * Configuration.EvaporationMultiplier;
+            cell.Environment.Pressure += steamVolume * Configuration.Steam.PressureMultiplier;
+            
+            cell.Objects.AddVolumeObject(CreateSteam(steamVolume));
         }
+
+        protected abstract ISteamObject CreateSteam(int volume);
 
         private void ProcessFreezing(AreaMapCell cell)
         {
-            var ice = cell.Objects.OfType<TIce>().FirstOrDefault();
-            if (ice == null)
-            {
-                ice = CreateIce(0);
-                cell.Objects.AddIce(ice);
-            }
+            var missingTemperature = Configuration.FreezingPoint - cell.Environment.Temperature;
+            var volumeToRaiseTemp = (int)Math.Floor(missingTemperature * Configuration.FreezingTemperatureMultiplier);
+            var volumeToFreeze = Math.Min(volumeToRaiseTemp, Volume);
+            var heatGain = (int)Math.Floor(volumeToFreeze / Configuration.FreezingTemperatureMultiplier);
 
-            ice.Volume += Volume;
-            Volume = 0;
+            cell.Environment.Temperature += heatGain;
+            Volume -= volumeToFreeze;
+
+            cell.Objects.AddVolumeObject(CreateIce(volumeToFreeze));
         }
 
-        protected abstract TIce CreateIce(int volume);
+        protected abstract IIceObject CreateIce(int volume);
 
         public bool Updated { get; set; }
 
@@ -112,14 +121,14 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public int MaxSpreadVolume => Configuration.MaxSpreadVolume;
 
-        public abstract ILiquidObject Separate(int volume);
+        public abstract ISpreadingObject Separate(int volume);
 
         protected string GetCustomConfigurationValue(string key)
         {
             var stringValue = Configuration.CustomValues
                 .FirstOrDefault(value => string.Equals(value.Key, key))?.Value;
             if (string.IsNullOrEmpty(stringValue))
-                throw new ApplicationException($"Custom value {key} not found in the configuration for \"{type}\".");
+                throw new ApplicationException($"Custom value {key} not found in the configuration for \"{Type}\".");
 
             return stringValue;
         }

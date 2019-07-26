@@ -1,9 +1,6 @@
 ﻿namespace CodeMagic.Core.Objects.IceObjects
 {
-    public interface IIceObject : IMapObject, IDynamicObject, IStepReactionObject
+    public interface IIceObject : IVolumeObject, IDynamicObject, IStepReactionObject
     {
-        int Volume { get; set; }
-
-        bool SupportsSlide { get; }
     }
 }

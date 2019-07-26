@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 
@@ -90,28 +89,20 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         public int GetTemperatureDamage(out Element? damageElement)
         {
-            if (value < 0)
+            if (value < configuration.ColdDamageConfiguration.TemperatureLevel)
             {
-                foreach (var damageConfiguration in configuration.ColdDamageConfiguration.OrderBy(config => config.Temperature))
-                {
-                    if (value <= damageConfiguration.Temperature)
-                    {
-                        damageElement = Element.Frost;
-                        return damageConfiguration.Damage;
-                    }
-                }
+
+                damageElement = Element.Frost;
+                var damageValue = configuration.ColdDamageConfiguration.TemperatureLevel - value;
+                return (int) Math.Round(damageValue * configuration.ColdDamageConfiguration.DamageMultiplier);
             }
 
-            if (value > 0)
+            if (value > configuration.HeatDamageConfiguration.TemperatureLevel)
             {
-                foreach (var damageConfiguration in configuration.HeatDamageConfiguration.OrderByDescending(config => config.Temperature))
-                {
-                    if (value >= damageConfiguration.Temperature)
-                    {
-                        damageElement = Element.Fire;
-                        return damageConfiguration.Damage;
-                    }
-                }
+
+                damageElement = Element.Fire;
+                var damageValue = value - configuration.HeatDamageConfiguration.TemperatureLevel;
+                return (int)Math.Round(damageValue * configuration.HeatDamageConfiguration.DamageMultiplier);
             }
 
             damageElement = null;

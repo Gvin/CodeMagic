@@ -17,7 +17,7 @@ namespace CodeMagic.UI.Sad.GameProcess
     {
         private const int GoblinsCount = 20;
         private const int MapSize = 31; // uneven value only!
-        private const bool UseFakeMap = false;
+        private const bool UseFakeMap = true;
         private const LightLevel DefaultLightLevel = LightLevel.Darkness;
 
         public GameCore StartGame()
@@ -46,14 +46,10 @@ namespace CodeMagic.UI.Sad.GameProcess
         {
             playerPosition = new Point(0, 0);
 
-            var map = new AreaMap(10, 10, DefaultLightLevel);
+            var map = new AreaMap(10, 10, LightLevel.Medium);
 
             map.AddObject(3, 3, MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(100));
-            map.AddObject(3, 5, new WallImpl(new WallObjectConfiguration
-            {
-                Name = "Wall",
-                Type = WallObjectConfiguration.ObjectTypeWallStone
-            }));
+            map.GetCell(3, 3).Environment.Temperature = 300;
 
             return map;
         }

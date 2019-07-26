@@ -10,10 +10,10 @@
 
         int NormalizeSpeed { get; }
 
-        IPressureDamageConfiguration[] LowPressureDamageConfiguration { get; }
+        IPressureDamageConfiguration LowPressureDamageConfiguration { get; }
 
-        IPressureDamageConfiguration[] HighPressureDamageConfiguration { get; }
+        IPressureDamageConfiguration HighPressureDamageConfiguration { get; }
 
-        IPressureDamageConfiguration[] ChangePressureDamageConfiguration { get; }
+        IPressureDamageConfiguration ChangePressureDamageConfiguration { get; }
     }
 }

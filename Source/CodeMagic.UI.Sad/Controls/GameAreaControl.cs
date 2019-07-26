@@ -4,6 +4,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
+using SadConsole;
 using SadConsole.Controls;
 using SadConsole.Themes;
 
@@ -40,8 +41,19 @@ namespace CodeMagic.UI.Sad.Controls
                 {
                     var cell = visibleArea.GetCell(x, y);
                     DrawCell(x, y, cell);
+
+                    
                 }
             }
+        }
+
+        private void DrawTemperature(int x, int y, AreaMapCell cell)
+        {
+            if (cell == null)
+                return;
+
+            var value = cell.Environment.Temperature / 10;
+            Surface.Print(x, y, new ColoredString(value.ToString(), Color.Red, Color.Black));
         }
 
         private void DrawCell(int mapX, int mapY, AreaMapCell cell)
@@ -52,6 +64,9 @@ namespace CodeMagic.UI.Sad.Controls
             var realY = mapY * Program.MapCellImageSize;
 
             Surface.DrawImage(realX, realY, image, DefaultForegroundColor, DefaultBackgroundColor);
+
+            if (Properties.Settings.Default.DebugDrawTemperature)
+                DrawTemperature(realX, realY, cell);
         }
     }
 }

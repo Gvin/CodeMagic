@@ -1,13 +1,14 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.IceObjects;
+using CodeMagic.Core.Objects.SteamObjects;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects.LiquidObjects
 {
-    public class WaterLiquidObject : AbstractLiquidObject<WaterIceObject>
+    public class WaterLiquidObject : AbstractLiquidObject
     {
-        public const string LiquidType = "water";
+        public const string LiquidType = "WaterLiquid";
         
         public WaterLiquidObject(int volume) 
             : base(volume, LiquidType)
@@ -16,13 +17,17 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public override string Name => "Water";
 
-
-        protected override WaterIceObject CreateIce(int volume)
+        protected override IIceObject CreateIce(int volume)
         {
             return MapObjectsFactory.CreateIceObject<WaterIceObject>(volume);
         }
 
-        public override ILiquidObject Separate(int volume)
+        protected override ISteamObject CreateSteam(int volume)
+        {
+            return MapObjectsFactory.CreateSteam<WaterSteamObject>(volume);
+        }
+
+        public override ISpreadingObject Separate(int volume)
         {
             Volume -= volume;
             return MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(volume);

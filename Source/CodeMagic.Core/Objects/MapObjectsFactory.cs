@@ -3,6 +3,7 @@ using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.IceObjects;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Core.Objects.SteamObjects;
 using CodeMagic.Core.Spells;
 
 namespace CodeMagic.Core.Objects
@@ -15,9 +16,11 @@ namespace CodeMagic.Core.Objects
 
         IDecorativeObject CreateDecorativeObject(DecorativeObjectConfiguration configuration);
 
-        TIce CreateIceObject<TIce>(int volume) where TIce : class, IIceObject;
+        TIce CreateIce<TIce>(int volume) where TIce : class, IIceObject;
 
-        TLiquid CreateLiquidObject<TLiquid>(int volume) where TLiquid : class, ILiquidObject;
+        TLiquid CreateLiquid<TLiquid>(int volume) where TLiquid : class, ILiquidObject;
+
+        TSteam CreateSteam<TSteam>(int volume) where TSteam : class, ISteamObject;
 
         IEnergyWall CreateEnergyWall(int lifeTime);
     }
@@ -48,12 +51,17 @@ namespace CodeMagic.Core.Objects
 
         public static TIce CreateIceObject<TIce>(int volume) where TIce : class, IIceObject
         {
-            return creator.CreateIceObject<TIce>(volume);
+            return creator.CreateIce<TIce>(volume);
         }
 
         public static TLiquid CreateLiquidObject<TLiquid>(int volume) where TLiquid : class, ILiquidObject
         {
-            return creator.CreateLiquidObject<TLiquid>(volume);
+            return creator.CreateLiquid<TLiquid>(volume);
+        }
+
+        public static TSteam CreateSteam<TSteam>(int volume) where TSteam : class, ISteamObject
+        {
+            return creator.CreateSteam<TSteam>(volume);
         }
 
         public static IEnergyWall CreateEnergyWall(int lifeTime)

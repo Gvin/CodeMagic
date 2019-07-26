@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using CodeMagic.Core.Configuration;
 
 namespace CodeMagic.Core.Area.EnvironmentData
@@ -85,39 +84,25 @@ namespace CodeMagic.Core.Area.EnvironmentData
         {
             var difference = Math.Abs(Value - oldValue);
 
-            if (difference <= 0)
+            if (difference < configuration.ChangePressureDamageConfiguration.PressureLevel)
                 return 0;
 
-            foreach (var damageConfiguration in configuration.ChangePressureDamageConfiguration.OrderByDescending(config =>
-                config.Pressure))
-            {
-                if (difference >= damageConfiguration.Pressure)
-                    return damageConfiguration.Damage;
-            }
-
-            return 0;
+            var differenceValue = configuration.ChangePressureDamageConfiguration.PressureLevel - difference;
+            return (int) Math.Round(differenceValue * configuration.ChangePressureDamageConfiguration.DamageMultiplier);
         }
 
         private int GetPurePressureDamage()
         {
-            if (value < configuration.NormalValue)
+            if (value < configuration.LowPressureDamageConfiguration.PressureLevel)
             {
-                foreach (var damageConfiguration in configuration.LowPressureDamageConfiguration.OrderBy(config =>
-                    config.Pressure))
-                {
-                    if (value <= damageConfiguration.Pressure)
-                        return damageConfiguration.Damage;
-                }
+                var diff = configuration.LowPressureDamageConfiguration.PressureLevel - value;
+                return (int)Math.Round(diff * configuration.LowPressureDamageConfiguration.DamageMultiplier);
             }
 
-            if (value > configuration.NormalValue)
+            if (value > configuration.HighPressureDamageConfiguration.PressureLevel)
             {
-                foreach (var damageConfiguration in configuration.HighPressureDamageConfiguration.OrderByDescending(config =>
-                    config.Pressure))
-                {
-                    if (value >= damageConfiguration.Pressure)
-                        return damageConfiguration.Damage;
-                }
+                var diff = value - configuration.HighPressureDamageConfiguration.PressureLevel;
+                return (int)Math.Round(diff * configuration.HighPressureDamageConfiguration.DamageMultiplier);
             }
 
             return 0;

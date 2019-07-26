@@ -5,10 +5,10 @@ namespace CodeMagic.Configuration.Xml.Types.Physics
 {
     public class XmlTemperatureDamageConfigurationType : ITemperatureDamageConfiguration
     {
-        [XmlAttribute("temperature")]
-        public int Temperature { get; set; }
+        [XmlElement("temperature-level")]
+        public int TemperatureLevel { get; set; }
 
-        [XmlAttribute("damage")]
-        public int Damage { get; set; }
+        [XmlElement("damage-multiplier")]
+        public double DamageMultiplier { get; set; }
     }
 }

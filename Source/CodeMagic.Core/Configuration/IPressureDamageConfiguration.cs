@@ -2,8 +2,8 @@
 {
     public interface IPressureDamageConfiguration
     {
-        int Pressure { get; }
+        int PressureLevel { get; }
 
-        int Damage { get; }
+        double DamageMultiplier { get; }
     }
 }

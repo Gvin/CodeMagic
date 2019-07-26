@@ -5,7 +5,6 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.DecorativeObjects;
-using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.SolidObjects;
 using Environment = CodeMagic.Core.Area.EnvironmentData.Environment;
 
@@ -123,33 +122,33 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        public void CheckLiquidSpreading(AreaMapCell other)
+        public void CheckSpreadingObjects(AreaMapCell other)
         {
-            var localLiquids = Objects.OfType<ILiquidObject>().ToArray();
-            var otherLiquids = Objects.OfType<ILiquidObject>().ToArray();
+            var localSpreadingObjects = Objects.OfType<ISpreadingObject>().ToArray();
+            var otherSpreadingObjects = other.Objects.OfType<ISpreadingObject>().ToArray();
 
-            foreach (var liquid in localLiquids)
+            foreach (var spreadingObject in localSpreadingObjects)
             {
-                if (liquid.Volume >= liquid.MaxVolumeBeforeSpread)
+                if (spreadingObject.Volume >= spreadingObject.MaxVolumeBeforeSpread)
                 {
-                    SpreadLiquid(liquid, other);
+                    SpreadObject(spreadingObject, other);
                 }
             }
 
-            foreach (var otherLiquid in otherLiquids)
+            foreach (var otherSpreadingObject in otherSpreadingObjects)
             {
-                if (otherLiquid.Volume >= otherLiquid.MaxVolumeBeforeSpread)
+                if (otherSpreadingObject.Volume >= otherSpreadingObject.MaxVolumeBeforeSpread)
                 {
-                    SpreadLiquid(otherLiquid, other);
+                    SpreadObject(otherSpreadingObject, other);
                 }
             }
         }
 
-        private void SpreadLiquid(ILiquidObject liquid, AreaMapCell target)
+        private void SpreadObject(ISpreadingObject liquid, AreaMapCell target)
         {
             var spreadAmount = Math.Min(liquid.MaxSpreadVolume, liquid.Volume - liquid.MaxVolumeBeforeSpread);
             var separated = liquid.Separate(spreadAmount);
-            target.Objects.AddLiquid(separated);
+            target.Objects.AddVolumeObject(separated);
         }
     }
 }

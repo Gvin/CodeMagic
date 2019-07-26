@@ -2,8 +2,9 @@
 
 namespace CodeMagic.Core.Objects.IceObjects
 {
-    public class WaterIceObject : AbstractIceObject<WaterLiquidObject>
+    public class WaterIceObject : AbstractIceObject
     {
+        private const string ObjectType = "WaterIce";
         public const int WaterIceMinVolumeForEffect = 50;
 
         public WaterIceObject(int volume)
@@ -15,7 +16,9 @@ namespace CodeMagic.Core.Objects.IceObjects
 
         public override string Name => "Ice";
 
-        protected override WaterLiquidObject CreateLiquid(int volume)
+        public override string Type => ObjectType;
+
+        protected override ILiquidObject CreateLiquid(int volume)
         {
             return MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(volume);
         }

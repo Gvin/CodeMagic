@@ -15,7 +15,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
         private const string CustomValueBurningRate = "BurningRate";
         private const string CustomValueHeatSpeed = "HeatSpeed";
 
-        public const string LiquidType = "oil";
+        public const string LiquidType = "OilLiquid";
 
         protected readonly ILiquidConfiguration Configuration;
 
@@ -41,6 +41,8 @@ namespace CodeMagic.Core.Objects.LiquidObjects
         public ZIndex ZIndex => ZIndex.FloorCover;
 
         public string Name => "Oil";
+
+        public string Type => LiquidType;
 
         public void Update(IGameCore game, Point position)
         {
@@ -129,10 +131,10 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public int MinVolumeForEffect => Configuration.MinVolumeForEffect;
 
-        public ILiquidObject Separate(int separateVolume)
+        public ISpreadingObject Separate(int separateVolume)
         {
             Volume -= separateVolume;
-            return new OilLiquidObject(separateVolume);
+            return MapObjectsFactory.CreateLiquidObject<OilLiquidObject>(separateVolume);
         }
 
         public bool Updated { get; set; }

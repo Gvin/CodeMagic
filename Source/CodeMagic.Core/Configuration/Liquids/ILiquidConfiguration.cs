@@ -16,9 +16,30 @@
 
         int EvaporationMultiplier { get; }
 
-        int SteamPressureMultiplier { get; }
+        double EvaporationTemperatureMultiplier { get; }
+
+        double CondensationTemperatureMultiplier { get; }
+
+        double FreezingTemperatureMultiplier { get; }
+
+        double MeltingTemperatureMultiplier { get; }
+
+        ISteamConfiguration Steam { get; }
 
         ILiquidConfigurationCustomValue[] CustomValues { get; }
+    }
+
+    public interface ISteamConfiguration
+    {
+        int PressureMultiplier { get; }
+
+        int VolumeMultiplier { get; }
+
+        double ThicknessMultiplier { get; }
+
+        int MaxVolumeBeforeSpread { get; }
+
+        int MaxSpreadVolume { get; }
     }
 
     public interface ILiquidConfigurationCustomValue

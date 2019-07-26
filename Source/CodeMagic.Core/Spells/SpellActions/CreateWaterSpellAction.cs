@@ -24,7 +24,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             if (cell.BlocksMovement)
                 return position;
 
-            cell.Objects.AddLiquid(MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(volume));
+            cell.Objects.AddVolumeObject(MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(volume));
             return position;
         }
 

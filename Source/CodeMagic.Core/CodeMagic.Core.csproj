@@ -74,7 +74,9 @@
     <Compile Include="Objects\IceObjects\IIceObject.cs" />
     <Compile Include="Objects\ILightSource.cs" />
     <Compile Include="Objects\IPlacedHandler.cs" />
+    <Compile Include="Objects\ISpreadingObject.cs" />
     <Compile Include="Objects\IStepReactionObject.cs" />
+    <Compile Include="Objects\IVolumeObject.cs" />
     <Compile Include="Objects\LiquidObjects\AbstractLiquidObject.cs" />
     <Compile Include="Objects\LiquidObjects\AcidLiquidObject.cs" />
     <Compile Include="Objects\LiquidObjects\ILiquidObject.cs" />
@@ -136,6 +138,9 @@
     <Compile Include="Objects\SolidObjects\WallObject.cs" />
     <Compile Include="Objects\StationaryObjects\StationaryObject.cs" />
     <Compile Include="Objects\StationaryObjects\StationaryObjectConfiguration.cs" />
+    <Compile Include="Objects\SteamObjects\AbstractSteamObject.cs" />
+    <Compile Include="Objects\SteamObjects\AcidSteamObject.cs" />
+    <Compile Include="Objects\SteamObjects\WaterSteamObject.cs" />
     <Compile Include="Objects\ZIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spells\CodeSpell.cs" />

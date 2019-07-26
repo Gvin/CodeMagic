@@ -2,8 +2,8 @@
 {
     public interface ITemperatureDamageConfiguration
     {
-        int Temperature { get; }
+        int TemperatureLevel { get; }
 
-        int Damage { get; }
+        double DamageMultiplier { get; }
     }
 }

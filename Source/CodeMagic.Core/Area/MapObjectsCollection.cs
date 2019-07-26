@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.IceObjects;
-using CodeMagic.Core.Objects.LiquidObjects;
 
 namespace CodeMagic.Core.Area
 {
@@ -21,11 +19,8 @@ namespace CodeMagic.Core.Area
         {
             switch (mapObject)
             {
-                case ILiquidObject liquid:
-                    AddLiquid(liquid);
-                    break;
-                case IIceObject ice:
-                    AddIce(ice);
+                case IVolumeObject volumeObject:
+                    AddVolumeObject(volumeObject);
                     break;
                 default:
                     objects.Add(mapObject);
@@ -33,48 +28,37 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        public void AddLiquid(ILiquidObject liquid)
+        public void AddVolumeObject(IVolumeObject volumeObject)
         {
-            var oldLiquid = objects.FirstOrDefault(mapObject => mapObject.GetType() == liquid.GetType()) as ILiquidObject;
-            if (oldLiquid == null)
+            var oldObject = objects.OfType<IVolumeObject>()
+                .FirstOrDefault(volObj => string.Equals(volObj.Type, volumeObject.Type));
+            if (oldObject == null)
             {
-                objects.Add(liquid);
+                objects.Add(volumeObject);
                 return;
             }
 
-            oldLiquid.Volume += liquid.Volume;
+            oldObject.Volume += volumeObject.Volume;
         }
 
-        public void AddIce(IIceObject ice)
+        public int GetVolume<TObject>() where TObject : IVolumeObject
         {
-            var oldIce = objects.FirstOrDefault(mapObject => mapObject.GetType() == ice.GetType()) as IIceObject;
-            if (oldIce == null)
+            var obj = objects.OfType<TObject>().FirstOrDefault();
+            return obj?.Volume ?? 0;
+        }
+
+        public void RemoveVolume<TObject>(int volume) where TObject : IVolumeObject
+        {
+            var obj = objects.OfType<TObject>().FirstOrDefault();
+            if (obj == null)
+                throw new ArgumentException($"Volume object {typeof(TObject).FullName} not found in cell.");
+            if (obj.Volume < volume)
+                throw new ArgumentException($"Not enough volume of {typeof(TObject).FullName} in the cell. Removing {volume} but only have {obj.Volume}");
+
+            obj.Volume -= volume;
+            if (obj.Volume == 0)
             {
-                objects.Add(ice);
-                return;
-            }
-
-            oldIce.Volume += ice.Volume;
-        }
-
-        public int GetLiquidVolume<TLiquid>() where TLiquid : ILiquidObject
-        {
-            var liquid = objects.OfType<TLiquid>().FirstOrDefault();
-            return liquid?.Volume ?? 0;
-        }
-
-        public void RemoveLiquidVolume<TLiquid>(int volume) where TLiquid : ILiquidObject
-        {
-            var liquid = objects.OfType<TLiquid>().FirstOrDefault();
-            if (liquid == null)
-                throw new ArgumentException($"Liquid {typeof(TLiquid).FullName} not found in cell.");
-            if (liquid.Volume < volume)
-                throw new ArgumentException($"Not enough liquid {typeof(TLiquid).FullName} in the cell. Removing {volume} but only have {liquid.Volume}");
-
-            liquid.Volume -= volume;
-            if (liquid.Volume == 0)
-            {
-                objects.Remove(liquid);
+                objects.Remove(obj);
             }
         }
 
