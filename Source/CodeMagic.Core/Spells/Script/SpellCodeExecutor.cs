@@ -44,9 +44,8 @@ namespace CodeMagic.Core.Spells.Script
 
         private void ConfigureEngine()
         {
-            jsEngine.SetValue("getCaster", new Func<JsValue>(() => ConvertDestroyable(caster).ToJson(jsEngine)));
-
-            jsEngine.SetValue("storeValue", new Action<string, object>((key, data) => globalData.Add(key, data)));
+            
+            jsEngine.SetValue("storeValue", new Action<string, object>(StoreData));
             jsEngine.SetValue("getStoredValue", new Func<string, object>(key => globalData.ContainsKey(key) ? globalData[key] : null));
 
             // Spell actions
@@ -61,6 +60,7 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("longCast", new Func<dynamic, string, int, JsValue>(GetLongCastSpellAction));
             jsEngine.SetValue("transformWater", new Func<string, int, JsValue>(GetTransformWaterSpellAction));
             jsEngine.SetValue("shock", new Func<int, JsValue>(GetShockSpellAction));
+            jsEngine.SetValue("emitLight", new Func<int, int, JsValue>(GetEmitLightSpellAction));
         }
 
         public ISpellAction Execute(IGameCore game, Point position, ICodeSpell spell)
@@ -124,6 +124,8 @@ namespace CodeMagic.Core.Spells.Script
 
         private void ConfigureDynamicEngineFunctions(IGameCore game, Point position, ICodeSpell spell)
         {
+            jsEngine.SetValue("getLightLevel", new Func<int>(() => GetLightLevel(game.Map, position)));
+            jsEngine.SetValue("getCaster", new Func<JsValue>(() => ConvertDestroyable(caster, game.Map).ToJson(jsEngine)));
             jsEngine.SetValue("log", new Action<object>(message => LogMessage(game.Journal, spell, message)));
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
             jsEngine.SetValue("getPosition", new Func<JsValue>(() => ConvertPoint(position)));
@@ -135,12 +137,22 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("scanForWalls",
                 new Func<int, bool[][]>(radius => ScanForWalls(game.Map, position, radius, spell)));
             jsEngine.SetValue("scanForObjects",
-                new Func<int, JsValue[][][]>(radius => ScanForObjects(game.Map, position, radius, spell)));
+                new Func<int, JsValue[]>(radius => ScanForObjects(game.Map, position, radius, spell)));
         }
 
         private void LogMessage(Journal journal, ICodeSpell spell, object message)
         {
             journal.Write(new SpellLogMessage(spell.Name, GetMessageString(message)));
+        }
+
+        private void StoreData(string key, object data)
+        {
+            if (globalData.ContainsKey(key))
+            {
+                globalData[key] = data;
+                return;
+            }
+            globalData.Add(key, data);
         }
 
         private string GetMessageString(object message)
@@ -163,7 +175,12 @@ namespace CodeMagic.Core.Spells.Script
             }
         }
 
-        private JsValue[][][] ScanForObjects(IAreaMap map, Point position, int radius, ICodeSpell spell)
+        private int GetLightLevel(IAreaMap map, Point position)
+        {
+            return (int) map.GetCell(position).LightLevel;
+        }
+
+        private JsValue[] ScanForObjects(IAreaMap map, Point position, int radius, ICodeSpell spell)
         {
             var cost = radius * ScanForObjectsManaCostMultiplier;
             if (spell.Mana < cost)
@@ -174,10 +191,12 @@ namespace CodeMagic.Core.Spells.Script
 
             spell.Mana -= cost;
             var mapSegment = map.GetMapPart(position, radius);
-            return mapSegment.Select(row =>
-                row.Select(cell =>
-                    cell.Objects.OfType<IDestroyableObject>().Select(obj => ConvertDestroyable(obj).ToJson(jsEngine))
-                        .ToArray()).ToArray()).ToArray();
+            return mapSegment.SelectMany(row => 
+                    row.SelectMany(cell =>
+                        cell.Objects
+                            .OfType<IDestroyableObject>()
+                            .Select(obj => ConvertDestroyable(obj, map).ToJson(jsEngine))))
+                .ToArray();
         }
 
         private bool[][] ScanForWalls(IAreaMap map, Point position, int radius, ICodeSpell spell)
@@ -198,9 +217,11 @@ namespace CodeMagic.Core.Spells.Script
         private JsValue[] GetObjectsUnder(IAreaMap map, Point position)
         {
             var cell = map.GetCell(position);
-            return cell.Objects.OfType<IDestroyableObject>().Select(obj => ConvertDestroyable(obj).ToJson(jsEngine))
+            return cell.Objects.OfType<IDestroyableObject>().Select(obj => ConvertDestroyable(obj, map).ToJson(jsEngine))
                 .ToArray();
         }
+
+        #region Code Spell API
 
         private JsValue ConvertPoint(Point point)
         {
@@ -211,15 +232,15 @@ namespace CodeMagic.Core.Spells.Script
             }).ToJson(jsEngine);
         }
 
-        #region Code Spell API
-
-        private JsonData ConvertDestroyable(IDestroyableObject destroyable)
+        private JsonData ConvertDestroyable(IDestroyableObject destroyable, IAreaMap map)
         {
+            var position = map.GetObjectPosition(obj => obj.Equals(destroyable));
             var data = new JsonData(new Dictionary<string, object>
             {
                 {"id", destroyable.Id},
                 {"health", destroyable.Health},
-                {"maxHealth", destroyable.MaxHealth}
+                {"maxHealth", destroyable.MaxHealth},
+                {"position", position}
             });
 
             if (destroyable is ICreatureObject creature)
@@ -246,6 +267,11 @@ namespace CodeMagic.Core.Spells.Script
         #endregion
 
         #region Action Creation functions
+
+        private JsValue GetEmitLightSpellAction(int power, int time)
+        {
+            return EmitLightSpellAction.GetJson(power, time).ToJson(jsEngine);
+        }
 
         private JsValue GetMoveSpellAction(string direction, int distance)
         {

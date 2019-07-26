@@ -48,4 +48,8 @@
       <value key="HeatMultiplier">5</value>
     </custom>
   </spell>
+  <spell type="emit_light">
+    <mana-cost-multiplier>0.5</mana-cost-multiplier>
+    <mana-cost-power>1</mana-cost-power>
+  </spell>
 </spells-configuration>

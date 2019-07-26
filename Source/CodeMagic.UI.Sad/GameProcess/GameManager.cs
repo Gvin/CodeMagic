@@ -1,16 +1,15 @@
-﻿using System.IO;
-using CodeMagic.Configuration.Xml;
-using CodeMagic.Core.Area;
-using CodeMagic.Core.Configuration;
+﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures.Implementations;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
 using CodeMagic.Objects.Implementation.Creatures;
 using CodeMagic.Objects.Implementation.Creatures.NonPlayable;
+using CodeMagic.Objects.Implementation.SolidObjects;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
@@ -18,7 +17,8 @@ namespace CodeMagic.UI.Sad.GameProcess
     {
         private const int GoblinsCount = 20;
         private const int MapSize = 31; // uneven value only!
-        private const bool UseFakeMap = true;
+        private const bool UseFakeMap = false;
+        private const LightLevel DefaultLightLevel = LightLevel.Darkness;
 
         public GameCore StartGame()
         {
@@ -26,6 +26,8 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             var player = CreatePlayer();
             map.AddObject(playerPosition, player);
+
+            map.Refresh();
 
             return new GameCore(map, playerPosition);
         }
@@ -35,7 +37,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             if (fake)
                 return CreateFakeMap(out playerPosition);
 
-            var realMap = new MapGenerator(FloorTypes.Stone).Generate(MapSize, MapSize, out playerPosition);
+            var realMap = new MapGenerator(FloorTypes.Stone).Generate(MapSize, MapSize, DefaultLightLevel, out playerPosition);
             PlaceTestGoblins(GoblinsCount, realMap, playerPosition);
             return realMap;
         }
@@ -44,27 +46,14 @@ namespace CodeMagic.UI.Sad.GameProcess
         {
             playerPosition = new Point(0, 0);
 
-            var map = new AreaMap(10, 10);
+            var map = new AreaMap(10, 10, DefaultLightLevel);
 
-            var cell1 = map.GetCell(1, 0);
-            //cell1.Environment.Temperature = ;
-            cell1.Objects.AddLiquid(MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(100));
-
-            var cell2 = map.GetCell(2, 0);
-//            cell2.Environment.Temperature = -100;
-            cell2.Objects.AddLiquid(MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(100));
-
-            var cell3 = map.GetCell(3, 0);
-//            cell3.Environment.Temperature = -100;
-            cell3.Objects.AddLiquid(MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(100));
-
-            var cell4 = map.GetCell(4, 0);
-//            cell4.Environment.Temperature = -100;
-            cell4.Objects.AddLiquid(MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(100));
-
-            var cell5 = map.GetCell(5, 0);
-//            cell5.Environment.Temperature = -100;
-            cell5.Objects.AddLiquid(MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(100));
+            map.AddObject(3, 3, MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(100));
+            map.AddObject(3, 5, new WallImpl(new WallObjectConfiguration
+            {
+                Name = "Wall",
+                Type = WallObjectConfiguration.ObjectTypeWallStone
+            }));
 
             return map;
         }
@@ -139,7 +128,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                 MaxHealth = 100,
                 Mana = 1000,
                 MaxMana = 1000,
-                ManaRegeneration = 1,
+                ManaRegeneration = 10,
                 VisionRange = 4,
                 MaxWeight = 100
             });

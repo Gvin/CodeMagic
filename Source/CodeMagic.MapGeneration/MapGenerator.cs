@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
@@ -10,16 +11,18 @@ namespace CodeMagic.MapGeneration
 {
     public class MapGenerator
     {
+        private const int TorchesCount = 60;
+
         private readonly FloorTypes floorType;
         private readonly string wallType;
 
-        public MapGenerator(FloorTypes floorType = FloorTypes.Stone, string wallType = SolidObjectConfiguration.ObjectTypeWallStone)
+        public MapGenerator(FloorTypes floorType = FloorTypes.Stone, string wallType = WallObjectConfiguration.ObjectTypeWallStone)
         {
             this.floorType = floorType;
             this.wallType = wallType;
         }
 
-        public IAreaMap Generate(int width, int height, out Point playerPosition)
+        public IAreaMap Generate(int width, int height, LightLevel defaultLightLevel, out Point playerPosition)
         {
             var labyrinthWidth = (width - 1) / 2;
             var labyrinthHeight = (height - 1) / 2;
@@ -27,12 +30,49 @@ namespace CodeMagic.MapGeneration
 
             playerPosition.X = playerPosition.X * 2 + 1;
             playerPosition.Y = playerPosition.Y * 2 + 1;
-            return ConvertToAreaMap(roomsMap, width, height);
+
+            var map = ConvertToAreaMap(roomsMap, width, height, defaultLightLevel);
+            ApplyTorches(map, TorchesCount);
+            return map;
         }
 
-        private IAreaMap ConvertToAreaMap(Room[][] roomsMap, int width, int height)
+        private void ApplyTorches(IAreaMap map, int torchesCount)
         {
-            var map = new AreaMap(width, height);
+            for (int counter = 0; counter < torchesCount; counter++)
+            {
+                var position = GetTorchPosition(map);
+                if (position == null)
+                    continue;
+
+                var cell = map.GetCell(position);
+                var wall = cell.Objects.OfType<WallObject>().First();
+                map.RemoveObject(position, wall);
+                map.AddObject(position, CreateTorchWall());
+            }
+        }
+
+        private Point GetTorchPosition(IAreaMap map)
+        {
+            const int maxTriesCount = 20;
+            for (int counter = 0; counter < maxTriesCount; counter++)
+            {
+                var randomX = RandomHelper.GetRandomValue(0, map.Width - 1);
+                var randomY = RandomHelper.GetRandomValue(0, map.Height - 1);
+
+                var position = new Point(randomX, randomY);
+                var cell = map.GetCell(position);
+                var wall = cell.Objects.OfType<WallObject>().FirstOrDefault();
+                if (wall == null)
+                    continue;
+
+                return position;
+            }
+            return null;
+        }
+
+        private IAreaMap ConvertToAreaMap(Room[][] roomsMap, int width, int height, LightLevel defaultLightLevel)
+        {
+            var map = new AreaMap(width, height, defaultLightLevel);
 
             var currentMapY = 1;
             foreach (var row in roomsMap)
@@ -87,9 +127,18 @@ namespace CodeMagic.MapGeneration
             return map;
         }
 
-        private SolidObject CreateWall()
+        private TorchWallImpl CreateTorchWall()
         {
-            return new WallImpl(new SolidObjectConfiguration
+            return new TorchWallImpl(new TorchWallObjectConfiguration
+            {
+                Name = "Torch Wall",
+                Type = wallType
+            });
+        }
+
+        private WallImpl CreateWall()
+        {
+            return new WallImpl(new WallObjectConfiguration
             {
                 Name = "Wall",
                 Type = wallType

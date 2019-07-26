@@ -29,6 +29,11 @@
         public bool BlocksEnvironment => false;
 
         public virtual ZIndex ZIndex { get; }
+
+        public bool Equals(IMapObject other)
+        {
+            return ReferenceEquals(other, this);
+        }
     }
 
     public class DecorativeObjectConfiguration

@@ -13,11 +13,16 @@ namespace CodeMagic.Core.Area
 {
     public class AreaMapCell
     {
-        public AreaMapCell()
+        private readonly LightLevel defaultLightLevel;
+
+        public AreaMapCell(LightLevel defaultLightLevel)
         {
+            this.defaultLightLevel = defaultLightLevel;
+
             Objects = new MapObjectsCollection();
             FloorType = FloorTypes.Stone;
             Environment = new Environment();
+            LightLevel = defaultLightLevel;
         }
 
         public Environment Environment { get; }
@@ -26,12 +31,14 @@ namespace CodeMagic.Core.Area
 
         public FloorTypes FloorType { get; set; }
 
+        public LightLevel LightLevel { get; set; }
+
         public bool BlocksMovement
         {
             get { return Objects.Any(obj => obj.BlocksMovement); }
         }
 
-        public bool HasSolidObjects => Objects.OfType<SolidObject>().Any();
+        public bool HasSolidObjects => Objects.OfType<WallObject>().Any();
 
         public bool BlocksEnvironment
         {
@@ -55,6 +62,11 @@ namespace CodeMagic.Core.Area
             if (bigDestroyable != null)
                 return bigDestroyable;
             return destroyable.LastOrDefault();
+        }
+
+        public void ResetLightLevel()
+        {
+            LightLevel = defaultLightLevel;
         }
 
         public void Update(IGameCore game, Point position)
@@ -96,8 +108,7 @@ namespace CodeMagic.Core.Area
             var deadObjects = destroyableObjects.Where(obj => obj.Health <= 0).ToArray();
             foreach (var deadObject in deadObjects)
             {
-                Objects.Remove(deadObject);
-                game.Map.UnregisterDestroyableObject(deadObject);
+                game.Map.RemoveObject(position, deadObject);
                 game.Journal.Write(new DeathMessage(deadObject));
                 deadObject.OnDeath(game.Map, position);
             }

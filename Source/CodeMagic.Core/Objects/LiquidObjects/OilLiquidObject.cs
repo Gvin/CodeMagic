@@ -149,6 +149,11 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public bool BlocksEnvironment => false;
 
+        public bool Equals(IMapObject other)
+        {
+            return ReferenceEquals(other, this);
+        }
+
         #endregion
     }
 }

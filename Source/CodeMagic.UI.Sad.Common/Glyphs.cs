@@ -34,7 +34,9 @@ namespace CodeMagic.UI.Sad.Common
                 {'►', GlyphTriangleArrowRight},
                 {'▼', GlyphTriangleArrowDown},
                 {'◄', GlyphTriangleArrowLeft},
-                {'☼', GlyphSun}
+                {'☼', GlyphSun},
+
+                {'ĭ', GlyphTorchVertical}
             };
         }
 
@@ -298,6 +300,10 @@ namespace CodeMagic.UI.Sad.Common
         /// █
         /// </summary>
         public const int GlyphBlockFull = 219;
+
+        public const int GlyphTorchVertical = 141;
+
+        public const int GlyphTorchHorizontal = 170;
 
         #endregion
     }

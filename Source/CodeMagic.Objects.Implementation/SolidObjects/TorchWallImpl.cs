@@ -3,15 +3,15 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Objects.Implementation.SolidObjects
 {
-    public class WallImpl : WallObject, IImageProvider
+    public class TorchWallImpl : TorchWallObject, IImageProvider
     {
         private const string ImageNormal = "Wall_{0}";
-        private const string ImageBottom = "Wall_{0}_Bottom";
-        private const string ImageRight = "Wall_{0}_Right";
-        private const string ImageBottomRight = "Wall_{0}_Bottom_Right";
+        private const string ImageBottom = "Wall_{0}_Bottom_Torch";
+        private const string ImageRight = "Wall_{0}_Right_Torch";
+        private const string ImageBottomRight = "Wall_{0}_Bottom_Right_Torch";
         private const string ImageCorner = "Wall_{0}_Corner";
 
-        public WallImpl(WallObjectConfiguration configuration) 
+        public TorchWallImpl(TorchWallObjectConfiguration configuration) 
             : base(configuration)
         {
         }

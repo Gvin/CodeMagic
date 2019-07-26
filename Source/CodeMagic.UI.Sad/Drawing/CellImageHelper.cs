@@ -10,10 +10,12 @@ namespace CodeMagic.UI.Sad.Drawing
     {
         private static readonly SymbolsImage EmptyImage = new SymbolsImage(Program.MapCellImageSize, Program.MapCellImageSize);
         private static readonly ImagesFactory ImagesFactory;
+        private static readonly LightLevelManager LightLevelManager;
 
         static CellImageHelper()
         {
             ImagesFactory = new ImagesFactory(ImagesStorage.Current);
+            LightLevelManager = new LightLevelManager();
         }
 
         public static SymbolsImage GetCellImage(AreaMapCell cell)
@@ -21,7 +23,7 @@ namespace CodeMagic.UI.Sad.Drawing
             if (cell == null)
                 return EmptyImage;
 
-            var floorImage = GetFloorImage(cell);
+            var image = GetFloorImage(cell);
 
             var objectsImages = cell.Objects
                 .Where(obj => obj.IsVisible)
@@ -31,10 +33,10 @@ namespace CodeMagic.UI.Sad.Drawing
 
             foreach (var objectImage in objectsImages)
             {
-                floorImage = SymbolsImage.Combine(floorImage, objectImage);
+                image = SymbolsImage.Combine(image, objectImage);
             }
 
-            return floorImage;
+            return LightLevelManager.ApplyLightLevel(image, cell.LightLevel);
         }
 
         private static SymbolsImage GetObjectImage(IMapObject mapObject)

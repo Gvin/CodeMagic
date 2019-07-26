@@ -52,6 +52,8 @@
     <Compile Include="Area\IAreaMap.cs" />
     <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Area\AreaMapFragment.cs" />
+    <Compile Include="Area\LightLevel.cs" />
+    <Compile Include="Area\LightLevelHelper.cs" />
     <Compile Include="Area\MapObjectsCollection.cs" />
     <Compile Include="Common\Direction.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Objects\IceObjects\AcidIceObject.cs" />
     <Compile Include="Objects\IceObjects\WaterIceObject.cs" />
     <Compile Include="Objects\IceObjects\IIceObject.cs" />
+    <Compile Include="Objects\ILightSource.cs" />
     <Compile Include="Objects\IPlacedHandler.cs" />
     <Compile Include="Objects\IStepReactionObject.cs" />
     <Compile Include="Objects\LiquidObjects\AbstractLiquidObject.cs" />
@@ -129,7 +132,8 @@
     <Compile Include="Objects\PlayerData\Player.cs" />
     <Compile Include="Objects\PlayerData\PlayerConfiguration.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWall.cs" />
-    <Compile Include="Objects\SolidObjects\SolidObject.cs" />
+    <Compile Include="Objects\SolidObjects\TorchWallObject.cs" />
+    <Compile Include="Objects\SolidObjects\WallObject.cs" />
     <Compile Include="Objects\StationaryObjects\StationaryObject.cs" />
     <Compile Include="Objects\StationaryObjects\StationaryObjectConfiguration.cs" />
     <Compile Include="Objects\ZIndex.cs" />
@@ -143,6 +147,7 @@
     <Compile Include="Spells\SpellActions\CoolAreaSpellAction.cs" />
     <Compile Include="Spells\SpellActions\CreateWaterSpellAction.cs" />
     <Compile Include="Spells\SpellActions\DecompressSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\EmitLightSpellAction.cs" />
     <Compile Include="Spells\SpellActions\EmptySpellAction.cs" />
     <Compile Include="Spells\SpellActions\HeatAreaSpellAction.cs" />
     <Compile Include="Spells\SpellActions\ISpellAction.cs" />

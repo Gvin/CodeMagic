@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Game;
+﻿using System;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
@@ -8,6 +9,8 @@ namespace CodeMagic.Core.Area
         int Width { get; }
 
         int Height { get; }
+
+        void Refresh();
 
         AreaMapCell GetCell(int x, int y);
 
@@ -19,16 +22,16 @@ namespace CodeMagic.Core.Area
 
         void Update(IGameCore game);
 
-        void RegisterDestroyableObject(IDestroyableObject @object);
-
-        void UnregisterDestroyableObject(IDestroyableObject @object);
-
         IDestroyableObject GetDestroyableObject(string id);
 
         void AddObject(Point position, IMapObject @object);
 
+        void RemoveObject(Point position, IMapObject @object);
+
         AreaMapCell[][] GetMapPart(Point position, int radius);
 
         Point GetObjectPosition<T>() where T : IMapObject;
+
+        Point GetObjectPosition(Func<IMapObject, bool> selector);
     }
 }

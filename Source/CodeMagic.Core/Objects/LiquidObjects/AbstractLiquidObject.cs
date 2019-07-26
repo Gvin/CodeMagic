@@ -123,5 +123,10 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
             return stringValue;
         }
+
+        public bool Equals(IMapObject other)
+        {
+            return ReferenceEquals(other, this);
+        }
     }
 }

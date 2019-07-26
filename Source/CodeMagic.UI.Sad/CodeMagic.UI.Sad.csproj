@@ -66,6 +66,7 @@
     <Compile Include="Drawing\ImagesStorage.cs" />
     <Compile Include="Drawing\ItemDrawingHelper.cs" />
     <Compile Include="Drawing\JournalMessageFormatter.cs" />
+    <Compile Include="Drawing\LightLevelManager.cs" />
     <Compile Include="GameProcess\EditSpellHelper.cs" />
     <Compile Include="GameProcess\GameConfigurator.cs" />
     <Compile Include="GameProcess\GameManager.cs" />

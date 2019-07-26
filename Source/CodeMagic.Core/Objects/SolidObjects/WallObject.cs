@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public class SolidObject : IMapObject, IPlacedHandler
+    public class WallObject : IMapObject, IPlacedHandler
     {
         private readonly List<Point> connectedTiles;
 
-        public SolidObject(SolidObjectConfiguration configuration)
+        public WallObject(WallObjectConfiguration configuration)
         {
             Name = configuration.Name;
             Type = configuration.Type;
@@ -62,18 +61,23 @@ namespace CodeMagic.Core.Objects.SolidObjects
             }
         }
 
-        private SolidObject GetWall(IAreaMap map, Point position, int relativeX, int relativeY)
+        private WallObject GetWall(IAreaMap map, Point position, int relativeX, int relativeY)
         {
             var nearPosition = new Point(position.X + relativeX, position.Y + relativeY);
             if (!map.ContainsCell(nearPosition))
                 return null;
 
             var cell = map.GetCell(nearPosition);
-            return cell.Objects.OfType<SolidObject>().FirstOrDefault();
+            return cell.Objects.OfType<WallObject>().FirstOrDefault();
+        }
+
+        public bool Equals(IMapObject other)
+        {
+            return ReferenceEquals(other, this);
         }
     }
 
-    public class SolidObjectConfiguration
+    public class WallObjectConfiguration
     {
         public const string ObjectTypeWallWood = "Wood";
         public const string ObjectTypeWallStone = "Stone";

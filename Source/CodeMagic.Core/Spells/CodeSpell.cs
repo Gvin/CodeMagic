@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Area;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
@@ -6,19 +7,24 @@ using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells
 {
-    public interface ICodeSpell : IMapObject
+    public interface ICodeSpell : IMapObject, ILightSource
     {
         int Mana { get; set; }
+
+        void SetEmitLight(LightLevel level, int time);
     }
 
-    public class CodeSpell : IDynamicObject, ICodeSpell
+    public class CodeSpell : ICodeSpell, IDynamicObject
     {
         private readonly SpellCodeExecutor codeExecutor;
+        private int? remainingLightTime;
 
         public CodeSpell(ICreatureObject caster, string name, string code, int mana)
         {
             Name = name;
             Mana = mana;
+            LightPower = LightLevel.Darkness;
+            remainingLightTime = null;
 
             codeExecutor = new SpellCodeExecutor(caster, code);
         }
@@ -27,11 +33,23 @@ namespace CodeMagic.Core.Spells
 
         public int Mana { get; set; }
 
+        public bool IsLightOn => remainingLightTime.HasValue;
+
+        public void SetEmitLight(LightLevel level, int time)
+        {
+            LightPower = level;
+            remainingLightTime = time;
+        }
+
+        public LightLevel LightPower { get; private set; }
+
         public void Update(IGameCore game, Point position)
         {
             var currentPosition = position;
             try
             {
+                ProcessLightEmitting();
+
                 var action = codeExecutor.Execute(game, position, this);
 
                 if (action.ManaCost <= Mana)
@@ -59,6 +77,21 @@ namespace CodeMagic.Core.Spells
             }
         }
 
+        private void ProcessLightEmitting()
+        {
+            if (!remainingLightTime.HasValue)
+                return;
+
+            if (remainingLightTime.Value < 0)
+            {
+                LightPower = LightLevel.Darkness;
+                remainingLightTime = null;
+                return;
+            }
+
+            remainingLightTime = remainingLightTime.Value - 1;
+        }
+
         public string Name { get; }
         public bool BlocksMovement => false;
         public bool IsVisible => true;
@@ -67,5 +100,10 @@ namespace CodeMagic.Core.Spells
         public bool BlocksEnvironment => false;
 
         public ZIndex ZIndex => ZIndex.Spell;
+
+        public bool Equals(IMapObject other)
+        {
+            return ReferenceEquals(other, this);
+        }
     }
 }

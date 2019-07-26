@@ -68,10 +68,10 @@ namespace CodeMagic.Core.Game
 
         public static bool IsOnLine(Point startPoint, Point endPoint, Point point, double tolerance = 0.3d)
         {
-            var AB = Math.Sqrt((endPoint.X - startPoint.X) * (endPoint.X - startPoint.X) + (endPoint.Y - startPoint.Y) * (endPoint.Y - startPoint.Y));
-            var AP = Math.Sqrt((point.X - startPoint.X) * (point.X - startPoint.X) + (point.Y - startPoint.Y) * (point.Y - startPoint.Y));
-            var PB = Math.Sqrt((endPoint.X - point.X) * (endPoint.X - point.X) + (endPoint.Y - point.Y) * (endPoint.Y - point.Y));
-            return Math.Abs(AB - (AP + PB)) < tolerance;
+            var ab = Math.Sqrt((endPoint.X - startPoint.X) * (endPoint.X - startPoint.X) + (endPoint.Y - startPoint.Y) * (endPoint.Y - startPoint.Y));
+            var ap = Math.Sqrt((point.X - startPoint.X) * (point.X - startPoint.X) + (point.Y - startPoint.Y) * (point.Y - startPoint.Y));
+            var pb = Math.Sqrt((endPoint.X - point.X) * (endPoint.X - point.X) + (endPoint.Y - point.Y) * (endPoint.Y - point.Y));
+            return Math.Abs(ab - (ap + pb)) < tolerance;
         }
 
         public static double GetDistance(Point point1, Point point2)

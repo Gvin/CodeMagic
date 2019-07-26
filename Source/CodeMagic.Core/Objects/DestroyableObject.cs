@@ -143,6 +143,16 @@ namespace CodeMagic.Core.Objects
                 map.AddObject(position, remains);
             }
         }
+
+        public bool Equals(IMapObject other)
+        {
+            if (other is DestroyableObject destroyable)
+            {
+                return string.Equals(Id, destroyable.Id);
+            }
+
+            return false;
+        }
     }
 
     public class DestroyableObjectConfiguration

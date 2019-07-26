@@ -13,7 +13,7 @@ namespace CodeMagic.Core.Area
         private readonly AreaMapCell[][] cells;
         private readonly Dictionary<string, IDestroyableObject> destroyableObjects;
 
-        public AreaMap(int width, int height)
+        public AreaMap(int width, int height, LightLevel defaultLightLevel)
         {
             objectPositionCache = new Dictionary<Type, Point>();
 
@@ -28,19 +28,9 @@ namespace CodeMagic.Core.Area
                 cells[y] = new AreaMapCell[width];
                 for (var x = 0; x < width; x++)
                 {
-                    cells[y][x] = new AreaMapCell();
+                    cells[y][x] = new AreaMapCell(defaultLightLevel);
                 }
             }
-        }
-
-        public void RegisterDestroyableObject(IDestroyableObject @object)
-        {
-            destroyableObjects.Add(@object.Id, @object);
-        }
-
-        public void UnregisterDestroyableObject(IDestroyableObject @object)
-        {
-            destroyableObjects.Remove(@object.Id);
         }
 
         public IDestroyableObject GetDestroyableObject(string id)
@@ -74,7 +64,7 @@ namespace CodeMagic.Core.Area
         {
             if (@object is IDestroyableObject destroyableObject)
             {
-                RegisterDestroyableObject(destroyableObject);
+                destroyableObjects.Add(destroyableObject.Id, destroyableObject);
             }
 
             GetCell(position).Objects.Add(@object);
@@ -83,6 +73,16 @@ namespace CodeMagic.Core.Area
             {
                 placedHandler.OnPlaced(this, position);
             }
+        }
+
+        public void RemoveObject(Point position, IMapObject @object)
+        {
+            if (@object is IDestroyableObject destroyableObject)
+            {
+                destroyableObjects.Remove(destroyableObject.Id);
+            }
+
+            GetCell(position).Objects.Remove(@object);
         }
 
         public Point GetObjectPosition<T>() where T : IMapObject
@@ -96,7 +96,7 @@ namespace CodeMagic.Core.Area
             return position;
         }
 
-        private Point GetObjectPosition(Func<IMapObject, bool> selector)
+        public Point GetObjectPosition(Func<IMapObject, bool> selector)
         {
             for (var y = 0; y < cells.Length; y++)
             {
@@ -153,15 +153,36 @@ namespace CodeMagic.Core.Area
             return result;
         }
 
+        public void Refresh()
+        {
+            LightLevelHelper.UpdateLightLevel(this);
+        }
+
         public void Update(IGameCore game)
         {
             objectPositionCache.Clear();
 
-            PerformForEachCell((point, cell) => cell.Update(game, point));
-            MergeCellsEnvironment();
+            LightLevelHelper.ResetLightLevel(this);
+            LightLevelHelper.UpdateLightLevel(this);
+
+            UpdateCells(game);
+            PostUpdateCells();
         }
 
-        private void MergeCellsEnvironment()
+        private void UpdateCells(IGameCore game)
+        {
+            for (var y = 0; y < cells.Length; y++)
+            {
+                var row = cells[y];
+                for (var x = 0; x < row.Length; x++)
+                {
+                    var cell = row[x];
+                    cell.Update(game, new Point(x, y));
+                }
+            }
+        }
+
+        private void PostUpdateCells()
         {
             var mergedCells = new List<CellsPair>();
             for (var y = 0; y < cells.Length; y++)
@@ -172,19 +193,6 @@ namespace CodeMagic.Core.Area
                     var cell = row[x];
                     cell.ResetDynamicObjectsState();
                     MergeCellEnvironment(new Point(x, y), cell, mergedCells);
-                }
-            }
-        }
-
-        private void PerformForEachCell(Action<Point, AreaMapCell> action)
-        {
-            for (var y = 0; y < cells.Length; y++)
-            {
-                var row = cells[y];
-                for (var x = 0; x < row.Length; x++)
-                {
-                    var cell = row[x];
-                    action(new Point(x, y), cell);
                 }
             }
         }
@@ -229,9 +237,9 @@ namespace CodeMagic.Core.Area
                 Cell2 = cell2;
             }
 
-            public AreaMapCell Cell1 { get; }
+            private AreaMapCell Cell1 { get; }
 
-            public AreaMapCell Cell2 { get; }
+            private AreaMapCell Cell2 { get; }
 
             public bool ContainsPair(AreaMapCell checkCell1, AreaMapCell checkCell2)
             {

@@ -37,6 +37,11 @@ namespace CodeMagic.Core.Objects.SolidObjects
         public bool BlocksEnvironment => true;
 
         public ZIndex ZIndex => ZIndex.Wall;
+
+        public bool Equals(IMapObject other)
+        {
+            return ReferenceEquals(other, this);
+        }
     }
 
     public class EnergyWallConfiguration

@@ -56,6 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SolidObjects\EnergyWallImpl.cs" />
     <Compile Include="SolidObjects\WallImpl.cs" />
+    <Compile Include="SolidObjects\TorchWallImpl.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">

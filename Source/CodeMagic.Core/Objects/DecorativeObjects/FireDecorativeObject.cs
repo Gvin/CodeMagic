@@ -54,5 +54,10 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         public bool Updated { get; set; }
 
         public ZIndex ZIndex => ZIndex.AreaDecoration;
+
+        public bool Equals(IMapObject other)
+        {
+            return ReferenceEquals(other, this);
+        }
     }
 }

@@ -138,5 +138,10 @@ namespace CodeMagic.Core.Objects.IceObjects
 
             return iceObject.Volume >= MinVolumeForEffect;
         }
+
+        public bool Equals(IMapObject other)
+        {
+            return ReferenceEquals(other, this);
+        }
     }
 }

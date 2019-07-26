@@ -33,6 +33,8 @@ namespace CodeMagic.Core.Spells
                     return new TransformWaterSpellAction(actionData);
                 case ShockSpellAction.ActionType:
                     return new ShockSpellAction(actionData);
+                case EmitLightSpellAction.ActionType:
+                    return new EmitLightSpellAction(actionData, spell);
             }
 
             throw new SpellException($"Action type \"{actionData.type}\" is not supported.");

@@ -15,5 +15,7 @@
         bool BlocksEnvironment { get; }
 
         ZIndex ZIndex { get; }
+
+        bool Equals(IMapObject other);
     }
 }

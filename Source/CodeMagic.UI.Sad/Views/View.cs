@@ -4,7 +4,6 @@ using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace CodeMagic.UI.Sad.Views
 {
