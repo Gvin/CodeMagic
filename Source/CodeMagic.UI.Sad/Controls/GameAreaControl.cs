@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Objects;
-using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
@@ -21,9 +18,9 @@ namespace CodeMagic.UI.Sad.Controls
         private const int ControlWidth = 30;
         private const int ControlHeight = 30;
 
-        private readonly GameCore game;
+        private readonly IGameCore game;
 
-        public GameAreaControl(GameCore game) 
+        public GameAreaControl(IGameCore game) 
             : base(ControlWidth, ControlHeight)
         {
             this.game = game;

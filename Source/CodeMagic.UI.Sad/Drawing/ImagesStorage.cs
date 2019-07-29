@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using CodeMagic.Core.Game;
 using CodeMagic.Objects.Implementation;
 using CodeMagic.UI.Images;
 

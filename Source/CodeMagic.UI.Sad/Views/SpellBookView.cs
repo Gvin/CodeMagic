@@ -23,7 +23,7 @@ namespace CodeMagic.UI.Sad.Views
     {
         private const string DefaultSpellName = "New Spell";
 
-        private readonly GameCore game;
+        private readonly IGameCore game;
 
         private Button closeButton;
         private ListBox spellsListBox;
@@ -33,7 +33,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button castSpellButton;
         private Button removeSpellButton;
 
-        public SpellBookView(GameCore game) 
+        public SpellBookView(IGameCore game) 
             : base(Program.Width, Program.Height)
         {
             this.game = game;

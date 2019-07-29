@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;

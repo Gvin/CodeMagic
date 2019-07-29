@@ -16,7 +16,7 @@ namespace CodeMagic.UI.Sad.Views
 {
     public class GameView : View
     {
-        private readonly GameCore game;
+        private readonly IGameCore game;
 
         private PlayerStatsControl playerStats;
         private GameAreaControl gameArea;
@@ -29,7 +29,7 @@ namespace CodeMagic.UI.Sad.Views
         private ButtonTheme standardButtonTheme;
         private ButtonTheme disabledButtonTheme;
 
-        public GameView(GameCore game) 
+        public GameView(IGameCore game) 
             : base(Program.Width, Program.Height)
         {
             UseKeyboard = true;
@@ -122,6 +122,9 @@ namespace CodeMagic.UI.Sad.Views
                 case Keys.C:
                     OpenSpellBook();
                     return true;
+                case Keys.Escape:
+                    OpenMainMenu();
+                    return true;
             }
 
             var action = GetPlayerAction(key.Key);
@@ -155,6 +158,13 @@ namespace CodeMagic.UI.Sad.Views
                 default:
                     return null;
             }
+        }
+
+        private void OpenMainMenu()
+        {
+            Close();
+
+            new InGameMenuView(game).Show();
         }
 
         private void openSpellBookButton_Click(object sender, EventArgs args)

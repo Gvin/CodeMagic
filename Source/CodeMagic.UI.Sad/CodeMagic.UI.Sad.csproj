@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\GameAreaControl.cs" />
+    <Compile Include="Controls\GameLogoControl.cs" />
     <Compile Include="Controls\JournalBoxControl.cs" />
     <Compile Include="Controls\PlayerStatsControl.cs" />
     <Compile Include="Controls\SpellDetailsControl.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="GameProcess\GameManager.cs" />
     <Compile Include="Views\EditSpellView.cs" />
     <Compile Include="Views\GameView.cs" />
+    <Compile Include="Views\InGameMenuView.cs" />
     <Compile Include="Views\MainMenuView.cs" />
     <Compile Include="Views\PlayerDeathView.cs" />
     <Compile Include="Views\SpellBookView.cs" />

@@ -71,7 +71,7 @@ namespace CodeMagic.UI.Sad.Views
             Print(labelX, 12, new ColoredString("You have died!", Color.Red, DefaultBackground));
         }
 
-        private void startNewGameButton_Click(object sender, System.EventArgs e)
+        private void startNewGameButton_Click(object sender, EventArgs e)
         {
             Close();
 
@@ -80,19 +80,16 @@ namespace CodeMagic.UI.Sad.Views
             gameView.Show();
         }
 
-        private void backToMenuButton_Click(object sender, System.EventArgs e)
+        private void backToMenuButton_Click(object sender, EventArgs e)
         {
             Close();
+
+            new MainMenuView().Show();
         }
 
-        private void exitGameButton_Click(object sender, System.EventArgs e)
+        private void exitGameButton_Click(object sender, EventArgs e)
         {
             Game.Instance.Exit();
-        }
-
-        private int GetLabelPosition()
-        {
-            return (int)Math.Floor(Width / 2d) - 8;
         }
     }
 }
