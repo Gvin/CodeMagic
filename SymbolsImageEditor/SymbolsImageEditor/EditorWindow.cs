@@ -83,6 +83,15 @@ namespace SymbolsImageEditor
             clearBackColorButton.Click += clearBackColorButton_Click;
             Add(clearBackColorButton);
 
+            var newImageButton = new Button(6)
+            {
+                Position = new Point(1, 11),
+                Text = "New",
+                CanFocus = false
+            };
+            newImageButton.Click += newImageButton_Click;
+            Add(newImageButton);
+
             var setBackgroundColor = new Button(6)
             {
                 Position = new Point(1, 5),
@@ -111,6 +120,11 @@ namespace SymbolsImageEditor
             Add(saveImageButton);
 
             InitializeImageControl();
+        }
+
+        private void newImageButton_Click(object sender, EventArgs e)
+        {
+            image = new SymbolsImage(DefaultImageSize, DefaultImageSize);
         }
 
         private void setBackgroundColor_Click(object sender, EventArgs e)

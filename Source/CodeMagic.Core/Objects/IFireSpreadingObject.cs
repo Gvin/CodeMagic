@@ -7,5 +7,7 @@ namespace CodeMagic.Core.Objects
         bool GetIsOnFire(AreaMapCell cell);
 
         bool SpreadsFire { get; }
+
+        int BurningTemperature { get; }
     }
 }

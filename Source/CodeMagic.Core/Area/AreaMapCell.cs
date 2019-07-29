@@ -136,14 +136,14 @@ namespace CodeMagic.Core.Area
             if (localIgnitable == null || otherIgnitable == null)
                 return;
 
-            if (localIgnitable.GetIsOnFire(this) && other.Environment.Temperature < Environment.Temperature)
+            if (localIgnitable.GetIsOnFire(this) && other.Environment.Temperature < localIgnitable.BurningTemperature)
             {
-                other.Environment.Temperature = Environment.Temperature;
+                other.Environment.Temperature = localIgnitable.BurningTemperature;
             }
 
-            if (otherIgnitable.GetIsOnFire(other) && Environment.Temperature < other.Environment.Temperature)
+            if (otherIgnitable.GetIsOnFire(other) && Environment.Temperature < otherIgnitable.BurningTemperature)
             {
-                Environment.Temperature = other.Environment.Temperature;
+                Environment.Temperature = otherIgnitable.BurningTemperature;
             }
         }
 
