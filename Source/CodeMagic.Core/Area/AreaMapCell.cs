@@ -122,7 +122,32 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        public void CheckSpreadingObjects(AreaMapCell other)
+        public void CheckSpreading(AreaMapCell other)
+        {
+            CheckSpreadingObjects(other);
+            CheckFireSpread(other);
+        }
+
+        private void CheckFireSpread(AreaMapCell other)
+        {
+            var localIgnitable = Objects.OfType<IFireSpreadingObject>().FirstOrDefault(obj => obj.SpreadsFire);
+            var otherIgnitable = Objects.OfType<IFireSpreadingObject>().FirstOrDefault(obj => obj.SpreadsFire);
+
+            if (localIgnitable == null || otherIgnitable == null)
+                return;
+
+            if (localIgnitable.GetIsOnFire(this) && other.Environment.Temperature < Environment.Temperature)
+            {
+                other.Environment.Temperature = Environment.Temperature;
+            }
+
+            if (otherIgnitable.GetIsOnFire(other) && Environment.Temperature < other.Environment.Temperature)
+            {
+                Environment.Temperature = other.Environment.Temperature;
+            }
+        }
+
+        private void CheckSpreadingObjects(AreaMapCell other)
         {
             var localSpreadingObjects = Objects.OfType<ISpreadingObject>().ToArray();
             var otherSpreadingObjects = other.Objects.OfType<ISpreadingObject>().ToArray();

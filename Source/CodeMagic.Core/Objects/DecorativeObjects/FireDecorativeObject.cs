@@ -1,4 +1,6 @@
-﻿using CodeMagic.Core.Game;
+﻿using System;
+using CodeMagic.Core.Area;
+using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects.DecorativeObjects
 {
@@ -6,9 +8,13 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
     {
     }
 
-    public class FireDecorativeObject : IFireDecorativeObject, IDynamicObject
+    public class FireDecorativeObject : IFireDecorativeObject, IDynamicObject, ILightSource
     {
-        private const int MediumFireTemperature = 1200;
+        private const LightLevel SmallFireLightLevel = LightLevel.Disk2;
+        private const LightLevel MediumFireLightLevel = LightLevel.Dim2;
+        private const LightLevel BigFireLightLevel = LightLevel.Medium;
+
+        private const int MediumFireTemperature = 1000;
         private const int BigFireTemperature = 1500;
         public const int SmallFireTemperature = 600;
 
@@ -58,6 +64,26 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         public bool Equals(IMapObject other)
         {
             return ReferenceEquals(other, this);
+        }
+
+        public bool IsLightOn => true;
+
+        public LightLevel LightPower
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case ObjectTypeSmallFire:
+                        return SmallFireLightLevel;
+                    case ObjectTypeMediumFire:
+                        return MediumFireLightLevel;
+                    case ObjectTypeBigFire:
+                        return BigFireLightLevel;
+                    default:
+                        throw new ApplicationException($"Unknown fire object type: {Type}");
+                }
+            }
         }
     }
 }

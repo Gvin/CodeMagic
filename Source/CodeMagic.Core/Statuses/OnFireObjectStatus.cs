@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
@@ -14,8 +15,6 @@ namespace CodeMagic.Core.Statuses
         public const string StatusType = "on_fire";
 
         private readonly int burningTemperature;
-        private readonly int fireDamageMin;
-        private readonly int fireDamageMax;
         private readonly int burnBeforeExtinguishCheck;
 
         private int burnTime;
@@ -23,8 +22,6 @@ namespace CodeMagic.Core.Statuses
         public OnFireObjectStatus(OnFireObjectStatusConfiguration configuration)
         {
             burningTemperature = configuration.BurningTemperature;
-            fireDamageMin = configuration.FireDamageMin;
-            fireDamageMax = configuration.FireDamageMax;
             burnBeforeExtinguishCheck = configuration.BurnBeforeExtinguishCheck;
 
             burnTime = 0;
@@ -42,7 +39,10 @@ namespace CodeMagic.Core.Statuses
 
             burnTime++;
 
-            var damage = RandomHelper.GetRandomValue(fireDamageMin, fireDamageMax);
+            var damage = Temperature.GetTemperatureDamage(burningTemperature, out _);
+            if (damage == 0)
+                return true;
+
             journal.Write(new BurningDamageMessage(owner, damage));
             owner.Damage(damage, Element.Fire);
 
@@ -67,8 +67,6 @@ namespace CodeMagic.Core.Statuses
         }
 
         public int BurningTemperature { get; set; }
-        public int FireDamageMin { get; set; }
-        public int FireDamageMax { get; set; }
         public int BurnBeforeExtinguishCheck { get; set; }
     }
 }

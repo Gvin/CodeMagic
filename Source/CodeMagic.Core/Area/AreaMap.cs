@@ -225,7 +225,7 @@ namespace CodeMagic.Core.Area
             if (nextCell.BlocksEnvironment)
                 return;
 
-            cell.CheckSpreadingObjects(nextCell);
+            cell.CheckSpreading(nextCell);
             cell.Environment.Balance(nextCell.Environment);
         }
 

@@ -72,6 +72,7 @@
     <Compile Include="Objects\IceObjects\AcidIceObject.cs" />
     <Compile Include="Objects\IceObjects\WaterIceObject.cs" />
     <Compile Include="Objects\IceObjects\IIceObject.cs" />
+    <Compile Include="Objects\IFireSpreadingObject.cs" />
     <Compile Include="Objects\ILightSource.cs" />
     <Compile Include="Objects\IPlacedHandler.cs" />
     <Compile Include="Objects\ISpreadingObject.cs" />

@@ -8,7 +8,7 @@ using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects.LiquidObjects
 {
-    public class OilLiquidObject : ILiquidObject
+    public class OilLiquidObject : ILiquidObject, IFireSpreadingObject, IDynamicObject
     {
         private const string CustomValueIgnitionTemperature = "IgnitionTemperature";
         private const string CustomValueBurningTemperature = "BurningTemperature";
@@ -20,7 +20,6 @@ namespace CodeMagic.Core.Objects.LiquidObjects
         protected readonly ILiquidConfiguration Configuration;
 
         private readonly int ignitionTemperature;
-        private readonly int burningTemperature;
         private readonly int heatSpeed;
         private readonly double burningRate;
 
@@ -31,7 +30,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
             Configuration = ConfigurationManager.GetLiquidConfiguration(LiquidType);
 
             ignitionTemperature = GetCustomInt(CustomValueIgnitionTemperature);
-            burningTemperature = GetCustomInt(CustomValueBurningTemperature);
+            BurningTemperature = GetCustomInt(CustomValueBurningTemperature);
             heatSpeed = GetCustomInt(CustomValueHeatSpeed);
             burningRate = GetCustomDouble(CustomValueBurningRate);
 
@@ -76,9 +75,9 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         private void ProcessBurning(AreaMapCell cell)
         {
-            if (cell.Environment.Temperature < burningTemperature)
+            if (cell.Environment.Temperature < BurningTemperature)
             {
-                var temperatureDiff = burningTemperature - cell.Environment.Temperature;
+                var temperatureDiff = BurningTemperature - cell.Environment.Temperature;
                 var temperatureChange = Math.Min(temperatureDiff, heatSpeed);
                 cell.Environment.Temperature += temperatureChange;
             }
@@ -157,5 +156,14 @@ namespace CodeMagic.Core.Objects.LiquidObjects
         }
 
         #endregion
+
+        public bool GetIsOnFire(AreaMapCell cell)
+        {
+            return cell.Environment.Temperature >= ignitionTemperature;
+        }
+
+        public bool SpreadsFire => true;
+
+        public int BurningTemperature { get; }
     }
 }

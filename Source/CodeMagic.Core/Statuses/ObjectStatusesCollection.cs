@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
@@ -30,6 +31,11 @@ namespace CodeMagic.Core.Statuses
         public TStatus[] GetStatuses<TStatus>()
         {
             return statuses.Values.OfType<TStatus>().ToArray();
+        }
+
+        public TStatus GetStatus<TStatus>()
+        {
+            return statuses.Values.OfType<TStatus>().FirstOrDefault();
         }
 
         public void Remove(string statusType)

@@ -46,10 +46,12 @@ namespace CodeMagic.UI.Sad.GameProcess
         {
             playerPosition = new Point(0, 0);
 
-            var map = new AreaMap(10, 10, LightLevel.Medium);
+            var map = new AreaMap(10, 10, LightLevel.Dim2);
 
-            map.AddObject(3, 3, MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(100));
-            map.GetCell(3, 3).Environment.Temperature = 300;
+            map.AddObject(1, 3, MapObjectsFactory.CreateLiquidObject<OilLiquidObject>(100));
+            map.AddObject(2, 3, MapObjectsFactory.CreateLiquidObject<OilLiquidObject>(100));
+            map.AddObject(3, 3, MapObjectsFactory.CreateLiquidObject<OilLiquidObject>(100));
+            map.GetCell(3, 3).Environment.Temperature = 400;
 
             return map;
         }

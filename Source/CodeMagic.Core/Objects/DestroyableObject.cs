@@ -108,9 +108,7 @@ namespace CodeMagic.Core.Objects
         {
             return new OnFireObjectStatusConfiguration
             {
-                BurnBeforeExtinguishCheck = 3,
-                FireDamageMax = 6,
-                FireDamageMin = 2
+                BurnBeforeExtinguishCheck = 3
             };
         }
 

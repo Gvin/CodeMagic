@@ -89,24 +89,35 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         public int GetTemperatureDamage(out Element? damageElement)
         {
-            if (value < configuration.ColdDamageConfiguration.TemperatureLevel)
+            return GetTemperatureDamage(configuration, value, out damageElement);
+        }
+
+        private static int GetTemperatureDamage(ITemperatureConfiguration configuration, int temperature, out Element? damageElement)
+        {
+            if (temperature < configuration.ColdDamageConfiguration.TemperatureLevel)
             {
 
                 damageElement = Element.Frost;
-                var damageValue = configuration.ColdDamageConfiguration.TemperatureLevel - value;
-                return (int) Math.Round(damageValue * configuration.ColdDamageConfiguration.DamageMultiplier);
+                var damageValue = configuration.ColdDamageConfiguration.TemperatureLevel - temperature;
+                return (int)Math.Round(damageValue * configuration.ColdDamageConfiguration.DamageMultiplier);
             }
 
-            if (value > configuration.HeatDamageConfiguration.TemperatureLevel)
+            if (temperature > configuration.HeatDamageConfiguration.TemperatureLevel)
             {
 
                 damageElement = Element.Fire;
-                var damageValue = value - configuration.HeatDamageConfiguration.TemperatureLevel;
+                var damageValue = temperature - configuration.HeatDamageConfiguration.TemperatureLevel;
                 return (int)Math.Round(damageValue * configuration.HeatDamageConfiguration.DamageMultiplier);
             }
 
             damageElement = null;
             return 0;
+        }
+
+        public static int GetTemperatureDamage(int temperature, out Element? damageElement)
+        {
+            var configuration = ConfigurationManager.Current.Physics.TemperatureConfiguration;
+            return GetTemperatureDamage(configuration, temperature, out damageElement);
         }
     }
 }
