@@ -10,22 +10,57 @@ namespace CodeMagic.Objects.Implementation
         private int currentFrameIndex;
         private readonly SymbolsImage[] frames;
         private DateTime lastUpdated;
+        private readonly AnimationFrameStrategy frameStrategy;
 
-        public AnimationManager(SymbolsImage[] frames, TimeSpan frameLifeTime, bool randomStartFrame = false)
+        public AnimationManager(
+            SymbolsImage[] frames,
+            TimeSpan frameLifeTime,
+            AnimationFrameStrategy frameStrategy = AnimationFrameStrategy.OneByOneStartFromZero)
         {
             this.frames = frames;
             this.frameLifeTime = frameLifeTime;
+            this.frameStrategy = frameStrategy;
 
-            if (randomStartFrame)
-            {
-                currentFrameIndex = RandomHelper.GetRandomValue(0, frames.Length - 1);
-            }
-            else
-            {
-                currentFrameIndex = 0;
-            }
+            currentFrameIndex = GetInitialFrameIndex();
 
             lastUpdated = DateTime.Now;
+        }
+
+        private int GetInitialFrameIndex()
+        {
+            switch (frameStrategy)
+            {
+                case AnimationFrameStrategy.OneByOneStartFromZero:
+                    return 0;
+                case AnimationFrameStrategy.Random:
+                case AnimationFrameStrategy.OneByOneStartFromRandom:
+                    return GetRandomFrameIndex();
+                default:
+                    throw new ArgumentOutOfRangeException($"Unknown frame strategy: {frameStrategy}");
+            }
+        }
+
+        private int GetNextFrameIndex()
+        {
+            switch (frameStrategy)
+            {
+                case AnimationFrameStrategy.OneByOneStartFromRandom:
+                case AnimationFrameStrategy.OneByOneStartFromZero:
+                    if (currentFrameIndex >= frames.Length - 2)
+                    {
+                        return 0;
+                    }
+                    return currentFrameIndex + 1;
+                case AnimationFrameStrategy.Random:
+                    return GetRandomFrameIndex();
+                default:
+                    throw new ArgumentOutOfRangeException($"Unknown frame strategy: {frameStrategy}");
+            }
+        }
+
+        private int GetRandomFrameIndex()
+        {
+            return RandomHelper.GetRandomValue(0, frames.Length - 1);
         }
 
         public SymbolsImage GetCurrentFrame()
@@ -38,7 +73,7 @@ namespace CodeMagic.Objects.Implementation
                 {
                     for (var index = 0; index < diffFrames; index++)
                     {
-                        IncrementFrameIndex();
+                        currentFrameIndex = GetNextFrameIndex();
                     }
                     lastUpdated = DateTime.Now;
                 }
@@ -46,14 +81,12 @@ namespace CodeMagic.Objects.Implementation
                 return frames[currentFrameIndex];
             }
         }
+    }
 
-        private void IncrementFrameIndex()
-        {
-            currentFrameIndex++;
-            if (currentFrameIndex >= frames.Length)
-            {
-                currentFrameIndex = 0;
-            }
-        }
+    public enum AnimationFrameStrategy
+    {
+        OneByOneStartFromZero,
+        OneByOneStartFromRandom,
+        Random
     }
 }

@@ -9,12 +9,14 @@ namespace CodeMagic.Objects.Implementation
         private readonly Dictionary<string, AnimationManager> managers;
 
         private readonly TimeSpan changeInterval;
-        private readonly bool randomStartFrame;
+        private readonly AnimationFrameStrategy frameStrategy;
 
-        public AnimationsBatchManager(TimeSpan changeInterval, bool randomStartFrame)
+        public AnimationsBatchManager(
+            TimeSpan changeInterval,
+            AnimationFrameStrategy frameStrategy = AnimationFrameStrategy.OneByOneStartFromZero)
         {
             this.changeInterval = changeInterval;
-            this.randomStartFrame = randomStartFrame;
+            this.frameStrategy = frameStrategy;
             managers = new Dictionary<string, AnimationManager>();
         }
 
@@ -23,7 +25,7 @@ namespace CodeMagic.Objects.Implementation
             if (!managers.ContainsKey(animationName))
             {
                 managers.Add(animationName,
-                    new AnimationManager(storage.GetAnimation(animationName), changeInterval, randomStartFrame));
+                    new AnimationManager(storage.GetAnimation(animationName), changeInterval, frameStrategy));
             }
 
             return managers[animationName].GetCurrentFrame();

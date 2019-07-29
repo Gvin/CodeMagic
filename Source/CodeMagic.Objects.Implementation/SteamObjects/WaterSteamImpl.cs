@@ -18,7 +18,7 @@ namespace CodeMagic.Objects.Implementation.SteamObjects
         public WaterSteamImpl(int volume) 
             : base(volume)
         {
-            animations = new AnimationsBatchManager(TimeSpan.FromSeconds(1), true);
+            animations = new AnimationsBatchManager(TimeSpan.FromSeconds(1), AnimationFrameStrategy.Random);
         }
 
         public SymbolsImage GetImage(IImagesStorage storage)
