@@ -10,7 +10,6 @@ namespace CodeMagic.UI.Sad.Drawing
 {
     public static class CellImageHelper
     {
-        private const int DamageTextXShift = 1;
         private const int DamageTextYShift = 1;
         private static readonly TimeSpan DamageMarksLifeTime = TimeSpan.FromSeconds(2);
         private static readonly SymbolsImage EmptyImage = new SymbolsImage(Program.MapCellImageSize, Program.MapCellImageSize);
@@ -63,10 +62,21 @@ namespace CodeMagic.UI.Sad.Drawing
             var color = ColorHelper.ConvertFromXna(xnaColor);
             var damageText = latestRecord.Value.ToString();
 
+            var xShift = 1;
+            if (damageText.Length == 3)
+            {
+                xShift = 0;
+            }
+
+            if (damageText.Length > 3)
+            {
+                damageText = "XXX";
+            }
+
             var damageTextImage = new SymbolsImage(image.Width, image.Height);
             for (int shift = 0; shift < damageText.Length; shift++)
             {
-                var x = DamageTextXShift + shift;
+                var x = xShift + shift;
                 if (x >= damageTextImage.Width)
                     break;
 
