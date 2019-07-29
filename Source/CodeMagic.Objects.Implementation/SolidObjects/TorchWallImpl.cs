@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Objects.SolidObjects;
+﻿using System;
+using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Objects.Implementation.SolidObjects
@@ -11,26 +12,29 @@ namespace CodeMagic.Objects.Implementation.SolidObjects
         private const string ImageBottomRight = "Wall_{0}_Bottom_Right_Torch";
         private const string ImageCorner = "Wall_{0}_Corner";
 
+        private readonly AnimationsBatchManager animationsManager;
+
         public TorchWallImpl(TorchWallObjectConfiguration configuration) 
             : base(configuration)
         {
+            animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
         }
 
         public SymbolsImage GetImage(IImagesStorage storage)
         {
             if (!HasConnectedTile(0, 1) && !HasConnectedTile(1, 0))
             {
-                return GetImage(storage, ImageBottomRight);
+                return animationsManager.GetImage(storage, ParseImageTemplate(ImageBottomRight));
             }
 
             if (!HasConnectedTile(0, 1))
             {
-                return GetImage(storage, ImageBottom);
+                return animationsManager.GetImage(storage, ParseImageTemplate(ImageBottom));
             }
 
             if (!HasConnectedTile(1, 0))
             {
-                return GetImage(storage, ImageRight);
+                return animationsManager.GetImage(storage, ParseImageTemplate(ImageRight));
             }
 
             if (!HasConnectedTile(1, 1))
@@ -41,9 +45,14 @@ namespace CodeMagic.Objects.Implementation.SolidObjects
             return GetImage(storage, ImageNormal);
         }
 
+        private string ParseImageTemplate(string template)
+        {
+            return string.Format(template, Type);
+        }
+
         private SymbolsImage GetImage(IImagesStorage storage, string template)
         {
-            var key = string.Format(template, Type);
+            var key = ParseImageTemplate(template);
             return storage.GetImage(key);
         }
     }

@@ -5,67 +5,43 @@
       <color>
         <R>255</R>
         <G>0</G>
-        <B>255</B>
+        <B>128</B>
       </color>
     </pixel>
-    <pixel symbol="│">
-      <color>
-        <R>255</R>
-        <G>0</G>
-        <B>255</B>
-      </color>
-    </pixel>
+    <pixel />
     <pixel symbol="/">
       <color>
         <R>255</R>
         <G>0</G>
-        <B>255</B>
+        <B>128</B>
       </color>
     </pixel>
   </row>
   <row>
-    <pixel symbol="─">
-      <color>
-        <R>255</R>
-        <G>0</G>
-        <B>255</B>
-      </color>
-    </pixel>
+    <pixel />
     <pixel symbol="☼">
       <color>
         <R>255</R>
         <G>0</G>
-        <B>255</B>
+        <B>128</B>
       </color>
     </pixel>
-    <pixel symbol="─">
-      <color>
-        <R>255</R>
-        <G>0</G>
-        <B>255</B>
-      </color>
-    </pixel>
+    <pixel />
   </row>
   <row>
     <pixel symbol="/">
       <color>
         <R>255</R>
         <G>0</G>
-        <B>255</B>
+        <B>128</B>
       </color>
     </pixel>
-    <pixel symbol="│">
-      <color>
-        <R>255</R>
-        <G>0</G>
-        <B>255</B>
-      </color>
-    </pixel>
+    <pixel />
     <pixel symbol="\">
       <color>
         <R>255</R>
         <G>0</G>
-        <B>255</B>
+        <B>128</B>
       </color>
     </pixel>
   </row>

@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Objects.Creatures;
+﻿using System;
+using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Spells;
 using CodeMagic.UI.Images;
 
@@ -13,18 +14,21 @@ namespace CodeMagic.Objects.Implementation
         private const int HighManaLevel = 100;
         private const int MediumManaLevel = 20;
 
+        private readonly AnimationsBatchManager animations;
+
         public CodeSpellImpl(ICreatureObject caster, string name, string code, int mana) 
             : base(caster, name, code, mana)
         {
+            animations = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.OneByOneStartFromRandom);
         }
 
         public SymbolsImage GetImage(IImagesStorage storage)
         {
             if (Mana >= HighManaLevel)
-                return storage.GetImage(ImageHighMana);
+                return animations.GetImage(storage, ImageHighMana);
             if (Mana >= MediumManaLevel)
-                return storage.GetImage(ImageMediumMana);
-            return storage.GetImage(ImageLowMana);
+                return animations.GetImage(storage, ImageMediumMana);
+            return animations.GetImage(storage, ImageLowMana);
         }
     }
 }
