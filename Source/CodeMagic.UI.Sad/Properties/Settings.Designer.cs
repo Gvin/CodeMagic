@@ -43,5 +43,14 @@ namespace CodeMagic.UI.Sad.Properties {
                 return ((bool)(this["DebugDrawTemperature"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DebugDrawLightLevel {
+            get {
+                return ((bool)(this["DebugDrawLightLevel"]));
+            }
+        }
     }
 }

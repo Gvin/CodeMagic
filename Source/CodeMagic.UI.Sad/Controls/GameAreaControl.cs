@@ -41,19 +41,8 @@ namespace CodeMagic.UI.Sad.Controls
                 {
                     var cell = visibleArea.GetCell(x, y);
                     DrawCell(x, y, cell);
-
-                    
                 }
             }
-        }
-
-        private void DrawTemperature(int x, int y, AreaMapCell cell)
-        {
-            if (cell == null)
-                return;
-
-            var value = cell.Environment.Temperature / 10;
-            Surface.Print(x, y, new ColoredString(value.ToString(), Color.Red, Color.Black));
         }
 
         private void DrawCell(int mapX, int mapY, AreaMapCell cell)
@@ -65,8 +54,37 @@ namespace CodeMagic.UI.Sad.Controls
 
             Surface.DrawImage(realX, realY, image, DefaultForegroundColor, DefaultBackgroundColor);
 
+            DrawDebugData(realX, realY, cell);
+        }
+
+        #region Debug Data Drawing
+
+        private void DrawDebugData(int realX, int realY, AreaMapCell cell)
+        {
             if (Properties.Settings.Default.DebugDrawTemperature)
                 DrawTemperature(realX, realY, cell);
+            if (Properties.Settings.Default.DebugDrawLightLevel)
+                DrawLightLevel(realX, realY + 1, cell);
         }
+
+        private void DrawLightLevel(int x, int y, AreaMapCell cell)
+        {
+            if (cell == null)
+                return;
+
+            var value = (int)cell.LightLevel;
+            Surface.Print(x, y, new ColoredString(value.ToString(), Color.Yellow, Color.Black));
+        }
+
+        private void DrawTemperature(int x, int y, AreaMapCell cell)
+        {
+            if (cell == null)
+                return;
+
+            var value = cell.Environment.Temperature / 10;
+            Surface.Print(x, y, new ColoredString(value.ToString(), Color.Red, Color.Black));
+        }
+
+        #endregion
     }
 }

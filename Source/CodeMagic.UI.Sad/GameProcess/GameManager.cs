@@ -17,7 +17,7 @@ namespace CodeMagic.UI.Sad.GameProcess
     {
         private const int GoblinsCount = 20;
         private const int MapSize = 31; // uneven value only!
-        private const bool UseFakeMap = true;
+        private const bool UseFakeMap = false;
         private const LightLevel DefaultLightLevel = LightLevel.Darkness;
 
         public GameCore StartGame()

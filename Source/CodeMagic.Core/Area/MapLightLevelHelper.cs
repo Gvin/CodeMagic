@@ -5,7 +5,7 @@ using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
 {
-    internal static class LightLevelHelper
+    internal static class MapLightLevelHelper
     {
         public static void ResetLightLevel(IAreaMap map)
         {

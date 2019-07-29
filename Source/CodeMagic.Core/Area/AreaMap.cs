@@ -155,15 +155,15 @@ namespace CodeMagic.Core.Area
 
         public void Refresh()
         {
-            LightLevelHelper.UpdateLightLevel(this);
+            MapLightLevelHelper.UpdateLightLevel(this);
         }
 
         public void Update(IGameCore game)
         {
             objectPositionCache.Clear();
 
-            LightLevelHelper.ResetLightLevel(this);
-            LightLevelHelper.UpdateLightLevel(this);
+            MapLightLevelHelper.ResetLightLevel(this);
+            MapLightLevelHelper.UpdateLightLevel(this);
 
             UpdateCells(game);
             PostUpdateCells();

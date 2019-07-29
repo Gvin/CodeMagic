@@ -53,7 +53,7 @@
     <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Area\AreaMapFragment.cs" />
     <Compile Include="Area\LightLevel.cs" />
-    <Compile Include="Area\LightLevelHelper.cs" />
+    <Compile Include="Area\MapLightLevelHelper.cs" />
     <Compile Include="Area\MapObjectsCollection.cs" />
     <Compile Include="Common\Direction.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />

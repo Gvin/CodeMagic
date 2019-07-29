@@ -16,6 +16,7 @@ namespace CodeMagic.Core.Spells
 
     public class CodeSpell : ICodeSpell, IDynamicObject
     {
+        private const LightLevel DefaultLightLevel = LightLevel.Dusk1;
         private readonly SpellCodeExecutor codeExecutor;
         private int? remainingLightTime;
 
@@ -23,7 +24,7 @@ namespace CodeMagic.Core.Spells
         {
             Name = name;
             Mana = mana;
-            LightPower = LightLevel.Darkness;
+            LightPower = DefaultLightLevel;
             remainingLightTime = null;
 
             codeExecutor = new SpellCodeExecutor(caster, code);
@@ -33,7 +34,7 @@ namespace CodeMagic.Core.Spells
 
         public int Mana { get; set; }
 
-        public bool IsLightOn => remainingLightTime.HasValue;
+        public bool IsLightOn => true;
 
         public void SetEmitLight(LightLevel level, int time)
         {
@@ -84,7 +85,7 @@ namespace CodeMagic.Core.Spells
 
             if (remainingLightTime.Value < 0)
             {
-                LightPower = LightLevel.Darkness;
+                LightPower = DefaultLightLevel;
                 remainingLightTime = null;
                 return;
             }
