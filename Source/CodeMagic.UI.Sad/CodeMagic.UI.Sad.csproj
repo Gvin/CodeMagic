@@ -75,6 +75,7 @@
     <Compile Include="Views\EditSpellView.cs" />
     <Compile Include="Views\GameView.cs" />
     <Compile Include="Views\MainMenuView.cs" />
+    <Compile Include="Views\PlayerDeathView.cs" />
     <Compile Include="Views\SpellBookView.cs" />
     <Compile Include="Views\View.cs" />
     <Compile Include="Program.cs" />

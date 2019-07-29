@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Items;
+﻿using System;
+using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.Creatures;
 
 namespace CodeMagic.Core.Objects.PlayerData
@@ -16,5 +17,7 @@ namespace CodeMagic.Core.Objects.PlayerData
         Inventory Inventory { get; }
 
         Equipment Equipment { get; }
+
+        event EventHandler Died;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
@@ -24,6 +25,8 @@ namespace CodeMagic.Core.Objects.PlayerData
 
             Direction = Direction.Up;
         }
+
+        public event EventHandler Died;
 
         public Equipment Equipment { get; }
 
@@ -84,5 +87,12 @@ namespace CodeMagic.Core.Objects.PlayerData
         }
 
         public bool Updated { get; set; }
+
+        public override void OnDeath(IAreaMap map, Point position)
+        {
+            base.OnDeath(map, position);
+
+            Died?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

@@ -37,6 +37,15 @@ namespace CodeMagic.UI.Sad.Views
             this.game = game;
 
             InitializeControls();
+
+            game.Player.Died += Player_Died;
+        }
+
+        private void Player_Died(object sender, EventArgs e)
+        {
+            Close();
+
+            new PlayerDeathView().Show();
         }
 
         private void InitializeControls()
