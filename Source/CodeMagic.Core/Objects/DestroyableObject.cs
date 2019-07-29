@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Statuses;
@@ -9,6 +10,7 @@ namespace CodeMagic.Core.Objects
     {
         private int health;
         private int maxHealth;
+        private readonly List<IDamageRecord> damageRecords;
 
         public DestroyableObject(DestroyableObjectConfiguration configuration)
         {
@@ -22,6 +24,7 @@ namespace CodeMagic.Core.Objects
             ZIndex = configuration.ZIndex;
 
             Statuses = new ObjectStatusesCollection();
+            damageRecords = new List<IDamageRecord>();
         }
 
         public virtual string Id { get; }
@@ -43,6 +46,8 @@ namespace CodeMagic.Core.Objects
         private int SelfExtinguishChance { get; }
 
         public ZIndex ZIndex { get; }
+
+        public IDamageRecord[] DamageRecords => damageRecords.ToArray();
 
         public int GetSelfExtinguishChance()
         {
@@ -102,6 +107,13 @@ namespace CodeMagic.Core.Objects
             {
                 CheckCatchFire(damage);
             }
+
+            damageRecords.Add(MapObjectsFactory.CreateDamageRecord(damage, element));
+        }
+
+        public void ClearDamageRecords()
+        {
+            damageRecords.Clear();
         }
 
         protected virtual OnFireObjectStatusConfiguration GetFireConfiguration()

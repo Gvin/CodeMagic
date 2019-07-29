@@ -62,6 +62,8 @@
     <Compile Include="Controls\PlayerStatsControl.cs" />
     <Compile Include="Controls\SpellDetailsControl.cs" />
     <Compile Include="Drawing\CellImageHelper.cs" />
+    <Compile Include="Drawing\DamageColorHelper.cs" />
+    <Compile Include="Drawing\DamageRecord.cs" />
     <Compile Include="Drawing\ImageProviding\ImagesFactory.cs" />
     <Compile Include="Drawing\ImagesStorage.cs" />
     <Compile Include="Drawing\ItemDrawingHelper.cs" />

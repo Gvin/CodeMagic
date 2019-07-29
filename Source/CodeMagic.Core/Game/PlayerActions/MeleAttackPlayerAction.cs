@@ -22,7 +22,7 @@ namespace CodeMagic.Core.Game.PlayerActions
                 return true;
 
             var damage = GetDamage(player);
-            target.Health -= damage;
+            target.Damage(damage);
             game.Journal.Write(new DealDamageMessage(player, target, damage));
             return true;
         }

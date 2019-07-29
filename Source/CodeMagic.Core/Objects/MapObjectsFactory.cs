@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Objects.Creatures;
+﻿using CodeMagic.Core.Game;
+using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.IceObjects;
 using CodeMagic.Core.Objects.LiquidObjects;
@@ -23,6 +24,8 @@ namespace CodeMagic.Core.Objects
         TSteam CreateSteam<TSteam>(int volume) where TSteam : class, ISteamObject;
 
         IEnergyWall CreateEnergyWall(int lifeTime);
+
+        IDamageRecord CreateDamageRecord(int value, Element? element);
     }
 
     public static class MapObjectsFactory
@@ -67,6 +70,11 @@ namespace CodeMagic.Core.Objects
         public static IEnergyWall CreateEnergyWall(int lifeTime)
         {
             return creator.CreateEnergyWall(lifeTime);
+        }
+
+        public static IDamageRecord CreateDamageRecord(int value, Element? element)
+        {
+            return creator.CreateDamageRecord(value, element);
         }
     }
 }

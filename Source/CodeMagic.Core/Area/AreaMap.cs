@@ -158,6 +158,11 @@ namespace CodeMagic.Core.Area
             MapLightLevelHelper.UpdateLightLevel(this);
         }
 
+        public void PreUpdate(IGameCore game)
+        {
+            PreUpdateCells();
+        }
+
         public void Update(IGameCore game)
         {
             objectPositionCache.Clear();
@@ -178,6 +183,23 @@ namespace CodeMagic.Core.Area
                 {
                     var cell = row[x];
                     cell.Update(game, new Point(x, y));
+                }
+            }
+        }
+
+        private void PreUpdateCells()
+        {
+            for (var y = 0; y < cells.Length; y++)
+            {
+                var row = cells[y];
+                for (var x = 0; x < row.Length; x++)
+                {
+                    var cell = row[x];
+                    var cellDestroyableObjects = cell.Objects.OfType<IDestroyableObject>();
+                    foreach (var destroyableObject in cellDestroyableObjects)
+                    {
+                        destroyableObject.ClearDamageRecords();
+                    }
                 }
             }
         }

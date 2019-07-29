@@ -22,14 +22,14 @@ namespace CodeMagic.UI.Sad.Common
                 for (int posX = 0; posX < image.Width; posX++)
                 {
                     var pixel = image[posX, posY];
-                    var backColor = pixel.BackgroundColor.HasValue ? ColorHelper.ConvertColor(pixel.BackgroundColor.Value) : defaultBackColor;
+                    var backColor = pixel.BackgroundColor.HasValue ? ColorHelper.ConvertToXna(pixel.BackgroundColor.Value) : defaultBackColor;
 
                     var printX = x + posX;
                     var printY = y + posY;
 
                     if (pixel.Symbol.HasValue)
                     {
-                        var foreColor = pixel.Color.HasValue ? ColorHelper.ConvertColor(pixel.Color.Value) : defaultForeColor;
+                        var foreColor = pixel.Color.HasValue ? ColorHelper.ConvertToXna(pixel.Color.Value) : defaultForeColor;
                         surface.Print(printX, printY,
                             new ColoredGlyph(Glyphs.GetGlyph(pixel.Symbol.Value), foreColor, backColor));
                     }

@@ -19,5 +19,16 @@ namespace CodeMagic.Core.Objects
         ObjectStatusesCollection Statuses { get; }
 
         int GetSelfExtinguishChance();
+
+        IDamageRecord[] DamageRecords { get; }
+
+        void ClearDamageRecords();
+    }
+
+    public interface IDamageRecord
+    {
+        int Value { get; }
+
+        Element? Element { get; }
     }
 }

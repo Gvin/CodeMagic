@@ -2,6 +2,7 @@
 using System.IO;
 using CodeMagic.Configuration.Xml;
 using CodeMagic.Core.Configuration;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.DecorativeObjects;
@@ -97,6 +98,11 @@ namespace CodeMagic.UI.Sad.GameProcess
             public IEnergyWall CreateEnergyWall(int lifeTime)
             {
                 return new EnergyWallImpl(lifeTime);
+            }
+
+            public IDamageRecord CreateDamageRecord(int value, Element? element)
+            {
+                return new DamageRecord(value, element);
             }
         }
     }

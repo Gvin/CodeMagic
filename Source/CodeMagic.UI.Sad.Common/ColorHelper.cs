@@ -8,12 +8,17 @@ namespace CodeMagic.UI.Sad.Common
         public static Color FromRgb(int r, int g, int b)
         {
             var color = System.Drawing.Color.FromArgb(r, g, b);
-            return ConvertColor(color);
+            return ConvertToXna(color);
         }
 
-        public static Color ConvertColor(System.Drawing.Color color)
+        public static Color ConvertToXna(System.Drawing.Color color)
         {
             return ConvertFromHex(ConvertToHex(color));
+        }
+
+        public static System.Drawing.Color ConvertFromXna(Color color)
+        {
+            return System.Drawing.Color.FromArgb(color.R, color.G, color.B);
         }
 
         private static Color ConvertFromHex(string s)

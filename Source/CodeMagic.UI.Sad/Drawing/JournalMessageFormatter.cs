@@ -22,12 +22,6 @@ namespace CodeMagic.UI.Sad.Drawing
         private static readonly Color ErrorColor = Color.Red;
         private static readonly Color SpellLogMessageColor = Color.Gray;
 
-        private static readonly Color PhysicalDamageColor = Color.LightGray;
-        private static readonly Color FireDamageColor = Color.Orange;
-        private static readonly Color FrostDamageColor = Color.LightBlue;
-        private static readonly Color AcidDamageColor = Color.Lime;
-        private static readonly Color ElectricityDamageColor = Color.Yellow;
-
         private static readonly ColoredString ManaString = new ColoredString("Mana", ManaColor, BackgroundColor);
 
         public ColoredString[] FormatMessage(JournalMessageData messageData)
@@ -167,29 +161,9 @@ namespace CodeMagic.UI.Sad.Drawing
 
         private ColoredString GetDamageText(int damage, Element? element)
         {
-            var color = GetDamageElementColor(element);
+            var color = DamageColorHelper.GetDamageTextColor(element);
             var elementText = GetDamageElementText(element);
             return new ColoredString($"{damage} {elementText} damage", color, BackgroundColor);
-        }
-
-        private Color GetDamageElementColor(Element? element)
-        {
-            if (!element.HasValue)
-                return PhysicalDamageColor;
-
-            switch (element.Value)
-            {
-                case Element.Fire:
-                    return FireDamageColor;
-                case Element.Frost:
-                    return FrostDamageColor;
-                case Element.Acid:
-                    return AcidDamageColor;
-                case Element.Electricity:
-                    return ElectricityDamageColor;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(element), $"Unknown damage element: {element}");
-            }
         }
 
         private string GetDamageElementText(Element? element)

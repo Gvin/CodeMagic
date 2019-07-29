@@ -20,6 +20,8 @@ namespace CodeMagic.Core.Area
 
         bool ContainsCell(Point point);
 
+        void PreUpdate(IGameCore game);
+
         void Update(IGameCore game);
 
         IDestroyableObject GetDestroyableObject(string id);

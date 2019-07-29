@@ -35,6 +35,8 @@ namespace CodeMagic.Core.Game
 
         public void PerformPlayerAction(IPlayerAction action)
         {
+            Map.PreUpdate(this);
+
             var endsTurn = action.Perform(Player, PlayerPosition, this, out var newPosition);
             PlayerPosition = newPosition;
             if (endsTurn)
