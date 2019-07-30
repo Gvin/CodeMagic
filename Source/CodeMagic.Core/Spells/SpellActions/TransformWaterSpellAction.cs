@@ -25,10 +25,10 @@ namespace CodeMagic.Core.Spells.SpellActions
 
         public override Point Perform(IGameCore game, Point position)
         {
-            if (!game.Map.ContainsCell(position))
+            var targetCell = game.Map.TryGetCell(position);
+            if (targetCell == null)
                 return position;
 
-            var targetCell = game.Map.GetCell(position);
             var waterVolume = targetCell.Objects.GetVolume<WaterLiquidObject>();
             if (waterVolume <= 0)
                 return position;

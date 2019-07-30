@@ -63,13 +63,14 @@ namespace CodeMagic.UI.Sad.GameProcess
             {
                 var x = RandomHelper.GetRandomValue(0, 30);
                 var y = RandomHelper.GetRandomValue(0, 30);
-                if (!map.ContainsCell(x, y))
-                    continue;
 
                 if (playerPosition.X == x && playerPosition.Y == y)
                     continue;
 
-                var cell = map.GetCell(x, y);
+                var cell = map.TryGetCell(x, y);
+                if (cell == null)
+                    continue;
+
                 if (cell.BlocksMovement)
                     continue;
 

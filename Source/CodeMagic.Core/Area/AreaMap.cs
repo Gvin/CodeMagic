@@ -55,6 +55,19 @@ namespace CodeMagic.Core.Area
             return cells[y][x];
         }
 
+        public AreaMapCell TryGetCell(Point position)
+        {
+            return TryGetCell(position.X, position.Y);
+        }
+
+        public AreaMapCell TryGetCell(int x, int y)
+        {
+            if (!ContainsCell(x, y))
+                return null;
+
+            return GetCell(x, y);
+        }
+
         public void AddObject(int x, int y, IMapObject @object)
         {
             AddObject(new Point(x, y), @object);
@@ -139,14 +152,7 @@ namespace CodeMagic.Core.Area
                 result[y] = new AreaMapCell[visionDiameter];
                 for (var x = 0; x < visionDiameter; x++)
                 {
-                    if (ContainsCell(startIndexX + x, startIndexY + y))
-                    {
-                        result[y][x] = GetCell(startIndexX + x, startIndexY + y);
-                    }
-                    else
-                    {
-                        result[y][x] = null;
-                    }
+                    result[y][x] = TryGetCell(startIndexX + x, startIndexY + y);
                 }
             }
 
@@ -219,6 +225,7 @@ namespace CodeMagic.Core.Area
                     var cell = GetCell(position);
                     cell.PostUpdate(game, position);
                     cell.ResetDynamicObjectsState();
+                    cell.UpdateEnvironment();
                     MergeCellEnvironment(position, cell, mergedCells);
                 }
             }

@@ -19,10 +19,10 @@ namespace CodeMagic.Core.Game.PlayerActions
             }
 
             var targetPoint = Point.GetPointInDirection(playerPosition, player.Direction);
-            if (!game.Map.ContainsCell(targetPoint))
+            var targetCell = game.Map.TryGetCell(targetPoint);
+            if (targetCell == null)
                 return true;
 
-            var targetCell = game.Map.GetCell(targetPoint);
             var possibleTargets = targetCell.Objects.OfType<IDestroyableObject>().ToArray();
 
             var target = GetAttackTarget(possibleTargets);

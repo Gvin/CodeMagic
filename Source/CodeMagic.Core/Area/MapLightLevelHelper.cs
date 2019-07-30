@@ -56,10 +56,10 @@ namespace CodeMagic.Core.Area
             if (lightLevel == LightLevel.Darkness)
                 return;
 
-            if (!map.ContainsCell(position))
+            var cell = map.TryGetCell(position);
+            if (cell == null)
                 return;
 
-            var cell = map.GetCell(position);
             if (cell.LightLevel >= lightLevel)
                 return;
 

@@ -51,10 +51,10 @@ namespace CodeMagic.Core.Objects
             if (!Point.IsAdjustedPoint(startPoint, endPoint))
                 throw new ArgumentException("Movement points are not adjusted.");
 
-            if (!game.Map.ContainsCell(endPoint))
+            var nextCell = game.Map.TryGetCell(endPoint);
+            if (nextCell == null)
                 return new MovementResult(startPoint, false);
 
-            var nextCell = game.Map.GetCell(endPoint);
             if (!canPassFilter(nextCell))
                 return new MovementResult(startPoint, false);
 

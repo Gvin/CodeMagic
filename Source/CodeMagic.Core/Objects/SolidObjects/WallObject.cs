@@ -64,11 +64,8 @@ namespace CodeMagic.Core.Objects.SolidObjects
         private WallObject GetWall(IAreaMap map, Point position, int relativeX, int relativeY)
         {
             var nearPosition = new Point(position.X + relativeX, position.Y + relativeY);
-            if (!map.ContainsCell(nearPosition))
-                return null;
-
-            var cell = map.GetCell(nearPosition);
-            return cell.Objects.OfType<WallObject>().FirstOrDefault();
+            var cell = map.TryGetCell(nearPosition);
+            return cell?.Objects.OfType<WallObject>().FirstOrDefault();
         }
 
         public bool Equals(IMapObject other)

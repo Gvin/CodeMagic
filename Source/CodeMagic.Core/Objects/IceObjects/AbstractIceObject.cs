@@ -127,9 +127,10 @@ namespace CodeMagic.Core.Objects.IceObjects
             for (var remainingSpeed = MaxSlideDistance; remainingSpeed > 0; remainingSpeed--)
             {
                 var nextPosition = Point.GetPointInDirection(newPosition, direction);
-                if (!game.Map.ContainsCell(nextPosition))
+                var nextCell = game.Map.TryGetCell(nextPosition);
+                if (nextCell == null)
                     return 0;
-                var nextCell = game.Map.GetCell(nextPosition);
+                
                 if (nextCell.BlocksMovement)
                 {
                     blockCell = nextCell;

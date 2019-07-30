@@ -58,10 +58,10 @@ namespace CodeMagic.Core.Spells.SpellActions
                 return;
 
             processedCells.Add(position);
-            if (!game.Map.ContainsCell(position))
+            var currentCell = game.Map.TryGetCell(position);
+            if (currentCell == null)
                 return;
 
-            var currentCell = game.Map.GetCell(position);
             if (!GetIfCellConductsElectricity(currentCell)) // No water - no spreading
                 return;
 
