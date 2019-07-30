@@ -11,6 +11,7 @@ namespace CodeMagic.UI.Sad.Drawing.ImageProviding
         private const string ImageStatusOily = "Status_Oily";
         private const string ImageStatusWet = "Status_Wet";
         private const string ImageStatusBlind = "Status_Blind";
+        private const string ImageStatusParalyzed = "Status_Paralyzed";
 
         private readonly IImagesStorage imagesStorage;
 
@@ -38,6 +39,11 @@ namespace CodeMagic.UI.Sad.Drawing.ImageProviding
             if (destroyable.Statuses.Contains(OnFireObjectStatus.StatusType))
             {
                 return ApplyStatusImage(image, ImageStatusOnFire);
+            }
+
+            if (destroyable.Statuses.Contains(ParalyzedObjectStatus.StatusType))
+            {
+                return ApplyStatusImage(image, ImageStatusParalyzed);
             }
 
             if (destroyable.Statuses.Contains(BlindObjectStatus.StatusType))

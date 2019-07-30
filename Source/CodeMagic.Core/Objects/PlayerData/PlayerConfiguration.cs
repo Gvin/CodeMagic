@@ -1,17 +1,12 @@
-﻿namespace CodeMagic.Core.Objects.PlayerData
-{
-    public class PlayerConfiguration : DestroyableObjectConfiguration
-    {
-        public PlayerConfiguration()
-        {
-            ZIndex = ZIndex.Creature;
-        }
+﻿using CodeMagic.Core.Objects.Creatures;
 
+namespace CodeMagic.Core.Objects.PlayerData
+{
+    public class PlayerConfiguration : CreatureObjectConfiguration
+    {
         public int Mana { get; set; }
 
         public int MaxMana { get; set; }
-
-        public int VisibilityRange { get; set; }
 
         public int MaxWeight { get; set; }
 

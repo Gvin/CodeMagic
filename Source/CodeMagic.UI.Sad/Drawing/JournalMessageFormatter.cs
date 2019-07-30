@@ -58,9 +58,19 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetSpellLogMessage(spellLogMessage);
                 case AttackMissMessage attackMissMessage:
                     return GetAttackMissMessage(attackMissMessage);
+                case ParalyzedMessage paralyzedMessage:
+                    return GetParalyzedMessage(paralyzedMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetParalyzedMessage(ParalyzedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{PlayerName} paralyzed and cannot move or attack")
+            };
         }
 
         private ColoredString[] GetAttackMissMessage(AttackMissMessage message)

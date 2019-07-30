@@ -69,11 +69,13 @@
     <Compile Include="Configuration\ITemperatureDamageConfiguration.cs" />
     <Compile Include="Game\IGameCore.cs" />
     <Compile Include="Game\Journaling\Messages\AttackMissMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\ParalyzedMessage.cs" />
     <Compile Include="Injection\Configuration\InjectorConfiguration.cs" />
     <Compile Include="Injection\Configuration\InjectorMappingType.cs" />
     <Compile Include="Injection\IInjectable.cs" />
     <Compile Include="Injection\InjectorImpl.cs" />
     <Compile Include="Injection\Injector.cs" />
+    <Compile Include="Objects\Creatures\CreatureObject.cs" />
     <Compile Include="Objects\IceObjects\AbstractIceObject.cs" />
     <Compile Include="Objects\IceObjects\AcidIceObject.cs" />
     <Compile Include="Objects\IceObjects\WaterIceObject.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />
     <Compile Include="Statuses\OilyObjectStatus.cs" />
     <Compile Include="Statuses\OnFireObjectStatus.cs" />
+    <Compile Include="Statuses\ParalyzedObjectStatus.cs" />
     <Compile Include="Statuses\WetObjectStatus.cs" />
     <Content Include="Resources\Templates\SpellTemplate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -12,6 +12,12 @@ namespace CodeMagic.Core.Game.PlayerActions
         public bool Perform(IPlayer player, Point playerPosition, IGameCore game, out Point newPosition)
         {
             newPosition = playerPosition;
+            if (player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
+            {
+                game.Journal.Write(new ParalyzedMessage());
+                return true;
+            }
+
             var targetPoint = Point.GetPointInDirection(playerPosition, player.Direction);
             if (!game.Map.ContainsCell(targetPoint))
                 return true;

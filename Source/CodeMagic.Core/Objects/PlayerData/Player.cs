@@ -1,13 +1,12 @@
 ﻿using System;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Statuses;
+using CodeMagic.Core.Objects.Creatures;
 
 namespace CodeMagic.Core.Objects.PlayerData
 {
-    public class Player : DestroyableObject, IPlayer, IDynamicObject
+    public class Player : CreatureObject, IPlayer, IDynamicObject
     {
         private int mana;
         private int maxMana;
@@ -18,12 +17,9 @@ namespace CodeMagic.Core.Objects.PlayerData
             MaxMana = configuration.MaxMana;
             Mana = configuration.Mana;
             ManaRegeneration = configuration.ManaRegeneration;
-            MaxVisibilityRange = configuration.VisibilityRange;
 
             Inventory = new Inventory(configuration.MaxWeight);
             Equipment = new Equipment(Inventory);
-
-            Direction = Direction.Up;
         }
 
         public UpdateOrder UpdateOrder => UpdateOrder.Medium;
@@ -35,21 +31,6 @@ namespace CodeMagic.Core.Objects.PlayerData
         public Inventory Inventory { get; }
 
         public override bool BlocksMovement => true;
-
-        public Direction Direction { get; set; }
-
-        public int VisibilityRange
-        {
-            get
-            {
-                if (Statuses.Contains(BlindObjectStatus.StatusType))
-                    return 0;
-
-                return MaxVisibilityRange;
-            }
-        }
-
-        public int MaxVisibilityRange { get; }
 
         public int ManaRegeneration { get; set; }
 

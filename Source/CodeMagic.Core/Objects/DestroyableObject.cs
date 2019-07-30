@@ -117,7 +117,7 @@ namespace CodeMagic.Core.Objects
             damageRecords.Clear();
         }
 
-        protected virtual OnFireObjectStatusConfiguration GetFireConfiguration()
+        private OnFireObjectStatusConfiguration GetFireConfiguration()
         {
             return new OnFireObjectStatusConfiguration
             {

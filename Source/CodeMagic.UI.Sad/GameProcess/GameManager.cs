@@ -6,7 +6,6 @@ using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures.Implementations;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
-using CodeMagic.Core.Statuses;
 using CodeMagic.MapGeneration;
 using CodeMagic.Objects.Implementation.Creatures;
 using CodeMagic.Objects.Implementation.Creatures.NonPlayable;
