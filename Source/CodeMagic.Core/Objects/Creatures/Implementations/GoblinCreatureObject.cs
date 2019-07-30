@@ -18,7 +18,6 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
         {
             MinDamage = configuration.MinDamage;
             MaxDamage = configuration.MaxDamage;
-            ViewDistance = configuration.ViewDistance;
 
             ConfigureLogic();
         }
@@ -40,7 +39,7 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
             if (playerPosition == null)
                 return false;
             return
-                CreaturesVisibilityHelper.GetIfPointIsVisible(map, position, ViewDistance, playerPosition);
+                CreaturesVisibilityHelper.GetIfPointIsVisible(map, position, VisibilityRange, playerPosition);
         }
 
         public override void Attack(IDestroyableObject target, Journal journal)
@@ -53,8 +52,6 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
         private int MinDamage { get; }
 
         private int MaxDamage { get; }
-
-        private int ViewDistance { get; }
 
         public override bool BlocksMovement => true;
 
@@ -79,7 +76,5 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
         public int MinDamage { get; set; }
 
         public int MaxDamage { get; set; }
-
-        public int ViewDistance { get; set; }
     }
 }

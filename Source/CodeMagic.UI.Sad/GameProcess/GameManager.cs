@@ -6,7 +6,7 @@ using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures.Implementations;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
-using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Core.Statuses;
 using CodeMagic.MapGeneration;
 using CodeMagic.Objects.Implementation.Creatures;
 using CodeMagic.Objects.Implementation.Creatures.NonPlayable;
@@ -115,7 +115,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                 MaxHealth = 20,
                 MinDamage = 2,
                 MaxDamage = 5,
-                ViewDistance = 3
+                VisibilityRange = 3
             });
         }
 
@@ -128,7 +128,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                 Mana = 1000,
                 MaxMana = 1000,
                 ManaRegeneration = 10,
-                VisionRange = 4,
+                VisibilityRange = 4,
                 MaxWeight = 100
             });
 

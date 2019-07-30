@@ -53,7 +53,30 @@ namespace CodeMagic.Core.Game
 
         public AreaMapFragment GetVisibleArea()
         {
-            return VisibilityHelper.GetVisibleArea(Player.VisionRange, PlayerPosition, Map);
+            var visibleArea = VisibilityHelper.GetVisibleArea(Player.VisibilityRange, PlayerPosition, Map);
+            if (Player.VisibilityRange == Player.MaxVisibilityRange)
+                return visibleArea;
+
+            var visibilityDifference = Player.MaxVisibilityRange - Player.VisibilityRange;
+            var visibleAreaDiameter = Player.MaxVisibilityRange * 2 + 1;
+            var result = new AreaMapCell[visibleAreaDiameter][];
+
+            for (int y = 0; y < visibleAreaDiameter; y++)
+            {
+                result[y] = new AreaMapCell[visibleAreaDiameter];
+            }
+
+            for (int y = 0; y < visibleArea.Height; y++)
+            {
+                for (int x = 0; x < visibleArea.Width; x++)
+                {
+                    var visibleAreaY = y + visibilityDifference;
+                    var visibleAreaX = x + visibilityDifference;
+                    result[visibleAreaY][visibleAreaX] = visibleArea.GetCell(x, y);
+                }
+            }
+
+            return new AreaMapFragment(result, visibleAreaDiameter, visibleAreaDiameter);
         }
     }
 }

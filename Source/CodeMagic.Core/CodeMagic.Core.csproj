@@ -88,7 +88,6 @@
     <Compile Include="Objects\LiquidObjects\ILiquidObject.cs" />
     <Compile Include="Objects\LiquidObjects\OilLiquidObject.cs" />
     <Compile Include="Objects\LiquidObjects\WaterLiquidObject.cs" />
-    <Compile Include="Objects\MapObjectsFactory.cs" />
     <Compile Include="Objects\MovementHelper.cs" />
     <Compile Include="CreaturesLogic\CreaturesVisibilityHelper.cs" />
     <Compile Include="CreaturesLogic\MovementStrategies\ICreatureMovementStrategy.cs" />
@@ -171,6 +170,7 @@
     <Compile Include="Spells\SpellActions\TransformWaterSpellAction.cs" />
     <Compile Include="Spells\SpellException.cs" />
     <Compile Include="Spells\SpellHelper.cs" />
+    <Compile Include="Statuses\BlindObjectStatus.cs" />
     <Compile Include="Statuses\IBurningRelatedStatus.cs" />
     <Compile Include="Statuses\IObjectStatus.cs" />
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />

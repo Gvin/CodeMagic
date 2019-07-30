@@ -11,7 +11,7 @@
 
         public int MaxMana { get; set; }
 
-        public int VisionRange { get; set; }
+        public int VisibilityRange { get; set; }
 
         public int MaxWeight { get; set; }
 

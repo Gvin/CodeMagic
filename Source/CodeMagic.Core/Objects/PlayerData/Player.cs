@@ -3,6 +3,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects.PlayerData
 {
@@ -10,7 +11,6 @@ namespace CodeMagic.Core.Objects.PlayerData
     {
         private int mana;
         private int maxMana;
-        private int visionRange;
 
         public Player(PlayerConfiguration configuration)
             : base(configuration)
@@ -18,7 +18,7 @@ namespace CodeMagic.Core.Objects.PlayerData
             MaxMana = configuration.MaxMana;
             Mana = configuration.Mana;
             ManaRegeneration = configuration.ManaRegeneration;
-            visionRange = configuration.VisionRange;
+            MaxVisibilityRange = configuration.VisibilityRange;
 
             Inventory = new Inventory(configuration.MaxWeight);
             Equipment = new Equipment();
@@ -36,16 +36,18 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         public Direction Direction { get; set; }
 
-        public int VisionRange
+        public int VisibilityRange
         {
-            get => visionRange;
-            set
+            get
             {
-                if (value < 0)
-                    throw new ArgumentException($"Vision range cannot be less than 0. Got {value}", nameof(value));
-                visionRange = value;
+                if (Statuses.Contains(BlindObjectStatus.StatusType))
+                    return 0;
+
+                return MaxVisibilityRange;
             }
         }
+
+        public int MaxVisibilityRange { get; }
 
         public int ManaRegeneration { get; set; }
 
@@ -84,6 +86,12 @@ namespace CodeMagic.Core.Objects.PlayerData
         public void Update(IGameCore game, Point position)
         {
             Mana += ManaRegeneration;
+
+            var cell = game.Map.GetCell(position);
+            if (cell.LightLevel == LightLevel.Blinding)
+            {
+                Statuses.Add(new BlindObjectStatus());
+            }
         }
 
         public bool Updated { get; set; }

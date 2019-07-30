@@ -12,11 +12,11 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         int ManaRegeneration { get; set; }
 
-        int VisionRange { get; set; }
-
         Inventory Inventory { get; }
 
         Equipment Equipment { get; }
+
+        int MaxVisibilityRange { get; }
 
         event EventHandler Died;
     }
