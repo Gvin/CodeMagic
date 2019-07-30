@@ -2,12 +2,17 @@
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects.IceObjects;
 using CodeMagic.Core.Objects.SteamObjects;
 
 namespace CodeMagic.Core.Objects.LiquidObjects
 {
-    public class AcidLiquidObject : AbstractLiquidObject
+    public interface IAcidLiquidObject : ILiquidObject, IInjectable
+    {
+    }
+
+    public class AcidLiquidObject : AbstractLiquidObject, IAcidLiquidObject
     {
         private const string CustomValueDamageToVolumeMultiplier = "DamageToVolumeMultiplier";
         public const string LiquidType = "AcidLiquid";
@@ -21,18 +26,18 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         protected override IIceObject CreateIce(int volume)
         {
-            return MapObjectsFactory.CreateIceObject<AcidIceObject>(volume);
+            return Injector.Current.Create<IAcidIceObject>(volume);
         }
 
         protected override ISteamObject CreateSteam(int volume)
         {
-            return MapObjectsFactory.CreateSteam<AcidSteamObject>(volume);
+            return Injector.Current.Create<IAcidSteamObject>(volume);
         }
 
         public override ISpreadingObject Separate(int volume)
         {
             Volume -= volume;
-            return MapObjectsFactory.CreateLiquidObject<AcidLiquidObject>(volume);
+            return Injector.Current.Create<IAcidLiquidObject>(volume);
         }
 
         protected override void UpdateLiquid(IGameCore game, Point position)

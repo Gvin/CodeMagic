@@ -1,12 +1,17 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects.IceObjects;
 using CodeMagic.Core.Objects.SteamObjects;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects.LiquidObjects
 {
-    public class WaterLiquidObject : AbstractLiquidObject
+    public interface IWaterLiquidObject : ILiquidObject, IInjectable
+    {
+    }
+
+    public class WaterLiquidObject : AbstractLiquidObject, IWaterLiquidObject
     {
         public const string LiquidType = "WaterLiquid";
         
@@ -19,18 +24,18 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         protected override IIceObject CreateIce(int volume)
         {
-            return MapObjectsFactory.CreateIceObject<WaterIceObject>(volume);
+            return Injector.Current.Create<IWaterIceObject>(volume);
         }
 
         protected override ISteamObject CreateSteam(int volume)
         {
-            return MapObjectsFactory.CreateSteam<WaterSteamObject>(volume);
+            return Injector.Current.Create<IWaterSteamObject>(volume);
         }
 
         public override ISpreadingObject Separate(int volume)
         {
             Volume -= volume;
-            return MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(volume);
+            return Injector.Current.Create<IWaterLiquidObject>(volume);
         }
 
         protected override void UpdateLiquid(IGameCore game, Point position)

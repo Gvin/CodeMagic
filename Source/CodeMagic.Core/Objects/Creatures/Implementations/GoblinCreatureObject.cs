@@ -5,6 +5,7 @@ using CodeMagic.Core.CreaturesLogic.Strategies;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.PlayerData;
 
@@ -64,7 +65,7 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
             if (typeRoll == 2)
                 type = DecorativeObjectConfiguration.ObjectTypeGreenBloodBig;
 
-            return MapObjectsFactory.CreateDecorativeObject(new DecorativeObjectConfiguration
+            return Injector.Current.Create<IDecorativeObject>(new DecorativeObjectConfiguration
             {
                 Name = "Goblin Blood",
                 Type = type,

@@ -1,8 +1,13 @@
-﻿using CodeMagic.Core.Objects.LiquidObjects;
+﻿using CodeMagic.Core.Injection;
+using CodeMagic.Core.Objects.LiquidObjects;
 
 namespace CodeMagic.Core.Objects.SteamObjects
 {
-    public class WaterSteamObject : AbstractSteamObject
+    public interface IWaterSteamObject : ISteamObject, IInjectable
+    {
+    }
+
+    public class WaterSteamObject : AbstractSteamObject, IWaterSteamObject
     {
         private const string SteamType = "WaterSteam";
 
@@ -18,12 +23,12 @@ namespace CodeMagic.Core.Objects.SteamObjects
         public override ISpreadingObject Separate(int volume)
         {
             Volume -= volume;
-            return MapObjectsFactory.CreateSteam<WaterSteamObject>(volume);
+            return Injector.Current.Create<IWaterSteamObject>(volume);
         }
 
         protected override ILiquidObject CreateLiquid(int volume)
         {
-            return MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(volume);
+            return Injector.Current.Create<IWaterLiquidObject>(volume);
         }
     }
 }

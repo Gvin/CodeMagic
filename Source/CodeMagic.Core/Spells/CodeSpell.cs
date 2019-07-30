@@ -1,13 +1,14 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells
 {
-    public interface ICodeSpell : IMapObject, ILightSource
+    public interface ICodeSpell : IMapObject, ILightSource, IInjectable
     {
         int Mana { get; set; }
 

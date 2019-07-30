@@ -1,5 +1,6 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects
@@ -25,7 +26,7 @@ namespace CodeMagic.Core.Objects
         void ClearDamageRecords();
     }
 
-    public interface IDamageRecord
+    public interface IDamageRecord : IInjectable
     {
         int Value { get; }
 

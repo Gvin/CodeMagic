@@ -1,4 +1,4 @@
-﻿using CodeMagic.Core.Objects;
+﻿using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects.Creatures;
 
 namespace CodeMagic.Core.Spells
@@ -13,7 +13,7 @@ namespace CodeMagic.Core.Spells
 
         public ICodeSpell CreateCodeSpell(ICreatureObject caster)
         {
-            return MapObjectsFactory.CreateCodeSpell(caster, Name, Code, ManaCost);
+            return Injector.Current.Create<ICodeSpell>(caster, Name, Code, ManaCost);
         }
     }
 }

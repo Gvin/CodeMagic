@@ -3,6 +3,7 @@ using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.SolidObjects;
@@ -77,7 +78,7 @@ namespace CodeMagic.Core.Area
 
             if (Environment.Temperature >= FireDecorativeObject.SmallFireTemperature && !Objects.OfType<FireDecorativeObject>().Any())
             {
-                Objects.Add(MapObjectsFactory.CreateFire(Environment.Temperature));
+                Objects.Add(Injector.Current.Create<IFireDecorativeObject>(Environment.Temperature));
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Objects;
+using CodeMagic.Core.Injection;
+using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
@@ -23,7 +24,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             if (cell.HasSolidObjects)
                 return position;
 
-            var wall = MapObjectsFactory.CreateEnergyWall(time);
+            var wall = Injector.Current.Create<IEnergyWall>(time);
             cell.Objects.Add(wall);
             return position;
         }

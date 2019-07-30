@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects
@@ -108,7 +109,7 @@ namespace CodeMagic.Core.Objects
                 CheckCatchFire(damage);
             }
 
-            damageRecords.Add(MapObjectsFactory.CreateDamageRecord(damage, element));
+            damageRecords.Add(Injector.Current.Create<IDamageRecord>(damage, element));
         }
 
         public void ClearDamageRecords()

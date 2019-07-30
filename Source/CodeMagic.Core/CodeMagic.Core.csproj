@@ -68,6 +68,11 @@
     <Compile Include="Configuration\ITemperatureConfiguration.cs" />
     <Compile Include="Configuration\ITemperatureDamageConfiguration.cs" />
     <Compile Include="Game\IGameCore.cs" />
+    <Compile Include="Injection\Configuration\InjectorConfiguration.cs" />
+    <Compile Include="Injection\Configuration\InjectorMappingType.cs" />
+    <Compile Include="Injection\IInjectable.cs" />
+    <Compile Include="Injection\InjectorImpl.cs" />
+    <Compile Include="Injection\Injector.cs" />
     <Compile Include="Objects\IceObjects\AbstractIceObject.cs" />
     <Compile Include="Objects\IceObjects\AcidIceObject.cs" />
     <Compile Include="Objects\IceObjects\WaterIceObject.cs" />

@@ -1,5 +1,6 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures.Implementations;
@@ -48,9 +49,9 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             var map = new AreaMap(10, 10, LightLevel.Dim2);
 
-            map.AddObject(1, 3, MapObjectsFactory.CreateLiquidObject<OilLiquidObject>(100));
-            map.AddObject(2, 3, MapObjectsFactory.CreateLiquidObject<OilLiquidObject>(100));
-            map.AddObject(3, 3, MapObjectsFactory.CreateLiquidObject<OilLiquidObject>(100));
+            map.AddObject(1, 3, Injector.Current.Create<IOilLiquidObject>(100));
+            map.AddObject(2, 3, Injector.Current.Create<IOilLiquidObject>(100));
+            map.AddObject(3, 3, Injector.Current.Create<IOilLiquidObject>(100));
             map.GetCell(3, 3).Environment.Temperature = 2400;
 
             return map;

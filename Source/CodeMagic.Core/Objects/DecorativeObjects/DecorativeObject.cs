@@ -1,6 +1,8 @@
-﻿namespace CodeMagic.Core.Objects.DecorativeObjects
+﻿using CodeMagic.Core.Injection;
+
+namespace CodeMagic.Core.Objects.DecorativeObjects
 {
-    public interface IDecorativeObject : IMapObject
+    public interface IDecorativeObject : IMapObject, IInjectable
     {
     }
 

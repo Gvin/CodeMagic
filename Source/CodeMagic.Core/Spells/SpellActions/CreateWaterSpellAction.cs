@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Objects;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Spells.Script;
 
@@ -24,7 +24,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             if (cell.BlocksMovement)
                 return position;
 
-            cell.Objects.AddVolumeObject(MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(volume));
+            cell.Objects.AddVolumeObject(Injector.Current.Create<IWaterLiquidObject>(volume));
             return position;
         }
 

@@ -1,10 +1,11 @@
 ﻿using System;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Injection;
 
 namespace CodeMagic.Core.Objects.DecorativeObjects
 {
-    public interface IFireDecorativeObject : IMapObject
+    public interface IFireDecorativeObject : IMapObject, IInjectable
     {
     }
 

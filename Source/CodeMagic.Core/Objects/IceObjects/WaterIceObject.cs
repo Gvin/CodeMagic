@@ -1,8 +1,13 @@
-﻿using CodeMagic.Core.Objects.LiquidObjects;
+﻿using CodeMagic.Core.Injection;
+using CodeMagic.Core.Objects.LiquidObjects;
 
 namespace CodeMagic.Core.Objects.IceObjects
 {
-    public class WaterIceObject : AbstractIceObject
+    public interface IWaterIceObject : IIceObject, IInjectable
+    {
+    }
+
+    public class WaterIceObject : AbstractIceObject, IWaterIceObject
     {
         private const string ObjectType = "WaterIce";
         public const int WaterIceMinVolumeForEffect = 50;
@@ -20,7 +25,7 @@ namespace CodeMagic.Core.Objects.IceObjects
 
         protected override ILiquidObject CreateLiquid(int volume)
         {
-            return MapObjectsFactory.CreateLiquidObject<WaterLiquidObject>(volume);
+            return Injector.Current.Create<IWaterLiquidObject>(volume);
         }
     }
 }

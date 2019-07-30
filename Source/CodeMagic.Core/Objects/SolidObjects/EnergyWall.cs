@@ -1,8 +1,9 @@
 ﻿using CodeMagic.Core.Game;
+using CodeMagic.Core.Injection;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public interface IEnergyWall : IMapObject
+    public interface IEnergyWall : IMapObject, IInjectable
     {
     }
 

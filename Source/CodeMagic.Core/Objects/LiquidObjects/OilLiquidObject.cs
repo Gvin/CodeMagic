@@ -4,11 +4,16 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects.LiquidObjects
 {
-    public class OilLiquidObject : ILiquidObject, IFireSpreadingObject, IDynamicObject
+    public interface IOilLiquidObject : ILiquidObject, IInjectable
+    {
+    }
+
+    public class OilLiquidObject : IOilLiquidObject, IFireSpreadingObject, IDynamicObject
     {
         private const string CustomValueIgnitionTemperature = "IgnitionTemperature";
         private const string CustomValueBurningTemperature = "BurningTemperature";
@@ -133,7 +138,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
         public ISpreadingObject Separate(int separateVolume)
         {
             Volume -= separateVolume;
-            return MapObjectsFactory.CreateLiquidObject<OilLiquidObject>(separateVolume);
+            return Injector.Current.Create<IOilLiquidObject>(separateVolume);
         }
 
         public bool Updated { get; set; }

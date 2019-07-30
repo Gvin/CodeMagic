@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using CodeMagic.Configuration.Xml;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Injection;
+using CodeMagic.Core.Injection.Configuration;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.DecorativeObjects;
@@ -30,7 +33,12 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             ImagesStorage.Current.Load();
 
-            MapObjectsFactory.Initialize(new MapObjectsCreator());
+            InitializeInjector();
+        }
+
+        private static void InitializeInjector()
+        {
+            Injector.Initialize(new InjectorConfiguration());
         }
 
         private static IConfigurationProvider LoadConfiguration()
@@ -43,66 +51,67 @@ namespace CodeMagic.UI.Sad.GameProcess
             }
         }
 
-        private class MapObjectsCreator : IMapObjectsCreator
+        private class InjectorConfiguration : IInjectorConfiguration
         {
-            public ICodeSpell CreateCodeSpell(ICreatureObject caster, string name, string code, int mana)
+            public Dictionary<Type, InjectorMappingType> GetMapping()
             {
-                return new CodeSpellImpl(caster, name, code, mana);
-            }
-
-            public IFireDecorativeObject CreateFire(int temperature)
-            {
-                return new FireObjectImpl(temperature);
-            }
-
-            public IDecorativeObject CreateDecorativeObject(DecorativeObjectConfiguration configuration)
-            {
-                return new DecorativeObjectImpl(configuration);
-            }
-
-            public TIce CreateIce<TIce>(int volume) where TIce : class, IIceObject
-            {
-                var iceType = typeof(TIce);
-                if (iceType == typeof(WaterIceObject))
-                    return new WaterIceImpl(volume) as TIce;
-                if (iceType == typeof(AcidIceObject))
-                    return new AcidIceImpl(volume) as TIce;
-
-                throw new ApplicationException($"Unknown ice type: {iceType.FullName}");
-            }
-
-            public TLiquid CreateLiquid<TLiquid>(int volume) where TLiquid : class, ILiquidObject
-            {
-                var liquidType = typeof(TLiquid);
-                if (liquidType == typeof(WaterLiquidObject))
-                    return new WaterLiquidImpl(volume) as TLiquid;
-                if (liquidType == typeof(AcidLiquidObject))
-                    return new AcidLiquidImpl(volume) as TLiquid;
-                if (liquidType == typeof(OilLiquidObject))
-                    return new OilLiquidImpl(volume) as TLiquid;
-
-                throw new ApplicationException($"Unknown liquid type: {liquidType.FullName}");
-            }
-
-            public TSteam CreateSteam<TSteam>(int volume) where TSteam : class, ISteamObject
-            {
-                var steamType = typeof(TSteam);
-                if (steamType == typeof(WaterSteamObject))
-                    return new WaterSteamImpl(volume) as TSteam;
-                if (steamType == typeof(AcidSteamObject))
-                    return new AcidSteamImpl(volume) as TSteam;
-
-                throw new ApplicationException($"Unknown steam type: {steamType.FullName}");
-            }
-
-            public IEnergyWall CreateEnergyWall(int lifeTime)
-            {
-                return new EnergyWallImpl(lifeTime);
-            }
-
-            public IDamageRecord CreateDamageRecord(int value, Element? element)
-            {
-                return new DamageRecord(value, element);
+                return new Dictionary<Type, InjectorMappingType>
+                {
+                    // Liquid
+                    {
+                        typeof(IWaterLiquidObject),
+                        new InjectorMappingType {FactoryMethod = args => new WaterLiquidImpl((int) args[0])}
+                    },
+                    {
+                        typeof(IAcidLiquidObject),
+                        new InjectorMappingType {FactoryMethod = args => new AcidLiquidImpl((int) args[0])}
+                    },
+                    {
+                        typeof(IOilLiquidObject),
+                        new InjectorMappingType {FactoryMethod = args => new OilLiquidImpl((int) args[0])}
+                    },
+                    // Ice
+                    {
+                        typeof(IWaterIceObject),
+                        new InjectorMappingType {FactoryMethod = args => new WaterIceImpl((int) args[0])}
+                    },
+                    {
+                        typeof(IAcidIceObject),
+                        new InjectorMappingType {FactoryMethod = args => new AcidIceImpl((int) args[0])}
+                    },
+                    // Steam
+                    {
+                        typeof(IWaterSteamObject),
+                        new InjectorMappingType {FactoryMethod = args => new WaterSteamImpl((int) args[0])}
+                    },
+                    {
+                        typeof(IAcidSteamObject),
+                        new InjectorMappingType {FactoryMethod = args => new AcidSteamImpl((int) args[0])}
+                    },
+                    // Objects
+                    {
+                        typeof(IEnergyWall),
+                        new InjectorMappingType {FactoryMethod = args => new EnergyWallImpl((int) args[0])}
+                    },
+                    {
+                        typeof(IDecorativeObject),
+                        new InjectorMappingType
+                            {FactoryMethod = args => new DecorativeObjectImpl((DecorativeObjectConfiguration) args[0])}
+                    },
+                    {
+                        typeof(IFireDecorativeObject),
+                        new InjectorMappingType {FactoryMethod = args => new FireObjectImpl((int) args[0])}
+                    },
+                    {
+                        typeof(ICodeSpell),
+                        new InjectorMappingType {FactoryMethod = args => new CodeSpellImpl((ICreatureObject) args[0], (string) args[1], (string) args[2], (int) args[3])}
+                    },
+                    // Misc
+                    {
+                        typeof(IDamageRecord),
+                        new InjectorMappingType {FactoryMethod = args => new DamageRecord((int) args[0], (Element?) args[1])}
+                    }
+                };
             }
         }
     }
