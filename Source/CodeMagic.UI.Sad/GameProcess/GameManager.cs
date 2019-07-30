@@ -86,10 +86,11 @@ namespace CodeMagic.UI.Sad.GameProcess
             {
                 Name = "Wooden Sword",
                 Key = "wooden_sword",
-                DamageMin = 2,
-                DamageMax = 5,
+                MinDamage = 2,
+                MaxDamage = 5,
                 Rareness = ItemRareness.Trash,
-                Weight = 10
+                Weight = 10,
+                HitChance = 70
             });
         }
 
@@ -99,10 +100,11 @@ namespace CodeMagic.UI.Sad.GameProcess
             {
                 Name = "Elves Blade",
                 Key = "elves_blade",
-                DamageMin = 10,
-                DamageMax = 25,
+                MinDamage = 10,
+                MaxDamage = 25,
                 Rareness = ItemRareness.Rare,
-                Weight = 7
+                Weight = 7,
+                HitChance = 90
             });
         }
 
@@ -115,6 +117,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                 MaxHealth = 20,
                 MinDamage = 2,
                 MaxDamage = 5,
+                HitChance = 60,
                 VisibilityRange = 3
             });
         }
@@ -142,7 +145,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Equipment.SpellBook = spellBook;
 
             var weapon = CreateWoodenSword();
-            player.Equipment.Weapon = weapon;
+            player.Equipment.EquipWeapon(weapon);
 
             return player;
         }

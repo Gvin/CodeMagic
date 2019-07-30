@@ -8,6 +8,7 @@ namespace CodeMagic.Core.Statuses
     {
         public const string StatusType = "blind";
         private const int MaxLifeTime = 4;
+        public const double HitChanceMultiplier = 0.1d;
 
         private int lifeTime;
 

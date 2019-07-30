@@ -24,12 +24,6 @@ namespace CodeMagic.Core.Objects.Creatures
         public void Update(IGameCore game, Point position)
         {
             Logic.Update(this, game, position);
-
-            var cell = game.Map.GetCell(position);
-            if (cell.LightLevel == LightLevel.Blinding)
-            {
-                Statuses.Add(new BlindObjectStatus());
-            }
         }
 
         public virtual void Attack(IDestroyableObject target, Journal journal)
@@ -37,6 +31,8 @@ namespace CodeMagic.Core.Objects.Creatures
         }
 
         public bool Updated { get; set; }
+
+        public UpdateOrder UpdateOrder => UpdateOrder.Medium;
 
         protected Logic Logic { get; }
 

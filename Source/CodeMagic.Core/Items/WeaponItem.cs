@@ -5,19 +5,24 @@
         public WeaponItem(WeaponItemConfiguration configuration) 
             : base(configuration)
         {
-            DamageMin = configuration.DamageMin;
-            DamageMax = configuration.DamageMax;
+            MinDamage = configuration.MinDamage;
+            MaxDamage = configuration.MaxDamage;
+            HitChance = configuration.HitChance;
         }
 
-        public int DamageMin { get; }
+        public int MinDamage { get; }
 
-        public int DamageMax { get; }
+        public int MaxDamage { get; }
+
+        public int HitChance { get; }
     }
 
     public class WeaponItemConfiguration : ItemConfiguration
     {
-        public int DamageMin { get; set; }
+        public int MinDamage { get; set; }
 
-        public int DamageMax { get; set; }
+        public int MaxDamage { get; set; }
+
+        public int HitChance { get; set; }
     }
 }

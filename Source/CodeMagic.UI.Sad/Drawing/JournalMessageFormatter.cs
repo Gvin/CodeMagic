@@ -56,9 +56,20 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetSpellErrorMessage(spellErrorMessage);
                 case SpellLogMessage spellLogMessage:
                     return GetSpellLogMessage(spellLogMessage);
+                case AttackMissMessage attackMissMessage:
+                    return GetAttackMissMessage(attackMissMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetAttackMissMessage(AttackMissMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{GetMapObjectName(message.Source)} missed {GetMapObjectName(message.Target)}", 
+                    TextColor, BackgroundColor)
+            };
         }
 
         private ColoredString[] GetSpellLogMessage(SpellLogMessage message)

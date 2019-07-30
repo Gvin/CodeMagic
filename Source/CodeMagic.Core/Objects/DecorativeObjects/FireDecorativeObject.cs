@@ -46,6 +46,8 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         public bool IsVisible => true;
         public bool BlocksVisibility => false;
 
+        public UpdateOrder UpdateOrder => UpdateOrder.Early;
+
         public void Update(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);

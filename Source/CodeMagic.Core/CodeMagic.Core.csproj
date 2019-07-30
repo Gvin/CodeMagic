@@ -68,6 +68,7 @@
     <Compile Include="Configuration\ITemperatureConfiguration.cs" />
     <Compile Include="Configuration\ITemperatureDamageConfiguration.cs" />
     <Compile Include="Game\IGameCore.cs" />
+    <Compile Include="Game\Journaling\Messages\AttackMissMessage.cs" />
     <Compile Include="Injection\Configuration\InjectorConfiguration.cs" />
     <Compile Include="Injection\Configuration\InjectorMappingType.cs" />
     <Compile Include="Injection\IInjectable.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Objects\SteamObjects\AbstractSteamObject.cs" />
     <Compile Include="Objects\SteamObjects\AcidSteamObject.cs" />
     <Compile Include="Objects\SteamObjects\WaterSteamObject.cs" />
+    <Compile Include="Objects\UpdateOrder.cs" />
     <Compile Include="Objects\ZIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spells\CodeSpell.cs" />

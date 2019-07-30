@@ -26,6 +26,8 @@ namespace CodeMagic.Core.Objects.SteamObjects
             this.volume = volume;
         }
 
+        public UpdateOrder UpdateOrder => UpdateOrder.Medium;
+
         public abstract string Name { get; }
 
         public bool BlocksMovement => false;

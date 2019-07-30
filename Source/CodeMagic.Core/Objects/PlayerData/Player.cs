@@ -21,10 +21,12 @@ namespace CodeMagic.Core.Objects.PlayerData
             MaxVisibilityRange = configuration.VisibilityRange;
 
             Inventory = new Inventory(configuration.MaxWeight);
-            Equipment = new Equipment();
+            Equipment = new Equipment(Inventory);
 
             Direction = Direction.Up;
         }
+
+        public UpdateOrder UpdateOrder => UpdateOrder.Medium;
 
         public event EventHandler Died;
 
@@ -86,12 +88,6 @@ namespace CodeMagic.Core.Objects.PlayerData
         public void Update(IGameCore game, Point position)
         {
             Mana += ManaRegeneration;
-
-            var cell = game.Map.GetCell(position);
-            if (cell.LightLevel == LightLevel.Blinding)
-            {
-                Statuses.Add(new BlindObjectStatus());
-            }
         }
 
         public bool Updated { get; set; }

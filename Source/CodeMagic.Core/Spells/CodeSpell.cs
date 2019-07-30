@@ -17,9 +17,10 @@ namespace CodeMagic.Core.Spells
 
     public class CodeSpell : ICodeSpell, IDynamicObject
     {
-        private const LightLevel DefaultLightLevel = LightLevel.Dusk1;
+        public const LightLevel DefaultLightLevel = LightLevel.Dusk1;
         private readonly SpellCodeExecutor codeExecutor;
         private int? remainingLightTime;
+        private int lifeTime;
 
         public CodeSpell(ICreatureObject caster, string name, string code, int mana)
         {
@@ -27,9 +28,12 @@ namespace CodeMagic.Core.Spells
             Mana = mana;
             LightPower = DefaultLightLevel;
             remainingLightTime = null;
+            lifeTime = 0;
 
             codeExecutor = new SpellCodeExecutor(caster, code);
         }
+
+        public UpdateOrder UpdateOrder => UpdateOrder.Early;
 
         public bool Updated { get; set; }
 
@@ -52,7 +56,8 @@ namespace CodeMagic.Core.Spells
             {
                 ProcessLightEmitting();
 
-                var action = codeExecutor.Execute(game, position, this);
+                var action = codeExecutor.Execute(game, position, this, lifeTime);
+                lifeTime++;
 
                 if (action.ManaCost <= Mana)
                 {

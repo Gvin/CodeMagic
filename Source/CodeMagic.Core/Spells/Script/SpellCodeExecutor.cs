@@ -23,7 +23,6 @@ namespace CodeMagic.Core.Spells.Script
 
         private readonly string code;
         private readonly Engine jsEngine;
-        private int lifeTime;
 
         private readonly Dictionary<string, object> globalData;
 
@@ -36,8 +35,6 @@ namespace CodeMagic.Core.Spells.Script
 
             jsEngine = new Engine();
             ConfigureEngine();
-
-            lifeTime = 0;
 
             globalData = new Dictionary<string, object>();
         }
@@ -63,9 +60,9 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("emitLight", new Func<int, int, JsValue>(GetEmitLightSpellAction));
         }
 
-        public ISpellAction Execute(IGameCore game, Point position, ICodeSpell spell)
+        public ISpellAction Execute(IGameCore game, Point position, ICodeSpell spell, int lifeTime)
         {
-            var result = ExecuteCode(game, position, spell);
+            var result = ExecuteCode(game, position, spell, lifeTime);
             if (result == null)
             {
                 return new EmptySpellAction();
@@ -77,12 +74,10 @@ namespace CodeMagic.Core.Spells.Script
                 throw new SpellException("Spell returned no action.");
             }
 
-            lifeTime++;
-
             return action;
         }
 
-        private dynamic ExecuteCode(IGameCore game, Point position, ICodeSpell spell)
+        private dynamic ExecuteCode(IGameCore game, Point position, ICodeSpell spell, int lifeTime)
         {
             ConfigureDynamicEngineFunctions(game, position, spell);
 

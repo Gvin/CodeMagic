@@ -167,14 +167,18 @@ namespace CodeMagic.Core.Area
         {
             objectPositionCache.Clear();
 
-            UpdateCells(game);
-            PostUpdateCells();
+            UpdateCells(game, UpdateOrder.Early);
 
             MapLightLevelHelper.ResetLightLevel(this);
             MapLightLevelHelper.UpdateLightLevel(this);
+
+            UpdateCells(game, UpdateOrder.Medium);
+            UpdateCells(game, UpdateOrder.Late);
+
+            PostUpdateCells(game);
         }
 
-        private void UpdateCells(IGameCore game)
+        private void UpdateCells(IGameCore game, UpdateOrder order)
         {
             for (var y = 0; y < cells.Length; y++)
             {
@@ -182,7 +186,7 @@ namespace CodeMagic.Core.Area
                 for (var x = 0; x < row.Length; x++)
                 {
                     var cell = row[x];
-                    cell.Update(game, new Point(x, y));
+                    cell.Update(game, new Point(x, y), order);
                 }
             }
         }
@@ -204,17 +208,18 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void PostUpdateCells()
+        private void PostUpdateCells(IGameCore game)
         {
             var mergedCells = new List<CellsPair>();
             for (var y = 0; y < cells.Length; y++)
             {
-                var row = cells[y];
-                for (var x = 0; x < row.Length; x++)
+                for (var x = 0; x < cells[y].Length; x++)
                 {
-                    var cell = row[x];
+                    var position = new Point(x, y);
+                    var cell = GetCell(position);
+                    cell.PostUpdate(game, position);
                     cell.ResetDynamicObjectsState();
-                    MergeCellEnvironment(new Point(x, y), cell, mergedCells);
+                    MergeCellEnvironment(position, cell, mergedCells);
                 }
             }
         }

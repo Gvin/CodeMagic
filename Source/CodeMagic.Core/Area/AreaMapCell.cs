@@ -5,8 +5,10 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Core.Statuses;
 using Environment = CodeMagic.Core.Area.EnvironmentData.Environment;
 
 namespace CodeMagic.Core.Area
@@ -69,11 +71,18 @@ namespace CodeMagic.Core.Area
             LightLevel = defaultLightLevel;
         }
 
-        public void Update(IGameCore game, Point position)
+        public void Update(IGameCore game, Point position, UpdateOrder updateOrder)
         {
-            ProcessDynamicObjects(game, position);
-            ProcessDestroyableObjects(game, position);
+            ProcessDynamicObjects(game, position, updateOrder);
+        }
 
+        public void PostUpdate(IGameCore game, Point position)
+        {
+            ProcessDestroyableObjects(game, position);
+        }
+
+        public void UpdateEnvironment()
+        {
             Environment.Normalize();
 
             if (Environment.Temperature >= FireDecorativeObject.SmallFireTemperature && !Objects.OfType<FireDecorativeObject>().Any())
@@ -90,9 +99,10 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void ProcessDynamicObjects(IGameCore game, Point position)
+        private void ProcessDynamicObjects(IGameCore game, Point position, UpdateOrder updateOrder)
         {
-            var dynamicObjects = Objects.OfType<IDynamicObject>().Where(obj => !obj.Updated).ToArray();
+            var dynamicObjects = Objects.OfType<IDynamicObject>()
+                .Where(obj => !obj.Updated && obj.UpdateOrder == updateOrder).ToArray();
             foreach (var dynamicObject in dynamicObjects)
             {
                 dynamicObject.Update(game, position);
@@ -120,6 +130,10 @@ namespace CodeMagic.Core.Area
             {
                 destroyableObject.Statuses.Update(destroyableObject, this, journal);
                 Environment.ApplyEnvironment(destroyableObject, journal);
+                if (destroyableObject is ICreatureObject && LightLevel == LightLevel.Blinding)
+                {
+                    destroyableObject.Statuses.Add(new BlindObjectStatus());
+                }
             }
         }
 

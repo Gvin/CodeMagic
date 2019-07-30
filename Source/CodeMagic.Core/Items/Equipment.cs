@@ -5,11 +5,23 @@ namespace CodeMagic.Core.Items
 {
     public class Equipment
     {
-        private const int HandMinDamage = 0;
-        private const int HandMaxDamage = 2;
-
-        public Equipment()
+        private static readonly WeaponItem Fists = new WeaponItem(new WeaponItemConfiguration
         {
+            MaxDamage = 2,
+            MinDamage = 0,
+            HitChance = 50,
+            Name = "Fists",
+            Rareness = ItemRareness.Trash,
+            Weight = 0
+        });
+
+        private WeaponItem weapon;
+        private readonly Inventory inventory;
+
+        public Equipment(Inventory inventory)
+        {
+            this.inventory = inventory;
+
             Armor = new Dictionary<ArmorType, ArmorItem>
             {
                 {ArmorType.Arms, null},
@@ -21,13 +33,22 @@ namespace CodeMagic.Core.Items
 
         public Dictionary<ArmorType, ArmorItem> Armor { get; }
 
-        public WeaponItem Weapon { get; set; }
+        public WeaponItem Weapon
+        {
+            get => weapon ?? Fists;
+        }
+
+        public void EquipWeapon(WeaponItem newWeapon)
+        {
+            if (weapon != null)
+            {
+                inventory.AddItem(weapon);
+            }
+
+            weapon = newWeapon;
+        }
 
         public SpellBook SpellBook { get; set; }
-
-        public int MinDamage => Weapon?.DamageMin ?? HandMinDamage;
-
-        public int MaxDamage => Weapon?.DamageMax ?? HandMaxDamage;
 
         public int Protection
         {

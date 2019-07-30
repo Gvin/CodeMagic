@@ -42,6 +42,8 @@ namespace CodeMagic.Core.Objects.LiquidObjects
             this.volume = volume;
         }
 
+        public UpdateOrder UpdateOrder => UpdateOrder.Medium;
+
         public ZIndex ZIndex => ZIndex.FloorCover;
 
         public string Name => "Oil";

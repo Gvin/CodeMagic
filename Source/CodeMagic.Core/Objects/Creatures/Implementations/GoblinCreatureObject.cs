@@ -13,11 +13,16 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
 {
     public class GoblinCreatureObject : NonPlayableCreatureObject
     {
+        private readonly int hitChance;
+        private readonly int minDamage;
+        private readonly int maxDamage;
+
         public GoblinCreatureObject(GoblinCreatureObjectConfiguration configuration) 
             : base(configuration)
         {
-            MinDamage = configuration.MinDamage;
-            MaxDamage = configuration.MaxDamage;
+            minDamage = configuration.MinDamage;
+            maxDamage = configuration.MaxDamage;
+            hitChance = configuration.HitChance;
 
             ConfigureLogic();
         }
@@ -44,14 +49,16 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
 
         public override void Attack(IDestroyableObject target, Journal journal)
         {
-            var damage = RandomHelper.GetRandomValue(MinDamage, MaxDamage);
+            if (!RandomHelper.CheckChance(hitChance))
+            {
+                journal.Write(new AttackMissMessage(this, target));
+                return;
+            }
+
+            var damage = RandomHelper.GetRandomValue(minDamage, maxDamage);
             target.Damage(damage);
             journal.Write(new DealDamageMessage(this, target, damage));
         }
-
-        private int MinDamage { get; }
-
-        private int MaxDamage { get; }
 
         public override bool BlocksMovement => true;
 
@@ -76,5 +83,7 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
         public int MinDamage { get; set; }
 
         public int MaxDamage { get; set; }
+
+        public int HitChance { get; set; }
     }
 }

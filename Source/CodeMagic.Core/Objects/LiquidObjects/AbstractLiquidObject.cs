@@ -21,6 +21,8 @@ namespace CodeMagic.Core.Objects.LiquidObjects
             this.volume = volume;
         }
 
+        public UpdateOrder UpdateOrder => UpdateOrder.Medium;
+
         public abstract string Name { get; }
 
         public string Type { get; }

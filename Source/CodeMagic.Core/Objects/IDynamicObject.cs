@@ -7,5 +7,7 @@ namespace CodeMagic.Core.Objects
         void Update(IGameCore game, Point position);
 
         bool Updated { get; set; }
+
+        UpdateOrder UpdateOrder { get; }
     }
 }

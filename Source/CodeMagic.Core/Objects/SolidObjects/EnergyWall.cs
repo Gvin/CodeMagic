@@ -1,5 +1,7 @@
-﻿using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Area;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
+using CodeMagic.Core.Spells;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
@@ -7,7 +9,7 @@ namespace CodeMagic.Core.Objects.SolidObjects
     {
     }
 
-    public class EnergyWall : IEnergyWall, IDynamicObject
+    public class EnergyWall : IEnergyWall, IDynamicObject, ILightSource
     {
         public EnergyWall(EnergyWallConfiguration configuration)
         {
@@ -24,6 +26,12 @@ namespace CodeMagic.Core.Objects.SolidObjects
             var cell = game.Map.GetCell(position);
             cell.Objects.Remove(this);
         }
+
+        public UpdateOrder UpdateOrder => UpdateOrder.Early;
+
+        public bool IsLightOn => true;
+
+        public LightLevel LightPower => CodeSpell.DefaultLightLevel;
 
         public int EnergyLeft { get; private set; }
 
