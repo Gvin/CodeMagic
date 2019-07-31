@@ -36,11 +36,21 @@ namespace CodeMagic.UI.Sad.Drawing
 
         private static Color ApplyLightLevel(Color color, LightLevel lightLevel)
         {
+            const float lightColorPower = 0.1f;
+            var lightColor = Color.Orange;
+
             var lightLevelPercent = GetLightLevelPercent(lightLevel);
             var red = Math.Min((int)(color.R * lightLevelPercent), 255);
             var green = Math.Min((int)(color.G * lightLevelPercent), 255);
             var blue = Math.Min((int)(color.B * lightLevelPercent), 255);
-            return Color.FromArgb(red, green, blue);
+
+            var darkenedColor = Color.FromArgb(red, green, blue);
+
+            var lightColorPercent = lightLevelPercent * lightColorPower;
+            var red2 = (int) Math.Min((darkenedColor.R + lightColor.R * lightColorPercent) / 2, 255);
+            var green2 = (int)Math.Min((darkenedColor.G + lightColor.G * lightColorPercent) / 2, 255);
+            var blue2 = (int)Math.Min((darkenedColor.B + lightColor.B * lightColorPercent) / 2, 255);
+            return Color.FromArgb(red2, green2, blue2);
         }
 
         private static float GetLightLevelPercent(LightLevel light)
