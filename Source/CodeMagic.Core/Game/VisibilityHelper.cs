@@ -13,7 +13,8 @@ namespace CodeMagic.Core.Game
             ApplyVisibilityBlockers(areaOfVisibility, visibilityBlockers);
 
             var visibilityDiameter = visibilityRange * 2 + 1;
-            return new AreaMapFragment(areaOfVisibility, visibilityDiameter, visibilityDiameter);
+            var visibleAreaPosition = new Point(viewerPosition.X - visibilityRange, viewerPosition.Y - visibilityRange);
+            return new AreaMapFragment(areaOfVisibility, visibilityDiameter, visibilityDiameter, visibleAreaPosition);
         }
 
         private static void ApplyVisibilityBlockers(AreaMapCell[][] visibleArea, Point[] visibilityBlockers)

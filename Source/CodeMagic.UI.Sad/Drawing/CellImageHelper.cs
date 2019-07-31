@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Common;
@@ -22,8 +23,12 @@ namespace CodeMagic.UI.Sad.Drawing
             LightLevelManager = new LightLevelManager();
         }
 
-        public static SymbolsImage GetCellImage(AreaMapCell cell)
+        public static SymbolsImage GetCellImage(IAreaMap map, Point position, bool isVisible)
         {
+            if (!isVisible)
+                return EmptyImage;
+
+            var cell = map.TryGetCell(position);
             if (cell == null)
                 return EmptyImage;
 
@@ -40,8 +45,36 @@ namespace CodeMagic.UI.Sad.Drawing
                 image = SymbolsImage.Combine(image, objectImage);
             }
 
-            image = LightLevelManager.ApplyLightLevel(image, cell.LightLevel);
+            image = LightLevelManager.ApplyLightLevel(image, GetLightLevelMap(map, position));
             return ApplyDamageMarks(cell, image);
+        }
+
+        private static LightLevel[][] GetLightLevelMap(IAreaMap map, Point position)
+        {
+            var result = new LightLevel[3][];
+
+            result[0] = new []
+            {
+                map.TryGetCell(position.X - 1, position.Y - 1)?.LightLevel ?? LightLevel.Darkness,
+                map.TryGetCell(position.X, position.Y - 1)?.LightLevel ?? LightLevel.Darkness,
+                map.TryGetCell(position.X + 1, position.Y - 1)?.LightLevel ?? LightLevel.Darkness
+            };
+
+            result[1] = new[]
+            {
+                map.TryGetCell(position.X - 1, position.Y)?.LightLevel ?? LightLevel.Darkness,
+                map.TryGetCell(position.X, position.Y)?.LightLevel ?? LightLevel.Darkness,
+                map.TryGetCell(position.X + 1, position.Y)?.LightLevel ?? LightLevel.Darkness
+            };
+
+            result[2] = new[]
+            {
+                map.TryGetCell(position.X - 1, position.Y + 1)?.LightLevel ?? LightLevel.Darkness,
+                map.TryGetCell(position.X, position.Y + 1)?.LightLevel ?? LightLevel.Darkness,
+                map.TryGetCell(position.X + 1, position.Y + 1)?.LightLevel ?? LightLevel.Darkness
+            };
+
+            return result;
         }
 
         private static SymbolsImage ApplyDamageMarks(AreaMapCell cell, SymbolsImage image)

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Controls;
 using SadConsole.Themes;
+using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.UI.Sad.Controls
 {
@@ -39,22 +40,22 @@ namespace CodeMagic.UI.Sad.Controls
             {
                 for (int x = 0; x < visibleArea.Width; x++)
                 {
-                    var cell = visibleArea.GetCell(x, y);
-                    DrawCell(x, y, cell);
+                    var realPosition = new Point(visibleArea.Position.X + x, visibleArea.Position.Y + y);
+                    DrawCell(x, y, realPosition, visibleArea.GetCell(x, y) != null);
                 }
             }
         }
 
-        private void DrawCell(int mapX, int mapY, AreaMapCell cell)
+        private void DrawCell(int mapX, int mapY, Point realPosition, bool isVisible)
         {
-            var image = CellImageHelper.GetCellImage(cell);
+            var image = CellImageHelper.GetCellImage(game.Map, realPosition, isVisible);
 
             var realX = mapX * Program.MapCellImageSize;
             var realY = mapY * Program.MapCellImageSize;
 
             Surface.DrawImage(realX, realY, image, DefaultForegroundColor, DefaultBackgroundColor);
 
-            DrawDebugData(realX, realY, cell);
+            DrawDebugData(realX, realY, game.Map.TryGetCell(realPosition));
         }
 
         #region Debug Data Drawing

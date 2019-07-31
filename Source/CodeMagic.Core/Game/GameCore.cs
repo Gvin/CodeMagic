@@ -76,7 +76,9 @@ namespace CodeMagic.Core.Game
                 }
             }
 
-            return new AreaMapFragment(result, visibleAreaDiameter, visibleAreaDiameter);
+            var visibleAreaPosition = new Point(PlayerPosition.X - Player.MaxVisibilityRange,
+                PlayerPosition.Y - Player.MaxVisibilityRange);
+            return new AreaMapFragment(result, visibleAreaDiameter, visibleAreaDiameter, visibleAreaPosition);
         }
     }
 }
