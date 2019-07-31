@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +53,7 @@
     <Compile Include="Area\IAreaMap.cs" />
     <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Area\AreaMapFragment.cs" />
+    <Compile Include="Area\CellLightData.cs" />
     <Compile Include="Area\LightLevel.cs" />
     <Compile Include="Area\MapLightLevelHelper.cs" />
     <Compile Include="Area\MapObjectsCollection.cs" />

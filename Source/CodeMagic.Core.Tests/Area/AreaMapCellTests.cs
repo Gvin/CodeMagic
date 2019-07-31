@@ -12,7 +12,7 @@ namespace CodeMagic.Core.Tests.Area
         [TestCase(false, ExpectedResult = false)]
         public bool ContainsBigObjectsTest(bool isBigObject)
         {
-            var cell = new AreaMapCell(LightLevel.Darkness);
+            var cell = new AreaMapCell();
             var objectMock = new Mock<IMapObject>();
             objectMock.SetupGet(obj => obj.BlocksMovement).Returns(isBigObject);
             cell.Objects.Add(objectMock.Object);

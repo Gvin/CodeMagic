@@ -22,7 +22,7 @@ namespace CodeMagic.MapGeneration
             this.wallType = wallType;
         }
 
-        public IAreaMap Generate(int width, int height, LightLevel defaultLightLevel, out Point playerPosition)
+        public IAreaMap Generate(int width, int height, out Point playerPosition)
         {
             var labyrinthWidth = (width - 1) / 2;
             var labyrinthHeight = (height - 1) / 2;
@@ -31,7 +31,7 @@ namespace CodeMagic.MapGeneration
             playerPosition.X = playerPosition.X * 2 + 1;
             playerPosition.Y = playerPosition.Y * 2 + 1;
 
-            var map = ConvertToAreaMap(roomsMap, width, height, defaultLightLevel);
+            var map = ConvertToAreaMap(roomsMap, width, height);
             ApplyTorches(map, TorchesCount);
             return map;
         }
@@ -70,9 +70,9 @@ namespace CodeMagic.MapGeneration
             return null;
         }
 
-        private IAreaMap ConvertToAreaMap(Room[][] roomsMap, int width, int height, LightLevel defaultLightLevel)
+        private IAreaMap ConvertToAreaMap(Room[][] roomsMap, int width, int height)
         {
-            var map = new AreaMap(width, height, defaultLightLevel);
+            var map = new AreaMap(width, height);
 
             var currentMapY = 1;
             foreach (var row in roomsMap)

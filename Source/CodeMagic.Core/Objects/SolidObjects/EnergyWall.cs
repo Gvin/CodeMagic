@@ -1,7 +1,9 @@
-﻿using CodeMagic.Core.Area;
+﻿using System.Drawing;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Spells;
+using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
@@ -32,6 +34,8 @@ namespace CodeMagic.Core.Objects.SolidObjects
         public bool IsLightOn => true;
 
         public LightLevel LightPower => CodeSpell.DefaultLightLevel;
+
+        public Color LightColor => Color.Red;
 
         public int EnergyLeft { get; private set; }
 

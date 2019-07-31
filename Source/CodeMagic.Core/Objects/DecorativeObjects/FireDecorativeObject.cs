@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Drawing;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
+using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Core.Objects.DecorativeObjects
 {
@@ -88,5 +90,7 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
                 }
             }
         }
+
+        public Color LightColor => Color.DarkOrange;
     }
 }

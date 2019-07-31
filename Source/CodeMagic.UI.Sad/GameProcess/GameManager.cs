@@ -6,6 +6,7 @@ using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures.Implementations;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
 using CodeMagic.Objects.Implementation.Creatures;
 using CodeMagic.Objects.Implementation.Creatures.NonPlayable;
@@ -18,7 +19,6 @@ namespace CodeMagic.UI.Sad.GameProcess
         private const int GoblinsCount = 20;
         private const int MapSize = 31; // uneven value only!
         private const bool UseFakeMap = false;
-        private const LightLevel DefaultLightLevel = LightLevel.Darkness;
 
         public GameCore StartGame()
         {
@@ -37,7 +37,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             if (fake)
                 return CreateFakeMap(out playerPosition);
 
-            var realMap = new MapGenerator(FloorTypes.Stone).Generate(MapSize, MapSize, DefaultLightLevel, out playerPosition);
+            var realMap = new MapGenerator(FloorTypes.Stone).Generate(MapSize, MapSize, out playerPosition);
             PlaceTestGoblins(GoblinsCount, realMap, playerPosition);
             return realMap;
         }
@@ -46,12 +46,13 @@ namespace CodeMagic.UI.Sad.GameProcess
         {
             playerPosition = new Point(0, 0);
 
-            var map = new AreaMap(10, 10, LightLevel.Dim2);
+            var map = new AreaMap(10, 10);
 
-            map.AddObject(1, 3, Injector.Current.Create<IOilLiquidObject>(100));
-            map.AddObject(2, 3, Injector.Current.Create<IOilLiquidObject>(100));
-            map.AddObject(3, 3, Injector.Current.Create<IOilLiquidObject>(100));
-            map.GetCell(3, 3).Environment.Temperature = 2400;
+            map.AddObject(3, 3, new TorchWallImpl(new TorchWallObjectConfiguration
+            {
+                LightPower = LightLevel.Medium,
+                Type = WallObjectConfiguration.ObjectTypeWallStone
+            }));
 
             return map;
         }

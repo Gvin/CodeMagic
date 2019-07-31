@@ -15,7 +15,7 @@ namespace CodeMagic.Core.Area
                 {
                     var position = new Point(x, y);
                     var cell = map.GetCell(position);
-                    cell.ResetLightLevel();
+                    cell.LightLevel.Clear();
                 }
             }
         }
@@ -35,43 +35,39 @@ namespace CodeMagic.Core.Area
 
         private static void UpdateCellLightLevel(IAreaMap map, AreaMapCell cell, Point position)
         {
-            var lightSources = cell.Objects.OfType<ILightSource>().Where(source => source.IsLightOn).ToArray();
-            if (lightSources.Length == 0)
+            var lights = cell.Objects.OfType<ILightSource>().Where(source => source.IsLightOn)
+                .Select(source => new Light(source)).ToArray();
+            if (lights.Length == 0)
                 return;
 
-            var maxLightLevel = lightSources.Max(source => source.LightPower);
-            if (cell.LightLevel < maxLightLevel)
-            {
-                cell.LightLevel = maxLightLevel;
-            }
+            cell.LightLevel.AddLights(lights);
 
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Up), maxLightLevel);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Down), maxLightLevel);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Left), maxLightLevel);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Right), maxLightLevel);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Up), lights);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Down), lights);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Left), lights);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Right), lights);
         }
 
-        private static void SpreadLightLevel(IAreaMap map, Point position, LightLevel lightLevel)
+        private static void SpreadLightLevel(IAreaMap map, Point position, Light[] lights)
         {
-            if (lightLevel == LightLevel.Darkness)
+            if (lights.Length == 0 || lights.All(light => light.Power == LightLevel.Darkness))
                 return;
 
             var cell = map.TryGetCell(position);
             if (cell == null)
                 return;
 
-            if (cell.LightLevel >= lightLevel)
-                return;
-
-            cell.LightLevel = lightLevel;
+            cell.LightLevel.AddLights(lights);
 
             if (cell.BlocksEnvironment)
                 return;
 
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Up), cell.LightLevel - 1);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Down), cell.LightLevel - 1);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Left), cell.LightLevel - 1);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Right), cell.LightLevel - 1);
+            var lightsToSpread = lights.Select(light => light.Clone(light.Power - 1)).Where(light => light.Power > LightLevel.Darkness).ToArray();
+
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Up), lightsToSpread);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Down), lightsToSpread);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Left), lightsToSpread);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Right), lightsToSpread);
         }
     }
 }

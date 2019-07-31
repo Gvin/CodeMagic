@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Area;
+﻿using System.Drawing;
+using CodeMagic.Core.Area;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
@@ -13,6 +14,8 @@ namespace CodeMagic.Core.Objects.SolidObjects
         public bool IsLightOn => true;
 
         public LightLevel LightPower { get; }
+
+        public Color LightColor => Color.FromArgb(255, 204, 102);
     }
 
     public class TorchWallObjectConfiguration : WallObjectConfiguration
