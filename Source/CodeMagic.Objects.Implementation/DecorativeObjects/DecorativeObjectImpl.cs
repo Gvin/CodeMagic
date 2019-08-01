@@ -14,6 +14,8 @@ namespace CodeMagic.Objects.Implementation.DecorativeObjects
         private const string ImageGreenBloodMedium = "Decoratives_GreenBlood_Medium";
         private const string ImageGreenBloodBig = "Decoratives_GreenBlood_Big";
 
+        private const string ImageStonesSmall = "Decoratives_Stones_Small";
+
         public DecorativeObjectImpl(DecorativeObjectConfiguration configuration) 
             : base(configuration)
         {
@@ -23,19 +25,22 @@ namespace CodeMagic.Objects.Implementation.DecorativeObjects
         {
             switch (Type)
             {
-                case DecorativeObjectConfiguration.ObjectTypeBloodSmall:
+                case DecorativeObjectConfiguration.ObjectType.BloodSmall:
                     return storage.GetImage(ImageBloodSmall);
-                case DecorativeObjectConfiguration.ObjectTypeBloodMedium:
+                case DecorativeObjectConfiguration.ObjectType.BloodMedium:
                     return storage.GetImage(ImageBloodMedium);
-                case DecorativeObjectConfiguration.ObjectTypeBloodBig:
+                case DecorativeObjectConfiguration.ObjectType.BloodBig:
                     return storage.GetImage(ImageBloodBig);
 
-                case DecorativeObjectConfiguration.ObjectTypeGreenBloodSmall:
+                case DecorativeObjectConfiguration.ObjectType.GreenBloodSmall:
                     return storage.GetImage(ImageGreenBloodSmall);
-                case DecorativeObjectConfiguration.ObjectTypeGreenBloodMedium:
+                case DecorativeObjectConfiguration.ObjectType.GreenBloodMedium:
                     return storage.GetImage(ImageGreenBloodMedium);
-                case DecorativeObjectConfiguration.ObjectTypeGreenBloodBig:
+                case DecorativeObjectConfiguration.ObjectType.GreenBloodBig:
                     return storage.GetImage(ImageGreenBloodBig);
+
+                case DecorativeObjectConfiguration.ObjectType.StonesSmall:
+                    return storage.GetImage(ImageStonesSmall);
                 default:
                     throw new ApplicationException($"Unknown decorative object type: {Type}");
             }

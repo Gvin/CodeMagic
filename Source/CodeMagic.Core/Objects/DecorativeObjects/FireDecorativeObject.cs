@@ -39,6 +39,8 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
             return ObjectTypeSmallFire;
         }
 
+        public ObjectSize Size => ObjectSize.Huge;
+
         public string Type { get; private set; }
 
         public string Name => "Fire";

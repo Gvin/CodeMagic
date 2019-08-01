@@ -31,6 +31,8 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public UpdateOrder UpdateOrder => UpdateOrder.Early;
 
+        public ObjectSize Size => ObjectSize.Huge;
+
         public bool IsLightOn => true;
 
         public LightLevel LightPower => CodeSpell.DefaultLightLevel;

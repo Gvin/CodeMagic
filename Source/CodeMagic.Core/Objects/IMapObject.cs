@@ -17,5 +17,7 @@
         ZIndex ZIndex { get; }
 
         bool Equals(IMapObject other);
+
+        ObjectSize Size { get; }
     }
 }

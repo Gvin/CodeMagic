@@ -28,6 +28,8 @@ namespace CodeMagic.Core.Objects.IceObjects
             this.volume = volume;
         }
 
+        public ObjectSize Size => ObjectSize.Huge;
+
         public UpdateOrder UpdateOrder => UpdateOrder.Medium;
 
         public abstract string Type { get; }

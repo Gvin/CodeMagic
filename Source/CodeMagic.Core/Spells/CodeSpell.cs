@@ -35,6 +35,8 @@ namespace CodeMagic.Core.Spells
             codeExecutor = new SpellCodeExecutor(caster, code);
         }
 
+        public ObjectSize Size => ObjectSize.Huge;
+
         public UpdateOrder UpdateOrder => UpdateOrder.Early;
 
         public bool Updated { get; set; }

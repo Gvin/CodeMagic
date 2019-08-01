@@ -16,6 +16,8 @@ namespace CodeMagic.Core.Objects.SolidObjects
             connectedTiles = new List<Point>();
         }
 
+        public ObjectSize Size => ObjectSize.Huge;
+
         public string Name { get; }
 
         public string Type { get; }

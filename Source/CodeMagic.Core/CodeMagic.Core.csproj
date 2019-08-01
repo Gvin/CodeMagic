@@ -141,14 +141,13 @@
     <Compile Include="Objects\DecorativeObjects\DecorativeObject.cs" />
     <Compile Include="Objects\DestroyableObject.cs" />
     <Compile Include="Objects\IDestroyableObject.cs" />
+    <Compile Include="Objects\ObjectSize.cs" />
     <Compile Include="Objects\PlayerData\IPlayer.cs" />
     <Compile Include="Objects\PlayerData\Player.cs" />
     <Compile Include="Objects\PlayerData\PlayerConfiguration.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWall.cs" />
     <Compile Include="Objects\SolidObjects\TorchWallObject.cs" />
     <Compile Include="Objects\SolidObjects\WallObject.cs" />
-    <Compile Include="Objects\StationaryObjects\StationaryObject.cs" />
-    <Compile Include="Objects\StationaryObjects\StationaryObjectConfiguration.cs" />
     <Compile Include="Objects\SteamObjects\AbstractSteamObject.cs" />
     <Compile Include="Objects\SteamObjects\AcidSteamObject.cs" />
     <Compile Include="Objects\SteamObjects\WaterSteamObject.cs" />

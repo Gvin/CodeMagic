@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
@@ -12,7 +13,6 @@ namespace CodeMagic.Core.Spells.SpellActions
     public class PushSpellAction : SpellActionBase
     {
         public const string ActionType = "push";
-        private const int PushDamageMultiplier = 1;
 
         private readonly Direction direction;
         private readonly int force;
@@ -24,7 +24,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             force = (int) actionData.force;
         }
 
-        public override  Point Perform(IGameCore game, Point position)
+        public override Point Perform(IGameCore game, Point position)
         {
             var target = GetTarget(game.Map, position);
             if (target == null)
@@ -35,26 +35,39 @@ namespace CodeMagic.Core.Spells.SpellActions
                 return position;
 
             var collideCellPosition = Point.GetPointInDirection(currentPosition, direction);
-            var collideTarget = GetTarget(game.Map, collideCellPosition);
 
-            var damage = remainingForce * PushDamageMultiplier;
+            var damage = GetCollideDamage(target, remainingForce);
 
-            target.Damage(game.Journal, damage);
-            game.Journal.Write(new EnvironmentDamageMessage(target, damage));
-
-            if (collideTarget != null)
+            if (target is IDestroyableObject destroyableTarget)
             {
-                collideTarget.Damage(game.Journal, damage);
-                game.Journal.Write(new EnvironmentDamageMessage(collideTarget, damage));
+                destroyableTarget.Damage(game.Journal, damage);
+                game.Journal.Write(new EnvironmentDamageMessage(target, damage));
             }
+
+            ApplyCollideDamageToCell(game, collideCellPosition, damage);
 
             return position;
         }
 
-        private int TryPush(IDestroyableObject target, IGameCore game, Point position, out Point currentPosition)
+        private void ApplyCollideDamageToCell(IGameCore game, Point position, int damage)
+        {
+            var cell = game.Map.TryGetCell(position);
+            if (cell == null)
+                return;
+
+            var collidedObjects = cell.Objects.OfType<IDestroyableObject>();
+            foreach (var collidedObject in collidedObjects)
+            {
+                collidedObject.Damage(game.Journal, damage);
+                game.Journal.Write(new EnvironmentDamageMessage(collidedObject, damage));
+            }
+        }
+
+        private int TryPush(IMapObject target, IGameCore game, Point position, out Point currentPosition)
         {
             currentPosition = position;
-            for (var remainingForce = force; remainingForce > 0; remainingForce--)
+            var initialForce = GetInitialForce(target);
+            for (var remainingForce = initialForce; remainingForce > 0; remainingForce--)
             {
                 var nextPosition = Point.GetPointInDirection(currentPosition, direction);
                 var movementResult = MovementHelper.MoveObject(target, game, currentPosition, nextPosition);
@@ -69,16 +82,57 @@ namespace CodeMagic.Core.Spells.SpellActions
             return 0;
         }
 
-        private IDestroyableObject GetTarget(IAreaMap map, Point position)
+        private int GetCollideDamage(IMapObject target, int remainingForce)
+        {
+            return (int) Math.Round(remainingForce * GetDamageMultiplier(target.Size));
+        }
+
+        private float GetDamageMultiplier(ObjectSize size)
+        {
+            switch (size)
+            {
+                case ObjectSize.Small:
+                    return 2;
+                case ObjectSize.Medium:
+                    return 4;
+                case ObjectSize.Big:
+                    return 8;
+                case ObjectSize.Huge:
+                    throw new InvalidOperationException("It is impossible to throw Huge objects.");
+                default:
+                    throw new ArgumentOutOfRangeException($"Unknown object size: {size}");
+            }
+        }
+
+        private int GetInitialForce(IMapObject target)
+        {
+            return (int) Math.Round(force * GetForceMultiplier(target.Size));
+        }
+
+        private float GetForceMultiplier(ObjectSize size)
+        {
+            switch (size)
+            {
+                case ObjectSize.Small:
+                    return 2;
+                case ObjectSize.Medium:
+                    return 1;
+                case ObjectSize.Big:
+                    return 0.5f;
+                case ObjectSize.Huge:
+                    throw new InvalidOperationException("It is impossible to throw Huge objects.");
+                default:
+                    throw new ArgumentOutOfRangeException($"Unknown object size: {size}");
+            }
+        }
+
+        private IMapObject GetTarget(IAreaMap map, Point position)
         {
             var cell = map.GetCell(position);
-            var destroyable = cell.Objects.OfType<IDestroyableObject>().ToArray();
-
-            var bigObject = destroyable.FirstOrDefault(obj => obj.BlocksMovement);
-            if (bigObject != null)
-                return bigObject;
-
-            return destroyable.LastOrDefault();
+            return cell.Objects
+                .Where(obj => obj.Size < ObjectSize.Huge)
+                .OrderByDescending(obj => obj.Size)
+                .FirstOrDefault();
         }
 
         private Direction ParseDirection(string directionString)

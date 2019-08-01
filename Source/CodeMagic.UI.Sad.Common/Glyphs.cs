@@ -35,6 +35,7 @@ namespace CodeMagic.UI.Sad.Common
                 {'▼', GlyphTriangleArrowDown},
                 {'◄', GlyphTriangleArrowLeft},
                 {'☼', GlyphSun},
+                {'•', GlyphBullet},
 
                 {'ĭ', GlyphTorchVertical}
             };

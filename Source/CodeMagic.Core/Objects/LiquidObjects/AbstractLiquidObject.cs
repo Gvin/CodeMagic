@@ -39,6 +39,8 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public ZIndex ZIndex => ZIndex.FloorCover;
 
+        public ObjectSize Size => ObjectSize.Huge;
+
         public void Update(IGameCore game, Point position)
         {
             var cell = game.Map.GetCell(position);

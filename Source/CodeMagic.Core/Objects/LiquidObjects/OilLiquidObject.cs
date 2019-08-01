@@ -47,6 +47,8 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public ZIndex ZIndex => ZIndex.FloorCover;
 
+        public ObjectSize Size => ObjectSize.Huge;
+
         public string Name => "Oil";
 
         public string Type => LiquidType;

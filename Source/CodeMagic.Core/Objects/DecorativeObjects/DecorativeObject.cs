@@ -12,13 +12,16 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         {
             Name = configuration.Name;
             Type = configuration.Type;
-            BlocksMovement = configuration.IsBigObject;
+            BlocksMovement = configuration.BlocksMovement;
             ZIndex = configuration.ZIndex;
+            Size = configuration.Size;
         }
+
+        public ObjectSize Size { get; }
 
         public string Name { get; }
 
-        public string Type { get; }
+        public DecorativeObjectConfiguration.ObjectType Type { get; }
 
         public bool BlocksMovement { get; }
 
@@ -40,27 +43,34 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
 
     public class DecorativeObjectConfiguration
     {
-        public const string ObjectTypeBloodSmall = "BloodSmall";
-        public const string ObjectTypeBloodMedium = "BloodMedium";
-        public const string ObjectTypeBloodBig = "BloodBig";
-
-        public const string ObjectTypeGreenBloodSmall = "GreenBloodSmall";
-        public const string ObjectTypeGreenBloodMedium = "GreenBloodMedium";
-        public const string ObjectTypeGreenBloodBig = "GreenBloodBig";
-
-        public const string ObjectTypeWoodPieces = "WoodPieces";
-
         public DecorativeObjectConfiguration()
         {
             ZIndex = ZIndex.GroundDecoration;
+            Size = ObjectSize.Huge;
+            BlocksMovement = false;
         }
 
         public string Name { get; set; }
 
-        public string Type { get; set; }
+        public ObjectType Type { get; set; }
 
-        public bool IsBigObject { get; set; }
+        public bool BlocksMovement { get; set; }
 
         public ZIndex ZIndex { get; set; }
+
+        public ObjectSize Size { get; set; }
+
+        public enum ObjectType
+        {
+            BloodSmall,
+            BloodMedium,
+            BloodBig,
+
+            GreenBloodSmall,
+            GreenBloodMedium,
+            GreenBloodBig,
+            
+            StonesSmall
+        }
     }
 }

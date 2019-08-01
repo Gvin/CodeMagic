@@ -65,10 +65,10 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
 
         protected override IMapObject CreateDeathRemains()
         {
-            var type = DecorativeObjectConfiguration.ObjectTypeGreenBloodMedium;
+            var type = DecorativeObjectConfiguration.ObjectType.GreenBloodMedium;
             var typeRoll = RandomHelper.GetRandomValue(1, 2);
             if (typeRoll == 2)
-                type = DecorativeObjectConfiguration.ObjectTypeGreenBloodBig;
+                type = DecorativeObjectConfiguration.ObjectType.GreenBloodBig;
 
             return Injector.Current.Create<IDecorativeObject>(new DecorativeObjectConfiguration
             {

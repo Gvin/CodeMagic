@@ -24,6 +24,7 @@ namespace CodeMagic.Core.Objects
             SelfExtinguishChance = configuration.SelfExtinguishChance;
             CatchFireChanceMultiplier = configuration.CatchFireChanceMultiplier;
             ZIndex = configuration.ZIndex;
+            Size = configuration.Size;
 
             Statuses = new ObjectStatusesCollection(this);
             damageRecords = new List<IDamageRecord>();
@@ -48,6 +49,8 @@ namespace CodeMagic.Core.Objects
         private int SelfExtinguishChance { get; }
 
         public ZIndex ZIndex { get; }
+
+        public ObjectSize Size { get; }
 
         public IDamageRecord[] DamageRecords => damageRecords.ToArray();
 
@@ -177,6 +180,7 @@ namespace CodeMagic.Core.Objects
             CatchFireChanceMultiplier = DefaultCatchFireChanceMultiplier;
             SelfExtinguishChance = DefaultSelfExtinguishChance;
             ZIndex = ZIndex.BigDecoration;
+            Size = ObjectSize.Medium;
         }
 
         public string Name { get; set; }
@@ -190,5 +194,7 @@ namespace CodeMagic.Core.Objects
         public int SelfExtinguishChance { get; set; }
 
         public ZIndex ZIndex { get; set; }
+
+        public ObjectSize Size { get; set; }
     }
 }

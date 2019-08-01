@@ -6,6 +6,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.Creatures.Implementations;
+using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
@@ -56,6 +57,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                 LightPower = LightLevel.Bright1,
                 Type = WallObjectConfiguration.ObjectTypeWallStone
             }));
+
 
             return map;
         }
