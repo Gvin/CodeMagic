@@ -15,7 +15,7 @@ namespace CodeMagic.MapGeneration
     public class MapGenerator
     {
         private const int StonesCount = 100;
-        private const int TorchChance = 100;
+        private const int TorchChance = 10;
 
         private readonly FloorTypes floorType;
         private readonly string wallType;
