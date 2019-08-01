@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.UI.Sad.Common;
@@ -72,7 +73,7 @@ namespace CodeMagic.UI.Sad.Controls
             if (cell == null)
                 return;
 
-            var value = (int)cell.LightLevel;
+            var value = (int)cell.LightLevel.GetMaxLightLevel();
             Surface.Print(x, y, new ColoredString(value.ToString(), Color.Yellow, Color.Black));
         }
 

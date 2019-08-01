@@ -49,7 +49,8 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
 
         public override void Attack(IDestroyableObject target, Journal journal)
         {
-            if (!RandomHelper.CheckChance(hitChance))
+            var currentHitChance = CalculateHitChance(hitChance);
+            if (!RandomHelper.CheckChance(currentHitChance))
             {
                 journal.Write(new AttackMissMessage(this, target));
                 return;

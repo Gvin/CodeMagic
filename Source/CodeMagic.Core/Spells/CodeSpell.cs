@@ -1,10 +1,12 @@
-﻿using CodeMagic.Core.Area;
+﻿using System.Drawing;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Spells.Script;
+using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Core.Spells
 {
@@ -48,6 +50,8 @@ namespace CodeMagic.Core.Spells
         }
 
         public LightLevel LightPower { get; private set; }
+
+        public Color LightColor => Color.Red;
 
         public void Update(IGameCore game, Point position)
         {

@@ -15,16 +15,13 @@ namespace CodeMagic.Core.Area
 {
     public class AreaMapCell
     {
-        private readonly LightLevel defaultLightLevel;
-
-        public AreaMapCell(LightLevel defaultLightLevel)
+        public AreaMapCell()
         {
-            this.defaultLightLevel = defaultLightLevel;
-
             Objects = new MapObjectsCollection();
             FloorType = FloorTypes.Stone;
             Environment = new Environment();
-            LightLevel = defaultLightLevel;
+
+            LightLevel = new CellLightData();
         }
 
         public Environment Environment { get; }
@@ -33,7 +30,7 @@ namespace CodeMagic.Core.Area
 
         public FloorTypes FloorType { get; set; }
 
-        public LightLevel LightLevel { get; set; }
+        public CellLightData LightLevel { get; set; }
 
         public bool BlocksMovement
         {
@@ -64,11 +61,6 @@ namespace CodeMagic.Core.Area
             if (bigDestroyable != null)
                 return bigDestroyable;
             return destroyable.LastOrDefault();
-        }
-
-        public void ResetLightLevel()
-        {
-            LightLevel = defaultLightLevel;
         }
 
         public void Update(IGameCore game, Point position, UpdateOrder updateOrder)
@@ -130,7 +122,7 @@ namespace CodeMagic.Core.Area
             {
                 destroyableObject.Statuses.Update(destroyableObject, this, journal);
                 Environment.ApplyEnvironment(destroyableObject, journal);
-                if (destroyableObject is ICreatureObject && LightLevel == LightLevel.Blinding)
+                if (destroyableObject is ICreatureObject && LightLevel.IsBlinding)
                 {
                     destroyableObject.Statuses.Add(new BlindObjectStatus());
                 }

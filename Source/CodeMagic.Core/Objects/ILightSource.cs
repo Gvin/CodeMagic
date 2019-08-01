@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Area;
+﻿using System.Drawing;
+using CodeMagic.Core.Area;
 
 namespace CodeMagic.Core.Objects
 {
@@ -7,5 +8,7 @@ namespace CodeMagic.Core.Objects
         bool IsLightOn { get; }
 
         LightLevel LightPower { get; }
+
+        Color LightColor { get; }
     }
 }

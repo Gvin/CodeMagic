@@ -13,7 +13,7 @@ namespace CodeMagic.Core.Area
         private readonly AreaMapCell[][] cells;
         private readonly Dictionary<string, IDestroyableObject> destroyableObjects;
 
-        public AreaMap(int width, int height, LightLevel defaultLightLevel)
+        public AreaMap(int width, int height)
         {
             objectPositionCache = new Dictionary<Type, Point>();
 
@@ -28,7 +28,7 @@ namespace CodeMagic.Core.Area
                 cells[y] = new AreaMapCell[width];
                 for (var x = 0; x < width; x++)
                 {
-                    cells[y][x] = new AreaMapCell(defaultLightLevel);
+                    cells[y][x] = new AreaMapCell();
                 }
             }
         }

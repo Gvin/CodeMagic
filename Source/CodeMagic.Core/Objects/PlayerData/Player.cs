@@ -66,6 +66,8 @@ namespace CodeMagic.Core.Objects.PlayerData
             }
         }
 
+        public int HitChance => CalculateHitChance(Equipment.Weapon.HitChance);
+
         public void Update(IGameCore game, Point position)
         {
             Mana += ManaRegeneration;
