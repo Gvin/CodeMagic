@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.PlayerData;
@@ -29,8 +28,7 @@ namespace CodeMagic.Core.Game.PlayerActions
             if (target == null)
                 return true;
 
-            var hitChance = GetHitChance(player);
-            if (!RandomHelper.CheckChance(hitChance))
+            if (!RandomHelper.CheckChance(player.HitChance))
             {
                 game.Journal.Write(new AttackMissMessage(player, target));
                 return true;
@@ -40,16 +38,6 @@ namespace CodeMagic.Core.Game.PlayerActions
             target.Damage(damage);
             game.Journal.Write(new DealDamageMessage(player, target, damage));
             return true;
-        }
-
-        private int GetHitChance(IPlayer player)
-        {
-            if (player.Statuses.Contains(BlindObjectStatus.StatusType))
-            {
-                return (int) Math.Round(player.Equipment.Weapon.HitChance * BlindObjectStatus.HitChanceMultiplier);
-            }
-
-            return player.Equipment.Weapon.HitChance;
         }
 
         private int GetDamage(IPlayer player)

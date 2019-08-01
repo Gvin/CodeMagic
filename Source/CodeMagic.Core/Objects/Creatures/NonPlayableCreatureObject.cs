@@ -30,5 +30,9 @@ namespace CodeMagic.Core.Objects.Creatures
 
     public class NonPlayableCreatureObjectConfiguration : CreatureObjectConfiguration
     {
+        public NonPlayableCreatureObjectConfiguration()
+        {
+            BlindVisibilityRange = 1;
+        }
     }
 }

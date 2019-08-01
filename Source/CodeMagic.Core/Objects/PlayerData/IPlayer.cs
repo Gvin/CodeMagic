@@ -10,6 +10,8 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         int MaxMana { get; set; }
 
+        int HitChance { get; }
+
         int ManaRegeneration { get; set; }
 
         Inventory Inventory { get; }
