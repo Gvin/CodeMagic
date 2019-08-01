@@ -4,6 +4,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Statuses;
 
@@ -67,16 +68,16 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
             if (Volume >= MinVolumeForEffect)
             { 
-                ApplyOilyStatus(cell);
+                ApplyOilyStatus(cell, game.Journal);
             }
         }
 
-        private void ApplyOilyStatus(AreaMapCell cell)
+        private void ApplyOilyStatus(AreaMapCell cell, Journal journal)
         {
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)
             {
-                destroyable.Statuses.Add(new OilyObjectStatus(Configuration));
+                destroyable.Statuses.Add(new OilyObjectStatus(Configuration), journal);
             }
         }
 

@@ -48,16 +48,16 @@ namespace CodeMagic.Core.Area.EnvironmentData
             var temperatureDamage = temperature.GetTemperatureDamage(out var temperDamageElement);
             var pressureDamage = pressure.GetPressureDamage();
 
-            if (temperatureDamage > 0)
+            if (temperatureDamage > 0 && temperDamageElement.HasValue)
             {
-                journal.Write(new EnvironmentDamageMessage(destroyable, temperatureDamage, temperDamageElement));
-                destroyable.Damage(temperatureDamage, temperDamageElement);
+                journal.Write(new EnvironmentDamageMessage(destroyable, temperatureDamage, temperDamageElement.Value));
+                destroyable.Damage(journal, temperatureDamage, temperDamageElement.Value);
             }
 
             if (pressureDamage > 0)
             {
                 journal.Write(new EnvironmentDamageMessage(destroyable, pressureDamage));
-                destroyable.Damage(pressureDamage);
+                destroyable.Damage(journal, pressureDamage);
             }
         }
 

@@ -5,6 +5,7 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Core.Statuses;
 using Microsoft.Xna.Framework;
 using SadConsole;
 
@@ -60,9 +61,19 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetAttackMissMessage(attackMissMessage);
                 case ParalyzedMessage paralyzedMessage:
                     return GetParalyzedMessage(paralyzedMessage);
+                case StatusAddedMessage statusAddedMessage:
+                    return GetStatusAddedMessage(statusAddedMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetStatusAddedMessage(StatusAddedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{GetMapObjectName(message.Target)} got [{GetStatusName(message.StatusType)}] status", TextColor, BackgroundColor) 
+            };
         }
 
         private ColoredString[] GetParalyzedMessage(ParalyzedMessage message)
@@ -139,7 +150,7 @@ namespace CodeMagic.UI.Sad.Drawing
             return new[]
             {
                 new ColoredString($"{GetMapObjectName(message.Source)} dealt ", TextColor, BackgroundColor),
-                GetDamageText(message.Damage, null),
+                GetDamageText(message.Damage, Element.Physical),
                 new ColoredString($" to {GetMapObjectName(message.Target)}", TextColor, BackgroundColor)
             };
         }
@@ -180,20 +191,19 @@ namespace CodeMagic.UI.Sad.Drawing
             return mapObject.Name;
         }
 
-        private ColoredString GetDamageText(int damage, Element? element)
+        private ColoredString GetDamageText(int damage, Element element)
         {
             var color = DamageColorHelper.GetDamageTextColor(element);
             var elementText = GetDamageElementText(element);
             return new ColoredString($"{damage} {elementText} damage", color, BackgroundColor);
         }
 
-        private string GetDamageElementText(Element? element)
+        private string GetDamageElementText(Element element)
         {
-            if (!element.HasValue)
-                return "Physical";
-
-            switch (element.Value)
+            switch (element)
             {
+                case Element.Physical:
+                    return "Physical";
                 case Element.Fire:
                     return "Fire";
                 case Element.Frost:
@@ -204,6 +214,27 @@ namespace CodeMagic.UI.Sad.Drawing
                     return "Electric";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(element), $"Unknown damage element: {element}");
+            }
+        }
+
+        private string GetStatusName(string statusType)
+        {
+            switch (statusType)
+            {
+                case OnFireObjectStatus.StatusType:
+                    return "On Fire";
+                case BlindObjectStatus.StatusType:
+                    return "Blind";
+                case ParalyzedObjectStatus.StatusType:
+                    return "Paralyzed";
+                case FrozenObjectStatus.StatusType:
+                    return "Frozen";
+                case WetObjectStatus.StatusType:
+                    return "Wet";
+                case OilyObjectStatus.StatusType:
+                    return "Oily";
+                default:
+                    throw new ApplicationException($"Unknown object status type: {statusType}");
             }
         }
     }

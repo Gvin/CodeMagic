@@ -1,12 +1,15 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.Creatures.Implementations;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Core.Statuses;
 using CodeMagic.MapGeneration;
 using CodeMagic.Objects.Implementation.Creatures;
 using CodeMagic.Objects.Implementation.Creatures.NonPlayable;
@@ -50,7 +53,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             map.AddObject(3, 3, new TorchWallImpl(new TorchWallObjectConfiguration
             {
-                LightPower = LightLevel.Medium,
+                LightPower = LightLevel.Bright1,
                 Type = WallObjectConfiguration.ObjectTypeWallStone
             }));
 
@@ -109,7 +112,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             });
         }
 
-        private IMapObject CreateGoblin()
+        private NonPlayableCreatureObject CreateGoblin()
         {
             return new GoblinImpl(new GoblinCreatureObjectConfiguration
             {

@@ -72,6 +72,7 @@
     <Compile Include="Game\IGameCore.cs" />
     <Compile Include="Game\Journaling\Messages\AttackMissMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ParalyzedMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\StatusAddedMessage.cs" />
     <Compile Include="Injection\Configuration\InjectorConfiguration.cs" />
     <Compile Include="Injection\Configuration\InjectorMappingType.cs" />
     <Compile Include="Injection\IInjectable.cs" />
@@ -177,12 +178,14 @@
     <Compile Include="Spells\SpellException.cs" />
     <Compile Include="Spells\SpellHelper.cs" />
     <Compile Include="Statuses\BlindObjectStatus.cs" />
+    <Compile Include="Statuses\FrozenObjectStatus.cs" />
     <Compile Include="Statuses\IBurningRelatedStatus.cs" />
     <Compile Include="Statuses\IObjectStatus.cs" />
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />
     <Compile Include="Statuses\OilyObjectStatus.cs" />
     <Compile Include="Statuses\OnFireObjectStatus.cs" />
     <Compile Include="Statuses\ParalyzedObjectStatus.cs" />
+    <Compile Include="Statuses\PassiveObjectStatusBase.cs" />
     <Compile Include="Statuses\WetObjectStatus.cs" />
     <Content Include="Resources\Templates\SpellTemplate.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

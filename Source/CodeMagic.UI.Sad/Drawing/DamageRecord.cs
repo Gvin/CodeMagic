@@ -6,7 +6,7 @@ namespace CodeMagic.UI.Sad.Drawing
 {
     public class DamageRecord : IDamageRecord
     {
-        public DamageRecord(int value, Element? element)
+        public DamageRecord(int value, Element element)
         {
             Value = value;
             Element = element;
@@ -17,6 +17,6 @@ namespace CodeMagic.UI.Sad.Drawing
 
         public int Value { get; }
 
-        public Element? Element { get; }
+        public Element Element { get; }
     }
 }

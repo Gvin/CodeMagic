@@ -39,12 +39,12 @@ namespace CodeMagic.Core.Spells.SpellActions
 
             var damage = remainingForce * PushDamageMultiplier;
 
-            target.Damage(damage);
+            target.Damage(game.Journal, damage);
             game.Journal.Write(new EnvironmentDamageMessage(target, damage));
 
             if (collideTarget != null)
             {
-                collideTarget.Damage(damage);
+                collideTarget.Damage(game.Journal, damage);
                 game.Journal.Write(new EnvironmentDamageMessage(collideTarget, damage));
             }
 

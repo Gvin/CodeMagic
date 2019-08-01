@@ -2,6 +2,7 @@
 {
     public enum Element
     {
+        Physical,
         Fire,
         Frost,
         Acid,

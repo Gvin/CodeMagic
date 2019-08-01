@@ -44,7 +44,7 @@ namespace CodeMagic.Core.Statuses
                 return true;
 
             journal.Write(new BurningDamageMessage(owner, damage));
-            owner.Damage(damage, Element.Fire);
+            owner.Damage(journal, damage, Element.Fire);
 
             var temperatureDiff = cell.Environment.Temperature - burningTemperature;
             if (temperatureDiff > 0)

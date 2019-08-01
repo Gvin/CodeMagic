@@ -45,7 +45,7 @@ namespace CodeMagic.Core.Objects.SteamObjects
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)
             {
-                destroyable.Damage(damage, Element.Acid);
+                destroyable.Damage(game.Journal, damage, Element.Acid);
                 game.Journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Acid));
             }
         }

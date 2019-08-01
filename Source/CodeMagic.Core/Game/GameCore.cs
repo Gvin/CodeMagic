@@ -4,6 +4,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Game
 {
@@ -35,15 +36,34 @@ namespace CodeMagic.Core.Game
 
         public void PerformPlayerAction(IPlayerAction action)
         {
-            Map.PreUpdate(this);
-
-            var endsTurn = action.Perform(Player, PlayerPosition, this, out var newPosition);
-            PlayerPosition = newPosition;
-            if (endsTurn)
+            lock (Map)
             {
-                UpdateMap();
-                CurrentTurn++;
+                Map.PreUpdate(this);
+
+                var endsTurn = action.Perform(Player, PlayerPosition, this, out var newPosition);
+                PlayerPosition = newPosition;
+
+                if (endsTurn)
+                {
+                    ProcessSystemTurn();
+
+                    if (GetIfPlayerIsFrozen())
+                    {
+                        ProcessSystemTurn();
+                    }
+                }
             }
+        }
+
+        private void ProcessSystemTurn()
+        {
+            UpdateMap();
+            CurrentTurn++;
+        }
+
+        private bool GetIfPlayerIsFrozen()
+        {
+            return Player.Statuses.Contains(FrozenObjectStatus.StatusType);
         }
 
         private void UpdateMap()

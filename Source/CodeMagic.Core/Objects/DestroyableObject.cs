@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Statuses;
 
@@ -24,7 +25,7 @@ namespace CodeMagic.Core.Objects
             CatchFireChanceMultiplier = configuration.CatchFireChanceMultiplier;
             ZIndex = configuration.ZIndex;
 
-            Statuses = new ObjectStatusesCollection();
+            Statuses = new ObjectStatusesCollection(this);
             damageRecords = new List<IDamageRecord>();
         }
 
@@ -97,16 +98,16 @@ namespace CodeMagic.Core.Objects
 
         private int CatchFireChanceMultiplier { get; }
 
-        public virtual void Damage(int damage, Element? element = null)
+        public virtual void Damage(Journal journal, int damage, Element element = Element.Physical)
         {
             if (damage < 0)
                 throw new ArgumentException($"Damage should be greater or equal 0. Got {damage}.");
 
             Health -= damage;
 
-            if (element.HasValue && element.Value == Element.Fire)
+            if (element == Element.Fire)
             {
-                CheckCatchFire(damage);
+                CheckCatchFire(damage, journal);
             }
 
             damageRecords.Add(Injector.Current.Create<IDamageRecord>(damage, element));
@@ -125,7 +126,7 @@ namespace CodeMagic.Core.Objects
             };
         }
 
-        private void CheckCatchFire(int damage)
+        private void CheckCatchFire(int damage, Journal journal)
         {
             var catchFireChance = damage * CatchFireChanceMultiplier;
 
@@ -137,7 +138,7 @@ namespace CodeMagic.Core.Objects
 
             if (RandomHelper.CheckChance(catchFireChance))
             {
-                Statuses.Add(new OnFireObjectStatus(GetFireConfiguration()));
+                Statuses.Add(new OnFireObjectStatus(GetFireConfiguration()), journal);
             }
         }
 

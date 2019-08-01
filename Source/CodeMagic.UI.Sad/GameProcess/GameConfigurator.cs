@@ -109,7 +109,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                     // Misc
                     {
                         typeof(IDamageRecord),
-                        new InjectorMappingType {FactoryMethod = args => new DamageRecord((int) args[0], (Element?) args[1])}
+                        new InjectorMappingType {FactoryMethod = args => new DamageRecord((int) args[0], (Element) args[1])}
                     }
                 };
             }

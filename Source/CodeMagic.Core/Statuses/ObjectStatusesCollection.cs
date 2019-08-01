@@ -2,6 +2,7 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Statuses
@@ -9,13 +10,15 @@ namespace CodeMagic.Core.Statuses
     public class ObjectStatusesCollection
     {
         private readonly Dictionary<string, IObjectStatus> statuses;
+        private readonly IDestroyableObject owner;
 
-        public ObjectStatusesCollection()
+        public ObjectStatusesCollection(IDestroyableObject owner)
         {
             statuses = new Dictionary<string, IObjectStatus>();
+            this.owner = owner;
         }
 
-        public void Add(IObjectStatus status)
+        public void Add(IObjectStatus status, Journal journal)
         {
             if (statuses.ContainsKey(status.Type))
             {
@@ -23,6 +26,7 @@ namespace CodeMagic.Core.Statuses
             }
             else
             {
+                journal.Write(new StatusAddedMessage(owner, status.Type));
                 statuses.Add(status.Type, status);
             }
         }

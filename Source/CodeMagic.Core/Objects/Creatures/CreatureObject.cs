@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects.Creatures
@@ -8,6 +9,7 @@ namespace CodeMagic.Core.Objects.Creatures
     public abstract class CreatureObject : DestroyableObject, ICreatureObject
     {
         private const double ParalyzedChanceMultiplier = 5;
+        private const double FrozenChanceMultiplier = 5;
 
         private readonly int blindVisibilityRange;
 
@@ -35,22 +37,36 @@ namespace CodeMagic.Core.Objects.Creatures
 
         public int MaxVisibilityRange { get; }
 
-        public override void Damage(int damage, Element? element = null)
+        public override void Damage(Journal journal, int damage, Element element = Element.Physical)
         {
-            base.Damage(damage, element);
+            base.Damage(journal, damage, element);
 
-            if (element.HasValue && element.Value == Element.Electricity)
+            switch (element)
             {
-                CheckParalyzed(damage);
+                case Element.Electricity:
+                    CheckParalyzed(damage, journal);
+                    break;
+                case Element.Frost:
+                    CheckFrozen(damage, journal);
+                    break;
             }
         }
 
-        private void CheckParalyzed(int damage)
+        private void CheckFrozen(int damage, Journal journal)
+        {
+            var chance = (int)Math.Round(damage * FrozenChanceMultiplier);
+            if (RandomHelper.CheckChance(chance))
+            {
+                Statuses.Add(new FrozenObjectStatus(), journal);
+            }
+        }
+
+        private void CheckParalyzed(int damage, Journal journal)
         {
             var chance = (int) Math.Round(damage * ParalyzedChanceMultiplier);
             if (RandomHelper.CheckChance(chance))
             {
-                Statuses.Add(new ParalyzedObjectStatus());
+                Statuses.Add(new ParalyzedObjectStatus(), journal);
             }
         }
 

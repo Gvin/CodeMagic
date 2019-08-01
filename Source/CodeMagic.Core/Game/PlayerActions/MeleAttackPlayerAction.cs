@@ -35,7 +35,7 @@ namespace CodeMagic.Core.Game.PlayerActions
             }
 
             var damage = GetDamage(player);
-            target.Damage(damage);
+            target.Damage(game.Journal, damage);
             game.Journal.Write(new DealDamageMessage(player, target, damage));
             return true;
         }

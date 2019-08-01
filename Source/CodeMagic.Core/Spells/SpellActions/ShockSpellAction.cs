@@ -100,7 +100,7 @@ namespace CodeMagic.Core.Spells.SpellActions
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)
             {
-                destroyable.Damage(value, Element.Electricity);
+                destroyable.Damage(journal, value, Element.Electricity);
                 journal.Write(new EnvironmentDamageMessage(destroyable, value, Element.Electricity));
             }
         }

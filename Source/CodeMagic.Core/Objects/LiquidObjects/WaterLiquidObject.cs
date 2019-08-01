@@ -52,7 +52,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
                 destroyable.Statuses.Remove(OnFireObjectStatus.StatusType);
                 destroyable.Statuses.Remove(OilyObjectStatus.StatusType);
 
-                destroyable.Statuses.Add(new WetObjectStatus(Configuration));
+                destroyable.Statuses.Add(new WetObjectStatus(Configuration), game.Journal);
             }
         }
     }

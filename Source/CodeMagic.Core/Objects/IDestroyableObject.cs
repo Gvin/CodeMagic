@@ -1,5 +1,6 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Statuses;
 
@@ -15,7 +16,7 @@ namespace CodeMagic.Core.Objects
 
         void OnDeath(IAreaMap map, Point position);
 
-        void Damage(int value, Element? element = null);
+        void Damage(Journal journal, int value, Element element = Element.Physical);
 
         ObjectStatusesCollection Statuses { get; }
 
@@ -30,6 +31,6 @@ namespace CodeMagic.Core.Objects
     {
         int Value { get; }
 
-        Element? Element { get; }
+        Element Element { get; }
     }
 }

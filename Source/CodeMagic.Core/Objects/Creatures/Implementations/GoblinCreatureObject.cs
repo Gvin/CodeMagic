@@ -57,7 +57,7 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
             }
 
             var damage = RandomHelper.GetRandomValue(minDamage, maxDamage);
-            target.Damage(damage);
+            target.Damage(journal, damage);
             journal.Write(new DealDamageMessage(this, target, damage));
         }
 

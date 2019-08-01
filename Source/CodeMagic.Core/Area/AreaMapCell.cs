@@ -124,7 +124,7 @@ namespace CodeMagic.Core.Area
                 Environment.ApplyEnvironment(destroyableObject, journal);
                 if (destroyableObject is ICreatureObject && LightLevel.IsBlinding)
                 {
-                    destroyableObject.Statuses.Add(new BlindObjectStatus());
+                    destroyableObject.Statuses.Add(new BlindObjectStatus(), journal);
                 }
             }
         }

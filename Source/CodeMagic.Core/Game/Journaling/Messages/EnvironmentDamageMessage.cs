@@ -4,7 +4,7 @@ namespace CodeMagic.Core.Game.Journaling.Messages
 {
     public class EnvironmentDamageMessage : IJournalMessage
     {
-        public EnvironmentDamageMessage(IMapObject @object, int damage, Element? element = null)
+        public EnvironmentDamageMessage(IMapObject @object, int damage, Element element = Game.Element.Physical)
         {
             Object = @object;
             Damage = damage;
@@ -15,6 +15,6 @@ namespace CodeMagic.Core.Game.Journaling.Messages
 
         public int Damage { get; }
 
-        public Element? Element { get; }
+        public Element Element { get; }
     }
 }

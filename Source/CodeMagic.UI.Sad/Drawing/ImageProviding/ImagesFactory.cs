@@ -12,6 +12,7 @@ namespace CodeMagic.UI.Sad.Drawing.ImageProviding
         private const string ImageStatusWet = "Status_Wet";
         private const string ImageStatusBlind = "Status_Blind";
         private const string ImageStatusParalyzed = "Status_Paralyzed";
+        private const string ImageStatusFrozen = "Status_Frozen";
 
         private readonly IImagesStorage imagesStorage;
 
@@ -44,6 +45,11 @@ namespace CodeMagic.UI.Sad.Drawing.ImageProviding
             if (destroyable.Statuses.Contains(ParalyzedObjectStatus.StatusType))
             {
                 return ApplyStatusImage(image, ImageStatusParalyzed);
+            }
+
+            if (destroyable.Statuses.Contains(FrozenObjectStatus.StatusType))
+            {
+                return ApplyStatusImage(image, ImageStatusFrozen);
             }
 
             if (destroyable.Statuses.Contains(BlindObjectStatus.StatusType))

@@ -12,13 +12,12 @@ namespace CodeMagic.UI.Sad.Drawing
         private static readonly Color AcidDamageColor = Color.Lime;
         private static readonly Color ElectricityDamageColor = Color.Yellow;
 
-        public static Color GetDamageTextColor(Element? element)
+        public static Color GetDamageTextColor(Element element)
         {
-            if (!element.HasValue)
-                return PhysicalDamageColor;
-
-            switch (element.Value)
+            switch (element)
             {
+                case Element.Physical:
+                    return PhysicalDamageColor;
                 case Element.Fire:
                     return FireDamageColor;
                 case Element.Frost:
