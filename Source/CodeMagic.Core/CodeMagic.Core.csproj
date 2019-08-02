@@ -78,6 +78,7 @@
     <Compile Include="Injection\IInjectable.cs" />
     <Compile Include="Injection\InjectorImpl.cs" />
     <Compile Include="Injection\Injector.cs" />
+    <Compile Include="Items\IUsableItem.cs" />
     <Compile Include="Objects\Creatures\CreatureObject.cs" />
     <Compile Include="Objects\IceObjects\AbstractIceObject.cs" />
     <Compile Include="Objects\IceObjects\AcidIceObject.cs" />

@@ -11,10 +11,10 @@ using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Implementations.Objects.Creatures;
+using CodeMagic.Implementations.Objects.Creatures.NonPlayable;
+using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
-using CodeMagic.Objects.Implementation.Creatures;
-using CodeMagic.Objects.Implementation.Creatures.NonPlayable;
-using CodeMagic.Objects.Implementation.SolidObjects;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
@@ -29,6 +29,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             var map = CreateMap(UseFakeMap, out var playerPosition);
 
             var player = CreatePlayer();
+            player.Inventory.AddItem(CreateElvesBlade());
             map.AddObject(playerPosition, player);
 
             map.Refresh();

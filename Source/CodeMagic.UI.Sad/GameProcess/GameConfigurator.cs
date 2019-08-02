@@ -14,12 +14,12 @@ using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Objects.SteamObjects;
 using CodeMagic.Core.Spells;
-using CodeMagic.Objects.Implementation;
-using CodeMagic.Objects.Implementation.DecorativeObjects;
-using CodeMagic.Objects.Implementation.IceObjects;
-using CodeMagic.Objects.Implementation.LiquidObjects;
-using CodeMagic.Objects.Implementation.SolidObjects;
-using CodeMagic.Objects.Implementation.SteamObjects;
+using CodeMagic.Implementations.Objects;
+using CodeMagic.Implementations.Objects.DecorativeObjects;
+using CodeMagic.Implementations.Objects.IceObjects;
+using CodeMagic.Implementations.Objects.LiquidObjects;
+using CodeMagic.Implementations.Objects.SolidObjects;
+using CodeMagic.Implementations.Objects.SteamObjects;
 using CodeMagic.UI.Sad.Drawing;
 
 namespace CodeMagic.UI.Sad.GameProcess

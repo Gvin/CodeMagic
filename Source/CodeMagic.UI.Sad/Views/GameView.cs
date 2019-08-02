@@ -25,6 +25,7 @@ namespace CodeMagic.UI.Sad.Views
         private JournalBoxControl journalBox;
 
         private Button openSpellBookButton;
+        private Button openInventoryButton;
 
         private ButtonTheme standardButtonTheme;
         private ButtonTheme disabledButtonTheme;
@@ -98,7 +99,7 @@ namespace CodeMagic.UI.Sad.Views
                     Appearance_ControlDisabled = new Cell(Color.Gray, DefaultBackground)
                 },
             };
-            openSpellBookButton = new Button(20, 3)
+            openSpellBookButton = new Button(30, 3)
             {
                 Position = new Point(81, 20),
                 Text = "[C] Spell Book",
@@ -107,6 +108,26 @@ namespace CodeMagic.UI.Sad.Views
             openSpellBookButton.Click += openSpellBookButton_Click;
             SetButtonEnabled(openSpellBookButton, true);
             Add(openSpellBookButton);
+
+            openInventoryButton = new Button(30, 3)
+            {
+                Position = new Point(81, 16),
+                Text = "[I] Inventory",
+                CanFocus = false,
+                Theme = standardButtonTheme
+            };
+            openInventoryButton.Click += openInventoryButton_Click;
+            Add(openInventoryButton);
+        }
+
+        private void openInventoryButton_Click(object sender, EventArgs e)
+        {
+            OpenInventory();
+        }
+
+        private void OpenInventory()
+        {
+            new InventoryView(game).Show();
         }
 
         private void SetButtonEnabled(Button button, bool enabled)
@@ -121,6 +142,9 @@ namespace CodeMagic.UI.Sad.Views
             {
                 case Keys.C:
                     OpenSpellBook();
+                    return true;
+                case Keys.I:
+                    OpenInventory();
                     return true;
                 case Keys.Escape:
                     OpenMainMenu();

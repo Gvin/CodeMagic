@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A4F02790-B78A-42D2-B1B2-BED6547E7FC3}</ProjectGuid>
+    <ProjectGuid>{47E2B226-C00A-4EF3-AC0B-0A8A243ADD79}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeMagic.MapGeneration</RootNamespace>
-    <AssemblyName>CodeMagic.MapGeneration</AssemblyName>
+    <RootNamespace>CodeMagic.Implementations</RootNamespace>
+    <AssemblyName>CodeMagic.Implementations</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,7 +41,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapGenerator.cs" />
+    <Compile Include="IImageProvider.cs" />
+    <Compile Include="IImagesStorage.cs" />
+    <Compile Include="Objects\AnimationManager.cs" />
+    <Compile Include="Objects\AnimationsBatchManager.cs" />
+    <Compile Include="Objects\CodeSpellImpl.cs" />
+    <Compile Include="Objects\Creatures\NonPlayable\GoblinImpl.cs" />
+    <Compile Include="Objects\Creatures\PlayerImpl.cs" />
+    <Compile Include="Objects\DecorativeObjects\DecorativeObjectImpl.cs" />
+    <Compile Include="Objects\DecorativeObjects\FireObjectImpl.cs" />
+    <Compile Include="Objects\IceObjects\AcidIceImpl.cs" />
+    <Compile Include="Objects\IceObjects\WaterIceImpl.cs" />
+    <Compile Include="Objects\LiquidObjects\AcidLiquidImpl.cs" />
+    <Compile Include="Objects\LiquidObjects\OilLiquidImpl.cs" />
+    <Compile Include="Objects\LiquidObjects\WaterLiquidImpl.cs" />
+    <Compile Include="Objects\SolidObjects\EnergyWallImpl.cs" />
+    <Compile Include="Objects\SolidObjects\TorchWallImpl.cs" />
+    <Compile Include="Objects\SolidObjects\WallImpl.cs" />
+    <Compile Include="Objects\SteamObjects\AcidSteamImpl.cs" />
+    <Compile Include="Objects\SteamObjects\WaterSteamImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -49,9 +67,9 @@
       <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
       <Name>CodeMagic.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeMagic.Implementations\CodeMagic.Implementations.csproj">
-      <Project>{47E2B226-C00A-4EF3-AC0B-0A8A243ADD79}</Project>
-      <Name>CodeMagic.Implementations</Name>
+    <ProjectReference Include="..\CodeMagic.UI.Images\CodeMagic.UI.Images.csproj">
+      <Project>{c5a8ee43-bc81-4e88-b990-d2ae962c3205}</Project>
+      <Name>CodeMagic.UI.Images</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
