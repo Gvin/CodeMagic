@@ -3,19 +3,19 @@ using System.Linq;
 using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Blade;
+using CodeMagic.ItemsGeneration.Configuration.Weapon.Head;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.ItemsGeneration.Implementations
 {
-    internal class BladeWeaponGenerator : WeaponGeneratorBase
+    internal class HeadWeaponGenerator : WeaponGeneratorBase
     {
-        private readonly IBladeWeaponConfiguration configuration;
+        private readonly IHeadWeaponConfiguration configuration;
 
-        public BladeWeaponGenerator(
-            string baseName,
-            IBladeWeaponConfiguration configuration,
-            IWeaponConfiguration weaponConfiguration,
+        public HeadWeaponGenerator(
+            string baseName, 
+            IHeadWeaponConfiguration configuration, 
+            IWeaponConfiguration weaponConfiguration, 
             IImagesStorage imagesStorage) 
             : base(baseName, weaponConfiguration, imagesStorage)
         {
@@ -43,14 +43,14 @@ namespace CodeMagic.ItemsGeneration.Implementations
         protected override SymbolsImage GenerateImage(ItemMaterial material)
         {
             var handleImageInit = GetRandomImage(configuration.Images.HandleImages);
-            var guardImageInit = GetRandomImage(configuration.Images.GuardImages);
-            var bladeImageInit = GetRandomImage(configuration.Images.BladeImages);
+            var shaftImageInit = GetRandomImage(configuration.Images.ShaftImages);
+            var headImageInit = GetRandomImage(configuration.Images.HeadImages);
 
             var handleImage = ItemRecolorHelper.RecolorImage(handleImageInit, material);
-            var guardImage = ItemRecolorHelper.RecolorImage(guardImageInit, material);
-            var bladeImage = ItemRecolorHelper.RecolorImage(bladeImageInit, material);
+            var shaftImage = ItemRecolorHelper.RecolorImage(shaftImageInit, material);
+            var headImage = ItemRecolorHelper.RecolorImage(headImageInit, material);
 
-            return MergeImages(bladeImage, handleImage, guardImage);
+            return MergeImages(shaftImage, handleImage, headImage);
         }
     }
 }

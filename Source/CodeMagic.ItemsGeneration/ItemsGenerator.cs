@@ -18,11 +18,31 @@ namespace CodeMagic.ItemsGeneration
             {
                 {
                     WeaponType.Sword,
-                    new BladeWeaponGenerator("Sword", configuration.WeaponConfiguration.SwordsConfiguration, imagesStorage)
+                    new BladeWeaponGenerator("Sword", 
+                        configuration.WeaponConfiguration.SwordsConfiguration, 
+                        configuration.WeaponConfiguration, 
+                        imagesStorage)
                 },
                 {
                     WeaponType.Dagger,
-                    new BladeWeaponGenerator("Dagger", configuration.WeaponConfiguration.DaggersConfiguration, imagesStorage)
+                    new BladeWeaponGenerator("Dagger", 
+                        configuration.WeaponConfiguration.DaggersConfiguration,
+                        configuration.WeaponConfiguration,
+                        imagesStorage)
+                },
+                {
+                    WeaponType.Mace,
+                    new HeadWeaponGenerator("Mace", 
+                        configuration.WeaponConfiguration.MacesConfiguration,
+                        configuration.WeaponConfiguration,
+                        imagesStorage)
+                },
+                {
+                    WeaponType.Axe,
+                    new HeadWeaponGenerator("Axe",
+                        configuration.WeaponConfiguration.AxesConfiguration,
+                        configuration.WeaponConfiguration,
+                        imagesStorage)
                 }
             };
         }
@@ -39,13 +59,15 @@ namespace CodeMagic.ItemsGeneration
 
         private WeaponType GetRandomWeaponType()
         {
-            return (WeaponType) RandomHelper.GetRandomValue(0, 1);
+            return (WeaponType) RandomHelper.GetRandomValue(0, 3);
         }
 
         private enum WeaponType
         {
             Sword = 0,
-            Dagger = 1
+            Dagger = 1,
+            Mace = 2,
+            Axe = 3
         }
     }
 }

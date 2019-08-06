@@ -32,13 +32,13 @@ namespace CodeMagic.Implementations.Items.Usable
             {
                 new[]
                 {
-                    new StyledString(description)
-                },
-                new[]
-                {
                     new StyledString("Restores "),
                     new StyledString(restoreValue.ToString(), Color.Blue),
                     new StyledString(" mana when used."),
+                },
+                new[]
+                {
+                    new StyledString(description)
                 }
             };
         }

@@ -43,9 +43,14 @@
   <ItemGroup>
     <Compile Include="ConfigurationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\Items\Weapon\Swords\XmlSwordImagesConfiguration.cs" />
+    <Compile Include="Types\Items\Weapon\Blade\XmlBladeImagesConfiguration.cs" />
+    <Compile Include="Types\Items\Weapon\Description\XmlMaterialDescriptionConfiguration.cs" />
+    <Compile Include="Types\Items\Weapon\Description\XmlRarenessDescriptionConfiguration.cs" />
+    <Compile Include="Types\Items\Weapon\Description\XmlWeaponDescriptionConfiguration.cs" />
+    <Compile Include="Types\Items\Weapon\Head\XmlHeadImagesConfiguration.cs" />
+    <Compile Include="Types\Items\Weapon\Head\XmlHeadWeaponConfiguration.cs" />
     <Compile Include="Types\Items\XmlItemGeneratorConfiguration.cs" />
-    <Compile Include="Types\Items\Weapon\Swords\XmlBladeWeaponConfiguration.cs" />
+    <Compile Include="Types\Items\Weapon\Blade\XmlBladeWeaponConfiguration.cs" />
     <Compile Include="Types\Items\Weapon\XmlWeaponConfiguration.cs" />
     <Compile Include="Types\Items\Weapon\XmlWeaponRarenessConfiguration.cs" />
     <Compile Include="Types\Items\XmlWeightConfiguration.cs" />

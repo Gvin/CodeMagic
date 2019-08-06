@@ -44,11 +44,17 @@
   <ItemGroup>
     <Compile Include="Configuration\IItemGeneratorConfiguration.cs" />
     <Compile Include="Configuration\IWeightConfiguration.cs" />
-    <Compile Include="Configuration\Weapon\Swords\ISwordImagesConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Blade\IBladeImagesConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Description\IMaterialDescriptionConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Description\IRarenessDescriptionConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Description\IWeaponDescriptionConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Head\IHeadImagesConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Head\IHeadWeaponConfiguration.cs" />
     <Compile Include="Configuration\Weapon\IWeaponConfiguration.cs" />
     <Compile Include="Configuration\Weapon\IWeaponRarenessConfiguration.cs" />
-    <Compile Include="Configuration\Weapon\Swords\IBladeWeaponConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Blade\IBladeWeaponConfiguration.cs" />
     <Compile Include="Implementations\BladeWeaponGenerator.cs" />
+    <Compile Include="Implementations\HeadWeaponGenerator.cs" />
     <Compile Include="Implementations\IWeaponGenerator.cs" />
     <Compile Include="Implementations\WeaponGeneratorBase.cs" />
     <Compile Include="ItemMaterial.cs" />

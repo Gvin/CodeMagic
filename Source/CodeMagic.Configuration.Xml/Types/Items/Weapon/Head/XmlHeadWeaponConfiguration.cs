@@ -3,18 +3,18 @@ using System.Linq;
 using System.Xml.Serialization;
 using CodeMagic.ItemsGeneration.Configuration;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Swords;
+using CodeMagic.ItemsGeneration.Configuration.Weapon.Head;
 
-namespace CodeMagic.Configuration.Xml.Types.Items.Weapon.Swords
+namespace CodeMagic.Configuration.Xml.Types.Items.Weapon.Head
 {
     [Serializable]
-    public class XmlBladeWeaponConfiguration : IBladeWeaponConfiguration
+    public class XmlHeadWeaponConfiguration : IHeadWeaponConfiguration
     {
         [XmlIgnore]
-        public ISwordImagesConfiguration Images => ImagesData;
+        public IHeadImagesConfiguration Images => ImagesData;
 
         [XmlElement("images")]
-        public XmlSwordImagesConfiguration ImagesData { get; set; }
+        public XmlHeadImagesConfiguration ImagesData { get; set; }
 
         [XmlIgnore]
         public IWeightConfiguration[] Weight => WeightData.ToArray<IWeightConfiguration>();

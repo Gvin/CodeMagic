@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Xml.Serialization;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Swords;
+using CodeMagic.ItemsGeneration.Configuration.Weapon.Blade;
 
-namespace CodeMagic.Configuration.Xml.Types.Items.Weapon.Swords
+namespace CodeMagic.Configuration.Xml.Types.Items.Weapon.Blade
 {
     [Serializable]
-    public class XmlSwordImagesConfiguration : ISwordImagesConfiguration
+    public class XmlBladeImagesConfiguration : IBladeImagesConfiguration
     {
         [XmlArray("handle")]
         [XmlArrayItem("image")]

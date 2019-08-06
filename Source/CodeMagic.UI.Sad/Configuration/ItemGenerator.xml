@@ -218,5 +218,258 @@
       </rareness-configuration>
     </daggers>
 
+    <maces>
+      <images>
+        <handle>
+          <image>Sword_Handle_V1</image>
+          <image>Sword_Handle_V2</image>
+          <image>Sword_Handle_V3</image>
+          <image>Sword_Handle_V4</image>
+          <image>Sword_Handle_V5</image>
+          <image>Sword_Handle_V6</image>
+          <image>Sword_Handle_V7</image>
+          <image>Sword_Handle_V8</image>
+          <image>Sword_Handle_V9</image>
+          <image>Sword_Handle_V10</image>
+          <image>Sword_Handle_V11</image>
+          <image>Sword_Handle_V12</image>
+        </handle>
+        <shaft>
+          <image>Mace_Shaft_V1</image>
+          <image>Mace_Shaft_V2</image>
+          <image>Mace_Shaft_V3</image>
+        </shaft>
+        <head>
+          <image>Mace_Head_V1</image>
+          <image>Mace_Head_V2</image>
+          <image>Mace_Head_V3</image>
+          <image>Mace_Head_V4</image>
+        </head>
+      </images>
+
+      <weight>
+        <value material="Wood">20</value>
+        <value material="Iron">40</value>
+        <value material="Steel">40</value>
+        <value material="Silver">35</value>
+        <value material="ElvesMetal">25</value>
+        <value material="DwarfsMetal">60</value>
+        <value material="Mythril">20</value>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <min-damage>10</min-damage>
+          <max-damage>15</max-damage>
+          <min-max-damage-difference>5</min-max-damage-difference>
+          <min-hit-chance>30</min-hit-chance>
+          <max-hit-chance>60</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>0</max-bonuses>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <min-damage>15</min-damage>
+          <max-damage>25</max-damage>
+          <min-max-damage-difference>5</min-max-damage-difference>
+          <min-hit-chance>35</min-hit-chance>
+          <max-hit-chance>65</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>1</max-bonuses>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <min-damage>25</min-damage>
+          <max-damage>35</max-damage>
+          <min-max-damage-difference>10</min-max-damage-difference>
+          <min-hit-chance>40</min-hit-chance>
+          <max-hit-chance>70</max-hit-chance>
+          <min-bonuses>1</min-bonuses>
+          <max-bonuses>2</max-bonuses>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <min-damage>35</min-damage>
+          <max-damage>55</max-damage>
+          <min-max-damage-difference>10</min-max-damage-difference>
+          <min-hit-chance>45</min-hit-chance>
+          <max-hit-chance>70</max-hit-chance>
+          <min-bonuses>2</min-bonuses>
+          <max-bonuses>3</max-bonuses>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </maces>
+
+    <axes>
+      <images>
+        <handle>
+          <image>Sword_Handle_V1</image>
+          <image>Sword_Handle_V2</image>
+          <image>Sword_Handle_V3</image>
+          <image>Sword_Handle_V4</image>
+          <image>Sword_Handle_V5</image>
+          <image>Sword_Handle_V6</image>
+          <image>Sword_Handle_V7</image>
+          <image>Sword_Handle_V8</image>
+          <image>Sword_Handle_V9</image>
+          <image>Sword_Handle_V10</image>
+          <image>Sword_Handle_V11</image>
+          <image>Sword_Handle_V12</image>
+        </handle>
+        <shaft>
+          <image>Mace_Shaft_V1</image>
+          <image>Mace_Shaft_V2</image>
+          <image>Mace_Shaft_V3</image>
+        </shaft>
+        <head>
+          <image>Axe_Head_V1</image>
+        </head>
+      </images>
+
+      <weight>
+        <value material="Wood">20</value>
+        <value material="Iron">40</value>
+        <value material="Steel">40</value>
+        <value material="Silver">35</value>
+        <value material="ElvesMetal">25</value>
+        <value material="DwarfsMetal">60</value>
+        <value material="Mythril">20</value>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <min-damage>5</min-damage>
+          <max-damage>7</max-damage>
+          <min-max-damage-difference>5</min-max-damage-difference>
+          <min-hit-chance>50</min-hit-chance>
+          <max-hit-chance>65</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>0</max-bonuses>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <min-damage>10</min-damage>
+          <max-damage>15</max-damage>
+          <min-max-damage-difference>8</min-max-damage-difference>
+          <min-hit-chance>55</min-hit-chance>
+          <max-hit-chance>70</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>1</max-bonuses>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <min-damage>13</min-damage>
+          <max-damage>20</max-damage>
+          <min-max-damage-difference>10</min-max-damage-difference>
+          <min-hit-chance>60</min-hit-chance>
+          <max-hit-chance>75</max-hit-chance>
+          <min-bonuses>1</min-bonuses>
+          <max-bonuses>2</max-bonuses>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <min-damage>17</min-damage>
+          <max-damage>30</max-damage>
+          <min-max-damage-difference>15</min-max-damage-difference>
+          <min-hit-chance>65</min-hit-chance>
+          <max-hit-chance>80</max-hit-chance>
+          <min-bonuses>2</min-bonuses>
+          <max-bonuses>3</max-bonuses>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </axes>
+
+    <description>
+      <material-description>
+        <material value="Wood">
+          <text>It is made from wood, bad idea for weapon.</text>
+          <text>It is made from wood. Hope it won't break.</text>
+          <text>It looks like some processed branch.</text>
+        </material>
+        <material value="Iron">
+          <text>It is made from iron, standard weapon material.</text>
+          <text>There is some rust on it.</text>
+        </material>
+        <material value="Steel">
+          <text>It is made from steel, a strong material.</text>
+          <text>It will not break easily.</text>
+        </material>
+        <material value="Silver">
+          <text>It is made from silver. Why is it so?</text>
+          <text>Not so hard as steel. But it is still metal.</text>
+          <text>It shines a bit in light.</text>
+        </material>
+        <material value="ElvesMetal">
+          <text>It is made from strange green metal.</text>
+          <text>It's material is very light.</text>
+          <text>It smells like grass.</text>
+        </material>
+        <material value="DwarfsMetal">
+          <text>It is made from strange yellow metal.</text>
+          <text>It is extraordinary heavy.</text>
+          <text>The material is super hard and super heavy.</text>
+        </material>
+        <material value="Mythril">
+          <text>It is made from strange violet metal.</text>
+          <text>It's material is extraordinary light.</text>
+          <text>I can barely feel it's weight.</text>
+        </material>
+      </material-description>
+      <rareness-description>
+        <rareness value="Trash">
+          <text>It's quality is poor.</text>
+          <text>It is almost falling apart.</text>
+          <text>It can barely be used.</text>
+          <text>Using it may be dangerous to you.</text>
+        </rareness>
+        <rareness value="Common">
+          <text>It's quality is common.</text>
+          <text>It is just normal.</text>
+          <text>There is nothing special in it.</text>
+        </rareness>
+        <rareness value="Uncommon">
+          <text>It's quality is quite good.</text>
+          <text>It was definitely created by a master.</text>
+        </rareness>
+        <rareness value="Rare">
+          <text>It's quality is great.</text>
+          <text>You can use it easily.</text>
+        </rareness>
+      </rareness-description>
+    </description>
   </weapon>
 </item-generator-configuration>

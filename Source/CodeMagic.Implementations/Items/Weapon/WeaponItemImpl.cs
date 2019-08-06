@@ -19,12 +19,14 @@ namespace CodeMagic.Implementations.Items.Weapon
 
         public StyledString[][] GetDescription()
         {
-            var result = new List<StyledString[]>();
-            result.AddRange(description.Select(line => new[] { new StyledString(line)}).ToArray());
-            result.Add(new StyledString[0]);
-            result.Add(new []{new StyledString($"Weight: {Weight}") });
-            result.Add(new[] { new StyledString($"Damage: {MinDamage} - {MaxDamage}") });
-            result.Add(new []{new StyledString($"Hit Chance: {HitChance}") });
+            var result = new List<StyledString[]>
+            {
+                new[] {new StyledString($"Weight: {Weight}")},
+                new[] {new StyledString($"Damage: {MinDamage} - {MaxDamage}")},
+                new[] {new StyledString($"Hit Chance: {HitChance}")},
+                new StyledString[0]
+            };
+            result.AddRange(description.Select(line => new[] { new StyledString(line) }).ToArray());
 
             return result.ToArray();
         }

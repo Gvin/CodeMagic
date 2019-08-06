@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
@@ -12,9 +13,11 @@ namespace CodeMagic.ItemsGeneration.Implementations
     {
         private readonly IImagesStorage imagesStorage;
         protected readonly string BaseName;
+        protected readonly IWeaponConfiguration Configuration;
 
-        protected WeaponGeneratorBase(string baseName, IImagesStorage imagesStorage)
+        protected WeaponGeneratorBase(string baseName, IWeaponConfiguration configuration, IImagesStorage imagesStorage)
         {
+            Configuration = configuration;
             this.imagesStorage = imagesStorage;
             BaseName = baseName;
         }
@@ -93,7 +96,7 @@ namespace CodeMagic.ItemsGeneration.Implementations
             return imagesStorage.GetImage(randomName);
         }
 
-        private T GetRandomElement<T>(T[] array)
+        protected T GetRandomElement<T>(T[] array)
         {
             if (array.Length == 0)
                 throw new ArgumentException("Empty array.");
@@ -123,9 +126,38 @@ namespace CodeMagic.ItemsGeneration.Implementations
         {
             var rarenessPrefix = GetRarenessPrefix(rareness);
             var materialPrefix = GetMaterialPrefix(material);
+            if (string.IsNullOrEmpty(rarenessPrefix))
+            {
+                return $"{materialPrefix} {BaseName}";
+            }
             return $"{rarenessPrefix} {materialPrefix} {BaseName}";
         }
 
-        protected abstract string[] GenerateDescription(ItemRareness rareness, ItemMaterial material);
+        private string[] GenerateDescription(ItemRareness rareness, ItemMaterial material)
+        {
+            return new[]
+            {
+                GetMaterialDescription(material),
+                GetRarenessDescription(rareness)
+            };
+        }
+
+        private string GetMaterialDescription(ItemMaterial material)
+        {
+            var textConfig = Configuration.DescriptionConfiguration.MaterialDescription.FirstOrDefault(config => config.Material == material);
+            if (textConfig == null)
+                throw new ApplicationException($"Text configuration not found for weapon material: {material}");
+
+            return GetRandomElement(textConfig.Text);
+        }
+
+        private string GetRarenessDescription(ItemRareness rareness)
+        {
+            var textConfig = Configuration.DescriptionConfiguration.RarenessDescription.FirstOrDefault(config => config.Rareness == rareness);
+            if (textConfig == null)
+                throw new ApplicationException($"Text configuration not found for weapon rareness: {rareness}");
+
+            return GetRandomElement(textConfig.Text);
+        }
     }
 }

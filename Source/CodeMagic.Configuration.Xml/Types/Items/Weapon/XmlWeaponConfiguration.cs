@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Xml.Serialization;
-using CodeMagic.Configuration.Xml.Types.Items.Weapon.Swords;
+using CodeMagic.Configuration.Xml.Types.Items.Weapon.Blade;
+using CodeMagic.Configuration.Xml.Types.Items.Weapon.Description;
+using CodeMagic.Configuration.Xml.Types.Items.Weapon.Head;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Swords;
+using CodeMagic.ItemsGeneration.Configuration.Weapon.Blade;
+using CodeMagic.ItemsGeneration.Configuration.Weapon.Description;
+using CodeMagic.ItemsGeneration.Configuration.Weapon.Head;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
 {
@@ -18,7 +22,26 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
         [XmlIgnore]
         public IBladeWeaponConfiguration DaggersConfiguration => DaggersConfigurationData;
 
+
         [XmlElement("daggers")]
         public XmlBladeWeaponConfiguration DaggersConfigurationData { get; set; }
+
+        [XmlIgnore]
+        public IHeadWeaponConfiguration MacesConfiguration => MacesConfigurationData;
+
+        [XmlElement("maces")]
+        public XmlHeadWeaponConfiguration MacesConfigurationData { get; set; }
+
+        [XmlIgnore]
+        public IHeadWeaponConfiguration AxesConfiguration => AxesConfigurationData;
+
+        [XmlElement("axes")]
+        public XmlHeadWeaponConfiguration AxesConfigurationData { get; set; }
+
+        [XmlIgnore]
+        public IWeaponDescriptionConfiguration DescriptionConfiguration => DescriptionConfigurationData;
+
+        [XmlElement("description")]
+        public XmlWeaponDescriptionConfiguration DescriptionConfigurationData { get; set; }
     }
 }

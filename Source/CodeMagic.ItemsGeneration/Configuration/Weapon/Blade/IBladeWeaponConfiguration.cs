@@ -1,8 +1,8 @@
-﻿namespace CodeMagic.ItemsGeneration.Configuration.Weapon.Swords
+﻿namespace CodeMagic.ItemsGeneration.Configuration.Weapon.Blade
 {
     public interface IBladeWeaponConfiguration
     {
-        ISwordImagesConfiguration Images { get; }
+        IBladeImagesConfiguration Images { get; }
 
         IWeightConfiguration[] Weight { get; }
 

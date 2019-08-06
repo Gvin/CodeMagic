@@ -36,7 +36,7 @@ namespace CodeMagic.UI.Sad.Controls
 
             Surface.Clear();
 
-            Surface.Print(1, 0, "Selected Spell Details");
+            Surface.Print(1, 0, "Selected Item Details");
             Surface.Fill(0, 1, Width, FrameColor, null, Glyphs.GlyphBoxSingleHorizontal);
 
             Surface.Fill(1, 3, 15, BackColor, BackColor, null);
