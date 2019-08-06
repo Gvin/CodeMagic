@@ -22,6 +22,7 @@ namespace CodeMagic.UI.Sad.Drawing
         private static readonly Color ManaColor = Color.Blue;
         private static readonly Color ErrorColor = Color.Red;
         private static readonly Color SpellLogMessageColor = Color.Gray;
+        private static readonly Color HealValueColor = Color.Green;
 
         private static readonly ColoredString ManaString = new ColoredString("Mana", ManaColor, BackgroundColor);
 
@@ -63,9 +64,45 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetParalyzedMessage(paralyzedMessage);
                 case StatusAddedMessage statusAddedMessage:
                     return GetStatusAddedMessage(statusAddedMessage);
+                case UsedItemMessage usedItemMessage:
+                    return GetUsedItemMessage(usedItemMessage);
+                case HealedMessage healedMessage:
+                    return GetHealedMessage(healedMessage);
+                case ManaRestoredMessage manaRestoredMessage:
+                    return GetManaRestoredMessage(manaRestoredMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetHealedMessage(HealedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{GetMapObjectName(message.Target)} restored ", TextColor, BackgroundColor),
+                new ColoredString(message.HealValue.ToString(), HealValueColor, BackgroundColor),
+                new ColoredString(" health", TextColor, BackgroundColor)
+            };
+        }
+
+        private ColoredString[] GetManaRestoredMessage(ManaRestoredMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{GetMapObjectName(message.Target)} restored ", TextColor, BackgroundColor),
+                new ColoredString(message.ManaRestoreValue.ToString(), ManaColor, BackgroundColor),
+                new ColoredString(" mana", TextColor, BackgroundColor)
+            };
+        }
+
+        private ColoredString[] GetUsedItemMessage(UsedItemMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{PlayerName} used [", TextColor, BackgroundColor),
+                new ColoredString(message.Item.Name, ItemDrawingHelper.GetItemColor(message.Item), BackgroundColor),
+                new ColoredString("]", TextColor, BackgroundColor)
+            };
         }
 
         private ColoredString[] GetStatusAddedMessage(StatusAddedMessage message)

@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,6 +44,11 @@
   <ItemGroup>
     <Compile Include="IImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
+    <Compile Include="Items\Usable\HealthRestorationItem.cs" />
+    <Compile Include="Items\IDescriptionProvider.cs" />
+    <Compile Include="Items\Usable\ManaRestorationItem.cs" />
+    <Compile Include="Items\SimpleItemImpl.cs" />
+    <Compile Include="Items\Weapon\WeaponItemImpl.cs" />
     <Compile Include="Objects\AnimationManager.cs" />
     <Compile Include="Objects\AnimationsBatchManager.cs" />
     <Compile Include="Objects\CodeSpellImpl.cs" />

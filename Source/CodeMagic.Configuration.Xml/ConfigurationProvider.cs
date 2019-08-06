@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.Xml.Serialization;
+using CodeMagic.Configuration.Xml.Types.Items;
 using CodeMagic.Configuration.Xml.Types.Liquids;
 using CodeMagic.Configuration.Xml.Types.Physics;
 using CodeMagic.Configuration.Xml.Types.Spells;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Configuration.Spells;
+using CodeMagic.ItemsGeneration.Configuration;
 
 namespace CodeMagic.Configuration.Xml
 {
@@ -14,11 +16,13 @@ namespace CodeMagic.Configuration.Xml
         private ConfigurationProvider(
             ISpellsConfiguration spells,
             IPhysicsConfiguration physics,
-            ILiquidsConfiguration liquids)
+            ILiquidsConfiguration liquids,
+            IItemGeneratorConfiguration itemGenerator)
         {
             Spells = spells;
             Physics = physics;
             Liquids = liquids;
+            ItemGenerator = itemGenerator;
         }
 
         public ISpellsConfiguration Spells { get; }
@@ -27,12 +31,21 @@ namespace CodeMagic.Configuration.Xml
 
         public ILiquidsConfiguration Liquids { get; }
 
-        public static IConfigurationProvider Load(Stream spellsConfigStream, Stream physicsConfigStream, Stream liquidsConfigStream)
+        public IItemGeneratorConfiguration ItemGenerator { get; }
+
+        public static IConfigurationProvider Load(
+            Stream spellsConfigStream,
+            Stream physicsConfigStream,
+            Stream liquidsConfigStream,
+            Stream itemsGeneratorConfigStream)
         {
             var spells = LoadConfig<ISpellsConfiguration, XmlSpellsConfigurationType>(spellsConfigStream);
             var physics = LoadConfig<IPhysicsConfiguration, XmlPhysicsConfigurationType>(physicsConfigStream);
             var liquids = LoadConfig<ILiquidsConfiguration, XmlLiquidsConfiguration>(liquidsConfigStream);
-            return new ConfigurationProvider(spells, physics, liquids);
+
+            var itemGenerator = LoadConfig<IItemGeneratorConfiguration, XmlItemGeneratorConfiguration>(itemsGeneratorConfigStream);
+
+            return new ConfigurationProvider(spells, physics, liquids, itemGenerator);
         }
 
         private static TConfig LoadConfig<TConfig, TSerializable>(Stream fileStream)

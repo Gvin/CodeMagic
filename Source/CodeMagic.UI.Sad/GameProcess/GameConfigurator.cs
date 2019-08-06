@@ -6,6 +6,7 @@ using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Injection.Configuration;
+using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.DecorativeObjects;
@@ -20,6 +21,7 @@ using CodeMagic.Implementations.Objects.IceObjects;
 using CodeMagic.Implementations.Objects.LiquidObjects;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.Implementations.Objects.SteamObjects;
+using CodeMagic.ItemsGeneration;
 using CodeMagic.UI.Sad.Drawing;
 
 namespace CodeMagic.UI.Sad.GameProcess
@@ -46,8 +48,9 @@ namespace CodeMagic.UI.Sad.GameProcess
             using (var spellsConfig = File.OpenRead(@".\Configuration\Spells.xml"))
             using (var physicsConfig = File.OpenRead(@".\Configuration\Physics.xml"))
             using (var liquidsConfig = File.OpenRead(@".\Configuration\Liquids.xml"))
+            using (var itemGeneratorConfig = File.OpenRead(@".\Configuration\ItemGenerator.xml"))
             {
-                return ConfigurationProvider.Load(spellsConfig, physicsConfig, liquidsConfig);
+                return ConfigurationProvider.Load(spellsConfig, physicsConfig, liquidsConfig, itemGeneratorConfig);
             }
         }
 
@@ -57,6 +60,15 @@ namespace CodeMagic.UI.Sad.GameProcess
             {
                 return new Dictionary<Type, InjectorMappingType>
                 {
+                    {
+                        typeof(IItemsGenerator),
+                        new InjectorMappingType
+                        {
+                            Object = new ItemsGenerator(
+                                ((ConfigurationProvider) ConfigurationManager.Current).ItemGenerator,
+                                ImagesStorage.Current)
+                        }
+                    },
                     // Liquid
                     {
                         typeof(IWaterLiquidObject),
@@ -104,12 +116,17 @@ namespace CodeMagic.UI.Sad.GameProcess
                     },
                     {
                         typeof(ICodeSpell),
-                        new InjectorMappingType {FactoryMethod = args => new CodeSpellImpl((ICreatureObject) args[0], (string) args[1], (string) args[2], (int) args[3])}
+                        new InjectorMappingType
+                        {
+                            FactoryMethod = args => new CodeSpellImpl((ICreatureObject) args[0], (string) args[1],
+                                (string) args[2], (int) args[3])
+                        }
                     },
                     // Misc
                     {
                         typeof(IDamageRecord),
-                        new InjectorMappingType {FactoryMethod = args => new DamageRecord((int) args[0], (Element) args[1])}
+                        new InjectorMappingType
+                            {FactoryMethod = args => new DamageRecord((int) args[0], (Element) args[1])}
                     }
                 };
             }

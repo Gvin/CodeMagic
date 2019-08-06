@@ -121,6 +121,10 @@
       <Project>{47e2b226-c00a-4ef3-ac0b-0a8a243add79}</Project>
       <Name>CodeMagic.Implementations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.ItemsGeneration\CodeMagic.ItemsGeneration.csproj">
+      <Project>{f3dc883a-6643-436f-a64c-7268248c1b5e}</Project>
+      <Name>CodeMagic.ItemsGeneration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeMagic.MapGeneration\CodeMagic.MapGeneration.csproj">
       <Project>{a4f02790-b78a-42d2-b1b2-bed6547e7fc3}</Project>
       <Name>CodeMagic.MapGeneration</Name>
@@ -135,6 +139,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configuration\ItemGenerator.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\Liquids.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

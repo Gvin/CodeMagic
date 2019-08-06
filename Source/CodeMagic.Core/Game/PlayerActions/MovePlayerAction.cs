@@ -1,7 +1,6 @@
 ﻿using CodeMagic.Core.Common;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Game.PlayerActions
@@ -15,22 +14,22 @@ namespace CodeMagic.Core.Game.PlayerActions
             this.direction = direction;
         }
 
-        public bool Perform(IPlayer player, Point playerPosition, IGameCore game, out Point newPosition)
+        public bool Perform(IGameCore game, out Point newPosition)
         {
-            if (player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
+            if (game.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
             {
-                newPosition = playerPosition;
+                newPosition = game.PlayerPosition;
                 game.Journal.Write(new ParalyzedMessage());
                 return true;
             }
 
-            if (player.Direction != direction)
+            if (game.Player.Direction != direction)
             {
-                player.Direction = direction;
-                newPosition = playerPosition;
+                game.Player.Direction = direction;
+                newPosition = game.PlayerPosition;
                 return false;
             }
-            var moveResult = MovementHelper.MoveCreature(player, game, playerPosition, direction, true, true);
+            var moveResult = MovementHelper.MoveCreature(game.Player, game, game.PlayerPosition, direction, true, true);
             newPosition = moveResult.NewPosition;
             return moveResult.Success;
         }

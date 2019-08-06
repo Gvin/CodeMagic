@@ -2,6 +2,8 @@
 {
     public interface IItem
     {
+        string Id { get; }
+
         string Name { get; }
 
         string Key { get; }
@@ -11,6 +13,8 @@
         int Weight { get; }
 
         bool Stackable { get; }
+
+        bool Equals(IItem other);
     }
 
     public enum ItemRareness

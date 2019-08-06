@@ -1,6 +1,6 @@
 ﻿namespace CodeMagic.Core.Items
 {
-    public class WeaponItem : Item
+    public class WeaponItem : Item, IEquipableItem
     {
         public WeaponItem(WeaponItemConfiguration configuration) 
             : base(configuration)
@@ -15,6 +15,8 @@
         public int MaxDamage { get; }
 
         public int HitChance { get; }
+
+        public override bool Stackable => false;
     }
 
     public class WeaponItemConfiguration : ItemConfiguration

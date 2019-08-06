@@ -8,16 +8,16 @@ namespace CodeMagic.Core.Game.PlayerActions
 {
     public class MeleAttackPlayerAction : IPlayerAction
     {
-        public bool Perform(IPlayer player, Point playerPosition, IGameCore game, out Point newPosition)
+        public bool Perform(IGameCore game, out Point newPosition)
         {
-            newPosition = playerPosition;
-            if (player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
+            newPosition = game.PlayerPosition;
+            if (game.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
             {
                 game.Journal.Write(new ParalyzedMessage());
                 return true;
             }
 
-            var targetPoint = Point.GetPointInDirection(playerPosition, player.Direction);
+            var targetPoint = Point.GetPointInDirection(game.PlayerPosition, game.Player.Direction);
             var targetCell = game.Map.TryGetCell(targetPoint);
             if (targetCell == null)
                 return true;
@@ -28,15 +28,15 @@ namespace CodeMagic.Core.Game.PlayerActions
             if (target == null)
                 return true;
 
-            if (!RandomHelper.CheckChance(player.HitChance))
+            if (!RandomHelper.CheckChance(game.Player.HitChance))
             {
-                game.Journal.Write(new AttackMissMessage(player, target));
+                game.Journal.Write(new AttackMissMessage(game.Player, target));
                 return true;
             }
 
-            var damage = GetDamage(player);
+            var damage = GetDamage(game.Player);
             target.Damage(game.Journal, damage);
-            game.Journal.Write(new DealDamageMessage(player, target, damage));
+            game.Journal.Write(new DealDamageMessage(game.Player, target, damage));
             return true;
         }
 

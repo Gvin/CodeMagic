@@ -17,6 +17,14 @@ namespace CodeMagic.Core.Items
 
         public int MaxWeight { get; set; }
 
+        public void AddItem(IItem item, int count)
+        {
+            for (int index = 0; index < count; index++)
+            {
+                AddItem(item);
+            }
+        }
+
         public void AddItem(IItem item)
         {
             lock (stacks)
@@ -32,8 +40,10 @@ namespace CodeMagic.Core.Items
                 {
                     existingStack.Count++;
                 }
-
-                stacks.Add(new InventoryStack(item));
+                else
+                {
+                    stacks.Add(new InventoryStack(item));
+                }
             }
         }
 
@@ -97,7 +107,7 @@ namespace CodeMagic.Core.Items
 
         private InventoryStack GetItemStack(IItem item)
         {
-            return stacks.FirstOrDefault(stack => string.Equals(stack.Item.Key, item.Key));
+            return stacks.FirstOrDefault(stack => stack.Item.Equals(item));
         }
     }
 

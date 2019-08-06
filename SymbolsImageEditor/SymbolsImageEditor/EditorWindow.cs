@@ -18,7 +18,8 @@ namespace SymbolsImageEditor
     {
         private const string SymbolsImageFileFilter = "Symbols Image|*.simg|All|*.*";
         private const string SymbolsImageFileExtension = ".simg";
-        private const int DefaultImageSize = 3;
+        private const int DefaultImageWidth = 20;
+        private const int DefaultImageHeight = 5;
 
         private ColorDialog colorPicker;
 
@@ -33,7 +34,7 @@ namespace SymbolsImageEditor
             IsFocused = true;
             UseKeyboard = true;
             brush = new Brush();
-            image = new SymbolsImage(DefaultImageSize, DefaultImageSize);
+            image = new SymbolsImage(DefaultImageWidth, DefaultImageHeight);
 
             DefaultBackground = Color.Black;
             DefaultForeground = Color.White;
@@ -124,7 +125,7 @@ namespace SymbolsImageEditor
 
         private void newImageButton_Click(object sender, EventArgs e)
         {
-            image = new SymbolsImage(DefaultImageSize, DefaultImageSize);
+            image = new SymbolsImage(DefaultImageWidth, DefaultImageHeight);
         }
 
         private void setBackgroundColor_Click(object sender, EventArgs e)

@@ -2,7 +2,7 @@
 
 namespace CodeMagic.Core.Items
 {
-    public interface IUsableItem
+    public interface IUsableItem : IItem
     {
         bool Use(IGameCore game);
     }

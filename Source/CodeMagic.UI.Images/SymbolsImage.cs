@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using CodeMagic.UI.Images.Saving.Xml;
@@ -123,6 +124,44 @@ namespace CodeMagic.UI.Images
                 pixel.Symbol = topPixel.Symbol ?? bottomPixel.Symbol;
                 pixel.Color = topPixel.Symbol.HasValue ? topPixel.Color : bottomPixel.Color;
                 pixel.BackgroundColor = topPixel.BackgroundColor ?? bottomPixel.BackgroundColor;
+            }
+
+            return result;
+        }
+
+        public static SymbolsImage Recolor(SymbolsImage image, Dictionary<Color, Color> palette)
+        {
+            var result = new SymbolsImage(image.Width, image.Height);
+
+            for (var x = 0; x < image.Width; x++)
+            for (var y = 0; y < image.Height; y++)
+            {
+                var pixel = result[x, y];
+                var originalPixel = image[x, y];
+
+                pixel.Symbol = originalPixel.Symbol;
+
+                if (originalPixel.Color.HasValue)
+                {
+                    pixel.Color = palette.ContainsKey(originalPixel.Color.Value)
+                        ? palette[originalPixel.Color.Value]
+                        : originalPixel.Color;
+                }
+                else
+                {
+                    pixel.Color = null;
+                }
+
+                if (originalPixel.BackgroundColor.HasValue)
+                {
+                    pixel.BackgroundColor = palette.ContainsKey(originalPixel.BackgroundColor.Value)
+                        ? palette[originalPixel.BackgroundColor.Value]
+                        : originalPixel.BackgroundColor;
+                }
+                else
+                {
+                    pixel.BackgroundColor = null;
+                }
             }
 
             return result;

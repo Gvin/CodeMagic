@@ -11,10 +11,16 @@ using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Implementations.Items;
+using CodeMagic.Implementations.Items.Usable;
+using CodeMagic.Implementations.Items.Weapon;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.Implementations.Objects.Creatures.NonPlayable;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
+using CodeMagic.UI.Sad.Drawing;
+using Microsoft.Xna.Framework;
+using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
@@ -29,7 +35,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             var map = CreateMap(UseFakeMap, out var playerPosition);
 
             var player = CreatePlayer();
-            player.Inventory.AddItem(CreateElvesBlade());
             map.AddObject(playerPosition, player);
 
             map.Refresh();
@@ -87,33 +92,34 @@ namespace CodeMagic.UI.Sad.GameProcess
             }
         }
 
-        private WeaponItem CreateWoodenSword()
-        {
-            return new WeaponItem(new WeaponItemConfiguration
-            {
-                Name = "Wooden Sword",
-                Key = "wooden_sword",
-                MinDamage = 2,
-                MaxDamage = 5,
-                Rareness = ItemRareness.Trash,
-                Weight = 10,
-                HitChance = 70
-            });
-        }
-
-        private WeaponItem CreateElvesBlade()
-        {
-            return new WeaponItem(new WeaponItemConfiguration
-            {
-                Name = "Elves Blade",
-                Key = "elves_blade",
-                MinDamage = 10,
-                MaxDamage = 25,
-                Rareness = ItemRareness.Rare,
-                Weight = 7,
-                HitChance = 90
-            });
-        }
+//        private WeaponItem CreateWoodenSword()
+//        {
+//            var color1 = System.Drawing.Color.FromArgb(128, 64, 0);
+//            var color2 = System.Drawing.Color.FromArgb(64, 32, 32);
+//            var color3 = System.Drawing.Color.GreenYellow;
+//
+//            return new WeaponItemImpl(new WeaponItemImplConfiguration
+//            {
+//                Name = "Wooden Sword",
+//                Key = "wooden_sword",
+//                Description = new []
+//                {
+//                    "It is now sharp enough to cut something.",
+//                    "But at least you can bite your enemy with it."
+//                },
+//                HandleImage = ItemDrawingHelper.RecolorImage(
+//                    ImagesStorage.Current.GetImage("Sword_Handle_V4"), color1, color2, color3),
+//                GuardImage = ItemDrawingHelper.RecolorImage(
+//                    ImagesStorage.Current.GetImage("Sword_Guard_V4"), color1, color2, color3),
+//                BladeImage = ItemDrawingHelper.RecolorImage(
+//                    ImagesStorage.Current.GetImage("Sword_Blade_V4"), color1, color2, color3),
+//                MinDamage = 2,
+//                MaxDamage = 5,
+//                Rareness = ItemRareness.Trash,
+//                Weight = 10,
+//                HitChance = 70
+//            });
+//        }
 
         private NonPlayableCreatureObject CreateGoblin()
         {
@@ -142,17 +148,71 @@ namespace CodeMagic.UI.Sad.GameProcess
                 MaxWeight = 100
             });
 
+            player.Inventory.AddItem(new HealthRestorationItem(new HealthPotionItemConfiguration
+            {
+                Description = "Medium sized jar with bloody-red liquid.",
+                HealValue = 50,
+                ImageName = "Item_Health_Potion",
+                Key = "health_potion",
+                Name = "Health Potion",
+                Rareness = ItemRareness.Uncommon,
+                Weight = 1
+            }));
+            player.Inventory.AddItem(new ManaRestorationItem(new ManaRestorationItemConfiguration
+            {
+                Description = "Medium sized jar with bright blue liquid.",
+                ManaRestoreValue = 50,
+                ImageName = "Item_Mana_Potion",
+                Key = "mana_potion",
+                Name = "Mana Potion",
+                Rareness = ItemRareness.Uncommon,
+                Weight = 1
+            }));
+
+            player.Inventory.AddItem(new HealthRestorationItem(new HealthPotionItemConfiguration
+            {
+                Description = "A small phial with bloody-red liquid.",
+                HealValue = 25,
+                ImageName = "Item_Health_Potion_Small",
+                Key = "health_potion_small",
+                Name = "Small Health Potion",
+                Rareness = ItemRareness.Common,
+                Weight = 1
+            }), 2);
+
+            player.Inventory.AddItem(new ManaRestorationItem(new ManaRestorationItemConfiguration
+            {
+                Description = "A small phial with bright blue liquid.",
+                ManaRestoreValue = 25,
+                ImageName = "Item_Mana_Potion_Small",
+                Key = "mana_potion_small",
+                Name = "Small Mana Potion",
+                Rareness = ItemRareness.Common,
+                Weight = 1
+            }), 2);
+
             var spellBook = new SpellBook(new SpellBookConfiguration
             {
                 Name = "Book of Fire",
                 Size = 10,
                 Rareness = ItemRareness.Epic
             });
+            player.Inventory.AddItem(spellBook);
+            player.Equipment.EquipItem(spellBook);
 
-            player.Equipment.SpellBook = spellBook;
+            var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
+            var weapon = itemsGenerator.GenerateWeapon(ItemRareness.Rare);
+            player.Inventory.AddItem(weapon);
+            player.Equipment.EquipItem(weapon);
 
-            var weapon = CreateWoodenSword();
-            player.Equipment.EquipWeapon(weapon);
+            player.Inventory.AddItem(itemsGenerator.GenerateWeapon(ItemRareness.Trash));
+            player.Inventory.AddItem(itemsGenerator.GenerateWeapon(ItemRareness.Common));
+            player.Inventory.AddItem(itemsGenerator.GenerateWeapon(ItemRareness.Uncommon));
+            for (int i = 0; i < 10; i++)
+            {
+                player.Inventory.AddItem(itemsGenerator.GenerateWeapon(ItemRareness.Rare));
+            }
+            
 
             return player;
         }

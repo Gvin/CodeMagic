@@ -19,7 +19,7 @@ namespace CodeMagic.Core.Objects.PlayerData
             ManaRegeneration = configuration.ManaRegeneration;
 
             Inventory = new Inventory(configuration.MaxWeight);
-            Equipment = new Equipment(Inventory);
+            Equipment = new Equipment();
         }
 
         public UpdateOrder UpdateOrder => UpdateOrder.Medium;

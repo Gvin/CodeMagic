@@ -10,7 +10,8 @@ namespace CodeMagic.Core.Game
 
         private RandomHelper()
         {
-            random = new Random();
+            var seedRandom = new Random();
+            random = new Random(seedRandom.Next());
         }
 
         public static int GetRandomValue(int min, int max)

@@ -1,6 +1,8 @@
 ﻿using System;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
@@ -19,6 +21,10 @@ namespace CodeMagic.UI.Sad.Views
 
         private ListBox itemsListBox;
         private ItemDetailsControl itemDetails;
+
+        private Button useItemButton;
+        private Button equipItemButton;
+        private Button takeOffItemButton;
 
         private Button closeButton;
 
@@ -49,6 +55,36 @@ namespace CodeMagic.UI.Sad.Views
             closeButton.Click += closeButton_Click;
             Add(closeButton);
 
+            useItemButton = new Button(20, 3)
+            {
+                Position = new Point(Width - 57, 25),
+                Text = "[U] Use",
+                CanFocus = false,
+                Theme = buttonsTheme
+            };
+            useItemButton.Click += useItemButton_Click;
+            Add(useItemButton);
+
+            equipItemButton = new Button(20, 3)
+            {
+                Position = new Point(Width - 57, 25),
+                Text = "[E] Equip",
+                CanFocus = false,
+                Theme = buttonsTheme
+            };
+            equipItemButton.Click += equipItemButton_Click;
+            Add(equipItemButton);
+
+            takeOffItemButton = new Button(20, 3)
+            {
+                Position = new Point(Width - 57, 25),
+                Text = "[T] Take Off",
+                CanFocus = false,
+                Theme = buttonsTheme
+            };
+            takeOffItemButton.Click += takeOffItemButton_Click;
+            Add(takeOffItemButton);
+
             itemDetails = new ItemDetailsControl(57, Height - 10)
             {
                 Position = new Point(Width - 58, 3)
@@ -75,9 +111,89 @@ namespace CodeMagic.UI.Sad.Views
                 }
             };
             itemsListBox.Theme = listBoxTheme;
+            itemsListBox.SelectedItemChanged += itemsListBox_SelectedItemChanged;
             Add(itemsListBox);
 
             RefreshItems(false);
+        }
+
+        private void takeOffItemButton_Click(object sender, EventArgs e)
+        {
+            TakeOffSelectedItem();
+        }
+
+        private void TakeOffSelectedItem()
+        {
+            var selectedStack = (itemsListBox.SelectedItem as InventoryStackListBoxItem)?.ItemStack;
+
+            if (!(selectedStack?.Item is IEquipableItem equipableItem))
+                return;
+
+            if (!game.Player.Equipment.IsEquiped(equipableItem))
+                return;
+
+            game.PerformPlayerAction(new UnequipItemPlayerAction(equipableItem));
+            Close();
+        }
+
+        private void equipItemButton_Click(object sender, EventArgs e)
+        {
+            EquipSelectedItem();
+        }
+
+        private void EquipSelectedItem()
+        {
+            var selectedStack = (itemsListBox.SelectedItem as InventoryStackListBoxItem)?.ItemStack;
+
+            if (!(selectedStack?.Item is IEquipableItem equipableItem))
+                return;
+
+            if (game.Player.Equipment.IsEquiped(equipableItem))
+                return;
+
+            game.PerformPlayerAction(new EquipItemPlayerAction(equipableItem));
+            Close();
+        }
+
+        private void useItemButton_Click(object sender, EventArgs e)
+        {
+            UseSelectedItem();
+        }
+
+        private void UseSelectedItem()
+        {
+            var selectedStack = (itemsListBox.SelectedItem as InventoryStackListBoxItem)?.ItemStack;
+
+            if (!(selectedStack?.Item is IUsableItem usableItem))
+                return;
+
+            game.PerformPlayerAction(new UseItemPlayerAction(usableItem));
+            Close();
+        }
+
+        private void itemsListBox_SelectedItemChanged(object sender, ListBox.SelectedItemEventArgs e)
+        {
+            itemDetails.Stack = (itemsListBox.SelectedItem as InventoryStackListBoxItem)?.ItemStack;
+
+            RefreshSelectedItemButtons();
+        }
+
+        private void RefreshSelectedItemButtons()
+        {
+            var selectedStack = (itemsListBox.SelectedItem as InventoryStackListBoxItem)?.ItemStack;
+
+            useItemButton.IsVisible = selectedStack?.Item is IUsableItem;
+            if (selectedStack?.Item is IEquipableItem equipable)
+            {
+                var equiped = game.Player.Equipment.IsEquiped(equipable);
+                takeOffItemButton.IsVisible = equiped;
+                equipItemButton.IsVisible = !equiped;
+            }
+            else
+            {
+                takeOffItemButton.IsVisible = false;
+                equipItemButton.IsVisible = false;
+            }
         }
 
         private void RefreshItems(bool keepSelection)
@@ -87,13 +203,15 @@ namespace CodeMagic.UI.Sad.Views
 
             foreach (var inventoryStack in game.Player.Inventory.Stacks)
             {
-                itemsListBox.Items.Add(new InventoryStackListBoxItem(inventoryStack));
+                itemsListBox.Items.Add(new InventoryStackListBoxItem(inventoryStack, game.Player));
             }
 
             if (keepSelection)
             {
                 itemsListBox.SelectedItem = itemsListBox.Items[selectionIndex];
             }
+
+            RefreshSelectedItemButtons();
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -120,6 +238,15 @@ namespace CodeMagic.UI.Sad.Views
         {
             switch (key.Key)
             {
+                case Keys.U:
+                    UseSelectedItem();
+                    return true;
+                case Keys.E:
+                    EquipSelectedItem();
+                    return true;
+                case Keys.T:
+                    TakeOffSelectedItem();
+                    return true;
                 case Keys.Escape:
                     Close();
                     return true;
@@ -129,18 +256,34 @@ namespace CodeMagic.UI.Sad.Views
 
         private class InventoryStackListBoxItem
         {
-            public InventoryStackListBoxItem(InventoryStack itemStack)
+            private readonly IPlayer player;
+
+            public InventoryStackListBoxItem(InventoryStack itemStack, IPlayer player)
             {
                 ItemStack = itemStack;
+                this.player = player;
             }
 
             public InventoryStack ItemStack { get; }
+
+            private bool GetIfEquiped()
+            {
+                if (!(ItemStack.Item is IEquipableItem equipable))
+                    return false;
+
+                return player.Equipment.IsEquiped(equipable);
+            }
 
             public override string ToString()
             {
                 if (ItemStack.Item.Stackable)
                 {
                     return $" {ItemStack.Item.Name} ({ItemStack.Count})";
+                }
+
+                if (GetIfEquiped())
+                {
+                    return $" {ItemStack.Item.Name} [Equiped]";
                 }
 
                 return $" {ItemStack.Item.Name}";
