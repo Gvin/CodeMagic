@@ -31,7 +31,6 @@ namespace CodeMagic.Implementations.Items
             };
 
             AddProtectionDescription(result);
-            AddWeaknessDescription(result);
 
             result.Add(new StyledString[0]);
             result.AddRange(description.Select(line => new[] { new StyledString(line) }).ToArray());
@@ -44,21 +43,9 @@ namespace CodeMagic.Implementations.Items
             foreach (Element element in Enum.GetValues(typeof(Element)))
             {
                 var value = GetProtection(element);
-                if (value > 0)
+                if (value != 0)
                 {
                     descriptionResult.Add(new[] { new StyledString($"{ElementNameHelper.GetElementName(element)} Protection: {value}%") });
-                }
-            }
-        }
-
-        private void AddWeaknessDescription(List<StyledString[]> descriptionResult)
-        {
-            foreach (Element element in Enum.GetValues(typeof(Element)))
-            {
-                var value = GetProtection(element);
-                if (value < 0)
-                {
-                    descriptionResult.Add(new[] {new StyledString($"{ElementNameHelper.GetElementName(element)} Weakness: {Math.Abs(value)}%")});
                 }
             }
         }

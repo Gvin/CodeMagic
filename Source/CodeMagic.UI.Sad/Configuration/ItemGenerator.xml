@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <item-generator-configuration>
   <weapon>
-
     <swords>
       <images>
         <handle>
@@ -560,6 +559,14 @@
                 <min-value>5</min-value>
                 <max-value>10</max-value>
               </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
             </protection>
             <min-bonuses>0</min-bonuses>
             <max-bonuses>0</max-bonuses>
@@ -574,12 +581,20 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>10</min-value>
-                <max-value>15</max-value>
+                <min-value>5</min-value>
+                <max-value>10</max-value>
               </value>
               <value element="Piercing">
                 <min-value>5</min-value>
                 <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
             </protection>
             <min-bonuses>0</min-bonuses>
@@ -595,10 +610,18 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
                 <min-value>10</min-value>
                 <max-value>15</max-value>
               </value>
@@ -616,10 +639,18 @@
                 <max-value>10</max-value>
               </value>
               <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
                 <min-value>15</min-value>
                 <max-value>20</max-value>
               </value>
-              <value element="Piercing">
+              <value element="Fire">
                 <min-value>10</min-value>
                 <max-value>15</max-value>
               </value>
@@ -656,6 +687,10 @@
                 <min-value>0</min-value>
                 <max-value>5</max-value>
               </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
               <value element="Electricity">
                 <min-value>-30</min-value>
                 <max-value>-20</max-value>
@@ -674,12 +709,16 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Piercing">
                 <min-value>0</min-value>
                 <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-30</min-value>
@@ -700,12 +739,16 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>15</min-value>
+                <max-value>20</max-value>
               </value>
               <value element="Piercing">
                 <min-value>5</min-value>
                 <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-30</min-value>
@@ -728,12 +771,16 @@
                 <max-value>10</max-value>
               </value>
               <value element="Slashing">
-                <min-value>25</min-value>
-                <max-value>30</max-value>
+                <min-value>15</min-value>
+                <max-value>20</max-value>
               </value>
               <value element="Piercing">
                 <min-value>10</min-value>
                 <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-30</min-value>
@@ -779,6 +826,14 @@
                 <min-value>10</min-value>
                 <max-value>15</max-value>
               </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
                 <max-value>-30</max-value>
@@ -797,12 +852,20 @@
                 <max-value>7</max-value>
               </value>
               <value element="Slashing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
-              </value>
-              <value element="Piercing">
                 <min-value>15</min-value>
                 <max-value>20</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
@@ -823,12 +886,20 @@
                 <max-value>10</max-value>
               </value>
               <value element="Slashing">
-                <min-value>25</min-value>
-                <max-value>30</max-value>
+                <min-value>20</min-value>
+                <max-value>25</max-value>
               </value>
               <value element="Piercing">
                 <min-value>15</min-value>
                 <max-value>20</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
@@ -851,12 +922,20 @@
                 <max-value>15</max-value>
               </value>
               <value element="Slashing">
-                <min-value>30</min-value>
-                <max-value>35</max-value>
-              </value>
-              <value element="Piercing">
                 <min-value>20</min-value>
                 <max-value>25</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
@@ -881,7 +960,6 @@
           <value material="Mythril">10</value>
         </weight>
       </item>
-      <!-- TODO: Configure -->
       <item name="Plate">
         <images>
           <image>Armor_Plate_Chest_V1</image>
@@ -892,16 +970,24 @@
           <rareness value="Trash">
             <protection>
               <value element="Blunt">
-                <min-value>2</min-value>
-                <max-value>7</max-value>
-              </value>
-              <value element="Slashing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
-              </value>
-              <value element="Piercing">
                 <min-value>10</min-value>
                 <max-value>15</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
@@ -917,14 +1003,22 @@
           <rareness value="Common">
             <protection>
               <value element="Blunt">
-                <min-value>2</min-value>
-                <max-value>7</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Slashing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>25</min-value>
+                <max-value>30</max-value>
               </value>
               <value element="Piercing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
                 <min-value>15</min-value>
                 <max-value>20</max-value>
               </value>
@@ -943,14 +1037,22 @@
           <rareness value="Uncommon">
             <protection>
               <value element="Blunt">
-                <min-value>5</min-value>
-                <max-value>10</max-value>
+                <min-value>15</min-value>
+                <max-value>20</max-value>
               </value>
               <value element="Slashing">
-                <min-value>25</min-value>
-                <max-value>30</max-value>
+                <min-value>30</min-value>
+                <max-value>35</max-value>
               </value>
               <value element="Piercing">
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
                 <min-value>15</min-value>
                 <max-value>20</max-value>
               </value>
@@ -971,16 +1073,24 @@
           <rareness value="Rare">
             <protection>
               <value element="Blunt">
-                <min-value>10</min-value>
-                <max-value>15</max-value>
+                <min-value>15</min-value>
+                <max-value>29</max-value>
               </value>
               <value element="Slashing">
                 <min-value>30</min-value>
                 <max-value>35</max-value>
               </value>
               <value element="Piercing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
@@ -1027,6 +1137,14 @@
                 <min-value>2</min-value>
                 <max-value>5</max-value>
               </value>
+              <value element="Frost">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
             </protection>
             <min-bonuses>0</min-bonuses>
             <max-bonuses>0</max-bonuses>
@@ -1041,10 +1159,18 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>5</min-value>
-                <max-value>7</max-value>
+                <min-value>2</min-value>
+                <max-value>5</max-value>
               </value>
               <value element="Piercing">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
                 <min-value>2</min-value>
                 <max-value>5</max-value>
               </value>
@@ -1062,12 +1188,20 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>7</min-value>
-                <max-value>10</max-value>
+                <min-value>5</min-value>
+                <max-value>7</max-value>
               </value>
               <value element="Piercing">
-                <min-value>5</min-value>
-                <max-value>8</max-value>
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
               </value>
             </protection>
             <min-bonuses>1</min-bonuses>
@@ -1079,16 +1213,24 @@
           <rareness value="Rare">
             <protection>
               <value element="Blunt">
-                <min-value>5</min-value>
-                <max-value>10</max-value>
+                <min-value>0</min-value>
+                <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>10</min-value>
-                <max-value>15</max-value>
+                <min-value>7</min-value>
+                <max-value>12</max-value>
               </value>
               <value element="Piercing">
-                <min-value>5</min-value>
-                <max-value>10</max-value>
+                <min-value>4</min-value>
+                <max-value>8</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
               </value>
             </protection>
             <min-bonuses>2</min-bonuses>
@@ -1102,7 +1244,6 @@
           <value material="Leather">3</value>
         </weight>
       </item>
-      <!-- TODO: Configure -->
       <item name="Mail">
         <images>
           <image>Armor_Mail_Helmet_V1</image>
@@ -1116,16 +1257,20 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>10</min-value>
-                <max-value>15</max-value>
+                <min-value>5</min-value>
+                <max-value>10</max-value>
               </value>
               <value element="Piercing">
                 <min-value>0</min-value>
                 <max-value>5</max-value>
               </value>
+              <value element="Frost">
+                <min-value>-7</min-value>
+                <max-value>-5</max-value>
+              </value>
               <value element="Electricity">
-                <min-value>-30</min-value>
-                <max-value>-20</max-value>
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
               </value>
             </protection>
             <min-bonuses>0</min-bonuses>
@@ -1141,16 +1286,20 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
+                <min-value>5</min-value>
+                <max-value>10</max-value>
               </value>
               <value element="Piercing">
                 <min-value>0</min-value>
                 <max-value>5</max-value>
               </value>
+              <value element="Frost">
+                <min-value>-7</min-value>
+                <max-value>-5</max-value>
+              </value>
               <value element="Electricity">
-                <min-value>-30</min-value>
-                <max-value>-20</max-value>
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
               </value>
             </protection>
             <min-bonuses>0</min-bonuses>
@@ -1167,16 +1316,20 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>7</min-value>
+                <max-value>12</max-value>
               </value>
               <value element="Piercing">
-                <min-value>5</min-value>
-                <max-value>10</max-value>
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-7</min-value>
+                <max-value>-5</max-value>
               </value>
               <value element="Electricity">
-                <min-value>-30</min-value>
-                <max-value>-20</max-value>
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
               </value>
             </protection>
             <min-bonuses>1</min-bonuses>
@@ -1191,20 +1344,24 @@
           <rareness value="Rare">
             <protection>
               <value element="Blunt">
-                <min-value>5</min-value>
-                <max-value>10</max-value>
+                <min-value>0</min-value>
+                <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>25</min-value>
-                <max-value>30</max-value>
-              </value>
-              <value element="Piercing">
-                <min-value>10</min-value>
+                <min-value>8</min-value>
                 <max-value>15</max-value>
               </value>
+              <value element="Piercing">
+                <min-value>3</min-value>
+                <max-value>8</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-7</min-value>
+                <max-value>-5</max-value>
+              </value>
               <value element="Electricity">
-                <min-value>-30</min-value>
-                <max-value>-20</max-value>
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
               </value>
             </protection>
             <min-bonuses>2</min-bonuses>
@@ -1225,7 +1382,6 @@
           <value material="Mythril">5</value>
         </weight>
       </item>
-      <!-- TODO: Configure -->
       <item name="Scale Mail">
         <images>
           <image>Armor_ScaleMail_Helmet_V1</image>
@@ -1236,19 +1392,27 @@
             <protection>
               <value element="Blunt">
                 <min-value>2</min-value>
-                <max-value>7</max-value>
+                <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
+                <min-value>5</min-value>
+                <max-value>10</max-value>
               </value>
               <value element="Piercing">
-                <min-value>10</min-value>
-                <max-value>15</max-value>
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>3</min-value>
+                <max-value>7</max-value>
               </value>
               <value element="Electricity">
-                <min-value>-40</min-value>
-                <max-value>-30</max-value>
+                <min-value>-12</min-value>
+                <max-value>-7</max-value>
               </value>
             </protection>
             <min-bonuses>0</min-bonuses>
@@ -1261,19 +1425,27 @@
             <protection>
               <value element="Blunt">
                 <min-value>2</min-value>
-                <max-value>7</max-value>
+                <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>5</min-value>
+                <max-value>10</max-value>
               </value>
               <value element="Piercing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>3</min-value>
+                <max-value>7</max-value>
               </value>
               <value element="Electricity">
-                <min-value>-40</min-value>
-                <max-value>-30</max-value>
+                <min-value>-12</min-value>
+                <max-value>-7</max-value>
               </value>
             </protection>
             <min-bonuses>0</min-bonuses>
@@ -1286,20 +1458,28 @@
           <rareness value="Uncommon">
             <protection>
               <value element="Blunt">
-                <min-value>5</min-value>
-                <max-value>10</max-value>
+                <min-value>2</min-value>
+                <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>25</min-value>
-                <max-value>30</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Piercing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
+                <min-value>5</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>3</min-value>
+                <max-value>7</max-value>
               </value>
               <value element="Electricity">
-                <min-value>-40</min-value>
-                <max-value>-30</max-value>
+                <min-value>-12</min-value>
+                <max-value>-7</max-value>
               </value>
             </protection>
             <min-bonuses>1</min-bonuses>
@@ -1314,20 +1494,28 @@
           <rareness value="Rare">
             <protection>
               <value element="Blunt">
+                <min-value>4</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Slashing">
                 <min-value>10</min-value>
                 <max-value>15</max-value>
               </value>
-              <value element="Slashing">
-                <min-value>30</min-value>
-                <max-value>35</max-value>
-              </value>
               <value element="Piercing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>5</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>3</min-value>
+                <max-value>7</max-value>
               </value>
               <value element="Electricity">
-                <min-value>-40</min-value>
-                <max-value>-30</max-value>
+                <min-value>-12</min-value>
+                <max-value>-7</max-value>
               </value>
             </protection>
             <min-bonuses>2</min-bonuses>
@@ -1348,7 +1536,6 @@
           <value material="Mythril">10</value>
         </weight>
       </item>
-      <!-- TODO: Configure -->
       <item name="Plate">
         <images>
           <image>Armor_Plate_Helmet_V1</image>
@@ -1364,16 +1551,24 @@
                 <max-value>7</max-value>
               </value>
               <value element="Slashing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
+                <min-value>7</min-value>
+                <max-value>12</max-value>
               </value>
               <value element="Piercing">
-                <min-value>10</min-value>
-                <max-value>15</max-value>
+                <min-value>7</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-5</min-value>
+                <max-value>-3</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
               </value>
               <value element="Electricity">
-                <min-value>-40</min-value>
-                <max-value>-30</max-value>
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
               </value>
             </protection>
             <min-bonuses>0</min-bonuses>
@@ -1389,16 +1584,24 @@
                 <max-value>7</max-value>
               </value>
               <value element="Slashing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>7</min-value>
+                <max-value>12</max-value>
               </value>
               <value element="Piercing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
+                <min-value>7</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-5</min-value>
+                <max-value>-3</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
               </value>
               <value element="Electricity">
-                <min-value>-40</min-value>
-                <max-value>-30</max-value>
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
               </value>
             </protection>
             <min-bonuses>0</min-bonuses>
@@ -1415,16 +1618,24 @@
                 <max-value>10</max-value>
               </value>
               <value element="Slashing">
-                <min-value>25</min-value>
-                <max-value>30</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Piercing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-5</min-value>
+                <max-value>-3</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
               </value>
               <value element="Electricity">
-                <min-value>-40</min-value>
-                <max-value>-30</max-value>
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
               </value>
             </protection>
             <min-bonuses>1</min-bonuses>
@@ -1439,20 +1650,28 @@
           <rareness value="Rare">
             <protection>
               <value element="Blunt">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Slashing">
                 <min-value>10</min-value>
                 <max-value>15</max-value>
               </value>
-              <value element="Slashing">
-                <min-value>30</min-value>
-                <max-value>35</max-value>
-              </value>
               <value element="Piercing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-5</min-value>
+                <max-value>-3</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
               </value>
               <value element="Electricity">
-                <min-value>-40</min-value>
-                <max-value>-30</max-value>
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
               </value>
             </protection>
             <min-bonuses>2</min-bonuses>
@@ -1476,7 +1695,6 @@
     </helmets>
 
     <leggings>
-      <!-- TODO: Configure-->
       <item>
         <images>
           <image>Armor_Leather_Leggings_V1</image>
@@ -1490,12 +1708,20 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>2</min-value>
-                <max-value>5</max-value>
+                <min-value>5</min-value>
+                <max-value>10</max-value>
               </value>
               <value element="Piercing">
-                <min-value>2</min-value>
-                <max-value>5</max-value>
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
             </protection>
             <min-bonuses>0</min-bonuses>
@@ -1512,11 +1738,19 @@
               </value>
               <value element="Slashing">
                 <min-value>5</min-value>
-                <max-value>7</max-value>
+                <max-value>10</max-value>
               </value>
               <value element="Piercing">
-                <min-value>2</min-value>
-                <max-value>5</max-value>
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
             </protection>
             <min-bonuses>0</min-bonuses>
@@ -1532,12 +1766,20 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>7</min-value>
-                <max-value>10</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Piercing">
-                <min-value>5</min-value>
-                <max-value>8</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
             </protection>
             <min-bonuses>1</min-bonuses>
@@ -1557,8 +1799,16 @@
                 <max-value>15</max-value>
               </value>
               <value element="Piercing">
-                <min-value>5</min-value>
-                <max-value>10</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
             </protection>
             <min-bonuses>2</min-bonuses>
@@ -1572,7 +1822,6 @@
           <value material="Leather">3</value>
         </weight>
       </item>
-      <!-- TODO: Configure -->
       <item name="Mail">
         <images>
           <image>Armor_Mail_Leggings_V1</image>
@@ -1594,6 +1843,10 @@
                 <min-value>0</min-value>
                 <max-value>5</max-value>
               </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
               <value element="Electricity">
                 <min-value>-30</min-value>
                 <max-value>-20</max-value>
@@ -1612,12 +1865,16 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Piercing">
                 <min-value>0</min-value>
                 <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-30</min-value>
@@ -1638,12 +1895,16 @@
                 <max-value>5</max-value>
               </value>
               <value element="Slashing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>15</min-value>
+                <max-value>20</max-value>
               </value>
               <value element="Piercing">
                 <min-value>5</min-value>
                 <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-30</min-value>
@@ -1666,12 +1927,16 @@
                 <max-value>10</max-value>
               </value>
               <value element="Slashing">
-                <min-value>25</min-value>
-                <max-value>30</max-value>
+                <min-value>15</min-value>
+                <max-value>20</max-value>
               </value>
               <value element="Piercing">
                 <min-value>10</min-value>
                 <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-30</min-value>
@@ -1696,7 +1961,6 @@
           <value material="Mythril">5</value>
         </weight>
       </item>
-      <!-- TODO: Configure -->
       <item name="Scale Mail">
         <images>
           <image>Armor_ScaleMail_Leggings_V1</image>
@@ -1718,6 +1982,14 @@
                 <min-value>10</min-value>
                 <max-value>15</max-value>
               </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
                 <max-value>-30</max-value>
@@ -1736,12 +2008,20 @@
                 <max-value>7</max-value>
               </value>
               <value element="Slashing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
-              </value>
-              <value element="Piercing">
                 <min-value>15</min-value>
                 <max-value>20</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
@@ -1762,12 +2042,20 @@
                 <max-value>10</max-value>
               </value>
               <value element="Slashing">
-                <min-value>25</min-value>
-                <max-value>30</max-value>
+                <min-value>20</min-value>
+                <max-value>25</max-value>
               </value>
               <value element="Piercing">
                 <min-value>15</min-value>
                 <max-value>20</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
@@ -1790,12 +2078,20 @@
                 <max-value>15</max-value>
               </value>
               <value element="Slashing">
-                <min-value>30</min-value>
-                <max-value>35</max-value>
-              </value>
-              <value element="Piercing">
                 <min-value>20</min-value>
                 <max-value>25</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
@@ -1820,7 +2116,6 @@
           <value material="Mythril">10</value>
         </weight>
       </item>
-      <!-- TODO: Configure -->
       <item name="Plate">
         <images>
           <image>Armor_Plate_Leggings_V1</image>
@@ -1831,16 +2126,24 @@
           <rareness value="Trash">
             <protection>
               <value element="Blunt">
-                <min-value>2</min-value>
-                <max-value>7</max-value>
-              </value>
-              <value element="Slashing">
-                <min-value>15</min-value>
-                <max-value>20</max-value>
-              </value>
-              <value element="Piercing">
                 <min-value>10</min-value>
                 <max-value>15</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-40</min-value>
@@ -1856,14 +2159,22 @@
           <rareness value="Common">
             <protection>
               <value element="Blunt">
-                <min-value>2</min-value>
-                <max-value>7</max-value>
+                <min-value>10</min-value>
+                <max-value>15</max-value>
               </value>
               <value element="Slashing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>25</min-value>
+                <max-value>30</max-value>
               </value>
               <value element="Piercing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
                 <min-value>15</min-value>
                 <max-value>20</max-value>
               </value>
@@ -1882,14 +2193,22 @@
           <rareness value="Uncommon">
             <protection>
               <value element="Blunt">
-                <min-value>5</min-value>
-                <max-value>10</max-value>
+                <min-value>15</min-value>
+                <max-value>20</max-value>
               </value>
               <value element="Slashing">
-                <min-value>25</min-value>
-                <max-value>30</max-value>
+                <min-value>30</min-value>
+                <max-value>35</max-value>
               </value>
               <value element="Piercing">
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
                 <min-value>15</min-value>
                 <max-value>20</max-value>
               </value>
@@ -1910,16 +2229,24 @@
           <rareness value="Rare">
             <protection>
               <value element="Blunt">
-                <min-value>10</min-value>
-                <max-value>15</max-value>
+                <min-value>15</min-value>
+                <max-value>29</max-value>
               </value>
               <value element="Slashing">
                 <min-value>30</min-value>
                 <max-value>35</max-value>
               </value>
               <value element="Piercing">
-                <min-value>20</min-value>
-                <max-value>25</max-value>
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
               </value>
               <value element="Electricity">
                 <min-value>-40</min-value>

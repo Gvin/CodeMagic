@@ -71,6 +71,7 @@
     <Compile Include="Configuration\ITemperatureDamageConfiguration.cs" />
     <Compile Include="Game\IGameCore.cs" />
     <Compile Include="Game\Journaling\Messages\AttackMissMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\DamageBlockedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\HealedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ManaRestoredMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ParalyzedMessage.cs" />

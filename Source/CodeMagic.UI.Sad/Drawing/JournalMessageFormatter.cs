@@ -70,9 +70,20 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetHealedMessage(healedMessage);
                 case ManaRestoredMessage manaRestoredMessage:
                     return GetManaRestoredMessage(manaRestoredMessage);
+                case DamageBlockedMessage damageBlockedMessage:
+                    return GetDamageBlockedMessage(damageBlockedMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetDamageBlockedMessage(DamageBlockedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{GetMapObjectName(message.Target)} blocked "),
+                GetDamageText(message.BlockedValue, message.DamageElement)
+            };
         }
 
         private ColoredString[] GetHealedMessage(HealedMessage message)

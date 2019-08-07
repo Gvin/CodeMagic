@@ -8,6 +8,8 @@ namespace CodeMagic.Core.Objects.PlayerData
 {
     public class Player : CreatureObject, IPlayer, IDynamicObject
     {
+        private const int MaxProtection = 75;
+
         private int mana;
         private int maxMana;
 
@@ -80,6 +82,14 @@ namespace CodeMagic.Core.Objects.PlayerData
             base.OnDeath(map, position);
 
             Died?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected override int GetProtection(Element element)
+        {
+            var value = base.GetProtection(element) + Equipment.GetProtection(element);
+            if (value > MaxProtection)
+                return MaxProtection;
+            return value;
         }
     }
 }
