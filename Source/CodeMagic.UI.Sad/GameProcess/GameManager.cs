@@ -205,12 +205,10 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Inventory.AddItem(weapon);
             player.Equipment.EquipItem(weapon);
 
-            player.Inventory.AddItem(itemsGenerator.GenerateWeapon(ItemRareness.Trash));
-            player.Inventory.AddItem(itemsGenerator.GenerateWeapon(ItemRareness.Common));
-            player.Inventory.AddItem(itemsGenerator.GenerateWeapon(ItemRareness.Uncommon));
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
-                player.Inventory.AddItem(itemsGenerator.GenerateWeapon(ItemRareness.Rare));
+                var rareness = (ItemRareness) RandomHelper.GetRandomValue(0, 3);
+                player.Inventory.AddItem(itemsGenerator.GenerateArmor(rareness));
             }
             
 

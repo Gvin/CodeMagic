@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
@@ -7,17 +8,17 @@ using CodeMagic.Implementations.Items.Weapon;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
 using CodeMagic.UI.Images;
 
-namespace CodeMagic.ItemsGeneration.Implementations
+namespace CodeMagic.ItemsGeneration.Implementations.Weapon
 {
     internal abstract class WeaponGeneratorBase : IWeaponGenerator
     {
         private readonly IImagesStorage imagesStorage;
         protected readonly string BaseName;
-        protected readonly IWeaponConfiguration Configuration;
+        private readonly IWeaponConfiguration configuration;
 
         protected WeaponGeneratorBase(string baseName, IWeaponConfiguration configuration, IImagesStorage imagesStorage)
         {
-            Configuration = configuration;
+            this.configuration = configuration;
             this.imagesStorage = imagesStorage;
             BaseName = baseName;
         }
@@ -25,10 +26,10 @@ namespace CodeMagic.ItemsGeneration.Implementations
         public WeaponItem GenerateWeapon(ItemRareness rareness)
         {
             var rarenessConfiguration = GetRarenessConfiguration(rareness);
-            var material = GetRandomElement(rarenessConfiguration.Materials);
+            var material = RandomHelper.GetRandomElement(rarenessConfiguration.Materials);
             var image = GenerateImage(material);
-            var maxDamage = RandomHelper.GetRandomValue(rarenessConfiguration.MinDamage, rarenessConfiguration.MaxDamage);
-            var minDamage = Math.Max(0, maxDamage - rarenessConfiguration.MinMaxDamageDifference);
+            var maxDamage = GenerateMaxDamage(rarenessConfiguration);
+            var minDamage = maxDamage.ToDictionary(pair => pair.Key, pair => pair.Value - rarenessConfiguration.MinMaxDamageDifference);
             var hitChance = RandomHelper.GetRandomValue(rarenessConfiguration.MinHitChance, rarenessConfiguration.MaxHitChance);
             var weight = GetWeight(material);
             var name = GenerateName(rareness, material);
@@ -48,60 +49,18 @@ namespace CodeMagic.ItemsGeneration.Implementations
             });
         }
 
-        protected string GetMaterialPrefix(ItemMaterial material)
+        private Dictionary<Element, int> GenerateMaxDamage(IWeaponRarenessConfiguration config)
         {
-            switch (material)
-            {
-                case ItemMaterial.Wood:
-                    return "Wooden";
-                case ItemMaterial.Iron:
-                    return "Iron";
-                case ItemMaterial.Steel:
-                    return "Steel";
-                case ItemMaterial.Silver:
-                    return "Silver";
-                case ItemMaterial.ElvesMetal:
-                    return "Elven";
-                case ItemMaterial.DwarfsMetal:
-                    return "Dwarf";
-                case ItemMaterial.Mythril:
-                    return "Mythril";
-                default:
-                    throw new ArgumentException($"Unknown material: {material}");
-            }
-        }
-
-        protected string GetRarenessPrefix(ItemRareness rareness)
-        {
-            switch (rareness)
-            {
-                case ItemRareness.Trash:
-                    return "Weak";
-                case ItemRareness.Common:
-                    return string.Empty;
-                case ItemRareness.Uncommon:
-                    return "Good";
-                case ItemRareness.Rare:
-                    return "Excellent";
-                default:
-                    throw new ArgumentException($"Unsupported rareness: {rareness}");
-            }
+            return config.Damage.ToDictionary(pair => pair.Element,
+                pair => RandomHelper.GetRandomValue(pair.MinValue, pair.MaxValue));
         }
 
         protected abstract int GetWeight(ItemMaterial material);
 
         protected SymbolsImage GetRandomImage(string[] names)
         {
-            var randomName = GetRandomElement(names);
+            var randomName = RandomHelper.GetRandomElement(names);
             return imagesStorage.GetImage(randomName);
-        }
-
-        protected T GetRandomElement<T>(T[] array)
-        {
-            if (array.Length == 0)
-                throw new ArgumentException("Empty array.");
-
-            return array[RandomHelper.GetRandomValue(0, array.Length - 1)];
         }
 
         protected SymbolsImage MergeImages(params SymbolsImage[] images)
@@ -124,8 +83,8 @@ namespace CodeMagic.ItemsGeneration.Implementations
 
         private string GenerateName(ItemRareness rareness, ItemMaterial material)
         {
-            var rarenessPrefix = GetRarenessPrefix(rareness);
-            var materialPrefix = GetMaterialPrefix(material);
+            var rarenessPrefix = NameGenerationHelper.GetRarenessPrefix(rareness);
+            var materialPrefix = NameGenerationHelper.GetMaterialPrefix(material);
             if (string.IsNullOrEmpty(rarenessPrefix))
             {
                 return $"{materialPrefix} {BaseName}";
@@ -144,20 +103,20 @@ namespace CodeMagic.ItemsGeneration.Implementations
 
         private string GetMaterialDescription(ItemMaterial material)
         {
-            var textConfig = Configuration.DescriptionConfiguration.MaterialDescription.FirstOrDefault(config => config.Material == material);
+            var textConfig = configuration.DescriptionConfiguration.MaterialDescription.FirstOrDefault(config => config.Material == material);
             if (textConfig == null)
                 throw new ApplicationException($"Text configuration not found for weapon material: {material}");
 
-            return GetRandomElement(textConfig.Text);
+            return RandomHelper.GetRandomElement(textConfig.Text);
         }
 
         private string GetRarenessDescription(ItemRareness rareness)
         {
-            var textConfig = Configuration.DescriptionConfiguration.RarenessDescription.FirstOrDefault(config => config.Rareness == rareness);
+            var textConfig = configuration.DescriptionConfiguration.RarenessDescription.FirstOrDefault(config => config.Rareness == rareness);
             if (textConfig == null)
                 throw new ApplicationException($"Text configuration not found for weapon rareness: {rareness}");
 
-            return GetRandomElement(textConfig.Text);
+            return RandomHelper.GetRandomElement(textConfig.Text);
         }
     }
 }

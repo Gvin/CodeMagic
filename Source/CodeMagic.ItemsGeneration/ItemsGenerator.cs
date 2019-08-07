@@ -5,12 +5,14 @@ using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
 using CodeMagic.ItemsGeneration.Configuration;
 using CodeMagic.ItemsGeneration.Implementations;
+using CodeMagic.ItemsGeneration.Implementations.Weapon;
 
 namespace CodeMagic.ItemsGeneration
 {
     public class ItemsGenerator : IItemsGenerator
     {
         private readonly Dictionary<WeaponType, IWeaponGenerator> weaponGenerators;
+        private readonly ArmorGenerator armorGenerator;
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage)
         {
@@ -45,6 +47,7 @@ namespace CodeMagic.ItemsGeneration
                         imagesStorage)
                 }
             };
+            armorGenerator = new ArmorGenerator(configuration.ArmorConfiguration, imagesStorage);
         }
 
         public WeaponItem GenerateWeapon(ItemRareness rareness)
@@ -55,6 +58,14 @@ namespace CodeMagic.ItemsGeneration
             var weaponType = GetRandomWeaponType();
             var generator = weaponGenerators[weaponType];
             return generator.GenerateWeapon(rareness);
+        }
+
+        public ArmorItem GenerateArmor(ItemRareness rareness)
+        {
+            if (rareness == ItemRareness.Epic)
+                throw new ArgumentException("Item generator cannot generate epic items.");
+
+            return armorGenerator.GenerateArmor(rareness);
         }
 
         private WeaponType GetRandomWeaponType()

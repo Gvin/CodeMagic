@@ -3,6 +3,7 @@
     public enum ItemMaterial
     {
         Wood,
+        Leather,
         Iron,
         Steel,
         Silver,

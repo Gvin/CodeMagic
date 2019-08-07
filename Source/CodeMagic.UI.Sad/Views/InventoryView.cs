@@ -57,7 +57,7 @@ namespace CodeMagic.UI.Sad.Views
 
             useItemButton = new Button(20, 3)
             {
-                Position = new Point(Width - 57, 25),
+                Position = new Point(Width - 57, 40),
                 Text = "[U] Use",
                 CanFocus = false,
                 Theme = buttonsTheme
@@ -67,7 +67,7 @@ namespace CodeMagic.UI.Sad.Views
 
             equipItemButton = new Button(20, 3)
             {
-                Position = new Point(Width - 57, 25),
+                Position = new Point(Width - 57, 40),
                 Text = "[E] Equip",
                 CanFocus = false,
                 Theme = buttonsTheme
@@ -77,7 +77,7 @@ namespace CodeMagic.UI.Sad.Views
 
             takeOffItemButton = new Button(20, 3)
             {
-                Position = new Point(Width - 57, 25),
+                Position = new Point(Width - 57, 40),
                 Text = "[T] Take Off",
                 CanFocus = false,
                 Theme = buttonsTheme
@@ -95,6 +95,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 Position = new Point(1, 3),
                 CompareByReference = true,
+                CanFocus = false
             };
             var scrollBarTheme = new ScrollBarTheme
             {

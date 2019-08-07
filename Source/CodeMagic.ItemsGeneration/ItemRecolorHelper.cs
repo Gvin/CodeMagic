@@ -9,6 +9,7 @@ namespace CodeMagic.ItemsGeneration
         private static readonly Dictionary<ItemMaterial, ColorPalette> Palette = new Dictionary<ItemMaterial, ColorPalette>
         {
             {ItemMaterial.Wood, new ColorPalette(Color.FromArgb(128, 64, 0), Color.FromArgb(64, 32, 32), Color.Yellow)},
+            {ItemMaterial.Leather, new ColorPalette(Color.FromArgb(128, 64, 0), Color.FromArgb(64, 32, 32), Color.LightGray)},
             {ItemMaterial.Iron, new ColorPalette(Color.FromArgb(201, 192, 167), Color.FromArgb(138, 130, 109), Color.Aqua)},
             {ItemMaterial.Steel, new ColorPalette(Color.FromArgb(196, 194, 187), Color.FromArgb(145, 143, 137), Color.Red)},
             {ItemMaterial.Silver, new ColorPalette(Color.FromArgb(224, 224, 224), Color.FromArgb(171, 171, 171), Color.Violet)},

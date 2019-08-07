@@ -1,18 +1,28 @@
-﻿namespace CodeMagic.Core.Items
+﻿using System.Collections.Generic;
+using System.Linq;
+using CodeMagic.Core.Game;
+
+namespace CodeMagic.Core.Items
 {
     public class WeaponItem : Item, IEquipableItem
     {
+        protected readonly Dictionary<Element, int> MaxDamage;
+        protected readonly Dictionary<Element, int> MinDamage;
+
         public WeaponItem(WeaponItemConfiguration configuration) 
             : base(configuration)
         {
-            MinDamage = configuration.MinDamage;
-            MaxDamage = configuration.MaxDamage;
+            MinDamage = configuration.MinDamage.ToDictionary(pair => pair.Key, pair => pair.Value);
+            MaxDamage = configuration.MaxDamage.ToDictionary(pair => pair.Key, pair => pair.Value);
+
             HitChance = configuration.HitChance;
         }
 
-        public int MinDamage { get; }
-
-        public int MaxDamage { get; }
+        public Dictionary<Element, int> GenerateDamage()
+        {
+            return MaxDamage.ToDictionary(pair => pair.Key,
+                pair => RandomHelper.GetRandomValue(pair.Value, MinDamage[pair.Key]));
+        }
 
         public int HitChance { get; }
 
@@ -21,9 +31,9 @@
 
     public class WeaponItemConfiguration : ItemConfiguration
     {
-        public int MinDamage { get; set; }
+        public Dictionary<Element, int> MaxDamage { get; set; }
 
-        public int MaxDamage { get; set; }
+        public Dictionary<Element, int> MinDamage { get; set; }
 
         public int HitChance { get; set; }
     }

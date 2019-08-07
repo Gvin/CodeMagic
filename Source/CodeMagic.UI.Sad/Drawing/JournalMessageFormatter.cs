@@ -187,7 +187,7 @@ namespace CodeMagic.UI.Sad.Drawing
             return new[]
             {
                 new ColoredString($"{GetMapObjectName(message.Source)} dealt ", TextColor, BackgroundColor),
-                GetDamageText(message.Damage, Element.Physical),
+                GetDamageText(message.Damage, message.Element),
                 new ColoredString($" to {GetMapObjectName(message.Target)}", TextColor, BackgroundColor)
             };
         }
@@ -239,8 +239,12 @@ namespace CodeMagic.UI.Sad.Drawing
         {
             switch (element)
             {
-                case Element.Physical:
-                    return "Physical";
+                case Element.Blunt:
+                    return "Blunt";
+                case Element.Slashing:
+                    return "Slashing";
+                case Element.Piercing:
+                    return "Piercing";
                 case Element.Fire:
                     return "Fire";
                 case Element.Frost:

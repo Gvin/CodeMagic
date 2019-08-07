@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Game.PlayerActions
@@ -34,17 +33,15 @@ namespace CodeMagic.Core.Game.PlayerActions
                 return true;
             }
 
-            var damage = GetDamage(game.Player);
-            target.Damage(game.Journal, damage);
-            game.Journal.Write(new DealDamageMessage(game.Player, target, damage));
-            return true;
-        }
+            var damage = game.Player.Equipment.Weapon.GenerateDamage();
+            foreach (var damageValue in damage)
+            {
+                // TODO: Process target's protection
+                target.Damage(game.Journal, damageValue.Value, damageValue.Key);
+                game.Journal.Write(new DealDamageMessage(game.Player, target, damageValue.Value, damageValue.Key));
+            }
 
-        private int GetDamage(IPlayer player)
-        {
-            var min = player.Equipment.Weapon.MinDamage;
-            var max = player.Equipment.Weapon.MaxDamage;
-            return RandomHelper.GetRandomValue(min, max);
+            return true;
         }
 
         private IDestroyableObject GetAttackTarget(IDestroyableObject[] possibleTargets)

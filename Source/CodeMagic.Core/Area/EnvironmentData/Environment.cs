@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
@@ -56,8 +57,8 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
             if (pressureDamage > 0)
             {
-                journal.Write(new EnvironmentDamageMessage(destroyable, pressureDamage));
-                destroyable.Damage(journal, pressureDamage);
+                journal.Write(new EnvironmentDamageMessage(destroyable, pressureDamage, Element.Blunt));
+                destroyable.Damage(journal, pressureDamage, Element.Blunt);
             }
         }
 

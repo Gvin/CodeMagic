@@ -6,7 +6,7 @@ using CodeMagic.ItemsGeneration.Configuration.Weapon;
 using CodeMagic.ItemsGeneration.Configuration.Weapon.Blade;
 using CodeMagic.UI.Images;
 
-namespace CodeMagic.ItemsGeneration.Implementations
+namespace CodeMagic.ItemsGeneration.Implementations.Weapon
 {
     internal class BladeWeaponGenerator : WeaponGeneratorBase
     {

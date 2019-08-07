@@ -6,9 +6,7 @@ namespace CodeMagic.ItemsGeneration.Configuration.Weapon
     {
         ItemRareness Rareness { get; }
 
-        int MinDamage { get; }
-
-        int MaxDamage { get; }
+        IElementConfiguration[] Damage { get; }
 
         int MinMaxDamageDifference { get; }
 

@@ -42,6 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Armor\IArmorConfiguration.cs" />
+    <Compile Include="Configuration\Armor\IArmorRarenessConfiguration.cs" />
+    <Compile Include="Configuration\Armor\IArmorPieceConfiguration.cs" />
+    <Compile Include="Configuration\IElementConfiguration.cs" />
     <Compile Include="Configuration\IItemGeneratorConfiguration.cs" />
     <Compile Include="Configuration\IWeightConfiguration.cs" />
     <Compile Include="Configuration\Weapon\Blade\IBladeImagesConfiguration.cs" />
@@ -53,13 +57,15 @@
     <Compile Include="Configuration\Weapon\IWeaponConfiguration.cs" />
     <Compile Include="Configuration\Weapon\IWeaponRarenessConfiguration.cs" />
     <Compile Include="Configuration\Weapon\Blade\IBladeWeaponConfiguration.cs" />
-    <Compile Include="Implementations\BladeWeaponGenerator.cs" />
-    <Compile Include="Implementations\HeadWeaponGenerator.cs" />
-    <Compile Include="Implementations\IWeaponGenerator.cs" />
-    <Compile Include="Implementations\WeaponGeneratorBase.cs" />
+    <Compile Include="Implementations\ArmorGenerator.cs" />
+    <Compile Include="Implementations\Weapon\BladeWeaponGenerator.cs" />
+    <Compile Include="Implementations\Weapon\HeadWeaponGenerator.cs" />
+    <Compile Include="Implementations\Weapon\IWeaponGenerator.cs" />
+    <Compile Include="Implementations\Weapon\WeaponGeneratorBase.cs" />
     <Compile Include="ItemMaterial.cs" />
     <Compile Include="ItemRecolorHelper.cs" />
     <Compile Include="ItemsGenerator.cs" />
+    <Compile Include="NameGenerationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

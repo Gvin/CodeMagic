@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Xml.Serialization;
 using CodeMagic.Core.Items;
 using CodeMagic.ItemsGeneration;
+using CodeMagic.ItemsGeneration.Configuration;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
@@ -12,11 +14,12 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
         [XmlAttribute("value")]
         public ItemRareness Rareness { get; set; }
 
-        [XmlElement("min-damage")]
-        public int MinDamage { get; set; }
+        [XmlIgnore]
+        public IElementConfiguration[] Damage => DamageData.ToArray<IElementConfiguration>();
 
-        [XmlElement("max-damage")]
-        public int MaxDamage { get; set; }
+        [XmlArray("damage")]
+        [XmlArrayItem("value")]
+        public XmlElementConfiguration[] DamageData { get; set; }
 
         [XmlElement("min-max-damage-difference")]
         public int MinMaxDamageDifference { get; set; }

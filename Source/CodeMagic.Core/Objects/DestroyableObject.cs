@@ -101,7 +101,7 @@ namespace CodeMagic.Core.Objects
 
         private int CatchFireChanceMultiplier { get; }
 
-        public virtual void Damage(Journal journal, int damage, Element element = Element.Physical)
+        public virtual void Damage(Journal journal, int damage, Element element)
         {
             if (damage < 0)
                 throw new ArgumentException($"Damage should be greater or equal 0. Got {damage}.");

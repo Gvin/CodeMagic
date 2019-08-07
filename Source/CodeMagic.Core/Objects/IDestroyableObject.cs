@@ -16,7 +16,7 @@ namespace CodeMagic.Core.Objects
 
         void OnDeath(IAreaMap map, Point position);
 
-        void Damage(Journal journal, int value, Element element = Element.Physical);
+        void Damage(Journal journal, int value, Element element);
 
         ObjectStatusesCollection Statuses { get; }
 

@@ -16,7 +16,9 @@ namespace CodeMagic.UI.Sad.Drawing
         {
             switch (element)
             {
-                case Element.Physical:
+                case Element.Blunt:
+                case Element.Slashing:
+                case Element.Piercing:
                     return PhysicalDamageColor;
                 case Element.Fire:
                     return FireDamageColor;

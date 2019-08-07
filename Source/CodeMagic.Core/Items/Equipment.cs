@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Items
 {
@@ -8,8 +9,8 @@ namespace CodeMagic.Core.Items
     {
         private static readonly WeaponItem Fists = new WeaponItem(new WeaponItemConfiguration
         {
-            MaxDamage = 2,
-            MinDamage = 0,
+            MaxDamage = new Dictionary<Element, int> {{Element.Blunt, 2}},
+            MinDamage = new Dictionary<Element, int> {{Element.Blunt, 0}},
             HitChance = 50,
             Name = "Fists",
             Rareness = ItemRareness.Trash,
@@ -22,10 +23,9 @@ namespace CodeMagic.Core.Items
         {
             Armor = new Dictionary<ArmorType, ArmorItem>
             {
-                {ArmorType.Arms, null},
-                {ArmorType.Head, null},
+                {ArmorType.Helmet, null},
                 {ArmorType.Chest, null},
-                {ArmorType.Legs, null}
+                {ArmorType.Leggings, null}
             };
         }
 
@@ -129,12 +129,9 @@ namespace CodeMagic.Core.Items
 
         public SpellBook SpellBook { get; private set; }
 
-        public int Protection
+        public int GetProtection(Element element)
         {
-            get
-            {
-                return Armor.Select(pair => pair.Value).Where(armor => armor != null).Sum(armor => armor.Protection);
-            }
+            return Armor.Sum(pair => pair.Value?.GetProtection(element) ?? 0);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace SymbolsImageEditor
         private const string SymbolsImageFileFilter = "Symbols Image|*.simg|All|*.*";
         private const string SymbolsImageFileExtension = ".simg";
         private const int DefaultImageWidth = 20;
-        private const int DefaultImageHeight = 5;
+        private const int DefaultImageHeight = 10;
 
         private ColorDialog colorPicker;
 
@@ -139,8 +139,10 @@ namespace SymbolsImageEditor
 
         private void DrawImage(DrawingSurface control)
         {
-            control.Surface.Fill(0, 0, Width, Color.Gray, Color.Black, '#');
-            control.Surface.Fill(0, Height - 1, Width, Color.Gray, Color.Black, '#');
+            control.Surface.Fill(0, 0, control.Width, Color.Gray, Color.Black, '#');
+            control.Surface.Fill(0, control.Height - 1, control.Width, Color.Gray, Color.Black, '#');
+            control.Surface.DrawVerticalLine(0, 0, control.Height, new ColoredGlyph('#', Color.Gray, Color.Black));
+            control.Surface.DrawVerticalLine(control.Width - 1, 0, control.Height, new ColoredGlyph('#', Color.Gray, Color.Black));
             control.Surface.DrawImage(1, 1, image, Color.White, ColorHelper.ConvertToXna(backgroundColor));
         }
 
