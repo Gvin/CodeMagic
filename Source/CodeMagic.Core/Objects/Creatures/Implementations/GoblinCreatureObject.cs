@@ -11,6 +11,7 @@ using CodeMagic.Core.Objects.PlayerData;
 
 namespace CodeMagic.Core.Objects.Creatures.Implementations
 {
+    // TODO: Implement creature weapon
     public class GoblinCreatureObject : NonPlayableCreatureObject
     {
         private readonly int hitChance;

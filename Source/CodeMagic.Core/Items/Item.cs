@@ -1,17 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using CodeMagic.Core.Items.Bonuses.Common;
 
 namespace CodeMagic.Core.Items
 {
     public class Item : IItem
     {
+        protected readonly List<IItemBonus> Bonuses;
+
+        private readonly int weight;
+
         public Item(ItemConfiguration configuration)
         {
             Key = configuration.Key;
             Name = configuration.Name;
             Rareness = configuration.Rareness;
-            Weight = configuration.Weight;
+            weight = configuration.Weight;
 
             Id = Guid.NewGuid().ToString();
+
+            Bonuses = new List<IItemBonus>();
         }
 
         public string Id { get; }
@@ -19,8 +28,18 @@ namespace CodeMagic.Core.Items
         public string Key { get; }
 
         public string Name { get; }
+
         public ItemRareness Rareness { get; }
-        public int Weight { get; }
+
+        public int Weight
+        {
+            get
+            {
+                var weightDecrease = Bonuses.OfType<ICommonItemBonus>().Sum(bonus => bonus.WeightDecrease);
+                return Math.Max(0, weight - weightDecrease);
+            }
+        }
+
         public virtual bool Stackable => true;
 
         public bool Equals(IItem other)
@@ -32,6 +51,10 @@ namespace CodeMagic.Core.Items
 
             return string.Equals(Id, other.Id);
         }
+    }
+
+    public interface IItemBonus
+    {
     }
 
     public class ItemConfiguration

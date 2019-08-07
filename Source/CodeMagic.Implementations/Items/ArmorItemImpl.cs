@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Items.Bonuses.Armor;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items
@@ -16,6 +17,7 @@ namespace CodeMagic.Implementations.Items
         {
             image = configuration.Image;
             description = configuration.Description;
+            Bonuses.Add(new ProtectionItemBonus(Element.Acid, 100));
         }
 
         public SymbolsImage GetImage(IImagesStorage storage)

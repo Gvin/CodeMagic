@@ -37,12 +37,12 @@ namespace CodeMagic.Implementations.Items.Weapon
         {
             foreach (Element element in Enum.GetValues(typeof(Element)))
             {
-                if (!MaxDamage.ContainsKey(element))
+                if (!MaxDamageValue.ContainsKey(element))
                     continue;
 
                 descriptionResult.Add(new[]
                 {
-                    new StyledString($"{ElementTextHelper.GetElementName(element)} Damage: {MinDamage[element]} - {MaxDamage[element]}")
+                    new StyledString($"{ElementTextHelper.GetElementName(element)} Damage: {MinDamageValue[element]} - {MaxDamageValue[element]}")
                 });
             }
         }

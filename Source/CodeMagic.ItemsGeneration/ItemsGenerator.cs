@@ -9,6 +9,7 @@ using CodeMagic.ItemsGeneration.Implementations.Weapon;
 
 namespace CodeMagic.ItemsGeneration
 {
+    // TODO: Implement bonuses generation
     public class ItemsGenerator : IItemsGenerator
     {
         private readonly Dictionary<WeaponType, IWeaponGenerator> weaponGenerators;
@@ -66,6 +67,12 @@ namespace CodeMagic.ItemsGeneration
                 throw new ArgumentException("Item generator cannot generate epic items.");
 
             return armorGenerator.GenerateArmor(rareness);
+        }
+
+        public SpellBook GenerateSpellBook(ItemRareness rareness)
+        {
+            // TODO: Implement generation
+            return null;
         }
 
         private WeaponType GetRandomWeaponType()

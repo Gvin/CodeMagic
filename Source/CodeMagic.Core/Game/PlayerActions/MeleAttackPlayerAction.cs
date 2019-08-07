@@ -36,7 +36,6 @@ namespace CodeMagic.Core.Game.PlayerActions
             var damage = game.Player.Equipment.Weapon.GenerateDamage();
             foreach (var damageValue in damage)
             {
-                // TODO: Process target's protection
                 target.Damage(game.Journal, damageValue.Value, damageValue.Key);
                 game.Journal.Write(new DealDamageMessage(game.Player, target, damageValue.Value, damageValue.Key));
             }
