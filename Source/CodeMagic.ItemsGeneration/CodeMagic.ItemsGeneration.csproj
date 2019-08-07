@@ -49,9 +49,9 @@
     <Compile Include="Configuration\IItemGeneratorConfiguration.cs" />
     <Compile Include="Configuration\IWeightConfiguration.cs" />
     <Compile Include="Configuration\Weapon\Blade\IBladeImagesConfiguration.cs" />
-    <Compile Include="Configuration\Weapon\Description\IMaterialDescriptionConfiguration.cs" />
-    <Compile Include="Configuration\Weapon\Description\IRarenessDescriptionConfiguration.cs" />
-    <Compile Include="Configuration\Weapon\Description\IWeaponDescriptionConfiguration.cs" />
+    <Compile Include="Configuration\Description\IMaterialDescriptionConfiguration.cs" />
+    <Compile Include="Configuration\Description\IRarenessDescriptionConfiguration.cs" />
+    <Compile Include="Configuration\Description\IDescriptionConfiguration.cs" />
     <Compile Include="Configuration\Weapon\Head\IHeadImagesConfiguration.cs" />
     <Compile Include="Configuration\Weapon\Head\IHeadWeaponConfiguration.cs" />
     <Compile Include="Configuration\Weapon\IWeaponConfiguration.cs" />

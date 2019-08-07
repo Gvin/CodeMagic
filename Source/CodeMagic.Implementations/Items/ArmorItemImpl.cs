@@ -33,7 +33,7 @@ namespace CodeMagic.Implementations.Items
             AddProtectionDescription(result);
 
             result.Add(new StyledString[0]);
-            result.AddRange(description.Select(line => new[] { new StyledString(line) }).ToArray());
+            result.AddRange(description.Select(line => new[] { new StyledString(line, ElementTextHelper.DescriptionTextColor) }).ToArray());
 
             return result.ToArray();
         }
@@ -45,7 +45,13 @@ namespace CodeMagic.Implementations.Items
                 var value = GetProtection(element);
                 if (value != 0)
                 {
-                    descriptionResult.Add(new[] { new StyledString($"{ElementNameHelper.GetElementName(element)} Protection: {value}%") });
+                    descriptionResult.Add(new[]
+                    {
+                        new StyledString($"{ElementTextHelper.GetElementName(element)}", ElementTextHelper.GetElementColor(element)), 
+                        new StyledString(" Protection: "),
+                        new StyledString(value.ToString(), value > 0 ? ElementTextHelper.PositiveValueColor : ElementTextHelper.NegativeValueColor), 
+                        new StyledString("%")
+                    });
                 }
             }
         }

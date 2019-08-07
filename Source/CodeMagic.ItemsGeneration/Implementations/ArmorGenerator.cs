@@ -31,7 +31,7 @@ namespace CodeMagic.ItemsGeneration.Implementations
             var image = GetArmorImage(config, material);
             var protection = GenerateProtection(rarenessConfig.Protection);
             var name = GenerateName(rareness, material, config.TypeName, armorType);
-            var description = GenerateDescription();
+            var description = GenerateDescription(rareness, material);
             var weight = GetWeight(config, material);
 
             return new ArmorItemImpl(new ArmorItemImplConfiguration
@@ -70,9 +70,31 @@ namespace CodeMagic.ItemsGeneration.Implementations
             return result.Weight;
         }
 
-        private string[] GenerateDescription()
+        private string[] GenerateDescription(ItemRareness rareness, ItemMaterial material)
         {
-            return new[] {"Armor description."};
+            return new[]
+            {
+                GetMaterialDescription(material),
+                GetRarenessDescription(rareness)
+            };
+        }
+
+        private string GetMaterialDescription(ItemMaterial material)
+        {
+            var textConfig = configuration.DescriptionConfiguration.MaterialDescription.FirstOrDefault(config => config.Material == material);
+            if (textConfig == null)
+                throw new ApplicationException($"Text configuration not found for armor material: {material}");
+
+            return RandomHelper.GetRandomElement(textConfig.Text);
+        }
+
+        private string GetRarenessDescription(ItemRareness rareness)
+        {
+            var textConfig = configuration.DescriptionConfiguration.RarenessDescription.FirstOrDefault(config => config.Rareness == rareness);
+            if (textConfig == null)
+                throw new ApplicationException($"Text configuration not found for armor rareness: {rareness}");
+
+            return RandomHelper.GetRandomElement(textConfig.Text);
         }
 
         private string GenerateName(ItemRareness rareness, ItemMaterial material, string typeName, ArmorType type)

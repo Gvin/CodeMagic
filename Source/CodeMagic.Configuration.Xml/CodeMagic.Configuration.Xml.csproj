@@ -48,9 +48,9 @@
     <Compile Include="Types\Items\Armor\XmlArmorRarenessConfiguration.cs" />
     <Compile Include="Types\Items\XmlElementConfiguration.cs" />
     <Compile Include="Types\Items\Weapon\Blade\XmlBladeImagesConfiguration.cs" />
-    <Compile Include="Types\Items\Weapon\Description\XmlMaterialDescriptionConfiguration.cs" />
-    <Compile Include="Types\Items\Weapon\Description\XmlRarenessDescriptionConfiguration.cs" />
-    <Compile Include="Types\Items\Weapon\Description\XmlWeaponDescriptionConfiguration.cs" />
+    <Compile Include="Types\Items\Description\XmlMaterialDescriptionConfiguration.cs" />
+    <Compile Include="Types\Items\Description\XmlRarenessDescriptionConfiguration.cs" />
+    <Compile Include="Types\Items\Description\XmlDescriptionConfiguration.cs" />
     <Compile Include="Types\Items\Weapon\Head\XmlHeadImagesConfiguration.cs" />
     <Compile Include="Types\Items\Weapon\Head\XmlHeadWeaponConfiguration.cs" />
     <Compile Include="Types\Items\XmlItemGeneratorConfiguration.cs" />

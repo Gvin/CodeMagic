@@ -1,6 +1,6 @@
-﻿namespace CodeMagic.ItemsGeneration.Configuration.Weapon.Description
+﻿namespace CodeMagic.ItemsGeneration.Configuration.Description
 {
-    public interface IWeaponDescriptionConfiguration
+    public interface IDescriptionConfiguration
     {
         IRarenessDescriptionConfiguration[] RarenessDescription { get; }
 

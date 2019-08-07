@@ -28,7 +28,7 @@ namespace CodeMagic.Implementations.Items.Weapon
             AddDamageDescription(result);
             result.Add(new[] { new StyledString($"Hit Chance: {HitChance}") });
             result.Add(new StyledString[0]);
-            result.AddRange(description.Select(line => new[] { new StyledString(line) }).ToArray());
+            result.AddRange(description.Select(line => new[] { new StyledString(line, ElementTextHelper.DescriptionTextColor) }).ToArray());
 
             return result.ToArray();
         }
@@ -42,7 +42,7 @@ namespace CodeMagic.Implementations.Items.Weapon
 
                 descriptionResult.Add(new[]
                 {
-                    new StyledString($"{ElementNameHelper.GetElementName(element)} Damage: {MinDamage[element]} - {MaxDamage[element]}")
+                    new StyledString($"{ElementTextHelper.GetElementName(element)} Damage: {MinDamage[element]} - {MaxDamage[element]}")
                 });
             }
         }

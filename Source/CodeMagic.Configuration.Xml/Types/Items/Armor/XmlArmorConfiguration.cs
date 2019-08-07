@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Serialization;
+using CodeMagic.Configuration.Xml.Types.Items.Description;
 using CodeMagic.ItemsGeneration.Configuration.Armor;
+using CodeMagic.ItemsGeneration.Configuration.Description;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Armor
 {
@@ -31,5 +33,11 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Armor
         [XmlArray("helmets")]
         [XmlArrayItem("item", Type = typeof(XmlArmorPieceConfiguration))]
         public XmlArmorPieceConfiguration[] HelmetConfigurationData { get; set; }
+
+        [XmlIgnore]
+        public IDescriptionConfiguration DescriptionConfiguration => DescriptionConfigurationData;
+
+        [XmlElement("description")]
+        public XmlDescriptionConfiguration DescriptionConfigurationData { get; set; }
     }
 }

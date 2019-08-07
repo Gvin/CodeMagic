@@ -6,6 +6,8 @@ using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Implementations.Items;
+using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
 using SadConsole;
 
@@ -241,32 +243,9 @@ namespace CodeMagic.UI.Sad.Drawing
 
         private ColoredString GetDamageText(int damage, Element element)
         {
-            var color = DamageColorHelper.GetDamageTextColor(element);
-            var elementText = GetDamageElementText(element);
-            return new ColoredString($"{damage} {elementText} damage", color, BackgroundColor);
-        }
-
-        private string GetDamageElementText(Element element)
-        {
-            switch (element)
-            {
-                case Element.Blunt:
-                    return "Blunt";
-                case Element.Slashing:
-                    return "Slashing";
-                case Element.Piercing:
-                    return "Piercing";
-                case Element.Fire:
-                    return "Fire";
-                case Element.Frost:
-                    return "Frost";
-                case Element.Acid:
-                    return "Acid";
-                case Element.Electricity:
-                    return "Electric";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(element), $"Unknown damage element: {element}");
-            }
+            var color = ElementTextHelper.GetElementColor(element);
+            var elementText = ElementTextHelper.GetElementName(element);
+            return new ColoredString($"{damage} {elementText} damage", ColorHelper.ConvertToXna(color), BackgroundColor);
         }
 
         private string GetStatusName(string statusType)

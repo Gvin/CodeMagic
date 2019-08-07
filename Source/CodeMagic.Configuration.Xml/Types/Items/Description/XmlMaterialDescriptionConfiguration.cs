@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Xml.Serialization;
 using CodeMagic.ItemsGeneration;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Description;
+using CodeMagic.ItemsGeneration.Configuration.Description;
 
-namespace CodeMagic.Configuration.Xml.Types.Items.Weapon.Description
+namespace CodeMagic.Configuration.Xml.Types.Items.Description
 {
     [Serializable]
     public class XmlMaterialDescriptionConfiguration : IMaterialDescriptionConfiguration

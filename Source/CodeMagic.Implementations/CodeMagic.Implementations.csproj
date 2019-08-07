@@ -45,7 +45,7 @@
     <Compile Include="IImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
     <Compile Include="Items\ArmorItemImpl.cs" />
-    <Compile Include="Items\ElementNameHelper.cs" />
+    <Compile Include="Items\ElementTextHelper.cs" />
     <Compile Include="Items\Usable\HealthRestorationItem.cs" />
     <Compile Include="Items\IDescriptionProvider.cs" />
     <Compile Include="Items\Usable\ManaRestorationItem.cs" />

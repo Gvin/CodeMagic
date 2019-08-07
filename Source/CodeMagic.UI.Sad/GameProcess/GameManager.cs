@@ -1,25 +1,16 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.Creatures.Implementations;
-using CodeMagic.Core.Objects.DecorativeObjects;
-using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.Core.Statuses;
-using CodeMagic.Implementations.Items;
 using CodeMagic.Implementations.Items.Usable;
-using CodeMagic.Implementations.Items.Weapon;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.Implementations.Objects.Creatures.NonPlayable;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
-using CodeMagic.UI.Sad.Drawing;
-using Microsoft.Xna.Framework;
 using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.UI.Sad.GameProcess
@@ -91,35 +82,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                 placed++;
             }
         }
-
-//        private WeaponItem CreateWoodenSword()
-//        {
-//            var color1 = System.Drawing.Color.FromArgb(128, 64, 0);
-//            var color2 = System.Drawing.Color.FromArgb(64, 32, 32);
-//            var color3 = System.Drawing.Color.GreenYellow;
-//
-//            return new WeaponItemImpl(new WeaponItemImplConfiguration
-//            {
-//                Name = "Wooden Sword",
-//                Key = "wooden_sword",
-//                Description = new []
-//                {
-//                    "It is now sharp enough to cut something.",
-//                    "But at least you can bite your enemy with it."
-//                },
-//                HandleImage = ItemDrawingHelper.RecolorImage(
-//                    ImagesStorage.Current.GetImage("Sword_Handle_V4"), color1, color2, color3),
-//                GuardImage = ItemDrawingHelper.RecolorImage(
-//                    ImagesStorage.Current.GetImage("Sword_Guard_V4"), color1, color2, color3),
-//                BladeImage = ItemDrawingHelper.RecolorImage(
-//                    ImagesStorage.Current.GetImage("Sword_Blade_V4"), color1, color2, color3),
-//                MinDamage = 2,
-//                MaxDamage = 5,
-//                Rareness = ItemRareness.Trash,
-//                Weight = 10,
-//                HitChance = 70
-//            });
-//        }
 
         private NonPlayableCreatureObject CreateGoblin()
         {
@@ -200,17 +162,8 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Inventory.AddItem(spellBook);
             player.Equipment.EquipItem(spellBook);
 
-            var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
-            var weapon = itemsGenerator.GenerateWeapon(ItemRareness.Rare);
+            var weapon = Injector.Current.Create<IItemsGenerator>().GenerateWeapon(ItemRareness.Trash);
             player.Inventory.AddItem(weapon);
-            player.Equipment.EquipItem(weapon);
-
-            for (int i = 0; i < 20; i++)
-            {
-                var rareness = (ItemRareness) RandomHelper.GetRandomValue(0, 3);
-                player.Inventory.AddItem(itemsGenerator.GenerateArmor(rareness));
-            }
-            
 
             return player;
         }

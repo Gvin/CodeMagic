@@ -1,5 +1,5 @@
-﻿using CodeMagic.ItemsGeneration.Configuration.Weapon.Blade;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Description;
+﻿using CodeMagic.ItemsGeneration.Configuration.Description;
+using CodeMagic.ItemsGeneration.Configuration.Weapon.Blade;
 using CodeMagic.ItemsGeneration.Configuration.Weapon.Head;
 
 namespace CodeMagic.ItemsGeneration.Configuration.Weapon
@@ -14,6 +14,6 @@ namespace CodeMagic.ItemsGeneration.Configuration.Weapon
 
         IHeadWeaponConfiguration AxesConfiguration { get; }
 
-        IWeaponDescriptionConfiguration DescriptionConfiguration { get; }
+        IDescriptionConfiguration DescriptionConfiguration { get; }
     }
 }

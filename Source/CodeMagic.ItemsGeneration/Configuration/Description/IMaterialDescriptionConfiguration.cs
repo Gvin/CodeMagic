@@ -1,4 +1,4 @@
-﻿namespace CodeMagic.ItemsGeneration.Configuration.Weapon.Description
+﻿namespace CodeMagic.ItemsGeneration.Configuration.Description
 {
     public interface IMaterialDescriptionConfiguration
     {
