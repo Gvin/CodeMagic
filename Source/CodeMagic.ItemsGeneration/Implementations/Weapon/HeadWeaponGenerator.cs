@@ -48,9 +48,9 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
             var shaftImageInit = GetRandomImage(configuration.Images.ShaftImages);
             var headImageInit = GetRandomImage(configuration.Images.HeadImages);
 
-            var handleImage = ItemRecolorHelper.RecolorImage(handleImageInit, material);
-            var shaftImage = ItemRecolorHelper.RecolorImage(shaftImageInit, material);
-            var headImage = ItemRecolorHelper.RecolorImage(headImageInit, material);
+            var handleImage = ItemRecolorHelper.RecolorItemImage(handleImageInit, material);
+            var shaftImage = ItemRecolorHelper.RecolorItemImage(shaftImageInit, material);
+            var headImage = ItemRecolorHelper.RecolorItemImage(headImageInit, material);
 
             return MergeImages(shaftImage, handleImage, headImage);
         }

@@ -14,6 +14,7 @@ namespace CodeMagic.ItemsGeneration
     {
         private readonly Dictionary<WeaponType, IWeaponGenerator> weaponGenerators;
         private readonly ArmorGenerator armorGenerator;
+        private readonly SpellBookGenerator spellBookGenerator;
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage)
         {
@@ -55,6 +56,7 @@ namespace CodeMagic.ItemsGeneration
                 }
             };
             armorGenerator = new ArmorGenerator(configuration.ArmorConfiguration, bonusesGenerator, imagesStorage);
+            spellBookGenerator = new SpellBookGenerator(configuration.SpellBooksConfiguration, bonusesGenerator, imagesStorage);
         }
 
         public WeaponItem GenerateWeapon(ItemRareness rareness)
@@ -77,8 +79,10 @@ namespace CodeMagic.ItemsGeneration
 
         public SpellBook GenerateSpellBook(ItemRareness rareness)
         {
-            // TODO: Implement generation
-            return null;
+            if (rareness == ItemRareness.Epic)
+                throw new ArgumentException("Item generator cannot generate epic items.");
+
+            return spellBookGenerator.GenerateSpellBook(rareness);
         }
 
         private WeaponType GetRandomWeaponType()

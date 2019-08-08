@@ -34,6 +34,9 @@ namespace CodeMagic.ItemsGeneration.Implementations.Bonuses
 
         public void GenerateBonuses(ItemConfiguration item, int bonusesCount)
         {
+            if (bonusesCount == 0)
+                return;
+
             var configurationGroup = GetConfigurationGroup(item);
             var config = GetConfiguration(item.Rareness, configurationGroup);
             var nameBuilder = new NameBuilder(item.Name);

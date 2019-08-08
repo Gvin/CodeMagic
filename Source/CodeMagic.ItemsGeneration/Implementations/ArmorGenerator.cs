@@ -146,7 +146,7 @@ namespace CodeMagic.ItemsGeneration.Implementations
         {
             var imageName = RandomHelper.GetRandomElement(config.Images);
             var imageInit = imagesStorage.GetImage(imageName);
-            return ItemRecolorHelper.RecolorImage(imageInit, material);
+            return ItemRecolorHelper.RecolorItemImage(imageInit, material);
         }
 
         private IArmorPieceConfiguration GetSpecificConfiguration(ArmorType type)

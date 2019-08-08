@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using CodeMagic.Core.Game;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.ItemsGeneration
@@ -22,9 +23,28 @@ namespace CodeMagic.ItemsGeneration
         private static readonly Color ReplaceColor2 = Color.FromArgb(0, 255, 0);
         private static readonly Color ReplaceColor3 = Color.FromArgb(0, 0, 255);
 
-        public static SymbolsImage RecolorImage(SymbolsImage sourceImage, ItemMaterial material)
+        private static readonly ColorPalette[] SpellBookColors = new[]
+        {
+            new ColorPalette(Color.FromArgb(0, 128, 255), Color.FromArgb(0, 0, 255), Color.White),
+            new ColorPalette(Color.FromArgb(255, 128, 0), Color.FromArgb(128, 0, 0), Color.White),
+            new ColorPalette(Color.FromArgb(0, 170, 85), Color.FromArgb(0, 102, 51), Color.White),
+            new ColorPalette(Color.FromArgb(150, 45, 255), Color.FromArgb(75, 0, 151), Color.White),
+        };
+
+        public static SymbolsImage RecolorSpellBookImage(SymbolsImage sourceImage)
+        {
+            var palette = RandomHelper.GetRandomElement(SpellBookColors);
+            return RecolorImage(sourceImage, palette);
+        }
+
+        public static SymbolsImage RecolorItemImage(SymbolsImage sourceImage, ItemMaterial material)
         {
             var palette = Palette[material];
+            return RecolorImage(sourceImage, palette);
+        }
+
+        private static SymbolsImage RecolorImage(SymbolsImage sourceImage, ColorPalette palette)
+        {
             var recolorPalette = new Dictionary<Color, Color>
             {
                 {ReplaceColor1, palette.Color1},

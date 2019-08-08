@@ -52,6 +52,8 @@
     <Compile Include="Configuration\IElementConfiguration.cs" />
     <Compile Include="Configuration\IItemGeneratorConfiguration.cs" />
     <Compile Include="Configuration\IWeightConfiguration.cs" />
+    <Compile Include="Configuration\SpellBook\ISpellBookRarenessConfiguration.cs" />
+    <Compile Include="Configuration\SpellBook\ISpellBooksConfiguration.cs" />
     <Compile Include="Configuration\Weapon\Blade\IBladeImagesConfiguration.cs" />
     <Compile Include="Configuration\Description\IMaterialDescriptionConfiguration.cs" />
     <Compile Include="Configuration\Description\IRarenessDescriptionConfiguration.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Implementations\Bonuses\Instances\ProtectionBonusApplier.cs" />
     <Compile Include="Implementations\Bonuses\Instances\WeightBonusApplier.cs" />
     <Compile Include="Implementations\NameBuilder.cs" />
+    <Compile Include="Implementations\SpellBookGenerator.cs" />
     <Compile Include="Implementations\Weapon\BladeWeaponGenerator.cs" />
     <Compile Include="Implementations\Weapon\HeadWeaponGenerator.cs" />
     <Compile Include="Implementations\Weapon\IWeaponGenerator.cs" />

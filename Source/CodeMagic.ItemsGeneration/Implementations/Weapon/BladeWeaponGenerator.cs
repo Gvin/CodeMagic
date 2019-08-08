@@ -48,9 +48,9 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
             var guardImageInit = GetRandomImage(configuration.Images.GuardImages);
             var bladeImageInit = GetRandomImage(configuration.Images.BladeImages);
 
-            var handleImage = ItemRecolorHelper.RecolorImage(handleImageInit, material);
-            var guardImage = ItemRecolorHelper.RecolorImage(guardImageInit, material);
-            var bladeImage = ItemRecolorHelper.RecolorImage(bladeImageInit, material);
+            var handleImage = ItemRecolorHelper.RecolorItemImage(handleImageInit, material);
+            var guardImage = ItemRecolorHelper.RecolorItemImage(guardImageInit, material);
+            var bladeImage = ItemRecolorHelper.RecolorItemImage(bladeImageInit, material);
 
             return MergeImages(bladeImage, handleImage, guardImage);
         }

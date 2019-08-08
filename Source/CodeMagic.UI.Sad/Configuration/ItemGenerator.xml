@@ -2336,6 +2336,63 @@
     </description>
   </armor>
 
+  <spell-book>
+    <template>SpellBook_Template</template>
+    <symbols>
+      <image>SpellBook_Picture_V1</image>
+      <image>SpellBook_Picture_V2</image>
+      <image>SpellBook_Picture_V3</image>
+      <image>SpellBook_Picture_V4</image>
+      <image>SpellBook_Picture_V5</image>
+    </symbols>
+    <weight>3</weight>
+    <rareness-configuration>
+      <rareness value="Trash">
+        <min-bonuses>0</min-bonuses>
+        <max-bonuses>0</max-bonuses>
+        <min-spells>3</min-spells>
+        <max-spells>5</max-spells>
+        <description>
+          <text>It's quality is very poor.</text>
+          <text>I hope it's pages won't fall over.</text>
+          <text>It's very worn up.</text>
+          <text>There are only several pages in it.</text>
+        </description>
+      </rareness>
+      <rareness value="Common">
+        <min-bonuses>0</min-bonuses>
+        <max-bonuses>1</max-bonuses>
+        <min-spells>5</min-spells>
+        <max-spells>7</max-spells>
+        <description>
+          <text>It's condition is quite good.</text>
+          <text>it's just some normal book with strange symbols.</text>
+        </description>
+      </rareness>
+      <rareness value="Uncommon">
+        <min-bonuses>1</min-bonuses>
+        <max-bonuses>2</max-bonuses>
+        <min-spells>7</min-spells>
+        <max-spells>10</max-spells>
+        <description>
+          <text>It's looks like a high-quality item.</text>
+          <text>It's cover is smooth and beautiful.</text>
+        </description>
+      </rareness>
+      <rareness value="Rare">
+        <min-bonuses>2</min-bonuses>
+        <max-bonuses>3</max-bonuses>
+        <min-spells>10</min-spells>
+        <max-spells>15</max-spells>
+        <description>
+          <text>It's quality is excellent.</text>
+          <text>There are a lot of pages in it.</text>
+          <text>It looks like new.</text>
+        </description>
+      </rareness>
+    </rareness-configuration>
+  </spell-book>
+
   <bonuses>
     <group type="All">
       <rareness value="Common">

@@ -153,14 +153,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                 Weight = 1
             }), 2);
 
-            var spellBook = new SpellBook(new SpellBookConfiguration
-            {
-                Name = "Book of Fire",
-                Size = 10,
-                Rareness = ItemRareness.Epic
-            });
-            player.Inventory.AddItem(spellBook);
-            player.Equipment.EquipItem(spellBook);
 
             var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
 
@@ -170,13 +162,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             for (int i = 0; i < 10; i++)
             {
                 var rareness = (ItemRareness) RandomHelper.GetRandomValue(1, 3);
-                player.Inventory.AddItem(itemsGenerator.GenerateWeapon(rareness));
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                var rareness = (ItemRareness)RandomHelper.GetRandomValue(1, 3);
-                player.Inventory.AddItem(itemsGenerator.GenerateArmor(rareness));
+                player.Inventory.AddItem(itemsGenerator.GenerateSpellBook(rareness));
             }
 
             return player;
