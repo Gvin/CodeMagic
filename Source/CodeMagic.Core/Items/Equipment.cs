@@ -133,5 +133,32 @@ namespace CodeMagic.Core.Items
         {
             return Armor.Sum(pair => pair.Value?.GetProtection(element) ?? 0);
         }
+
+        public int GetBonusMana()
+        {
+            var result = weapon?.ManaBonus ?? 0;
+            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.ManaBonus);
+            result += SpellBook?.ManaBonus ?? 0;
+
+            return result;
+        }
+
+        public int GetBonusManaRegeneration()
+        {
+            var result = weapon?.ManaRegenerationBonus ?? 0;
+            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.ManaRegenerationBonus);
+            result += SpellBook?.HealthBonus ?? 0;
+
+            return result;
+        }
+
+        public int GetBonusHealth()
+        {
+            var result = weapon?.HealthBonus ?? 0;
+            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.HealthBonus);
+            result += SpellBook?.HealthBonus ?? 0;
+
+            return result;
+        }
     }
 }

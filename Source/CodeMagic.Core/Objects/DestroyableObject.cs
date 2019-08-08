@@ -98,7 +98,7 @@ namespace CodeMagic.Core.Objects
             }
         }
 
-        public int MaxHealth
+        public virtual int MaxHealth
         {
             get => maxHealth;
             set
