@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Items.Bonuses.Armor;
 
 namespace CodeMagic.Core.Items
 {
-    public class ArmorItem : Item, IEquipableItem
+    public class ArmorItem : EquipableItem
     {
         private readonly Dictionary<Element, int> protection;
 
@@ -20,11 +19,7 @@ namespace CodeMagic.Core.Items
 
         public int GetProtection(Element element)
         {
-            var bonuses = Bonuses.OfType<IArmorItemBonus>().ToDictionary(bonus => bonus.Element, bonus => bonus.Protection);
-            var bonusValue = bonuses.ContainsKey(element) ? bonuses[element] : 0;
-            var defaultValue = protection.ContainsKey(element) ? protection[element] : 0;
-
-            return bonusValue + defaultValue;
+            return protection.ContainsKey(element) ? protection[element] : 0;
         }
 
         public override bool Stackable => false;
@@ -37,7 +32,7 @@ namespace CodeMagic.Core.Items
         Leggings = 2
     }
 
-    public class ArmorItemConfiguration : ItemConfiguration
+    public class ArmorItemConfiguration : EquipableItemConfiguration
     {
         public ArmorItemConfiguration()
         {

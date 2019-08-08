@@ -2,7 +2,7 @@
 
 namespace CodeMagic.Core.Items
 {
-    public class SpellBook : Item, IEquipableItem
+    public class SpellBook : EquipableItem
     {
         public SpellBook(SpellBookConfiguration configuration) 
             : base(configuration)
@@ -17,7 +17,7 @@ namespace CodeMagic.Core.Items
         public override bool Stackable => false;
     }
 
-    public class SpellBookConfiguration : ItemConfiguration
+    public class SpellBookConfiguration : EquipableItemConfiguration
     {
         public int Size { get; set; }
     }

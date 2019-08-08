@@ -34,6 +34,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
             var weight = GetWeight(material);
             var name = GenerateName(rareness, material);
             var description = GenerateDescription(rareness, material);
+            var bonusesCount = RandomHelper.GetRandomValue(rarenessConfiguration.MinBonuses, rarenessConfiguration.MaxBonuses);
 
             return new WeaponItemImpl(new WeaponItemImplConfiguration
             {
