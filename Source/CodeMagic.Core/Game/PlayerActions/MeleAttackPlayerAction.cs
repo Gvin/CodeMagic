@@ -1,23 +1,22 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Game.PlayerActions
 {
     public class MeleAttackPlayerAction : IPlayerAction
     {
-        public bool Perform(IPlayer player, Point playerPosition, IGameCore game, out Point newPosition)
+        public bool Perform(IGameCore game, out Point newPosition)
         {
-            newPosition = playerPosition;
-            if (player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
+            newPosition = game.PlayerPosition;
+            if (game.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
             {
                 game.Journal.Write(new ParalyzedMessage());
                 return true;
             }
 
-            var targetPoint = Point.GetPointInDirection(playerPosition, player.Direction);
+            var targetPoint = Point.GetPointInDirection(game.PlayerPosition, game.Player.Direction);
             var targetCell = game.Map.TryGetCell(targetPoint);
             if (targetCell == null)
                 return true;
@@ -28,23 +27,20 @@ namespace CodeMagic.Core.Game.PlayerActions
             if (target == null)
                 return true;
 
-            if (!RandomHelper.CheckChance(player.HitChance))
+            if (!RandomHelper.CheckChance(game.Player.HitChance))
             {
-                game.Journal.Write(new AttackMissMessage(player, target));
+                game.Journal.Write(new AttackMissMessage(game.Player, target));
                 return true;
             }
 
-            var damage = GetDamage(player);
-            target.Damage(game.Journal, damage);
-            game.Journal.Write(new DealDamageMessage(player, target, damage));
-            return true;
-        }
+            var damage = game.Player.Equipment.Weapon.GenerateDamage();
+            foreach (var damageValue in damage)
+            {
+                target.Damage(game.Journal, damageValue.Value, damageValue.Key);
+                game.Journal.Write(new DealDamageMessage(game.Player, target, damageValue.Value, damageValue.Key));
+            }
 
-        private int GetDamage(IPlayer player)
-        {
-            var min = player.Equipment.Weapon.MinDamage;
-            var max = player.Equipment.Weapon.MaxDamage;
-            return RandomHelper.GetRandomValue(min, max);
+            return true;
         }
 
         private IDestroyableObject GetAttackTarget(IDestroyableObject[] possibleTargets)

@@ -8,7 +8,7 @@ using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.Objects.Implementation.SolidObjects;
+using CodeMagic.Implementations.Objects.SolidObjects;
 
 namespace CodeMagic.MapGeneration
 {

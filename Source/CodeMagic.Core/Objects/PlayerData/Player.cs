@@ -8,18 +8,21 @@ namespace CodeMagic.Core.Objects.PlayerData
 {
     public class Player : CreatureObject, IPlayer, IDynamicObject
     {
+        private const int MaxProtection = 75;
+
         private int mana;
         private int maxMana;
+        private int manaRegeneration;
 
         public Player(PlayerConfiguration configuration)
             : base(configuration)
         {
+            Equipment = new Equipment();
             MaxMana = configuration.MaxMana;
             Mana = configuration.Mana;
-            ManaRegeneration = configuration.ManaRegeneration;
+            manaRegeneration = configuration.ManaRegeneration;
 
             Inventory = new Inventory(configuration.MaxWeight);
-            Equipment = new Equipment(Inventory);
         }
 
         public UpdateOrder UpdateOrder => UpdateOrder.Medium;
@@ -32,7 +35,20 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         public override bool BlocksMovement => true;
 
-        public int ManaRegeneration { get; set; }
+        public int ManaRegeneration
+        {
+            get => manaRegeneration + Equipment.GetBonusManaRegeneration();
+            set
+            {
+                if (value < 0)
+                {
+                    manaRegeneration = 0;
+                    return;
+                }
+
+                manaRegeneration = value;
+            }
+        }
 
         public int Mana
         {
@@ -44,25 +60,31 @@ namespace CodeMagic.Core.Objects.PlayerData
                     mana = 0;
                     return;
                 }
-                if (value > maxMana)
+                if (value > MaxMana)
                 {
-                    mana = maxMana;
+                    mana = MaxMana;
                     return;
                 }
                 mana = value;
             }
         }
 
+        public override int MaxHealth
+        {
+            get => base.MaxHealth + Equipment.GetBonusHealth();
+            set => base.MaxHealth = value;
+        }
+
         public int MaxMana
         {
-            get => maxMana;
+            get => maxMana + Equipment.GetBonusMana();
             set
             {
                 if (value < 0)
                     throw new ArgumentException("Max Mana value cannot be < 0");
                 maxMana = value;
-                if (mana > maxMana)
-                    mana = maxMana;
+                if (mana > MaxMana)
+                    mana = MaxMana;
             }
         }
 
@@ -80,6 +102,14 @@ namespace CodeMagic.Core.Objects.PlayerData
             base.OnDeath(map, position);
 
             Died?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected override int GetProtection(Element element)
+        {
+            var value = base.GetProtection(element) + Equipment.GetProtection(element);
+            if (value > MaxProtection)
+                return MaxProtection;
+            return value;
         }
     }
 }

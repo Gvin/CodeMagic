@@ -1,0 +1,2505 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<item-generator-configuration>
+  <weapon>
+    <swords>
+      <images>
+        <handle>
+          <image>Sword_Handle_V1</image>
+          <image>Sword_Handle_V2</image>
+          <image>Sword_Handle_V3</image>
+          <image>Sword_Handle_V4</image>
+          <image>Sword_Handle_V5</image>
+          <image>Sword_Handle_V6</image>
+          <image>Sword_Handle_V7</image>
+          <image>Sword_Handle_V8</image>
+          <image>Sword_Handle_V9</image>
+          <image>Sword_Handle_V10</image>
+          <image>Sword_Handle_V11</image>
+          <image>Sword_Handle_V12</image>
+        </handle>
+        <guard>
+          <image>Sword_Guard_V1</image>
+          <image>Sword_Guard_V2</image>
+          <image>Sword_Guard_V3</image>
+          <image>Sword_Guard_V4</image>
+          <image>Sword_Guard_V5</image>
+          <image>Sword_Guard_V6</image>
+          <image>Sword_Guard_V7</image>
+          <image>Sword_Guard_V8</image>
+          <image>Sword_Guard_V9</image>
+        </guard>
+        <blade>
+          <image>Sword_Blade_V1</image>
+          <image>Sword_Blade_V2</image>
+          <image>Sword_Blade_V3</image>
+          <image>Sword_Blade_V4</image>
+          <image>Sword_Blade_V5</image>
+          <image>Sword_Blade_V6</image>
+          <image>Sword_Blade_V7</image>
+          <image>Sword_Blade_V8</image>
+          <image>Sword_Blade_V9</image>
+          <image>Sword_Blade_V10</image>
+          <image>Sword_Blade_V11</image>
+          <image>Sword_Blade_V12</image>
+        </blade>
+      </images>
+
+      <weight>
+        <value material="Wood">10</value>
+        <value material="Iron">20</value>
+        <value material="Steel">20</value>
+        <value material="Silver">15</value>
+        <value material="ElvesMetal">10</value>
+        <value material="DwarfsMetal">30</value>
+        <value material="Mythril">7</value>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <damage>
+            <value element="Slashing">
+              <min-value>3</min-value>
+              <max-value>5</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>1</min-max-damage-difference>
+          <min-hit-chance>60</min-hit-chance>
+          <max-hit-chance>75</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>0</max-bonuses>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <damage>
+            <value element="Slashing">
+              <min-value>7</min-value>
+              <max-value>10</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>2</min-max-damage-difference>
+          <min-hit-chance>65</min-hit-chance>
+          <max-hit-chance>80</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>1</max-bonuses>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <damage>
+            <value element="Slashing">
+              <min-value>10</min-value>
+              <max-value>15</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>2</min-max-damage-difference>
+          <min-hit-chance>70</min-hit-chance>
+          <max-hit-chance>85</max-hit-chance>
+          <min-bonuses>1</min-bonuses>
+          <max-bonuses>2</max-bonuses>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <damage>
+            <value element="Slashing">
+              <min-value>20</min-value>
+              <max-value>25</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>3</min-max-damage-difference>
+          <min-hit-chance>75</min-hit-chance>
+          <max-hit-chance>85</max-hit-chance>
+          <min-bonuses>2</min-bonuses>
+          <max-bonuses>3</max-bonuses>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </swords>
+
+    <daggers>
+      <images>
+        <handle>
+          <image>Sword_Handle_V1</image>
+          <image>Sword_Handle_V2</image>
+          <image>Sword_Handle_V3</image>
+          <image>Sword_Handle_V4</image>
+          <image>Sword_Handle_V5</image>
+          <image>Sword_Handle_V6</image>
+          <image>Sword_Handle_V7</image>
+          <image>Sword_Handle_V8</image>
+          <image>Sword_Handle_V9</image>
+          <image>Sword_Handle_V10</image>
+          <image>Sword_Handle_V11</image>
+          <image>Sword_Handle_V12</image>
+        </handle>
+        <guard>
+          <image>Dagger_Guard_V1</image>
+          <image>Dagger_Guard_V2</image>
+          <image>Dagger_Guard_V3</image>
+          <image>Dagger_Guard_V4</image>
+          <image>Dagger_Guard_V5</image>
+          <image>Dagger_Guard_V6</image>
+        </guard>
+        <blade>
+          <image>Dagger_Blade_V1</image>
+          <image>Dagger_Blade_V2</image>
+          <image>Dagger_Blade_V3</image>
+          <image>Dagger_Blade_V4</image>
+          <image>Dagger_Blade_V5</image>
+        </blade>
+      </images>
+
+      <weight>
+        <value material="Wood">5</value>
+        <value material="Iron">10</value>
+        <value material="Steel">10</value>
+        <value material="Silver">7</value>
+        <value material="ElvesMetal">5</value>
+        <value material="DwarfsMetal">15</value>
+        <value material="Mythril">3</value>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <damage>
+            <value element="Piercing">
+              <min-value>2</min-value>
+              <max-value>3</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>1</min-max-damage-difference>
+          <min-hit-chance>80</min-hit-chance>
+          <max-hit-chance>90</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>0</max-bonuses>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <damage>
+            <value element="Piercing">
+              <min-value>4</min-value>
+              <max-value>6</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>1</min-max-damage-difference>
+          <min-hit-chance>85</min-hit-chance>
+          <max-hit-chance>90</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>1</max-bonuses>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <damage>
+            <value element="Piercing">
+              <min-value>8</min-value>
+              <max-value>10</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>2</min-max-damage-difference>
+          <min-hit-chance>85</min-hit-chance>
+          <max-hit-chance>90</max-hit-chance>
+          <min-bonuses>1</min-bonuses>
+          <max-bonuses>2</max-bonuses>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <damage>
+            <value element="Piercing">
+              <min-value>12</min-value>
+              <max-value>15</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>2</min-max-damage-difference>
+          <min-hit-chance>90</min-hit-chance>
+          <max-hit-chance>100</max-hit-chance>
+          <min-bonuses>2</min-bonuses>
+          <max-bonuses>3</max-bonuses>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </daggers>
+
+    <maces>
+      <images>
+        <handle>
+          <image>Sword_Handle_V1</image>
+          <image>Sword_Handle_V2</image>
+          <image>Sword_Handle_V3</image>
+          <image>Sword_Handle_V4</image>
+          <image>Sword_Handle_V5</image>
+          <image>Sword_Handle_V6</image>
+          <image>Sword_Handle_V7</image>
+          <image>Sword_Handle_V8</image>
+          <image>Sword_Handle_V9</image>
+          <image>Sword_Handle_V10</image>
+          <image>Sword_Handle_V11</image>
+          <image>Sword_Handle_V12</image>
+        </handle>
+        <shaft>
+          <image>Mace_Shaft_V1</image>
+          <image>Mace_Shaft_V2</image>
+          <image>Mace_Shaft_V3</image>
+        </shaft>
+        <head>
+          <image>Mace_Head_V1</image>
+          <image>Mace_Head_V2</image>
+          <image>Mace_Head_V3</image>
+          <image>Mace_Head_V4</image>
+          <image>Mace_Head_V5</image>
+        </head>
+      </images>
+
+      <weight>
+        <value material="Wood">20</value>
+        <value material="Iron">40</value>
+        <value material="Steel">40</value>
+        <value material="Silver">35</value>
+        <value material="ElvesMetal">25</value>
+        <value material="DwarfsMetal">60</value>
+        <value material="Mythril">20</value>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <damage>
+            <value element="Blunt">
+              <min-value>10</min-value>
+              <max-value>15</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>5</min-max-damage-difference>
+          <min-hit-chance>30</min-hit-chance>
+          <max-hit-chance>60</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>0</max-bonuses>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <damage>
+            <value element="Blunt">
+              <min-value>15</min-value>
+              <max-value>25</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>5</min-max-damage-difference>
+          <min-hit-chance>35</min-hit-chance>
+          <max-hit-chance>65</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>1</max-bonuses>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <damage>
+            <value element="Blunt">
+              <min-value>25</min-value>
+              <max-value>35</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>10</min-max-damage-difference>
+          <min-hit-chance>40</min-hit-chance>
+          <max-hit-chance>70</max-hit-chance>
+          <min-bonuses>1</min-bonuses>
+          <max-bonuses>2</max-bonuses>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <damage>
+            <value element="Blunt">
+              <min-value>35</min-value>
+              <max-value>55</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>10</min-max-damage-difference>
+          <min-hit-chance>45</min-hit-chance>
+          <max-hit-chance>70</max-hit-chance>
+          <min-bonuses>2</min-bonuses>
+          <max-bonuses>3</max-bonuses>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </maces>
+
+    <axes>
+      <images>
+        <handle>
+          <image>Sword_Handle_V1</image>
+          <image>Sword_Handle_V2</image>
+          <image>Sword_Handle_V3</image>
+          <image>Sword_Handle_V4</image>
+          <image>Sword_Handle_V5</image>
+          <image>Sword_Handle_V6</image>
+          <image>Sword_Handle_V7</image>
+          <image>Sword_Handle_V8</image>
+          <image>Sword_Handle_V9</image>
+          <image>Sword_Handle_V10</image>
+          <image>Sword_Handle_V11</image>
+          <image>Sword_Handle_V12</image>
+        </handle>
+        <shaft>
+          <image>Mace_Shaft_V1</image>
+          <image>Mace_Shaft_V2</image>
+          <image>Mace_Shaft_V3</image>
+        </shaft>
+        <head>
+          <image>Axe_Head_V1</image>
+        </head>
+      </images>
+
+      <weight>
+        <value material="Wood">20</value>
+        <value material="Iron">40</value>
+        <value material="Steel">40</value>
+        <value material="Silver">35</value>
+        <value material="ElvesMetal">25</value>
+        <value material="DwarfsMetal">60</value>
+        <value material="Mythril">20</value>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <damage>
+            <value element="Slashing">
+              <min-value>5</min-value>
+              <max-value>7</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>5</min-max-damage-difference>
+          <min-hit-chance>50</min-hit-chance>
+          <max-hit-chance>65</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>0</max-bonuses>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <damage>
+            <value element="Slashing">
+              <min-value>10</min-value>
+              <max-value>15</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>8</min-max-damage-difference>
+          <min-hit-chance>55</min-hit-chance>
+          <max-hit-chance>70</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>1</max-bonuses>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <damage>
+            <value element="Slashing">
+              <min-value>13</min-value>
+              <max-value>20</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>10</min-max-damage-difference>
+          <min-hit-chance>60</min-hit-chance>
+          <max-hit-chance>75</max-hit-chance>
+          <min-bonuses>1</min-bonuses>
+          <max-bonuses>2</max-bonuses>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <damage>
+            <value element="Slashing">
+              <min-value>17</min-value>
+              <max-value>30</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>15</min-max-damage-difference>
+          <min-hit-chance>65</min-hit-chance>
+          <max-hit-chance>80</max-hit-chance>
+          <min-bonuses>2</min-bonuses>
+          <max-bonuses>3</max-bonuses>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </axes>
+
+    <description>
+      <material-description>
+        <material value="Wood">
+          <text>It is made from wood, bad idea for weapon.</text>
+          <text>It is made from wood. Hope it won't break.</text>
+          <text>It looks like some processed branch.</text>
+        </material>
+        <material value="Iron">
+          <text>It is made from iron, standard weapon material.</text>
+          <text>There is some rust on it.</text>
+        </material>
+        <material value="Steel">
+          <text>It is made from steel, a strong material.</text>
+          <text>It will not break easily.</text>
+        </material>
+        <material value="Silver">
+          <text>It is made from silver. Why is it so?</text>
+          <text>Not so hard as steel. But it is still metal.</text>
+          <text>It shines a bit in light.</text>
+        </material>
+        <material value="ElvesMetal">
+          <text>It is made from strange green metal.</text>
+          <text>It's material is very light.</text>
+          <text>It smells like grass.</text>
+        </material>
+        <material value="DwarfsMetal">
+          <text>It is made from strange yellow metal.</text>
+          <text>It is extraordinary heavy.</text>
+          <text>The material is super hard and super heavy.</text>
+        </material>
+        <material value="Mythril">
+          <text>It is made from strange violet metal.</text>
+          <text>It's material is extraordinary light.</text>
+          <text>I can barely feel it's weight.</text>
+        </material>
+      </material-description>
+      <rareness-description>
+        <rareness value="Trash">
+          <text>It's quality is poor.</text>
+          <text>It is almost falling apart.</text>
+          <text>It can barely be used.</text>
+          <text>Using it may be dangerous to you.</text>
+        </rareness>
+        <rareness value="Common">
+          <text>It's quality is common.</text>
+          <text>It is just normal.</text>
+          <text>There is nothing special in it.</text>
+        </rareness>
+        <rareness value="Uncommon">
+          <text>It's quality is quite good.</text>
+          <text>It was definitely created by a master.</text>
+        </rareness>
+        <rareness value="Rare">
+          <text>It's quality is great.</text>
+          <text>You can use it easily.</text>
+        </rareness>
+      </rareness-description>
+    </description>
+  </weapon>
+
+  <armor>
+    <chests>
+      <item>
+        <images>
+          <image>Armor_Leather_Chest_V1</image>
+          <image>Armor_Leather_Chest_V2</image>
+          <image>Armor_Leather_Chest_V3</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Leather">10</value>
+        </weight>
+      </item>
+      <item name="Mail">
+        <images>
+          <image>Armor_Mail_Chest_V1</image>
+          <image>Armor_Mail_Chest_V2</image>
+          <image>Armor_Mail_Chest_V3</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-30</min-value>
+                <max-value>-20</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Iron</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-30</min-value>
+                <max-value>-20</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Iron</material>
+              <material>Steel</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-30</min-value>
+                <max-value>-20</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Steel</material>
+              <material>Silver</material>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-30</min-value>
+                <max-value>-20</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+              <material>Mythril</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Iron">15</value>
+          <value material="Steel">15</value>
+          <value material="Silver">12</value>
+          <value material="ElvesMetal">7</value>
+          <value material="DwarfsMetal">30</value>
+          <value material="Mythril">5</value>
+        </weight>
+      </item>
+      <item name="Scale Mail">
+        <images>
+          <image>Armor_ScaleMail_Chest_V1</image>
+          <image>Armor_ScaleMail_Chest_V2</image>
+          <image>Armor_ScaleMail_Chest_V3</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Iron</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Iron</material>
+              <material>Steel</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>20</min-value>
+                <max-value>25</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Steel</material>
+              <material>Silver</material>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>20</min-value>
+                <max-value>25</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+              <material>Mythril</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Iron">25</value>
+          <value material="Steel">25</value>
+          <value material="Silver">20</value>
+          <value material="ElvesMetal">12</value>
+          <value material="DwarfsMetal">50</value>
+          <value material="Mythril">10</value>
+        </weight>
+      </item>
+      <item name="Plate">
+        <images>
+          <image>Armor_Plate_Chest_V1</image>
+          <image>Armor_Plate_Chest_V2</image>
+          <image>Armor_Plate_Chest_V3</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Iron</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Iron</material>
+              <material>Steel</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Steel</material>
+              <material>Silver</material>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>15</min-value>
+                <max-value>29</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+              <material>Mythril</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Iron">25</value>
+          <value material="Steel">25</value>
+          <value material="Silver">20</value>
+          <value material="ElvesMetal">12</value>
+          <value material="DwarfsMetal">50</value>
+          <value material="Mythril">10</value>
+        </weight>
+      </item>
+    </chests>
+
+    <helmets>
+      <item>
+        <images>
+          <image>Armor_Leather_Helmet_V1</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>5</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>7</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>4</min-value>
+                <max-value>8</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Leather">3</value>
+        </weight>
+      </item>
+      <item name="Mail">
+        <images>
+          <image>Armor_Mail_Helmet_V1</image>
+          <image>Armor_Mail_Helmet_V2</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-7</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Iron</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-7</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Iron</material>
+              <material>Steel</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>7</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-7</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Steel</material>
+              <material>Silver</material>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>8</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>3</min-value>
+                <max-value>8</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-7</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+              <material>Mythril</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Iron">7</value>
+          <value material="Steel">7</value>
+          <value material="Silver">5</value>
+          <value material="ElvesMetal">3</value>
+          <value material="DwarfsMetal">14</value>
+          <value material="Mythril">2</value>
+        </weight>
+      </item>
+      <item name="Scale Mail">
+        <images>
+          <image>Armor_ScaleMail_Helmet_V1</image>
+          <image>Armor_ScaleMail_Helmet_V2</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>3</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-12</min-value>
+                <max-value>-7</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Iron</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>3</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-12</min-value>
+                <max-value>-7</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Iron</material>
+              <material>Steel</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>2</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>5</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>3</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-12</min-value>
+                <max-value>-7</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Steel</material>
+              <material>Silver</material>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>4</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>5</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>3</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-12</min-value>
+                <max-value>-7</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+              <material>Mythril</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Iron">10</value>
+          <value material="Steel">10</value>
+          <value material="Silver">7</value>
+          <value material="ElvesMetal">5</value>
+          <value material="DwarfsMetal">20</value>
+          <value material="Mythril">3</value>
+        </weight>
+      </item>
+      <item name="Plate">
+        <images>
+          <image>Armor_Plate_Helmet_V1</image>
+          <image>Armor_Plate_Helmet_V2</image>
+          <image>Armor_Plate_Helmet_V3</image>
+          <image>Armor_Plate_Helmet_V4</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>7</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>7</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-5</min-value>
+                <max-value>-3</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Iron</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>7</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>7</min-value>
+                <max-value>12</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-5</min-value>
+                <max-value>-3</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Iron</material>
+              <material>Steel</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-5</min-value>
+                <max-value>-3</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Steel</material>
+              <material>Silver</material>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-5</min-value>
+                <max-value>-3</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+              <material>Mythril</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Iron">15</value>
+          <value material="Steel">15</value>
+          <value material="Silver">12</value>
+          <value material="ElvesMetal">10</value>
+          <value material="DwarfsMetal">30</value>
+          <value material="Mythril">7</value>
+        </weight>
+      </item>
+    </helmets>
+
+    <leggings>
+      <item>
+        <images>
+          <image>Armor_Leather_Leggings_V1</image>
+          <image>Armor_Leather_Leggings_V2</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>Leather</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Leather">3</value>
+        </weight>
+      </item>
+      <item name="Mail">
+        <images>
+          <image>Armor_Mail_Leggings_V1</image>
+          <image>Armor_Mail_Leggings_V2</image>
+          <image>Armor_Mail_Leggings_V3</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-30</min-value>
+                <max-value>-20</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Iron</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-30</min-value>
+                <max-value>-20</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Iron</material>
+              <material>Steel</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>0</min-value>
+                <max-value>5</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-30</min-value>
+                <max-value>-20</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Steel</material>
+              <material>Silver</material>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-15</min-value>
+                <max-value>-10</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-30</min-value>
+                <max-value>-20</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+              <material>Mythril</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Iron">15</value>
+          <value material="Steel">15</value>
+          <value material="Silver">12</value>
+          <value material="ElvesMetal">7</value>
+          <value material="DwarfsMetal">30</value>
+          <value material="Mythril">5</value>
+        </weight>
+      </item>
+      <item name="Scale Mail">
+        <images>
+          <image>Armor_ScaleMail_Leggings_V1</image>
+          <image>Armor_ScaleMail_Leggings_V2</image>
+          <image>Armor_ScaleMail_Leggings_V3</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Iron</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>2</min-value>
+                <max-value>7</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Iron</material>
+              <material>Steel</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>20</min-value>
+                <max-value>25</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Steel</material>
+              <material>Silver</material>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>20</min-value>
+                <max-value>25</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>5</min-value>
+                <max-value>10</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+              <material>Mythril</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Iron">25</value>
+          <value material="Steel">25</value>
+          <value material="Silver">20</value>
+          <value material="ElvesMetal">12</value>
+          <value material="DwarfsMetal">50</value>
+          <value material="Mythril">10</value>
+        </weight>
+      </item>
+      <item name="Plate">
+        <images>
+          <image>Armor_Plate_Leggings_V1</image>
+          <image>Armor_Plate_Leggings_V2</image>
+          <image>Armor_Plate_Leggings_V3</image>
+        </images>
+        <rareness-configuration>
+          <rareness value="Trash">
+            <protection>
+              <value element="Blunt">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>0</max-bonuses>
+            <materials>
+              <material>Iron</material>
+            </materials>
+          </rareness>
+          <rareness value="Common">
+            <protection>
+              <value element="Blunt">
+                <min-value>10</min-value>
+                <max-value>15</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>25</min-value>
+                <max-value>30</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>0</min-bonuses>
+            <max-bonuses>1</max-bonuses>
+            <materials>
+              <material>Iron</material>
+              <material>Steel</material>
+            </materials>
+          </rareness>
+          <rareness value="Uncommon">
+            <protection>
+              <value element="Blunt">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>1</min-bonuses>
+            <max-bonuses>2</max-bonuses>
+            <materials>
+              <material>Steel</material>
+              <material>Silver</material>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+            </materials>
+          </rareness>
+          <rareness value="Rare">
+            <protection>
+              <value element="Blunt">
+                <min-value>15</min-value>
+                <max-value>29</max-value>
+              </value>
+              <value element="Slashing">
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Piercing">
+                <min-value>30</min-value>
+                <max-value>35</max-value>
+              </value>
+              <value element="Frost">
+                <min-value>-10</min-value>
+                <max-value>-5</max-value>
+              </value>
+              <value element="Fire">
+                <min-value>15</min-value>
+                <max-value>20</max-value>
+              </value>
+              <value element="Electricity">
+                <min-value>-40</min-value>
+                <max-value>-30</max-value>
+              </value>
+            </protection>
+            <min-bonuses>2</min-bonuses>
+            <max-bonuses>3</max-bonuses>
+            <materials>
+              <material>ElvesMetal</material>
+              <material>DwarfsMetal</material>
+              <material>Mythril</material>
+            </materials>
+          </rareness>
+        </rareness-configuration>
+        <weight>
+          <value material="Iron">25</value>
+          <value material="Steel">25</value>
+          <value material="Silver">20</value>
+          <value material="ElvesMetal">12</value>
+          <value material="DwarfsMetal">50</value>
+          <value material="Mythril">10</value>
+        </weight>
+      </item>
+    </leggings>
+
+    <description>
+      <material-description>
+        <material value="Leather">
+          <text>It is made from leather, light but strong.</text>
+          <text>It is made from leather. Just like some good jacket.</text>
+        </material>
+        <material value="Iron">
+          <text>It is made from iron, standard armor material.</text>
+          <text>There is some rust on it.</text>
+        </material>
+        <material value="Steel">
+          <text>It is made from steel, a strong material.</text>
+          <text>It will not break easily.</text>
+        </material>
+        <material value="Silver">
+          <text>It is made from silver. Why is it so?</text>
+          <text>Not so hard as steel. But it is still metal.</text>
+          <text>It shines a bit in light.</text>
+        </material>
+        <material value="ElvesMetal">
+          <text>It is made from strange green metal.</text>
+          <text>It's material is very light.</text>
+          <text>It smells like grass.</text>
+        </material>
+        <material value="DwarfsMetal">
+          <text>It is made from strange yellow metal.</text>
+          <text>It is extraordinary heavy.</text>
+          <text>The material is super hard and super heavy.</text>
+        </material>
+        <material value="Mythril">
+          <text>It is made from strange violet metal.</text>
+          <text>It's material is extraordinary light.</text>
+          <text>I can barely feel it's weight.</text>
+        </material>
+      </material-description>
+      <rareness-description>
+        <rareness value="Trash">
+          <text>It's quality is poor.</text>
+          <text>It is almost falling apart.</text>
+          <text>It can barely be used.</text>
+          <text>This doesn't provide good protection.</text>
+        </rareness>
+        <rareness value="Common">
+          <text>It's quality is common.</text>
+          <text>It is just normal.</text>
+          <text>There is nothing special in it.</text>
+          <text>It should protect from some damage.</text>
+        </rareness>
+        <rareness value="Uncommon">
+          <text>It's quality is quite good.</text>
+          <text>It was definitely created by a master.</text>
+          <text>This thing can withstand some damage.</text>
+        </rareness>
+        <rareness value="Rare">
+          <text>It's quality is great.</text>
+          <text>You can use it easily.</text>
+          <text>Such armor can save live.</text>
+        </rareness>
+      </rareness-description>
+    </description>
+  </armor>
+
+  <spell-book>
+    <template>SpellBook_Template</template>
+    <symbols>
+      <image>SpellBook_Picture_V1</image>
+      <image>SpellBook_Picture_V2</image>
+      <image>SpellBook_Picture_V3</image>
+      <image>SpellBook_Picture_V4</image>
+      <image>SpellBook_Picture_V5</image>
+    </symbols>
+    <weight>3</weight>
+    <rareness-configuration>
+      <rareness value="Trash">
+        <min-bonuses>0</min-bonuses>
+        <max-bonuses>0</max-bonuses>
+        <min-spells>3</min-spells>
+        <max-spells>5</max-spells>
+        <description>
+          <text>It's quality is very poor.</text>
+          <text>I hope it's pages won't fall over.</text>
+          <text>It's very worn up.</text>
+          <text>There are only several pages in it.</text>
+        </description>
+      </rareness>
+      <rareness value="Common">
+        <min-bonuses>0</min-bonuses>
+        <max-bonuses>1</max-bonuses>
+        <min-spells>5</min-spells>
+        <max-spells>7</max-spells>
+        <description>
+          <text>It's condition is quite good.</text>
+          <text>it's just some normal book with strange symbols.</text>
+        </description>
+      </rareness>
+      <rareness value="Uncommon">
+        <min-bonuses>1</min-bonuses>
+        <max-bonuses>2</max-bonuses>
+        <min-spells>7</min-spells>
+        <max-spells>10</max-spells>
+        <description>
+          <text>It's looks like a high-quality item.</text>
+          <text>It's cover is smooth and beautiful.</text>
+        </description>
+      </rareness>
+      <rareness value="Rare">
+        <min-bonuses>2</min-bonuses>
+        <max-bonuses>3</max-bonuses>
+        <min-spells>10</min-spells>
+        <max-spells>15</max-spells>
+        <description>
+          <text>It's quality is excellent.</text>
+          <text>There are a lot of pages in it.</text>
+          <text>It looks like new.</text>
+        </description>
+      </rareness>
+    </rareness-configuration>
+  </spell-book>
+
+  <bonuses>
+    <group type="All">
+      <rareness value="Common">
+        <bonus type="WeightBonus">
+          <value key="WeightDecrease">30</value>
+        </bonus>
+      </rareness>
+      <rareness value="Uncommon">
+        <bonus type="WeightBonus">
+          <value key="WeightDecrease">50</value>
+        </bonus>
+      </rareness>
+      <rareness value="Rare">
+        <bonus type="WeightBonus">
+          <value key="WeightDecrease">80</value>
+        </bonus>
+      </rareness>
+    </group>
+
+    <group type="Equipable" inherit-from="All">
+      <rareness value="Common">
+        <bonus type="HealthBonus">
+          <value key="Min">5</value>
+          <value key="Max">10</value>
+        </bonus>
+        <bonus type="ManaBonus">
+          <value key="Min">50</value>
+          <value key="Max">100</value>
+        </bonus>
+        <bonus type="ManaRegenerationBonus">
+          <value key="Min">1</value>
+          <value key="Max">2</value>
+        </bonus>
+      </rareness>
+      <rareness value="Uncommon">
+        <bonus type="HealthBonus">
+          <value key="Min">10</value>
+          <value key="Max">15</value>
+        </bonus>
+        <bonus type="ManaBonus">
+          <value key="Min">100</value>
+          <value key="Max">150</value>
+        </bonus>
+        <bonus type="ManaRegenerationBonus">
+          <value key="Min">2</value>
+          <value key="Max">4</value>
+        </bonus>
+      </rareness>
+      <rareness value="Rare">
+        <bonus type="HealthBonus">
+          <value key="Min">15</value>
+          <value key="Max">20</value>
+        </bonus>
+        <bonus type="ManaBonus">
+          <value key="Min">150</value>
+          <value key="Max">200</value>
+        </bonus>
+        <bonus type="ManaRegenerationBonus">
+          <value key="Min">4</value>
+          <value key="Max">6</value>
+        </bonus>
+      </rareness>
+    </group>
+
+    <group type="Weapon" inherit-from="Equipable">
+      <rareness value="Common">
+        <bonus type="DamageBonus">
+          <value key="Min">1</value>
+          <value key="Max">3</value>
+          <value key="Difference">1</value>
+        </bonus>
+      </rareness>
+      <rareness value="Uncommon">
+        <bonus type="DamageBonus">
+          <value key="Min">3</value>
+          <value key="Max">5</value>
+          <value key="Difference">2</value>
+        </bonus>
+      </rareness>
+      <rareness value="Rare">
+        <bonus type="DamageBonus">
+          <value key="Min">5</value>
+          <value key="Max">10</value>
+          <value key="Difference">3</value>
+        </bonus>
+      </rareness>
+    </group>
+
+    <group type="Armor" inherit-from="Equipable">
+      <rareness value="Common">
+        <bonus type="ProtectionBonus">
+          <value key="Min">3</value>
+          <value key="Max">6</value>
+        </bonus>
+      </rareness>
+      <rareness value="Uncommon">
+        <bonus type="ProtectionBonus">
+          <value key="Min">6</value>
+          <value key="Max">10</value>
+        </bonus>
+      </rareness>
+      <rareness value="Rare">
+        <bonus type="ProtectionBonus">
+          <value key="Min">10</value>
+          <value key="Max">15</value>
+        </bonus>
+      </rareness>
+    </group>
+  </bonuses>
+</item-generator-configuration>

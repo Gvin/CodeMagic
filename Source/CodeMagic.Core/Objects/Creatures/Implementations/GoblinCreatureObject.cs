@@ -11,11 +11,13 @@ using CodeMagic.Core.Objects.PlayerData;
 
 namespace CodeMagic.Core.Objects.Creatures.Implementations
 {
+    // TODO: Implement creature weapon
     public class GoblinCreatureObject : NonPlayableCreatureObject
     {
         private readonly int hitChance;
         private readonly int minDamage;
         private readonly int maxDamage;
+        private readonly Element damageElement;
 
         public GoblinCreatureObject(GoblinCreatureObjectConfiguration configuration) 
             : base(configuration)
@@ -23,6 +25,7 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
             minDamage = configuration.MinDamage;
             maxDamage = configuration.MaxDamage;
             hitChance = configuration.HitChance;
+            damageElement = configuration.DamageElement;
 
             ConfigureLogic();
         }
@@ -57,8 +60,8 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
             }
 
             var damage = RandomHelper.GetRandomValue(minDamage, maxDamage);
-            target.Damage(journal, damage);
-            journal.Write(new DealDamageMessage(this, target, damage));
+            target.Damage(journal, damage, damageElement);
+            journal.Write(new DealDamageMessage(this, target, damage, damageElement));
         }
 
         public override bool BlocksMovement => true;
@@ -81,9 +84,16 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
 
     public class GoblinCreatureObjectConfiguration : NonPlayableCreatureObjectConfiguration
     {
+        public GoblinCreatureObjectConfiguration()
+        {
+            DamageElement = Element.Slashing;
+        }
+
         public int MinDamage { get; set; }
 
         public int MaxDamage { get; set; }
+
+        public Element DamageElement { get; set; }
 
         public int HitChance { get; set; }
     }

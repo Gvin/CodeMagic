@@ -1,20 +1,17 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.Creatures.Implementations;
-using CodeMagic.Core.Objects.DecorativeObjects;
-using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.Core.Statuses;
+using CodeMagic.Implementations.Items.Usable;
+using CodeMagic.Implementations.Objects.Creatures;
+using CodeMagic.Implementations.Objects.Creatures.NonPlayable;
+using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
-using CodeMagic.Objects.Implementation.Creatures;
-using CodeMagic.Objects.Implementation.Creatures.NonPlayable;
-using CodeMagic.Objects.Implementation.SolidObjects;
+using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
@@ -86,34 +83,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             }
         }
 
-        private WeaponItem CreateWoodenSword()
-        {
-            return new WeaponItem(new WeaponItemConfiguration
-            {
-                Name = "Wooden Sword",
-                Key = "wooden_sword",
-                MinDamage = 2,
-                MaxDamage = 5,
-                Rareness = ItemRareness.Trash,
-                Weight = 10,
-                HitChance = 70
-            });
-        }
-
-        private WeaponItem CreateElvesBlade()
-        {
-            return new WeaponItem(new WeaponItemConfiguration
-            {
-                Name = "Elves Blade",
-                Key = "elves_blade",
-                MinDamage = 10,
-                MaxDamage = 25,
-                Rareness = ItemRareness.Rare,
-                Weight = 7,
-                HitChance = 90
-            });
-        }
-
         private NonPlayableCreatureObject CreateGoblin()
         {
             return new GoblinImpl(new GoblinCreatureObjectConfiguration
@@ -141,17 +110,60 @@ namespace CodeMagic.UI.Sad.GameProcess
                 MaxWeight = 100
             });
 
-            var spellBook = new SpellBook(new SpellBookConfiguration
+            player.Inventory.AddItem(new HealthRestorationItem(new HealthPotionItemConfiguration
             {
-                Name = "Book of Fire",
-                Size = 10,
-                Rareness = ItemRareness.Epic
-            });
+                Description = "Medium sized jar with bloody-red liquid.",
+                HealValue = 50,
+                ImageName = "Item_Health_Potion",
+                Key = "health_potion",
+                Name = "Health Potion",
+                Rareness = ItemRareness.Uncommon,
+                Weight = 1
+            }));
+            player.Inventory.AddItem(new ManaRestorationItem(new ManaRestorationItemConfiguration
+            {
+                Description = "Medium sized jar with bright blue liquid.",
+                ManaRestoreValue = 50,
+                ImageName = "Item_Mana_Potion",
+                Key = "mana_potion",
+                Name = "Mana Potion",
+                Rareness = ItemRareness.Uncommon,
+                Weight = 1
+            }));
 
-            player.Equipment.SpellBook = spellBook;
+            player.Inventory.AddItem(new HealthRestorationItem(new HealthPotionItemConfiguration
+            {
+                Description = "A small phial with bloody-red liquid.",
+                HealValue = 25,
+                ImageName = "Item_Health_Potion_Small",
+                Key = "health_potion_small",
+                Name = "Small Health Potion",
+                Rareness = ItemRareness.Common,
+                Weight = 1
+            }), 2);
 
-            var weapon = CreateWoodenSword();
-            player.Equipment.EquipWeapon(weapon);
+            player.Inventory.AddItem(new ManaRestorationItem(new ManaRestorationItemConfiguration
+            {
+                Description = "A small phial with bright blue liquid.",
+                ManaRestoreValue = 25,
+                ImageName = "Item_Mana_Potion_Small",
+                Key = "mana_potion_small",
+                Name = "Small Mana Potion",
+                Rareness = ItemRareness.Common,
+                Weight = 1
+            }), 2);
+
+
+            var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
+
+            var weapon = itemsGenerator.GenerateWeapon(ItemRareness.Trash);
+            player.Inventory.AddItem(weapon);
+
+            for (int i = 0; i < 10; i++)
+            {
+                var rareness = (ItemRareness) RandomHelper.GetRandomValue(1, 3);
+                player.Inventory.AddItem(itemsGenerator.GenerateSpellBook(rareness));
+            }
 
             return player;
         }

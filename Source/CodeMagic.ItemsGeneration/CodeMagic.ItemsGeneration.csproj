@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F3DC883A-6643-436F-A64C-7268248C1B5E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeMagic.ItemsGeneration</RootNamespace>
+    <AssemblyName>CodeMagic.ItemsGeneration</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\Armor\IArmorConfiguration.cs" />
+    <Compile Include="Configuration\Armor\IArmorRarenessConfiguration.cs" />
+    <Compile Include="Configuration\Armor\IArmorPieceConfiguration.cs" />
+    <Compile Include="Configuration\Bonuses\IBonusConfiguration.cs" />
+    <Compile Include="Configuration\Bonuses\IBonusesConfiguration.cs" />
+    <Compile Include="Configuration\Bonuses\IBonusRarenessConfiguration.cs" />
+    <Compile Include="Configuration\Bonuses\IItemGroupBonusesConfiguration.cs" />
+    <Compile Include="Configuration\IElementConfiguration.cs" />
+    <Compile Include="Configuration\IItemGeneratorConfiguration.cs" />
+    <Compile Include="Configuration\IWeightConfiguration.cs" />
+    <Compile Include="Configuration\SpellBook\ISpellBookRarenessConfiguration.cs" />
+    <Compile Include="Configuration\SpellBook\ISpellBooksConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Blade\IBladeImagesConfiguration.cs" />
+    <Compile Include="Configuration\Description\IMaterialDescriptionConfiguration.cs" />
+    <Compile Include="Configuration\Description\IRarenessDescriptionConfiguration.cs" />
+    <Compile Include="Configuration\Description\IDescriptionConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Head\IHeadImagesConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Head\IHeadWeaponConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\IWeaponConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\IWeaponRarenessConfiguration.cs" />
+    <Compile Include="Configuration\Weapon\Blade\IBladeWeaponConfiguration.cs" />
+    <Compile Include="Implementations\ArmorGenerator.cs" />
+    <Compile Include="Implementations\Bonuses\BonusesGenerator.cs" />
+    <Compile Include="Implementations\Bonuses\Instances\DamageBonusApplier.cs" />
+    <Compile Include="Implementations\Bonuses\Instances\ManaBonusApplier.cs" />
+    <Compile Include="Implementations\Bonuses\Instances\HealthBonusApplier.cs" />
+    <Compile Include="Implementations\Bonuses\Instances\IBonusApplier.cs" />
+    <Compile Include="Implementations\Bonuses\Instances\ManaRegenerationBonusApplier.cs" />
+    <Compile Include="Implementations\Bonuses\Instances\ProtectionBonusApplier.cs" />
+    <Compile Include="Implementations\Bonuses\Instances\WeightBonusApplier.cs" />
+    <Compile Include="Implementations\NameBuilder.cs" />
+    <Compile Include="Implementations\SpellBookGenerator.cs" />
+    <Compile Include="Implementations\Weapon\BladeWeaponGenerator.cs" />
+    <Compile Include="Implementations\Weapon\HeadWeaponGenerator.cs" />
+    <Compile Include="Implementations\Weapon\IWeaponGenerator.cs" />
+    <Compile Include="Implementations\Weapon\WeaponGeneratorBase.cs" />
+    <Compile Include="ItemGeneratorHelper.cs" />
+    <Compile Include="ItemMaterial.cs" />
+    <Compile Include="ItemRecolorHelper.cs" />
+    <Compile Include="ItemsGenerator.cs" />
+    <Compile Include="NameGenerationHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">
+      <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
+      <Name>CodeMagic.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.Implementations\CodeMagic.Implementations.csproj">
+      <Project>{47e2b226-c00a-4ef3-ac0b-0a8a243add79}</Project>
+      <Name>CodeMagic.Implementations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.UI.Images\CodeMagic.UI.Images.csproj">
+      <Project>{c5a8ee43-bc81-4e88-b990-d2ae962c3205}</Project>
+      <Name>CodeMagic.UI.Images</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

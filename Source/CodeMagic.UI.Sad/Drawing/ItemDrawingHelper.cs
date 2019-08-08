@@ -17,7 +17,7 @@ namespace CodeMagic.UI.Sad.Drawing
                 case ItemRareness.Uncommon:
                     return Color.Lime;
                 case ItemRareness.Rare:
-                    return Color.LightBlue;
+                    return Color.FromNonPremultiplied(0, 102, 255, 255);
                 case ItemRareness.Epic:
                     return Color.Violet;
                 default:

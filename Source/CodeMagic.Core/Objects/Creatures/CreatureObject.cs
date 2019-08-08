@@ -37,7 +37,7 @@ namespace CodeMagic.Core.Objects.Creatures
 
         public int MaxVisibilityRange { get; }
 
-        public override void Damage(Journal journal, int damage, Element element = Element.Physical)
+        public override void Damage(Journal journal, int damage, Element element)
         {
             base.Damage(journal, damage, element);
 

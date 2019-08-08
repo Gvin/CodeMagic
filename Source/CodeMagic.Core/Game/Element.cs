@@ -2,7 +2,9 @@
 {
     public enum Element
     {
-        Physical,
+        Blunt,
+        Slashing,
+        Piercing,
         Fire,
         Frost,
         Acid,

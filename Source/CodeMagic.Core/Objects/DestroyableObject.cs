@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Statuses;
 
@@ -13,6 +15,7 @@ namespace CodeMagic.Core.Objects
         private int health;
         private int maxHealth;
         private readonly List<IDamageRecord> damageRecords;
+        private readonly Dictionary<Element, int> baseProtection;
 
         public DestroyableObject(DestroyableObjectConfiguration configuration)
         {
@@ -28,6 +31,8 @@ namespace CodeMagic.Core.Objects
 
             Statuses = new ObjectStatusesCollection(this);
             damageRecords = new List<IDamageRecord>();
+
+            baseProtection = configuration.BaseProtection.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         public virtual string Id { get; }
@@ -53,6 +58,13 @@ namespace CodeMagic.Core.Objects
         public ObjectSize Size { get; }
 
         public IDamageRecord[] DamageRecords => damageRecords.ToArray();
+
+        protected virtual int GetProtection(Element element)
+        {
+            if (baseProtection.ContainsKey(element))
+                return baseProtection[element];
+            return 0;
+        }
 
         public int GetSelfExtinguishChance()
         {
@@ -86,7 +98,7 @@ namespace CodeMagic.Core.Objects
             }
         }
 
-        public int MaxHealth
+        public virtual int MaxHealth
         {
             get => maxHealth;
             set
@@ -101,19 +113,32 @@ namespace CodeMagic.Core.Objects
 
         private int CatchFireChanceMultiplier { get; }
 
-        public virtual void Damage(Journal journal, int damage, Element element = Element.Physical)
+        public virtual void Damage(Journal journal, int damage, Element element)
         {
             if (damage < 0)
                 throw new ArgumentException($"Damage should be greater or equal 0. Got {damage}.");
 
-            Health -= damage;
+            var protection = GetProtection(element);
+            var protectionMultiplier = (100 - protection) / 100f;
+
+            var realDamage = (int) Math.Round(damage * protectionMultiplier);
+            realDamage = Math.Max(realDamage, 0);
+            if (realDamage < damage)
+            {
+                journal.Write(new DamageBlockedMessage(this, damage - realDamage, element));
+            }
+
+            if (realDamage == 0)
+                return;
+
+            Health -= realDamage;
 
             if (element == Element.Fire)
             {
-                CheckCatchFire(damage, journal);
+                CheckCatchFire(realDamage, journal);
             }
 
-            damageRecords.Add(Injector.Current.Create<IDamageRecord>(damage, element));
+            damageRecords.Add(Injector.Current.Create<IDamageRecord>(realDamage, element));
         }
 
         public void ClearDamageRecords()
@@ -181,7 +206,10 @@ namespace CodeMagic.Core.Objects
             SelfExtinguishChance = DefaultSelfExtinguishChance;
             ZIndex = ZIndex.BigDecoration;
             Size = ObjectSize.Medium;
+            BaseProtection = new Dictionary<Element, int>();
         }
+
+        public Dictionary<Element, int> BaseProtection { get; set; }
 
         public string Name { get; set; }
 

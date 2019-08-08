@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Items
 {
@@ -7,8 +9,8 @@ namespace CodeMagic.Core.Items
     {
         private static readonly WeaponItem Fists = new WeaponItem(new WeaponItemConfiguration
         {
-            MaxDamage = 2,
-            MinDamage = 0,
+            MaxDamage = new Dictionary<Element, int> {{Element.Blunt, 2}},
+            MinDamage = new Dictionary<Element, int> {{Element.Blunt, 0}},
             HitChance = 50,
             Name = "Fists",
             Rareness = ItemRareness.Trash,
@@ -16,18 +18,14 @@ namespace CodeMagic.Core.Items
         });
 
         private WeaponItem weapon;
-        private readonly Inventory inventory;
 
-        public Equipment(Inventory inventory)
+        public Equipment()
         {
-            this.inventory = inventory;
-
             Armor = new Dictionary<ArmorType, ArmorItem>
             {
-                {ArmorType.Arms, null},
-                {ArmorType.Head, null},
+                {ArmorType.Helmet, null},
                 {ArmorType.Chest, null},
-                {ArmorType.Legs, null}
+                {ArmorType.Leggings, null}
             };
         }
 
@@ -38,24 +36,129 @@ namespace CodeMagic.Core.Items
             get => weapon ?? Fists;
         }
 
-        public void EquipWeapon(WeaponItem newWeapon)
+        public void EquipItem(IEquipableItem item)
         {
-            if (weapon != null)
+            switch (item)
             {
-                inventory.AddItem(weapon);
+                case WeaponItem weaponItem:
+                    EquipWeapon(weaponItem);
+                    break;
+                case ArmorItem armorItem:
+                    EquipArmor(armorItem);
+                    break;
+                case SpellBook spellBookItem:
+                    EquipSpellBook(spellBookItem);
+                    break;
+                default:
+                    throw new ArgumentException($"Equipable item type is not supported: {item.GetType().FullName}");
             }
+        }
 
+        public void UnequipItem(IEquipableItem item)
+        {
+            switch (item)
+            {
+                case WeaponItem _:
+                    UnequipWeapon();
+                    break;
+                case ArmorItem armorItem:
+                    UnequipArmor(armorItem.ArmorType);
+                    break;
+                case SpellBook _:
+                    UnequipSpellBook();
+                    break;
+                default:
+                    throw new ArgumentException($"Equipable item type is not supported: {item.GetType().FullName}");
+            }
+        }
+
+        private void UnequipArmor(ArmorType type)
+        {
+            var armor = Armor[type];
+            if (armor != null)
+            {
+                Armor[type] = null;
+            }
+        }
+
+        private void UnequipWeapon()
+        {
+            weapon = null;
+        }
+
+        private void UnequipSpellBook()
+        {
+            if (SpellBook != null)
+            {
+                SpellBook = null;
+            }
+        }
+
+        private void EquipWeapon(WeaponItem newWeapon)
+        {
+            UnequipWeapon();
             weapon = newWeapon;
         }
 
-        public SpellBook SpellBook { get; set; }
-
-        public int Protection
+        private void EquipArmor(ArmorItem newArmor)
         {
-            get
+            UnequipArmor(newArmor.ArmorType);
+            Armor[newArmor.ArmorType] = newArmor;
+        }
+
+        private void EquipSpellBook(SpellBook newSpellBook)
+        {
+            UnequipSpellBook();
+            SpellBook = newSpellBook;
+        }
+
+        public bool IsEquiped(IEquipableItem item)
+        {
+            switch (item)
             {
-                return Armor.Select(pair => pair.Value).Where(armor => armor != null).Sum(armor => armor.Protection);
+                case WeaponItem weaponItem:
+                    return weapon != null && weapon.Equals(weaponItem);
+                case ArmorItem armorItem:
+                    return Armor[armorItem.ArmorType] != null && Armor[armorItem.ArmorType].Equals(item);
+                case SpellBook spellBookItem:
+                    return SpellBook != null && SpellBook.Equals(spellBookItem);
+                default:
+                    throw new ArgumentException($"Equipable item type is not supported: {item.GetType().FullName}");
             }
+        }
+
+        public SpellBook SpellBook { get; private set; }
+
+        public int GetProtection(Element element)
+        {
+            return Armor.Sum(pair => pair.Value?.GetProtection(element) ?? 0);
+        }
+
+        public int GetBonusMana()
+        {
+            var result = weapon?.ManaBonus ?? 0;
+            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.ManaBonus);
+            result += SpellBook?.ManaBonus ?? 0;
+
+            return result;
+        }
+
+        public int GetBonusManaRegeneration()
+        {
+            var result = weapon?.ManaRegenerationBonus ?? 0;
+            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.ManaRegenerationBonus);
+            result += SpellBook?.HealthBonus ?? 0;
+
+            return result;
+        }
+
+        public int GetBonusHealth()
+        {
+            var result = weapon?.HealthBonus ?? 0;
+            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.HealthBonus);
+            result += SpellBook?.HealthBonus ?? 0;
+
+            return result;
         }
     }
 }

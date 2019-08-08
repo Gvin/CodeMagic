@@ -1,5 +1,4 @@
 ﻿using CodeMagic.Core.Game.Journaling.Messages;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Spells;
 
 namespace CodeMagic.Core.Game.PlayerActions
@@ -13,21 +12,21 @@ namespace CodeMagic.Core.Game.PlayerActions
             this.spell = spell;
         }
 
-        public bool Perform(IPlayer player, Point playerPosition, IGameCore game, out Point newPosition)
+        public bool Perform(IGameCore game, out Point newPosition)
         {
-            newPosition = playerPosition;
+            newPosition = game.PlayerPosition;
 
-            if (player.Mana < spell.ManaCost)
+            if (game.Player.Mana < spell.ManaCost)
             {
-                player.Mana = 0;
+                game.Player.Mana = 0;
                 game.Journal.Write(new NotEnoughManaMessage());
                 return true;
             }
 
-            player.Mana -= spell.ManaCost;
-            var codeSpell = spell.CreateCodeSpell(player);
-            game.Journal.Write(new SpellCastMessage(player, spell.Name));
-            game.Map.AddObject(playerPosition, codeSpell);
+            game.Player.Mana -= spell.ManaCost;
+            var codeSpell = spell.CreateCodeSpell(game.Player);
+            game.Journal.Write(new SpellCastMessage(game.Player, spell.Name));
+            game.Map.AddObject(game.PlayerPosition, codeSpell);
             return true;
         }
     }

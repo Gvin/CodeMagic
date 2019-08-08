@@ -59,11 +59,11 @@
   <ItemGroup>
     <Compile Include="Controls\GameAreaControl.cs" />
     <Compile Include="Controls\GameLogoControl.cs" />
+    <Compile Include="Controls\ItemDetailsControl.cs" />
     <Compile Include="Controls\JournalBoxControl.cs" />
     <Compile Include="Controls\PlayerStatsControl.cs" />
     <Compile Include="Controls\SpellDetailsControl.cs" />
     <Compile Include="Drawing\CellImageHelper.cs" />
-    <Compile Include="Drawing\DamageColorHelper.cs" />
     <Compile Include="Drawing\DamageRecord.cs" />
     <Compile Include="Drawing\ImageProviding\ImagesFactory.cs" />
     <Compile Include="Drawing\ImagesStorage.cs" />
@@ -76,6 +76,7 @@
     <Compile Include="Views\EditSpellView.cs" />
     <Compile Include="Views\GameView.cs" />
     <Compile Include="Views\InGameMenuView.cs" />
+    <Compile Include="Views\InventoryView.cs" />
     <Compile Include="Views\MainMenuView.cs" />
     <Compile Include="Views\PlayerDeathView.cs" />
     <Compile Include="Views\SpellBookView.cs" />
@@ -115,13 +116,17 @@
       <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
       <Name>CodeMagic.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.Implementations\CodeMagic.Implementations.csproj">
+      <Project>{47e2b226-c00a-4ef3-ac0b-0a8a243add79}</Project>
+      <Name>CodeMagic.Implementations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.ItemsGeneration\CodeMagic.ItemsGeneration.csproj">
+      <Project>{f3dc883a-6643-436f-a64c-7268248c1b5e}</Project>
+      <Name>CodeMagic.ItemsGeneration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CodeMagic.MapGeneration\CodeMagic.MapGeneration.csproj">
       <Project>{a4f02790-b78a-42d2-b1b2-bed6547e7fc3}</Project>
       <Name>CodeMagic.MapGeneration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeMagic.Objects.Implementation\CodeMagic.Objects.Implementation.csproj">
-      <Project>{be94a033-ed03-4142-b634-563a110dd8bb}</Project>
-      <Name>CodeMagic.Objects.Implementation</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeMagic.UI.Images\CodeMagic.UI.Images.csproj">
       <Project>{c5a8ee43-bc81-4e88-b990-d2ae962c3205}</Project>
@@ -133,6 +138,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configuration\ItemGenerator.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\Liquids.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

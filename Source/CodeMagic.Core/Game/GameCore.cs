@@ -40,7 +40,7 @@ namespace CodeMagic.Core.Game
             {
                 Map.PreUpdate(this);
 
-                var endsTurn = action.Perform(Player, PlayerPosition, this, out var newPosition);
+                var endsTurn = action.Perform(this, out var newPosition);
                 PlayerPosition = newPosition;
 
                 if (endsTurn)

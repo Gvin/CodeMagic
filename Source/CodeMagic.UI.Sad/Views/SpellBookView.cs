@@ -10,6 +10,7 @@ using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
 using SadConsole;
+using SadConsole.Controls;
 using SadConsole.Input;
 using SadConsole.Themes;
 using Button = SadConsole.Controls.Button;
@@ -69,7 +70,7 @@ namespace CodeMagic.UI.Sad.Views
             spellsListBox = new ListBox(Width - 60, Height - 6)
             {
                 Position = new Point(1, 3),
-                CompareByReference = true
+                CompareByReference = true,
             };
             var scrollBarTheme = new ScrollBarTheme
             {

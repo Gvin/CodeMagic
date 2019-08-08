@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{47E2B226-C00A-4EF3-AC0B-0A8A243ADD79}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeMagic.Implementations</RootNamespace>
+    <AssemblyName>CodeMagic.Implementations</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IImageProvider.cs" />
+    <Compile Include="IImagesStorage.cs" />
+    <Compile Include="Items\ArmorItemImpl.cs" />
+    <Compile Include="Items\ItemTextHelper.cs" />
+    <Compile Include="Items\SpellBookItemImpl.cs" />
+    <Compile Include="Items\Usable\HealthRestorationItem.cs" />
+    <Compile Include="Items\IDescriptionProvider.cs" />
+    <Compile Include="Items\Usable\ManaRestorationItem.cs" />
+    <Compile Include="Items\SimpleItemImpl.cs" />
+    <Compile Include="Items\Weapon\WeaponItemImpl.cs" />
+    <Compile Include="Objects\AnimationManager.cs" />
+    <Compile Include="Objects\AnimationsBatchManager.cs" />
+    <Compile Include="Objects\CodeSpellImpl.cs" />
+    <Compile Include="Objects\Creatures\NonPlayable\GoblinImpl.cs" />
+    <Compile Include="Objects\Creatures\PlayerImpl.cs" />
+    <Compile Include="Objects\DecorativeObjects\DecorativeObjectImpl.cs" />
+    <Compile Include="Objects\DecorativeObjects\FireObjectImpl.cs" />
+    <Compile Include="Objects\IceObjects\AcidIceImpl.cs" />
+    <Compile Include="Objects\IceObjects\WaterIceImpl.cs" />
+    <Compile Include="Objects\LiquidObjects\AcidLiquidImpl.cs" />
+    <Compile Include="Objects\LiquidObjects\OilLiquidImpl.cs" />
+    <Compile Include="Objects\LiquidObjects\WaterLiquidImpl.cs" />
+    <Compile Include="Objects\SolidObjects\EnergyWallImpl.cs" />
+    <Compile Include="Objects\SolidObjects\TorchWallImpl.cs" />
+    <Compile Include="Objects\SolidObjects\WallImpl.cs" />
+    <Compile Include="Objects\SteamObjects\AcidSteamImpl.cs" />
+    <Compile Include="Objects\SteamObjects\WaterSteamImpl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">
+      <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
+      <Name>CodeMagic.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.UI.Images\CodeMagic.UI.Images.csproj">
+      <Project>{c5a8ee43-bc81-4e88-b990-d2ae962c3205}</Project>
+      <Name>CodeMagic.UI.Images</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

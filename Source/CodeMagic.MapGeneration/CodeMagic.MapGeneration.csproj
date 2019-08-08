@@ -49,9 +49,9 @@
       <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
       <Name>CodeMagic.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeMagic.Objects.Implementation\CodeMagic.Objects.Implementation.csproj">
-      <Project>{be94a033-ed03-4142-b634-563a110dd8bb}</Project>
-      <Name>CodeMagic.Objects.Implementation</Name>
+    <ProjectReference Include="..\CodeMagic.Implementations\CodeMagic.Implementations.csproj">
+      <Project>{47E2B226-C00A-4EF3-AC0B-0A8A243ADD79}</Project>
+      <Name>CodeMagic.Implementations</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
