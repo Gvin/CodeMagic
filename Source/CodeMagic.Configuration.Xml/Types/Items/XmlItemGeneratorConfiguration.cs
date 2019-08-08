@@ -1,8 +1,10 @@
 ﻿using System.Xml.Serialization;
 using CodeMagic.Configuration.Xml.Types.Items.Armor;
+using CodeMagic.Configuration.Xml.Types.Items.Bonuses;
 using CodeMagic.Configuration.Xml.Types.Items.Weapon;
 using CodeMagic.ItemsGeneration.Configuration;
 using CodeMagic.ItemsGeneration.Configuration.Armor;
+using CodeMagic.ItemsGeneration.Configuration.Bonuses;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
 
 namespace CodeMagic.Configuration.Xml.Types.Items
@@ -21,5 +23,11 @@ namespace CodeMagic.Configuration.Xml.Types.Items
 
         [XmlElement("armor")]
         public XmlArmorConfiguration ArmorConfigurationData { get; set; }
+
+        [XmlIgnore]
+        public IBonusesConfiguration BonusesConfiguration => BonusesConfigurationData;
+
+        [XmlElement("bonuses")]
+        public XmlBonusesConfiguration BonusesConfigurationData { get; set; }
     }
 }

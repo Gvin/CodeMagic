@@ -7,6 +7,7 @@ using CodeMagic.Implementations;
 using CodeMagic.Implementations.Items;
 using CodeMagic.ItemsGeneration.Configuration;
 using CodeMagic.ItemsGeneration.Configuration.Armor;
+using CodeMagic.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.ItemsGeneration.Implementations
@@ -15,11 +16,13 @@ namespace CodeMagic.ItemsGeneration.Implementations
     {
         private readonly IArmorConfiguration configuration;
         private readonly IImagesStorage imagesStorage;
+        private readonly BonusesGenerator bonusesGenerator;
 
-        public ArmorGenerator(IArmorConfiguration configuration, IImagesStorage imagesStorage)
+        public ArmorGenerator(IArmorConfiguration configuration, BonusesGenerator bonusesGenerator, IImagesStorage imagesStorage)
         {
             this.configuration = configuration;
             this.imagesStorage = imagesStorage;
+            this.bonusesGenerator = bonusesGenerator;
         }
 
         public ArmorItem GenerateArmor(ItemRareness rareness)
@@ -34,17 +37,21 @@ namespace CodeMagic.ItemsGeneration.Implementations
             var description = GenerateDescription(rareness, material);
             var weight = GetWeight(config, material);
 
-            return new ArmorItemImpl(new ArmorItemImplConfiguration
+            var bonusesCount = RandomHelper.GetRandomValue(rarenessConfig.MinBonuses, rarenessConfig.MaxBonuses);
+            var itemConfig = new ArmorItemImplConfiguration
             {
                 Name = name,
                 Key = Guid.NewGuid().ToString(),
-                ArmorType =  armorType,
+                ArmorType = armorType,
                 Description = description,
                 Image = image,
                 Protection = protection,
                 Rareness = rareness,
                 Weight = weight
-            });
+            };
+            bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
+
+            return new ArmorItemImpl(itemConfig);
         }
 
         private string GetArmorTypeName(ArmorType armorType)
@@ -99,15 +106,10 @@ namespace CodeMagic.ItemsGeneration.Implementations
 
         private string GenerateName(ItemRareness rareness, ItemMaterial material, string typeName, ArmorType type)
         {
-            var rarenessPrefix = NameGenerationHelper.GetRarenessPrefix(rareness);
             var materialPrefix = NameGenerationHelper.GetMaterialPrefix(material);
             var armorTypeName = GetArmorTypeName(type);
 
             var builder = new List<string>();
-            if (!string.IsNullOrEmpty(rarenessPrefix))
-            {
-                builder.Add(rarenessPrefix);
-            }
 
             if (!string.IsNullOrEmpty(materialPrefix))
             {

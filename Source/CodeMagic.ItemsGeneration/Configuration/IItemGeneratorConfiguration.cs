@@ -1,4 +1,5 @@
 ﻿using CodeMagic.ItemsGeneration.Configuration.Armor;
+using CodeMagic.ItemsGeneration.Configuration.Bonuses;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
 
 namespace CodeMagic.ItemsGeneration.Configuration
@@ -8,5 +9,7 @@ namespace CodeMagic.ItemsGeneration.Configuration
         IWeaponConfiguration WeaponConfiguration { get; }
 
         IArmorConfiguration ArmorConfiguration { get; }
+
+        IBonusesConfiguration BonusesConfiguration { get; }
     }
 }

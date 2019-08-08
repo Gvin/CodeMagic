@@ -243,8 +243,8 @@ namespace CodeMagic.UI.Sad.Drawing
 
         private ColoredString GetDamageText(int damage, Element element)
         {
-            var color = ElementTextHelper.GetElementColor(element);
-            var elementText = ElementTextHelper.GetElementName(element);
+            var color = ItemTextHelper.GetElementColor(element);
+            var elementText = ItemTextHelper.GetElementName(element);
             return new ColoredString($"{damage} {elementText} damage", ColorHelper.ConvertToXna(color), BackgroundColor);
         }
 

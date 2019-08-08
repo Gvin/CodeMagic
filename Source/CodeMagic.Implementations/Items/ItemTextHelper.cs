@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Items;
 
 namespace CodeMagic.Implementations.Items
 {
-    public static class ElementTextHelper
+    public static class ItemTextHelper
     {
         private static readonly Color PhysicalDamageColor = Color.Red;
         private static readonly Color FireDamageColor = Color.Orange;
@@ -16,6 +18,10 @@ namespace CodeMagic.Implementations.Items
         public static readonly Color NegativeValueColor = Color.Red;
 
         public static readonly Color DescriptionTextColor = Color.Gray;
+
+        public static readonly Color HealthColor = Color.Green;
+        public static readonly Color ManaColor = Color.Blue;
+        public static readonly Color ManaRegenerationColor = Color.DodgerBlue;
 
         public static Color GetElementColor(Element element)
         {
@@ -59,6 +65,46 @@ namespace CodeMagic.Implementations.Items
                 default:
                     throw new ArgumentException($"Unknown element: {element}");
             }
+        }
+
+        public static void AddBonusesDescription(EquipableItem item, List<StyledString[]> descriptionResult)
+        {
+            if (item.HealthBonus > 0)
+            {
+                descriptionResult.Add(new[]
+                {
+                    new StyledString("Health Bonus: "),
+                    new StyledString(FormatBonusNumber(item.HealthBonus), ItemTextHelper.HealthColor)
+                });
+            }
+
+            if (item.ManaBonus > 0)
+            {
+                descriptionResult.Add(new[]
+                {
+                    new StyledString("Mana Bonus: "),
+                    new StyledString(FormatBonusNumber(item.ManaBonus), ItemTextHelper.ManaColor)
+                });
+            }
+
+            if (item.ManaRegenerationBonus > 0)
+            {
+                descriptionResult.Add(new[]
+                {
+                    new StyledString("Mana Regeneration Bonus: "),
+                    new StyledString(FormatBonusNumber(item.ManaRegenerationBonus), ItemTextHelper.ManaRegenerationColor)
+                });
+            }
+        }
+
+        public static string FormatBonusNumber(int number)
+        {
+            if (number > 0)
+            {
+                return $"+{number}";
+            }
+
+            return number.ToString();
         }
     }
 }

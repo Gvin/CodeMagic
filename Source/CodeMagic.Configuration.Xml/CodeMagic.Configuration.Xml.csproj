@@ -46,6 +46,10 @@
     <Compile Include="Types\Items\Armor\XmlArmorConfiguration.cs" />
     <Compile Include="Types\Items\Armor\XmlArmorPieceConfiguration.cs" />
     <Compile Include="Types\Items\Armor\XmlArmorRarenessConfiguration.cs" />
+    <Compile Include="Types\Items\Bonuses\XmlBonusConfiguration.cs" />
+    <Compile Include="Types\Items\Bonuses\XmlBonusesConfiguration.cs" />
+    <Compile Include="Types\Items\Bonuses\XmlBonusRarenessConfiguration.cs" />
+    <Compile Include="Types\Items\Bonuses\XmlItemGroupBonusesConfiguration.cs" />
     <Compile Include="Types\Items\XmlElementConfiguration.cs" />
     <Compile Include="Types\Items\Weapon\Blade\XmlBladeImagesConfiguration.cs" />
     <Compile Include="Types\Items\Description\XmlMaterialDescriptionConfiguration.cs" />

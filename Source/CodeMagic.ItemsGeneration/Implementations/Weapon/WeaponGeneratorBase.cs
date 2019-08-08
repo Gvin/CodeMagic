@@ -6,6 +6,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
 using CodeMagic.Implementations.Items.Weapon;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
+using CodeMagic.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.ItemsGeneration.Implementations.Weapon
@@ -15,11 +16,17 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
         private readonly IImagesStorage imagesStorage;
         protected readonly string BaseName;
         private readonly IWeaponConfiguration configuration;
+        private readonly BonusesGenerator bonusesGenerator;
 
-        protected WeaponGeneratorBase(string baseName, IWeaponConfiguration configuration, IImagesStorage imagesStorage)
+        protected WeaponGeneratorBase(
+            string baseName, 
+            IWeaponConfiguration configuration, 
+            BonusesGenerator bonusesGenerator, 
+            IImagesStorage imagesStorage)
         {
             this.configuration = configuration;
             this.imagesStorage = imagesStorage;
+            this.bonusesGenerator = bonusesGenerator;
             BaseName = baseName;
         }
 
@@ -36,7 +43,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
             var description = GenerateDescription(rareness, material);
             var bonusesCount = RandomHelper.GetRandomValue(rarenessConfiguration.MinBonuses, rarenessConfiguration.MaxBonuses);
 
-            return new WeaponItemImpl(new WeaponItemImplConfiguration
+            var itemConfig = new WeaponItemImplConfiguration
             {
                 Name = name,
                 Key = Guid.NewGuid().ToString(),
@@ -47,7 +54,10 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
                 MinDamage = minDamage,
                 HitChance = hitChance,
                 Image = image
-            });
+            };
+            bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
+
+            return new WeaponItemImpl(itemConfig);
         }
 
         private Dictionary<Element, int> GenerateMaxDamage(IWeaponRarenessConfiguration config)
@@ -84,13 +94,8 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
 
         private string GenerateName(ItemRareness rareness, ItemMaterial material)
         {
-            var rarenessPrefix = NameGenerationHelper.GetRarenessPrefix(rareness);
             var materialPrefix = NameGenerationHelper.GetMaterialPrefix(material);
-            if (string.IsNullOrEmpty(rarenessPrefix))
-            {
-                return $"{materialPrefix} {BaseName}";
-            }
-            return $"{rarenessPrefix} {materialPrefix} {BaseName}";
+            return $"{materialPrefix} {BaseName}";
         }
 
         private string[] GenerateDescription(ItemRareness rareness, ItemMaterial material)

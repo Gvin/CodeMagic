@@ -27,13 +27,19 @@ namespace CodeMagic.Implementations.Items
         {
             var result = new List<StyledString[]>
             {
-                new[] {new StyledString($"Weight: {Weight}")}
+                new[] {new StyledString($"Weight: {Weight}")},
+                new StyledString[0]
             };
 
             AddProtectionDescription(result);
 
             result.Add(new StyledString[0]);
-            result.AddRange(description.Select(line => new[] { new StyledString(line, ElementTextHelper.DescriptionTextColor) }).ToArray());
+
+            ItemTextHelper.AddBonusesDescription(this, result);
+
+            result.Add(new StyledString[0]);
+
+            result.AddRange(description.Select(line => new[] { new StyledString(line, ItemTextHelper.DescriptionTextColor) }).ToArray());
 
             return result.ToArray();
         }
@@ -47,9 +53,9 @@ namespace CodeMagic.Implementations.Items
                 {
                     descriptionResult.Add(new[]
                     {
-                        new StyledString($"{ElementTextHelper.GetElementName(element)}", ElementTextHelper.GetElementColor(element)), 
+                        new StyledString($"{ItemTextHelper.GetElementName(element)}", ItemTextHelper.GetElementColor(element)), 
                         new StyledString(" Protection: "),
-                        new StyledString(value.ToString(), value > 0 ? ElementTextHelper.PositiveValueColor : ElementTextHelper.NegativeValueColor), 
+                        new StyledString(ItemTextHelper.FormatBonusNumber(value), value > 0 ? ItemTextHelper.PositiveValueColor : ItemTextHelper.NegativeValueColor), 
                         new StyledString("%")
                     });
                 }

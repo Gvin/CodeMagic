@@ -4,6 +4,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
 using CodeMagic.ItemsGeneration.Configuration.Weapon.Head;
+using CodeMagic.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.ItemsGeneration.Implementations.Weapon
@@ -15,9 +16,10 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
         public HeadWeaponGenerator(
             string baseName, 
             IHeadWeaponConfiguration configuration, 
-            IWeaponConfiguration weaponConfiguration, 
+            IWeaponConfiguration weaponConfiguration,
+            BonusesGenerator bonusesGenerator,
             IImagesStorage imagesStorage) 
-            : base(baseName, weaponConfiguration, imagesStorage)
+            : base(baseName, weaponConfiguration, bonusesGenerator, imagesStorage)
         {
             this.configuration = configuration;
         }

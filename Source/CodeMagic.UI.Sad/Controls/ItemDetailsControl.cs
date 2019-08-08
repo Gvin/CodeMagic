@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Items;
 using CodeMagic.Implementations.Items;
@@ -44,21 +45,60 @@ namespace CodeMagic.UI.Sad.Controls
             if (Stack == null)
                 return;
 
-            var itemColor = ItemDrawingHelper.GetItemColor(Stack.Item);
-            Surface.Print(1, 3, new ColoredString(Stack.Item.Name, new Cell(itemColor, BackColor)));
+            DrawName();
 
             var itemImage = imagesFactory.GetImage(Stack.Item);
             if (itemImage != null)
             {
-                Surface.DrawImage(3, 5, itemImage, Color.White, BackColor);
+                Surface.DrawImage(3, 6, itemImage, Color.White, BackColor);
             }
 
             if (Stack.Item is IDescriptionProvider descriptionProvider)
             {
                 var imageHeight = itemImage?.Height ?? 0;
-                var descriptionY = 5 + 1 + imageHeight;
+                var descriptionY = 6 + 1 + imageHeight;
                 DrawDescription(descriptionY, descriptionProvider);
             }
+        }
+
+        private void DrawName()
+        {
+            const int initialYShift = 3;
+            var maxWidth = Width - 6;
+
+            var itemColor = ItemDrawingHelper.GetItemColor(Stack.Item);
+            if (Stack.Item.Name.Length <= maxWidth)
+            {
+                Surface.Print(1, initialYShift, new ColoredString(Stack.Item.Name, new Cell(itemColor, BackColor)));
+                return;
+            }
+
+            var cuttedName = CutNameString(Stack.Item.Name, maxWidth);
+            for (int yShift = 0; yShift < cuttedName.Length; yShift++)
+            {
+                var line = cuttedName[yShift];
+                Surface.Print(1, initialYShift + yShift, new ColoredString(line, new Cell(itemColor, BackColor)));
+            }
+        }
+
+        private string[] CutNameString(string name, int maxWidth)
+        {
+            var result = new List<string>();
+            var remainingName = name;
+
+            while (remainingName.Length > maxWidth)
+            {
+                var cutIndex = remainingName.Substring(0, maxWidth).LastIndexOf(' ');
+                var leftPart = remainingName.Substring(0, cutIndex);
+                var rightPart = remainingName.Substring(cutIndex + 1, remainingName.Length - cutIndex - 1);
+
+                result.Add(leftPart);
+                remainingName = rightPart;
+            }
+
+            result.Add(remainingName);
+
+            return result.ToArray();
         }
 
         private void DrawDescription(int initialY, IDescriptionProvider descriptionProvider)

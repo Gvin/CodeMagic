@@ -59,7 +59,7 @@ namespace CodeMagic.UI.Sad.Drawing
             if (latestRecord == null)
                 return image;
 
-            var color = ElementTextHelper.GetElementColor(latestRecord.Element);
+            var color = ItemTextHelper.GetElementColor(latestRecord.Element);
             var damageText = latestRecord.Value.ToString();
 
             var xShift = 1;

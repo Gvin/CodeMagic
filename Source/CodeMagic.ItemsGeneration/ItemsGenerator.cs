@@ -5,11 +5,11 @@ using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
 using CodeMagic.ItemsGeneration.Configuration;
 using CodeMagic.ItemsGeneration.Implementations;
+using CodeMagic.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.ItemsGeneration.Implementations.Weapon;
 
 namespace CodeMagic.ItemsGeneration
 {
-    // TODO: Implement bonuses generation
     public class ItemsGenerator : IItemsGenerator
     {
         private readonly Dictionary<WeaponType, IWeaponGenerator> weaponGenerators;
@@ -17,13 +17,16 @@ namespace CodeMagic.ItemsGeneration
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage)
         {
+            var bonusesGenerator = new BonusesGenerator(configuration.BonusesConfiguration);
+
             weaponGenerators = new Dictionary<WeaponType, IWeaponGenerator>
             {
                 {
                     WeaponType.Sword,
                     new BladeWeaponGenerator("Sword", 
                         configuration.WeaponConfiguration.SwordsConfiguration, 
-                        configuration.WeaponConfiguration, 
+                        configuration.WeaponConfiguration,
+                        bonusesGenerator,
                         imagesStorage)
                 },
                 {
@@ -31,6 +34,7 @@ namespace CodeMagic.ItemsGeneration
                     new BladeWeaponGenerator("Dagger", 
                         configuration.WeaponConfiguration.DaggersConfiguration,
                         configuration.WeaponConfiguration,
+                        bonusesGenerator,
                         imagesStorage)
                 },
                 {
@@ -38,6 +42,7 @@ namespace CodeMagic.ItemsGeneration
                     new HeadWeaponGenerator("Mace", 
                         configuration.WeaponConfiguration.MacesConfiguration,
                         configuration.WeaponConfiguration,
+                        bonusesGenerator,
                         imagesStorage)
                 },
                 {
@@ -45,10 +50,11 @@ namespace CodeMagic.ItemsGeneration
                     new HeadWeaponGenerator("Axe",
                         configuration.WeaponConfiguration.AxesConfiguration,
                         configuration.WeaponConfiguration,
+                        bonusesGenerator,
                         imagesStorage)
                 }
             };
-            armorGenerator = new ArmorGenerator(configuration.ArmorConfiguration, imagesStorage);
+            armorGenerator = new ArmorGenerator(configuration.ArmorConfiguration, bonusesGenerator, imagesStorage);
         }
 
         public WeaponItem GenerateWeapon(ItemRareness rareness)

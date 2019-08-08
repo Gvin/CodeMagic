@@ -162,8 +162,22 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Inventory.AddItem(spellBook);
             player.Equipment.EquipItem(spellBook);
 
-            var weapon = Injector.Current.Create<IItemsGenerator>().GenerateWeapon(ItemRareness.Trash);
+            var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
+
+            var weapon = itemsGenerator.GenerateWeapon(ItemRareness.Trash);
             player.Inventory.AddItem(weapon);
+
+            for (int i = 0; i < 10; i++)
+            {
+                var rareness = (ItemRareness) RandomHelper.GetRandomValue(1, 3);
+                player.Inventory.AddItem(itemsGenerator.GenerateWeapon(rareness));
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                var rareness = (ItemRareness)RandomHelper.GetRandomValue(1, 3);
+                player.Inventory.AddItem(itemsGenerator.GenerateArmor(rareness));
+            }
 
             return player;
         }

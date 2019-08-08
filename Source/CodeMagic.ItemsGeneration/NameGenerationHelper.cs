@@ -29,22 +29,5 @@ namespace CodeMagic.ItemsGeneration
                     throw new ArgumentException($"Unknown material: {material}");
             }
         }
-
-        public static string GetRarenessPrefix(ItemRareness rareness)
-        {
-            switch (rareness)
-            {
-                case ItemRareness.Trash:
-                    return "Weak";
-                case ItemRareness.Common:
-                    return string.Empty;
-                case ItemRareness.Uncommon:
-                    return "Good";
-                case ItemRareness.Rare:
-                    return "Excellent";
-                default:
-                    throw new ArgumentException($"Unsupported rareness: {rareness}");
-            }
-        }
     }
 }

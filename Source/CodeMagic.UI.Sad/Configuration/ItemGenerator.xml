@@ -2335,4 +2335,114 @@
       </rareness-description>
     </description>
   </armor>
+
+  <bonuses>
+    <group type="All">
+      <rareness value="Common">
+        <bonus type="WeightBonus">
+          <value key="WeightDecrease">30</value>
+        </bonus>
+      </rareness>
+      <rareness value="Uncommon">
+        <bonus type="WeightBonus">
+          <value key="WeightDecrease">50</value>
+        </bonus>
+      </rareness>
+      <rareness value="Rare">
+        <bonus type="WeightBonus">
+          <value key="WeightDecrease">80</value>
+        </bonus>
+      </rareness>
+    </group>
+
+    <group type="Equipable" inherit-from="All">
+      <rareness value="Common">
+        <bonus type="HealthBonus">
+          <value key="Min">5</value>
+          <value key="Max">10</value>
+        </bonus>
+        <bonus type="ManaBonus">
+          <value key="Min">50</value>
+          <value key="Max">100</value>
+        </bonus>
+        <bonus type="ManaRegenerationBonus">
+          <value key="Min">1</value>
+          <value key="Max">2</value>
+        </bonus>
+      </rareness>
+      <rareness value="Uncommon">
+        <bonus type="HealthBonus">
+          <value key="Min">10</value>
+          <value key="Max">15</value>
+        </bonus>
+        <bonus type="ManaBonus">
+          <value key="Min">100</value>
+          <value key="Max">150</value>
+        </bonus>
+        <bonus type="ManaRegenerationBonus">
+          <value key="Min">2</value>
+          <value key="Max">4</value>
+        </bonus>
+      </rareness>
+      <rareness value="Rare">
+        <bonus type="HealthBonus">
+          <value key="Min">15</value>
+          <value key="Max">20</value>
+        </bonus>
+        <bonus type="ManaBonus">
+          <value key="Min">150</value>
+          <value key="Max">200</value>
+        </bonus>
+        <bonus type="ManaRegenerationBonus">
+          <value key="Min">4</value>
+          <value key="Max">6</value>
+        </bonus>
+      </rareness>
+    </group>
+
+    <group type="Weapon" inherit-from="Equipable">
+      <rareness value="Common">
+        <bonus type="DamageBonus">
+          <value key="Min">1</value>
+          <value key="Max">3</value>
+          <value key="Difference">1</value>
+        </bonus>
+      </rareness>
+      <rareness value="Uncommon">
+        <bonus type="DamageBonus">
+          <value key="Min">3</value>
+          <value key="Max">5</value>
+          <value key="Difference">2</value>
+        </bonus>
+      </rareness>
+      <rareness value="Rare">
+        <bonus type="DamageBonus">
+          <value key="Min">5</value>
+          <value key="Max">10</value>
+          <value key="Difference">3</value>
+        </bonus>
+      </rareness>
+    </group>
+
+    <group type="Armor" inherit-from="Equipable">
+      <rareness value="Common">
+        <bonus type="ProtectionBonus">
+          <value key="Min">3</value>
+          <value key="Max">6</value>
+        </bonus>
+      </rareness>
+      <rareness value="Uncommon">
+        <bonus type="ProtectionBonus">
+          <value key="Min">6</value>
+          <value key="Max">10</value>
+        </bonus>
+      </rareness>
+      <rareness value="Rare">
+        <bonus type="ProtectionBonus">
+          <value key="Min">10</value>
+          <value key="Max">15</value>
+        </bonus>
+      </rareness>
+    </group>
+  </bonuses>
 </item-generator-configuration>

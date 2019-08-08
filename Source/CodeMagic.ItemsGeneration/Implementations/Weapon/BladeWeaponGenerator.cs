@@ -4,6 +4,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
 using CodeMagic.ItemsGeneration.Configuration.Weapon.Blade;
+using CodeMagic.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.ItemsGeneration.Implementations.Weapon
@@ -16,8 +17,9 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
             string baseName,
             IBladeWeaponConfiguration configuration,
             IWeaponConfiguration weaponConfiguration,
+            BonusesGenerator bonusesGenerator,
             IImagesStorage imagesStorage) 
-            : base(baseName, weaponConfiguration, imagesStorage)
+            : base(baseName, weaponConfiguration, bonusesGenerator, imagesStorage)
         {
             this.configuration = configuration;
         }
