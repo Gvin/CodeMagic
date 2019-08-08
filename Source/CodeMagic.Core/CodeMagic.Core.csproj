@@ -85,14 +85,7 @@
     <Compile Include="Injection\IInjectable.cs" />
     <Compile Include="Injection\InjectorImpl.cs" />
     <Compile Include="Injection\Injector.cs" />
-    <Compile Include="Items\Bonuses\Armor\IArmorItemBonus.cs" />
-    <Compile Include="Items\Bonuses\Armor\ProtectionItemBonus.cs" />
-    <Compile Include="Items\Bonuses\Common\ICommonItemBonus.cs" />
-    <Compile Include="Items\Bonuses\Common\WeightDecreaseItemBonus.cs" />
-    <Compile Include="Items\Bonuses\Equipable\IEquipableItemBonus.cs" />
-    <Compile Include="Items\Bonuses\Equipable\StatsItemBonus.cs" />
-    <Compile Include="Items\Bonuses\Weapon\DamageItemBonus.cs" />
-    <Compile Include="Items\Bonuses\Weapon\IWeaponItemBonus.cs" />
+    <Compile Include="Items\EquipableItem.cs" />
     <Compile Include="Items\IEquipableItem.cs" />
     <Compile Include="Items\IItemsGenerator.cs" />
     <Compile Include="Items\IUsableItem.cs" />
