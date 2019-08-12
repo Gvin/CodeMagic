@@ -17,6 +17,8 @@ namespace CodeMagic.UI.Sad.Common
                 {'└', GlyphBoxSingleUpRight},
                 {'┘', GlyphBoxSingleUpLeft},
 
+                {'╤', GlyphBoxDoubleHorizontalSingleDown},
+
                 {'═', GlyphBoxDoubleHorizontal},
                 {'║', GlyphBoxDoubleVertical},
                 {'╬', GlyphBoxDoubleHorizontalVertical},
@@ -27,6 +29,10 @@ namespace CodeMagic.UI.Sad.Common
                 {'▓', GlyphBlockFilledThick},
                 {'░', GlyphBlockFilledRare},
 
+                {'Π', GlyphPants},
+                {'♣', GlyphClubs},
+                {'ô', GlyphArmorChest},
+                {'♠', GlyphSpades},
                 {'☺', GlyphSmileTransparent},
                 {'☻', GlyphSmileFilled},
                 {'←', GlyphArrowLeft},
@@ -322,6 +328,16 @@ namespace CodeMagic.UI.Sad.Common
         /// ≡
         /// </summary>
         public const int GlyphIdenticalEquals = 240;
+
+        /// <summary>
+        /// Π
+        /// </summary>
+        public const int GlyphPants = 239;
+
+        /// <summary>
+        /// ô
+        /// </summary>
+        public const int GlyphArmorChest = 147;
 
         #endregion
     }

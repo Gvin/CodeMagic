@@ -3,7 +3,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.LiquidObjects
 {
-    public class OilLiquidImpl : OilLiquidObject, IImageProvider
+    public class OilLiquidImpl : OilLiquidObject, IWorldImageProvider
     {
         private const string ImageSmall = "Oil_Small";
         private const string ImageMedium = "Oil_Medium";
@@ -14,7 +14,7 @@ namespace CodeMagic.Implementations.Objects.LiquidObjects
         {
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             if (Volume >= Configuration.MaxVolumeBeforeSpread)
                 return storage.GetImage(ImageBig);

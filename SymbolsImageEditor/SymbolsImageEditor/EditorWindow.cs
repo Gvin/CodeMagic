@@ -18,8 +18,8 @@ namespace SymbolsImageEditor
     {
         private const string SymbolsImageFileFilter = "Symbols Image|*.simg|All|*.*";
         private const string SymbolsImageFileExtension = ".simg";
-        private const int DefaultImageWidth = 8;
-        private const int DefaultImageHeight = 5;
+        private const int DefaultImageWidth = 3;
+        private const int DefaultImageHeight = 3;
 
         private ColorDialog colorPicker;
 

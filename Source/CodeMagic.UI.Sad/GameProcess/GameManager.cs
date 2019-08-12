@@ -11,6 +11,7 @@ using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.Implementations.Objects.Creatures.NonPlayable;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
+using CodeMagic.UI.Sad.Drawing;
 using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.UI.Sad.GameProcess
@@ -54,6 +55,16 @@ namespace CodeMagic.UI.Sad.GameProcess
                 LightPower = LightLevel.Bright1,
                 Type = WallObjectConfiguration.ObjectTypeWallStone
             }));
+
+            map.AddObject(2, 2, Injector.Current.Create<IItemsGenerator>().GenerateArmor(ItemRareness.Rare));
+            map.AddObject(2, 2, Injector.Current.Create<IItemsGenerator>().GenerateWeapon(ItemRareness.Rare));
+
+            map.AddObject(3, 2, Injector.Current.Create<IItemsGenerator>().GenerateArmor(ItemRareness.Rare));
+            map.AddObject(3, 2, Injector.Current.Create<IItemsGenerator>().GenerateArmor(ItemRareness.Rare));
+            map.AddObject(3, 2, Injector.Current.Create<IItemsGenerator>().GenerateArmor(ItemRareness.Rare));
+            map.AddObject(3, 2, Injector.Current.Create<IItemsGenerator>().GenerateArmor(ItemRareness.Rare));
+
+            map.AddObject(4, 2, Injector.Current.Create<IItemsGenerator>().GenerateSpellBook(ItemRareness.Rare));
 
 
             return map;
@@ -114,7 +125,8 @@ namespace CodeMagic.UI.Sad.GameProcess
             {
                 Description = "Medium sized jar with bloody-red liquid.",
                 HealValue = 50,
-                ImageName = "Item_Health_Potion",
+                ImageName = "Item_Potion_Red",
+                WorldImage = ImagesStorage.Current.GetImage("ItemsOnGround_Potion_Red"),
                 Key = "health_potion",
                 Name = "Health Potion",
                 Rareness = ItemRareness.Uncommon,
@@ -124,7 +136,8 @@ namespace CodeMagic.UI.Sad.GameProcess
             {
                 Description = "Medium sized jar with bright blue liquid.",
                 ManaRestoreValue = 50,
-                ImageName = "Item_Mana_Potion",
+                ImageName = "Item_Potion_Blue",
+                WorldImage = ImagesStorage.Current.GetImage("ItemsOnGround_Potion_Blue"),
                 Key = "mana_potion",
                 Name = "Mana Potion",
                 Rareness = ItemRareness.Uncommon,
@@ -135,35 +148,36 @@ namespace CodeMagic.UI.Sad.GameProcess
             {
                 Description = "A small phial with bloody-red liquid.",
                 HealValue = 25,
-                ImageName = "Item_Health_Potion_Small",
+                ImageName = "Item_Potion_Red_Small",
+                WorldImage = ImagesStorage.Current.GetImage("ItemsOnGround_Potion_Red"),
                 Key = "health_potion_small",
                 Name = "Small Health Potion",
                 Rareness = ItemRareness.Common,
                 Weight = 1
-            }), 2);
+            }));
 
             player.Inventory.AddItem(new ManaRestorationItem(new ManaRestorationItemConfiguration
             {
                 Description = "A small phial with bright blue liquid.",
                 ManaRestoreValue = 25,
-                ImageName = "Item_Mana_Potion_Small",
+                ImageName = "Item_Potion_Blue_Small",
+                WorldImage = ImagesStorage.Current.GetImage("ItemsOnGround_Potion_Blue"),
                 Key = "mana_potion_small",
                 Name = "Small Mana Potion",
                 Rareness = ItemRareness.Common,
                 Weight = 1
-            }), 2);
+            }));
 
 
             var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
 
             var weapon = itemsGenerator.GenerateWeapon(ItemRareness.Trash);
             player.Inventory.AddItem(weapon);
+            player.Equipment.EquipItem(weapon);
 
-            for (int i = 0; i < 10; i++)
-            {
-                var rareness = (ItemRareness) RandomHelper.GetRandomValue(1, 3);
-                player.Inventory.AddItem(itemsGenerator.GenerateSpellBook(rareness));
-            }
+            var spellBook = itemsGenerator.GenerateSpellBook(ItemRareness.Trash);
+            player.Inventory.AddItem(spellBook);
+            player.Equipment.EquipItem(spellBook);
 
             return player;
         }

@@ -3,7 +3,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.SolidObjects
 {
-    public class WallImpl : WallObject, IImageProvider
+    public class WallImpl : WallObject, IWorldImageProvider
     {
         private const string ImageNormal = "Wall_{0}";
         private const string ImageBottom = "Wall_{0}_Bottom";
@@ -16,7 +16,7 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
         {
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             if (!HasConnectedTile(0, 1) && !HasConnectedTile(1, 0))
             {

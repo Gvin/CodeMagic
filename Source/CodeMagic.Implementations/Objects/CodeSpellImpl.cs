@@ -5,7 +5,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects
 {
-    public class CodeSpellImpl : CodeSpell, IImageProvider
+    public class CodeSpellImpl : CodeSpell, IWorldImageProvider
     {
         private const string ImageHighMana = "Spell_HighMana";
         private const string ImageMediumMana = "Spell_MediumMana";
@@ -22,7 +22,7 @@ namespace CodeMagic.Implementations.Objects
             animations = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.OneByOneStartFromRandom);
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             if (Mana >= HighManaLevel)
                 return animations.GetImage(storage, ImageHighMana);

@@ -2,8 +2,8 @@
 
 namespace CodeMagic.Implementations
 {
-    public interface IImageProvider
+    public interface IInventoryImageProvider
     {
-        SymbolsImage GetImage(IImagesStorage storage);
+        SymbolsImage GetInventoryImage(IImagesStorage storage);
     }
 }

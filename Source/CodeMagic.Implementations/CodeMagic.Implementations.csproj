@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="IImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
+    <Compile Include="IWorldImageProvider.cs" />
     <Compile Include="Items\ArmorItemImpl.cs" />
     <Compile Include="Items\ItemTextHelper.cs" />
     <Compile Include="Items\SpellBookItemImpl.cs" />

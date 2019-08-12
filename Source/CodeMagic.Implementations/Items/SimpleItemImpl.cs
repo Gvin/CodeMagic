@@ -3,7 +3,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items
 {
-    public abstract class SimpleItemImpl : Item, IImageProvider
+    public abstract class SimpleItemImpl : Item, IInventoryImageProvider
     {
         private readonly string imageName;
 
@@ -12,7 +12,7 @@ namespace CodeMagic.Implementations.Items
         {
             imageName = configuration.ImageName;
         }
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetInventoryImage(IImagesStorage storage)
         {
             return storage.GetImage(imageName);
         }

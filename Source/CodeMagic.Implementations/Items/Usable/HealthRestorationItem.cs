@@ -2,17 +2,20 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
+using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items.Usable
 {
-    public class HealthRestorationItem : SimpleItemImpl, IUsableItem, IDescriptionProvider
+    public class HealthRestorationItem : SimpleItemImpl, IUsableItem, IDescriptionProvider, IWorldImageProvider
     {
+        private readonly SymbolsImage worldImage;
         private readonly int healValue;
         private readonly string description;
 
         public HealthRestorationItem(HealthPotionItemConfiguration configuration) 
             : base(configuration)
         {
+            worldImage = configuration.WorldImage;
             healValue = configuration.HealValue;
             description = configuration.Description;
         }
@@ -42,6 +45,11 @@ namespace CodeMagic.Implementations.Items.Usable
                 }
             };
         }
+
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
+        {
+            return worldImage;
+        }
     }
 
     public class HealthPotionItemConfiguration : SimpleItemConfiguration
@@ -49,5 +57,7 @@ namespace CodeMagic.Implementations.Items.Usable
         public int HealValue { get; set; }
 
         public string Description { get; set; }
+
+        public SymbolsImage WorldImage { get; set; }
     }
 }

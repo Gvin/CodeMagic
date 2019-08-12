@@ -4,7 +4,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.DecorativeObjects
 {
-    public class FireObjectImpl : FireDecorativeObject, IImageProvider
+    public class FireObjectImpl : FireDecorativeObject, IWorldImageProvider
     {
         private const string ImageSmall = "Fire_Small";
         private const string ImageMedium = "Fire_Medium";
@@ -17,7 +17,7 @@ namespace CodeMagic.Implementations.Objects.DecorativeObjects
             animations = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             switch (Type)
             {

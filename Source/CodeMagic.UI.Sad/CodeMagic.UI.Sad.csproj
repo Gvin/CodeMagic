@@ -65,7 +65,8 @@
     <Compile Include="Controls\SpellDetailsControl.cs" />
     <Compile Include="Drawing\CellImageHelper.cs" />
     <Compile Include="Drawing\DamageRecord.cs" />
-    <Compile Include="Drawing\ImageProviding\ImagesFactory.cs" />
+    <Compile Include="Drawing\ImageProviding\InventoryImagesFactory.cs" />
+    <Compile Include="Drawing\ImageProviding\WorldImagesFactory.cs" />
     <Compile Include="Drawing\ImagesStorage.cs" />
     <Compile Include="Drawing\ItemDrawingHelper.cs" />
     <Compile Include="Drawing\JournalMessageFormatter.cs" />
@@ -76,7 +77,9 @@
     <Compile Include="Views\EditSpellView.cs" />
     <Compile Include="Views\GameView.cs" />
     <Compile Include="Views\InGameMenuView.cs" />
-    <Compile Include="Views\InventoryView.cs" />
+    <Compile Include="Views\PlayerInventoryView.cs" />
+    <Compile Include="Views\InventoryViewBase.cs" />
+    <Compile Include="Views\CustomInventoryView.cs" />
     <Compile Include="Views\MainMenuView.cs" />
     <Compile Include="Views\PlayerDeathView.cs" />
     <Compile Include="Views\SpellBookView.cs" />

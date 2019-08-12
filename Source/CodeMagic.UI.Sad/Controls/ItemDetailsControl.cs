@@ -18,7 +18,7 @@ namespace CodeMagic.UI.Sad.Controls
         private static readonly Color FrameColor = Color.Gray;
         private static readonly Color BackColor = Color.Black;
 
-        private readonly ImagesFactory imagesFactory;
+        private readonly InventoryImagesFactory imagesFactory;
 
         public ItemDetailsControl(int width, int height) 
             : base(width, height)
@@ -26,7 +26,7 @@ namespace CodeMagic.UI.Sad.Controls
             Theme = new DrawingSurfaceTheme();
             CanFocus = false;
 
-            imagesFactory = new ImagesFactory(ImagesStorage.Current);
+            imagesFactory = new InventoryImagesFactory(ImagesStorage.Current);
         }
 
         public InventoryStack Stack { get; set; }
@@ -47,13 +47,13 @@ namespace CodeMagic.UI.Sad.Controls
 
             DrawName();
 
-            var itemImage = imagesFactory.GetImage(Stack.Item);
+            var itemImage = imagesFactory.GetImage(Stack.TopItem);
             if (itemImage != null)
             {
                 Surface.DrawImage(3, 6, itemImage, Color.White, BackColor);
             }
 
-            if (Stack.Item is IDescriptionProvider descriptionProvider)
+            if (Stack.TopItem is IDescriptionProvider descriptionProvider)
             {
                 var imageHeight = itemImage?.Height ?? 0;
                 var descriptionY = 6 + 1 + imageHeight;
@@ -66,14 +66,14 @@ namespace CodeMagic.UI.Sad.Controls
             const int initialYShift = 3;
             var maxWidth = Width - 6;
 
-            var itemColor = ItemDrawingHelper.GetItemColor(Stack.Item);
-            if (Stack.Item.Name.Length <= maxWidth)
+            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
+            if (Stack.TopItem.Name.Length <= maxWidth)
             {
-                Surface.Print(1, initialYShift, new ColoredString(Stack.Item.Name, new Cell(itemColor, BackColor)));
+                Surface.Print(1, initialYShift, new ColoredString(Stack.TopItem.Name, new Cell(itemColor, BackColor)));
                 return;
             }
 
-            var cuttedName = CutNameString(Stack.Item.Name, maxWidth);
+            var cuttedName = CutNameString(Stack.TopItem.Name, maxWidth);
             for (int yShift = 0; yShift < cuttedName.Length; yShift++)
             {
                 var line = cuttedName[yShift];

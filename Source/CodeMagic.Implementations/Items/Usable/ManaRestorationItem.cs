@@ -2,17 +2,20 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
+using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items.Usable
 {
-    public class ManaRestorationItem : SimpleItemImpl, IUsableItem, IDescriptionProvider
+    public class ManaRestorationItem : SimpleItemImpl, IUsableItem, IDescriptionProvider, IWorldImageProvider
     {
+        private readonly SymbolsImage worldImage;
         private readonly int restoreValue;
         private readonly string description;
 
         public ManaRestorationItem(ManaRestorationItemConfiguration configuration)
             : base(configuration)
         {
+            worldImage = configuration.WorldImage;
             restoreValue = configuration.ManaRestoreValue;
             description = configuration.Description;
         }
@@ -42,6 +45,11 @@ namespace CodeMagic.Implementations.Items.Usable
                 }
             };
         }
+
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
+        {
+            return worldImage;
+        }
     }
 
     public class ManaRestorationItemConfiguration : SimpleItemConfiguration
@@ -49,5 +57,7 @@ namespace CodeMagic.Implementations.Items.Usable
         public int ManaRestoreValue { get; set; }
 
         public string Description { get; set; }
+
+        public SymbolsImage WorldImage { get; set; }
     }
 }

@@ -12,6 +12,11 @@ namespace CodeMagic.ItemsGeneration
 {
     public class ItemsGenerator : IItemsGenerator
     {
+        private const string WorldImageNameSword = "ItemsOnGround_Weapon_Sword";
+        private const string WorldImageNameAxe = "ItemsOnGround_Weapon_Axe";
+        private const string WorldImageNameDagger = "ItemsOnGround_Weapon_Dagger";
+        private const string WorldImageNameMace = "ItemsOnGround_Weapon_Mace";
+
         private readonly Dictionary<WeaponType, IWeaponGenerator> weaponGenerators;
         private readonly ArmorGenerator armorGenerator;
         private readonly SpellBookGenerator spellBookGenerator;
@@ -25,6 +30,7 @@ namespace CodeMagic.ItemsGeneration
                 {
                     WeaponType.Sword,
                     new BladeWeaponGenerator("Sword", 
+                        WorldImageNameSword,
                         configuration.WeaponConfiguration.SwordsConfiguration, 
                         configuration.WeaponConfiguration,
                         bonusesGenerator,
@@ -33,6 +39,7 @@ namespace CodeMagic.ItemsGeneration
                 {
                     WeaponType.Dagger,
                     new BladeWeaponGenerator("Dagger", 
+                        WorldImageNameDagger,
                         configuration.WeaponConfiguration.DaggersConfiguration,
                         configuration.WeaponConfiguration,
                         bonusesGenerator,
@@ -41,6 +48,7 @@ namespace CodeMagic.ItemsGeneration
                 {
                     WeaponType.Mace,
                     new HeadWeaponGenerator("Mace", 
+                        WorldImageNameMace,
                         configuration.WeaponConfiguration.MacesConfiguration,
                         configuration.WeaponConfiguration,
                         bonusesGenerator,
@@ -49,6 +57,7 @@ namespace CodeMagic.ItemsGeneration
                 {
                     WeaponType.Axe,
                     new HeadWeaponGenerator("Axe",
+                        WorldImageNameAxe,
                         configuration.WeaponConfiguration.AxesConfiguration,
                         configuration.WeaponConfiguration,
                         bonusesGenerator,

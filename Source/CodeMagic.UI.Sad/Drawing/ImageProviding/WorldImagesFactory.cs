@@ -5,7 +5,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.UI.Sad.Drawing.ImageProviding
 {
-    public class ImagesFactory
+    public class WorldImagesFactory
     {
         private const string ImageStatusOnFire = "Status_OnFire";
         private const string ImageStatusOily = "Status_Oily";
@@ -16,7 +16,7 @@ namespace CodeMagic.UI.Sad.Drawing.ImageProviding
 
         private readonly IImagesStorage imagesStorage;
 
-        public ImagesFactory(IImagesStorage imagesStorage)
+        public WorldImagesFactory(IImagesStorage imagesStorage)
         {
             this.imagesStorage = imagesStorage;
         }
@@ -78,9 +78,9 @@ namespace CodeMagic.UI.Sad.Drawing.ImageProviding
 
         private SymbolsImage GetObjectImage(object objectToDraw)
         {
-            if (objectToDraw is IImageProvider selfProvider)
+            if (objectToDraw is IWorldImageProvider selfProvider)
             {
-                return selfProvider.GetImage(imagesStorage);
+                return selfProvider.GetWorldImage(imagesStorage);
             }
 
             return null;

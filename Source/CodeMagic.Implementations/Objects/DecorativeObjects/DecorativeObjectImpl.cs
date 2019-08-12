@@ -4,7 +4,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.DecorativeObjects
 {
-    public class DecorativeObjectImpl : DecorativeObject, IImageProvider
+    public class DecorativeObjectImpl : DecorativeObject, IWorldImageProvider
     {
         private const string ImageBloodSmall = "Decoratives_Blood_Small";
         private const string ImageBloodMedium = "Decoratives_Blood_Medium";
@@ -21,7 +21,7 @@ namespace CodeMagic.Implementations.Objects.DecorativeObjects
         {
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             switch (Type)
             {

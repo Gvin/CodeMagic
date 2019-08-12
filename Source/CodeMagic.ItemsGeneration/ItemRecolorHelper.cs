@@ -31,9 +31,18 @@ namespace CodeMagic.ItemsGeneration
             new ColorPalette(Color.FromArgb(150, 45, 255), Color.FromArgb(75, 0, 151), Color.White),
         };
 
-        public static SymbolsImage RecolorSpellBookImage(SymbolsImage sourceImage)
+        public static SymbolsImage RecolorImage(SymbolsImage sourceImage, Color mainColor)
+        {
+            return SymbolsImage.Recolor(sourceImage, new Dictionary<Color, Color>
+            {
+                {ReplaceColor1, mainColor}
+            });
+        }
+
+        public static SymbolsImage RecolorSpellBookImage(SymbolsImage sourceImage, out Color mainColor)
         {
             var palette = RandomHelper.GetRandomElement(SpellBookColors);
+            mainColor = palette.Color1;
             return RecolorImage(sourceImage, palette);
         }
 

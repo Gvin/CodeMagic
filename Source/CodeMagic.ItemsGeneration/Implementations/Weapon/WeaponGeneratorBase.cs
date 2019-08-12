@@ -15,11 +15,13 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
     {
         private readonly IImagesStorage imagesStorage;
         protected readonly string BaseName;
+        private readonly string worldImageName;
         private readonly IWeaponConfiguration configuration;
         private readonly BonusesGenerator bonusesGenerator;
 
         protected WeaponGeneratorBase(
             string baseName, 
+            string worldImageName,
             IWeaponConfiguration configuration, 
             BonusesGenerator bonusesGenerator, 
             IImagesStorage imagesStorage)
@@ -28,13 +30,15 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
             this.imagesStorage = imagesStorage;
             this.bonusesGenerator = bonusesGenerator;
             BaseName = baseName;
+            this.worldImageName = worldImageName;
         }
 
         public WeaponItem GenerateWeapon(ItemRareness rareness)
         {
             var rarenessConfiguration = GetRarenessConfiguration(rareness);
             var material = RandomHelper.GetRandomElement(rarenessConfiguration.Materials);
-            var image = GenerateImage(material);
+            var inventoryImage = GenerateImage(material);
+            var worldImage = GetWorldImage(material);
             var maxDamage = GenerateMaxDamage(rarenessConfiguration);
             var minDamage = maxDamage.ToDictionary(pair => pair.Key, pair => pair.Value - rarenessConfiguration.MinMaxDamageDifference);
             var hitChance = RandomHelper.GetRandomValue(rarenessConfiguration.MinHitChance, rarenessConfiguration.MaxHitChance);
@@ -53,11 +57,18 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
                 MaxDamage = maxDamage,
                 MinDamage = minDamage,
                 HitChance = hitChance,
-                Image = image
+                InventoryImage = inventoryImage,
+                WorldImage = worldImage
             };
             bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
 
             return new WeaponItemImpl(itemConfig);
+        }
+
+        private SymbolsImage GetWorldImage(ItemMaterial material)
+        {
+            var imageInit = imagesStorage.GetImage(worldImageName);
+            return ItemRecolorHelper.RecolorItemImage(imageInit, material);
         }
 
         private Dictionary<Element, int> GenerateMaxDamage(IWeaponRarenessConfiguration config)

@@ -5,7 +5,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.Creatures
 {
-    public class PlayerImpl : Player, IImageProvider
+    public class PlayerImpl : Player, IWorldImageProvider
     {
         private const string ImageUp = "Player_Up";
         private const string ImageDown = "Player_Down";
@@ -17,7 +17,7 @@ namespace CodeMagic.Implementations.Objects.Creatures
         {
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             switch (Direction)
             {

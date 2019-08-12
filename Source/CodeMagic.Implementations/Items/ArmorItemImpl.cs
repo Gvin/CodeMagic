@@ -7,20 +7,22 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items
 {
-    public class ArmorItemImpl : ArmorItem, IImageProvider, IDescriptionProvider
+    public class ArmorItemImpl : ArmorItem, IInventoryImageProvider, IDescriptionProvider, IWorldImageProvider
     {
-        private readonly SymbolsImage image;
+        private readonly SymbolsImage inventoryImage;
+        private readonly SymbolsImage worldImage;
         private readonly string[] description;
 
         public ArmorItemImpl(ArmorItemImplConfiguration configuration) : base(configuration)
         {
-            image = configuration.Image;
+            inventoryImage = configuration.InventoryImage;
+            worldImage = configuration.WorldImage;
             description = configuration.Description;
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetInventoryImage(IImagesStorage storage)
         {
-            return image;
+            return inventoryImage;
         }
 
         public StyledString[][] GetDescription()
@@ -61,11 +63,18 @@ namespace CodeMagic.Implementations.Items
                 }
             }
         }
+
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
+        {
+            return worldImage;
+        }
     }
 
     public class ArmorItemImplConfiguration : ArmorItemConfiguration
     {
-        public SymbolsImage Image { get; set; }
+        public SymbolsImage InventoryImage { get; set; }
+
+        public SymbolsImage WorldImage { get; set; }
 
         public string[] Description { get; set; }
     }

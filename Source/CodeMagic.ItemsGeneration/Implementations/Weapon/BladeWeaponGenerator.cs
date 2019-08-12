@@ -15,11 +15,12 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
 
         public BladeWeaponGenerator(
             string baseName,
+            string worldImageName,
             IBladeWeaponConfiguration configuration,
             IWeaponConfiguration weaponConfiguration,
             BonusesGenerator bonusesGenerator,
             IImagesStorage imagesStorage) 
-            : base(baseName, weaponConfiguration, bonusesGenerator, imagesStorage)
+            : base(baseName, worldImageName, weaponConfiguration, bonusesGenerator, imagesStorage)
         {
             this.configuration = configuration;
         }

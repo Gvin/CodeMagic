@@ -14,12 +14,12 @@ namespace CodeMagic.UI.Sad.Drawing
         private const int DamageTextYShift = 1;
         private static readonly TimeSpan DamageMarksLifeTime = TimeSpan.FromSeconds(2);
         private static readonly SymbolsImage EmptyImage = new SymbolsImage(Program.MapCellImageSize, Program.MapCellImageSize);
-        private static readonly ImagesFactory ImagesFactory;
+        private static readonly WorldImagesFactory WorldImagesFactory;
         private static readonly LightLevelManager LightLevelManager;
 
         static CellImageHelper()
         {
-            ImagesFactory = new ImagesFactory(ImagesStorage.Current);
+            WorldImagesFactory = new WorldImagesFactory(ImagesStorage.Current);
             LightLevelManager = new LightLevelManager();
         }
 
@@ -88,7 +88,7 @@ namespace CodeMagic.UI.Sad.Drawing
 
         private static SymbolsImage GetObjectImage(IMapObject mapObject)
         {
-            return ImagesFactory.GetImage(mapObject);
+            return WorldImagesFactory.GetImage(mapObject);
         }
 
         private static SymbolsImage GetFloorImage(AreaMapCell cell)

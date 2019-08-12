@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
+using CodeMagic.Core.Items;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
@@ -26,6 +28,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private Button openSpellBookButton;
         private Button openInventoryButton;
+        private Button showItemsOnFloorButton;
 
         private ButtonTheme standardButtonTheme;
         private ButtonTheme disabledButtonTheme;
@@ -99,15 +102,7 @@ namespace CodeMagic.UI.Sad.Views
                     Appearance_ControlDisabled = new Cell(Color.Gray, DefaultBackground)
                 },
             };
-            openSpellBookButton = new Button(30, 3)
-            {
-                Position = new Point(81, 20),
-                Text = "[C] Spell Book",
-                CanFocus = false
-            };
-            openSpellBookButton.Click += openSpellBookButton_Click;
-            SetButtonEnabled(openSpellBookButton, true);
-            Add(openSpellBookButton);
+            
 
             openInventoryButton = new Button(30, 3)
             {
@@ -118,6 +113,43 @@ namespace CodeMagic.UI.Sad.Views
             };
             openInventoryButton.Click += openInventoryButton_Click;
             Add(openInventoryButton);
+
+            openSpellBookButton = new Button(30, 3)
+            {
+                Position = new Point(81, 19),
+                Text = "[C] Spell Book",
+                CanFocus = false
+            };
+            openSpellBookButton.Click += openSpellBookButton_Click;
+            SetButtonEnabled(openSpellBookButton, true);
+            Add(openSpellBookButton);
+
+            showItemsOnFloorButton = new Button(30, 3)
+            {
+                Position = new Point(81, 22),
+                Text = "[G] Check Floor",
+                CanFocus = false
+            };
+            showItemsOnFloorButton.Click += showItemsOnFloorButton_Click;
+            Add(showItemsOnFloorButton);
+        }
+
+        private void showItemsOnFloorButton_Click(object sender, EventArgs e)
+        {
+            ShowItemsOnFloor();
+        }
+
+        private void ShowItemsOnFloor()
+        {
+            var cell = game.Map.GetCell(game.PlayerPosition);
+            var itemsOnFloor = cell.Objects.OfType<IItem>().ToArray();
+            if (itemsOnFloor.Length == 0)
+                return;
+            
+            var floorInventory = new Inventory(itemsOnFloor);
+            floorInventory.ItemRemoved += (sender, args) => cell.Objects.Remove(args.Item);
+
+            new CustomInventoryView(game, "Items On Floor", floorInventory).Show();
         }
 
         private void openInventoryButton_Click(object sender, EventArgs e)
@@ -127,7 +159,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void OpenInventory()
         {
-            new InventoryView(game).Show();
+            new PlayerInventoryView(game).Show();
         }
 
         private void SetButtonEnabled(Button button, bool enabled)
@@ -145,6 +177,9 @@ namespace CodeMagic.UI.Sad.Views
                     return true;
                 case Keys.I:
                     OpenInventory();
+                    return true;
+                case Keys.G:
+                    ShowItemsOnFloor();
                     return true;
                 case Keys.Escape:
                     OpenMainMenu();
@@ -212,6 +247,14 @@ namespace CodeMagic.UI.Sad.Views
             Print(0, Height - 11, new ColoredGlyph(Glyphs.GlyphBoxDoubleVerticalSingleRight, FrameColor, DefaultBackground));
             Print(1, Height - 11, new ColoredGlyph(Glyphs.GlyphBoxSingleHorizontal, FrameColor, DefaultBackground));
             Print(Width - 1, Height - 11, new ColoredGlyph(Glyphs.GlyphBoxDoubleVerticalSingleLeft, FrameColor, DefaultBackground));
+
+            UpdateButtonsState();
+        }
+
+        private void UpdateButtonsState()
+        {
+            SetButtonEnabled(openSpellBookButton, game.Player.Equipment.SpellBook != null);
+            SetButtonEnabled(showItemsOnFloorButton, game.Map.GetCell(game.PlayerPosition).Objects.OfType<IItem>().Any());
         }
     }
 }

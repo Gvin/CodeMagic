@@ -3,7 +3,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.SolidObjects
 {
-    public class EnergyWallImpl : EnergyWall, IImageProvider
+    public class EnergyWallImpl : EnergyWall, IWorldImageProvider
     {
         private const string ImageHighEnergy = "EnergyWall_HighEnergy";
         private const string ImageMediumEnergy = "EnergyWall_MediumEnergy";
@@ -20,7 +20,7 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
         {
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             if (EnergyLeft >= HighEnergy)
                 return storage.GetImage(ImageHighEnergy);

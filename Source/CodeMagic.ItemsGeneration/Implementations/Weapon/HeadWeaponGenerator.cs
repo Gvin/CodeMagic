@@ -14,12 +14,13 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
         private readonly IHeadWeaponConfiguration configuration;
 
         public HeadWeaponGenerator(
-            string baseName, 
+            string baseName,
+            string worldImageName,
             IHeadWeaponConfiguration configuration, 
             IWeaponConfiguration weaponConfiguration,
             BonusesGenerator bonusesGenerator,
             IImagesStorage imagesStorage) 
-            : base(baseName, weaponConfiguration, bonusesGenerator, imagesStorage)
+            : base(baseName, worldImageName, weaponConfiguration, bonusesGenerator, imagesStorage)
         {
             this.configuration = configuration;
         }

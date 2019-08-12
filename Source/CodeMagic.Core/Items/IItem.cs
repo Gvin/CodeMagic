@@ -1,10 +1,10 @@
-﻿namespace CodeMagic.Core.Items
+﻿using CodeMagic.Core.Objects;
+
+namespace CodeMagic.Core.Items
 {
-    public interface IItem
+    public interface IItem : IMapObject
     {
         string Id { get; }
-
-        string Name { get; }
 
         string Key { get; }
 

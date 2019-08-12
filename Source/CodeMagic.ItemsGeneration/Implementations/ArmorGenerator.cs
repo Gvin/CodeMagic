@@ -14,6 +14,10 @@ namespace CodeMagic.ItemsGeneration.Implementations
 {
     public class ArmorGenerator
     {
+        private const string WorldImageNameChest = "ItemsOnGround_Armor_Chest";
+        private const string WorldImageNameLeggings = "ItemsOnGround_Armor_Leggings";
+        private const string WorldImageNameHelmet = "ItemsOnGround_Armor_Helmet";
+
         private readonly IArmorConfiguration configuration;
         private readonly IImagesStorage imagesStorage;
         private readonly BonusesGenerator bonusesGenerator;
@@ -31,9 +35,10 @@ namespace CodeMagic.ItemsGeneration.Implementations
             var config = GetSpecificConfiguration(armorType);
             var rarenessConfig = GetRarenessConfiguration(config, rareness);
             var material = RandomHelper.GetRandomElement(rarenessConfig.Materials);
-            var image = GetArmorImage(config, material);
+            var inventoryImage = GetArmorImage(config, material);
+            var worldImage = GetWorldImage(material, armorType);
             var protection = GenerateProtection(rarenessConfig.Protection);
-            var name = GenerateName(rareness, material, config.TypeName, armorType);
+            var name = GenerateName(material, config.TypeName, armorType);
             var description = GenerateDescription(rareness, material);
             var weight = GetWeight(config, material);
 
@@ -44,7 +49,8 @@ namespace CodeMagic.ItemsGeneration.Implementations
                 Key = Guid.NewGuid().ToString(),
                 ArmorType = armorType,
                 Description = description,
-                Image = image,
+                InventoryImage = inventoryImage,
+                WorldImage = worldImage,
                 Protection = protection,
                 Rareness = rareness,
                 Weight = weight
@@ -52,6 +58,28 @@ namespace CodeMagic.ItemsGeneration.Implementations
             bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
 
             return new ArmorItemImpl(itemConfig);
+        }
+
+        private SymbolsImage GetWorldImage(ItemMaterial material, ArmorType type)
+        {
+            var imageName = GetWorldImageName(type);
+            var imageInit = imagesStorage.GetImage(imageName);
+            return ItemRecolorHelper.RecolorItemImage(imageInit, material);
+        }
+
+        private string GetWorldImageName(ArmorType type)
+        {
+            switch (type)
+            {
+                case ArmorType.Helmet:
+                    return WorldImageNameHelmet;
+                case ArmorType.Chest:
+                    return WorldImageNameChest;
+                case ArmorType.Leggings:
+                    return WorldImageNameLeggings;
+                default:
+                    throw new ArgumentException($"Unknown armor type: {type}");
+            }
         }
 
         private string GetArmorTypeName(ArmorType armorType)
@@ -104,7 +132,7 @@ namespace CodeMagic.ItemsGeneration.Implementations
             return RandomHelper.GetRandomElement(textConfig.Text);
         }
 
-        private string GenerateName(ItemRareness rareness, ItemMaterial material, string typeName, ArmorType type)
+        private string GenerateName(ItemMaterial material, string typeName, ArmorType type)
         {
             var materialPrefix = NameGenerationHelper.GetMaterialPrefix(material);
             var armorTypeName = GetArmorTypeName(type);

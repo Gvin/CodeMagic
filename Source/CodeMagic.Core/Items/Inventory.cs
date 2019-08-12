@@ -6,20 +6,25 @@ namespace CodeMagic.Core.Items
 {
     public class Inventory
     {
+        public event EventHandler<ItemEventArgs> ItemAdded;
+        public event EventHandler<ItemEventArgs> ItemRemoved; 
+
         private readonly List<InventoryStack> stacks;
 
-        public Inventory(int maxWeight)
+        public Inventory()
         {
             stacks = new List<InventoryStack>();
-
-            MaxWeight = maxWeight;
         }
 
-        public int MaxWeight { get; set; }
-
-        public void AddItem(IItem item, int count)
+        public Inventory(IEnumerable<IItem> items)
         {
-            for (int index = 0; index < count; index++)
+            stacks = new List<InventoryStack>();
+            AddItems(items);
+        }
+
+        public void AddItems(IEnumerable<IItem> items)
+        {
+            foreach (var item in items)
             {
                 AddItem(item);
             }
@@ -38,35 +43,14 @@ namespace CodeMagic.Core.Items
                 var existingStack = GetItemStack(item);
                 if (existingStack != null)
                 {
-                    existingStack.Count++;
+                    existingStack.Add(item);
                 }
                 else
                 {
                     stacks.Add(new InventoryStack(item));
                 }
-            }
-        }
 
-        public void RemoveItem(IItem item, int count)
-        {
-            if (!item.Stackable)
-                throw new InvalidOperationException($"Removing multiple items is supported only by stackable items (tried to remove {item.Key}).");
-
-            var existingStack = GetItemStack(item);
-            if (existingStack == null)
-            {
-                throw new InvalidOperationException($"Item {item.Key} not found in inventory.");
-            }
-
-            if (existingStack.Count < count)
-            {
-                throw new InvalidOperationException($"Unable to remove {count} items of type {item.Key}: only {existingStack.Count} in the inventory.");
-            }
-
-            existingStack.Count -= count;
-            if (existingStack.Count == 0)
-            {
-                stacks.Remove(existingStack);
+                ItemAdded?.Invoke(this, new ItemEventArgs(item));
             }
         }
 
@@ -80,47 +64,87 @@ namespace CodeMagic.Core.Items
                     throw new InvalidOperationException($"Item {item.Key} not found in inventory.");
                 }
 
-                existingStack.Count--;
+                existingStack.Remove(item);
                 if (existingStack.Count == 0)
                 {
                     stacks.Remove(existingStack);
                 }
+
+                ItemRemoved?.Invoke(this, new ItemEventArgs(item));
             }
         }
+
+        public int ItemsCount => stacks.Sum(stack => stack.Count);
 
         public InventoryStack[] Stacks => stacks.ToArray();
 
         public int Wight
         {
-            get { return stacks.Sum(stack => stack.Count * stack.Item.Weight); }
+            get { return stacks.Sum(stack => stack.Count * stack.TopItem.Weight); }
         }
 
         public int GetItemsCount(IItem item)
         {
-            return stacks.Where(stack => string.Equals(stack.Item.Key, item.Key)).Sum(stack => stack.Count);
+            return stacks.Where(stack => string.Equals(stack.TopItem.Key, item.Key)).Sum(stack => stack.Count);
         }
 
         public bool GetIfItemExists(IItem item)
         {
-            return stacks.Any(stack => string.Equals(stack.Item.Key, item.Key));
+            return stacks.Any(stack => string.Equals(stack.TopItem.Key, item.Key));
         }
 
         private InventoryStack GetItemStack(IItem item)
         {
-            return stacks.FirstOrDefault(stack => stack.Item.Equals(item));
+            return stacks.FirstOrDefault(stack => stack.CheckItemMatches(item));
         }
+    }
+
+    public class ItemEventArgs : EventArgs
+    {
+        public ItemEventArgs(IItem item)
+        {
+            Item = item;
+        }
+
+        public IItem Item { get; }
     }
 
     public class InventoryStack
     {
+        private readonly List<IItem> items;
+
         public InventoryStack(IItem item)
         {
-            Item = item;
-            Count = 1;
+            items = new List<IItem> {item};
         }
 
-        public IItem Item { get; }
+        public void Add(IItem item)
+        {
+            if (!item.Stackable)
+                throw new ArgumentException("Stackable item expected.");
+            if (!CheckItemMatches(item))
+                throw new ArgumentException("Item doesn't match stack.");
 
-        public int Count { get; set; }
+            items.Add(item);
+        }
+
+        public void Remove(IItem item)
+        {
+            if (!items.Contains(item))
+                throw new ArgumentException("Item not found in stack.");
+
+            items.Remove(item);
+        }
+
+        public IItem[] Items => items.ToArray();
+
+        public IItem TopItem => items.Last();
+
+        public bool CheckItemMatches(IItem item)
+        {
+            return item.Equals(items.First());
+        }
+
+        public int Count => items.Count;
     }
 }

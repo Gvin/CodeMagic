@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Items
 {
@@ -35,6 +36,29 @@ namespace CodeMagic.Core.Items
 
             return string.Equals(Id, other.Id);
         }
+
+        #region IMapObject Implementation
+
+        public bool BlocksMovement => false;
+
+        public bool BlocksProjectiles => false;
+
+        public bool IsVisible => true;
+
+        public bool BlocksVisibility => false;
+
+        public bool BlocksEnvironment => false;
+
+        public ZIndex ZIndex => ZIndex.BigDecoration;
+
+        bool IMapObject.Equals(IMapObject other)
+        {
+            return ReferenceEquals(other, this);
+        }
+
+        public ObjectSize Size => ObjectSize.Small;
+
+        #endregion
     }
 
     public class ItemConfiguration

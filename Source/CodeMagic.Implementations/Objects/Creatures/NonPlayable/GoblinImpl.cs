@@ -5,7 +5,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.Creatures.NonPlayable
 {
-    public class GoblinImpl : GoblinCreatureObject, IImageProvider
+    public class GoblinImpl : GoblinCreatureObject, IWorldImageProvider
     {
         private const string ImageUp = "Creature_Goblin_Up";
         private const string ImageDown = "Creature_Goblin_Down";
@@ -17,7 +17,7 @@ namespace CodeMagic.Implementations.Objects.Creatures.NonPlayable
         {
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             switch (Direction)
             {

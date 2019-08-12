@@ -5,21 +5,23 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items
 {
-    public class SpellBookItemImpl : SpellBook, IImageProvider, IDescriptionProvider
+    public class SpellBookItemImpl : SpellBook, IInventoryImageProvider, IDescriptionProvider, IWorldImageProvider
     {
-        private readonly SymbolsImage image;
+        private readonly SymbolsImage inventoryImage;
+        private readonly SymbolsImage worldImage;
         private readonly string[] description;
 
         public SpellBookItemImpl(SpellBookItemImplConfiguration configuration) 
             : base(configuration)
         {
-            image = configuration.Image;
+            inventoryImage = configuration.InventoryImage;
+            worldImage = configuration.WorldImage;
             description = configuration.Description;
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetInventoryImage(IImagesStorage storage)
         {
-            return image;
+            return inventoryImage;
         }
 
         public StyledString[][] GetDescription()
@@ -41,11 +43,18 @@ namespace CodeMagic.Implementations.Items
 
             return result.ToArray();
         }
+
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
+        {
+            return worldImage;
+        }
     }
 
     public class SpellBookItemImplConfiguration : SpellBookConfiguration
     {
-        public SymbolsImage Image { get; set; }
+        public SymbolsImage InventoryImage { get; set; }
+
+        public SymbolsImage WorldImage { get; set; }
 
         public string[] Description { get; set; }
     }

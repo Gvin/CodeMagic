@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
@@ -13,6 +14,7 @@ namespace CodeMagic.ItemsGeneration.Implementations
 {
     public class SpellBookGenerator
     {
+        private const string WorldImageName = "ItemsOnGround_SpellBook";
         private const string DefaultName = "Spell Book";
 
         private readonly ISpellBooksConfiguration configuration;
@@ -31,7 +33,8 @@ namespace CodeMagic.ItemsGeneration.Implementations
             var config = GetConfiguration(rareness);
             var spellsCount = RandomHelper.GetRandomValue(config.MinSpells, config.MaxSpells);
             var bonusesCount = RandomHelper.GetRandomValue(config.MinBonuses, config.MaxBonuses);
-            var image = GenerateImage();
+            var inventoryImage = GenerateImage(out var mainColor);
+            var worldImage = GetWorldImage(mainColor);
 
             var itemConfig = new SpellBookItemImplConfiguration
             {
@@ -39,7 +42,8 @@ namespace CodeMagic.ItemsGeneration.Implementations
                 Key = Guid.NewGuid().ToString(),
                 Description = GenerateDescription(config),
                 Size = spellsCount,
-                Image = image,
+                InventoryImage = inventoryImage,
+                WorldImage = worldImage,
                 Weight = configuration.Weight,
                 Rareness = rareness
             };
@@ -49,12 +53,18 @@ namespace CodeMagic.ItemsGeneration.Implementations
             return new SpellBookItemImpl(itemConfig);
         }
 
-        private SymbolsImage GenerateImage()
+        private SymbolsImage GetWorldImage(Color mainImageColor)
+        {
+            var imageInit = imagesStorage.GetImage(WorldImageName);
+            return ItemRecolorHelper.RecolorImage(imageInit, mainImageColor);
+        }
+
+        private SymbolsImage GenerateImage(out Color mainColor)
         {
             var baseImageInit = imagesStorage.GetImage(configuration.Template);
             var symbolImageInit = imagesStorage.GetImage(RandomHelper.GetRandomElement(configuration.SymbolImages));
             var imageInit = SymbolsImage.Combine(baseImageInit, symbolImageInit);
-            return ItemRecolorHelper.RecolorSpellBookImage(imageInit);
+            return ItemRecolorHelper.RecolorSpellBookImage(imageInit, out mainColor);
         }
 
         private string[] GenerateDescription(ISpellBookRarenessConfiguration config)

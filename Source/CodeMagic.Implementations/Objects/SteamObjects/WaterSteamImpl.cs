@@ -4,7 +4,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.SteamObjects
 {
-    public class WaterSteamImpl : WaterSteamObject, IImageProvider
+    public class WaterSteamImpl : WaterSteamObject, IWorldImageProvider
     {
         private const string ImageSmall = "Water_Steam_Small";
         private const string ImageMedium = "Water_Steam_Medium";
@@ -21,7 +21,7 @@ namespace CodeMagic.Implementations.Objects.SteamObjects
             animations = new AnimationsBatchManager(TimeSpan.FromSeconds(1), AnimationFrameStrategy.Random);
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             var animationName = GetAnimationName();
             return animations.GetImage(storage, animationName);

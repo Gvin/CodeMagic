@@ -4,7 +4,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.SolidObjects
 {
-    public class TorchWallImpl : TorchWallObject, IImageProvider
+    public class TorchWallImpl : TorchWallObject, IWorldImageProvider
     {
         private const string ImageNormal = "Wall_{0}";
         private const string ImageBottom = "Wall_{0}_Bottom_Torch";
@@ -20,7 +20,7 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
             animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
         }
 
-        public SymbolsImage GetImage(IImagesStorage storage)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             if (!HasConnectedTile(0, 1) && !HasConnectedTile(1, 0))
             {
