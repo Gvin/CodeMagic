@@ -31,10 +31,7 @@ namespace CodeMagic.Core.Items
 
         public Dictionary<ArmorType, ArmorItem> Armor { get; }
 
-        public WeaponItem Weapon
-        {
-            get => weapon ?? Fists;
-        }
+        public WeaponItem Weapon => weapon ?? Fists;
 
         public void EquipItem(IEquipableItem item)
         {

@@ -24,7 +24,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button dropAllItemsButton;
 
         public PlayerInventoryView(IGameCore game) 
-            : base("Player Inventory", game.Player.Inventory)
+            : base("Player Inventory", game.Player.Inventory, game.Player)
         {
             this.game = game;
 

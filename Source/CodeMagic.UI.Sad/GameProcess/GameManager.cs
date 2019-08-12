@@ -131,6 +131,11 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Inventory.AddItem(spellBook);
             player.Equipment.EquipItem(spellBook);
 
+            for (int i = 0; i < 10; i++)
+            {
+                player.Inventory.AddItem(itemsGenerator.GenerateWeapon(ItemRareness.Uncommon));
+            }
+
             return player;
         }
     }

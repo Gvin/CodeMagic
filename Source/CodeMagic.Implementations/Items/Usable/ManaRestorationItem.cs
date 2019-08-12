@@ -2,6 +2,7 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items.Usable
@@ -29,20 +30,17 @@ namespace CodeMagic.Implementations.Items.Usable
 
         public override bool Stackable => true;
 
-        public StyledString[][] GetDescription()
+        public StyledLine[] GetDescription(IPlayer player)
         {
             return new[]
             {
-                new[]
+                new StyledLine
                 {
-                    new StyledString("Restores "),
+                    "Restores ",
                     new StyledString(restoreValue.ToString(), Color.Blue),
-                    new StyledString(" mana when used."),
+                    " mana when used."
                 },
-                new[]
-                {
-                    new StyledString(description)
-                }
+                new StyledLine {description}
             };
         }
 

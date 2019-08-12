@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
@@ -19,18 +20,18 @@ namespace CodeMagic.UI.Sad.Views
         private ItemDetailsControl itemDetails;
         private Button closeButton;
 
-        protected InventoryViewBase(string inventoryName, Inventory inventory) 
+        protected InventoryViewBase(string inventoryName, Inventory inventory, IPlayer player) 
             : base(Program.Width, Program.Height)
         {
             this.inventoryName = inventoryName;
             Inventory = inventory;
 
-            InitializeControls();
+            InitializeControls(player);
         }
 
         protected InventoryStack SelectedStack => (itemsListBox.SelectedItem as IInventoryStackListBoxItem)?.ItemStack;
 
-        private void InitializeControls()
+        private void InitializeControls(IPlayer player)
         {
             var buttonsTheme = new ButtonLinesTheme
             {
@@ -49,7 +50,7 @@ namespace CodeMagic.UI.Sad.Views
             closeButton.Click += closeButton_Click;
             Add(closeButton);
 
-            itemDetails = new ItemDetailsControl(57, Height - 10)
+            itemDetails = new ItemDetailsControl(57, Height - 10, player)
             {
                 Position = new Point(Width - 58, 3)
             };

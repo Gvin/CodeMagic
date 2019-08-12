@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items
@@ -25,40 +26,48 @@ namespace CodeMagic.Implementations.Items
             return inventoryImage;
         }
 
-        public StyledString[][] GetDescription()
+        public StyledLine[] GetDescription(IPlayer player)
         {
-            var result = new List<StyledString[]>
+            var equipedArmor = player.Equipment.Armor[ArmorType];
+            var result = new List<StyledLine>
             {
-                new[] {new StyledString($"Weight: {Weight}")},
-                new StyledString[0]
+                new StyledLine {$"Weight: {Weight}"},
+                StyledLine.Empty
             };
 
-            AddProtectionDescription(result);
+            AddProtectionDescription(result, equipedArmor);
 
-            result.Add(new StyledString[0]);
+            result.Add(StyledLine.Empty);
 
-            ItemTextHelper.AddBonusesDescription(this, result);
 
-            result.Add(new StyledString[0]);
+            ItemTextHelper.AddBonusesDescription(this, equipedArmor, result);
 
-            result.AddRange(description.Select(line => new[] { new StyledString(line, ItemTextHelper.DescriptionTextColor) }).ToArray());
+            result.Add(StyledLine.Empty);
+
+            result.AddRange(description.Select(line => new StyledLine
+            {
+                new StyledString(line, ItemTextHelper.DescriptionTextColor)
+            }).ToArray());
 
             return result.ToArray();
         }
 
-        private void AddProtectionDescription(List<StyledString[]> descriptionResult)
+        private void AddProtectionDescription(List<StyledLine> descriptionResult, ArmorItem equipedArmor)
         {
             foreach (Element element in Enum.GetValues(typeof(Element)))
             {
                 var value = GetProtection(element);
-                if (value != 0)
+                var equipedValue = equipedArmor?.GetProtection(element) ?? 0;
+
+                if (value != 0 || equipedValue != 0)
                 {
-                    descriptionResult.Add(new[]
+                    descriptionResult.Add(new StyledLine
                     {
                         new StyledString($"{ItemTextHelper.GetElementName(element)}", ItemTextHelper.GetElementColor(element)), 
-                        new StyledString(" Protection: "),
+                        " Protection: ",
                         new StyledString(ItemTextHelper.FormatBonusNumber(value), value > 0 ? ItemTextHelper.PositiveValueColor : ItemTextHelper.NegativeValueColor), 
-                        new StyledString("%")
+                        "%",
+                        ItemTextHelper.GetComparisonString(value, equipedValue)
                     });
                 }
             }

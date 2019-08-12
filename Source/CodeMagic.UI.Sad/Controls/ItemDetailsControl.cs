@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Implementations.Items;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
@@ -19,10 +20,12 @@ namespace CodeMagic.UI.Sad.Controls
         private static readonly Color BackColor = Color.Black;
 
         private readonly InventoryImagesFactory imagesFactory;
+        private readonly IPlayer player;
 
-        public ItemDetailsControl(int width, int height) 
+        public ItemDetailsControl(int width, int height, IPlayer player) 
             : base(width, height)
         {
+            this.player = player;
             Theme = new DrawingSurfaceTheme();
             CanFocus = false;
 
@@ -104,14 +107,25 @@ namespace CodeMagic.UI.Sad.Controls
         private void DrawDescription(int initialY, IDescriptionProvider descriptionProvider)
         {
             const int initialX = 3;
-            var lines = descriptionProvider.GetDescription();
+            var lines = descriptionProvider.GetDescription(player);
             for (int yShift = 0; yShift < lines.Length; yShift++)
             {
                 var line = lines[yShift].Select(part =>
-                    new ColoredString(part.String, ColorHelper.ConvertToXna(part.TextColor), BackColor)).ToArray();
+                    new ColoredString(ConvertString(part.String), ColorHelper.ConvertToXna(part.TextColor), BackColor)).ToArray();
                 var y = initialY + yShift;
                 Surface.PrintStyledText(initialX, y, line);
             }
+        }
+
+        private string ConvertString(string initial)
+        {
+            var result = string.Empty;
+            foreach (var symbol in initial)
+            {
+                result += (char) Glyphs.GetGlyph(symbol);
+            }
+
+            return result;
         }
     }
 }

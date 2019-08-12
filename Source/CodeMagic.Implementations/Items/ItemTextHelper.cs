@@ -14,7 +14,7 @@ namespace CodeMagic.Implementations.Items
         private static readonly Color AcidDamageColor = Color.Lime;
         private static readonly Color ElectricityDamageColor = Color.Yellow;
 
-        public static readonly Color PositiveValueColor = Color.Green;
+        public static readonly Color PositiveValueColor = Color.LimeGreen;
         public static readonly Color NegativeValueColor = Color.Red;
 
         public static readonly Color DescriptionTextColor = Color.Gray;
@@ -22,6 +22,21 @@ namespace CodeMagic.Implementations.Items
         public static readonly Color HealthColor = Color.Green;
         public static readonly Color ManaColor = Color.Blue;
         public static readonly Color ManaRegenerationColor = Color.DodgerBlue;
+
+        public static StyledString[] GetComparisonString(int newValue, int currentValue)
+        {
+            if (newValue == currentValue)
+                return new StyledString[0];
+
+            var isUp = newValue > currentValue;
+            var textColor = isUp ? PositiveValueColor : NegativeValueColor;
+            return new[]
+            {
+                new StyledString(" (now "),
+                new StyledString(currentValue.ToString(), textColor),
+                new StyledString(")"),
+            };
+        }
 
         public static Color GetElementColor(Element element)
         {
@@ -67,32 +82,38 @@ namespace CodeMagic.Implementations.Items
             }
         }
 
-        public static void AddBonusesDescription(EquipableItem item, List<StyledString[]> descriptionResult)
+        public static void AddBonusesDescription(EquipableItem item, EquipableItem equiped, List<StyledLine> descriptionResult)
         {
-            if (item.HealthBonus > 0)
+            var equipedHealthBonus = equiped?.HealthBonus ?? 0;
+            if (item.HealthBonus > 0 || equipedHealthBonus > 0)
             {
-                descriptionResult.Add(new[]
+                descriptionResult.Add(new StyledLine
                 {
-                    new StyledString("Health Bonus: "),
-                    new StyledString(FormatBonusNumber(item.HealthBonus), ItemTextHelper.HealthColor)
+                    "Health Bonus: ",
+                    new StyledString(FormatBonusNumber(item.HealthBonus), HealthColor),
+                    GetComparisonString(item.HealthBonus, equipedHealthBonus)
                 });
             }
 
-            if (item.ManaBonus > 0)
+            var equipedManaBonus = equiped?.ManaBonus ?? 0;
+            if (item.ManaBonus > 0 || equipedManaBonus > 0)
             {
-                descriptionResult.Add(new[]
+                descriptionResult.Add(new StyledLine
                 {
-                    new StyledString("Mana Bonus: "),
-                    new StyledString(FormatBonusNumber(item.ManaBonus), ItemTextHelper.ManaColor)
+                    "Mana Bonus: ",
+                    new StyledString(FormatBonusNumber(item.ManaBonus), ManaColor),
+                    GetComparisonString(item.ManaBonus, equipedManaBonus)
                 });
             }
 
-            if (item.ManaRegenerationBonus > 0)
+            var equipedManaRegenBonus = equiped?.ManaRegenerationBonus ?? 0;
+            if (item.ManaRegenerationBonus > 0 || equipedManaRegenBonus > 0)
             {
-                descriptionResult.Add(new[]
+                descriptionResult.Add(new StyledLine
                 {
-                    new StyledString("Mana Regeneration Bonus: "),
-                    new StyledString(FormatBonusNumber(item.ManaRegenerationBonus), ItemTextHelper.ManaRegenerationColor)
+                    "Mana Regeneration Bonus: ",
+                    new StyledString(FormatBonusNumber(item.ManaRegenerationBonus), ManaRegenerationColor),
+                    GetComparisonString(item.ManaRegenerationBonus, equipedManaRegenBonus)
                 });
             }
         }

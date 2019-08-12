@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items.Weapon
@@ -21,38 +23,90 @@ namespace CodeMagic.Implementations.Items.Weapon
             worldImage = configuration.WorldImage;
         }
 
-        public StyledString[][] GetDescription()
+        public StyledLine[] GetDescription(IPlayer player)
         {
-            var result = new List<StyledString[]>
+            var equipedWeapon = player.Equipment.Weapon;
+
+            var result = new List<StyledLine>
             {
-                new[] {new StyledString($"Weight: {Weight}")},
-                new StyledString[0]
+                new StyledLine {$"Weight: {Weight}"},
+                StyledLine.Empty
             };
-            AddDamageDescription(result);
-            result.Add(new[] { new StyledString($"Hit Chance: {HitChance}") });
-            result.Add(new StyledString[0]);
-
-            ItemTextHelper.AddBonusesDescription(this, result);
-
-            result.Add(new StyledString[0]);
-            result.AddRange(description.Select(line => new[] { new StyledString(line, ItemTextHelper.DescriptionTextColor) }).ToArray());
+            AddDamageDescription(result, equipedWeapon);
+            result.Add(new StyledLine{ $"Hit Chance: {HitChance}" });
+            result.Add(StyledLine.Empty);
+            ItemTextHelper.AddBonusesDescription(this, equipedWeapon, result);
+            result.Add(StyledLine.Empty);
+            result.AddRange(description.Select(line => new StyledLine
+            {
+                new StyledString(line, ItemTextHelper.DescriptionTextColor)
+            }).ToArray());
 
             return result.ToArray();
         }
 
-        private void AddDamageDescription(List<StyledString[]> descriptionResult)
+        private void AddDamageDescription(List<StyledLine> descriptionResult, WeaponItem equipedWeapon)
         {
             foreach (Element element in Enum.GetValues(typeof(Element)))
             {
-                if (!MaxDamage.ContainsKey(element))
+                var maxDamage = GetMaxDamage(this, element);
+                var minDamage = GetMinDamage(this, element);
+
+                var otherMaxDamage = GetMaxDamage(equipedWeapon, element);
+                var otherMinDamage = GetMinDamage(equipedWeapon, element);
+
+                if (maxDamage == 0 && minDamage == 0 && otherMaxDamage == 0 && otherMinDamage == 0)
                     continue;
 
-                descriptionResult.Add(new[]
+                Color? otherMinDamageColor = null;
+                if (otherMinDamage > minDamage)
+                {
+                    otherMinDamageColor = ItemTextHelper.NegativeValueColor;
+                }
+
+                if (otherMinDamage < minDamage)
+                {
+                    otherMinDamageColor = ItemTextHelper.PositiveValueColor;
+                }
+
+                Color? otherMaxDamageColor = null;
+                if (otherMaxDamage > maxDamage)
+                {
+                    otherMaxDamageColor = ItemTextHelper.NegativeValueColor;
+                }
+
+                if (otherMaxDamage < maxDamage)
+                {
+                    otherMaxDamageColor = ItemTextHelper.PositiveValueColor;
+                }
+
+                descriptionResult.Add(new StyledLine
                 {
                     new StyledString($"{ItemTextHelper.GetElementName(element)}", ItemTextHelper.GetElementColor(element)), 
-                    new StyledString($" Damage: {MinDamage[element]} - {MaxDamage[element]}")
+                    $" Damage: {minDamage} - {maxDamage}",
+                    " now (",
+                    new StyledString(otherMinDamage.ToString(), otherMinDamageColor),
+                    " - ",
+                    new StyledString(otherMaxDamage.ToString(), otherMaxDamageColor),
+                    ")", 
                 });
             }
+        }
+
+        private static int GetMaxDamage(WeaponItem item, Element element)
+        {
+            if (item == null)
+                return 0;
+
+            return item.MaxDamage.ContainsKey(element) ? item.MaxDamage[element] : 0;
+        }
+
+        private static int GetMinDamage(WeaponItem item, Element element)
+        {
+            if (item == null)
+                return 0;
+
+            return item.MinDamage.ContainsKey(element) ? item.MinDamage[element] : 0;
         }
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)

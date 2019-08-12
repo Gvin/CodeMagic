@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items
@@ -24,22 +25,25 @@ namespace CodeMagic.Implementations.Items
             return inventoryImage;
         }
 
-        public StyledString[][] GetDescription()
+        public StyledLine[] GetDescription(IPlayer player)
         {
-            var result = new List<StyledString[]>
+            var result = new List<StyledLine>
             {
-                new []{new StyledString($"Weight: {Weight}") },
-                new StyledString[0],
-                new []{new StyledString($"Spells Capacity: {Spells.Length}") },
-                new []{new StyledString($"Spells In Book: {Spells.Count(spell => spell != null)}") },
-                new StyledString[0],
+                new StyledLine {$"Weight: {Weight}"},
+                StyledLine.Empty,
+                new StyledLine
+                {
+                    $"Spells Capacity: {Size}",
+                    ItemTextHelper.GetComparisonString(Size, player.Equipment.SpellBook?.Size ?? 0)
+                },
+                new StyledLine { $"Spells In Book: {Spells.Count(spell => spell != null)}" },
+                StyledLine.Empty,
             };
 
-            ItemTextHelper.AddBonusesDescription(this, result);
-
-            result.Add(new StyledString[0]);
-
-            result.AddRange(description.Select(line => new[] { new StyledString(line, ItemTextHelper.DescriptionTextColor) }).ToArray());
+            result.AddRange(description.Select(line => new StyledLine
+            {
+                new StyledString(line, ItemTextHelper.DescriptionTextColor)
+            }).ToArray());
 
             return result.ToArray();
         }
