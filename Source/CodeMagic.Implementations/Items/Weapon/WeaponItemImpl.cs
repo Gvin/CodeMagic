@@ -33,7 +33,11 @@ namespace CodeMagic.Implementations.Items.Weapon
                 StyledLine.Empty
             };
             AddDamageDescription(result, equipedWeapon);
-            result.Add(new StyledLine{ $"Hit Chance: {HitChance}" });
+            result.Add(new StyledLine
+            {
+                $"Hit Chance: {HitChance}",
+                ItemTextHelper.GetComparisonString(HitChance, equipedWeapon?.HitChance ?? 0)
+            });
             result.Add(StyledLine.Empty);
             ItemTextHelper.AddBonusesDescription(this, equipedWeapon, result);
             result.Add(StyledLine.Empty);
