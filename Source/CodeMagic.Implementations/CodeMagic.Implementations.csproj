@@ -58,6 +58,7 @@
     <Compile Include="Objects\CodeSpellImpl.cs" />
     <Compile Include="Objects\Creatures\NonPlayable\GoblinImpl.cs" />
     <Compile Include="Objects\Creatures\PlayerImpl.cs" />
+    <Compile Include="Objects\DecorativeObjects\CreatureRemainsObjectImpl.cs" />
     <Compile Include="Objects\DecorativeObjects\DecorativeObjectImpl.cs" />
     <Compile Include="Objects\DecorativeObjects\FireObjectImpl.cs" />
     <Compile Include="Objects\IceObjects\AcidIceImpl.cs" />

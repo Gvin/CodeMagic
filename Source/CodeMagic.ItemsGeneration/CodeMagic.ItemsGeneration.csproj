@@ -73,6 +73,7 @@
     <Compile Include="Implementations\Bonuses\Instances\ProtectionBonusApplier.cs" />
     <Compile Include="Implementations\Bonuses\Instances\WeightBonusApplier.cs" />
     <Compile Include="Implementations\NameBuilder.cs" />
+    <Compile Include="Implementations\PotionsGenerator.cs" />
     <Compile Include="Implementations\SpellBookGenerator.cs" />
     <Compile Include="Implementations\Weapon\BladeWeaponGenerator.cs" />
     <Compile Include="Implementations\Weapon\HeadWeaponGenerator.cs" />

@@ -1,6 +1,9 @@
-﻿using CodeMagic.Core.CreaturesLogic;
+﻿using System.Linq;
+using CodeMagic.Core.CreaturesLogic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects.Creatures
@@ -15,8 +18,11 @@ namespace CodeMagic.Core.Objects.Creatures
         {
             Logic = new Logic();
             normalSpeed = configuration.Speed;
+            RemainsType = configuration.RemainsType;
             turnsCounter = 0;
         }
+
+        public RemainsType RemainsType { get; set; }
 
         private float Speed
         {
@@ -50,6 +56,36 @@ namespace CodeMagic.Core.Objects.Creatures
         public UpdateOrder UpdateOrder => UpdateOrder.Medium;
 
         protected Logic Logic { get; }
+
+        public override void OnDeath(IGameCore game, Point position)
+        {
+            base.OnDeath(game, position);
+
+            var remains = GenerateRemains();
+            if (remains != null)
+            {
+                game.Map.AddObject(position, remains);
+            }
+
+            var loot = GenerateLoot();
+            if (loot != null && loot.Any())
+            {
+                foreach (var item in loot)
+                {
+                    game.Map.AddObject(position, item);
+                }
+            }
+        }
+
+        protected virtual IMapObject GenerateRemains()
+        {
+            return null;
+        }
+
+        protected virtual IItem[] GenerateLoot()
+        {
+            return null;
+        }
     }
 
     public class NonPlayableCreatureObjectConfiguration : CreatureObjectConfiguration
@@ -64,5 +100,7 @@ namespace CodeMagic.Core.Objects.Creatures
         /// Number of turns required to perform 1 action (less -> faster).
         /// </summary>
         public float Speed { get; set; }
+
+        public RemainsType RemainsType { get; set; }
     }
 }

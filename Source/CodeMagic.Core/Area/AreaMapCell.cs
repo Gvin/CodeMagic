@@ -112,7 +112,7 @@ namespace CodeMagic.Core.Area
             {
                 game.Map.RemoveObject(position, deadObject);
                 game.Journal.Write(new DeathMessage(deadObject));
-                deadObject.OnDeath(game.Map, position);
+                deadObject.OnDeath(game, position);
             }
         }
 

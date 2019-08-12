@@ -91,6 +91,10 @@
     <Compile Include="Items\IItemsGenerator.cs" />
     <Compile Include="Items\IUsableItem.cs" />
     <Compile Include="Objects\Creatures\CreatureObject.cs" />
+    <Compile Include="Objects\Creatures\Loot\ILootGenerator.cs" />
+    <Compile Include="Objects\Creatures\Loot\StandardLootGenerator.cs" />
+    <Compile Include="Objects\Creatures\Remains\CreatureRemainsGenerator.cs" />
+    <Compile Include="Objects\DecorativeObjects\CreatureRemainsObject.cs" />
     <Compile Include="Objects\IceObjects\AbstractIceObject.cs" />
     <Compile Include="Objects\IceObjects\AcidIceObject.cs" />
     <Compile Include="Objects\IceObjects\WaterIceObject.cs" />

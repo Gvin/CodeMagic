@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.Creatures;
@@ -97,9 +96,9 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         public bool Updated { get; set; }
 
-        public override void OnDeath(IAreaMap map, Point position)
+        public override void OnDeath(IGameCore game, Point position)
         {
-            base.OnDeath(map, position);
+            base.OnDeath(game, position);
 
             Died?.Invoke(this, EventArgs.Empty);
         }

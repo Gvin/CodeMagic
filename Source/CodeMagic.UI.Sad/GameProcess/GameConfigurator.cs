@@ -115,6 +115,10 @@ namespace CodeMagic.UI.Sad.GameProcess
                         new InjectorMappingType {FactoryMethod = args => new FireObjectImpl((int) args[0])}
                     },
                     {
+                        typeof(ICreatureRemainsObject),
+                        new InjectorMappingType { FactoryMethod = args => new CreatureRemainsObjectImpl((CreatureRemainsObjectConfiguration) args[0])}
+                    },
+                    {
                         typeof(ICodeSpell),
                         new InjectorMappingType
                         {

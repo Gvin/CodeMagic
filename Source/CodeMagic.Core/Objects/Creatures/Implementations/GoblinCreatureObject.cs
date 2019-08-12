@@ -5,7 +5,9 @@ using CodeMagic.Core.CreaturesLogic.Strategies;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
-using CodeMagic.Core.Injection;
+using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects.Creatures.Loot;
+using CodeMagic.Core.Objects.Creatures.Remains;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.PlayerData;
 
@@ -66,19 +68,18 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
 
         public override bool BlocksMovement => true;
 
-        protected override IMapObject CreateDeathRemains()
+        protected override IMapObject GenerateRemains()
         {
-            var type = DecorativeObjectConfiguration.ObjectType.GreenBloodMedium;
-            var typeRoll = RandomHelper.GetRandomValue(1, 2);
-            if (typeRoll == 2)
-                type = DecorativeObjectConfiguration.ObjectType.GreenBloodBig;
+            return new CreatureRemainsGenerator().GenerateRemains(this);
+        }
 
-            return Injector.Current.Create<IDecorativeObject>(new DecorativeObjectConfiguration
-            {
-                Name = "Goblin Blood",
-                Type = type,
-                ZIndex = ZIndex.GroundDecoration
-            });
+        protected override IItem[] GenerateLoot()
+        {
+            return new StandardLootGenerator(ItemRareness.Trash, ItemRareness.Common,
+                0, 2,
+                0, 1,
+                potionsCountMin: 0, potionsCountMax: 1)
+                    .GenerateLoot();
         }
     }
 
@@ -87,6 +88,7 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
         public GoblinCreatureObjectConfiguration()
         {
             DamageElement = Element.Slashing;
+            RemainsType = RemainsType.BloodGreenMedium;
         }
 
         public int MinDamage { get; set; }

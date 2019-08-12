@@ -121,54 +121,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                 MaxWeight = 100
             });
 
-            player.Inventory.AddItem(new HealthRestorationItem(new HealthPotionItemConfiguration
-            {
-                Description = "Medium sized jar with bloody-red liquid.",
-                HealValue = 50,
-                ImageName = "Item_Potion_Red",
-                WorldImage = ImagesStorage.Current.GetImage("ItemsOnGround_Potion_Red"),
-                Key = "health_potion",
-                Name = "Health Potion",
-                Rareness = ItemRareness.Uncommon,
-                Weight = 1
-            }));
-            player.Inventory.AddItem(new ManaRestorationItem(new ManaRestorationItemConfiguration
-            {
-                Description = "Medium sized jar with bright blue liquid.",
-                ManaRestoreValue = 50,
-                ImageName = "Item_Potion_Blue",
-                WorldImage = ImagesStorage.Current.GetImage("ItemsOnGround_Potion_Blue"),
-                Key = "mana_potion",
-                Name = "Mana Potion",
-                Rareness = ItemRareness.Uncommon,
-                Weight = 1
-            }));
-
-            player.Inventory.AddItem(new HealthRestorationItem(new HealthPotionItemConfiguration
-            {
-                Description = "A small phial with bloody-red liquid.",
-                HealValue = 25,
-                ImageName = "Item_Potion_Red_Small",
-                WorldImage = ImagesStorage.Current.GetImage("ItemsOnGround_Potion_Red"),
-                Key = "health_potion_small",
-                Name = "Small Health Potion",
-                Rareness = ItemRareness.Common,
-                Weight = 1
-            }));
-
-            player.Inventory.AddItem(new ManaRestorationItem(new ManaRestorationItemConfiguration
-            {
-                Description = "A small phial with bright blue liquid.",
-                ManaRestoreValue = 25,
-                ImageName = "Item_Potion_Blue_Small",
-                WorldImage = ImagesStorage.Current.GetImage("ItemsOnGround_Potion_Blue"),
-                Key = "mana_potion_small",
-                Name = "Small Mana Potion",
-                Rareness = ItemRareness.Common,
-                Weight = 1
-            }));
-
-
             var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
 
             var weapon = itemsGenerator.GenerateWeapon(ItemRareness.Trash);

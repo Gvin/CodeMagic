@@ -170,18 +170,8 @@ namespace CodeMagic.Core.Objects
             }
         }
 
-        protected virtual IMapObject CreateDeathRemains()
+        public virtual void OnDeath(IGameCore game, Point position)
         {
-            return null;
-        }
-
-        public virtual void OnDeath(IAreaMap map, Point position)
-        {
-            var remains = CreateDeathRemains();
-            if (remains != null)
-            {
-                map.AddObject(position, remains);
-            }
         }
 
         public bool Equals(IMapObject other)

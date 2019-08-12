@@ -62,14 +62,6 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
 
         public enum ObjectType
         {
-            BloodSmall,
-            BloodMedium,
-            BloodBig,
-
-            GreenBloodSmall,
-            GreenBloodMedium,
-            GreenBloodBig,
-            
             StonesSmall
         }
     }

@@ -9,5 +9,7 @@ namespace CodeMagic.Core.Items
         ArmorItem GenerateArmor(ItemRareness rareness);
 
         SpellBook GenerateSpellBook(ItemRareness rareness);
+
+        Item GeneratePotion(ItemRareness rareness);
     }
 }

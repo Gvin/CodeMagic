@@ -22,7 +22,7 @@ namespace CodeMagic.Core.Items
         public Dictionary<Element, int> GenerateDamage()
         {
             return MaxDamage.ToDictionary(pair => pair.Key,
-                pair => RandomHelper.GetRandomValue(pair.Value, MinDamage[pair.Key]));
+                pair => RandomHelper.GetRandomValue(MinDamage[pair.Key], pair.Value));
         }
 
         public int HitChance { get; }
