@@ -15,6 +15,8 @@ namespace CodeMagic.UI.Sad.Views
 {
     public class PlayerInventoryView : InventoryViewBase
     {
+        private const string Title = "Player Inventory";
+
         private readonly IGameCore game;
 
         private Button useItemButton;
@@ -24,7 +26,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button dropAllItemsButton;
 
         public PlayerInventoryView(IGameCore game) 
-            : base("Player Inventory", game.Player.Inventory, game.Player)
+            : base(GetTitleWithWeight(game.Player), game.Player.Inventory, game.Player)
         {
             this.game = game;
 
@@ -219,6 +221,11 @@ namespace CodeMagic.UI.Sad.Views
                     return true;
             }
             return base.ProcessKeyPressed(key);
+        }
+
+        private static string GetTitleWithWeight(IPlayer player)
+        {
+            return $"{Title} [Weight: {player.Inventory.GetWeight()} / {player.MaxCarryWeight}]";
         }
 
         protected override IInventoryStackListBoxItem CreateListBoxItem(InventoryStack stack)

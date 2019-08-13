@@ -76,6 +76,7 @@
     <Compile Include="Game\Journaling\Messages\DamageBlockedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\HealedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ManaRestoredMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\OverweightBlocksMovementMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ParalyzedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\StatusAddedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\UsedItemMessage.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />
     <Compile Include="Statuses\OilyObjectStatus.cs" />
     <Compile Include="Statuses\OnFireObjectStatus.cs" />
+    <Compile Include="Statuses\OverweightObjectStatus.cs" />
     <Compile Include="Statuses\ParalyzedObjectStatus.cs" />
     <Compile Include="Statuses\PassiveObjectStatusBase.cs" />
     <Compile Include="Statuses\WetObjectStatus.cs" />

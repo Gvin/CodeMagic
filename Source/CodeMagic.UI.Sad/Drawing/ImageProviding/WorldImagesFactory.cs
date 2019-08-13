@@ -13,6 +13,7 @@ namespace CodeMagic.UI.Sad.Drawing.ImageProviding
         private const string ImageStatusBlind = "Status_Blind";
         private const string ImageStatusParalyzed = "Status_Paralyzed";
         private const string ImageStatusFrozen = "Status_Frozen";
+        private const string ImageStatusOverweight = "Status_Overweight";
 
         private readonly IImagesStorage imagesStorage;
 
@@ -55,6 +56,11 @@ namespace CodeMagic.UI.Sad.Drawing.ImageProviding
             if (destroyable.Statuses.Contains(BlindObjectStatus.StatusType))
             {
                 return ApplyStatusImage(image, ImageStatusBlind);
+            }
+
+            if (destroyable.Statuses.Contains(OverweightObjectStatus.StatusType))
+            {
+                return ApplyStatusImage(image, ImageStatusOverweight);
             }
 
             if (destroyable.Statuses.Contains(OilyObjectStatus.StatusType))

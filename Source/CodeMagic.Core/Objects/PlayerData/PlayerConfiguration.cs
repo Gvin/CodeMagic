@@ -13,7 +13,7 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         public int MaxMana { get; set; }
 
-        public int MaxWeight { get; set; }
+        public int MaxCarryWeight { get; set; }
 
         public int ManaRegeneration { get; set; }
     }

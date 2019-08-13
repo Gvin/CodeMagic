@@ -74,9 +74,19 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetManaRestoredMessage(manaRestoredMessage);
                 case DamageBlockedMessage damageBlockedMessage:
                     return GetDamageBlockedMessage(damageBlockedMessage);
+                case OverweightBlocksMovementMessage overweightBlocksMovementMessage:
+                    return GetOverweightBlocksMovementMessage(overweightBlocksMovementMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetOverweightBlocksMovementMessage(OverweightBlocksMovementMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"Inventory is too heavy and {PlayerName} cannot move."),
+            };
         }
 
         private ColoredString[] GetDamageBlockedMessage(DamageBlockedMessage message)
@@ -252,6 +262,8 @@ namespace CodeMagic.UI.Sad.Drawing
         {
             switch (statusType)
             {
+                case OverweightObjectStatus.StatusType:
+                    return "Overweight";
                 case OnFireObjectStatus.StatusType:
                     return "On Fire";
                 case BlindObjectStatus.StatusType:

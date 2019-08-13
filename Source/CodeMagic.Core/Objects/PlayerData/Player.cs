@@ -2,6 +2,7 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects.PlayerData
 {
@@ -20,9 +21,12 @@ namespace CodeMagic.Core.Objects.PlayerData
             MaxMana = configuration.MaxMana;
             Mana = configuration.Mana;
             manaRegeneration = configuration.ManaRegeneration;
+            MaxCarryWeight = configuration.MaxCarryWeight;
 
             Inventory = new Inventory();
         }
+
+        public int MaxCarryWeight { get; }
 
         public UpdateOrder UpdateOrder => UpdateOrder.Medium;
 
@@ -97,6 +101,12 @@ namespace CodeMagic.Core.Objects.PlayerData
                 var manaToRegenerate = Math.Min(ManaRegeneration, cell.MagicEnergy.Energy);
                 cell.MagicEnergy.Energy -= manaToRegenerate;
                 Mana += manaToRegenerate;
+            }
+
+            var weight = Inventory.GetWeight();
+            if (weight > MaxCarryWeight)
+            {
+                Statuses.Add(new OverweightObjectStatus(), game.Journal);
             }
         }
 

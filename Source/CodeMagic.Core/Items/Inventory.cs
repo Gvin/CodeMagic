@@ -78,9 +78,9 @@ namespace CodeMagic.Core.Items
 
         public InventoryStack[] Stacks => stacks.ToArray();
 
-        public int Wight
+        public int GetWeight()
         {
-            get { return stacks.Sum(stack => stack.Count * stack.TopItem.Weight); }
+            return stacks.Sum(stack => stack.Count * stack.TopItem.Weight);
         }
 
         public int GetItemsCount(IItem item)

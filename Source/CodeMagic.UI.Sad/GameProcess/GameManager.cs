@@ -109,7 +109,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                 MaxMana = 1000,
                 ManaRegeneration = 10,
                 VisibilityRange = 4,
-                MaxWeight = 100
+                MaxCarryWeight = 100
             });
 
             var itemsGenerator = Injector.Current.Create<IItemsGenerator>();

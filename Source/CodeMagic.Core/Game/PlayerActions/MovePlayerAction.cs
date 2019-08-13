@@ -23,6 +23,13 @@ namespace CodeMagic.Core.Game.PlayerActions
                 return true;
             }
 
+            if (game.Player.Statuses.Contains(OverweightObjectStatus.StatusType))
+            {
+                newPosition = game.PlayerPosition;
+                game.Journal.Write(new OverweightBlocksMovementMessage());
+                return true;
+            }
+
             if (game.Player.Direction != direction)
             {
                 game.Player.Direction = direction;
