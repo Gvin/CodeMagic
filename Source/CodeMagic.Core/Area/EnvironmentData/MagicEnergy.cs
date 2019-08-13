@@ -1,0 +1,96 @@
+﻿using System;
+using CodeMagic.Core.Configuration;
+using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Objects;
+
+namespace CodeMagic.Core.Area.EnvironmentData
+{
+    public class MagicEnergy
+    {
+        public static int MaxEnergy => ConfigurationManager.Current.Physics.MagicEnergyConfiguration.MaxValue;
+
+        private int energy;
+        private readonly IMagicEnergyConfiguration configuration;
+
+        public MagicEnergy()
+        {
+            configuration = ConfigurationManager.Current.Physics.MagicEnergyConfiguration;
+
+            energy = configuration.MaxValue;
+            Disturbance = 0;
+        }
+
+        public int Energy
+        {
+            get => energy;
+            set
+            {
+                var clearValue = Math.Max(0, value);
+                energy = Math.Min(CurrentMaxEnergy, clearValue);
+            }
+        }
+
+        public int Disturbance { get; private set; }
+
+        private int CurrentMaxEnergy => configuration.MaxValue - Disturbance;
+
+        public void Update()
+        {
+            if (Energy > configuration.DisturbanceStartLevel)
+            {
+                Energy = Energy + configuration.RegenerationValue;
+                return;
+            }
+
+            Disturbance = Math.Min(MaxEnergy, Disturbance + configuration.DisturbanceIncrement);
+            Energy = Energy; // Refresh energy value.
+        }
+
+        public void Merge(MagicEnergy other)
+        {
+            if (other.Energy == other.CurrentMaxEnergy && Energy == CurrentMaxEnergy)
+                return;
+
+            var thisDiff = CurrentMaxEnergy - Energy;
+            var otherDiff = other.CurrentMaxEnergy - other.Energy;
+
+            if (thisDiff >= otherDiff)
+            {
+                var maxTransferValue = Math.Min(thisDiff, other.Energy);
+                var transferValue = Math.Min(configuration.MaxTransferValue, maxTransferValue);
+
+                Energy += transferValue;
+                other.Energy -= transferValue;
+                return;
+            }
+
+            {
+                var maxTransferValue = Math.Min(otherDiff, Energy);
+                var transferValue = Math.Min(configuration.MaxTransferValue, maxTransferValue);
+                Energy -= transferValue;
+                other.Energy += transferValue;
+            }
+        }
+
+        public void ApplyMagicEnvironment(IDestroyableObject destroyable, Journal journal)
+        {
+            var damage = CalculateDamage();
+            if (damage <= 0)
+                return;
+
+            destroyable.Damage(journal, damage, Element.Magic);
+            journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Magic));
+        }
+
+        private int CalculateDamage()
+        {
+            var disturbanceOverLimit = Disturbance - configuration.DisturbanceDamageStartLevel;
+            if (disturbanceOverLimit <= 0)
+                return 0;
+
+            return (int) Math.Floor(Disturbance * configuration.DisturbanceDamageMultiplier);
+        }
+    }
+}

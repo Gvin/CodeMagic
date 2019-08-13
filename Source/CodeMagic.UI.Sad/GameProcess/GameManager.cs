@@ -1,4 +1,6 @@
-﻿using CodeMagic.Core.Area;
+﻿using System;
+using System.Linq;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
@@ -55,17 +57,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                 LightPower = LightLevel.Bright1,
                 Type = WallObjectConfiguration.ObjectTypeWallStone
             }));
-
-            map.AddObject(2, 2, Injector.Current.Create<IItemsGenerator>().GenerateArmor(ItemRareness.Rare));
-            map.AddObject(2, 2, Injector.Current.Create<IItemsGenerator>().GenerateWeapon(ItemRareness.Rare));
-
-            map.AddObject(3, 2, Injector.Current.Create<IItemsGenerator>().GenerateArmor(ItemRareness.Rare));
-            map.AddObject(3, 2, Injector.Current.Create<IItemsGenerator>().GenerateArmor(ItemRareness.Rare));
-            map.AddObject(3, 2, Injector.Current.Create<IItemsGenerator>().GenerateArmor(ItemRareness.Rare));
-            map.AddObject(3, 2, Injector.Current.Create<IItemsGenerator>().GenerateArmor(ItemRareness.Rare));
-
-            map.AddObject(4, 2, Injector.Current.Create<IItemsGenerator>().GenerateSpellBook(ItemRareness.Rare));
-
 
             return map;
         }
@@ -130,11 +121,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             var spellBook = itemsGenerator.GenerateSpellBook(ItemRareness.Trash);
             player.Inventory.AddItem(spellBook);
             player.Equipment.EquipItem(spellBook);
-
-            for (int i = 0; i < 10; i++)
-            {
-                player.Inventory.AddItem(itemsGenerator.GenerateWeapon(ItemRareness.Uncommon));
-            }
 
             return player;
         }

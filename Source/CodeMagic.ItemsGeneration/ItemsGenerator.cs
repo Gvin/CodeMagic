@@ -4,6 +4,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
 using CodeMagic.ItemsGeneration.Configuration;
+using CodeMagic.ItemsGeneration.Configuration.Armor;
 using CodeMagic.ItemsGeneration.Implementations;
 using CodeMagic.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.ItemsGeneration.Implementations.Weapon;
@@ -80,12 +81,12 @@ namespace CodeMagic.ItemsGeneration
             return generator.GenerateWeapon(rareness);
         }
 
-        public ArmorItem GenerateArmor(ItemRareness rareness)
+        public ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass[] classesWhitelist)
         {
             if (rareness == ItemRareness.Epic)
                 throw new ArgumentException("Item generator cannot generate epic items.");
 
-            return armorGenerator.GenerateArmor(rareness);
+            return armorGenerator.GenerateArmor(rareness, classesWhitelist);
         }
 
         public SpellBook GenerateSpellBook(ItemRareness rareness)

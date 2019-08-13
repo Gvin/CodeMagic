@@ -48,6 +48,7 @@
     <Compile Include="Area\AreaMap.cs" />
     <Compile Include="Area\AreaMapCell.cs" />
     <Compile Include="Area\EnvironmentData\Environment.cs" />
+    <Compile Include="Area\EnvironmentData\MagicEnergy.cs" />
     <Compile Include="Area\EnvironmentData\Pressure.cs" />
     <Compile Include="Area\FloorTypes.cs" />
     <Compile Include="Area\IAreaMap.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Common\Direction.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\IConfigurationProvider.cs" />
+    <Compile Include="Configuration\IMagicEnergyConfiguration.cs" />
     <Compile Include="Configuration\Liquids\ILiquidConfiguration.cs" />
     <Compile Include="Configuration\Liquids\ILiquidsConfiguration.cs" />
     <Compile Include="Configuration\IPhysicsConfiguration.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Injection\IInjectable.cs" />
     <Compile Include="Injection\InjectorImpl.cs" />
     <Compile Include="Injection\Injector.cs" />
+    <Compile Include="Items\ArmorClass.cs" />
     <Compile Include="Items\EquipableItem.cs" />
     <Compile Include="Items\IEquipableItem.cs" />
     <Compile Include="Items\IItemsGenerator.cs" />

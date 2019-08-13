@@ -13,6 +13,7 @@ namespace CodeMagic.Implementations.Items
         private static readonly Color FrostDamageColor = Color.LightBlue;
         private static readonly Color AcidDamageColor = Color.Lime;
         private static readonly Color ElectricityDamageColor = Color.Yellow;
+        private static readonly Color MagicDamageColor = Color.Violet;
 
         public static readonly Color PositiveValueColor = Color.LimeGreen;
         public static readonly Color NegativeValueColor = Color.Red;
@@ -54,6 +55,8 @@ namespace CodeMagic.Implementations.Items
                     return AcidDamageColor;
                 case Element.Electricity:
                     return ElectricityDamageColor;
+                case Element.Magic:
+                    return MagicDamageColor;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(element), $"Unknown damage element: {element}");
             }
@@ -77,6 +80,8 @@ namespace CodeMagic.Implementations.Items
                     return "Acid";
                 case Element.Electricity:
                     return "Electricity";
+                case Element.Magic:
+                    return "Magic";
                 default:
                     throw new ArgumentException($"Unknown element: {element}");
             }

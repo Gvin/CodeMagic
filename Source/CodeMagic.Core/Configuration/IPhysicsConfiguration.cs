@@ -5,5 +5,7 @@
         ITemperatureConfiguration TemperatureConfiguration { get; }
 
         IPressureConfiguration PressureConfiguration { get; }
+
+        IMagicEnergyConfiguration MagicEnergyConfiguration { get; }
     }
 }

@@ -54,7 +54,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void InitializeControls()
         {
-            playerStats = new PlayerStatsControl(40, 40, game.Player)
+            playerStats = new PlayerStatsControl(40, 40, game)
             {
                 Position = new Point(80, 0)
             };

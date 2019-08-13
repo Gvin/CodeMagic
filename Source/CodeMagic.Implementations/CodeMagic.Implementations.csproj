@@ -44,13 +44,12 @@
   <ItemGroup>
     <Compile Include="IImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
+    <Compile Include="Items\Usable\HealthManaRestorationItem.cs" />
     <Compile Include="IWorldImageProvider.cs" />
     <Compile Include="Items\ArmorItemImpl.cs" />
     <Compile Include="Items\ItemTextHelper.cs" />
     <Compile Include="Items\SpellBookItemImpl.cs" />
-    <Compile Include="Items\Usable\HealthRestorationItem.cs" />
     <Compile Include="Items\IDescriptionProvider.cs" />
-    <Compile Include="Items\Usable\ManaRestorationItem.cs" />
     <Compile Include="Items\SimpleItemImpl.cs" />
     <Compile Include="Items\Weapon\WeaponItemImpl.cs" />
     <Compile Include="Objects\AnimationManager.cs" />

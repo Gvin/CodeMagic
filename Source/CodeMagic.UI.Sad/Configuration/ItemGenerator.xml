@@ -539,7 +539,7 @@
 
   <armor>
     <chests>
-      <item>
+      <item class="Leather">
         <images>
           <image>Armor_Leather_Chest_V1</image>
           <image>Armor_Leather_Chest_V2</image>
@@ -667,7 +667,7 @@
           <value material="Leather">10</value>
         </weight>
       </item>
-      <item name="Mail">
+      <item class="Mail" name="Mail">
         <images>
           <image>Armor_Mail_Chest_V1</image>
           <image>Armor_Mail_Chest_V2</image>
@@ -806,7 +806,7 @@
           <value material="Mythril">5</value>
         </weight>
       </item>
-      <item name="Scale Mail">
+      <item class="ScaleMail" name="Scale Mail">
         <images>
           <image>Armor_ScaleMail_Chest_V1</image>
           <image>Armor_ScaleMail_Chest_V2</image>
@@ -961,7 +961,7 @@
           <value material="Mythril">10</value>
         </weight>
       </item>
-      <item name="Plate">
+      <item class="Plate" name="Plate">
         <images>
           <image>Armor_Plate_Chest_V1</image>
           <image>Armor_Plate_Chest_V2</image>
@@ -1119,7 +1119,7 @@
     </chests>
 
     <helmets>
-      <item>
+      <item class="Leather">
         <images>
           <image>Armor_Leather_Helmet_V1</image>
         </images>
@@ -1245,7 +1245,7 @@
           <value material="Leather">3</value>
         </weight>
       </item>
-      <item name="Mail">
+      <item class="Mail" name="Mail">
         <images>
           <image>Armor_Mail_Helmet_V1</image>
           <image>Armor_Mail_Helmet_V2</image>
@@ -1383,7 +1383,7 @@
           <value material="Mythril">2</value>
         </weight>
       </item>
-      <item name="Scale Mail">
+      <item class="ScaleMail" name="Scale Mail">
         <images>
           <image>Armor_ScaleMail_Helmet_V1</image>
           <image>Armor_ScaleMail_Helmet_V2</image>
@@ -1537,7 +1537,7 @@
           <value material="Mythril">3</value>
         </weight>
       </item>
-      <item name="Plate">
+      <item class="Plate" name="Plate">
         <images>
           <image>Armor_Plate_Helmet_V1</image>
           <image>Armor_Plate_Helmet_V2</image>
@@ -1696,7 +1696,7 @@
     </helmets>
 
     <leggings>
-      <item>
+      <item class="Leather">
         <images>
           <image>Armor_Leather_Leggings_V1</image>
           <image>Armor_Leather_Leggings_V2</image>
@@ -1823,7 +1823,7 @@
           <value material="Leather">3</value>
         </weight>
       </item>
-      <item name="Mail">
+      <item class="Mail" name="Mail">
         <images>
           <image>Armor_Mail_Leggings_V1</image>
           <image>Armor_Mail_Leggings_V2</image>
@@ -1962,7 +1962,7 @@
           <value material="Mythril">5</value>
         </weight>
       </item>
-      <item name="Scale Mail">
+      <item class="ScaleMail" name="Scale Mail">
         <images>
           <image>Armor_ScaleMail_Leggings_V1</image>
           <image>Armor_ScaleMail_Leggings_V2</image>
@@ -2117,7 +2117,7 @@
           <value material="Mythril">10</value>
         </weight>
       </item>
-      <item name="Plate">
+      <item class="Plate" name="Plate">
         <images>
           <image>Armor_Plate_Leggings_V1</image>
           <image>Armor_Plate_Leggings_V2</image>

@@ -1,5 +1,6 @@
 ﻿using System;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Core.Area.EnvironmentData;
+using CodeMagic.Core.Game;
 using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
 using SadConsole;
@@ -13,12 +14,12 @@ namespace CodeMagic.UI.Sad.Controls
         private static readonly Color FrameColor = Color.Gray;
         private static readonly Color BackgroundColor = Color.Black;
 
-        private readonly IPlayer player;
+        private readonly IGameCore game;
 
-        public PlayerStatsControl(int width, int height, IPlayer player)
+        public PlayerStatsControl(int width, int height, IGameCore game)
             : base(width, height)
         {
-            this.player = player;
+            this.game = game;
             Theme = new DrawingSurfaceTheme();
             CanFocus = false;
         }
@@ -28,6 +29,8 @@ namespace CodeMagic.UI.Sad.Controls
             base.Update(time);
 
             Draw();
+
+            DrawCellManaLevel();
         }
 
         private void Draw()
@@ -45,10 +48,44 @@ namespace CodeMagic.UI.Sad.Controls
 
             Surface.Print(2, 3, "HP:");
             Surface.Fill(6, 3, 10, BackgroundColor, BackgroundColor, null);
-            Surface.Print(6, 3, new ColoredString($"{player.Health} / {player.MaxHealth}", Color.Red, BackgroundColor));
+            Surface.Print(6, 3, new ColoredString($"{game.Player.Health} / {game.Player.MaxHealth}", Color.Red, BackgroundColor));
             Surface.Print(2, 4, "Mana:");
             Surface.Fill(8, 4, 15, BackgroundColor, BackgroundColor, null);
-            Surface.Print(8, 4, new ColoredString($"{player.Mana} / {player.MaxMana}", Color.Blue, BackgroundColor));
+            Surface.Print(8, 4, new ColoredString($"{game.Player.Mana} / {game.Player.MaxMana}", Color.Blue, BackgroundColor));
+        }
+
+        private void DrawCellManaLevel()
+        {
+            var cell = game.Map.GetCell(game.PlayerPosition);
+
+            Surface.Print(2, 6, "Area Mana:");
+
+            const int manaBarLength = 30;
+            var manaLevelPercent = (float) cell.MagicEnergy.Energy / MagicEnergy.MaxEnergy;
+            var disturbanceLevelPercent = (float)cell.MagicEnergy.Disturbance / MagicEnergy.MaxEnergy;
+
+            var manaLevelLength = (int) Math.Floor(manaBarLength * manaLevelPercent);
+            var disturbanceLevelLength = (int) Math.Ceiling(manaBarLength * disturbanceLevelPercent);
+            var leftLength = manaBarLength - (manaLevelLength + disturbanceLevelLength);
+
+            var shiftX = 2;
+
+            for (int i = 0; i < disturbanceLevelLength; i++)
+            {
+                Surface.Print(shiftX + i, 7, new ColoredGlyph(' ', Color.White, Color.BlueViolet));
+            }
+
+            shiftX += disturbanceLevelLength;
+            for (int i = 0; i < leftLength; i++)
+            {
+                Surface.Print(shiftX + i, 7, new ColoredGlyph(' ', Color.White, Color.DarkBlue));
+            }
+
+            shiftX += leftLength;
+            for (int i = 0; i < manaLevelLength; i++)
+            {
+                Surface.Print(shiftX + i, 7, new ColoredGlyph(' ', Color.White, Color.Blue));
+            }
         }
     }
 }

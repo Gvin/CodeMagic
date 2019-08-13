@@ -76,10 +76,10 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
         protected override IItem[] GenerateLoot()
         {
             return new StandardLootGenerator(ItemRareness.Trash, ItemRareness.Common,
-                0, 2,
-                0, 1,
-                potionsCountMin: 0, potionsCountMax: 1)
-                    .GenerateLoot();
+                    0, 2,
+                    0, 1, new[] {ArmorClass.Leather},
+                    potionsCountMin: 0, potionsCountMax: 1)
+                .GenerateLoot();
         }
     }
 

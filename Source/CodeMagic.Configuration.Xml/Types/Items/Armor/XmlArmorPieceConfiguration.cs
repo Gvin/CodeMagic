@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Serialization;
+using CodeMagic.Core.Items;
 using CodeMagic.ItemsGeneration.Configuration;
 using CodeMagic.ItemsGeneration.Configuration.Armor;
 
@@ -11,6 +12,9 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Armor
     {
         [XmlAttribute("name")]
         public string TypeName { get; set; }
+
+        [XmlAttribute("class")]
+        public ArmorClass Class { get; set; }
 
         [XmlArray("images")]
         [XmlArrayItem("image")]

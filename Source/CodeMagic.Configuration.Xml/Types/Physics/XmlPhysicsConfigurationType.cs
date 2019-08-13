@@ -17,5 +17,11 @@ namespace CodeMagic.Configuration.Xml.Types.Physics
 
         [XmlElement("pressure")]
         public XmlPressureConfigurationType PressureConfigurationData { get; set; }
+
+        [XmlIgnore]
+        public IMagicEnergyConfiguration MagicEnergyConfiguration => MagicEnergyConfigurationData;
+
+        [XmlElement("magic-energy")]
+        public XmlMagicEnergyConfiguration MagicEnergyConfigurationData { get; set; }
     }
 }

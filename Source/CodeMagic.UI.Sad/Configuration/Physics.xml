@@ -34,4 +34,13 @@
       <damage-multiplier>0.1</damage-multiplier>
     </change-pressure-damage>
   </pressure>
+  <magic-energy>
+    <max-value>100</max-value>
+    <max-transfer-value>2</max-transfer-value>
+    <regeneration-value>1</regeneration-value>
+    <disturbance-start-level>20</disturbance-start-level>
+    <disturbance-damage-multiplier>0.1</disturbance-damage-multiplier>
+    <disturbance-damage-start-level>20</disturbance-damage-start-level>
+    <disturbance-increment>1</disturbance-increment>
+  </magic-energy>
 </physics-configuration>

@@ -5,21 +5,21 @@ namespace CodeMagic.Implementations.Items
 {
     public abstract class SimpleItemImpl : Item, IInventoryImageProvider
     {
-        private readonly string imageName;
+        private readonly SymbolsImage inventoryImage;
 
         protected SimpleItemImpl(SimpleItemConfiguration configuration) 
             : base(configuration)
         {
-            imageName = configuration.ImageName;
+            inventoryImage = configuration.InventoryImage;
         }
         public SymbolsImage GetInventoryImage(IImagesStorage storage)
         {
-            return storage.GetImage(imageName);
+            return inventoryImage;
         }
     }
 
     public class SimpleItemConfiguration : ItemConfiguration
     {
-        public string ImageName { get; set; }
+        public SymbolsImage InventoryImage { get; set; }
     }
 }

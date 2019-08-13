@@ -8,6 +8,7 @@
         Fire,
         Frost,
         Acid,
-        Electricity
+        Electricity,
+        Magic
     }
 }

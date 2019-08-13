@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.UI.Sad.Common;
@@ -66,6 +65,8 @@ namespace CodeMagic.UI.Sad.Controls
                 DrawTemperature(realX, realY, cell);
             if (Properties.Settings.Default.DebugDrawLightLevel)
                 DrawLightLevel(realX, realY + 1, cell);
+            if (Properties.Settings.Default.DebugDrawMagicEnergy)
+                DrawMagicEnergy(realX, realY + 1, cell);
         }
 
         private void DrawLightLevel(int x, int y, AreaMapCell cell)
@@ -84,6 +85,15 @@ namespace CodeMagic.UI.Sad.Controls
 
             var value = cell.Environment.Temperature / 10;
             Surface.Print(x, y, new ColoredString(value.ToString(), Color.Red, Color.Black));
+        }
+
+        private void DrawMagicEnergy(int x, int y, AreaMapCell cell)
+        {
+            if (cell == null)
+                return;
+
+            Surface.Print(x, y, new ColoredString(cell.MagicEnergy.Energy.ToString(), Color.Blue, Color.Black));
+            Surface.Print(x, y + 1, new ColoredString(cell.MagicEnergy.Disturbance.ToString(), Color.Blue, Color.Black));
         }
 
         #endregion

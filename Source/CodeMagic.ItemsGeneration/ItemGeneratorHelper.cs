@@ -6,9 +6,13 @@ namespace CodeMagic.ItemsGeneration
 {
     public static class ItemGeneratorHelper
     {
+        private static readonly Element[] BlacklistedElements = {
+            Element.Magic
+        };
+
         public static Element GetRandomDamageElement()
         {
-            var elements = Enum.GetValues(typeof(Element)).Cast<Element>().ToArray();
+            var elements = Enum.GetValues(typeof(Element)).Cast<Element>().Except(BlacklistedElements).ToArray();
             return RandomHelper.GetRandomElement(elements);
         }
     }

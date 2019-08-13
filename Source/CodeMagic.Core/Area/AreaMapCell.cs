@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
@@ -20,9 +21,11 @@ namespace CodeMagic.Core.Area
             Objects = new MapObjectsCollection();
             FloorType = FloorTypes.Stone;
             Environment = new Environment();
-
+            MagicEnergy = new MagicEnergy();
             LightLevel = new CellLightData();
         }
+
+        public MagicEnergy MagicEnergy { get; }
 
         public Environment Environment { get; }
 
@@ -81,6 +84,8 @@ namespace CodeMagic.Core.Area
             {
                 Objects.Add(Injector.Current.Create<IFireDecorativeObject>(Environment.Temperature));
             }
+
+            MagicEnergy.Update();
         }
 
         public void ResetDynamicObjectsState()
@@ -121,7 +126,10 @@ namespace CodeMagic.Core.Area
             foreach (var destroyableObject in destroyableObjects)
             {
                 destroyableObject.Statuses.Update(destroyableObject, this, journal);
+
                 Environment.ApplyEnvironment(destroyableObject, journal);
+                MagicEnergy.ApplyMagicEnvironment(destroyableObject, journal);
+
                 if (destroyableObject is ICreatureObject && LightLevel.IsBlinding)
                 {
                     destroyableObject.Statuses.Add(new BlindObjectStatus(), journal);

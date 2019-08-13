@@ -66,6 +66,7 @@
     <Compile Include="Types\Items\XmlWeightConfiguration.cs" />
     <Compile Include="Types\Liquids\XmlLiquidConfigurationType.cs" />
     <Compile Include="Types\Liquids\XmlLiquidsConfiguration.cs" />
+    <Compile Include="Types\Physics\XmlMagicEnergyConfiguration.cs" />
     <Compile Include="Types\Physics\XmlPhysicsConfigurationType.cs" />
     <Compile Include="Types\Spells\XmlSpellsConfigurationType.cs" />
     <Compile Include="Types\Physics\XmlPressureConfigurationType.cs" />

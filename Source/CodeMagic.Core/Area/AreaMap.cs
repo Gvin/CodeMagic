@@ -256,6 +256,9 @@ namespace CodeMagic.Core.Area
             if (mergedCells.Any(merge => merge.ContainsPair(cell, nextCell)))
                 return;
             mergedCells.Add(new CellsPair(cell, nextCell));
+
+            cell.MagicEnergy.Merge(nextCell.MagicEnergy);
+
             if (nextCell.BlocksEnvironment)
                 return;
 

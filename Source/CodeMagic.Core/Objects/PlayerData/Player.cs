@@ -91,7 +91,13 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         public void Update(IGameCore game, Point position)
         {
-            Mana += ManaRegeneration;
+            if (Mana < MaxMana)
+            {
+                var cell = game.Map.GetCell(position);
+                var manaToRegenerate = Math.Min(ManaRegeneration, cell.MagicEnergy.Energy);
+                cell.MagicEnergy.Energy -= manaToRegenerate;
+                Mana += manaToRegenerate;
+            }
         }
 
         public bool Updated { get; set; }

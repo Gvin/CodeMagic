@@ -14,6 +14,7 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
 
         private readonly int armorCountMin;
         private readonly int armorCountMax;
+        private readonly ArmorClass[] armorClassesWhitelist;
 
         private readonly int spellBooksCountMin;
         private readonly int spellBooksCountMax;
@@ -26,7 +27,7 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
 
         public StandardLootGenerator(ItemRareness rarenessMin, ItemRareness rarenessMax,
             int weaponsCountMin = 0, int weaponsCountMax = 0,
-            int armorCountMin = 0, int armorCountMax = 0,
+            int armorCountMin = 0, int armorCountMax = 0, ArmorClass[] armorClassesWhitelist = null,
             int spellBooksCountMin = 0, int spellBooksCountMax = 0,
             int potionsCountMin = 0, int potionsCountMax = 0)
         {
@@ -38,6 +39,7 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
 
             this.armorCountMin = armorCountMin;
             this.armorCountMax = armorCountMax;
+            this.armorClassesWhitelist = armorClassesWhitelist ?? new ArmorClass[0];
 
             this.spellBooksCountMin = spellBooksCountMin;
             this.spellBooksCountMax = spellBooksCountMax;
@@ -58,7 +60,7 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
             result.AddRange(weapons);
 
             var armorCount = GetRandomValue(armorCountMin, armorCountMax);
-            var armor = GenerateItems(armorCount, rareness => generator.GenerateArmor(rareness));
+            var armor = GenerateItems(armorCount, rareness => generator.GenerateArmor(rareness, armorClassesWhitelist));
             result.AddRange(armor);
 
             var spellBooksCount = GetRandomValue(spellBooksCountMin, spellBooksCountMax);

@@ -44,6 +44,8 @@ namespace CodeMagic.ItemsGeneration.Implementations
                     return CreateSmallHealthPotion();
                 case PotionType.Mana:
                     return CreateSmallManaPotion();
+                case PotionType.Restoration:
+                    return CreateSmallRestorationPotion();
                 default:
                     throw new ArgumentException($"Unknown potion type: {type}");
             }
@@ -57,6 +59,8 @@ namespace CodeMagic.ItemsGeneration.Implementations
                     return CreateMediumHealthPotion();
                 case PotionType.Mana:
                     return CreateMediumManaPotion();
+                case PotionType.Restoration:
+                    return CreateMediumRestorationPotion();
                 default:
                     throw new ArgumentException($"Unknown potion type: {type}");
             }
@@ -70,6 +74,8 @@ namespace CodeMagic.ItemsGeneration.Implementations
                     return CreateBigHealthPotion();
                 case PotionType.Mana:
                     return CreateBigManaPotion();
+                case PotionType.Restoration:
+                    return CreateBigRestorationPotion();
                 default:
                     throw new ArgumentException($"Unknown potion type: {type}");
             }
@@ -77,14 +83,14 @@ namespace CodeMagic.ItemsGeneration.Implementations
 
         private Item CreateBigHealthPotion()
         {
-            return new HealthRestorationItem(new HealthPotionItemConfiguration
+            return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
             {
                 Description = "Big jar with bloody-red liquid.",
                 HealValue = 100,
-                ImageName = "Item_Potion_Red",
+                InventoryImage = imagesStorage.GetImage("Item_Potion_Red_Big"),
                 WorldImage = imagesStorage.GetImage("ItemsOnGround_Potion_Red"),
-                Key = "health_potion",
-                Name = "Health Potion",
+                Key = "health_potion_big",
+                Name = "Big Health Potion",
                 Rareness = ItemRareness.Rare,
                 Weight = 1
             });
@@ -92,26 +98,42 @@ namespace CodeMagic.ItemsGeneration.Implementations
 
         private Item CreateBigManaPotion()
         {
-            return new ManaRestorationItem(new ManaRestorationItemConfiguration
+            return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
             {
                 Description = "Big jar with bright blue liquid.",
-                ManaRestoreValue = 100,
-                ImageName = "Item_Potion_Blue",
+                ManaRestoreValue = 1000,
+                InventoryImage = imagesStorage.GetImage("Item_Potion_Blue_Big"),
                 WorldImage = imagesStorage.GetImage("ItemsOnGround_Potion_Blue"),
-                Key = "mana_potion",
-                Name = "Mana Potion",
-                Rareness = ItemRareness.Uncommon,
+                Key = "mana_potion_big",
+                Name = "Big Mana Potion",
+                Rareness = ItemRareness.Rare,
+                Weight = 1
+            });
+        }
+
+        private Item CreateBigRestorationPotion()
+        {
+            return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
+            {
+                Description = "Big jar with bright purple liquid.",
+                ManaRestoreValue = 600,
+                HealValue = 60,
+                InventoryImage = imagesStorage.GetImage("Item_Potion_Purple_Big"),
+                WorldImage = imagesStorage.GetImage("ItemsOnGround_Potion_Purple"),
+                Key = "restoration_potion_big",
+                Name = "Big Restoration Potion",
+                Rareness = ItemRareness.Rare,
                 Weight = 1
             });
         }
 
         private Item CreateMediumHealthPotion()
         {
-            return new HealthRestorationItem(new HealthPotionItemConfiguration
+            return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
             {
-                Description = "Medium sized jar with bloody-red liquid.",
+                Description = "Medium size jar with bloody-red liquid.",
                 HealValue = 50,
-                ImageName = "Item_Potion_Red",
+                InventoryImage = imagesStorage.GetImage("Item_Potion_Red"),
                 WorldImage = imagesStorage.GetImage("ItemsOnGround_Potion_Red"),
                 Key = "health_potion",
                 Name = "Health Potion",
@@ -122,11 +144,11 @@ namespace CodeMagic.ItemsGeneration.Implementations
 
         private Item CreateMediumManaPotion()
         {
-            return new ManaRestorationItem(new ManaRestorationItemConfiguration
+            return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
             {
-                Description = "Medium sized jar with bright blue liquid.",
-                ManaRestoreValue = 50,
-                ImageName = "Item_Potion_Blue",
+                Description = "Medium size jar with bright blue liquid.",
+                ManaRestoreValue = 500,
+                InventoryImage = imagesStorage.GetImage("Item_Potion_Blue"),
                 WorldImage = imagesStorage.GetImage("ItemsOnGround_Potion_Blue"),
                 Key = "mana_potion",
                 Name = "Mana Potion",
@@ -135,13 +157,29 @@ namespace CodeMagic.ItemsGeneration.Implementations
             });
         }
 
+        private Item CreateMediumRestorationPotion()
+        {
+            return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
+            {
+                Description = "Medium size jar with bright purple liquid.",
+                ManaRestoreValue = 400,
+                HealValue = 40,
+                InventoryImage = imagesStorage.GetImage("Item_Potion_Purple"),
+                WorldImage = imagesStorage.GetImage("ItemsOnGround_Potion_Purple"),
+                Key = "restoration_potion",
+                Name = "Restoration Potion",
+                Rareness = ItemRareness.Uncommon,
+                Weight = 1
+            });
+        }
+
         private Item CreateSmallHealthPotion()
         {
-            return new HealthRestorationItem(new HealthPotionItemConfiguration
+            return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
             {
                 Description = "A small phial with bloody-red liquid.",
                 HealValue = 25,
-                ImageName = "Item_Potion_Red_Small",
+                InventoryImage = imagesStorage.GetImage("Item_Potion_Red_Small"),
                 WorldImage = imagesStorage.GetImage("ItemsOnGround_Potion_Red"),
                 Key = "health_potion_small",
                 Name = "Small Health Potion",
@@ -152,14 +190,30 @@ namespace CodeMagic.ItemsGeneration.Implementations
 
         private Item CreateSmallManaPotion()
         {
-            return new ManaRestorationItem(new ManaRestorationItemConfiguration
+            return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
             {
                 Description = "A small phial with bright blue liquid.",
-                ManaRestoreValue = 25,
-                ImageName = "Item_Potion_Blue_Small",
+                ManaRestoreValue = 250,
+                InventoryImage = imagesStorage.GetImage("Item_Potion_Blue_Small"),
                 WorldImage = imagesStorage.GetImage("ItemsOnGround_Potion_Blue"),
                 Key = "mana_potion_small",
                 Name = "Small Mana Potion",
+                Rareness = ItemRareness.Common,
+                Weight = 1
+            });
+        }
+
+        private Item CreateSmallRestorationPotion()
+        {
+            return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
+            {
+                Description = "A small phial with bright purple liquid.",
+                ManaRestoreValue = 200,
+                HealValue = 20,
+                InventoryImage = imagesStorage.GetImage("Item_Potion_Purple_Small"),
+                WorldImage = imagesStorage.GetImage("ItemsOnGround_Potion_Purple"),
+                Key = "restoration_potion_small",
+                Name = "Small Restoration Potion",
                 Rareness = ItemRareness.Common,
                 Weight = 1
             });
@@ -173,8 +227,9 @@ namespace CodeMagic.ItemsGeneration.Implementations
 
         private enum PotionType
         {
-            Health = 0,
-            Mana = 1
+            Health,
+            Mana,
+            Restoration
         }
     }
 }

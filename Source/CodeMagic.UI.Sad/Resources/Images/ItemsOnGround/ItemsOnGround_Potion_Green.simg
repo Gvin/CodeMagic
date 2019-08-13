@@ -6,14 +6,14 @@
     <pixel />
   </row>
   <row>
-    <pixel />
-    <pixel symbol="≡">
+    <pixel symbol="♠">
       <color>
-        <R>128</R>
-        <G>128</G>
-        <B>255</B>
+        <R>0</R>
+        <G>210</G>
+        <B>0</B>
       </color>
     </pixel>
+    <pixel />
     <pixel />
   </row>
   <row>
