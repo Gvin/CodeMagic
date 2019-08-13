@@ -72,19 +72,19 @@ namespace CodeMagic.UI.Sad.Controls
 
             for (int i = 0; i < disturbanceLevelLength; i++)
             {
-                Surface.Print(shiftX + i, 7, new ColoredGlyph(' ', Color.White, Color.BlueViolet));
+                Surface.Print(shiftX + i, 7, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.BlueViolet));
             }
 
             shiftX += disturbanceLevelLength;
             for (int i = 0; i < leftLength; i++)
             {
-                Surface.Print(shiftX + i, 7, new ColoredGlyph(' ', Color.White, Color.DarkBlue));
+                Surface.Print(shiftX + i, 7, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.DarkBlue));
             }
 
             shiftX += leftLength;
             for (int i = 0; i < manaLevelLength; i++)
             {
-                Surface.Print(shiftX + i, 7, new ColoredGlyph(' ', Color.White, Color.Blue));
+                Surface.Print(shiftX + i, 7, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.Blue));
             }
         }
     }
