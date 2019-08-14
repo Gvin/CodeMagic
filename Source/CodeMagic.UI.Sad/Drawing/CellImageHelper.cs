@@ -4,7 +4,6 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Objects;
 using CodeMagic.Implementations.Items;
 using CodeMagic.UI.Images;
-using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing.ImageProviding;
 
 namespace CodeMagic.UI.Sad.Drawing

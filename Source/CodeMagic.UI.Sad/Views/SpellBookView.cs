@@ -4,19 +4,20 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Spells;
+using CodeMagic.Implementations.Items;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
 using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Input;
 using SadConsole.Themes;
 using Button = SadConsole.Controls.Button;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
-using ListBox = SadConsole.Controls.ListBox;
+using Orientation = SadConsole.Orientation;
 using Point = Microsoft.Xna.Framework.Point;
+using ScrollBar = SadConsole.Controls.ScrollBar;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -27,7 +28,7 @@ namespace CodeMagic.UI.Sad.Views
         private readonly IGameCore game;
 
         private Button closeButton;
-        private ListBox spellsListBox;
+        private CustomListBox<SpellListBoxItem> spellsListBox;
         private SpellDetailsControl spellDetails;
 
         private Button editSpellButton;
@@ -61,36 +62,6 @@ namespace CodeMagic.UI.Sad.Views
             closeButton.Click += closeButton_Click;
             Add(closeButton);
 
-            spellDetails = new SpellDetailsControl(57, Height - 10)
-            {
-                Position = new Point(Width - 58, 3)
-            };
-            Add(spellDetails);
-
-            spellsListBox = new ListBox(Width - 60, Height - 6)
-            {
-                Position = new Point(1, 3),
-                CompareByReference = true,
-            };
-            var scrollBarTheme = new ScrollBarTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(DefaultForeground, DefaultBackground)
-                }
-            };
-            var listBoxTheme = new ListBoxTheme(scrollBarTheme)
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground)
-                }
-            };
-            spellsListBox.Theme = listBoxTheme;
-            spellsListBox.SelectedItemChanged += spellsListBox_SelectedItemChanged;
-            Add(spellsListBox);
-            RefreshSpells();
-
             editSpellButton = new Button(20, 3)
             {
                 Position = new Point(Width - 57, 13),
@@ -121,6 +92,34 @@ namespace CodeMagic.UI.Sad.Views
             removeSpellButton.Click += removeSpellButton_Click;
             Add(removeSpellButton);
 
+            spellDetails = new SpellDetailsControl(57, Height - 10)
+            {
+                Position = new Point(Width - 58, 3)
+            };
+            Add(spellDetails);
+
+            var scrollBarTheme = new ScrollBarTheme
+            {
+                Colors = new Colors
+                {
+                    Appearance_ControlNormal = new Cell(DefaultForeground, DefaultBackground)
+                }
+            };
+            var scrollBar = new ScrollBar(Orientation.Vertical, Height - 4)
+            {
+                Position = new Point(Width - 60, 3),
+                Theme = scrollBarTheme
+            };
+            Add(scrollBar);
+            spellsListBox = new CustomListBox<SpellListBoxItem>(Width - 61, Height - 4, scrollBar)
+            {
+                Position = new Point(1, 3)
+            };
+            spellsListBox.SelectionChanged += spellsListBox_SelectedItemChanged;
+            Add(spellsListBox);
+
+            RefreshSpells();
+
             UpdateSpellDetails();
         }
 
@@ -141,7 +140,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void PerformSpellEdit()
         {
-            var selectedSpellItem = spellsListBox.SelectedItem as SpellListBoxItem;
+            var selectedSpellItem = spellsListBox.SelectedItem;
             if (selectedSpellItem == null)
                 return;
 
@@ -173,7 +172,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void RemoveSelectedSpell()
         {
-            var selectedSpellItem = spellsListBox.SelectedItem as SpellListBoxItem;
+            var selectedSpellItem = spellsListBox.SelectedItem;
             if (selectedSpellItem?.Spell == null)
                 return;
 
@@ -183,7 +182,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void CastSelectedSpell()
         {
-            var selectedSpellItem = spellsListBox.SelectedItem as SpellListBoxItem;
+            var selectedSpellItem = spellsListBox.SelectedItem;
             if (selectedSpellItem?.Spell == null)
                 return;
 
@@ -193,19 +192,23 @@ namespace CodeMagic.UI.Sad.Views
 
         private void RefreshSpells()
         {
-            var selectedIndex = spellsListBox.SelectedIndex;
+            var selectedIndex = spellsListBox.SelectedItemIndex;
 
-            spellsListBox.Items.Clear();
+            spellsListBox.ClearItems();
 
             for (var index = 0; index < Book.Spells.Length; index++)
             {
                 var spell = Book.Spells[index];
-                spellsListBox.Items.Add(new SpellListBoxItem(spell, index));
+                spellsListBox.AddItem(new SpellListBoxItem(spell, index));
             }
 
             if (selectedIndex != -1)
             {
-                spellsListBox.SelectedItem = spellsListBox.Items[selectedIndex];
+                spellsListBox.SelectedItemIndex = selectedIndex;
+            }
+            else
+            {
+                spellsListBox.SelectedItemIndex = 0;
             }
         }
 
@@ -216,7 +219,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void UpdateSpellDetails()
         {
-            var selectedSpellItem = spellsListBox.SelectedItem as SpellListBoxItem;
+            var selectedSpellItem = spellsListBox.SelectedItem;
             spellDetails.IsVisible = selectedSpellItem != null;
             editSpellButton.IsVisible = selectedSpellItem != null;
             spellDetails.Spell = selectedSpellItem?.Spell;
@@ -266,9 +269,27 @@ namespace CodeMagic.UI.Sad.Views
                 case Keys.C:
                     CastSelectedSpell();
                     return true;
+                case Keys.Up:
+                case Keys.W:
+                    MoveSelectionUp();
+                    return true;
+                case Keys.Down:
+                case Keys.S:
+                    MoveSelectionDown();
+                    return true;
                 default:
                     return false;
             }
+        }
+
+        private void MoveSelectionUp()
+        {
+            spellsListBox.SelectedItemIndex = Math.Max(0, spellsListBox.SelectedItemIndex - 1);
+        }
+
+        private void MoveSelectionDown()
+        {
+            spellsListBox.SelectedItemIndex = Math.Min(spellsListBox.Items.Length - 1, spellsListBox.SelectedItemIndex + 1);
         }
 
         private void closeButton_Click(object sender, EventArgs args)
@@ -276,9 +297,14 @@ namespace CodeMagic.UI.Sad.Views
             Close();
         }
 
-        private class SpellListBoxItem
+        private class SpellListBoxItem : ICustomListBoxItem
         {
             private const string EmptySpellName = "Empty";
+            private static readonly Color EmptySpellNameColor = Color.Gray;
+            private static readonly Color SpellNameColor = Color.White;
+            private static readonly Color SpellIndexColor = Color.Green;
+            private static readonly Color SelectedItemBackColor = Color.FromNonPremultiplied(255, 128, 0, 255);
+            private static readonly Color DefaultBackColor = Color.Black;
 
             public SpellListBoxItem(BookSpell spell, int bookIndex)
             {
@@ -290,11 +316,40 @@ namespace CodeMagic.UI.Sad.Views
 
             public int BookIndex { get; }
 
-            public override string ToString()
+            public bool Equals(ICustomListBoxItem other)
             {
-                var spellName = Spell?.Name ?? EmptySpellName;
+                return ReferenceEquals(this, other);
+            }
+
+            public void Draw(CellSurface surface, int y, int maxWidth, bool selected)
+            {
+                var backColor = selected ? SelectedItemBackColor : DefaultBackColor;
+
+                surface.Fill(0, y, maxWidth, null, backColor, null);
+
                 var indexText = BookIndex < 9 ? $"0{BookIndex + 1}" : $"{BookIndex + 1}";
-                return $" {indexText} - {spellName}";
+                surface.Print(1, y, indexText, new Cell(SpellIndexColor, backColor));
+
+                var spellName = Spell?.Name ?? EmptySpellName;
+                var spellNameColor = Spell == null ? EmptySpellNameColor : SpellNameColor;
+                surface.Print(4, y, spellName, new Cell(spellNameColor, backColor));
+
+                var manaCost = GetManaCostText();
+                surface.Print(maxWidth - 5, y, manaCost, new Cell(ItemTextHelper.ManaColor.ToXna(), backColor));
+            }
+
+            private string GetManaCostText()
+            {
+                if (Spell == null)
+                    return string.Empty;
+
+                if (Spell.ManaCost >= 1000)
+                    return Spell.ManaCost.ToString();
+                if (Spell.ManaCost >= 100)
+                    return $" {Spell.ManaCost}";
+                if (Spell.ManaCost >= 10)
+                    return $"  {Spell.ManaCost}";
+                return $"   {Spell.ManaCost}";
             }
         }
     }

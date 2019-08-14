@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
+using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -16,6 +18,7 @@ namespace CodeMagic.UI.Sad.Views
     public class CustomInventoryView : InventoryViewBase
     {
         private readonly IGameCore game;
+        private readonly Inventory inventory;
         private bool actionPerformed;
 
         private Button pickUpStackButton;
@@ -23,14 +26,20 @@ namespace CodeMagic.UI.Sad.Views
         private Button pickUpAllButton;
 
         public CustomInventoryView(IGameCore game, string inventoryName, Inventory inventory) 
-            : base(inventoryName, inventory, game.Player)
+            : base(inventoryName, game.Player)
         {
             this.game = game;
+            this.inventory = inventory;
             actionPerformed = false;
 
             InitializeControls();
 
             RefreshItems(false);
+        }
+
+        protected override IEnumerable<InventoryStack> GetStacks()
+        {
+            return inventory.Stacks;
         }
 
         private void InitializeControls()
@@ -74,17 +83,17 @@ namespace CodeMagic.UI.Sad.Views
             Add(pickUpAllButton);
         }
 
-        private void pickUpAllButton_Click(object sender, System.EventArgs e)
+        private void pickUpAllButton_Click(object sender, EventArgs e)
         {
             PickUpAll();
         }
 
-        private void pickUpStackButton_Click(object sender, System.EventArgs e)
+        private void pickUpStackButton_Click(object sender, EventArgs e)
         {
             PickUpStack();
         }
 
-        private void pickUpOneItemButton_Click(object sender, System.EventArgs e)
+        private void pickUpOneItemButton_Click(object sender, EventArgs e)
         {
             PickUpOneItem();
         }
@@ -96,10 +105,10 @@ namespace CodeMagic.UI.Sad.Views
 
             actionPerformed = true;
             var item = SelectedStack.TopItem;
-            Inventory.RemoveItem(item);
+            inventory.RemoveItem(item);
             game.Player.Inventory.AddItem(item);
 
-            if (Inventory.ItemsCount > 0)
+            if (inventory.ItemsCount > 0)
             {
                 RefreshItems(true);
             }
@@ -118,11 +127,11 @@ namespace CodeMagic.UI.Sad.Views
             var items = SelectedStack.Items.ToArray();
             foreach (var item in items)
             {
-                Inventory.RemoveItem(item);
+                inventory.RemoveItem(item);
                 game.Player.Inventory.AddItem(item);
             }
 
-            if (Inventory.ItemsCount > 0)
+            if (inventory.ItemsCount > 0)
             {
                 RefreshItems(false);
             }
@@ -135,12 +144,12 @@ namespace CodeMagic.UI.Sad.Views
         private void PickUpAll()
         {
             actionPerformed = true;
-            foreach (var stack in Inventory.Stacks)
+            foreach (var stack in inventory.Stacks)
             {
                 var items = stack.Items.ToArray();
                 foreach (var item in items)
                 {
-                    Inventory.RemoveItem(item);
+                    inventory.RemoveItem(item);
                     game.Player.Inventory.AddItem(item);
                 }
             }
@@ -173,17 +182,14 @@ namespace CodeMagic.UI.Sad.Views
                 case Keys.O:
                     PickUpOneItem();
                     return true;
-                case Keys.Escape:
-                    Close();
-                    return true;
             }
 
             return base.ProcessKeyPressed(key);
         }
 
-        protected override IInventoryStackListBoxItem CreateListBoxItem(InventoryStack stack)
+        protected override InventoryStackItem CreateListBoxItem(InventoryStack stack)
         {
-            return new InventoryStackListBoxItem(stack);
+            return new CustomInventoryItem(stack);
         }
 
         protected override void OnClosed(System.Windows.Forms.DialogResult? result)
@@ -196,23 +202,34 @@ namespace CodeMagic.UI.Sad.Views
             }
         }
 
-        private class InventoryStackListBoxItem : IInventoryStackListBoxItem
+        private class CustomInventoryItem : InventoryStackItem
         {
-            public InventoryStackListBoxItem(InventoryStack itemStack)
+            public CustomInventoryItem(InventoryStack itemStack)
+                : base(itemStack)
             {
-                ItemStack = itemStack;
             }
 
-            public InventoryStack ItemStack { get; }
-
-            public override string ToString()
+            protected override ColoredString[] GetNameText(Color backColor)
             {
-                if (ItemStack.TopItem.Stackable)
+                var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
+
+                return new[]
                 {
-                    return $" {ItemStack.TopItem.Name} ({ItemStack.Count})";
+                    new ColoredString(Stack.TopItem.Name, new Cell(itemColor, backColor))
+                };
+            }
+
+            protected override ColoredString[] GetAfterNameText(Color backColor)
+            {
+                if (Stack.TopItem.Stackable)
+                {
+                    return new[]
+                    {
+                        new ColoredString($" ({Stack.Count})", new Cell(StackCountColor, backColor))
+                    };
                 }
 
-                return $" {ItemStack.TopItem.Name}";
+                return new ColoredString[0];
             }
         }
     }

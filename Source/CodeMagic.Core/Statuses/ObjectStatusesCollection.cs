@@ -52,7 +52,7 @@ namespace CodeMagic.Core.Statuses
             return statuses.ContainsKey(statusType);
         }
 
-        public void Update(IDestroyableObject owner, AreaMapCell cell, Journal journal)
+        public void Update(AreaMapCell cell, Journal journal)
         {
             foreach (var status in statuses.Values.ToArray())
             {

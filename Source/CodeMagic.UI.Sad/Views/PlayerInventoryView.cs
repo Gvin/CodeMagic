@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -26,12 +29,17 @@ namespace CodeMagic.UI.Sad.Views
         private Button dropAllItemsButton;
 
         public PlayerInventoryView(IGameCore game) 
-            : base(GetTitleWithWeight(game.Player), game.Player.Inventory, game.Player)
+            : base(GetTitleWithWeight(game.Player), game.Player)
         {
             this.game = game;
 
             InitializeControls();
             RefreshItems(false);
+        }
+
+        protected override IEnumerable<InventoryStack> GetStacks()
+        {
+            return game.Player.Inventory.Stacks.OrderByDescending(stack => GetIfEquiped(game.Player, stack));
         }
 
         private void InitializeControls()
@@ -216,9 +224,6 @@ namespace CodeMagic.UI.Sad.Views
                 case Keys.A:
                     DropAllItemsInStack();
                     return true;
-                case Keys.Escape:
-                    Close();
-                    return true;
             }
             return base.ProcessKeyPressed(key);
         }
@@ -228,44 +233,58 @@ namespace CodeMagic.UI.Sad.Views
             return $"{Title} [Weight: {player.Inventory.GetWeight()} / {player.MaxCarryWeight}]";
         }
 
-        protected override IInventoryStackListBoxItem CreateListBoxItem(InventoryStack stack)
+        protected override InventoryStackItem CreateListBoxItem(InventoryStack stack)
         {
-            return new InventoryStackListBoxItem(stack, game.Player);
+            return new PlayerInventoryItem(stack, game.Player);
         }
 
-        private class InventoryStackListBoxItem : IInventoryStackListBoxItem
+        private static bool GetIfEquiped(IPlayer player, InventoryStack stack)
         {
+            if (!(stack.TopItem is IEquipableItem equipable))
+                return false;
+
+            return player.Equipment.IsEquiped(equipable);
+        }
+
+        private class PlayerInventoryItem : InventoryStackItem
+        {
+            private const string EquipedText = "[Equiped]";
+            private static readonly Color EquipedTextColor = Color.Red;
+            
+
             private readonly IPlayer player;
 
-            public InventoryStackListBoxItem(InventoryStack itemStack, IPlayer player)
+            public PlayerInventoryItem(InventoryStack itemStack, IPlayer player)
+                : base(itemStack)
             {
-                ItemStack = itemStack;
                 this.player = player;
             }
 
-            public InventoryStack ItemStack { get; }
-
-            private bool GetIfEquiped()
+            protected override ColoredString[] GetNameText(Color backColor)
             {
-                if (!(ItemStack.TopItem is IEquipableItem equipable))
-                    return false;
+                var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
 
-                return player.Equipment.IsEquiped(equipable);
+                return new[]
+                {
+                    new ColoredString(Stack.TopItem.Name, new Cell(itemColor, backColor))
+                };
             }
 
-            public override string ToString()
+            protected override ColoredString[] GetAfterNameText(Color backColor)
             {
-                if (ItemStack.TopItem.Stackable)
+                var result = new List<ColoredString>();
+
+                if (Stack.TopItem.Stackable)
                 {
-                    return $" {ItemStack.TopItem.Name} ({ItemStack.Count})";
+                    result.Add(new ColoredString($" ({Stack.Count})", new Cell(StackCountColor, backColor)));
                 }
 
-                if (GetIfEquiped())
+                if (GetIfEquiped(player, Stack))
                 {
-                    return $" {ItemStack.TopItem.Name} [Equiped]";
+                    result.Add(new ColoredString($" {EquipedText}", new Cell(EquipedTextColor, backColor)));
                 }
 
-                return $" {ItemStack.TopItem.Name}";
+                return result.ToArray();
             }
         }
     }

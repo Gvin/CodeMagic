@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\CustomListBox.cs" />
     <Compile Include="Controls\GameAreaControl.cs" />
     <Compile Include="Controls\GameLogoControl.cs" />
     <Compile Include="Controls\ItemDetailsControl.cs" />

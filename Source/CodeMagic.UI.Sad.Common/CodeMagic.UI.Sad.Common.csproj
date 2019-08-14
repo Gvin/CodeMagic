@@ -54,9 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CellSurfaceExtension.cs" />
-    <Compile Include="ColorHelper.cs" />
     <Compile Include="Glyphs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemColorExtension.cs" />
+    <Compile Include="XnaColorExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

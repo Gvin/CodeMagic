@@ -12,7 +12,7 @@ namespace CodeMagic.Core.Items
 
         public BookSpell[] Spells { get; }
 
-        public int Size => Spells.Length;
+        public int BookSize => Spells.Length;
 
         public override bool Stackable => false;
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
 using SadConsole;
@@ -74,8 +73,8 @@ namespace CodeMagic.UI.Sad.Views
             {
                 Colors = new Colors
                 {
-                    Appearance_ControlNormal = new Cell(Color.White, ColorHelper.FromRgb(66, 66, 66)),
-                    Appearance_ControlFocused = new Cell(Color.White, ColorHelper.FromRgb(66, 66, 66))
+                    Appearance_ControlNormal = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255)),
+                    Appearance_ControlFocused = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255))
                 }
             };
             spellNameTextBox = new TextBox(60)
@@ -113,7 +112,7 @@ namespace CodeMagic.UI.Sad.Views
         private void okButton_Click(object sender, EventArgs e)
         {
             Name = spellNameTextBox.EditingText;
-            ManaCost = int.Parse(manaCostTextBox.EditingText);
+            ManaCost = int.Parse(manaCostTextBox.EditingText ?? manaCostTextBox.Text);
             Close(DialogResult.OK);
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeMagic.Core.Items;
 
 namespace CodeMagic.ItemsGeneration
 {

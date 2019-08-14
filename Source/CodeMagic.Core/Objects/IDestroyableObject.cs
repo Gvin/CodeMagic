@@ -1,5 +1,4 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Statuses;

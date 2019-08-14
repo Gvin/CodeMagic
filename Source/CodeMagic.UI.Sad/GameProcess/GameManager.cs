@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using CodeMagic.Core.Area;
+﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
@@ -8,12 +6,10 @@ using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.Creatures.Implementations;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.Implementations.Items.Usable;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.Implementations.Objects.Creatures.NonPlayable;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
-using CodeMagic.UI.Sad.Drawing;
 using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.UI.Sad.GameProcess
@@ -121,6 +117,18 @@ namespace CodeMagic.UI.Sad.GameProcess
             var spellBook = itemsGenerator.GenerateSpellBook(ItemRareness.Trash);
             player.Inventory.AddItem(spellBook);
             player.Equipment.EquipItem(spellBook);
+
+            for (int counter = 0; counter < 100; counter++)
+            {
+                var rareness = RandomHelper.GetRandomElement(new[]
+                {
+                    ItemRareness.Trash,
+                    ItemRareness.Common,
+                    ItemRareness.Uncommon,
+                    ItemRareness.Rare
+                });
+                player.Inventory.AddItem(itemsGenerator.GenerateWeapon(rareness));
+            }
 
             return player;
         }

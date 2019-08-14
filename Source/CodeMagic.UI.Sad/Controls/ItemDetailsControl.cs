@@ -111,7 +111,7 @@ namespace CodeMagic.UI.Sad.Controls
             for (int yShift = 0; yShift < lines.Length; yShift++)
             {
                 var line = lines[yShift].Select(part =>
-                    new ColoredString(ConvertString(part.String), ColorHelper.ConvertToXna(part.TextColor), BackColor)).ToArray();
+                    new ColoredString(ConvertString(part.String), part.TextColor.ToXna(), BackColor)).ToArray();
                 var y = initialY + yShift;
                 Surface.PrintStyledText(initialX, y, line);
             }

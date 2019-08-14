@@ -33,8 +33,8 @@ namespace CodeMagic.Implementations.Items
                 StyledLine.Empty,
                 new StyledLine
                 {
-                    $"Spells Capacity: {Size}",
-                    ItemTextHelper.GetComparisonString(Size, player.Equipment.SpellBook?.Size ?? 0)
+                    $"Spells Capacity: {BookSize}",
+                    ItemTextHelper.GetComparisonString(BookSize, player.Equipment.SpellBook?.BookSize ?? 0)
                 },
                 new StyledLine { $"Spells In Book: {Spells.Count(spell => spell != null)}" },
                 StyledLine.Empty,

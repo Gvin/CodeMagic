@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.UI.Images;
 

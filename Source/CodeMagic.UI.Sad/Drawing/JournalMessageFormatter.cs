@@ -255,7 +255,7 @@ namespace CodeMagic.UI.Sad.Drawing
         {
             var color = ItemTextHelper.GetElementColor(element);
             var elementText = ItemTextHelper.GetElementName(element);
-            return new ColoredString($"{damage} {elementText} damage", ColorHelper.ConvertToXna(color), BackgroundColor);
+            return new ColoredString($"{damage} {elementText} damage", color.ToXna(), BackgroundColor);
         }
 
         private string GetStatusName(string statusType)

@@ -80,7 +80,7 @@ namespace CodeMagic.Core.Items
 
         public int GetWeight()
         {
-            return stacks.Sum(stack => stack.Count * stack.TopItem.Weight);
+            return stacks.Sum(stack => stack.Weight);
         }
 
         public int GetItemsCount(IItem item)
@@ -139,6 +139,8 @@ namespace CodeMagic.Core.Items
         public IItem[] Items => items.ToArray();
 
         public IItem TopItem => items.Last();
+
+        public int Weight => items.Sum(item => item.Weight);
 
         public bool CheckItemMatches(IItem item)
         {

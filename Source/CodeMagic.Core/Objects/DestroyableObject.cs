@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
@@ -22,7 +21,7 @@ namespace CodeMagic.Core.Objects
             Id = Guid.NewGuid().ToString();
 
             Name = configuration.Name;
-            MaxHealth = configuration.MaxHealth;
+            maxHealth = configuration.MaxHealth;
             Health = configuration.Health;
             SelfExtinguishChance = configuration.SelfExtinguishChance;
             CatchFireChanceMultiplier = configuration.CatchFireChanceMultiplier;

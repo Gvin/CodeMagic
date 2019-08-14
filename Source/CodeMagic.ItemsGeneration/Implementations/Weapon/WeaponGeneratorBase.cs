@@ -43,7 +43,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
             var minDamage = maxDamage.ToDictionary(pair => pair.Key, pair => pair.Value - rarenessConfiguration.MinMaxDamageDifference);
             var hitChance = RandomHelper.GetRandomValue(rarenessConfiguration.MinHitChance, rarenessConfiguration.MaxHitChance);
             var weight = GetWeight(material);
-            var name = GenerateName(rareness, material);
+            var name = GenerateName(material);
             var description = GenerateDescription(rareness, material);
             var bonusesCount = RandomHelper.GetRandomValue(rarenessConfiguration.MinBonuses, rarenessConfiguration.MaxBonuses);
 
@@ -103,7 +103,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Weapon
 
         protected abstract SymbolsImage GenerateImage(ItemMaterial material);
 
-        private string GenerateName(ItemRareness rareness, ItemMaterial material)
+        private string GenerateName(ItemMaterial material)
         {
             var materialPrefix = NameGenerationHelper.GetMaterialPrefix(material);
             return $"{materialPrefix} {BaseName}";

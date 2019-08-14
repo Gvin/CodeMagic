@@ -4,7 +4,6 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
 using CodeMagic.ItemsGeneration.Configuration;
-using CodeMagic.ItemsGeneration.Configuration.Armor;
 using CodeMagic.ItemsGeneration.Implementations;
 using CodeMagic.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.ItemsGeneration.Implementations.Weapon;

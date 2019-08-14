@@ -125,7 +125,7 @@ namespace CodeMagic.Core.Area
         {
             foreach (var destroyableObject in destroyableObjects)
             {
-                destroyableObject.Statuses.Update(destroyableObject, this, journal);
+                destroyableObject.Statuses.Update(this, journal);
 
                 Environment.ApplyEnvironment(destroyableObject, journal);
                 MagicEnergy.ApplyMagicEnvironment(destroyableObject, journal);
