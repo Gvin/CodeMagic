@@ -186,7 +186,7 @@ namespace CodeMagic.UI.Sad.Views
             if (selectedSpellItem?.Spell == null)
                 return;
 
-            game.PerformPlayerAction(new CastSpellAction(selectedSpellItem.Spell));
+            game.PerformPlayerAction(new CastSpellPlayerAction(selectedSpellItem.Spell));
             Close();
         }
 

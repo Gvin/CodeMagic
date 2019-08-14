@@ -2,9 +2,9 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Objects;
-using CodeMagic.Implementations.Items;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Drawing.ImageProviding;
+using CodeMagic.UI.Sad.Drawing.ObjectEffects;
 
 namespace CodeMagic.UI.Sad.Drawing
 {
@@ -41,48 +41,26 @@ namespace CodeMagic.UI.Sad.Drawing
             }
 
             image = LightLevelManager.ApplyLightLevel(image, cell.LightLevel);
-            return ApplyDamageMarks(cell, image);
+            return ApplyObjectEffects(cell, image);
         }
 
-        private static SymbolsImage ApplyDamageMarks(AreaMapCell cell, SymbolsImage image)
+        private static SymbolsImage ApplyObjectEffects(AreaMapCell cell, SymbolsImage image)
         {
             var bigObject = cell.Objects.OfType<IDestroyableObject>().FirstOrDefault(obj => obj.BlocksMovement);
-            if (bigObject == null || bigObject.DamageRecords.Length == 0)
+            if (bigObject == null || !bigObject.ObjectEffects.Any())
                 return image;
 
-            var latestRecord = bigObject.DamageRecords
-                .OfType<DamageRecord>()
+            var latestEffect = bigObject.ObjectEffects
+                .OfType<ObjectEffect>()
                 .Where(rec => rec.CreatedAt + DamageMarksLifeTime > DateTime.Now)
                 .OrderByDescending(obj => obj.CreatedAt)
                 .FirstOrDefault();
-            if (latestRecord == null)
+            if (latestEffect == null)
                 return image;
 
-            var color = ItemTextHelper.GetElementColor(latestRecord.Element);
-            var damageText = latestRecord.Value.ToString();
+            var effectImage = latestEffect.GetEffectImage(image.Width, image.Height);
 
-            var xShift = 1;
-            if (damageText.Length == 3)
-            {
-                xShift = 0;
-            }
-
-            if (damageText.Length > 3)
-            {
-                damageText = "XXX";
-            }
-
-            var damageTextImage = new SymbolsImage(image.Width, image.Height);
-            for (int shift = 0; shift < damageText.Length; shift++)
-            {
-                var x = xShift + shift;
-                if (x >= damageTextImage.Width)
-                    break;
-
-                damageTextImage.SetPixel(x, DamageTextYShift, damageText[shift], color);
-            }
-
-            return SymbolsImage.Combine(image, damageTextImage);
+            return SymbolsImage.Combine(image, effectImage);
         }
 
         private static SymbolsImage GetObjectImage(IMapObject mapObject)

@@ -5,6 +5,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Injection;
+using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects
@@ -13,7 +14,6 @@ namespace CodeMagic.Core.Objects
     {
         private int health;
         private int maxHealth;
-        private readonly List<IDamageRecord> damageRecords;
         private readonly Dictionary<Element, int> baseProtection;
 
         public DestroyableObject(DestroyableObjectConfiguration configuration)
@@ -29,7 +29,7 @@ namespace CodeMagic.Core.Objects
             Size = configuration.Size;
 
             Statuses = new ObjectStatusesCollection(this);
-            damageRecords = new List<IDamageRecord>();
+            ObjectEffects = new List<IObjectEffect>();
 
             baseProtection = configuration.BaseProtection.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
@@ -56,7 +56,7 @@ namespace CodeMagic.Core.Objects
 
         public ObjectSize Size { get; }
 
-        public IDamageRecord[] DamageRecords => damageRecords.ToArray();
+        public List<IObjectEffect> ObjectEffects { get; }
 
         protected virtual int GetProtection(Element element)
         {
@@ -137,12 +137,12 @@ namespace CodeMagic.Core.Objects
                 CheckCatchFire(realDamage, journal);
             }
 
-            damageRecords.Add(Injector.Current.Create<IDamageRecord>(realDamage, element));
+            ObjectEffects.Add(Injector.Current.Create<IDamageEffect>(realDamage, element));
         }
 
         public void ClearDamageRecords()
         {
-            damageRecords.Clear();
+            ObjectEffects.Clear();
         }
 
         private OnFireObjectStatusConfiguration GetFireConfiguration()

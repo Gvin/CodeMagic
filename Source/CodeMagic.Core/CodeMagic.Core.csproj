@@ -136,7 +136,7 @@
     <Compile Include="Game\Journaling\Messages\SpellErrorMessage.cs" />
     <Compile Include="Game\Journaling\Messages\SpellLogMessage.cs" />
     <Compile Include="Game\Journaling\Messages\SpellOutOfManaMessage.cs" />
-    <Compile Include="Game\PlayerActions\CastSpellAction.cs" />
+    <Compile Include="Game\PlayerActions\CastSpellPlayerAction.cs" />
     <Compile Include="Game\PlayerActions\MeleAttackPlayerAction.cs" />
     <Compile Include="Game\PlayerActions\IPlayerAction.cs" />
     <Compile Include="Game\PlayerActions\EmptyPlayerAction.cs" />
@@ -161,6 +161,9 @@
     <Compile Include="Objects\DecorativeObjects\DecorativeObject.cs" />
     <Compile Include="Objects\DestroyableObject.cs" />
     <Compile Include="Objects\IDestroyableObject.cs" />
+    <Compile Include="Objects\ObjectEffects\IDamageEffect.cs" />
+    <Compile Include="Objects\ObjectEffects\IObjectEffect.cs" />
+    <Compile Include="Objects\ObjectEffects\ISpellCastEffect.cs" />
     <Compile Include="Objects\ObjectSize.cs" />
     <Compile Include="Objects\PlayerData\IPlayer.cs" />
     <Compile Include="Objects\PlayerData\Player.cs" />

@@ -1,4 +1,5 @@
-﻿using CodeMagic.UI.Images;
+﻿using System.Linq;
+using CodeMagic.UI.Images;
 using Microsoft.Xna.Framework;
 using SadConsole;
 
@@ -43,12 +44,9 @@ namespace CodeMagic.UI.Sad.Common
 
         public static void PrintStyledText(this CellSurface surface, int x, int y, params ColoredString[] text)
         {
-            var shiftX = 0;
-            foreach (var part in text)
-            {
-                surface.Print(x + shiftX, y, part);
-                shiftX += part.Count;
-            }
+            var glyphs = text.SelectMany(part => part.ToArray()).ToArray();
+            var coloredString = new ColoredString(glyphs);
+            surface.Print(x, y, coloredString);
         }
     }
 }

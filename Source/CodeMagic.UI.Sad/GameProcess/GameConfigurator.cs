@@ -12,6 +12,7 @@ using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.IceObjects;
 using CodeMagic.Core.Objects.LiquidObjects;
+using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Objects.SteamObjects;
 using CodeMagic.Core.Spells;
@@ -23,6 +24,7 @@ using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.Implementations.Objects.SteamObjects;
 using CodeMagic.ItemsGeneration;
 using CodeMagic.UI.Sad.Drawing;
+using CodeMagic.UI.Sad.Drawing.ObjectEffects;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
@@ -128,9 +130,14 @@ namespace CodeMagic.UI.Sad.GameProcess
                     },
                     // Misc
                     {
-                        typeof(IDamageRecord),
+                        typeof(IDamageEffect),
                         new InjectorMappingType
-                            {FactoryMethod = args => new DamageRecord((int) args[0], (Element) args[1])}
+                            {FactoryMethod = args => new DamageEffect((int) args[0], (Element) args[1])}
+                    },
+                    {
+                        typeof(ISpellCastEffect),
+                        new InjectorMappingType
+                            {FactoryMethod = args => new SpellCastEffect()}
                     }
                 };
             }

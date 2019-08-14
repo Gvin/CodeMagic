@@ -1,6 +1,8 @@
-﻿using CodeMagic.Core.Game;
+﻿using System.Collections.Generic;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
+using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects
@@ -21,15 +23,8 @@ namespace CodeMagic.Core.Objects
 
         int GetSelfExtinguishChance();
 
-        IDamageRecord[] DamageRecords { get; }
+        List<IObjectEffect> ObjectEffects { get; }
 
         void ClearDamageRecords();
-    }
-
-    public interface IDamageRecord : IInjectable
-    {
-        int Value { get; }
-
-        Element Element { get; }
     }
 }
