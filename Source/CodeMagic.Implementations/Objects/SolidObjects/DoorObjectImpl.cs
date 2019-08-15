@@ -5,8 +5,13 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 {
     public class DoorObjectImpl : DoorObject, IWorldImageProvider
     {
-        private const string ImageOpened = "Door_Opened";
+        private const string ImageOpenedHorizontal = "Door_Opened_Horizontal";
+        private const string ImageOpenedVertical = "Door_Opened_Vertical";
         private const string ImageClosed = "Door_Closed";
+
+        public DoorObjectImpl(bool horizontal) : base(horizontal)
+        {
+        }
 
         public override string Name => "Door";
 
@@ -17,7 +22,8 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
                 return storage.GetImage(ImageClosed);
             }
 
-            return storage.GetImage(ImageOpened);
+            var imageName = Horizontal ? ImageOpenedHorizontal : ImageOpenedVertical;
+            return storage.GetImage(imageName);
         }
     }
 }

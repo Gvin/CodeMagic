@@ -104,13 +104,35 @@ namespace CodeMagic.MapGeneration.MapGenerators
                     }
                     else if (map[y][x] == MapBuilder.DoorCell)
                     {
-                        var door = wallsFactory.CreateDoor();
+                        var horizontal = GetIfHorizontalDoor(map, x, y);
+                        var door = wallsFactory.CreateDoor(horizontal);
                         result.AddObject(x, y, door);
                     }
                 }
             }
 
             return result;
+        }
+
+        private bool GetIfHorizontalDoor(int[][] map, int x, int y)
+        {
+            var leftCell = TryGet(map, x - 1, y);
+            var rightCell = TryGet(map, x + 1, y);
+
+            return leftCell.HasValue && leftCell.Value == MapBuilder.FilledCell &&
+                   rightCell.HasValue && rightCell.Value == MapBuilder.FilledCell;
+        }
+
+        private static int? TryGet(int[][] array, int x, int y)
+        {
+            if (y < 0 || y >= array.Length)
+                return null;
+
+            var line = array[y];
+            if (x < 0 || x >= line.Length)
+                return null;
+
+            return line[x];
         }
 
         private int[][] SimplifyMap(int[,] map, int width, int height)

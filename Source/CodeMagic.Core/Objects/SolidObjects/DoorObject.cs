@@ -4,10 +4,13 @@ namespace CodeMagic.Core.Objects.SolidObjects
 {
     public abstract class DoorObject : IMapObject, IUsableObject
     {
-        protected DoorObject()
+        protected DoorObject(bool horizontal)
         {
+            Horizontal = horizontal;
             Closed = true;
         }
+
+        protected bool Horizontal { get; }
 
         public abstract string Name { get; }
 
