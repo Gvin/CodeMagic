@@ -200,16 +200,16 @@ namespace CodeMagic.UI.Sad.Views
             {
                 case Keys.W:
                 case Keys.Up:
-                    return new MovePlayerAction(Direction.Up);
+                    return new MovePlayerAction(Direction.North);
                 case Keys.S:
                 case Keys.Down:
-                    return new MovePlayerAction(Direction.Down);
+                    return new MovePlayerAction(Direction.South);
                 case Keys.A:
                 case Keys.Left:
-                    return new MovePlayerAction(Direction.Left);
+                    return new MovePlayerAction(Direction.West);
                 case Keys.D:
                 case Keys.Right:
-                    return new MovePlayerAction(Direction.Right);
+                    return new MovePlayerAction(Direction.East);
                 case Keys.Space:
                     return new EmptyPlayerAction();
                 case Keys.F:

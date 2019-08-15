@@ -21,13 +21,13 @@ namespace CodeMagic.Implementations.Objects.Creatures
         {
             switch (Direction)
             {
-                case Direction.Up:
+                case Direction.North:
                     return storage.GetImage(ImageUp);
-                case Direction.Down:
+                case Direction.South:
                     return storage.GetImage(ImageDown);
-                case Direction.Left:
+                case Direction.West:
                     return storage.GetImage(ImageLeft);
-                case Direction.Right:
+                case Direction.East:
                     return storage.GetImage(ImageRight);
                 default:
                     throw new ArgumentOutOfRangeException();

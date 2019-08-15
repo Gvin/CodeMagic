@@ -14,6 +14,11 @@ namespace CodeMagic.Core.Game
             random = new Random(seedRandom.Next());
         }
 
+        public static Random GetRandomGenerator()
+        {
+            return Current.random;
+        }
+
         public static int GetRandomValue(int min, int max)
         {
             return Current.random.Next(min, max + 1);

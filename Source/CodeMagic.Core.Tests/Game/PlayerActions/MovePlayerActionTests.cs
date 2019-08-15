@@ -12,10 +12,10 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
     [TestFixture]
     public class MovePlayerActionTests
     {
-        [TestCase(0, 0, Direction.Down, 0, 1)]
-        [TestCase(0, 0, Direction.Up, 0, -1)]
-        [TestCase(0, 0, Direction.Left, -1, 0)]
-        [TestCase(0, 0, Direction.Right, 1, 0)]
+        [TestCase(0, 0, Direction.South, 0, 1)]
+        [TestCase(0, 0, Direction.North, 0, -1)]
+        [TestCase(0, 0, Direction.West, -1, 0)]
+        [TestCase(0, 0, Direction.East, 1, 0)]
         public void PerformValidMovementTest(int startX, int startY, Direction direction, int endX, int endY)
         {
             var playerMock = new Mock<IPlayer>();
@@ -66,7 +66,7 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
                     It.IsAny<Point>()))
                 .Returns(false);
 
-            var action = new MovePlayerAction(Direction.Down);
+            var action = new MovePlayerAction(Direction.South);
 
             action.Perform(gameMock.Object, out var endPosition);
 
@@ -105,7 +105,7 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
                     It.Is<Point>(point => point.Equals(newPosition))))
                 .Returns(true);
 
-            var action = new MovePlayerAction(Direction.Down);
+            var action = new MovePlayerAction(Direction.South);
 
             action.Perform(gameMock.Object, out var endPosition);
 

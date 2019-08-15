@@ -41,10 +41,10 @@ namespace CodeMagic.Core.Spells.SpellActions
 
             var processedCells = new List<Point> {position};
             var spreadPower = (int) Math.Floor(power * waterTransferMultiplier);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.Up), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.Down), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.Left), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.Right), spreadPower, processedCells);
+            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.North), spreadPower, processedCells);
+            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.South), spreadPower, processedCells);
+            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.West), spreadPower, processedCells);
+            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.East), spreadPower, processedCells);
 
             return position;
         }
@@ -70,10 +70,10 @@ namespace CodeMagic.Core.Spells.SpellActions
 
             var spreadPower = (int)Math.Floor(value * waterTransferMultiplier);
 
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.Up), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.Down), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.Left), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.Right), spreadPower, processedCells);
+            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.North), spreadPower, processedCells);
+            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.South), spreadPower, processedCells);
+            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.West), spreadPower, processedCells);
+            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.East), spreadPower, processedCells);
         }
 
         private bool GetIfCellConductsElectricity(AreaMapCell cell)

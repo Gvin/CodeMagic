@@ -19,7 +19,7 @@ namespace CodeMagic.Core.Objects.Creatures
             MaxVisibilityRange = configuration.VisibilityRange;
             blindVisibilityRange = configuration.BlindVisibilityRange;
 
-            Direction = Direction.Up;
+            Direction = Direction.North;
         }
 
         public Direction Direction { get; set; }

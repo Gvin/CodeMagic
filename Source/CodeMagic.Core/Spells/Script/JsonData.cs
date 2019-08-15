@@ -82,14 +82,14 @@ namespace CodeMagic.Core.Spells.Script
         {
             switch (direction)
             {
-                case Direction.Up:
-                    return "up";
-                case Direction.Down:
-                    return "down";
-                case Direction.Left:
-                    return "left";
-                case Direction.Right:
-                    return "right";
+                case Direction.North:
+                    return "north";
+                case Direction.South:
+                    return "south";
+                case Direction.West:
+                    return "west";
+                case Direction.East:
+                    return "east";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(direction), direction, "Unknown direction value.");
             }

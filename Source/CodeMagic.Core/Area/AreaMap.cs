@@ -240,10 +240,10 @@ namespace CodeMagic.Core.Area
 
         private void SpreadEnvironment(Point position, AreaMapCell cell, List<CellsPair> mergedCells)
         {
-            TrySpreadEnvironment(position, Direction.Up, cell, mergedCells);
-            TrySpreadEnvironment(position, Direction.Down, cell, mergedCells);
-            TrySpreadEnvironment(position, Direction.Left, cell, mergedCells);
-            TrySpreadEnvironment(position, Direction.Right, cell, mergedCells);
+            TrySpreadEnvironment(position, Direction.North, cell, mergedCells);
+            TrySpreadEnvironment(position, Direction.South, cell, mergedCells);
+            TrySpreadEnvironment(position, Direction.West, cell, mergedCells);
+            TrySpreadEnvironment(position, Direction.East, cell, mergedCells);
         }
 
         private void TrySpreadEnvironment(Point position, Direction direction, AreaMapCell cell, List<CellsPair> mergedCells)

@@ -2,12 +2,9 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Objects.Creatures.Implementations;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Implementations.Objects.Creatures;
-using CodeMagic.Implementations.Objects.Creatures.NonPlayable;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
 using Point = CodeMagic.Core.Game.Point;
@@ -16,8 +13,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 {
     public class GameManager
     {
-        private const int GoblinsCount = 20;
-        private const int MapSize = 31; // uneven value only!
+        private const MapSize MapSize = MapGeneration.MapSize.Small;
         private const bool UseFakeMap = false;
 
         public GameCore StartGame()
@@ -37,9 +33,12 @@ namespace CodeMagic.UI.Sad.GameProcess
             if (fake)
                 return CreateFakeMap(out playerPosition);
 
-            var realMap = new MapGenerator(FloorTypes.Stone).Generate(MapSize, MapSize, out playerPosition);
-            PlaceTestGoblins(GoblinsCount, realMap, playerPosition);
-            return realMap;
+            return new MapGenerator().GenerateMap(
+                MapSize,
+                FloorTypes.Stone, 
+                WallObjectConfiguration.WallType.Stone, 
+                out playerPosition,
+                true);
         }
 
         private IAreaMap CreateFakeMap(out Point playerPosition)
@@ -51,48 +50,10 @@ namespace CodeMagic.UI.Sad.GameProcess
             map.AddObject(3, 3, new TorchWallImpl(new TorchWallObjectConfiguration
             {
                 LightPower = LightLevel.Bright1,
-                Type = WallObjectConfiguration.ObjectTypeWallStone
+                Type = WallObjectConfiguration.WallType.Stone
             }));
 
             return map;
-        }
-
-        private void PlaceTestGoblins(int count, IAreaMap map, Point playerPosition)
-        {
-            var placed = 0;
-            while (placed < count)
-            {
-                var x = RandomHelper.GetRandomValue(0, 30);
-                var y = RandomHelper.GetRandomValue(0, 30);
-
-                if (playerPosition.X == x && playerPosition.Y == y)
-                    continue;
-
-                var cell = map.TryGetCell(x, y);
-                if (cell == null)
-                    continue;
-
-                if (cell.BlocksMovement)
-                    continue;
-
-                var goblin = CreateGoblin();
-                map.AddObject(new Point(x, y), goblin);
-                placed++;
-            }
-        }
-
-        private NonPlayableCreatureObject CreateGoblin()
-        {
-            return new GoblinImpl(new GoblinCreatureObjectConfiguration
-            {
-                Name = "Goblin",
-                Health = 20,
-                MaxHealth = 20,
-                MinDamage = 2,
-                MaxDamage = 5,
-                HitChance = 60,
-                VisibilityRange = 3
-            });
         }
 
         private IPlayer CreatePlayer()
@@ -117,18 +78,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             var spellBook = itemsGenerator.GenerateSpellBook(ItemRareness.Trash);
             player.Inventory.AddItem(spellBook);
             player.Equipment.EquipItem(spellBook);
-
-            for (int counter = 0; counter < 100; counter++)
-            {
-                var rareness = RandomHelper.GetRandomElement(new[]
-                {
-                    ItemRareness.Trash,
-                    ItemRareness.Common,
-                    ItemRareness.Uncommon,
-                    ItemRareness.Rare
-                });
-                player.Inventory.AddItem(itemsGenerator.GenerateWeapon(rareness));
-            }
 
             return player;
         }

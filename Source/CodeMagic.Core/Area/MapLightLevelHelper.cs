@@ -42,10 +42,10 @@ namespace CodeMagic.Core.Area
 
             cell.LightLevel.AddLights(lights);
 
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Up), lights);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Down), lights);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Left), lights);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Right), lights);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.North), lights);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.South), lights);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.West), lights);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.East), lights);
         }
 
         private static void SpreadLightLevel(IAreaMap map, Point position, Light[] lights)
@@ -64,10 +64,10 @@ namespace CodeMagic.Core.Area
 
             var lightsToSpread = lights.Select(light => light.Clone(light.Power - 1)).Where(light => light.Power > LightLevel.Darkness).ToArray();
 
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Up), lightsToSpread);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Down), lightsToSpread);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Left), lightsToSpread);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.Right), lightsToSpread);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.North), lightsToSpread);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.South), lightsToSpread);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.West), lightsToSpread);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.East), lightsToSpread);
         }
     }
 }

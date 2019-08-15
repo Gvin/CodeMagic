@@ -20,7 +20,7 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public string Name { get; }
 
-        public string Type { get; }
+        public WallObjectConfiguration.WallType Type { get; }
 
         public bool BlocksMovement => true;
 
@@ -78,12 +78,15 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
     public class WallObjectConfiguration
     {
-        public const string ObjectTypeWallWood = "Wood";
-        public const string ObjectTypeWallStone = "Stone";
-        public const string ObjectTypeHole = "Hole";
+        public enum WallType
+        {
+            Wood,
+            Stone,
+            Hole
+        }
 
         public string Name { get; set; }
 
-        public string Type { get; set; }
+        public WallType Type { get; set; }
     }
 }

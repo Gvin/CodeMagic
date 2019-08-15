@@ -38,13 +38,13 @@ namespace CodeMagic.Core.Game
         public static Direction? GetAdjustedPointRelativeDirection(Point position, Point checkPoint)
         {
             if (position.X == checkPoint.X && checkPoint.Y == position.Y - 1)
-                return Direction.Up;
+                return Direction.North;
             if (position.X == checkPoint.X && checkPoint.Y == position.Y + 1)
-                return Direction.Down;
+                return Direction.South;
             if (position.Y == checkPoint.Y && checkPoint.X == position.X - 1)
-                return Direction.Left;
+                return Direction.West;
             if (position.Y == checkPoint.Y && checkPoint.X == position.X + 1)
-                return Direction.Right;
+                return Direction.East;
 
             return null;
         }
@@ -53,13 +53,13 @@ namespace CodeMagic.Core.Game
         {
             switch (direction)
             {
-                case Direction.Up:
+                case Direction.North:
                     return new Point(point.X, point.Y - distance);
-                case Direction.Down:
+                case Direction.South:
                     return new Point(point.X, point.Y + distance);
-                case Direction.Left:
+                case Direction.West:
                     return new Point(point.X - distance, point.Y);
-                case Direction.Right:
+                case Direction.East:
                     return new Point(point.X + distance, point.Y);
                 default:
                     throw new InvalidEnumArgumentException($"Unknown direction: {direction}");
