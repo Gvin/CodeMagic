@@ -214,6 +214,8 @@ namespace CodeMagic.UI.Sad.Views
                     return new EmptyPlayerAction();
                 case Keys.F:
                     return new MeleAttackPlayerAction();
+                case Keys.E:
+                    return new UseObjectPlayerAction();
                 default:
                     return null;
             }

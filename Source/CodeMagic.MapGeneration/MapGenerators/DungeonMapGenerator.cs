@@ -102,6 +102,11 @@ namespace CodeMagic.MapGeneration.MapGenerators
                         var wall = wallsFactory.CreateWall(TorchChance);
                         result.AddObject(x, y, wall);
                     }
+                    else if (map[y][x] == MapBuilder.DoorCell)
+                    {
+                        var door = wallsFactory.CreateDoor();
+                        result.AddObject(x, y, door);
+                    }
                 }
             }
 
@@ -361,6 +366,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
 
             public const int FilledCell = 1;
             public const int EmptyCell = 0;
+            public const int DoorCell = 3;
 
             private readonly Random random;
 
@@ -686,7 +692,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                         return;
 
                     //until we meet an empty cell
-                } while (GetPoint(pLocation.X, pLocation.Y) != FilledCell);
+                } while (!IsFilledPoint(pLocation.X, pLocation.Y));
 
             }
 
@@ -700,7 +706,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
             /// <param name="pLocation">Out: location of Point</param>
             /// <param name="pDirection">Out: direction of Point</param>
             /// <returns>Bool indicating success</returns>
-            private void Corridor_GetEdge(out Point pLocation, out Point pDirection)
+            private void CorridorGetEdge(out Point pLocation, out Point pDirection)
             {
                 List<Point> validDirections = new List<Point>();
 
@@ -718,7 +724,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                     //using the directions to offset the randomly chosen Point
                     foreach (Point p in DirectionsStraight)
                         if (ValidatePoint(pLocation.X + p.X, pLocation.Y + p.Y))
-                            if (GetPoint(pLocation.X + p.X, pLocation.Y + p.Y) == FilledCell)
+                            if (IsFilledPoint(pLocation.X + p.X, pLocation.Y + p.Y))
                                 validDirections.Add(p);
 
                     if (iteration > maxIterations)
@@ -743,6 +749,11 @@ namespace CodeMagic.MapGeneration.MapGenerators
                     lBuiltCorridors.Add(p);
                 }
 
+                var startPoint = lPotentialCorridor.First();
+                var endPoint = lPotentialCorridor.Last();
+                SetPoint(startPoint.X, startPoint.Y, DoorCell);
+                SetPoint(endPoint.X, endPoint.Y, DoorCell);
+
                 lPotentialCorridor.Clear();
             }
 
@@ -762,7 +773,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                     if (random.Next(0, 100) >= BuildProb)
                         RoomGetEdge(out pLocation, out pDirection);
                     else
-                        Corridor_GetEdge(out pLocation, out pDirection);
+                        CorridorGetEdge(out pLocation, out pDirection);
                 }
                 else//no corridors present, so build off a room
                     RoomGetEdge(out pLocation, out pDirection);
@@ -851,13 +862,13 @@ namespace CodeMagic.MapGeneration.MapGenerators
                     if (pDirection.X == 0)//north or south
                     {
                         if (ValidatePoint(pPoint.X + r, pPoint.Y))
-                            if (GetPoint(pPoint.X + r, pPoint.Y) != FilledCell)
+                            if (!IsFilledPoint(pPoint.X + r, pPoint.Y))
                                 return CorridorItemHit.TooClose;
                     }
                     else if (pDirection.Y == 0)//east west
                     {
                         if (ValidatePoint(pPoint.X, pPoint.Y + r))
-                            if (GetPoint(pPoint.X, pPoint.Y + r) != FilledCell)
+                            if (!IsFilledPoint(pPoint.X, pPoint.Y + r))
                                 return CorridorItemHit.TooClose;
                     }
 
@@ -932,7 +943,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                 //check it occupies legal, empty coordinates
                 for (int x = rctCurrentRoom.Left; x <= rctCurrentRoom.Right; x++)
                     for (int y = rctCurrentRoom.Top; y <= rctCurrentRoom.Bottom; y++)
-                        if (!ValidatePoint(x, y) || GetPoint(x, y) != FilledCell)
+                        if (!ValidatePoint(x, y) || !IsFilledPoint(x, y))
                             return false;
 
                 //check it doesn't encroach onto existing rooms
@@ -1002,6 +1013,17 @@ namespace CodeMagic.MapGeneration.MapGenerators
             private int GetPoint(int x, int y)
             {
                 return Map[x, y];
+            }
+
+            private bool IsFilled(int value)
+            {
+                return value == FilledCell;
+            }
+
+            private bool IsFilledPoint(int x, int y)
+            {
+                var point = GetPoint(x, y);
+                return IsFilled(point);
             }
 
             #endregion

@@ -65,6 +65,7 @@
     <Compile Include="Objects\LiquidObjects\AcidLiquidImpl.cs" />
     <Compile Include="Objects\LiquidObjects\OilLiquidImpl.cs" />
     <Compile Include="Objects\LiquidObjects\WaterLiquidImpl.cs" />
+    <Compile Include="Objects\SolidObjects\DoorObjectImpl.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWallImpl.cs" />
     <Compile Include="Objects\SolidObjects\TorchWallImpl.cs" />
     <Compile Include="Objects\SolidObjects\WallImpl.cs" />

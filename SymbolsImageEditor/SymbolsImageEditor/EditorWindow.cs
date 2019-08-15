@@ -143,7 +143,7 @@ namespace SymbolsImageEditor
             control.Surface.Fill(0, control.Height - 1, control.Width, Color.Gray, Color.Black, '#');
             control.Surface.DrawVerticalLine(0, 0, control.Height, new ColoredGlyph('#', Color.Gray, Color.Black));
             control.Surface.DrawVerticalLine(control.Width - 1, 0, control.Height, new ColoredGlyph('#', Color.Gray, Color.Black));
-            control.Surface.DrawImage(1, 1, image, Color.White, ColorHelper.ConvertToXna(backgroundColor));
+            control.Surface.DrawImage(1, 1, image, Color.White, backgroundColor.ToXna());
         }
 
         private void saveImageButton_Click(object sender, EventArgs args)
@@ -313,7 +313,7 @@ namespace SymbolsImageEditor
             if (brush.ForeColor.HasValue)
             {
                 Fill(dX + 6, 2, 5, Color.White, Color.Black, ' ');
-                Print(dX + 6, 2, new ColoredGlyph(' ', Color.White, ColorHelper.ConvertToXna(brush.ForeColor.Value)));
+                Print(dX + 6, 2, new ColoredGlyph(' ', Color.White, brush.ForeColor.Value.ToXna()));
             }
             else
             {
@@ -325,7 +325,7 @@ namespace SymbolsImageEditor
             if (brush.BackColor.HasValue)
             {
                 Fill(dX + 6, 3, 5, Color.White, Color.Black, ' ');
-                Print(dX + 6, 3, new ColoredGlyph(' ', Color.White, ColorHelper.ConvertToXna(brush.BackColor.Value)));
+                Print(dX + 6, 3, new ColoredGlyph(' ', Color.White, brush.BackColor.Value.ToXna()));
             }
             else
             {

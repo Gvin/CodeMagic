@@ -14,6 +14,11 @@ namespace CodeMagic.MapGeneration
             this.wallType = wallType;
         }
 
+        public DoorObject CreateDoor()
+        {
+            return new DoorObjectImpl();
+        }
+
         public WallObject CreateWall()
         {
             return new WallImpl(new WallObjectConfiguration

@@ -17,12 +17,21 @@ namespace CodeMagic.UI.Sad.Common
                 {'└', GlyphBoxSingleUpRight},
                 {'┘', GlyphBoxSingleUpLeft},
 
+                {'╨', GlyphBoxSingleHorizontalDoubleUp},
+                {'╞', GlyphBoxSingleVerticalDoubleRight},
+                {'╡', GlyphBoxSingleVerticalDoubleLeft},
+                {'╢', GlyphBoxDoubleVerticalSingleLeft},
+                {'╟', GlyphBoxDoubleVerticalSingleRight},
                 {'╤', GlyphBoxDoubleHorizontalSingleDown},
+                {'╧', GlyphBoxDoubleHorizontalSingleUp},
 
                 {'═', GlyphBoxDoubleHorizontal},
                 {'║', GlyphBoxDoubleVertical},
                 {'╬', GlyphBoxDoubleHorizontalVertical},
                 {'╝', GlyphBoxDoubleUpLeft},
+                {'╔', GlyphBoxDoubleDownRight},
+                {'╚', GlyphBoxDoubleUpRight},
+                {'╗', GlyphBoxDoubleDownLeft},
 
                 {'▄', GlyphBlockLowerHalf},
                 {'█', GlyphBlockFull},
@@ -185,8 +194,14 @@ namespace CodeMagic.UI.Sad.Common
         /// </summary>
         public const int GlyphBoxSingleVerticalLeft = 180;
 
+        /// <summary>
+        /// ╡
+        /// </summary>
         public const int GlyphBoxSingleVerticalDoubleLeft = 181;
 
+        /// <summary>
+        /// ╢
+        /// </summary>
         public const int GlyphBoxDoubleVerticalSingleLeft = 182;
 
         public const int GlyphBoxDoubleDownSingleLeft = 183;
@@ -197,8 +212,14 @@ namespace CodeMagic.UI.Sad.Common
 
         public const int GlyphBoxDoubleVertical = 186;
 
+        /// <summary>
+        /// ╗
+        /// </summary>
         public const int GlyphBoxDoubleDownLeft = 187;
 
+        /// <summary>
+        /// ╝
+        /// </summary>
         public const int GlyphBoxDoubleUpLeft = 188;
 
         public const int GlyphBoxDoubleUpSingleLeft = 189;
@@ -291,7 +312,7 @@ namespace CodeMagic.UI.Sad.Common
         public const int GlyphBoxDoubleHorizontalSingleUp = 207;
 
         /// <summary>
-        /// 
+        /// ╤
         /// </summary>
         public const int GlyphBoxDoubleHorizontalSingleDown = 209;
 
