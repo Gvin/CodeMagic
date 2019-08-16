@@ -1,29 +1,63 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.MapGeneration.MapGenerators;
+using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.MapGeneration
 {
-    public class MapGenerator
+    public class MapGenerator : IMapGenerator
     {
-        public IAreaMap GenerateMap(
+        private readonly Dictionary<MapType, IMapAreaGenerator> generators;
+        private readonly bool writeMapFile;
+
+        public MapGenerator(bool writeMapFile = false)
+        {
+            this.writeMapFile = writeMapFile;
+
+            var wallsFactory = new MapObjectsFactory(WallObjectConfiguration.WallType.Stone);
+            generators = new Dictionary<MapType, IMapAreaGenerator>
+            {
+                {MapType.Dungeon, new DungeonMapGenerator(wallsFactory)},
+                {MapType.Labyrinth, new LabyrinthMapGenerator(wallsFactory)}
+            };
+        }
+
+        public IAreaMap GenerateNewMap(int level, out Point playerPosition)
+        {
+            var size = GenerateMapSize();
+            return GenerateMap(level, size, FloorTypes.Stone, out playerPosition);
+        }
+
+        private MapSize GenerateMapSize()
+        {
+            var value = RandomHelper.GetRandomValue(0, 100);
+
+            if (value >= 0 && value <= 25)
+                return MapSize.Big; // 25%
+            if (value > 25 && value <= 62)
+                return MapSize.Medium; // 37%
+
+            return MapSize.Small; // 38%
+        }
+
+        private IAreaMap GenerateMap(
+            int level,
             MapSize size, 
             FloorTypes floorType,
-            WallObjectConfiguration.WallType wallType, 
-            out Point playerPosition, 
-            bool writeMapFile = false)
+            out Point playerPosition)
         {
-            var wallsFactory = new WallsFactory(wallType);
-            var generator = CreateGenerator(wallsFactory);
+            var generator = CreateGenerator();
             var map = generator.Generate(size, out playerPosition);
 
             ApplyFloorType(map, floorType);
             
             new ObjectsGenerator().GenerateObjects(map);
 
-            new NpcGenerator().GenerateNpc(map, playerPosition);
+            new NpcGenerator().GenerateNpc(level, size, map, playerPosition);
 
             if (writeMapFile)
             {
@@ -43,9 +77,17 @@ namespace CodeMagic.MapGeneration
                     for (int x = 0; x < map.Width; x++)
                     {
                         var cell = map.GetCell(x, y);
-                        if (cell.BlocksEnvironment)
+                        if (cell.Objects.OfType<WallObject>().Any())
                         {
                             line += "█";
+                        }
+                        else if (cell.Objects.OfType<DoorObject>().Any())
+                        {
+                            line += "▒";
+                        }
+                        else if (cell.Objects.OfType<StairsObject>().Any())
+                        {
+                            line += "≡";
                         }
                         else
                         {
@@ -73,9 +115,23 @@ namespace CodeMagic.MapGeneration
             }
         }
 
-        private IMapGenerator CreateGenerator(WallsFactory wallsFactory)
+        private IMapAreaGenerator CreateGenerator()
         {
-            return new DungeonMapGenerator(wallsFactory);
+            var type = GenerateMapType();
+            return generators[type];
+        }
+
+        private MapType GenerateMapType()
+        {
+            if (RandomHelper.CheckChance(20))
+                return MapType.Labyrinth;
+            return MapType.Dungeon;
+        }
+
+        private enum MapType
+        {
+            Dungeon,
+            Labyrinth
         }
     }
 

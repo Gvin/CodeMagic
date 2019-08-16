@@ -8,19 +8,19 @@ using CodeMagic.Core.Game;
 
 namespace CodeMagic.MapGeneration.MapGenerators
 {
-    internal class LabyrinthMapGenerator : IMapGenerator
+    internal class LabyrinthMapGenerator : IMapAreaGenerator
     {
         private const int SizeSmall = 15;
-        private const int SizeMedium = 31;
-        private const int SizeBig = 51;
+        private const int SizeMedium = 25;
+        private const int SizeBig = 35;
 
         private const int TorchChance = 10;
 
-        private readonly WallsFactory wallsFactory;
+        private readonly MapObjectsFactory mapObjectsFactory;
 
-        public LabyrinthMapGenerator(WallsFactory wallsFactory)
+        public LabyrinthMapGenerator(MapObjectsFactory mapObjectsFactory)
         {
-            this.wallsFactory = wallsFactory;
+            this.mapObjectsFactory = mapObjectsFactory;
         }
 
         public IAreaMap Generate(MapSize size, out Point playerPosition)
@@ -35,7 +35,43 @@ namespace CodeMagic.MapGeneration.MapGenerators
             playerPosition.X = playerPosition.X * 2 + 1;
             playerPosition.Y = playerPosition.Y * 2 + 1;
 
-            return ConvertToAreaMap(roomsMap, mapSize, mapSize);
+            var map = ConvertToAreaMap(roomsMap, mapSize, mapSize);
+
+            var endPosition = GetEndPosition(map, playerPosition);
+
+            map.AddObject(playerPosition, mapObjectsFactory.CreateTrapDoor());
+            map.AddObject(endPosition, mapObjectsFactory.CreateStairsUp());
+
+            return map;
+        }
+
+        private Point GetEndPosition(IAreaMap map, Point playerPosition)
+        {
+            const int maxIterations = 100;
+            const int minPlayerDistance = 10;
+
+            var iteration = 0;
+            while (true)
+            {
+                if (iteration >= maxIterations)
+                    throw new MapGenerationException("Unable to find suitable end point.");
+
+                iteration++;
+
+                var x = RandomHelper.GetRandomValue(0, map.Width - 1);
+                var y = RandomHelper.GetRandomValue(0, map.Height - 1);
+                var point = new Point(x, y);
+
+                if (Point.GetDistance(playerPosition, point) < minPlayerDistance)
+                    continue;
+
+                var cell = map.GetCell(point);
+
+                if (cell.BlocksMovement)
+                    continue;
+
+                return point;
+            }
         }
 
         private int GetSize(MapSize size)
@@ -67,7 +103,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                     currentMapX++;
                     if (room.Walls[Direction.East])
                     {
-                        map.AddObject(currentMapX, currentMapY, wallsFactory.CreateWall(TorchChance));
+                        map.AddObject(currentMapX, currentMapY, mapObjectsFactory.CreateWall(TorchChance));
                     }
                     currentMapX++;
                 }
@@ -79,10 +115,10 @@ namespace CodeMagic.MapGeneration.MapGenerators
                 {
                     if (room.Walls[Direction.South])
                     {
-                        map.AddObject(currentMapX, currentMapY, wallsFactory.CreateWall(TorchChance));
+                        map.AddObject(currentMapX, currentMapY, mapObjectsFactory.CreateWall(TorchChance));
                     }
                     currentMapX++;
-                    map.AddObject(currentMapX, currentMapY, wallsFactory.CreateWall(TorchChance));
+                    map.AddObject(currentMapX, currentMapY, mapObjectsFactory.CreateWall(TorchChance));
                     currentMapX++;
                 }
 
@@ -91,12 +127,12 @@ namespace CodeMagic.MapGeneration.MapGenerators
 
             for (var y = 0; y < map.Height; y++)
             {
-                map.AddObject(0, y, wallsFactory.CreateWall(TorchChance));
+                map.AddObject(0, y, mapObjectsFactory.CreateWall(TorchChance));
             }
 
             for (var x = 0; x < map.Width; x++)
             {
-                map.AddObject(x, 0, wallsFactory.CreateWall(TorchChance));
+                map.AddObject(x, 0, mapObjectsFactory.CreateWall(TorchChance));
             }
 
             return map;

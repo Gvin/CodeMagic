@@ -55,7 +55,7 @@
     <Compile Include="Objects\AnimationManager.cs" />
     <Compile Include="Objects\AnimationsBatchManager.cs" />
     <Compile Include="Objects\CodeSpellImpl.cs" />
-    <Compile Include="Objects\Creatures\NonPlayable\GoblinImpl.cs" />
+    <Compile Include="Objects\Creatures\NonPlayable\SkeletonImpl.cs" />
     <Compile Include="Objects\Creatures\PlayerImpl.cs" />
     <Compile Include="Objects\DecorativeObjects\CreatureRemainsObjectImpl.cs" />
     <Compile Include="Objects\DecorativeObjects\DecorativeObjectImpl.cs" />
@@ -67,6 +67,7 @@
     <Compile Include="Objects\LiquidObjects\WaterLiquidImpl.cs" />
     <Compile Include="Objects\SolidObjects\DoorObjectImpl.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWallImpl.cs" />
+    <Compile Include="Objects\SolidObjects\StairsObjectImpl.cs" />
     <Compile Include="Objects\SolidObjects\TorchWallImpl.cs" />
     <Compile Include="Objects\SolidObjects\WallImpl.cs" />
     <Compile Include="Objects\SteamObjects\AcidSteamImpl.cs" />

@@ -45,12 +45,12 @@
     <Compile Include="MapGenerationException.cs" />
     <Compile Include="MapGenerator.cs" />
     <Compile Include="MapGenerators\DungeonMapGenerator.cs" />
-    <Compile Include="MapGenerators\IMapGenerator.cs" />
+    <Compile Include="MapGenerators\IMapAreaGenerator.cs" />
     <Compile Include="MapGenerators\LabyrinthMapGenerator.cs" />
     <Compile Include="NpcGenerator.cs" />
     <Compile Include="ObjectsGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WallsFactory.cs" />
+    <Compile Include="MapObjectsFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">

@@ -71,9 +71,12 @@
     <Compile Include="Configuration\Spells\ISpellsConfiguration.cs" />
     <Compile Include="Configuration\ITemperatureConfiguration.cs" />
     <Compile Include="Configuration\ITemperatureDamageConfiguration.cs" />
+    <Compile Include="CreaturesLogic\Strategies\PatrolAreaStrategy.cs" />
     <Compile Include="Game\IGameCore.cs" />
+    <Compile Include="Game\IMapGenerator.cs" />
     <Compile Include="Game\Journaling\Messages\AttackMissMessage.cs" />
     <Compile Include="Game\Journaling\Messages\DamageBlockedMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\DungeonLevelMessage.cs" />
     <Compile Include="Game\Journaling\Messages\HealedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ManaRestoredMessage.cs" />
     <Compile Include="Game\Journaling\Messages\OverweightBlocksMovementMessage.cs" />
@@ -148,7 +151,7 @@
     <Compile Include="Game\VisibilityHelper.cs" />
     <Compile Include="Items\SpellBook.cs" />
     <Compile Include="Objects\Creatures\ICreatureObject.cs" />
-    <Compile Include="Objects\Creatures\Implementations\GoblinCreatureObject.cs" />
+    <Compile Include="Objects\Creatures\Implementations\SkeletonCreatureObject.cs" />
     <Compile Include="Objects\Creatures\INonPlayableCreatureObject.cs" />
     <Compile Include="Objects\Creatures\NonPlayableCreatureObject.cs" />
     <Compile Include="Objects\DecorativeObjects\FireDecorativeObject.cs" />
@@ -172,6 +175,7 @@
     <Compile Include="Objects\PlayerData\PlayerConfiguration.cs" />
     <Compile Include="Objects\SolidObjects\DoorObject.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWall.cs" />
+    <Compile Include="Objects\SolidObjects\StairsObject.cs" />
     <Compile Include="Objects\SolidObjects\TorchWallObject.cs" />
     <Compile Include="Objects\SolidObjects\WallObject.cs" />
     <Compile Include="Objects\SteamObjects\AbstractSteamObject.cs" />

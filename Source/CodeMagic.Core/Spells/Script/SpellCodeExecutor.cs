@@ -238,7 +238,8 @@ namespace CodeMagic.Core.Spells.Script
                 {"id", destroyable.Id},
                 {"health", destroyable.Health},
                 {"maxHealth", destroyable.MaxHealth},
-                {"position", position}
+                {"position", position},
+                {"type", GetObjectType(destroyable)}
             });
 
             if (destroyable is ICreatureObject creature)
@@ -247,6 +248,21 @@ namespace CodeMagic.Core.Spells.Script
             }
 
             return data;
+        }
+
+        private string GetObjectType(IDestroyableObject destroyable)
+        {
+            if (destroyable.Equals(caster))
+            {
+                return "caster";
+            }
+
+            if (destroyable is ICreatureObject)
+            {
+                return "creature";
+            }
+
+            return "object";
         }
 
         private bool GetIfCellIsSolid(IAreaMap map, Point position, string directionString)

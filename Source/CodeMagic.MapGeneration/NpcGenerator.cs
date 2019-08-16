@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Area;
+﻿using System;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.Creatures.Implementations;
@@ -8,12 +9,15 @@ namespace CodeMagic.MapGeneration
 {
     internal class NpcGenerator
     {
-        private const int GoblinsCount = 20;
+        private const int SkeletonsCountMultiplier = 10;
+        private const int MaxSkeletonsCount = 50;
         private const int MinDistanceFromPlayer = 6;
 
-        public void GenerateNpc(IAreaMap map, Point playerPosition)
+        public void GenerateNpc(int level, MapSize mapSize, IAreaMap map, Point playerPosition)
         {
-            PlaceCreatures(GoblinsCount, map, playerPosition);
+            var count = level * SkeletonsCountMultiplier + (int) mapSize * 10;
+            count = Math.Min(MaxSkeletonsCount, count);
+            PlaceCreatures(count, map, playerPosition);
         }
 
         private void PlaceCreatures(int count, IAreaMap map, Point playerPosition)
@@ -57,13 +61,13 @@ namespace CodeMagic.MapGeneration
 
         private NonPlayableCreatureObject CreateGoblin()
         {
-            return new GoblinImpl(new GoblinCreatureObjectConfiguration
+            return new SkeletonImpl(new GoblinCreatureObjectConfiguration
             {
-                Name = "Goblin",
-                Health = 20,
-                MaxHealth = 20,
-                MinDamage = 2,
-                MaxDamage = 5,
+                Name = "Skeleton",
+                Health = 10,
+                MaxHealth = 10,
+                MinDamage = 1,
+                MaxDamage = 4,
                 HitChance = 60,
                 VisibilityRange = 3
             });

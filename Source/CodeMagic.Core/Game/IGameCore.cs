@@ -7,6 +7,8 @@ namespace CodeMagic.Core.Game
 {
     public interface IGameCore
     {
+        int Level { get; }
+
         IAreaMap Map { get; }
 
         Journal Journal { get; }
@@ -18,5 +20,7 @@ namespace CodeMagic.Core.Game
         AreaMapFragment GetVisibleArea();
 
         void PerformPlayerAction(IPlayerAction action);
+
+        void GoToNextLevel();
     }
 }

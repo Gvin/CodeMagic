@@ -5,14 +5,14 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.Creatures.NonPlayable
 {
-    public class GoblinImpl : GoblinCreatureObject, IWorldImageProvider
+    public class SkeletonImpl : SkeletonCreatureObject, IWorldImageProvider
     {
-        private const string ImageUp = "Creature_Goblin_Up";
-        private const string ImageDown = "Creature_Goblin_Down";
-        private const string ImageLeft = "Creature_Goblin_Left";
-        private const string ImageRight = "Creature_Goblin_Right";
+        private const string ImageUp = "Creature_Skeleton_Up";
+        private const string ImageDown = "Creature_Skeleton_Down";
+        private const string ImageLeft = "Creature_Skeleton_Left";
+        private const string ImageRight = "Creature_Skeleton_Right";
 
-        public GoblinImpl(GoblinCreatureObjectConfiguration configuration) 
+        public SkeletonImpl(GoblinCreatureObjectConfiguration configuration) 
             : base(configuration)
         {
         }

@@ -14,14 +14,14 @@ using CodeMagic.Core.Objects.PlayerData;
 namespace CodeMagic.Core.Objects.Creatures.Implementations
 {
     // TODO: Implement creature weapon
-    public class GoblinCreatureObject : NonPlayableCreatureObject
+    public class SkeletonCreatureObject : NonPlayableCreatureObject
     {
         private readonly int hitChance;
         private readonly int minDamage;
         private readonly int maxDamage;
         private readonly Element damageElement;
 
-        public GoblinCreatureObject(GoblinCreatureObjectConfiguration configuration) 
+        public SkeletonCreatureObject(GoblinCreatureObjectConfiguration configuration) 
             : base(configuration)
         {
             minDamage = configuration.MinDamage;
@@ -34,13 +34,13 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
 
         private void ConfigureLogic()
         {
-            var standStill = new StandStillStrategy();
+            var patrol = new PatrolAreaStrategy();
             var attack = new ChasePlayerStrategy(new SimpleCreatureMovementStrategy());
 
-            Logic.SetInitialStrategy(standStill);
+            Logic.SetInitialStrategy(patrol);
 
-            Logic.AddTransferRule(standStill, attack, GetIfPlayerVisible);
-            Logic.AddTransferRule(attack, standStill, (map, position) => !GetIfPlayerVisible(map, position));
+            Logic.AddTransferRule(patrol, attack, GetIfPlayerVisible);
+            Logic.AddTransferRule(attack, patrol, (map, position) => !GetIfPlayerVisible(map, position));
         }
 
         private bool GetIfPlayerVisible(IAreaMap map, Point position)

@@ -2,6 +2,7 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
@@ -10,23 +11,52 @@ namespace CodeMagic.Core.Game
 {
     public class GameCore : ITurnProvider, IGameCore
     {
-        public GameCore(IAreaMap map, Point playerPosition)
-        {
-            Map = map;
-            PlayerPosition = playerPosition;
-            Player = map.GetCell(playerPosition).Objects.First(obj => obj is IPlayer) as IPlayer;
+        private readonly object mapLockObject = new object();
+        private readonly IMapGenerator mapGenerator;
+        private IAreaMap map;
 
-            if (Player == null)
-                throw new ArgumentException("Player is not located on map in specified location.", nameof(playerPosition));
+        public GameCore(IMapGenerator mapGenerator, IPlayer player)
+        {
+            this.mapGenerator = mapGenerator;
+            Player = player;
 
             Journal = new Journal(this);
 
             CurrentTurn = 1;
+            Level = 1;
+
+            Journal.Write(new DungeonLevelMessage(Level));
+
+            GenerateNewMap();
+        }
+
+        private void GenerateNewMap()
+        {
+            lock (mapLockObject)
+            {
+                Map = mapGenerator.GenerateNewMap(Level, out var playerPosition);
+
+                PlayerPosition = playerPosition;
+                Map.AddObject(PlayerPosition, Player);
+                Map.Refresh();
+            }
         }
 
         public int CurrentTurn { get; private set; }
 
-        public IAreaMap Map { get; }
+        public int Level { get; private set; }
+
+        public IAreaMap Map
+        {
+            get
+            {
+                lock (mapLockObject)
+                {
+                    return map;
+                }
+            }
+            private set => map = value;
+        }
 
         public IPlayer Player { get; }
 
@@ -36,7 +66,7 @@ namespace CodeMagic.Core.Game
 
         public void PerformPlayerAction(IPlayerAction action)
         {
-            lock (Map)
+            lock (mapLockObject)
             {
                 Map.PreUpdate(this);
 
@@ -53,6 +83,15 @@ namespace CodeMagic.Core.Game
                     }
                 }
             }
+        }
+
+        public void GoToNextLevel()
+        {
+            Level++;
+            
+            GenerateNewMap();
+
+            Journal.Write(new DungeonLevelMessage(Level));
         }
 
         private void ProcessSystemTurn()

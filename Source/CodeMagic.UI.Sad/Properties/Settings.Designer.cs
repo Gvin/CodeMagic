@@ -61,5 +61,14 @@ namespace CodeMagic.UI.Sad.Properties {
                 return ((bool)(this["DebugDrawMagicEnergy"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DebugWriteMapToFile {
+            get {
+                return ((bool)(this["DebugWriteMapToFile"]));
+            }
+        }
     }
 }

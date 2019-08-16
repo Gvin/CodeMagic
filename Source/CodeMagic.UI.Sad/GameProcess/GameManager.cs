@@ -13,47 +13,22 @@ namespace CodeMagic.UI.Sad.GameProcess
 {
     public class GameManager
     {
-        private const MapSize MapSize = MapGeneration.MapSize.Small;
         private const bool UseFakeMap = false;
 
         public GameCore StartGame()
         {
-            var map = CreateMap(UseFakeMap, out var playerPosition);
-
             var player = CreatePlayer();
-            map.AddObject(playerPosition, player);
-
-            map.Refresh();
-
-            return new GameCore(map, playerPosition);
+            return new GameCore(CreateMapGenerator(), player);
         }
 
-        private IAreaMap CreateMap(bool fake, out Point playerPosition)
+        private IMapGenerator CreateMapGenerator()
         {
-            if (fake)
-                return CreateFakeMap(out playerPosition);
-
-            return new MapGenerator().GenerateMap(
-                MapSize,
-                FloorTypes.Stone, 
-                WallObjectConfiguration.WallType.Stone, 
-                out playerPosition,
-                true);
-        }
-
-        private IAreaMap CreateFakeMap(out Point playerPosition)
-        {
-            playerPosition = new Point(0, 0);
-
-            var map = new AreaMap(10, 10);
-
-            map.AddObject(3, 3, new TorchWallImpl(new TorchWallObjectConfiguration
+            if (UseFakeMap)
             {
-                LightPower = LightLevel.Bright1,
-                Type = WallObjectConfiguration.WallType.Stone
-            }));
+                return new FakeMapGenerator();
+            }
 
-            return map;
+            return new MapGenerator(Properties.Settings.Default.DebugWriteMapToFile);
         }
 
         private IPlayer CreatePlayer()
@@ -80,6 +55,24 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Equipment.EquipItem(spellBook);
 
             return player;
+        }
+
+        private class FakeMapGenerator : IMapGenerator
+        {
+            public IAreaMap GenerateNewMap(int level, out Point playerPosition)
+            {
+                playerPosition = new Point(0, 0);
+
+                var map = new AreaMap(10, 10);
+
+                map.AddObject(3, 3, new TorchWallImpl(new TorchWallObjectConfiguration
+                {
+                    LightPower = LightLevel.Bright1,
+                    Type = WallObjectConfiguration.WallType.Stone
+                }));
+
+                return map;
+            }
         }
     }
 }

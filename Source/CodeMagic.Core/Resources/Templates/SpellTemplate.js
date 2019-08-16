@@ -36,7 +36,7 @@
  * List of custom types
  *
  * Point { x: int, y: int }
- * Object { id: string, health: int, maxHealth: int, position: Point, direction: string } - direction exists only for creatures
+ * Object { id: string, health: int, maxHealth: int, position: Point, direction: string, type: string } - direction exists only for creatures
  * Action { type: string, manaCost: int }
  * ------------------------------------------------------------------------------------
  */

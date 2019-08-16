@@ -4,20 +4,23 @@ using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Objects;
+using CodeMagic.Core.Objects.DecorativeObjects;
+using CodeMagic.Implementations.Objects.DecorativeObjects;
 using Point = System.Drawing.Point;
 
 namespace CodeMagic.MapGeneration.MapGenerators
 {
-    internal class DungeonMapGenerator : IMapGenerator
+    internal class DungeonMapGenerator : IMapAreaGenerator
     {
         private const int TorchChance = 5;
         private const int MaxBuildRetries = 10;
 
-        private readonly WallsFactory wallsFactory;
+        private readonly MapObjectsFactory mapObjectsFactory;
 
-        public DungeonMapGenerator(WallsFactory wallsFactory)
+        public DungeonMapGenerator(MapObjectsFactory mapObjectsFactory)
         {
-            this.wallsFactory = wallsFactory;
+            this.mapObjectsFactory = mapObjectsFactory;
         }
 
         public IAreaMap Generate(MapSize size, out Core.Game.Point playerPosition)
@@ -48,6 +51,9 @@ namespace CodeMagic.MapGeneration.MapGenerators
 
             var map = ConvertMap(simplifiedMap, width, height);
             playerPosition = FindPlayerPosition(map);
+
+            map.AddObject(playerPosition, mapObjectsFactory.CreateTrapDoor());
+
             return map;
         }
 
@@ -99,14 +105,19 @@ namespace CodeMagic.MapGeneration.MapGenerators
                 {
                     if (map[y][x] == MapBuilder.FilledCell)
                     {
-                        var wall = wallsFactory.CreateWall(TorchChance);
+                        var wall = mapObjectsFactory.CreateWall(TorchChance);
                         result.AddObject(x, y, wall);
                     }
                     else if (map[y][x] == MapBuilder.DoorCell)
                     {
                         var horizontal = GetIfHorizontalDoor(map, x, y);
-                        var door = wallsFactory.CreateDoor(horizontal);
+                        var door = mapObjectsFactory.CreateDoor(horizontal);
                         result.AddObject(x, y, door);
+                    }
+                    else if (map[y][x] == MapBuilder.StairsCell)
+                    {
+                        var stairs = mapObjectsFactory.CreateStairsUp();
+                        result.AddObject(x, y, stairs);
                     }
                 }
             }
@@ -389,6 +400,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
             public const int FilledCell = 1;
             public const int EmptyCell = 0;
             public const int DoorCell = 3;
+            public const int StairsCell = 4;
 
             private readonly Random random;
 
@@ -453,7 +465,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                 //attempt to build the required number of rooms
                 while (rctBuiltRooms.Count() < MaxRoomsCount)
                 {
-
+                    var lastRoom = rctBuiltRooms.Count == MaxRoomsCount - 1;
                     if (loopctr++ > BreakOut)//bail out if this value is exceeded
                         return false;
 
@@ -475,7 +487,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                                 if (RoomAttemptBuildOnCorridor(Direction))
                                 {
                                     CorridorBuild();
-                                    BuildRoom();
+                                    BuildRoom(lastRoom);
                                 }
                                 break;
                         }
@@ -508,7 +520,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                 //attempt to build the required number of rooms
                 while (rctBuiltRooms.Count < MaxRoomsCount)
                 {
-
+                    var lastRoom = rctBuiltRooms.Count == MaxRoomsCount - 1;
                     if (loopctr++ > BreakOut)//bail out if this value is exceeded
                         return false;
 
@@ -530,7 +542,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                                 if (RoomAttemptBuildOnCorridor(Direction))
                                 {
                                     CorridorBuild();
-                                    BuildRoom();
+                                    BuildRoom(lastRoom);
                                 }
                                 break;
                         }
@@ -558,7 +570,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                 };
                 rctCurrentRoom.X = MapSize.Width / 2;
                 rctCurrentRoom.Y = MapSize.Height / 2;
-                BuildRoom();
+                BuildRoom(false);
             }
 
 
@@ -567,7 +579,6 @@ namespace CodeMagic.MapGeneration.MapGenerators
             /// </summary>
             private void PlaceStartRooms()
             {
-
                 Point startdirection;
                 bool connection = false;
                 Point Location = new Point();
@@ -576,14 +587,12 @@ namespace CodeMagic.MapGeneration.MapGenerators
 
                 while (!connection)
                 {
-
                     Clear();
                     startdirection = GetDirection(new Point());
 
                     //place a room on the top and bottom
                     if (startdirection.X == 0)
                     {
-
                         //room at the top of the map
                         rctCurrentRoom = new Rectangle()
                         {
@@ -592,7 +601,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                         };
                         rctCurrentRoom.X = random.Next(0, MapSize.Width - rctCurrentRoom.Width);
                         rctCurrentRoom.Y = 1;
-                        BuildRoom();
+                        BuildRoom(false);
 
                         //at the bottom of the map
                         rctCurrentRoom = new Rectangle();
@@ -600,9 +609,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                         rctCurrentRoom.Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height);
                         rctCurrentRoom.X = random.Next(0, MapSize.Width - rctCurrentRoom.Width);
                         rctCurrentRoom.Y = MapSize.Height - rctCurrentRoom.Height - 1;
-                        BuildRoom();
-
-
+                        BuildRoom(false);
                     }
                     else//place a room on the east and west side
                     {
@@ -612,24 +619,19 @@ namespace CodeMagic.MapGeneration.MapGenerators
                         rctCurrentRoom.Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height);
                         rctCurrentRoom.Y = random.Next(0, MapSize.Height - rctCurrentRoom.Height);
                         rctCurrentRoom.X = 1;
-                        BuildRoom();
+                        BuildRoom(false);
 
                         rctCurrentRoom = new Rectangle();
                         rctCurrentRoom.Width = random.Next(RoomSizeMin.Width, RoomSizeMax.Width);
                         rctCurrentRoom.Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height);
                         rctCurrentRoom.Y = random.Next(0, MapSize.Height - rctCurrentRoom.Height);
                         rctCurrentRoom.X = MapSize.Width - rctCurrentRoom.Width - 2;
-                        BuildRoom();
+                        BuildRoom(false);
 
                     }
 
-
-
                     if (CorridorGetStart(out Location, out Direction))
                     {
-
-
-
                         CorBuildOutcome = CorridorMakeStraight(ref Location, ref Direction, 100, true);
 
                         switch (CorBuildOutcome)
@@ -990,7 +992,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
             /// <summary>
             /// Add the global Room to the rooms collection and draw it on the map
             /// </summary>
-            private void BuildRoom()
+            private void BuildRoom(bool placeStairs)
             {
                 rctBuiltRooms.Add(rctCurrentRoom);
 
@@ -998,6 +1000,13 @@ namespace CodeMagic.MapGeneration.MapGenerators
                     for (int y = rctCurrentRoom.Top; y <= rctCurrentRoom.Bottom; y++)
                         Map[x, y] = EmptyCell;
 
+                if (placeStairs)
+                {
+                    var centerX = (int)Math.Round((rctCurrentRoom.Left + rctCurrentRoom.Right) / 2d);
+                    var centerY = (int)Math.Round((rctCurrentRoom.Top + rctCurrentRoom.Bottom) / 2d);
+
+                    Map[centerX, centerY] = StairsCell;
+                }
             }
 
             #endregion

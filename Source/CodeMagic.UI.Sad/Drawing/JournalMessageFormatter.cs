@@ -76,9 +76,19 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetDamageBlockedMessage(damageBlockedMessage);
                 case OverweightBlocksMovementMessage overweightBlocksMovementMessage:
                     return GetOverweightBlocksMovementMessage(overweightBlocksMovementMessage);
+                case DungeonLevelMessage dungeonLevelMessage:
+                    return GetDungeonLevelMessage(dungeonLevelMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetDungeonLevelMessage(DungeonLevelMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{PlayerName} reached {message.Level} level of the dungeon."), 
+            };
         }
 
         private ColoredString[] GetOverweightBlocksMovementMessage(OverweightBlocksMovementMessage message)
