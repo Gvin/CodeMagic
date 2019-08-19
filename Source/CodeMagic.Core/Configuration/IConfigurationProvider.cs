@@ -1,4 +1,5 @@
 ﻿using CodeMagic.Core.Configuration.Liquids;
+using CodeMagic.Core.Configuration.Monsters;
 using CodeMagic.Core.Configuration.Spells;
 
 namespace CodeMagic.Core.Configuration
@@ -10,5 +11,7 @@ namespace CodeMagic.Core.Configuration
         IPhysicsConfiguration Physics { get; }
 
         ILiquidsConfiguration Liquids { get; }
+
+        IMonstersConfiguration Monsters { get; }
     }
 }

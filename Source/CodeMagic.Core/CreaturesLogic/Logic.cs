@@ -23,7 +23,7 @@ namespace CodeMagic.Core.CreaturesLogic
             currentStrategy = strategy;
         }
 
-        public void AddTransferRule(ICreatureStrategy source, ICreatureStrategy target, Func<IAreaMap, Point, bool> condition)
+        public void AddTransferRule(ICreatureStrategy source, ICreatureStrategy target, Func<INonPlayableCreatureObject, IAreaMap, Point, bool> condition)
         {
             rules.Add(new ChangeStrategyRule(source, target, condition));
         }
@@ -33,7 +33,7 @@ namespace CodeMagic.Core.CreaturesLogic
             var endTurn = false;
             while (!endTurn)
             {
-                var nextStrategy = GetNextStrategy(game.Map, position);
+                var nextStrategy = GetNextStrategy(creature, game.Map, position);
                 if (nextStrategy != null)
                 {
                     currentStrategy = nextStrategy;
@@ -43,15 +43,15 @@ namespace CodeMagic.Core.CreaturesLogic
             }
         }
 
-        private ICreatureStrategy GetNextStrategy(IAreaMap map, Point position)
+        private ICreatureStrategy GetNextStrategy(INonPlayableCreatureObject creature, IAreaMap map, Point position)
         {
-            var matchingRule = rules.FirstOrDefault(rule => rule.Source == currentStrategy && rule.Condition(map, position));
+            var matchingRule = rules.FirstOrDefault(rule => rule.Source == currentStrategy && rule.Condition(creature, map, position));
             return matchingRule?.Target;
         }
 
         private class ChangeStrategyRule
         {
-            public ChangeStrategyRule(ICreatureStrategy source, ICreatureStrategy target, Func<IAreaMap, Point, bool> condition)
+            public ChangeStrategyRule(ICreatureStrategy source, ICreatureStrategy target, Func<INonPlayableCreatureObject, IAreaMap, Point, bool> condition)
             {
                 Source = source;
                 Target = target;
@@ -62,7 +62,7 @@ namespace CodeMagic.Core.CreaturesLogic
 
             public ICreatureStrategy Target { get; }
 
-            public Func<IAreaMap, Point, bool> Condition { get; }
+            public Func<INonPlayableCreatureObject, IAreaMap, Point, bool> Condition { get; }
         }
     }
 }

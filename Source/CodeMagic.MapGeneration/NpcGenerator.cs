@@ -1,26 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Objects.Creatures.Implementations;
-using CodeMagic.Implementations.Objects.Creatures.NonPlayable;
 
 namespace CodeMagic.MapGeneration
 {
     internal class NpcGenerator
     {
-        private const int SkeletonsCountMultiplier = 10;
-        private const int MaxSkeletonsCount = 50;
+        private const int MaxMobsCount = 100;
         private const int MinDistanceFromPlayer = 6;
 
-        public void GenerateNpc(int level, MapSize mapSize, IAreaMap map, Point playerPosition)
+        private static readonly Dictionary<MapType, double> MapTypeCountMultiplier = new Dictionary<MapType, double>
         {
-            var count = level * SkeletonsCountMultiplier + (int) mapSize * 10;
-            count = Math.Min(MaxSkeletonsCount, count);
-            PlaceCreatures(count, map, playerPosition);
+            {MapType.Labyrinth, 20d},
+            {MapType.Dungeon, 60d}
+        };
+        private static readonly Dictionary<MapSize, double> MapSizeCountMultiplier = new Dictionary<MapSize, double>
+        {
+            {MapSize.Small, 0.5d},
+            {MapSize.Medium, 1d},
+            {MapSize.Big, 2d}
+        };
+
+        private readonly MonstersGenerator monstersGenerator;
+
+        public NpcGenerator()
+        {
+            monstersGenerator = new MonstersGenerator();
         }
 
-        private void PlaceCreatures(int count, IAreaMap map, Point playerPosition)
+        public void GenerateNpc(int level, MapSize mapSize, MapType mapType, IAreaMap map, Point playerPosition)
+        {
+            var count = (int)Math.Round(level * MapTypeCountMultiplier[mapType] * MapSizeCountMultiplier[mapSize]);
+            count = Math.Min(MaxMobsCount, count);
+
+            PlaceCreatures(count, level, map, playerPosition);
+        }
+
+        private void PlaceCreatures(int count, int level, IAreaMap map, Point playerPosition)
         {
             var maxIterations = count * count;
             var iteration = 0;
@@ -43,7 +61,7 @@ namespace CodeMagic.MapGeneration
                 if (cell.BlocksMovement)
                     continue;
 
-                var npc = CreateNpc();
+                var npc = CreateMonster(level);
                 map.AddObject(position, npc);
                 placed++;
             }
@@ -54,23 +72,9 @@ namespace CodeMagic.MapGeneration
             return Point.GetDistance(playerPosition, targetPosition) > MinDistanceFromPlayer;
         }
 
-        private NonPlayableCreatureObject CreateNpc()
+        private INonPlayableCreatureObject CreateMonster(int level)
         {
-            return CreateGoblin();
-        }
-
-        private NonPlayableCreatureObject CreateGoblin()
-        {
-            return new SkeletonImpl(new SkeletonCreatureObjectConfiguration
-            {
-                Name = "Skeleton",
-                Health = 10,
-                MaxHealth = 10,
-                MinDamage = 1,
-                MaxDamage = 4,
-                HitChance = 60,
-                VisibilityRange = 3
-            });
+            return monstersGenerator.GenerateRandomMonster(level);
         }
     }
 }

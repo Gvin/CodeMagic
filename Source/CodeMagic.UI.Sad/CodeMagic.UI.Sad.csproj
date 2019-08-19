@@ -150,6 +150,9 @@
     <Content Include="Configuration\Liquids.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\Monsters.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\Physics.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

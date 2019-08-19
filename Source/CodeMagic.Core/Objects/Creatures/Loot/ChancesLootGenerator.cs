@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
@@ -42,6 +43,22 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
             this.spellBookRarenessSettings = spellBookRarenessSettings;
             this.potionCountSettings = potionCountSettings;
             this.potionRarenessSettings = potionRarenessSettings;
+        }
+
+        public ChancesLootGenerator(ILootConfiguration lootConfiguration)
+        {
+            weaponCountSettings = lootConfiguration.Weapon?.Count?.Select(c => new Chance<int>(c.Chance, c.Value)).ToArray();
+            weaponRarenessSettings = lootConfiguration.Weapon?.Rareness?.Select(c => new Chance<ItemRareness>(c.Chance, c.Value)).ToArray();
+
+            armorCountSettings = lootConfiguration.Armor?.Count?.Select(c => new Chance<int>(c.Chance, c.Value)).ToArray();
+            armorRarenessSettings = lootConfiguration.Armor?.Rareness?.Select(c => new Chance<ItemRareness>(c.Chance, c.Value)).ToArray();
+            armorClassSettings = lootConfiguration.Armor?.Class?.Select(c => new Chance<ArmorClass>(c.Chance, c.Value)).ToArray();
+
+            spellBookCountSettings = lootConfiguration.SpellBook?.Count?.Select(c => new Chance<int>(c.Chance, c.Value)).ToArray();
+            spellBookRarenessSettings = lootConfiguration.SpellBook?.Rareness?.Select(c => new Chance<ItemRareness>(c.Chance, c.Value)).ToArray();
+
+            potionCountSettings = lootConfiguration.Potion?.Count?.Select(c => new Chance<int>(c.Chance, c.Value)).ToArray();
+            potionRarenessSettings = lootConfiguration.Potion?.Rareness?.Select(c => new Chance<ItemRareness>(c.Chance, c.Value)).ToArray();
         }
 
         public IItem[] GenerateLoot()

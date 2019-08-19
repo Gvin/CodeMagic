@@ -7,7 +7,6 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Injection.Configuration;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.IceObjects;
@@ -51,8 +50,14 @@ namespace CodeMagic.UI.Sad.GameProcess
             using (var physicsConfig = File.OpenRead(@".\Configuration\Physics.xml"))
             using (var liquidsConfig = File.OpenRead(@".\Configuration\Liquids.xml"))
             using (var itemGeneratorConfig = File.OpenRead(@".\Configuration\ItemGenerator.xml"))
+            using (var monstersConfig = File.OpenRead(@".\Configuration\Monsters.xml"))
             {
-                return ConfigurationProvider.Load(spellsConfig, physicsConfig, liquidsConfig, itemGeneratorConfig);
+                return ConfigurationProvider.Load(
+                    spellsConfig, 
+                    physicsConfig, 
+                    liquidsConfig, 
+                    itemGeneratorConfig, 
+                    monstersConfig);
             }
         }
 

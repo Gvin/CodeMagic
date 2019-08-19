@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<monsters-configuration>
+  <monster levels="1,2" type="skeleton">
+    <name>Skeleton</name>
+    <logic-pattern>SimplePatrollingChaser</logic-pattern>
+    <images>
+      <north>Creature_Skeleton_Up</north>
+      <south>Creature_Skeleton_Down</south>
+      <west>Creature_Skeleton_Left</west>
+      <east>Creature_Skeleton_Right</east>
+    </images>
+    <stats>
+      <health min="5" max="10"/>
+      <speed>1</speed>
+      <catch-fire-chance-multiplier>1</catch-fire-chance-multiplier>
+      <self-extinguish-chance>30</self-extinguish-chance>
+      <visibility-range>2</visibility-range>
+      <hit-chance>60</hit-chance>
+      <protection>
+        <element type="Piercing">30</element>
+        <element type="Blunt">-30</element>
+      </protection>
+      <damage>
+        <value element="Blunt" min="1" max="4"/>
+      </damage>
+    </stats>
+    <size>Medium</size>
+    <remains-type>BonesMedium</remains-type>
+    <loot>
+      <weapon>
+        <count-configuration>
+          <value chance="50">0</value>
+          <value chance="50">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="70">Trash</value>
+          <value chance="30">Common</value>
+        </rareness-configuration>
+      </weapon>
+      <armor>
+        <count-configuration>
+          <value chance="80">0</value>
+          <value chance="20">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="70">Trash</value>
+          <value chance="30">Common</value>
+        </rareness-configuration>
+        <class-configuration>
+          <value chance="90">Leather</value>
+          <value chance="10">Mail</value>
+        </class-configuration>
+      </armor>
+    </loot>
+  </monster>
+  <monster levels="2,3" type="goblin">
+    <name>Goblin</name>
+    <logic-pattern>SimpleWonderingChaser</logic-pattern>
+    <images>
+      <north>Creature_Goblin_Up</north>
+      <south>Creature_Goblin_Down</south>
+      <west>Creature_Goblin_Left</west>
+      <east>Creature_Goblin_Right</east>
+    </images>
+    <stats>
+      <health min="15" max="25"/>
+      <speed>1</speed>
+      <catch-fire-chance-multiplier>2</catch-fire-chance-multiplier>
+      <self-extinguish-chance>15</self-extinguish-chance>
+      <visibility-range>3</visibility-range>
+      <hit-chance>60</hit-chance>
+      <damage>
+        <value element="Slashing" min="3" max="6"/>
+      </damage>
+    </stats>
+    <size>Medium</size>
+    <remains-type>BloodGreenMedium</remains-type>
+    <loot>
+      <weapon>
+        <count-configuration>
+          <value chance="50">0</value>
+          <value chance="50">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="70">Trash</value>
+          <value chance="30">Common</value>
+        </rareness-configuration>
+      </weapon>
+      <armor>
+        <count-configuration>
+          <value chance="60">0</value>
+          <value chance="40">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="70">Trash</value>
+          <value chance="30">Common</value>
+        </rareness-configuration>
+        <class-configuration>
+          <value chance="80">Leather</value>
+          <value chance="20">Mail</value>
+        </class-configuration>
+      </armor>
+      <potion>
+        <count-configuration>
+          <value chance="50">0</value>
+          <value chance="50">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="70">Trash</value>
+          <value chance="30">Common</value>
+        </rareness-configuration>
+      </potion>
+    </loot>
+  </monster>
+</monsters-configuration>

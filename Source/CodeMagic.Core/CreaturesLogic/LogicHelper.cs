@@ -1,0 +1,19 @@
+﻿using CodeMagic.Core.Area;
+using CodeMagic.Core.Game;
+using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Core.Objects.PlayerData;
+
+namespace CodeMagic.Core.CreaturesLogic
+{
+    public static class LogicHelper
+    {
+        public static bool GetIfPlayerVisible(INonPlayableCreatureObject creature, IAreaMap map, Point position)
+        {
+            var playerPosition = map.GetObjectPosition<IPlayer>();
+            if (playerPosition == null)
+                return false;
+            return
+                CreaturesVisibilityHelper.GetIfPointIsVisible(map, position, creature.VisibilityRange, playerPosition);
+        }
+    }
+}

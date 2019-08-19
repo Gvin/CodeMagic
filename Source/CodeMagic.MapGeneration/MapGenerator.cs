@@ -50,14 +50,15 @@ namespace CodeMagic.MapGeneration
             FloorTypes floorType,
             out Point playerPosition)
         {
-            var generator = CreateGenerator();
+            var mapType = GenerateMapType(level);
+            var generator = generators[mapType];
             var map = generator.Generate(size, out playerPosition);
 
             ApplyFloorType(map, floorType);
             
             new ObjectsGenerator().GenerateObjects(map);
 
-            new NpcGenerator().GenerateNpc(level, size, map, playerPosition);
+            new NpcGenerator().GenerateNpc(level, size, mapType, map, playerPosition);
 
             if (writeMapFile)
             {
@@ -115,24 +116,26 @@ namespace CodeMagic.MapGeneration
             }
         }
 
-        private IMapAreaGenerator CreateGenerator()
+        private IMapAreaGenerator CreateGenerator(int level)
         {
-            var type = GenerateMapType();
+            var type = GenerateMapType(level);
             return generators[type];
         }
 
-        private MapType GenerateMapType()
+        private MapType GenerateMapType(int level)
         {
+            if (level == 1) // Always dungeons for the 1st level.
+                return MapType.Dungeon;
+
             if (RandomHelper.CheckChance(20))
                 return MapType.Labyrinth;
             return MapType.Dungeon;
         }
-
-        private enum MapType
-        {
-            Dungeon,
-            Labyrinth
-        }
+    }
+    public enum MapType
+    {
+        Dungeon,
+        Labyrinth
     }
 
     public enum MapSize

@@ -47,6 +47,7 @@
     <Compile Include="MapGenerators\DungeonMapGenerator.cs" />
     <Compile Include="MapGenerators\IMapAreaGenerator.cs" />
     <Compile Include="MapGenerators\LabyrinthMapGenerator.cs" />
+    <Compile Include="MonstersGenerator.cs" />
     <Compile Include="NpcGenerator.cs" />
     <Compile Include="ObjectsGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

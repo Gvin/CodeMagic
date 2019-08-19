@@ -79,6 +79,8 @@ namespace CodeMagic.Core.Objects.Creatures
 
             return initialValue;
         }
+
+        public override bool BlocksMovement => true;
     }
 
     public class CreatureObjectConfiguration : DestroyableObjectConfiguration

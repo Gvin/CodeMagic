@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using CodeMagic.Core.CreaturesLogic;
+using CodeMagic.Core.CreaturesLogic.Strategies;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
@@ -20,6 +21,16 @@ namespace CodeMagic.Core.Objects.Creatures
             normalSpeed = configuration.Speed;
             RemainsType = configuration.RemainsType;
             turnsCounter = 0;
+
+            if (!string.IsNullOrEmpty(configuration.LogicPattern))
+            {
+                var configurator = StandardLogicFactory.GetConfigurator(configuration.LogicPattern);
+                configurator.Configure(Logic);
+            }
+            else
+            {
+                Logic.SetInitialStrategy(new StandStillStrategy());
+            }
         }
 
         public RemainsType RemainsType { get; set; }
@@ -95,6 +106,8 @@ namespace CodeMagic.Core.Objects.Creatures
             BlindVisibilityRange = 1;
             Speed = 1f;
         }
+
+        public string LogicPattern { get; set; }
 
         /// <summary>
         /// Number of turns required to perform 1 action (less -> faster).

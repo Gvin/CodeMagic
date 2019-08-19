@@ -66,6 +66,12 @@
     <Compile Include="Types\Items\XmlWeightConfiguration.cs" />
     <Compile Include="Types\Liquids\XmlLiquidConfigurationType.cs" />
     <Compile Include="Types\Liquids\XmlLiquidsConfiguration.cs" />
+    <Compile Include="Types\Monsters\XmlMonsterConfiguration.cs" />
+    <Compile Include="Types\Monsters\XmlMonsterDamageConfiguration.cs" />
+    <Compile Include="Types\Monsters\XmlMonsterImagesConfiguration.cs" />
+    <Compile Include="Types\Monsters\XmlMonsterProtectionConfiguration.cs" />
+    <Compile Include="Types\Monsters\XmlMonstersConfiguration.cs" />
+    <Compile Include="Types\Monsters\XmlMonsterStatsConfiguration.cs" />
     <Compile Include="Types\Physics\XmlMagicEnergyConfiguration.cs" />
     <Compile Include="Types\Physics\XmlPhysicsConfigurationType.cs" />
     <Compile Include="Types\Spells\XmlSpellsConfigurationType.cs" />
@@ -74,6 +80,7 @@
     <Compile Include="Types\Spells\XmlSpellConfigurationType.cs" />
     <Compile Include="Types\Physics\XmlTemperatureConfigurationType.cs" />
     <Compile Include="Types\Physics\XmlTemperatureDamageConfigurationType.cs" />
+    <Compile Include="Types\XmlLootConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">
