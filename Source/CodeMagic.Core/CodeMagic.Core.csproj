@@ -99,6 +99,7 @@
     <Compile Include="Items\IItemsGenerator.cs" />
     <Compile Include="Items\IUsableItem.cs" />
     <Compile Include="Objects\Creatures\CreatureObject.cs" />
+    <Compile Include="Objects\Creatures\Loot\ChancesLootGenerator.cs" />
     <Compile Include="Objects\Creatures\Loot\ILootGenerator.cs" />
     <Compile Include="Objects\Creatures\Loot\StandardLootGenerator.cs" />
     <Compile Include="Objects\Creatures\Remains\CreatureRemainsGenerator.cs" />

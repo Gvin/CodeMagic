@@ -21,7 +21,7 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
         private readonly int maxDamage;
         private readonly Element damageElement;
 
-        public SkeletonCreatureObject(GoblinCreatureObjectConfiguration configuration) 
+        public SkeletonCreatureObject(SkeletonCreatureObjectConfiguration configuration) 
             : base(configuration)
         {
             minDamage = configuration.MinDamage;
@@ -75,20 +75,42 @@ namespace CodeMagic.Core.Objects.Creatures.Implementations
 
         protected override IItem[] GenerateLoot()
         {
-            return new StandardLootGenerator(ItemRareness.Trash, ItemRareness.Common,
-                    0, 2,
-                    0, 1, new[] {ArmorClass.Leather},
-                    potionsCountMin: 0, potionsCountMax: 1)
-                .GenerateLoot();
+            return new ChancesLootGenerator(
+                new[]
+                {
+                    new Chance<int>(50, 0),
+                    new Chance<int>(50, 1)
+                },
+                new[]
+                {
+                    new Chance<ItemRareness>(70, ItemRareness.Trash),
+                    new Chance<ItemRareness>(30, ItemRareness.Common),
+                },
+                new[]
+                {
+                    new Chance<int>(80, 0),
+                    new Chance<int>(20, 1),
+                },
+                new[]
+                {
+                    new Chance<ItemRareness>(70, ItemRareness.Trash),
+                    new Chance<ItemRareness>(30, ItemRareness.Common),
+                },
+                new[]
+                {
+                    new Chance<ArmorClass>(90, ArmorClass.Leather),
+                    new Chance<ArmorClass>(10, ArmorClass.Mail),
+                }
+            ).GenerateLoot();
         }
     }
 
-    public class GoblinCreatureObjectConfiguration : NonPlayableCreatureObjectConfiguration
+    public class SkeletonCreatureObjectConfiguration : NonPlayableCreatureObjectConfiguration
     {
-        public GoblinCreatureObjectConfiguration()
+        public SkeletonCreatureObjectConfiguration()
         {
-            DamageElement = Element.Slashing;
-            RemainsType = RemainsType.BloodGreenMedium;
+            DamageElement = Element.Blunt;
+            RemainsType = RemainsType.BonesMedium;
         }
 
         public int MinDamage { get; set; }

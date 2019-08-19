@@ -6,7 +6,7 @@ namespace CodeMagic.Core.Items
     {
         WeaponItem GenerateWeapon(ItemRareness rareness);
 
-        ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass[] classesWhitelist);
+        ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass armorClass);
 
         SpellBook GenerateSpellBook(ItemRareness rareness);
 

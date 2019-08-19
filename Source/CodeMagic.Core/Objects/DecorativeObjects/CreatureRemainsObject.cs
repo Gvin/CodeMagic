@@ -59,6 +59,8 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
 
         BloodGreenSmall,
         BloodGreenMedium,
-        BloodGreenBig
+        BloodGreenBig,
+
+        BonesMedium
     }
 }

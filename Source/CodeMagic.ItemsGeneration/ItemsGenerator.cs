@@ -80,12 +80,12 @@ namespace CodeMagic.ItemsGeneration
             return generator.GenerateWeapon(rareness);
         }
 
-        public ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass[] classesWhitelist)
+        public ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass armorClass)
         {
             if (rareness == ItemRareness.Epic)
                 throw new ArgumentException("Item generator cannot generate epic items.");
 
-            return armorGenerator.GenerateArmor(rareness, classesWhitelist);
+            return armorGenerator.GenerateArmor(rareness, armorClass);
         }
 
         public SpellBook GenerateSpellBook(ItemRareness rareness)

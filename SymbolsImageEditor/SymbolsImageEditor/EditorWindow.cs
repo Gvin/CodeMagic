@@ -195,9 +195,19 @@ namespace SymbolsImageEditor
                 return;
 
             var pixel = image[relativeX, relativeY];
-            pixel.Symbol = brush.Symbol;
-            pixel.Color = brush.ForeColor;
-            pixel.BackgroundColor = brush.BackColor;
+
+            if (args.MouseState.Mouse.LeftClicked)
+            {
+                pixel.Symbol = brush.Symbol;
+                pixel.Color = brush.ForeColor;
+                pixel.BackgroundColor = brush.BackColor;
+            }
+            else if (args.MouseState.Mouse.RightClicked)
+            {
+                brush.Symbol = pixel.Symbol;
+                brush.ForeColor = pixel.Color;
+                brush.BackColor = pixel.BackgroundColor;
+            }
         }
 
         private void loadImageButton_Click(object sender, EventArgs args)

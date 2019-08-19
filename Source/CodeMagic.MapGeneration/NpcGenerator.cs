@@ -61,7 +61,7 @@ namespace CodeMagic.MapGeneration
 
         private NonPlayableCreatureObject CreateGoblin()
         {
-            return new SkeletonImpl(new GoblinCreatureObjectConfiguration
+            return new SkeletonImpl(new SkeletonCreatureObjectConfiguration
             {
                 Name = "Skeleton",
                 Health = 10,

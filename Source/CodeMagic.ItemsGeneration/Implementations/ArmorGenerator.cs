@@ -29,10 +29,10 @@ namespace CodeMagic.ItemsGeneration.Implementations
             this.bonusesGenerator = bonusesGenerator;
         }
 
-        public ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass[] classesWhitelist)
+        public ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass armorClass)
         {
             var armorType = GenerateArmorType();
-            var config = GetSpecificConfiguration(armorType, classesWhitelist);
+            var config = GetSpecificConfiguration(armorType, armorClass);
             var rarenessConfig = GetRarenessConfiguration(config, rareness);
             var material = RandomHelper.GetRandomElement(rarenessConfig.Materials);
             var inventoryImage = GetArmorImage(config, material);
@@ -177,11 +177,11 @@ namespace CodeMagic.ItemsGeneration.Implementations
             return ItemRecolorHelper.RecolorItemImage(imageInit, material);
         }
 
-        private IArmorPieceConfiguration GetSpecificConfiguration(ArmorType type, ArmorClass[] classesWhitelist)
+        private IArmorPieceConfiguration GetSpecificConfiguration(ArmorType type, ArmorClass armorClass)
         {
             var configurations = GetArmorTypeConfigurations(type);
             var classFilteredConfigurations = configurations
-                .Where(config => classesWhitelist.Contains(config.Class))
+                .Where(config => config.Class == armorClass)
                 .ToArray();
             return RandomHelper.GetRandomElement(classFilteredConfigurations);
         }

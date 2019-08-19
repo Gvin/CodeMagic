@@ -14,6 +14,8 @@ namespace CodeMagic.Implementations.Objects.DecorativeObjects
         private const string ImageGreenBloodMedium = "Remains_GreenBlood_Medium";
         private const string ImageGreenBloodBig = "Remains_GreenBlood_Big";
 
+        private const string ImageBonesMedium = "Remains_Bones_Medium";
+
         public CreatureRemainsObjectImpl(CreatureRemainsObjectConfiguration configuration) : base(configuration)
         {
             Name = GetName(configuration.Type);
@@ -30,6 +32,8 @@ namespace CodeMagic.Implementations.Objects.DecorativeObjects
                 case RemainsType.BloodGreenMedium:
                 case RemainsType.BloodGreenBig:
                     return "Blood";
+                case RemainsType.BonesMedium:
+                    return "Bones";
                 default:
                     throw new ArgumentException($"Unknown remains type: {type}");
             }
@@ -53,12 +57,17 @@ namespace CodeMagic.Implementations.Objects.DecorativeObjects
                     return ImageBloodMedium;
                 case RemainsType.BloodRedBig:
                     return ImageBloodBig;
+
                 case RemainsType.BloodGreenSmall:
                     return ImageGreenBloodSmall;
                 case RemainsType.BloodGreenMedium:
                     return ImageGreenBloodMedium;
                 case RemainsType.BloodGreenBig:
                     return ImageGreenBloodBig;
+
+                case RemainsType.BonesMedium:
+                    return ImageBonesMedium;
+
                 default:
                     throw new ArgumentException($"Unknown remains type: {Type}");
             }

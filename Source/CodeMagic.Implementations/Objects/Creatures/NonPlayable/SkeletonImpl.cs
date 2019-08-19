@@ -12,7 +12,7 @@ namespace CodeMagic.Implementations.Objects.Creatures.NonPlayable
         private const string ImageLeft = "Creature_Skeleton_Left";
         private const string ImageRight = "Creature_Skeleton_Right";
 
-        public SkeletonImpl(GoblinCreatureObjectConfiguration configuration) 
+        public SkeletonImpl(SkeletonCreatureObjectConfiguration configuration) 
             : base(configuration)
         {
         }

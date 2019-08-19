@@ -60,7 +60,7 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
             result.AddRange(weapons);
 
             var armorCount = GetRandomValue(armorCountMin, armorCountMax);
-            var armor = GenerateItems(armorCount, rareness => generator.GenerateArmor(rareness, armorClassesWhitelist));
+            var armor = GenerateItems(armorCount, rareness => generator.GenerateArmor(rareness, RandomHelper.GetRandomElement(armorClassesWhitelist)));
             result.AddRange(armor);
 
             var spellBooksCount = GetRandomValue(spellBooksCountMin, spellBooksCountMax);
