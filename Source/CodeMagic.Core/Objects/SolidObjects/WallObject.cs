@@ -5,7 +5,7 @@ using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public class WallObject : IMapObject, IPlacedHandler
+    public class WallObject : IWallObject, IPlacedHandler
     {
         private readonly List<Point> connectedTiles;
 

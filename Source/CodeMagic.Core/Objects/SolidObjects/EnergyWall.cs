@@ -7,7 +7,7 @@ using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public interface IEnergyWall : IMapObject, IInjectable
+    public interface IEnergyWall : IWallObject, IInjectable
     {
     }
 

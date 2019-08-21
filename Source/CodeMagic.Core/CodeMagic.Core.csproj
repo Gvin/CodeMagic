@@ -189,6 +189,7 @@
     <Compile Include="Objects\PlayerData\PlayerConfiguration.cs" />
     <Compile Include="Objects\SolidObjects\DoorObject.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWall.cs" />
+    <Compile Include="Objects\SolidObjects\IWallObject.cs" />
     <Compile Include="Objects\SolidObjects\StairsObject.cs" />
     <Compile Include="Objects\SolidObjects\TorchWallObject.cs" />
     <Compile Include="Objects\SolidObjects\WallObject.cs" />

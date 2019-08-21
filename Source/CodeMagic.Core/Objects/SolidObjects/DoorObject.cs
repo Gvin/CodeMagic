@@ -2,7 +2,7 @@
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public abstract class DoorObject : IMapObject, IUsableObject
+    public abstract class DoorObject : IWallObject, IUsableObject
     {
         protected DoorObject(bool horizontal)
         {
