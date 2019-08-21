@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Serialization;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Monsters;
@@ -12,10 +11,11 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
     public class XmlMonsterConfiguration : IMonsterConfiguration
     {
         [XmlIgnore]
-        public int[] Levels => LevelsData.Replace(" ", "").Split(',').Select(int.Parse).ToArray();
+        public IMonsterSpawnConfiguration[] SpawnConfiguration => SpawnConfigurationData;
 
-        [XmlAttribute("levels")]
-        public string LevelsData { get; set; }
+        [XmlArray("spawn-configuration")]
+        [XmlArrayItem("level")]
+        public XmlMonsterSpawnConfiguration[] SpawnConfigurationData { get; set; }
 
         [XmlAttribute("type")]
         public string Type { get; set; }
@@ -49,5 +49,15 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
 
         [XmlElement("loot")]
         public XmlLootConfiguration LootData { get; set; }
+    }
+
+    [Serializable]
+    public class XmlMonsterSpawnConfiguration : IMonsterSpawnConfiguration
+    {
+        [XmlAttribute("value")]
+        public int Level { get; set; }
+
+        [XmlAttribute("rate")]
+        public int Rate { get; set; }
     }
 }

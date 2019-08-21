@@ -11,13 +11,10 @@ namespace CodeMagic.Core.Objects.Creatures
         private const double ParalyzedChanceMultiplier = 5;
         private const double FrozenChanceMultiplier = 5;
 
-        private readonly int blindVisibilityRange;
-
         protected CreatureObject(CreatureObjectConfiguration configuration) 
             : base(configuration)
         {
             MaxVisibilityRange = configuration.VisibilityRange;
-            blindVisibilityRange = configuration.BlindVisibilityRange;
 
             Direction = Direction.North;
         }
@@ -29,7 +26,7 @@ namespace CodeMagic.Core.Objects.Creatures
             get
             {
                 if (Statuses.Contains(BlindObjectStatus.StatusType))
-                    return blindVisibilityRange;
+                    return 0;
 
                 return MaxVisibilityRange;
             }
@@ -91,7 +88,5 @@ namespace CodeMagic.Core.Objects.Creatures
         }
 
         public int VisibilityRange { get; set; }
-
-        public int BlindVisibilityRange { get; set; }
     }
 }

@@ -32,8 +32,15 @@ namespace CodeMagic.UI.Sad.Common
                 {'╔', GlyphBoxDoubleDownRight},
                 {'╚', GlyphBoxDoubleUpRight},
                 {'╗', GlyphBoxDoubleDownLeft},
+                {'╣', GlyphBoxDoubleVerticalLeft},
+                {'╠', GlyphBoxDoubleVerticalRight},
+                {'╩', GlyphBoxDoubleHorizontalUp},
+                {'╦', GlyphBoxDoubleHorizontalDown},
 
                 {'▄', GlyphBlockLowerHalf},
+                {'▀', GlyphBlockUpperHalf},
+                {'▌', GlyphBlockLeftHalf},
+                {'▐', GlyphBlockRightHalf},
                 {'█', GlyphBlockFull},
                 {'▓', GlyphBlockFilledThick},
                 {'░', GlyphBlockFilledRare},
@@ -208,8 +215,14 @@ namespace CodeMagic.UI.Sad.Common
 
         public const int GlyphBoxSingleDownDoubleLeft = 184;
 
+        /// <summary>
+        /// ╣
+        /// </summary>
         public const int GlyphBoxDoubleVerticalLeft = 185;
 
+        /// <summary>
+        /// ║
+        /// </summary>
         public const int GlyphBoxDoubleVertical = 186;
 
         /// <summary>
@@ -340,6 +353,21 @@ namespace CodeMagic.UI.Sad.Common
         /// ▄
         /// </summary>
         public const int GlyphBlockLowerHalf = 220;
+
+        /// <summary>
+        /// ▌
+        /// </summary>
+        public const int GlyphBlockLeftHalf = 221;
+
+        /// <summary>
+        /// ▐
+        /// </summary>
+        public const int GlyphBlockRightHalf = 222;
+
+        /// <summary>
+        /// ▀
+        /// </summary>
+        public const int GlyphBlockUpperHalf = 223;
 
         public const int GlyphTorchVertical = 141;
 

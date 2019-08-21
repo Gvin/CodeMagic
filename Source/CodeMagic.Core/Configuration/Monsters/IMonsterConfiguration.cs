@@ -5,7 +5,7 @@ namespace CodeMagic.Core.Configuration.Monsters
 {
     public interface IMonsterConfiguration
     {
-        int[] Levels { get; }
+        IMonsterSpawnConfiguration[] SpawnConfiguration { get; }
 
         string Type { get; }
 
@@ -22,5 +22,12 @@ namespace CodeMagic.Core.Configuration.Monsters
         IMonsterStatsConfiguration Stats { get; }
 
         ILootConfiguration Loot { get; }
+    }
+
+    public interface IMonsterSpawnConfiguration
+    {
+        int Level { get; }
+
+        int Rate { get; }
     }
 }

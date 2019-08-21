@@ -18,7 +18,7 @@ namespace CodeMagic.Core.Objects.Creatures
             : base(configuration)
         {
             Logic = new Logic();
-            normalSpeed = configuration.Speed;
+            normalSpeed = 1 / configuration.Speed;
             RemainsType = configuration.RemainsType;
             turnsCounter = 0;
 
@@ -103,15 +103,11 @@ namespace CodeMagic.Core.Objects.Creatures
     {
         public NonPlayableCreatureObjectConfiguration()
         {
-            BlindVisibilityRange = 1;
             Speed = 1f;
         }
 
         public string LogicPattern { get; set; }
 
-        /// <summary>
-        /// Number of turns required to perform 1 action (less -> faster).
-        /// </summary>
         public float Speed { get; set; }
 
         public RemainsType RemainsType { get; set; }

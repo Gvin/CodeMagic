@@ -32,14 +32,14 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
         public int HitChance { get; set; }
 
         [XmlIgnore]
-        public IMonsterProtectionConfiguration[] Protection => ProtectionData;
+        public IMonsterProtectionConfiguration[] Protection => ProtectionData ?? new IMonsterProtectionConfiguration[0];
 
         [XmlArray("protection")]
         [XmlArrayItem("element")]
         public XmlMonsterProtectionConfiguration[] ProtectionData { get; set; }
 
         [XmlIgnore]
-        public IMonsterDamageConfiguration[] Damage => DamageData;
+        public IMonsterDamageConfiguration[] Damage => DamageData ?? new IMonsterDamageConfiguration[0];
 
         [XmlArray("damage")]
         [XmlArrayItem("value")]

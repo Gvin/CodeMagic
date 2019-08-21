@@ -190,7 +190,8 @@ namespace CodeMagic.Core.Spells.Script
             spell.Mana -= cost;
             var mapSegment = map.GetMapPart(position, radius);
             return mapSegment.SelectMany(row => 
-                    row.SelectMany(cell =>
+                    row.Where(cell => cell != null)
+                        .SelectMany(cell =>
                         cell.Objects
                             .OfType<IDestroyableObject>()
                             .Select(obj => ConvertDestroyable(obj, map).ToJson(jsEngine))))

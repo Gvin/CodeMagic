@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <monsters-configuration>
-  <monster levels="1,2" type="skeleton">
+  <monster type="skeleton">
+    <spawn-configuration>
+      <level value="1" rate="100"/>
+      <level value="2" rate="50"/>
+    </spawn-configuration>
     <name>Skeleton</name>
     <logic-pattern>SimplePatrollingChaser</logic-pattern>
     <images>
@@ -53,8 +57,13 @@
       </armor>
     </loot>
   </monster>
-  <monster levels="2,3" type="goblin">
+  <monster type="goblin">
     <name>Goblin</name>
+    <spawn-configuration>
+      <level value="2" rate="50"/>
+      <level value="3" rate="80"/>
+      <level value="4" rate="20"/>
+    </spawn-configuration>
     <logic-pattern>SimpleWonderingChaser</logic-pattern>
     <images>
       <north>Creature_Goblin_Up</north>
@@ -102,12 +111,158 @@
       </armor>
       <potion>
         <count-configuration>
+          <value chance="70">0</value>
+          <value chance="30">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="100">Common</value>
+        </rareness-configuration>
+      </potion>
+    </loot>
+  </monster>
+  <monster type="slime">
+    <name>Green Slime</name>
+    <spawn-configuration>
+      <level value="3" rate="20"/>
+      <level value="4" rate="30"/>
+      <level value="5" rate="20"/>
+    </spawn-configuration>
+    <logic-pattern>SimpleWonderingChaser</logic-pattern>
+    <images>
+      <north>Creature_Slime_Green</north>
+      <south>Creature_Slime_Green</south>
+      <west>Creature_Slime_Green</west>
+      <east>Creature_Slime_Green</east>
+    </images>
+    <stats>
+      <health min="50" max="70"/>
+      <speed>0.5</speed>
+      <catch-fire-chance-multiplier>3</catch-fire-chance-multiplier>
+      <self-extinguish-chance>5</self-extinguish-chance>
+      <visibility-range>2</visibility-range>
+      <hit-chance>50</hit-chance>
+      <damage>
+        <value element="Acid" min="5" max="8"/>
+      </damage>
+      <protection>
+        <element type="Piercing">30</element>
+        <element type="Slashing">30</element>
+        <element type="Blunt">30</element>
+        <element type="Acid">100</element>
+        <element type="Fire">-30</element>
+        <element type="Frost">-100</element>
+      </protection>
+    </stats>
+    <size>Huge</size>
+    <remains-type>BloodGreenBig</remains-type>
+    <loot>
+      <weapon>
+        <count-configuration>
           <value chance="50">0</value>
           <value chance="50">1</value>
         </count-configuration>
         <rareness-configuration>
-          <value chance="70">Trash</value>
-          <value chance="30">Common</value>
+          <value chance="20">Trash</value>
+          <value chance="60">Common</value>
+          <value chance="20">Uncommon</value>
+        </rareness-configuration>
+      </weapon>
+      <armor>
+        <count-configuration>
+          <value chance="60">0</value>
+          <value chance="40">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="20">Trash</value>
+          <value chance="60">Common</value>
+          <value chance="20">Uncommon</value>
+        </rareness-configuration>
+        <class-configuration>
+          <value chance="70">Leather</value>
+          <value chance="20">Mail</value>
+          <value chance="10">ScaleMail</value>
+        </class-configuration>
+      </armor>
+      <potion>
+        <count-configuration>
+          <value chance="40">0</value>
+          <value chance="60">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="70">Common</value>
+          <value chance="30">Uncommon</value>
+        </rareness-configuration>
+      </potion>
+    </loot>
+  </monster>
+  <monster type="knight">
+    <spawn-configuration>
+      <level value="4" rate="50"/>
+      <level value="5" rate="80"/>
+    </spawn-configuration>
+    <name>Black Knight</name>
+    <logic-pattern>SimplePatrollingChaser</logic-pattern>
+    <images>
+      <north>Creature_BlackKnight_Up</north>
+      <south>Creature_BlackKnight_Down</south>
+      <west>Creature_BlackKnight_Left</west>
+      <east>Creature_BlackKnight_Right</east>
+    </images>
+    <stats>
+      <health min="50" max="70"/>
+      <speed>1</speed>
+      <catch-fire-chance-multiplier>2</catch-fire-chance-multiplier>
+      <self-extinguish-chance>15</self-extinguish-chance>
+      <visibility-range>4</visibility-range>
+      <hit-chance>70</hit-chance>
+      <protection>
+        <element type="Piercing">30</element>
+        <element type="Slashing">30</element>
+        <element type="Blunt">30</element>
+        <element type="Fire">15</element>
+        <element type="Frost">-15</element>
+      </protection>
+      <damage>
+        <value element="Slashing" min="5" max="10"/>
+      </damage>
+    </stats>
+    <size>Medium</size>
+    <remains-type>BloodRedMedium</remains-type>
+    <loot>
+      <weapon>
+        <count-configuration>
+          <value chance="20">0</value>
+          <value chance="60">1</value>
+          <value chance="20">2</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="60">Common</value>
+          <value chance="40">Uncommon</value>
+        </rareness-configuration>
+      </weapon>
+      <armor>
+        <count-configuration>
+          <value chance="40">0</value>
+          <value chance="60">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="60">Common</value>
+          <value chance="40">Uncommon</value>
+        </rareness-configuration>
+        <class-configuration>
+          <value chance="70">Mail</value>
+          <value chance="30">ScaleMail</value>
+        </class-configuration>
+      </armor>
+      <potion>
+        <count-configuration>
+          <value chance="30">0</value>
+          <value chance="60">1</value>
+          <value chance="10">2</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="70">Common</value>
+          <value chance="30">Uncommon</value>
         </rareness-configuration>
       </potion>
     </loot>
