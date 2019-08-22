@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="IImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
+    <Compile Include="Items\TorchItem.cs" />
     <Compile Include="Items\Usable\HealthManaRestorationItem.cs" />
     <Compile Include="IWorldImageProvider.cs" />
     <Compile Include="Items\ArmorItemImpl.cs" />
@@ -51,7 +52,7 @@
     <Compile Include="Items\SpellBookItemImpl.cs" />
     <Compile Include="Items\IDescriptionProvider.cs" />
     <Compile Include="Items\SimpleItemImpl.cs" />
-    <Compile Include="Items\Weapon\WeaponItemImpl.cs" />
+    <Compile Include="Items\WeaponItemImpl.cs" />
     <Compile Include="Objects\AnimationManager.cs" />
     <Compile Include="Objects\AnimationsBatchManager.cs" />
     <Compile Include="Objects\CodeSpellImpl.cs" />
@@ -84,5 +85,6 @@
       <Name>CodeMagic.UI.Images</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -66,6 +66,7 @@
     <Compile Include="Implementations\ArmorGenerator.cs" />
     <Compile Include="Implementations\Bonuses\BonusesGenerator.cs" />
     <Compile Include="Implementations\Bonuses\Instances\DamageBonusApplier.cs" />
+    <Compile Include="Implementations\Bonuses\Instances\LightBonusApplier.cs" />
     <Compile Include="Implementations\Bonuses\Instances\ManaBonusApplier.cs" />
     <Compile Include="Implementations\Bonuses\Instances\HealthBonusApplier.cs" />
     <Compile Include="Implementations\Bonuses\Instances\IBonusApplier.cs" />

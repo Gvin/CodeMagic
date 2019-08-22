@@ -22,7 +22,8 @@ namespace CodeMagic.ItemsGeneration.Implementations.Bonuses
             {ManaBonusApplier.BonusType, new ManaBonusApplier()},
             {ManaRegenerationBonusApplier.BonusType, new ManaRegenerationBonusApplier()},
             {ProtectionBonusApplier.BonusType, new ProtectionBonusApplier()},
-            {WeightBonusApplier.BonusType, new WeightBonusApplier()}
+            {WeightBonusApplier.BonusType, new WeightBonusApplier()},
+            {LightBonusApplier.BonusType, new LightBonusApplier()}
         };
 
         private readonly IBonusesConfiguration configuration;

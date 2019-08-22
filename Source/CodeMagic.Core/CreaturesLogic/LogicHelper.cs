@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Area;
+﻿using System;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.PlayerData;
@@ -14,6 +15,11 @@ namespace CodeMagic.Core.CreaturesLogic
                 return false;
             return
                 CreaturesVisibilityHelper.GetIfPointIsVisible(map, position, creature.VisibilityRange, playerPosition);
+        }
+
+        public static int GetHealthPercent(INonPlayableCreatureObject creature)
+        {
+            return (int) Math.Ceiling(creature.Health / (double) creature.MaxHealth);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 
@@ -87,39 +88,66 @@ namespace CodeMagic.Implementations.Items
             }
         }
 
+        public static void AddLightBonusDescription(EquipableItem item, List<StyledLine> descriptionResult)
+        {
+            if (!item.IsLightOn)
+                return;
+
+            var colorName = GetLightColorName(item.LightColor);
+            var powerDistance = GetLightPowerDistance(item.LightPower);
+
+            descriptionResult.Add(new StyledLine
+            {
+                $"Light: {powerDistance}m ",
+                new StyledString(colorName, item.LightColor)
+            });
+        }
+
+        private static string GetLightColorName(Color color)
+        {
+            return color.Name;
+        }
+
+        private static int GetLightPowerDistance(LightLevel power)
+        {
+            return (int) power;
+        }
+
         public static void AddBonusesDescription(EquipableItem item, EquipableItem equiped, List<StyledLine> descriptionResult)
         {
             var equipedHealthBonus = equiped?.HealthBonus ?? 0;
             if (item.HealthBonus > 0 || equipedHealthBonus > 0)
             {
-                descriptionResult.Add(new StyledLine
+                var healthBonusDescription = new StyledLine
                 {
                     "Health Bonus: ",
                     new StyledString(FormatBonusNumber(item.HealthBonus), HealthColor),
                     GetComparisonString(item.HealthBonus, equipedHealthBonus)
-                });
+                };
             }
 
             var equipedManaBonus = equiped?.ManaBonus ?? 0;
             if (item.ManaBonus > 0 || equipedManaBonus > 0)
             {
-                descriptionResult.Add(new StyledLine
+                var manaBonusDescription = new StyledLine
                 {
                     "Mana Bonus: ",
                     new StyledString(FormatBonusNumber(item.ManaBonus), ManaColor),
                     GetComparisonString(item.ManaBonus, equipedManaBonus)
-                });
+                };
+                descriptionResult.Add(manaBonusDescription);
             }
 
             var equipedManaRegenBonus = equiped?.ManaRegenerationBonus ?? 0;
             if (item.ManaRegenerationBonus > 0 || equipedManaRegenBonus > 0)
             {
-                descriptionResult.Add(new StyledLine
+                var manaRegenBonusDescription = new StyledLine
                 {
                     "Mana Regeneration Bonus: ",
                     new StyledString(FormatBonusNumber(item.ManaRegenerationBonus), ManaRegenerationColor),
                     GetComparisonString(item.ManaRegenerationBonus, equipedManaRegenBonus)
-                });
+                };
+                descriptionResult.Add(manaRegenBonusDescription);
             }
         }
 

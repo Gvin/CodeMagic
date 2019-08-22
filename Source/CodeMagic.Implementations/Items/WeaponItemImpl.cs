@@ -7,7 +7,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.UI.Images;
 
-namespace CodeMagic.Implementations.Items.Weapon
+namespace CodeMagic.Implementations.Items
 {
     public class WeaponItemImpl : WeaponItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider
     {
@@ -33,13 +33,18 @@ namespace CodeMagic.Implementations.Items.Weapon
                 StyledLine.Empty
             };
             AddDamageDescription(result, equipedWeapon);
-            result.Add(new StyledLine
+
+            var hitChanceLine = new StyledLine {$"Hit Chance: {HitChance}"};
+            if (!Equals(equipedWeapon))
             {
-                $"Hit Chance: {HitChance}",
-                ItemTextHelper.GetComparisonString(HitChance, equipedWeapon?.HitChance ?? 0)
-            });
+                hitChanceLine.Add(ItemTextHelper.GetComparisonString(HitChance, equipedWeapon?.HitChance ?? 0));
+            }
+            result.Add(hitChanceLine);
+
             result.Add(StyledLine.Empty);
             ItemTextHelper.AddBonusesDescription(this, equipedWeapon, result);
+            result.Add(StyledLine.Empty);
+            ItemTextHelper.AddLightBonusDescription(this, result);
             result.Add(StyledLine.Empty);
             result.AddRange(description.Select(line => new StyledLine
             {
@@ -84,16 +89,23 @@ namespace CodeMagic.Implementations.Items.Weapon
                     otherMaxDamageColor = ItemTextHelper.PositiveValueColor;
                 }
 
-                descriptionResult.Add(new StyledLine
+                var damageLine = new StyledLine
                 {
-                    new StyledString($"{ItemTextHelper.GetElementName(element)}", ItemTextHelper.GetElementColor(element)), 
-                    $" Damage: {minDamage} - {maxDamage}",
-                    " now (",
-                    new StyledString(otherMinDamage.ToString(), otherMinDamageColor),
-                    " - ",
-                    new StyledString(otherMaxDamage.ToString(), otherMaxDamageColor),
-                    ")", 
-                });
+                    new StyledString($"{ItemTextHelper.GetElementName(element)}",
+                        ItemTextHelper.GetElementColor(element)),
+                    $" Damage: {minDamage} - {maxDamage}"
+                };
+
+                if (minDamage != otherMinDamage || maxDamage != otherMaxDamage)
+                {
+                    damageLine.Add(" now (");
+                    damageLine.Add(new StyledString(otherMinDamage.ToString(), otherMinDamageColor));
+                    damageLine.Add(" - ");
+                    damageLine.Add(new StyledString(otherMaxDamage.ToString(), otherMaxDamageColor));
+                    damageLine.Add(")");
+                }
+
+                descriptionResult.Add(damageLine);
             }
         }
 

@@ -11,7 +11,7 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
     {
     }
 
-    public class FireDecorativeObject : IFireDecorativeObject, IDynamicObject, ILightSource
+    public class FireDecorativeObject : IFireDecorativeObject, IDynamicObject, ILightObject
     {
         private const LightLevel SmallFireLightLevel = LightLevel.Disk2;
         private const LightLevel MediumFireLightLevel = LightLevel.Dim2;
@@ -73,9 +73,7 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
             return ReferenceEquals(other, this);
         }
 
-        public bool IsLightOn => true;
-
-        public LightLevel LightPower
+        private LightLevel LightPower
         {
             get
             {
@@ -93,6 +91,9 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
             }
         }
 
-        public Color LightColor => Color.DarkOrange;
+        public ILightSource[] LightSources => new ILightSource[]
+        {
+            new StaticLightSource(LightPower, Color.DarkOrange)
+        };
     }
 }

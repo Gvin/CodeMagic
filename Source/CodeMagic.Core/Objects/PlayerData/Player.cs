@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Statuses;
+using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Core.Objects.PlayerData
 {
-    public class Player : CreatureObject, IPlayer, IDynamicObject
+    public class Player : CreatureObject, IPlayer, IDynamicObject, ILightObject
     {
         private const int MaxProtection = 75;
 
@@ -24,6 +29,18 @@ namespace CodeMagic.Core.Objects.PlayerData
             MaxCarryWeight = configuration.MaxCarryWeight;
 
             Inventory = new Inventory();
+            Inventory.ItemRemoved += Inventory_ItemRemoved;
+        }
+
+        private void Inventory_ItemRemoved(object sender, ItemEventArgs e)
+        {
+            if (!(e.Item is IEquipableItem equipable))
+                return;
+
+            if (Equipment.IsEquiped(equipable))
+            {
+                Equipment.UnequipItem(equipable);
+            }
         }
 
         public int MaxCarryWeight { get; }
@@ -125,6 +142,26 @@ namespace CodeMagic.Core.Objects.PlayerData
             if (value > MaxProtection)
                 return MaxProtection;
             return value;
+        }
+
+        public ILightSource[] LightSources
+        {
+            get
+            {
+                var result = new List<ILightSource>();
+                result.AddRange(Equipment.Armor.Values.OfType<ILightSource>());
+                if (Equipment.Weapon is ILightSource weaponLight)
+                {
+                    result.Add(weaponLight);
+                }
+
+                if (Equipment.SpellBook is ILightSource spellBookLight)
+                {
+                    result.Add(spellBookLight);
+                }
+
+                return result.ToArray();
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Core.Spells
 {
-    public interface ICodeSpell : IMapObject, ILightSource, IInjectable
+    public interface ICodeSpell : IMapObject, ILightObject, IInjectable
     {
         int Mana { get; set; }
 
@@ -51,9 +51,7 @@ namespace CodeMagic.Core.Spells
             remainingLightTime = time;
         }
 
-        public LightLevel LightPower { get; private set; }
-
-        public Color LightColor => Color.Red;
+        private LightLevel LightPower { get; set; }
 
         public void Update(IGameCore game, Point position)
         {
@@ -118,5 +116,10 @@ namespace CodeMagic.Core.Spells
         {
             return ReferenceEquals(other, this);
         }
+
+        public ILightSource[] LightSources => new ILightSource[]
+        {
+            new StaticLightSource(LightPower, Color.Red)
+        };
     }
 }

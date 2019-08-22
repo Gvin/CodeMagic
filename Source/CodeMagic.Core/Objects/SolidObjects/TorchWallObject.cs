@@ -3,19 +3,19 @@ using CodeMagic.Core.Area;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public class TorchWallObject : WallObject, ILightSource
+    public class TorchWallObject : WallObject, ILightObject
     {
         public TorchWallObject(TorchWallObjectConfiguration configuration) 
             : base(configuration)
         {
             LightPower = configuration.LightPower;
         }
+        private LightLevel LightPower { get; }
 
-        public bool IsLightOn => true;
-
-        public LightLevel LightPower { get; }
-
-        public Color LightColor => Color.FromArgb(255, 204, 102);
+        public ILightSource[] LightSources => new ILightSource[]
+        {
+            new StaticLightSource(LightPower, Color.FromArgb(255, 204, 102))
+        };
     }
 
     public class TorchWallObjectConfiguration : WallObjectConfiguration

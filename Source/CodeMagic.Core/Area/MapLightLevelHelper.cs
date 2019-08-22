@@ -35,7 +35,7 @@ namespace CodeMagic.Core.Area
 
         private static void UpdateCellLightLevel(IAreaMap map, AreaMapCell cell, Point position)
         {
-            var lights = cell.Objects.OfType<ILightSource>().Where(source => source.IsLightOn)
+            var lights = cell.Objects.OfType<ILightObject>().SelectMany(lightObject => lightObject.LightSources).Where(source => source.IsLightOn)
                 .Select(source => new Light(source)).ToArray();
             if (lights.Length == 0)
                 return;

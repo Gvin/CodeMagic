@@ -2464,6 +2464,9 @@
           <value key="Max">3</value>
           <value key="Difference">1</value>
         </bonus>
+        <bonus type="LightBonus">
+          <value key="Power">Dusk1,Disk2</value>
+        </bonus>
       </rareness>
       <rareness value="Uncommon">
         <bonus type="DamageBonus">
@@ -2471,12 +2474,18 @@
           <value key="Max">5</value>
           <value key="Difference">2</value>
         </bonus>
+        <bonus type="LightBonus">
+          <value key="Power">Dim1,Dim2</value>
+        </bonus>
       </rareness>
       <rareness value="Rare">
         <bonus type="DamageBonus">
           <value key="Min">5</value>
           <value key="Max">10</value>
           <value key="Difference">3</value>
+        </bonus>
+        <bonus type="LightBonus">
+          <value key="Power">Dim2,Medium</value>
         </bonus>
       </rareness>
     </group>

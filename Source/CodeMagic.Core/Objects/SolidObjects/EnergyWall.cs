@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Spells;
@@ -11,7 +10,7 @@ namespace CodeMagic.Core.Objects.SolidObjects
     {
     }
 
-    public class EnergyWall : IEnergyWall, IDynamicObject, ILightSource
+    public class EnergyWall : IEnergyWall, IDynamicObject, ILightObject
     {
         public EnergyWall(EnergyWallConfiguration configuration)
         {
@@ -33,11 +32,10 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public ObjectSize Size => ObjectSize.Huge;
 
-        public bool IsLightOn => true;
-
-        public LightLevel LightPower => CodeSpell.DefaultLightLevel;
-
-        public Color LightColor => Color.Red;
+        public ILightSource[] LightSources => new ILightSource[]
+        {
+            new StaticLightSource(CodeSpell.DefaultLightLevel, Color.Red)
+        };
 
         public int EnergyLeft { get; private set; }
 

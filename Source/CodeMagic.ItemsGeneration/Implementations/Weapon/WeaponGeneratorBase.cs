@@ -4,7 +4,7 @@ using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
-using CodeMagic.Implementations.Items.Weapon;
+using CodeMagic.Implementations.Items;
 using CodeMagic.ItemsGeneration.Configuration.Weapon;
 using CodeMagic.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.UI.Images;

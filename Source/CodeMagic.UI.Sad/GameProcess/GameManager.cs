@@ -4,6 +4,7 @@ using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Implementations.Items;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
@@ -46,7 +47,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
 
-            var weapon = itemsGenerator.GenerateWeapon(ItemRareness.Trash);
+            var weapon = new TorchItem();
             player.Inventory.AddItem(weapon);
             player.Equipment.EquipItem(weapon);
 
@@ -70,6 +71,9 @@ namespace CodeMagic.UI.Sad.GameProcess
                     LightPower = LightLevel.Bright1,
                     Type = WallObjectConfiguration.WallType.Stone
                 }));
+
+                var monster = new MonstersGenerator().GenerateRandomMonster(1);
+                map.AddObject(2, 2, monster);
 
                 return map;
             }
