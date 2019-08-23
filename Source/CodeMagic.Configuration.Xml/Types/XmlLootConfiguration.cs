@@ -27,9 +27,9 @@ namespace CodeMagic.Configuration.Xml.Types
         public XmlStandardLootConfiguration SpellBookData { get; set; }
 
         [XmlIgnore]
-        public IStandardLootConfiguration Potion => PotionData;
+        public IStandardLootConfiguration Usable => PotionData;
 
-        [XmlElement("potion")]
+        [XmlElement("usable")]
         public XmlStandardLootConfiguration PotionData { get; set; }
 
         [XmlIgnore]

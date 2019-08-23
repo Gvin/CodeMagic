@@ -80,16 +80,26 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetDungeonLevelMessage(dungeonLevelMessage);
                 case NotEnoughManaToScrollMessage notEnoughManaToScrollMessage:
                     return GetNotEnoughManaToScrollMessage(notEnoughManaToScrollMessage);
+                case FailedToUseScrollMessage failedToUseScrollMessage:
+                    return GetFailedToUseScrollMessage(failedToUseScrollMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetFailedToUseScrollMessage(FailedToUseScrollMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{PlayerName} failed to use scroll. It's destroyed")
+            };
         }
 
         private ColoredString[] GetNotEnoughManaToScrollMessage(NotEnoughManaToScrollMessage message)
         {
             return new[]
             {
-                new ColoredString("You have not enough ", TextColor, BackgroundColor),
+                new ColoredString($"{PlayerName} have not enough ", TextColor, BackgroundColor),
                 ManaString,
                 new ColoredString(" to create a scroll with this spell", TextColor, BackgroundColor)
             };
@@ -145,7 +155,7 @@ namespace CodeMagic.UI.Sad.Drawing
             return new[]
             {
                 new ColoredString($"{PlayerName} used [", TextColor, BackgroundColor),
-                new ColoredString(message.Item.Name, ItemDrawingHelper.GetItemColor(message.Item), BackgroundColor),
+                new ColoredString(message.Item.Name.ConvertGlyphs(), ItemDrawingHelper.GetItemColor(message.Item), BackgroundColor),
                 new ColoredString("]", TextColor, BackgroundColor)
             };
         }
@@ -180,7 +190,7 @@ namespace CodeMagic.UI.Sad.Drawing
             return new[]
             {
                 new ColoredString("Spell ", TextColor, BackgroundColor),
-                new ColoredString(message.SpellName, SpellNameColor, BackgroundColor),
+                new ColoredString(message.SpellName.ConvertGlyphs(), SpellNameColor, BackgroundColor),
                 new ColoredString(" sent a message: ", TextColor, BackgroundColor),
                 new ColoredString(message.Message, SpellLogMessageColor, BackgroundColor)
             };
@@ -191,7 +201,7 @@ namespace CodeMagic.UI.Sad.Drawing
             return new[]
             {
                 new ColoredString("An error occured in spell ", TextColor, BackgroundColor),
-                new ColoredString(message.SpellName, SpellNameColor, BackgroundColor),
+                new ColoredString(message.SpellName.ConvertGlyphs(), SpellNameColor, BackgroundColor),
                 new ColoredString(": ", TextColor, BackgroundColor),
                 new ColoredString(message.Message, ErrorColor, BackgroundColor)
             };
@@ -202,7 +212,7 @@ namespace CodeMagic.UI.Sad.Drawing
             return new[]
             {
                 new ColoredString($"{GetMapObjectName(message.Caster)} casted spell ", TextColor, BackgroundColor),
-                new ColoredString(message.SpellName, SpellNameColor, BackgroundColor)
+                new ColoredString(message.SpellName.ConvertGlyphs(), SpellNameColor, BackgroundColor)
             };
         }
 
@@ -221,7 +231,7 @@ namespace CodeMagic.UI.Sad.Drawing
             return new[]
             {
                 new ColoredString("Spell ", TextColor, BackgroundColor),
-                new ColoredString(message.SpellName, SpellNameColor, BackgroundColor),
+                new ColoredString(message.SpellName.ConvertGlyphs(), SpellNameColor, BackgroundColor),
                 new ColoredString(" is out of ", TextColor, BackgroundColor),
                 ManaString
             };

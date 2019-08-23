@@ -21,24 +21,24 @@ namespace CodeMagic.UI.Sad.GameProcess
             return File.ReadAllText(filePath);
         }
 
-        public static string PrepareSpellTemplate(BookSpell initialSpell)
+        public static string PrepareSpellTemplate(string initialSpellCode)
         {
             var filePath = GenerateSpellFileName();
-            if (initialSpell == null)
+            if (string.IsNullOrEmpty(initialSpellCode))
             {
                 WriteTemplateDataToFile(filePath);
             }
             else
             {
-                WriteSpellDataToFile(initialSpell, filePath);
+                WriteSpellDataToFile(initialSpellCode, filePath);
             }
 
             return filePath;
         }
 
-        private static void WriteSpellDataToFile(BookSpell spell, string filePath)
+        private static void WriteSpellDataToFile(string spellCode, string filePath)
         {
-            File.WriteAllText(filePath, spell.Code);
+            File.WriteAllText(filePath, spellCode);
         }
 
         private static void WriteTemplateDataToFile(string filePath)

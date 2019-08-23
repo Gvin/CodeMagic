@@ -14,8 +14,8 @@ namespace CodeMagic.Core.Game.PlayerActions
 
         public bool Perform(IGameCore game, out Point newPosition)
         {
-            var keepItem = item.Use(game);
             game.Journal.Write(new UsedItemMessage(item));
+            var keepItem = item.Use(game);
 
             if (!keepItem)
             {

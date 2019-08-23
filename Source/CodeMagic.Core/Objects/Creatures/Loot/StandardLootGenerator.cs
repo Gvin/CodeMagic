@@ -68,7 +68,7 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
             result.AddRange(spellBooks);
 
             var potionsCount = GetRandomValue(potionsCountMin, potionsCountMax);
-            var potions = GenerateItems(potionsCount, rareness => generator.GeneratePotion(rareness));
+            var potions = GenerateItems(potionsCount, rareness => generator.GenerateUsable(rareness));
             result.AddRange(potions);
 
             return result.ToArray();

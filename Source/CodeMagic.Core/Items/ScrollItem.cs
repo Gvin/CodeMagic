@@ -1,4 +1,5 @@
 ﻿using CodeMagic.Core.Game;
+using CodeMagic.Core.Injection;
 using CodeMagic.Core.Spells;
 
 namespace CodeMagic.Core.Items
@@ -17,16 +18,26 @@ namespace CodeMagic.Core.Items
             Mana = configuration.Mana;
         }
 
-        public bool Use(IGameCore game)
+        public virtual bool Use(IGameCore game)
         {
-            var codeSpell = new CodeSpell(game.Player, SpellName, code, Mana);
+            var codeSpell = Injector.Current.Create<ICodeSpell>(game.Player, SpellName, code, Mana);
             game.Map.AddObject(game.PlayerPosition, codeSpell);
             return false;
+        }
+
+        public virtual string GetSpellCode()
+        {
+            return code;
         }
     }
 
     public class ScrollItemConfiguration : ItemConfiguration
     {
+        public ScrollItemConfiguration()
+        {
+            Weight = 1;
+        }
+
         public string SpellName { get; set; }
 
         public string Code { get; set; }

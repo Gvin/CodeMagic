@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CodeMagic.UI.Sad.Properties
-{
-
-
+namespace CodeMagic.UI.Sad.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -19,52 +19,143 @@ namespace CodeMagic.UI.Sad.Properties
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources
-    {
-
+    internal class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if ((resourceMan == null))
-                {
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CodeMagic.UI.Sad.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to function getDirection(lifeTime) {
+        ///	if (lifeTime === 0) {
+        ///		var direction = getCaster().direction;
+        ///		storeValue(&quot;direction&quot;, direction);
+        ///		return direction;
+        ///	}
+        ///	
+        ///	return getStoredValue(&quot;direction&quot;);
+        ///}
+        ///
+        ///function main(lifeTime) {
+        ///    var direction = getDirection(lifeTime);
+        ///	
+        ///	if (lifeTime === 0 || (getObjectsUnder().length === 0 &amp;&amp; !getIsSolidWall(direction))) {
+        ///		return move(direction, 1);
+        ///	}
+        ///	
+        ///	var action = heat(500);
+        ///	if (getMana() &lt; action.manaCost &amp;&amp; getTemperature() &lt;= 3000) {
+        ///		return [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AncientSpell_Fireball {
+            get {
+                return ResourceManager.GetString("AncientSpell_Fireball", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to function setRemainingLightTime(value) {
+        ///	storeValue(&quot;remainingLight&quot;, value);
+        ///}
+        ///
+        ///function getRemainingLightTime(lifeTime) {
+        ///	if (lifeTime === 0) {
+        ///		setRemainingLightTime(0);
+        ///		return 0;
+        ///	}
+        ///	return getStoredValue(&quot;remainingLight&quot;);
+        ///}
+        ///
+        ///function main(lifeTime) {
+        ///	var remainingLightTime = getRemainingLightTime(lifeTime);
+        ///	
+        ///	if (getLightLevel() &lt; 3) {
+        ///		if (remainingLightTime &lt;= 0) {
+        ///			setRemainingLightTime(10);
+        ///			return emitLight(5, 10);
+        ///		}
+        ///	}
+        ///	
+        ///	setRemainingLightTime(remainingLightTim [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AncientSpell_Lighter {
+            get {
+                return ResourceManager.GetString("AncientSpell_Lighter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to function main(lifeTime) {
+        ///    var position = getPosition();
+        ///    var casterPosition = getCaster().position;
+        ///	
+        ///	if (position.x === casterPosition.x &amp;&amp; position.y === casterPosition.y) {
+        ///		var nearObjects = scanForObjects(1);
+        ///		if (nearObjects &amp;&amp; nearObjects.length &gt; 1) {
+        ///			return buildWall(2);
+        ///		}
+        ///	}
+        ///	
+        ///    if (casterPosition.x &gt; position.x) {
+        ///        return move(&quot;east&quot;, 1);
+        ///    }
+        ///    if (casterPosition.x &lt; position.x) {
+        ///        return move(&quot;west&quot;, 1);
+        ///    }
+        ///    if (casterPosition.y &gt; positio [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AncientSpell_Shield {
+            get {
+                return ResourceManager.GetString("AncientSpell_Shield", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to function main(lifeTime) {
+        ///    if (lifeTime === 0) {
+        ///		return move(getCaster().direction, 1);
+        ///	}
+        ///	return shock(10);
+        ///}.
+        /// </summary>
+        internal static string AncientSpell_ThorsHands {
+            get {
+                return ResourceManager.GetString("AncientSpell_ThorsHands", resourceCulture);
             }
         }
     }

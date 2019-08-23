@@ -63,6 +63,7 @@
     <Compile Include="Configuration\Weapon\IWeaponConfiguration.cs" />
     <Compile Include="Configuration\Weapon\IWeaponRarenessConfiguration.cs" />
     <Compile Include="Configuration\Weapon\Blade\IBladeWeaponConfiguration.cs" />
+    <Compile Include="IAncientSpellsProvider.cs" />
     <Compile Include="Implementations\ArmorGenerator.cs" />
     <Compile Include="Implementations\Bonuses\BonusesGenerator.cs" />
     <Compile Include="Implementations\Bonuses\Instances\DamageBonusApplier.cs" />
@@ -74,9 +75,14 @@
     <Compile Include="Implementations\Bonuses\Instances\ProtectionBonusApplier.cs" />
     <Compile Include="Implementations\Bonuses\Instances\WeightBonusApplier.cs" />
     <Compile Include="Implementations\NameBuilder.cs" />
-    <Compile Include="Implementations\PotionsGenerator.cs" />
+    <Compile Include="Implementations\UsableItemsGenerator.cs" />
     <Compile Include="Implementations\ResourcesGenerator.cs" />
     <Compile Include="Implementations\SpellBookGenerator.cs" />
+    <Compile Include="Implementations\Usable\HealthPotionsGenerator.cs" />
+    <Compile Include="Implementations\Usable\IUsableItemTypeGenerator.cs" />
+    <Compile Include="Implementations\Usable\ManaPotionsGenerator.cs" />
+    <Compile Include="Implementations\Usable\RestorationPotionsGenerator.cs" />
+    <Compile Include="Implementations\Usable\ScrollsGenerator.cs" />
     <Compile Include="Implementations\Weapon\BladeWeaponGenerator.cs" />
     <Compile Include="Implementations\Weapon\HeadWeaponGenerator.cs" />
     <Compile Include="Implementations\Weapon\IWeaponGenerator.cs" />

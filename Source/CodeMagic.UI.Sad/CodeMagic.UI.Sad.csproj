@@ -74,6 +74,7 @@
     <Compile Include="Drawing\LightLevelManager.cs" />
     <Compile Include="Drawing\ObjectEffects\ObjectEffect.cs" />
     <Compile Include="Drawing\ObjectEffects\SpellCastEffect.cs" />
+    <Compile Include="GameProcess\AncientSpellsProvider.cs" />
     <Compile Include="GameProcess\EditSpellHelper.cs" />
     <Compile Include="GameProcess\GameConfigurator.cs" />
     <Compile Include="GameProcess\GameManager.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -159,6 +161,10 @@
     <Content Include="Configuration\Spells.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\AncientSpell_Lighter.txt" />
+    <None Include="Resources\AncientSpell_Fireball.txt" />
+    <None Include="Resources\AncientSpell_ThorsHands.txt" />
+    <None Include="Resources\AncientSpell_Shield.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

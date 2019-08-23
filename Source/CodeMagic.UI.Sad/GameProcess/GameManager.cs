@@ -5,7 +5,6 @@ using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Implementations.Items;
-using CodeMagic.Implementations.Items.Materials;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
@@ -55,6 +54,9 @@ namespace CodeMagic.UI.Sad.GameProcess
             var spellBook = itemsGenerator.GenerateSpellBook(ItemRareness.Trash);
             player.Inventory.AddItem(spellBook);
             player.Equipment.EquipItem(spellBook);
+
+            player.Inventory.AddItem(itemsGenerator.GenerateUsable(ItemRareness.Common));
+            player.Inventory.AddItem(itemsGenerator.GenerateUsable(ItemRareness.Common));
 
             return player;
         }

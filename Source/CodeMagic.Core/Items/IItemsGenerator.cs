@@ -10,7 +10,7 @@ namespace CodeMagic.Core.Items
 
         SpellBook GenerateSpellBook(ItemRareness rareness);
 
-        IItem GeneratePotion(ItemRareness rareness);
+        IItem GenerateUsable(ItemRareness rareness);
 
         IItem GenerateResource();
     }

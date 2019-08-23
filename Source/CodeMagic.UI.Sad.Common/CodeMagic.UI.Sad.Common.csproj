@@ -56,6 +56,7 @@
     <Compile Include="CellSurfaceExtension.cs" />
     <Compile Include="Glyphs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringExtension.cs" />
     <Compile Include="SystemColorExtension.cs" />
     <Compile Include="XnaColorExtension.cs" />
   </ItemGroup>

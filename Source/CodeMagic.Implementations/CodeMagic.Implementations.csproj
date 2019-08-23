@@ -46,6 +46,7 @@
     <Compile Include="IImagesStorage.cs" />
     <Compile Include="Items\Materials\BlankScroll.cs" />
     <Compile Include="Items\TorchItem.cs" />
+    <Compile Include="Items\Usable\AncientScrollItemImpl.cs" />
     <Compile Include="Items\Usable\HealthManaRestorationItem.cs" />
     <Compile Include="Items\Usable\ScrollItemImpl.cs" />
     <Compile Include="IWorldImageProvider.cs" />

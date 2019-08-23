@@ -20,10 +20,10 @@ namespace CodeMagic.ItemsGeneration
         private readonly Dictionary<WeaponType, IWeaponGenerator> weaponGenerators;
         private readonly ArmorGenerator armorGenerator;
         private readonly SpellBookGenerator spellBookGenerator;
-        private readonly PotionsGenerator potionsGenerator;
+        private readonly UsableItemsGenerator usableItemsGenerator;
         private readonly ResourcesGenerator resourcesGenerator;
 
-        public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage)
+        public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage, IAncientSpellsProvider spellsProvider)
         {
             var bonusesGenerator = new BonusesGenerator(configuration.BonusesConfiguration);
 
@@ -68,7 +68,7 @@ namespace CodeMagic.ItemsGeneration
             };
             armorGenerator = new ArmorGenerator(configuration.ArmorConfiguration, bonusesGenerator, imagesStorage);
             spellBookGenerator = new SpellBookGenerator(configuration.SpellBooksConfiguration, bonusesGenerator, imagesStorage);
-            potionsGenerator = new PotionsGenerator(imagesStorage);
+            usableItemsGenerator = new UsableItemsGenerator(imagesStorage, spellsProvider);
             resourcesGenerator = new ResourcesGenerator();
         }
 
@@ -98,12 +98,17 @@ namespace CodeMagic.ItemsGeneration
             return spellBookGenerator.GenerateSpellBook(rareness);
         }
 
-        public IItem GeneratePotion(ItemRareness rareness)
+        public IItem GenerateUsable(ItemRareness rareness)
         {
             if (rareness == ItemRareness.Epic)
                 throw new ArgumentException("Item generator cannot generate epic items.");
 
-            return potionsGenerator.GeneratePotion(rareness);
+            while (true)
+            {
+                var result = usableItemsGenerator.GenerateUsableItem(rareness);
+                if (result != null)
+                    return result;
+            }
         }
 
         public IItem GenerateResource()

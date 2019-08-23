@@ -20,8 +20,8 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
         private readonly Chance<int>[] spellBookCountSettings;
         private readonly Chance<ItemRareness>[] spellBookRarenessSettings;
 
-        private readonly Chance<int>[] potionCountSettings;
-        private readonly Chance<ItemRareness>[] potionRarenessSettings;
+        private readonly Chance<int>[] usableCountSettings;
+        private readonly Chance<ItemRareness>[] usableRarenessSettings;
 
         private readonly Chance<int>[] resourceCountSettings;
 
@@ -37,8 +37,8 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
             spellBookCountSettings = lootConfiguration.SpellBook?.Count?.Select(c => new Chance<int>(c.Chance, c.Value)).ToArray();
             spellBookRarenessSettings = lootConfiguration.SpellBook?.Rareness?.Select(c => new Chance<ItemRareness>(c.Chance, c.Value)).ToArray();
 
-            potionCountSettings = lootConfiguration.Potion?.Count?.Select(c => new Chance<int>(c.Chance, c.Value)).ToArray();
-            potionRarenessSettings = lootConfiguration.Potion?.Rareness?.Select(c => new Chance<ItemRareness>(c.Chance, c.Value)).ToArray();
+            usableCountSettings = lootConfiguration.Usable?.Count?.Select(c => new Chance<int>(c.Chance, c.Value)).ToArray();
+            usableRarenessSettings = lootConfiguration.Usable?.Rareness?.Select(c => new Chance<ItemRareness>(c.Chance, c.Value)).ToArray();
 
             resourceCountSettings = lootConfiguration.Resource?.Count?.Select(c => new Chance<int>(c.Chance, c.Value)).ToArray();
         }
@@ -75,12 +75,12 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
                 result.AddRange(items);
             }
 
-            if (potionCountSettings != null)
+            if (usableCountSettings != null)
             {
                 var items = GenerateItems(
-                    potionCountSettings, 
-                    potionRarenessSettings, 
-                    rareness => generator.GeneratePotion(rareness));
+                    usableCountSettings, 
+                    usableRarenessSettings, 
+                    rareness => generator.GenerateUsable(rareness));
                 result.AddRange(items);
             }
 

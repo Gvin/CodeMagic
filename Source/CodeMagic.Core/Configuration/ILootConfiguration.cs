@@ -10,7 +10,7 @@ namespace CodeMagic.Core.Configuration
 
         IStandardLootConfiguration SpellBook { get; }
 
-        IStandardLootConfiguration Potion { get; }
+        IStandardLootConfiguration Usable { get; }
 
         ISimpleLootConfiguration Resource { get; }
     }

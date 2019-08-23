@@ -13,13 +13,14 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         private int energy;
         private readonly IMagicEnergyConfiguration configuration;
+        private int disturbance;
 
         public MagicEnergy()
         {
             configuration = ConfigurationManager.Current.Physics.MagicEnergyConfiguration;
 
             energy = configuration.MaxValue;
-            Disturbance = 0;
+            disturbance = 0;
         }
 
         public int Energy
@@ -32,7 +33,15 @@ namespace CodeMagic.Core.Area.EnvironmentData
             }
         }
 
-        public int Disturbance { get; private set; }
+        public int Disturbance
+        {
+            get => disturbance;
+            set
+            {
+                value = Math.Max(0, value);
+                disturbance = Math.Min(configuration.MaxValue, value);
+            }
+        }
 
         private int CurrentMaxEnergy => configuration.MaxValue - Disturbance;
 

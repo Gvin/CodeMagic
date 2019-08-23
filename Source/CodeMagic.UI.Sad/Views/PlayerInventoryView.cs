@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
+using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -27,6 +28,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button takeOffItemButton;
         private Button dropItemButton;
         private Button dropAllItemsButton;
+        private Button checkScrollButton;
 
         public PlayerInventoryView(IGameCore game) 
             : base(GetTitleWithWeight(game.Player), game.Player)
@@ -52,6 +54,16 @@ namespace CodeMagic.UI.Sad.Views
                 }
             };
 
+            checkScrollButton = new Button(20, 3)
+            {
+                Position = new Point(Width - 35, 40),
+                Text = "[C] Check Scroll",
+                CanFocus = false,
+                Theme = buttonsTheme
+            };
+            checkScrollButton.Click += (sender, args) => CheckSelectedScrollCode();
+            Add(checkScrollButton);
+
             useItemButton = new Button(20, 3)
             {
                 Position = new Point(Width - 57, 40),
@@ -59,7 +71,7 @@ namespace CodeMagic.UI.Sad.Views
                 CanFocus = false,
                 Theme = buttonsTheme
             };
-            useItemButton.Click += useItemButton_Click;
+            useItemButton.Click += (sender, args) => UseSelectedItem();
             Add(useItemButton);
 
             equipItemButton = new Button(20, 3)
@@ -69,7 +81,7 @@ namespace CodeMagic.UI.Sad.Views
                 CanFocus = false,
                 Theme = buttonsTheme
             };
-            equipItemButton.Click += equipItemButton_Click;
+            equipItemButton.Click += (sender, args) => EquipSelectedItem();
             Add(equipItemButton);
 
             takeOffItemButton = new Button(20, 3)
@@ -79,7 +91,7 @@ namespace CodeMagic.UI.Sad.Views
                 CanFocus = false,
                 Theme = buttonsTheme
             };
-            takeOffItemButton.Click += takeOffItemButton_Click;
+            takeOffItemButton.Click += (sender, args) => TakeOffSelectedItem();
             Add(takeOffItemButton);
 
             dropItemButton = new Button(20, 3)
@@ -89,7 +101,7 @@ namespace CodeMagic.UI.Sad.Views
                 CanFocus = false,
                 Theme = buttonsTheme
             };
-            dropItemButton.Click += dropItemButton_Click;
+            dropItemButton.Click += (sender, args) => DropSelectedItem();
             Add(dropItemButton);
 
             dropAllItemsButton = new Button(20, 3)
@@ -99,13 +111,19 @@ namespace CodeMagic.UI.Sad.Views
                 CanFocus = false,
                 Theme = buttonsTheme
             };
-            dropAllItemsButton.Click += dropAllItemsButton_Click;
+            dropAllItemsButton.Click += (sender, args) => DropAllItemsInStack();
             Add(dropAllItemsButton);
         }
 
-        private void dropAllItemsButton_Click(object sender, EventArgs e)
+        private void CheckSelectedScrollCode()
         {
-            DropAllItemsInStack();
+            var selectedScroll = SelectedStack?.TopItem as ScrollItem;
+            if (selectedScroll == null)
+                return;
+
+            var code = selectedScroll.GetSpellCode();
+            var filePath = EditSpellHelper.PrepareSpellTemplate(code);
+            EditSpellHelper.LaunchSpellFileEditor(filePath);
         }
 
         private void DropAllItemsInStack()
@@ -117,11 +135,6 @@ namespace CodeMagic.UI.Sad.Views
             Close();
         }
 
-        private void dropItemButton_Click(object sender, EventArgs e)
-        {
-            DropSelectedItem();
-        }
-
         private void DropSelectedItem()
         {
             if (SelectedStack == null)
@@ -129,11 +142,6 @@ namespace CodeMagic.UI.Sad.Views
 
             game.PerformPlayerAction(new DropItemsPlayerAction(SelectedStack.TopItem));
             Close();
-        }
-
-        private void takeOffItemButton_Click(object sender, EventArgs e)
-        {
-            TakeOffSelectedItem();
         }
 
         private void TakeOffSelectedItem()
@@ -148,11 +156,6 @@ namespace CodeMagic.UI.Sad.Views
             Close();
         }
 
-        private void equipItemButton_Click(object sender, EventArgs e)
-        {
-            EquipSelectedItem();
-        }
-
         private void EquipSelectedItem()
         {
             if (!(SelectedStack?.TopItem is IEquipableItem equipableItem))
@@ -163,11 +166,6 @@ namespace CodeMagic.UI.Sad.Views
 
             game.PerformPlayerAction(new EquipItemPlayerAction(equipableItem));
             Close();
-        }
-
-        private void useItemButton_Click(object sender, EventArgs e)
-        {
-            UseSelectedItem();
         }
 
         private void UseSelectedItem()
@@ -192,6 +190,8 @@ namespace CodeMagic.UI.Sad.Views
             dropAllItemsButton.IsVisible = SelectedStack != null;
 
             useItemButton.IsVisible = SelectedStack?.TopItem is IUsableItem;
+            checkScrollButton.IsVisible = SelectedStack?.TopItem is ScrollItem;
+
             if (SelectedStack?.TopItem is IEquipableItem equipable)
             {
                 var equiped = game.Player.Equipment.IsEquiped(equipable);
@@ -223,6 +223,9 @@ namespace CodeMagic.UI.Sad.Views
                     return true;
                 case Keys.A:
                     DropAllItemsInStack();
+                    return true;
+                case Keys.C:
+                    CheckSelectedScrollCode();
                     return true;
             }
             return base.ProcessKeyPressed(key);
@@ -266,7 +269,7 @@ namespace CodeMagic.UI.Sad.Views
 
                 return new[]
                 {
-                    new ColoredString(Stack.TopItem.Name, new Cell(itemColor, backColor))
+                    new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, backColor))
                 };
             }
 

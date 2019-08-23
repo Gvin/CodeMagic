@@ -73,7 +73,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                         {
                             Object = new ItemsGenerator(
                                 ((ConfigurationProvider) ConfigurationManager.Current).ItemGenerator,
-                                ImagesStorage.Current)
+                                ImagesStorage.Current, new AncientSpellsProvider())
                         }
                     },
                     // Liquid

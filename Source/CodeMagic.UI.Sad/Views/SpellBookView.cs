@@ -199,7 +199,7 @@ namespace CodeMagic.UI.Sad.Views
             if (selectedSpellItem == null)
                 return;
 
-            var spellFilePath = EditSpellHelper.PrepareSpellTemplate(selectedSpellItem.Spell);
+            var spellFilePath = EditSpellHelper.PrepareSpellTemplate(selectedSpellItem.Spell?.Code);
 
             var editSpellView = new EditSpellView(spellFilePath)
             {

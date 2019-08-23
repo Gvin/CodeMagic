@@ -72,7 +72,7 @@ namespace CodeMagic.UI.Sad.Controls
             var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
             if (Stack.TopItem.Name.Length <= maxWidth)
             {
-                Surface.Print(1, initialYShift, new ColoredString(Stack.TopItem.Name, new Cell(itemColor, BackColor)));
+                Surface.Print(1, initialYShift, new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, BackColor)));
                 return;
             }
 
@@ -80,7 +80,7 @@ namespace CodeMagic.UI.Sad.Controls
             for (int yShift = 0; yShift < cuttedName.Length; yShift++)
             {
                 var line = cuttedName[yShift];
-                Surface.Print(1, initialYShift + yShift, new ColoredString(line, new Cell(itemColor, BackColor)));
+                Surface.Print(1, initialYShift + yShift, new ColoredString(line.ConvertGlyphs(), new Cell(itemColor, BackColor)));
             }
         }
 

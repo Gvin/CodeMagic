@@ -4,6 +4,7 @@ using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -215,7 +216,7 @@ namespace CodeMagic.UI.Sad.Views
 
                 return new[]
                 {
-                    new ColoredString(Stack.TopItem.Name, new Cell(itemColor, backColor))
+                    new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, backColor))
                 };
             }
 
