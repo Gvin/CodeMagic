@@ -11,6 +11,8 @@ namespace CodeMagic.Core.Configuration
         IStandardLootConfiguration SpellBook { get; }
 
         IStandardLootConfiguration Potion { get; }
+
+        ISimpleLootConfiguration Resource { get; }
     }
 
     public interface IArmorLootConfiguration : IStandardLootConfiguration
@@ -18,11 +20,14 @@ namespace CodeMagic.Core.Configuration
         IChanceConfiguration<ArmorClass>[] Class { get; }
     }
 
-    public interface IStandardLootConfiguration
+    public interface IStandardLootConfiguration : ISimpleLootConfiguration
+    {
+        IChanceConfiguration<ItemRareness>[] Rareness { get; }
+    }
+
+    public interface ISimpleLootConfiguration
     {
         IChanceConfiguration<int>[] Count { get; }
-
-        IChanceConfiguration<ItemRareness>[] Rareness { get; }
     }
 
     public interface IChanceConfiguration<TValue>

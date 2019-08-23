@@ -31,6 +31,12 @@ namespace CodeMagic.Configuration.Xml.Types
 
         [XmlElement("potion")]
         public XmlStandardLootConfiguration PotionData { get; set; }
+
+        [XmlIgnore]
+        public ISimpleLootConfiguration Resource => ResourceData;
+
+        [XmlElement("resource")]
+        public XmlSimpleLootConfiguration ResourceData { get; set; }
     }
 
     [Serializable]
@@ -45,14 +51,9 @@ namespace CodeMagic.Configuration.Xml.Types
     }
 
     [Serializable]
-    public class XmlStandardLootConfiguration : IStandardLootConfiguration
+    public class XmlStandardLootConfiguration : XmlSimpleLootConfiguration, IStandardLootConfiguration
     {
-        [XmlIgnore]
-        public IChanceConfiguration<int>[] Count => CountData;
-
-        [XmlArray("count-configuration")]
-        [XmlArrayItem("value")]
-        public XmlChanceConfiguration<int>[] CountData { get; set; }
+        
         
         [XmlIgnore]
         public IChanceConfiguration<ItemRareness>[] Rareness => RarenessData;
@@ -60,6 +61,17 @@ namespace CodeMagic.Configuration.Xml.Types
         [XmlArray("rareness-configuration")]
         [XmlArrayItem("value")]
         public XmlChanceConfiguration<ItemRareness>[] RarenessData { get; set; }
+    }
+
+    [Serializable]
+    public class XmlSimpleLootConfiguration : ISimpleLootConfiguration
+    {
+        [XmlIgnore]
+        public IChanceConfiguration<int>[] Count => CountData;
+
+        [XmlArray("count-configuration")]
+        [XmlArrayItem("value")]
+        public XmlChanceConfiguration<int>[] CountData { get; set; }
     }
 
     [Serializable]

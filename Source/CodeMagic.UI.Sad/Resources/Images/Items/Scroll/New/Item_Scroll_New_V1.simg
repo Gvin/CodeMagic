@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="6" height="5">
+  <row>
+    <pixel symbol="▄">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+    <pixel symbol="▄">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+    <pixel symbol="▄">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+    <pixel symbol="▄">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+    <pixel symbol="▄">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+    <pixel symbol="▄">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+  </row>
+  <row>
+    <pixel symbol="░">
+      <color>
+        <R>205</R>
+        <G>88</G>
+        <B>1</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="Æ">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="ê">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="f">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="ç">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="░">
+      <color>
+        <R>205</R>
+        <G>88</G>
+        <B>1</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel symbol="░">
+      <color>
+        <R>205</R>
+        <G>88</G>
+        <B>1</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="Ü">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="t">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="σ">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="φ">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="░">
+      <color>
+        <R>205</R>
+        <G>88</G>
+        <B>1</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel symbol="░">
+      <color>
+        <R>205</R>
+        <G>88</G>
+        <B>1</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="Θ">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="Ω">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="ï">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="q">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+    <pixel symbol="░">
+      <color>
+        <R>205</R>
+        <G>88</G>
+        <B>1</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>228</G>
+        <B>202</B>
+      </background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel symbol="▀">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+    <pixel symbol="▀">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+    <pixel symbol="▀">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+    <pixel symbol="▀">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+    <pixel symbol="▀">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+    <pixel symbol="▀">
+      <color>
+        <R>254</R>
+        <G>181</G>
+        <B>126</B>
+      </color>
+    </pixel>
+  </row>
+</symbols-image>

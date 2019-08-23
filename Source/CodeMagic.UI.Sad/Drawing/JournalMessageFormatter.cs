@@ -52,8 +52,8 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetDealDamageMessage(dealDamageMessage);
                 case SpellOutOfManaMessage spellOutOfManaMessage:
                     return GetSpellOutOfManaMessage(spellOutOfManaMessage);
-                case NotEnoughManaMessage notEnoughManaMessage:
-                    return GetNotEnoughManaMessage(notEnoughManaMessage);
+                case NotEnoughManaToCastMessage notEnoughManaMessage:
+                    return GetNotEnoughManaToCastMessage(notEnoughManaMessage);
                 case SpellCastMessage spellCastMessage:
                     return GetSpellCastMessage(spellCastMessage);
                 case SpellErrorMessage spellErrorMessage:
@@ -78,16 +78,28 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetOverweightBlocksMovementMessage(overweightBlocksMovementMessage);
                 case DungeonLevelMessage dungeonLevelMessage:
                     return GetDungeonLevelMessage(dungeonLevelMessage);
+                case NotEnoughManaToScrollMessage notEnoughManaToScrollMessage:
+                    return GetNotEnoughManaToScrollMessage(notEnoughManaToScrollMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetNotEnoughManaToScrollMessage(NotEnoughManaToScrollMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("You have not enough ", TextColor, BackgroundColor),
+                ManaString,
+                new ColoredString(" to create a scroll with this spell", TextColor, BackgroundColor)
+            };
         }
 
         private ColoredString[] GetDungeonLevelMessage(DungeonLevelMessage message)
         {
             return new[]
             {
-                new ColoredString($"{PlayerName} reached {message.Level} level of the dungeon."), 
+                new ColoredString($"{PlayerName} reached {message.Level} level of the dungeon"), 
             };
         }
 
@@ -95,7 +107,7 @@ namespace CodeMagic.UI.Sad.Drawing
         {
             return new[]
             {
-                new ColoredString($"Inventory is too heavy and {PlayerName} cannot move."),
+                new ColoredString($"Inventory is too heavy and {PlayerName} cannot move"),
             };
         }
 
@@ -194,7 +206,7 @@ namespace CodeMagic.UI.Sad.Drawing
             };
         }
 
-        private ColoredString[] GetNotEnoughManaMessage(NotEnoughManaMessage message)
+        private ColoredString[] GetNotEnoughManaToCastMessage(NotEnoughManaToCastMessage message)
         {
             return new[]
             {

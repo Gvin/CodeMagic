@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Spells;
 using CodeMagic.Implementations.Items;
+using CodeMagic.Implementations.Items.Materials;
+using CodeMagic.Implementations.Items.Usable;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Drawing;
@@ -34,6 +37,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button editSpellButton;
         private Button castSpellButton;
         private Button removeSpellButton;
+        private Button scribeSpellButton;
 
         public SpellBookView(IGameCore game) 
             : base(Program.Width, Program.Height)
@@ -92,6 +96,16 @@ namespace CodeMagic.UI.Sad.Views
             removeSpellButton.Click += removeSpellButton_Click;
             Add(removeSpellButton);
 
+            scribeSpellButton = new Button(20, 3)
+            {
+                Position = new Point(Width - 57, 22),
+                Text = "[G] Write Scroll",
+                CanFocus = false,
+                Theme = buttonsTheme
+            };
+            scribeSpellButton.Click += scribeSpellButton_Click;
+            Add(scribeSpellButton);
+
             spellDetails = new SpellDetailsControl(57, Height - 10)
             {
                 Position = new Point(Width - 58, 3)
@@ -121,6 +135,47 @@ namespace CodeMagic.UI.Sad.Views
             RefreshSpells();
 
             UpdateSpellDetails();
+        }
+
+        private void scribeSpellButton_Click(object sender, EventArgs e)
+        {
+            WriteSpellToScroll();
+        }
+
+        private void WriteSpellToScroll()
+        {
+            var selectedSpell = spellsListBox.SelectedItem?.Spell;
+            if (selectedSpell == null)
+                return;
+
+            var blankScroll = game.Player.Inventory.GetItem(BlankScroll.ItemKey);
+            if (blankScroll == null)
+                return;
+
+            var scrollCreationCost = selectedSpell.ManaCost * 2;
+            if (game.Player.Mana < scrollCreationCost)
+            {
+                game.Journal.Write(new NotEnoughManaToScrollMessage());
+                return;
+            }
+
+            game.Player.Mana -= scrollCreationCost;
+
+            game.Player.Inventory.RemoveItem(blankScroll);
+            var newScroll = new ScrollItemImpl(new ScrollItemConfiguration
+            {
+                Name = $"{selectedSpell.Name} Scroll ({selectedSpell.ManaCost})",
+                Key = Guid.NewGuid().ToString(),
+                Weight = 1,
+                Code = selectedSpell.Code,
+                SpellName = selectedSpell.Name,
+                Mana = selectedSpell.ManaCost,
+                Rareness = ItemRareness.Uncommon
+            });
+            game.Player.Inventory.AddItem(newScroll);
+
+            game.PerformPlayerAction(new EmptyPlayerAction());
+            Close();
         }
 
         private void castSpellButton_Click(object sender, EventArgs args)
@@ -227,6 +282,7 @@ namespace CodeMagic.UI.Sad.Views
             var spellExists = selectedSpellItem?.Spell != null;
             removeSpellButton.IsVisible = spellExists;
             castSpellButton.IsVisible = spellExists;
+            scribeSpellButton.IsVisible = spellExists && game.Player.Inventory.Contains(BlankScroll.ItemKey);
         }
 
         private SpellBook Book => game.Player.Equipment.SpellBook;
@@ -268,6 +324,9 @@ namespace CodeMagic.UI.Sad.Views
                     return true;
                 case Keys.C:
                     CastSelectedSpell();
+                    return true;
+                case Keys.G:
+                    WriteSpellToScroll();
                     return true;
                 case Keys.Up:
                 case Keys.W:

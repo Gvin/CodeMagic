@@ -23,27 +23,7 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
         private readonly Chance<int>[] potionCountSettings;
         private readonly Chance<ItemRareness>[] potionRarenessSettings;
 
-        public ChancesLootGenerator(
-            Chance<int>[] weaponCountSettings = null, 
-            Chance<ItemRareness>[] weaponRarenessSettings = null, 
-            Chance<int>[] armorCountSettings = null, 
-            Chance<ItemRareness>[] armorRarenessSettings = null, 
-            Chance<ArmorClass>[] armorClassSettings = null, 
-            Chance<int>[] spellBookCountSettings = null, 
-            Chance<ItemRareness>[] spellBookRarenessSettings = null, 
-            Chance<int>[] potionCountSettings = null, 
-            Chance<ItemRareness>[] potionRarenessSettings = null)
-        {
-            this.weaponCountSettings = weaponCountSettings;
-            this.weaponRarenessSettings = weaponRarenessSettings;
-            this.armorCountSettings = armorCountSettings;
-            this.armorRarenessSettings = armorRarenessSettings;
-            this.armorClassSettings = armorClassSettings;
-            this.spellBookCountSettings = spellBookCountSettings;
-            this.spellBookRarenessSettings = spellBookRarenessSettings;
-            this.potionCountSettings = potionCountSettings;
-            this.potionRarenessSettings = potionRarenessSettings;
-        }
+        private readonly Chance<int>[] resourceCountSettings;
 
         public ChancesLootGenerator(ILootConfiguration lootConfiguration)
         {
@@ -59,6 +39,8 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
 
             potionCountSettings = lootConfiguration.Potion?.Count?.Select(c => new Chance<int>(c.Chance, c.Value)).ToArray();
             potionRarenessSettings = lootConfiguration.Potion?.Rareness?.Select(c => new Chance<ItemRareness>(c.Chance, c.Value)).ToArray();
+
+            resourceCountSettings = lootConfiguration.Resource?.Count?.Select(c => new Chance<int>(c.Chance, c.Value)).ToArray();
         }
 
         public IItem[] GenerateLoot()
@@ -100,6 +82,19 @@ namespace CodeMagic.Core.Objects.Creatures.Loot
                     potionRarenessSettings, 
                     rareness => generator.GeneratePotion(rareness));
                 result.AddRange(items);
+            }
+
+            if (resourceCountSettings != null)
+            {
+                var count = GenerateValue(resourceCountSettings);
+                for (int counter = 0; counter < count; counter++)
+                {
+                    var resource = generator.GenerateResource();
+                    if (resource != null)
+                    {
+                        result.Add(resource);
+                    }
+                }
             }
 
             return result.ToArray();

@@ -55,6 +55,12 @@
           <value chance="10">Mail</value>
         </class-configuration>
       </armor>
+      <resource>
+        <count-configuration>
+          <value chance="90">0</value>
+          <value chance="10">1</value>
+        </count-configuration>
+      </resource>
     </loot>
   </monster>
   <monster type="goblin">
@@ -118,6 +124,12 @@
           <value chance="100">Common</value>
         </rareness-configuration>
       </potion>
+      <resource>
+        <count-configuration>
+          <value chance="80">0</value>
+          <value chance="20">1</value>
+        </count-configuration>
+      </resource>
     </loot>
   </monster>
   <monster type="slime">
@@ -193,6 +205,12 @@
           <value chance="30">Uncommon</value>
         </rareness-configuration>
       </potion>
+      <resource>
+        <count-configuration>
+          <value chance="50">0</value>
+          <value chance="50">1</value>
+        </count-configuration>
+      </resource>
     </loot>
   </monster>
   <monster type="knight">
@@ -265,6 +283,12 @@
           <value chance="30">Uncommon</value>
         </rareness-configuration>
       </potion>
+      <resource>
+        <count-configuration>
+          <value chance="70">0</value>
+          <value chance="30">1</value>
+        </count-configuration>
+      </resource>
     </loot>
   </monster>
 </monsters-configuration>

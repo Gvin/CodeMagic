@@ -92,6 +92,7 @@
     <Compile Include="Game\Journaling\Messages\DungeonLevelMessage.cs" />
     <Compile Include="Game\Journaling\Messages\HealedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ManaRestoredMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\NotEnoughManaToScrollMessage.cs" />
     <Compile Include="Game\Journaling\Messages\OverweightBlocksMovementMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ParalyzedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\StatusAddedMessage.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Items\IEquipableItem.cs" />
     <Compile Include="Items\IItemsGenerator.cs" />
     <Compile Include="Items\IUsableItem.cs" />
+    <Compile Include="Items\ScrollItem.cs" />
     <Compile Include="Objects\Creatures\CreatureObject.cs" />
     <Compile Include="Objects\Creatures\Loot\ChancesLootGenerator.cs" />
     <Compile Include="Objects\Creatures\Loot\ILootGenerator.cs" />
@@ -151,7 +153,7 @@
     <Compile Include="Game\Journaling\Messages\DealDamageMessage.cs" />
     <Compile Include="Game\Journaling\Messages\DeathMessage.cs" />
     <Compile Include="Game\Journaling\Messages\EnvironmentDamageMessage.cs" />
-    <Compile Include="Game\Journaling\Messages\NotEnoughManaMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\NotEnoughManaToCastMessage.cs" />
     <Compile Include="Game\Journaling\Messages\SpellCastMessage.cs" />
     <Compile Include="Game\Journaling\Messages\SpellErrorMessage.cs" />
     <Compile Include="Game\Journaling\Messages\SpellLogMessage.cs" />

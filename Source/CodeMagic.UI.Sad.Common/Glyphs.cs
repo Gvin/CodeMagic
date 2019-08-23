@@ -43,11 +43,11 @@ namespace CodeMagic.UI.Sad.Common
                 {'▐', GlyphBlockRightHalf},
                 {'█', GlyphBlockFull},
                 {'▓', GlyphBlockFilledThick},
+                {'▒', GlyphBlockFilledMedium},
                 {'░', GlyphBlockFilledRare},
 
-                {'Π', GlyphPants},
+                
                 {'♣', GlyphClubs},
-                {'ô', GlyphArmorChest},
                 {'♠', GlyphSpades},
                 {'☺', GlyphSmileTransparent},
                 {'☻', GlyphSmileFilled},
@@ -66,7 +66,53 @@ namespace CodeMagic.UI.Sad.Common
                 {'«', GlyphDoubleArrowLeft},
                 {'»', GlyphDoubleArrowRight},
 
-                {'ĭ', GlyphTorchVertical}
+                {'Ç', 128},
+                {'ϋ', 129},
+                {'έ', 130},
+                {'â', 131},
+                {'ä', 132},
+                {'à', 133},
+                {'å', 134},
+                {'ç', 135},
+                {'ê', 136},
+                {'ë', 137},
+                {'è', 138},
+                {'ï', 139},
+                {'î', 140},
+                {'ì', 141},
+                {'Ä', 142},
+                {'Å', 143},
+                {'È', 144},
+                {'æ', 145},
+                {'Æ', 146},
+                {'ô', 147},
+                {'ö', 148},
+                {'ò', 149},
+                {'û', 150},
+                {'ù', 151},
+                {'ÿ', 152},
+                {'Ö', 153},
+                {'Ü', 154},
+                {'¢', 155},
+                {'£', 156},
+                {'¥', 157},
+
+                {'α', 224},
+                {'β', 225},
+                {'Γ', 226},
+                {'π', 227},
+                {'Σ', 228},
+                {'σ', 229},
+                {'μ', 230},
+                {'γ', 231},
+                {'θ', 232},
+                {'Θ', 233},
+                {'Ω', 234},
+                {'δ', 235},
+                {'φ', 236},
+                {'Φ', 237},
+                {'ε', 238},
+                {'Π', 239}
             };
         }
 
@@ -184,7 +230,10 @@ namespace CodeMagic.UI.Sad.Common
         /// </summary>
         public const int GlyphBlockFilledRare = 176;
 
-        public const int GlyphBoxFilledMedium = 177;
+        /// <summary>
+        /// ▒
+        /// </summary>
+        public const int GlyphBlockFilledMedium = 177;
 
         /// <summary>
         /// ▓

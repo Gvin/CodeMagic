@@ -93,6 +93,16 @@ namespace CodeMagic.Core.Items
             return stacks.Any(stack => string.Equals(stack.TopItem.Key, item.Key));
         }
 
+        public IItem GetItem(string itemKey)
+        {
+            return stacks.FirstOrDefault(stack => string.Equals(stack.TopItem.Key, itemKey))?.TopItem;
+        }
+
+        public bool Contains(string itemKey)
+        {
+            return stacks.Any(stack => string.Equals(stack.TopItem.Key, itemKey));
+        }
+
         private InventoryStack GetItemStack(IItem item)
         {
             return stacks.FirstOrDefault(stack => stack.CheckItemMatches(item));

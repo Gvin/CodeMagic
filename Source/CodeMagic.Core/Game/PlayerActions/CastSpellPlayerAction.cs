@@ -21,7 +21,7 @@ namespace CodeMagic.Core.Game.PlayerActions
             if (game.Player.Mana < spell.ManaCost)
             {
                 game.Player.Mana = 0;
-                game.Journal.Write(new NotEnoughManaMessage());
+                game.Journal.Write(new NotEnoughManaToCastMessage());
                 return true;
             }
 

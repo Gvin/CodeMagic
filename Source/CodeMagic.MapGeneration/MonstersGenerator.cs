@@ -29,7 +29,7 @@ namespace CodeMagic.MapGeneration
             var topRate = possibleMonsters
                 .Select(conf => conf.SpawnConfiguration.FirstOrDefault(spawnConf => spawnConf.Level == level))
                 .Where(spawnConf => spawnConf != null)
-                .Max(spawnConf => spawnConf.Rate);
+                .Sum(spawnConf => spawnConf.Rate);
 
             var value = RandomHelper.GetRandomValue(1, topRate);
 
@@ -40,7 +40,7 @@ namespace CodeMagic.MapGeneration
                 if (spawnConfig == null)
                     continue;
 
-                if (value > bottomLine && value <= spawnConfig.Rate)
+                if (value > bottomLine && value <= spawnConfig.Rate + bottomLine)
                 {
                     return possibleMonster;
                 }

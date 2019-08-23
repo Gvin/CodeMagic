@@ -5,6 +5,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Implementations.Items;
+using CodeMagic.Implementations.Items.Materials;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration;
