@@ -3,13 +3,12 @@ using System.Drawing;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items
 {
-    public class TorchItem : WeaponItem, IInventoryImageProvider, IWorldImageProvider, IDescriptionProvider, ILightSource, ILightObject
+    public class TorchItem : WeaponItem, IInventoryImageProvider, IWorldImageProvider, IDescriptionProvider
     {
         private const string InventoryImage = "Weapon_Torch";
         private const string WorldImage = "ItemsOnGround_Torch";
@@ -30,7 +29,9 @@ namespace CodeMagic.Implementations.Items
             {
                 {Element.Fire, 3},
                 {Element.Blunt, 3}
-            }
+            },
+            LightPower = LightLevel.Dim1,
+            LightColor = Color.Orange
         })
         {
         }
@@ -54,16 +55,5 @@ namespace CodeMagic.Implementations.Items
                 new StyledLine { "Rude torch made from wood and clothes."}, 
             };
         }
-
-        public bool IsLightOn => true;
-
-        public LightLevel LightPower => LightLevel.Dim1;
-
-        public Color LightColor => Color.Orange;
-
-        public ILightSource[] LightSources => new ILightSource[]
-        {
-            this
-        };
     }
 }

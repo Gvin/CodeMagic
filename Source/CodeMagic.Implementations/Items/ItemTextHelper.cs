@@ -124,6 +124,7 @@ namespace CodeMagic.Implementations.Items
                     new StyledString(FormatBonusNumber(item.HealthBonus), HealthColor),
                     GetComparisonString(item.HealthBonus, equipedHealthBonus)
                 };
+                descriptionResult.Add(healthBonusDescription);
             }
 
             var equipedManaBonus = equiped?.ManaBonus ?? 0;

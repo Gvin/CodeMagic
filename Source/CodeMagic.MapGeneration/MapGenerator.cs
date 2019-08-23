@@ -116,12 +116,6 @@ namespace CodeMagic.MapGeneration
             }
         }
 
-        private IMapAreaGenerator CreateGenerator(int level)
-        {
-            var type = GenerateMapType(level);
-            return generators[type];
-        }
-
         private MapType GenerateMapType(int level)
         {
             if (level == 1) // Always dungeons for the 1st level.

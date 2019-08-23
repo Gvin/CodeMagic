@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using CodeMagic.Core.Area;
+﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Game.PlayerActions;

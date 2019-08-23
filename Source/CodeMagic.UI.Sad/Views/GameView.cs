@@ -246,9 +246,9 @@ namespace CodeMagic.UI.Sad.Views
         {
             base.Update(time);
 
-            Print(0, Height - 11, new ColoredGlyph(Glyphs.GlyphBoxDoubleVerticalSingleRight, FrameColor, DefaultBackground));
-            Print(1, Height - 11, new ColoredGlyph(Glyphs.GlyphBoxSingleHorizontal, FrameColor, DefaultBackground));
-            Print(Width - 1, Height - 11, new ColoredGlyph(Glyphs.GlyphBoxDoubleVerticalSingleLeft, FrameColor, DefaultBackground));
+            Print(0, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
+            Print(1, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('─'), FrameColor, DefaultBackground));
+            Print(Width - 1, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
             UpdateButtonsState();
         }

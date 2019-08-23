@@ -36,15 +36,15 @@ namespace CodeMagic.UI.Sad.Controls
         private void Draw()
         {
             Surface.Print(2, 1, "Player Status:");
-            Surface.Fill(1, 2, Width - 2, FrameColor, BackgroundColor, Glyphs.GlyphBoxSingleHorizontal);
+            Surface.Fill(1, 2, Width - 2, FrameColor, BackgroundColor, Glyphs.GetGlyph('─'));
             Surface.Print(Width - 1, 2,
-                new ColoredGlyph(Glyphs.GlyphBoxDoubleVerticalSingleLeft, FrameColor, BackgroundColor));
+                new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, BackgroundColor));
             Surface.DrawVerticalLine(0, 1, Height,
-                new ColoredGlyph(Glyphs.GlyphBoxSingleVertical, FrameColor, BackgroundColor));
-            Surface.Print(0, 2, new ColoredGlyph(Glyphs.GlyphBoxSingleVerticalRight, FrameColor, BackgroundColor));
+                new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, BackgroundColor));
+            Surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, BackgroundColor));
             Surface.Print(Width - 1, 2,
-                new ColoredGlyph(Glyphs.GlyphBoxDoubleVerticalSingleLeft, FrameColor, BackgroundColor));
-            Surface.Print(0, 0, new ColoredGlyph(Glyphs.GlyphBoxDoubleHorizontalSingleDown, FrameColor, BackgroundColor));
+                new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, BackgroundColor));
+            Surface.Print(0, 0, new ColoredGlyph(Glyphs.GetGlyph('╤'), FrameColor, BackgroundColor));
 
             Surface.Print(2, 3, "HP:");
             Surface.Fill(6, 3, 10, BackgroundColor, BackgroundColor, null);

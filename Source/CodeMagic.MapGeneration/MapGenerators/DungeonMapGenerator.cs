@@ -4,9 +4,6 @@ using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.DecorativeObjects;
-using CodeMagic.Implementations.Objects.DecorativeObjects;
 using Point = System.Drawing.Point;
 
 namespace CodeMagic.MapGeneration.MapGenerators

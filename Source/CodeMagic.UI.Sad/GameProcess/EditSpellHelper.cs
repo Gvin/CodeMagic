@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using CodeMagic.Core.Spells;
 using CodeMagic.UI.Sad.Properties;
 
 namespace CodeMagic.UI.Sad.GameProcess

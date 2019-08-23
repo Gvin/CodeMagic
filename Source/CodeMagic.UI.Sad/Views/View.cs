@@ -77,19 +77,19 @@ namespace CodeMagic.UI.Sad.Views
         {
             Fill(DefaultForeground, DefaultBackground, null);
 
-            Fill(1, 0, Width - 2, FrameColor, DefaultBackground, Glyphs.GlyphBoxDoubleHorizontal);
-            Fill(1, Height - 1, Width - 2, FrameColor, DefaultBackground, Glyphs.GlyphBoxDoubleHorizontal);
+            Fill(1, 0, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
+            Fill(1, Height - 1, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
 
-            Print(0, 0, new ColoredGlyph(Glyphs.GlyphBoxDoubleDownRight, FrameColor, DefaultBackground));
-            Print(Width - 1, 0, new ColoredGlyph(Glyphs.GlyphBoxDoubleDownLeft, FrameColor, DefaultBackground));
+            Print(0, 0, new ColoredGlyph(Glyphs.GetGlyph('╔'), FrameColor, DefaultBackground));
+            Print(Width - 1, 0, new ColoredGlyph(Glyphs.GetGlyph('╗'), FrameColor, DefaultBackground));
 
-            Print(0, Height - 1, new ColoredGlyph(Glyphs.GlyphBoxDoubleUpRight, FrameColor, DefaultBackground));
-            Print(Width - 1, Height - 1, new ColoredGlyph(Glyphs.GlyphBoxDoubleUpLeft, FrameColor, DefaultBackground));
+            Print(0, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╚'), FrameColor, DefaultBackground));
+            Print(Width - 1, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╝'), FrameColor, DefaultBackground));
 
             for (var y = 1; y < Height - 1; y++)
             {
-                Print(0, y, new ColoredGlyph(Glyphs.GlyphBoxDoubleVertical, FrameColor, DefaultBackground));
-                Print(Width - 1, y, new ColoredGlyph(Glyphs.GlyphBoxDoubleVertical, FrameColor, DefaultBackground));
+                Print(0, y, new ColoredGlyph(Glyphs.GetGlyph('║'), FrameColor, DefaultBackground));
+                Print(Width - 1, y, new ColoredGlyph(Glyphs.GetGlyph('║'), FrameColor, DefaultBackground));
             }
         }
     }

@@ -24,13 +24,13 @@ namespace CodeMagic.UI.Sad.Controls
             Surface.Print(0, 0, "<- C0de Mag1c ->", Color.BlueViolet);
 
             Surface.Print(4, +1,
-                new ColoredGlyph(Glyphs.GlyphBoxSingleVertical, Color.Red,
+                new ColoredGlyph(Glyphs.GetGlyph('│'), Color.Red,
                     DefaultBackground));
             Surface.Print(6, 1,
                 new ColoredGlyph('\'', Color.Red,
                     DefaultBackground));
             Surface.Print(10, 1,
-                new ColoredGlyph(Glyphs.GlyphBoxSingleVertical, Color.Red,
+                new ColoredGlyph(Glyphs.GetGlyph('│'), Color.Red,
                     DefaultBackground));
             Surface.Print(12, 1,
                 new ColoredGlyph('`', Color.Red,

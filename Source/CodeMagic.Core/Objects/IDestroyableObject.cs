@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Core.Statuses;
 

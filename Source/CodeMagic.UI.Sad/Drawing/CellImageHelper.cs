@@ -10,7 +10,6 @@ namespace CodeMagic.UI.Sad.Drawing
 {
     public static class CellImageHelper
     {
-        private const int DamageTextYShift = 1;
         private static readonly TimeSpan DamageMarksLifeTime = TimeSpan.FromSeconds(2);
         private static readonly SymbolsImage EmptyImage = new SymbolsImage(Program.MapCellImageSize, Program.MapCellImageSize);
         private static readonly WorldImagesFactory WorldImagesFactory;

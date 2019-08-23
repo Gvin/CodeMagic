@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.Creatures;
@@ -149,15 +147,15 @@ namespace CodeMagic.Core.Objects.PlayerData
             get
             {
                 var result = new List<ILightSource>();
-                result.AddRange(Equipment.Armor.Values.OfType<ILightSource>());
-                if (Equipment.Weapon is ILightSource weaponLight)
+                result.AddRange(Equipment.Armor.Values.Where(item => item != null));
+                if (Equipment.Weapon != null)
                 {
-                    result.Add(weaponLight);
+                    result.Add(Equipment.Weapon);
                 }
 
-                if (Equipment.SpellBook is ILightSource spellBookLight)
+                if (Equipment.SpellBook != null)
                 {
-                    result.Add(spellBookLight);
+                    result.Add(Equipment.SpellBook);
                 }
 
                 return result.ToArray();
