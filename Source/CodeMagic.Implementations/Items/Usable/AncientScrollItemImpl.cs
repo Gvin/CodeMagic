@@ -48,7 +48,7 @@ namespace CodeMagic.Implementations.Items.Usable
         {
             return new[]
             {
-                new StyledLine {$"Weight: {Weight}"},
+                ItemTextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
                 new StyledLine {$"Spell Name: {SpellName}"},
                 new StyledLine {"Damaged: ", new StyledString($"{DamagePercent}%", ItemTextHelper.NegativeValueColor)}, 

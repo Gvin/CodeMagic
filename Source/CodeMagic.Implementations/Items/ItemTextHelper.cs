@@ -25,6 +25,12 @@ namespace CodeMagic.Implementations.Items
         public static readonly Color ManaColor = Color.Blue;
         public static readonly Color ManaRegenerationColor = Color.DodgerBlue;
 
+        public static StyledLine GetWeightLine(int weight)
+        {
+            const double kgWeightMultiplier = 1000d;
+            return new StyledLine {$"Weight: {weight / kgWeightMultiplier:F2} kg"};
+        }
+
         public static StyledString[] GetComparisonString(int newValue, int currentValue)
         {
             if (newValue == currentValue)

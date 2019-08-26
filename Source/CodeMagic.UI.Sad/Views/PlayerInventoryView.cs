@@ -233,7 +233,11 @@ namespace CodeMagic.UI.Sad.Views
 
         private static string GetTitleWithWeight(IPlayer player)
         {
-            return $"{Title} [Weight: {player.Inventory.GetWeight()} / {player.MaxCarryWeight}]";
+            const double kgWeightMultiplier = 1000d;
+
+            var currentWeight = player.Inventory.GetWeight() / kgWeightMultiplier;
+            var maxWeight = player.MaxCarryWeight / kgWeightMultiplier;
+            return $"{Title} [Weight: {currentWeight:F2} / {maxWeight:F2}]";
         }
 
         protected override InventoryStackItem CreateListBoxItem(InventoryStack stack)

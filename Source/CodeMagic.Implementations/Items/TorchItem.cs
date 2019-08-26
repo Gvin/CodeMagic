@@ -19,7 +19,7 @@ namespace CodeMagic.Implementations.Items
             Key = "torch",
             HitChance = 50,
             Rareness = ItemRareness.Trash,
-            Weight = 8,
+            Weight = 1500,
             MinDamage = new Dictionary<Element, int>
             {
                 {Element.Fire, 1},
@@ -50,7 +50,7 @@ namespace CodeMagic.Implementations.Items
         {
             return new[]
             {
-                new StyledLine {$"Weight: {Weight}"},
+                ItemTextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
                 new StyledLine { "Rude torch made from wood and clothes."}, 
             };

@@ -31,7 +31,7 @@ namespace CodeMagic.Implementations.Items
             var equipedArmor = player.Equipment.Armor[ArmorType];
             var result = new List<StyledLine>
             {
-                new StyledLine {$"Weight: {Weight}"},
+                ItemTextHelper.GetWeightLine(Weight),
                 StyledLine.Empty
             };
 

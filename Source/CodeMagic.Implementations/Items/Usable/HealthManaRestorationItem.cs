@@ -41,7 +41,11 @@ namespace CodeMagic.Implementations.Items.Usable
 
         public StyledLine[] GetDescription(IPlayer player)
         {
-            var result = new List<StyledLine>();
+            var result = new List<StyledLine>
+            {
+                ItemTextHelper.GetWeightLine(Weight),
+                StyledLine.Empty
+            };
 
             if (healValue > 0)
             {

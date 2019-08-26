@@ -45,7 +45,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Usable
                 Key = "restoration_potion_big",
                 Name = "Big Restoration Potion",
                 Rareness = ItemRareness.Rare,
-                Weight = 1
+                Weight = 500
             });
         }
 
@@ -61,7 +61,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Usable
                 Key = "restoration_potion",
                 Name = "Restoration Potion",
                 Rareness = ItemRareness.Uncommon,
-                Weight = 1
+                Weight = 300
             });
         }
 
@@ -77,7 +77,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Usable
                 Key = "restoration_potion_small",
                 Name = "Small Restoration Potion",
                 Rareness = ItemRareness.Common,
-                Weight = 1
+                Weight = 150
             });
         }
     }

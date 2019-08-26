@@ -29,7 +29,7 @@ namespace CodeMagic.Implementations.Items
         {
             var result = new List<StyledLine>
             {
-                new StyledLine {$"Weight: {Weight}"},
+                ItemTextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
                 new StyledLine
                 {

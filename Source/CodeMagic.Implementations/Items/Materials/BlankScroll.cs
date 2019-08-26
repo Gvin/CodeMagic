@@ -16,7 +16,7 @@ namespace CodeMagic.Implementations.Items.Materials
             Name = "Blank Scroll",
             Key = ItemKey,
             Rareness = ItemRareness.Common,
-            Weight = 1
+            Weight = 300
         })
         {
         }
@@ -37,7 +37,7 @@ namespace CodeMagic.Implementations.Items.Materials
         {
             return new[]
             {
-                new StyledLine {$"Weight: {Weight}"},
+                ItemTextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
                 new StyledLine {"An empty parchment scroll."},
                 new StyledLine {"A spell can be written to it with mana."},

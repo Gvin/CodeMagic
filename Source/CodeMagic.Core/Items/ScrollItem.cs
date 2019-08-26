@@ -35,7 +35,7 @@ namespace CodeMagic.Core.Items
     {
         public ScrollItemConfiguration()
         {
-            Weight = 1;
+            Weight = 300;
         }
 
         public string SpellName { get; set; }

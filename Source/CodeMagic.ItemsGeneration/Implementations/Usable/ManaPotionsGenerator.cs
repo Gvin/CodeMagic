@@ -44,7 +44,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Usable
                 Key = "mana_potion_big",
                 Name = "Big Mana Potion",
                 Rareness = ItemRareness.Rare,
-                Weight = 1
+                Weight = 500
             });
         }
 
@@ -59,7 +59,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Usable
                 Key = "mana_potion",
                 Name = "Mana Potion",
                 Rareness = ItemRareness.Uncommon,
-                Weight = 1
+                Weight = 300
             });
         }
 
@@ -74,7 +74,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Usable
                 Key = "mana_potion_small",
                 Name = "Small Mana Potion",
                 Rareness = ItemRareness.Common,
-                Weight = 1
+                Weight = 150
             });
         }
     }
