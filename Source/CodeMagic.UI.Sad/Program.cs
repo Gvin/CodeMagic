@@ -27,6 +27,8 @@ namespace CodeMagic.UI.Sad
 
         private static void Init()
         {
+            Game.Instance.Window.Title = "C0de Mag1c";
+
             var mainMenu = new MainMenuView();
             mainMenu.Show();
         }
