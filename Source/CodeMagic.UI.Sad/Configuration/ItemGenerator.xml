@@ -477,6 +477,111 @@
       </rareness-configuration>
     </axes>
 
+    <staffs>
+      <images>
+        <handle>
+          <image>Weapon_Empty</image>
+        </handle>
+        <shaft>
+          <image>Mace_Shaft_V1</image>
+          <image>Mace_Shaft_V2</image>
+          <image>Mace_Shaft_V3</image>
+        </shaft>
+        <head>
+          <image>Staff_Head_V1</image>
+          <image>Staff_Head_V2</image>
+          <image>Staff_Head_V3</image>
+          <image>Staff_Head_V4</image>
+        </head>
+      </images>
+
+      <weight>
+        <value material="Wood">2000</value>
+        <value material="Iron">2500</value>
+        <value material="Steel">2500</value>
+        <value material="Silver">3200</value>
+        <value material="ElvesMetal">1800</value>
+        <value material="DwarfsMetal">5000</value>
+        <value material="Mythril">700</value>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <damage>
+            <value element="Blunt">
+              <min-value>3</min-value>
+              <max-value>5</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>1</min-max-damage-difference>
+          <min-hit-chance>60</min-hit-chance>
+          <max-hit-chance>75</max-hit-chance>
+          <min-bonuses>0</min-bonuses>
+          <max-bonuses>1</max-bonuses>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <damage>
+            <value element="Blunt">
+              <min-value>7</min-value>
+              <max-value>10</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>2</min-max-damage-difference>
+          <min-hit-chance>65</min-hit-chance>
+          <max-hit-chance>80</max-hit-chance>
+          <min-bonuses>1</min-bonuses>
+          <max-bonuses>2</max-bonuses>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <damage>
+            <value element="Blunt">
+              <min-value>10</min-value>
+              <max-value>15</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>2</min-max-damage-difference>
+          <min-hit-chance>70</min-hit-chance>
+          <max-hit-chance>85</max-hit-chance>
+          <min-bonuses>2</min-bonuses>
+          <max-bonuses>3</max-bonuses>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <damage>
+            <value element="Blunt">
+              <min-value>20</min-value>
+              <max-value>25</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>3</min-max-damage-difference>
+          <min-hit-chance>75</min-hit-chance>
+          <max-hit-chance>85</max-hit-chance>
+          <min-bonuses>3</min-bonuses>
+          <max-bonuses>4</max-bonuses>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </staffs>
+
+
     <description>
       <material-description>
         <material value="Wood">

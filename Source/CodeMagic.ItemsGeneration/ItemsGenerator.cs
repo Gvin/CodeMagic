@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Implementations;
@@ -16,6 +17,7 @@ namespace CodeMagic.ItemsGeneration
         private const string WorldImageNameAxe = "ItemsOnGround_Weapon_Axe";
         private const string WorldImageNameDagger = "ItemsOnGround_Weapon_Dagger";
         private const string WorldImageNameMace = "ItemsOnGround_Weapon_Mace";
+        private const string WorldImageNameStaff = "ItemsOnGround_Weapon_Staff";
 
         private readonly Dictionary<WeaponType, IWeaponGenerator> weaponGenerators;
         private readonly ArmorGenerator armorGenerator;
@@ -61,6 +63,15 @@ namespace CodeMagic.ItemsGeneration
                     new HeadWeaponGenerator("Axe",
                         WorldImageNameAxe,
                         configuration.WeaponConfiguration.AxesConfiguration,
+                        configuration.WeaponConfiguration,
+                        bonusesGenerator,
+                        imagesStorage)
+                },
+                {
+                    WeaponType.Staff,
+                    new HeadWeaponGenerator("Staff",
+                        WorldImageNameStaff,
+                        configuration.WeaponConfiguration.StaffsConfiguration,
                         configuration.WeaponConfiguration,
                         bonusesGenerator,
                         imagesStorage)
@@ -118,15 +129,16 @@ namespace CodeMagic.ItemsGeneration
 
         private WeaponType GetRandomWeaponType()
         {
-            return (WeaponType) RandomHelper.GetRandomValue(0, 3);
+            return RandomHelper.GetRandomElement(Enum.GetValues(typeof(WeaponType)).Cast<WeaponType>().ToArray());
         }
 
         private enum WeaponType
         {
-            Sword = 0,
-            Dagger = 1,
-            Mace = 2,
-            Axe = 3
+            Sword,
+            Dagger,
+            Mace,
+            Axe,
+            Staff
         }
     }
 }

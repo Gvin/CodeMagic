@@ -14,6 +14,8 @@ namespace CodeMagic.ItemsGeneration.Configuration.Weapon
 
         IHeadWeaponConfiguration AxesConfiguration { get; }
 
+        IHeadWeaponConfiguration StaffsConfiguration { get; }
+
         IDescriptionConfiguration DescriptionConfiguration { get; }
     }
 }

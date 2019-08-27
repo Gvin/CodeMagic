@@ -39,6 +39,12 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
         public XmlHeadWeaponConfiguration AxesConfigurationData { get; set; }
 
         [XmlIgnore]
+        public IHeadWeaponConfiguration StaffsConfiguration => StaffsConfigurationData;
+
+        [XmlElement("staffs")]
+        public XmlHeadWeaponConfiguration StaffsConfigurationData { get; set; }
+
+        [XmlIgnore]
         public IDescriptionConfiguration DescriptionConfiguration => DescriptionConfigurationData;
 
         [XmlElement("description")]
