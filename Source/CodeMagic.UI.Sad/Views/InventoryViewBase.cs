@@ -199,17 +199,20 @@ namespace CodeMagic.UI.Sad.Views
                 var formattedText = FormatText(text, afterNameText, backColor, maxWidth);
                 surface.Print(1, y, formattedText);
                 surface.PrintStyledText(1 + formattedText.Count, y, afterNameText);
-                surface.Print(maxWidth - 4, y, new ColoredString(GetWeightText(), WeightColor, backColor));
+                surface.Print(maxWidth - 5, y, new ColoredString(GetWeightText(), WeightColor, backColor));
             }
 
             private string GetWeightText()
             {
-                if (Stack.Weight >= 100)
-                    return Stack.Weight.ToString();
-                if (Stack.Weight >= 10)
-                    return $" {Stack.Weight}";
+                const double kgMultiplier = 1000d;
+                var weightText = $"{Stack.Weight / kgMultiplier:F2}";
 
-                return $"  {Stack.Weight}";
+                if (weightText.Length >= 5)
+                    return weightText;
+                if (weightText.Length >= 4)
+                    return $" {weightText}";
+
+                return $"  {weightText}";
             }
 
             private ColoredString FormatText(ColoredString[] initialText, ColoredString[] afterNameText, Color backColor, int maxWidth)
