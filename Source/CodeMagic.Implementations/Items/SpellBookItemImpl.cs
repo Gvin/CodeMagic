@@ -27,23 +27,37 @@ namespace CodeMagic.Implementations.Items
 
         public StyledLine[] GetDescription(IPlayer player)
         {
-            var result = new List<StyledLine>
-            {
-                ItemTextHelper.GetWeightLine(Weight),
-                StyledLine.Empty,
-                new StyledLine
-                {
-                    $"Spells Capacity: {BookSize}",
-                    ItemTextHelper.GetComparisonString(BookSize, player.Equipment.SpellBook?.BookSize ?? 0)
-                },
-                new StyledLine { $"Spells In Book: {Spells.Count(spell => spell != null)}" },
-                StyledLine.Empty,
-            };
+            var equipedBook = player.Equipment.SpellBook;
 
-            result.AddRange(description.Select(line => new StyledLine
+            var result = new List<StyledLine>();
+
+            if (equipedBook == null || Equals(equipedBook))
             {
-                new StyledString(line, ItemTextHelper.DescriptionTextColor)
-            }).ToArray());
+                result.Add(ItemTextHelper.GetWeightLine(Weight));
+            }
+            else
+            {
+                result.Add(ItemTextHelper.GetCompareWeightLine(Weight, equipedBook.Weight));
+            }
+
+            result.Add(StyledLine.Empty);
+
+            var capacityLine = new StyledLine { "Spells Capacity: " };
+            if (equipedBook == null || Equals(equipedBook))
+            {
+                capacityLine.Add(ItemTextHelper.GetValueString(BookSize, formatBonus: false));
+            }
+            else
+            {
+                capacityLine.Add(ItemTextHelper.GetCompareValueString(BookSize, equipedBook.BookSize, formatBonus: false));
+            }
+            result.Add(capacityLine);
+
+            result.Add(new StyledLine { $"Spells In Book: {Spells.Count(spell => spell != null)}" });
+
+            result.Add(StyledLine.Empty);
+
+            result.AddRange(ItemTextHelper.ConvertDescription(description));
 
             return result.ToArray();
         }

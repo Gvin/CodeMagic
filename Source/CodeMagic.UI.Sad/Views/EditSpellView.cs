@@ -128,6 +128,10 @@ namespace CodeMagic.UI.Sad.Views
             Print(3, 2, "Edit spell file, fill all data and click OK to continue.");
             Print(3, 4, "Spell Name:");
             Print(3, 7, "Mana Cost:");
+
+            Print(3, Height - 5,
+                new ColoredString("Don't forget to save spell file changes before pressing OK.",
+                    new Cell(Color.Red, DefaultBackground)));
         }
 
         public string Name { get; set; }

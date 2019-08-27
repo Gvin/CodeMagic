@@ -27,17 +27,29 @@ namespace CodeMagic.Implementations.Items
         {
             var equipedWeapon = player.Equipment.Weapon;
 
-            var result = new List<StyledLine>
+            var result = new List<StyledLine>();
+
+            if (equipedWeapon == null || Equals(equipedWeapon))
             {
-                ItemTextHelper.GetWeightLine(Weight),
-                StyledLine.Empty
-            };
+                result.Add(ItemTextHelper.GetWeightLine(Weight));
+            }
+            else
+            {
+                result.Add(ItemTextHelper.GetCompareWeightLine(Weight, equipedWeapon.Weight));
+            }
+
+            result.Add(StyledLine.Empty);
+
             AddDamageDescription(result, equipedWeapon);
 
-            var hitChanceLine = new StyledLine {$"Hit Chance: {HitChance}"};
-            if (!Equals(equipedWeapon))
+            var hitChanceLine = new StyledLine {"Hit Chance: "};
+            if (equipedWeapon == null || Equals(equipedWeapon))
             {
-                hitChanceLine.Add(ItemTextHelper.GetComparisonString(HitChance, equipedWeapon?.HitChance ?? 0));
+                hitChanceLine.Add(ItemTextHelper.GetValueString(HitChance, "%", false));
+            }
+            else
+            {
+                hitChanceLine.Add(ItemTextHelper.GetCompareValueString(HitChance, equipedWeapon.HitChance, "%", false));
             }
             result.Add(hitChanceLine);
 
@@ -46,16 +58,15 @@ namespace CodeMagic.Implementations.Items
             result.Add(StyledLine.Empty);
             ItemTextHelper.AddLightBonusDescription(this, result);
             result.Add(StyledLine.Empty);
-            result.AddRange(description.Select(line => new StyledLine
-            {
-                new StyledString(line, ItemTextHelper.DescriptionTextColor)
-            }).ToArray());
+            result.AddRange(ItemTextHelper.ConvertDescription(description));
 
             return result.ToArray();
         }
 
         private void AddDamageDescription(List<StyledLine> descriptionResult, WeaponItem equipedWeapon)
         {
+            var equiped = Equals(equipedWeapon);
+
             foreach (Element element in Enum.GetValues(typeof(Element)))
             {
                 var maxDamage = GetMaxDamage(this, element);
@@ -67,46 +78,44 @@ namespace CodeMagic.Implementations.Items
                 if (maxDamage == 0 && minDamage == 0 && otherMaxDamage == 0 && otherMinDamage == 0)
                     continue;
 
-                Color? otherMinDamageColor = null;
-                if (otherMinDamage > minDamage)
-                {
-                    otherMinDamageColor = ItemTextHelper.NegativeValueColor;
-                }
-
-                if (otherMinDamage < minDamage)
-                {
-                    otherMinDamageColor = ItemTextHelper.PositiveValueColor;
-                }
-
-                Color? otherMaxDamageColor = null;
-                if (otherMaxDamage > maxDamage)
-                {
-                    otherMaxDamageColor = ItemTextHelper.NegativeValueColor;
-                }
-
-                if (otherMaxDamage < maxDamage)
-                {
-                    otherMaxDamageColor = ItemTextHelper.PositiveValueColor;
-                }
-
                 var damageLine = new StyledLine
                 {
                     new StyledString($"{ItemTextHelper.GetElementName(element)}",
                         ItemTextHelper.GetElementColor(element)),
-                    $" Damage: {minDamage} - {maxDamage}"
+                    " Damage: "
                 };
 
-                if (minDamage != otherMinDamage || maxDamage != otherMaxDamage)
+                if (equiped)
                 {
-                    damageLine.Add(" now (");
-                    damageLine.Add(new StyledString(otherMinDamage.ToString(), otherMinDamageColor));
+                    damageLine.Add($"{minDamage} - {maxDamage}");
+                }
+                else
+                {
+                    var thisMinColor = GetValueDependentColor(minDamage, otherMinDamage);
+                    var thisMaxColor = GetValueDependentColor(maxDamage, otherMaxDamage);
+
+                    var otherMinColor = GetValueDependentColor(otherMinDamage, minDamage);
+                    var otherMaxColor = GetValueDependentColor(otherMaxDamage, maxDamage);
+
+                    damageLine.Add(new StyledString(minDamage.ToString(), thisMinColor));
                     damageLine.Add(" - ");
-                    damageLine.Add(new StyledString(otherMaxDamage.ToString(), otherMaxDamageColor));
+                    damageLine.Add(new StyledString(maxDamage.ToString(), thisMaxColor));
+                    damageLine.Add(" (now ");
+                    damageLine.Add(new StyledString(otherMinDamage.ToString(), otherMinColor));
+                    damageLine.Add(" - ");
+                    damageLine.Add(new StyledString(otherMaxDamage.ToString(), otherMaxColor));
                     damageLine.Add(")");
                 }
 
                 descriptionResult.Add(damageLine);
             }
+        }
+
+        private Color GetValueDependentColor(int value, int otherValue)
+        {
+            if (value == otherValue)
+                return ItemTextHelper.NeutralColor;
+            return value > otherValue ? ItemTextHelper.PositiveValueColor : ItemTextHelper.NegativeValueColor;
         }
 
         private static int GetMaxDamage(WeaponItem item, Element element)

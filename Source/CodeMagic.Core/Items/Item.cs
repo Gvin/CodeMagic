@@ -29,6 +29,9 @@ namespace CodeMagic.Core.Items
 
         public bool Equals(IItem other)
         {
+            if (other == null)
+                return false;
+
             if (Stackable)
             {
                 return string.Equals(Key, other.Key);

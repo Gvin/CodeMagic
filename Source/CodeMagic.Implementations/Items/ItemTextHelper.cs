@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
@@ -18,6 +19,7 @@ namespace CodeMagic.Implementations.Items
 
         public static readonly Color PositiveValueColor = Color.LimeGreen;
         public static readonly Color NegativeValueColor = Color.Red;
+        public static readonly Color NeutralColor = Color.White;
 
         public static readonly Color DescriptionTextColor = Color.Gray;
 
@@ -31,18 +33,66 @@ namespace CodeMagic.Implementations.Items
             return new StyledLine {$"Weight: {weight / kgWeightMultiplier:F2} kg"};
         }
 
-        public static StyledString[] GetComparisonString(int newValue, int currentValue)
+        public static StyledLine GetCompareWeightLine(int weight, int equipedWeight)
         {
-            if (newValue == currentValue)
-                return new StyledString[0];
+            const double kgWeightMultiplier = 1000d;
 
-            var isUp = newValue > currentValue;
-            var textColor = isUp ? PositiveValueColor : NegativeValueColor;
+            Color newValueColor;
+            Color currentValueColor;
+            if (weight == equipedWeight)
+            {
+                newValueColor = NeutralColor;
+                currentValueColor = NeutralColor;
+            }
+            else
+            {
+                newValueColor = weight < equipedWeight ? PositiveValueColor : NegativeValueColor;
+                currentValueColor = weight > equipedWeight ? PositiveValueColor : NegativeValueColor;
+            }
+
+            return new StyledLine
+            {
+                "Weight: ",
+                new StyledString($"{weight / kgWeightMultiplier:F2}", newValueColor),
+                " kg (now ",
+                new StyledString($"{equipedWeight / kgWeightMultiplier:F2}", currentValueColor),
+                " kg)"
+            };
+        }
+
+        public static StyledString[] GetCompareValueString(int newValue, int currentValue, string valuePostfix = "", bool formatBonus = true)
+        {
+            Color newValueColor;
+            Color currentValueColor;
+            if (newValue == currentValue)
+            {
+                newValueColor = NeutralColor;
+                currentValueColor = NeutralColor;
+            }
+            else
+            {
+                newValueColor = newValue > currentValue ? PositiveValueColor : NegativeValueColor;
+                currentValueColor = newValue < currentValue ? PositiveValueColor : NegativeValueColor;
+            }
+
+            var stringNewValue = formatBonus ? FormatBonusNumber(newValue) : newValue.ToString();
+            var stringCurrentValue = formatBonus ? FormatBonusNumber(currentValue) : currentValue.ToString();
+
             return new[]
             {
+                new StyledString($"{stringNewValue}{valuePostfix}", newValueColor),
                 new StyledString(" (now "),
-                new StyledString(currentValue.ToString(), textColor),
-                new StyledString(")"),
+                new StyledString($"{stringCurrentValue}{valuePostfix}", currentValueColor),
+                new StyledString(")")
+            };
+        }
+
+        public static StyledString[] GetValueString(int value, string valuePostfix = "", bool formatBonus = true)
+        {
+            var stringValue = formatBonus ? FormatBonusNumber(value) : value.ToString();
+            return new[]
+            {
+                new StyledString($"{stringValue}{valuePostfix}", NeutralColor)
             };
         }
 
@@ -121,15 +171,24 @@ namespace CodeMagic.Implementations.Items
 
         public static void AddBonusesDescription(EquipableItem item, EquipableItem equiped, List<StyledLine> descriptionResult)
         {
+            var equalItems = item.Equals(equiped);
+
             var equipedHealthBonus = equiped?.HealthBonus ?? 0;
             if (item.HealthBonus > 0 || equipedHealthBonus > 0)
             {
                 var healthBonusDescription = new StyledLine
                 {
-                    "Health Bonus: ",
-                    new StyledString(FormatBonusNumber(item.HealthBonus), HealthColor),
-                    GetComparisonString(item.HealthBonus, equipedHealthBonus)
+                    new StyledString("Health", HealthColor),
+                    " Bonus: "
                 };
+                if (equalItems)
+                {
+                    healthBonusDescription.Add(GetValueString(item.HealthBonus));
+                }
+                else
+                {
+                    healthBonusDescription.Add(GetCompareValueString(item.HealthBonus, equipedHealthBonus));
+                }
                 descriptionResult.Add(healthBonusDescription);
             }
 
@@ -138,10 +197,17 @@ namespace CodeMagic.Implementations.Items
             {
                 var manaBonusDescription = new StyledLine
                 {
-                    "Mana Bonus: ",
-                    new StyledString(FormatBonusNumber(item.ManaBonus), ManaColor),
-                    GetComparisonString(item.ManaBonus, equipedManaBonus)
+                    new StyledString("Mana", ManaColor),
+                    " Bonus: "
                 };
+                if (equalItems)
+                {
+                    manaBonusDescription.Add(GetValueString(item.ManaBonus));
+                }
+                else
+                {
+                    manaBonusDescription.Add(GetCompareValueString(item.ManaBonus, equipedManaBonus));
+                }
                 descriptionResult.Add(manaBonusDescription);
             }
 
@@ -150,12 +216,27 @@ namespace CodeMagic.Implementations.Items
             {
                 var manaRegenBonusDescription = new StyledLine
                 {
-                    "Mana Regeneration Bonus: ",
-                    new StyledString(FormatBonusNumber(item.ManaRegenerationBonus), ManaRegenerationColor),
-                    GetComparisonString(item.ManaRegenerationBonus, equipedManaRegenBonus)
+                    new StyledString("Mana Regeneration", ManaRegenerationColor),
+                    " Bonus: "
                 };
+                if (equalItems)
+                {
+                    manaRegenBonusDescription.Add(GetValueString(item.ManaRegenerationBonus));
+                }
+                else
+                {
+                    manaRegenBonusDescription.Add(GetCompareValueString(item.ManaRegenerationBonus, equipedManaRegenBonus));
+                }
                 descriptionResult.Add(manaRegenBonusDescription);
             }
+        }
+
+        public static StyledLine[] ConvertDescription(string[] description)
+        {
+            return description.Select(line => new StyledLine
+            {
+                new StyledString(line, DescriptionTextColor)
+            }).ToArray();
         }
 
         public static string FormatBonusNumber(int number)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
@@ -29,31 +28,36 @@ namespace CodeMagic.Implementations.Items
         public StyledLine[] GetDescription(IPlayer player)
         {
             var equipedArmor = player.Equipment.Armor[ArmorType];
-            var result = new List<StyledLine>
+
+            var result = new List<StyledLine>();
+
+            if (equipedArmor == null || Equals(equipedArmor))
             {
-                ItemTextHelper.GetWeightLine(Weight),
-                StyledLine.Empty
-            };
+                result.Add(ItemTextHelper.GetWeightLine(Weight));
+            }
+            else
+            {
+                result.Add(ItemTextHelper.GetCompareWeightLine(Weight, equipedArmor.Weight));
+            }
+
+            result.Add(StyledLine.Empty);
 
             AddProtectionDescription(result, equipedArmor);
 
             result.Add(StyledLine.Empty);
 
-
             ItemTextHelper.AddBonusesDescription(this, equipedArmor, result);
 
             result.Add(StyledLine.Empty);
 
-            result.AddRange(description.Select(line => new StyledLine
-            {
-                new StyledString(line, ItemTextHelper.DescriptionTextColor)
-            }).ToArray());
+            result.AddRange(ItemTextHelper.ConvertDescription(description));
 
             return result.ToArray();
         }
 
         private void AddProtectionDescription(List<StyledLine> descriptionResult, ArmorItem equipedArmor)
         {
+            var equiped = Equals(equipedArmor);
             foreach (Element element in Enum.GetValues(typeof(Element)))
             {
                 var value = GetProtection(element);
@@ -61,14 +65,23 @@ namespace CodeMagic.Implementations.Items
 
                 if (value != 0 || equipedValue != 0)
                 {
-                    descriptionResult.Add(new StyledLine
+                    var protectionLine = new StyledLine
                     {
-                        new StyledString($"{ItemTextHelper.GetElementName(element)}", ItemTextHelper.GetElementColor(element)), 
-                        " Protection: ",
-                        new StyledString(ItemTextHelper.FormatBonusNumber(value), value > 0 ? ItemTextHelper.PositiveValueColor : ItemTextHelper.NegativeValueColor), 
-                        "%",
-                        ItemTextHelper.GetComparisonString(value, equipedValue)
-                    });
+                        new StyledString($"{ItemTextHelper.GetElementName(element)}",
+                            ItemTextHelper.GetElementColor(element)),
+                        " Protection: "
+                    };
+
+                    if (equiped)
+                    {
+                        protectionLine.Add(ItemTextHelper.GetValueString(value, "%"));;
+                    }
+                    else
+                    {
+                        protectionLine.Add(ItemTextHelper.GetCompareValueString(value, equipedValue, "%"));
+                    }
+
+                    descriptionResult.Add(protectionLine);
                 }
             }
         }
