@@ -12,6 +12,7 @@ using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
+using CodeMagic.UI.Sad.SpellsLibrary;
 using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
@@ -38,6 +39,8 @@ namespace CodeMagic.UI.Sad.Views
         private Button castSpellButton;
         private Button removeSpellButton;
         private Button scribeSpellButton;
+        private Button saveToLibraryButton;
+        private Button loadFromLibraryButton;
 
         public SpellBookView(IGameCore game) 
             : base(Program.Width, Program.Height)
@@ -66,7 +69,7 @@ namespace CodeMagic.UI.Sad.Views
             closeButton.Click += closeButton_Click;
             Add(closeButton);
 
-            editSpellButton = new Button(20, 3)
+            editSpellButton = new Button(25, 3)
             {
                 Position = new Point(Width - 57, 13),
                 Text = "[E] Edit Spell",
@@ -76,7 +79,7 @@ namespace CodeMagic.UI.Sad.Views
             editSpellButton.Click += editSpellButton_Click;
             Add(editSpellButton);
 
-            castSpellButton = new Button(20, 3)
+            castSpellButton = new Button(25, 3)
             {
                 Position = new Point(Width - 57, 16),
                 Text = "[C] Cast Spell",
@@ -86,7 +89,7 @@ namespace CodeMagic.UI.Sad.Views
             castSpellButton.Click += castSpellButton_Click;
             Add(castSpellButton);
 
-            removeSpellButton = new Button(20, 3)
+            removeSpellButton = new Button(25, 3)
             {
                 Position = new Point(Width - 57, 19),
                 Text = "[R] Remove Spell",
@@ -96,7 +99,7 @@ namespace CodeMagic.UI.Sad.Views
             removeSpellButton.Click += removeSpellButton_Click;
             Add(removeSpellButton);
 
-            scribeSpellButton = new Button(20, 3)
+            scribeSpellButton = new Button(25, 3)
             {
                 Position = new Point(Width - 57, 22),
                 Text = "[G] Write Scroll",
@@ -105,6 +108,26 @@ namespace CodeMagic.UI.Sad.Views
             };
             scribeSpellButton.Click += scribeSpellButton_Click;
             Add(scribeSpellButton);
+
+            saveToLibraryButton = new Button(25, 3)
+            {
+                Position = new Point(Width - 30, 16),
+                Text = "[T] Save to Library",
+                CanFocus = false,
+                Theme = buttonsTheme
+            };
+            saveToLibraryButton.Click += (sender, args) => SaveSpellToLibrary();
+            Add(saveToLibraryButton);
+
+            loadFromLibraryButton = new Button(25, 3)
+            {
+                Position = new Point(Width - 30, 13),
+                Text = "[L] Load from Library",
+                CanFocus = false,
+                Theme = buttonsTheme
+            };
+            loadFromLibraryButton.Click += (sender, args) => LoadSpellFromLibrary();
+            Add(loadFromLibraryButton);
 
             spellDetails = new SpellDetailsControl(57, Height - 10)
             {
@@ -135,6 +158,29 @@ namespace CodeMagic.UI.Sad.Views
             RefreshSpells();
 
             UpdateSpellDetails();
+        }
+
+        private void SaveSpellToLibrary()
+        {
+            var selectedSpell = spellsListBox.SelectedItem?.Spell;
+            if (selectedSpell == null)
+                return;
+
+            new SpellsLibraryManager().SaveSpell(selectedSpell);
+        }
+
+        private void LoadSpellFromLibrary()
+        {
+            var view = new LoadSpellFromLibraryView();
+            view.Closed += (sender, args) =>
+            {
+                if (args.Result.HasValue && args.Result == DialogResult.OK && view.SelectedSpell != null)
+                {
+                    Book.Spells[spellsListBox.SelectedItem.BookIndex] = view.SelectedSpell;
+                    RefreshSpells();
+                }
+            };
+            view.Show();
         }
 
         private void scribeSpellButton_Click(object sender, EventArgs e)
@@ -280,6 +326,7 @@ namespace CodeMagic.UI.Sad.Views
             spellDetails.Spell = selectedSpellItem?.Spell;
 
             var spellExists = selectedSpellItem?.Spell != null;
+            saveToLibraryButton.IsVisible = spellExists;
             removeSpellButton.IsVisible = spellExists;
             castSpellButton.IsVisible = spellExists;
             scribeSpellButton.IsVisible = spellExists && game.Player.Inventory.Contains(BlankScroll.ItemKey);
@@ -328,6 +375,12 @@ namespace CodeMagic.UI.Sad.Views
                 case Keys.G:
                     WriteSpellToScroll();
                     return true;
+                case Keys.T:
+                    SaveSpellToLibrary();
+                    return true;
+                case Keys.L:
+                    LoadSpellFromLibrary();
+                    return true;
                 case Keys.Up:
                 case Keys.W:
                     MoveSelectionUp();
@@ -355,61 +408,61 @@ namespace CodeMagic.UI.Sad.Views
         {
             Close();
         }
+    }
 
-        private class SpellListBoxItem : ICustomListBoxItem
+    public class SpellListBoxItem : ICustomListBoxItem
+    {
+        private const string EmptySpellName = "Empty";
+        private static readonly Color EmptySpellNameColor = Color.Gray;
+        private static readonly Color SpellNameColor = Color.White;
+        private static readonly Color SpellIndexColor = Color.Green;
+        private static readonly Color SelectedItemBackColor = Color.FromNonPremultiplied(255, 128, 0, 255);
+        private static readonly Color DefaultBackColor = Color.Black;
+
+        public SpellListBoxItem(BookSpell spell, int bookIndex)
         {
-            private const string EmptySpellName = "Empty";
-            private static readonly Color EmptySpellNameColor = Color.Gray;
-            private static readonly Color SpellNameColor = Color.White;
-            private static readonly Color SpellIndexColor = Color.Green;
-            private static readonly Color SelectedItemBackColor = Color.FromNonPremultiplied(255, 128, 0, 255);
-            private static readonly Color DefaultBackColor = Color.Black;
+            Spell = spell;
+            BookIndex = bookIndex;
+        }
 
-            public SpellListBoxItem(BookSpell spell, int bookIndex)
-            {
-                Spell = spell;
-                BookIndex = bookIndex;
-            }
+        public BookSpell Spell { get; }
 
-            public BookSpell Spell { get; }
+        public int BookIndex { get; }
 
-            public int BookIndex { get; }
+        public bool Equals(ICustomListBoxItem other)
+        {
+            return ReferenceEquals(this, other);
+        }
 
-            public bool Equals(ICustomListBoxItem other)
-            {
-                return ReferenceEquals(this, other);
-            }
+        public void Draw(CellSurface surface, int y, int maxWidth, bool selected)
+        {
+            var backColor = selected ? SelectedItemBackColor : DefaultBackColor;
 
-            public void Draw(CellSurface surface, int y, int maxWidth, bool selected)
-            {
-                var backColor = selected ? SelectedItemBackColor : DefaultBackColor;
+            surface.Fill(0, y, maxWidth, null, backColor, null);
 
-                surface.Fill(0, y, maxWidth, null, backColor, null);
+            var indexText = BookIndex < 9 ? $"0{BookIndex + 1}" : $"{BookIndex + 1}";
+            surface.Print(1, y, indexText, new Cell(SpellIndexColor, backColor));
 
-                var indexText = BookIndex < 9 ? $"0{BookIndex + 1}" : $"{BookIndex + 1}";
-                surface.Print(1, y, indexText, new Cell(SpellIndexColor, backColor));
+            var spellName = Spell?.Name ?? EmptySpellName;
+            var spellNameColor = Spell == null ? EmptySpellNameColor : SpellNameColor;
+            surface.Print(4, y, spellName, new Cell(spellNameColor, backColor));
 
-                var spellName = Spell?.Name ?? EmptySpellName;
-                var spellNameColor = Spell == null ? EmptySpellNameColor : SpellNameColor;
-                surface.Print(4, y, spellName, new Cell(spellNameColor, backColor));
+            var manaCost = GetManaCostText();
+            surface.Print(maxWidth - 5, y, manaCost, new Cell(ItemTextHelper.ManaColor.ToXna(), backColor));
+        }
 
-                var manaCost = GetManaCostText();
-                surface.Print(maxWidth - 5, y, manaCost, new Cell(ItemTextHelper.ManaColor.ToXna(), backColor));
-            }
+        private string GetManaCostText()
+        {
+            if (Spell == null)
+                return string.Empty;
 
-            private string GetManaCostText()
-            {
-                if (Spell == null)
-                    return string.Empty;
-
-                if (Spell.ManaCost >= 1000)
-                    return Spell.ManaCost.ToString();
-                if (Spell.ManaCost >= 100)
-                    return $" {Spell.ManaCost}";
-                if (Spell.ManaCost >= 10)
-                    return $"  {Spell.ManaCost}";
-                return $"   {Spell.ManaCost}";
-            }
+            if (Spell.ManaCost >= 1000)
+                return Spell.ManaCost.ToString();
+            if (Spell.ManaCost >= 100)
+                return $" {Spell.ManaCost}";
+            if (Spell.ManaCost >= 10)
+                return $"  {Spell.ManaCost}";
+            return $"   {Spell.ManaCost}";
         }
     }
 }

@@ -54,7 +54,10 @@ namespace CodeMagic.UI.Sad.Controls
             set
             {
                 ClearSelection();
-                items[value].Selected = true;
+                if (value >= 0 && value < items.Count)
+                {
+                    items[value].Selected = true;
+                }
                 SelectionChanged?.Invoke(this, EventArgs.Empty);
             }
         }
