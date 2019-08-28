@@ -1,4 +1,5 @@
-﻿using CodeMagic.UI.Sad.GameProcess;
+﻿using System;
+using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.Views;
 using SadConsole;
 
@@ -10,6 +11,7 @@ namespace CodeMagic.UI.Sad
         public const int Height = 50;
         public const int MapCellImageSize = 3;
 
+        [STAThread]
         static void Main(string[] args)
         {
             GameConfigurator.Configure();

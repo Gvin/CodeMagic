@@ -2,9 +2,6 @@
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
-using SadConsole;
-using SadConsole.Controls;
-using SadConsole.Themes;
 using Game = SadConsole.Game;
 
 namespace CodeMagic.UI.Sad.Views
@@ -12,9 +9,10 @@ namespace CodeMagic.UI.Sad.Views
     public class MainMenuView : View
     {
         private GameLogoControl gameLabel;
-        private Button startGameButton;
-        private Button spellsLibraryButton;
-        private Button exitButton;
+        private StandardButton startGameButton;
+        private StandardButton spellsLibraryButton;
+        private StandardButton exitButton;
+        private StandardButton settingsButton;
 
         public MainMenuView() 
             : base(Program.Width, Program.Height)
@@ -32,43 +30,42 @@ namespace CodeMagic.UI.Sad.Views
             };
             Add(gameLabel);
 
-            var menuButtonsTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(DefaultForeground, DefaultBackground)
-                }
-            };
-
-            startGameButton = new Button(20, 3)
+            startGameButton = new StandardButton(20)
             {
                 Position = new Point(xPosition - 2, 9),
-                Text = "Start Game",
-                Theme = menuButtonsTheme,
-                CanFocus = false
+                Text = "Start Game"
             };
             startGameButton.Click += startGameButton_Click;
             Add(startGameButton);
 
-            spellsLibraryButton = new Button(20,3)
+            spellsLibraryButton = new StandardButton(20)
             {
                 Position = new Point(xPosition - 2, 13),
-                Text = "Spells L1brary",
-                Theme = menuButtonsTheme,
-                CanFocus = false
+                Text = "Spells L1brary"
             };
             spellsLibraryButton.Click += (sender, args) => OpenSpellsLibrary();
             Add(spellsLibraryButton);
 
-            exitButton = new Button(20, 3)
+            settingsButton = new StandardButton(20)
             {
                 Position = new Point(xPosition - 2, 17),
-                Text = "Ex1t",
-                Theme = menuButtonsTheme,
-                CanFocus = false
+                Text = "Sett1ngs"
+            };
+            settingsButton.Click += (sender, args) => OpenSettingsDialog();
+            Add(settingsButton);
+
+            exitButton = new StandardButton(20)
+            {
+                Position = new Point(xPosition - 2, 21),
+                Text = "Ex1t"
             };
             exitButton.Click += exitButton_Click;
             Add(exitButton);
+        }
+
+        private void OpenSettingsDialog()
+        {
+            new SettingsView().Show();
         }
 
         private void OpenSpellsLibrary()

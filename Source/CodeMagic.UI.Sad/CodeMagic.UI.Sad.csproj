@@ -64,6 +64,7 @@
     <Compile Include="Controls\JournalBoxControl.cs" />
     <Compile Include="Controls\PlayerStatsControl.cs" />
     <Compile Include="Controls\SpellDetailsControl.cs" />
+    <Compile Include="Controls\StandardButton.cs" />
     <Compile Include="Drawing\CellImageHelper.cs" />
     <Compile Include="Drawing\ObjectEffects\DamageEffect.cs" />
     <Compile Include="Drawing\ImageProviding\InventoryImagesFactory.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Views\CustomInventoryView.cs" />
     <Compile Include="Views\MainMenuView.cs" />
     <Compile Include="Views\PlayerDeathView.cs" />
+    <Compile Include="Views\SettingsView.cs" />
     <Compile Include="Views\SpellBookView.cs" />
     <Compile Include="Views\SpellsLibraryViewBase.cs" />
     <Compile Include="Views\View.cs" />
