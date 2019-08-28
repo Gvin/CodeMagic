@@ -70,5 +70,17 @@ namespace CodeMagic.UI.Sad.Properties {
                 return ((bool)(this["DebugWriteMapToFile"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("One")]
+        public string FontSize {
+            get {
+                return ((string)(this["FontSize"]));
+            }
+            set {
+                this["FontSize"] = value;
+            }
+        }
     }
 }

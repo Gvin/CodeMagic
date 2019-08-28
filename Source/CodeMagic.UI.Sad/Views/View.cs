@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using CodeMagic.UI.Sad.Common;
+using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
@@ -14,7 +15,7 @@ namespace CodeMagic.UI.Sad.Views
         public event EventHandler<ViewClosedEventArgs> Closed;
 
         public View(int width, int height) 
-            : base(width, height)
+            : base(width, height, FontProvider.CurrentFont)
         {
             DefaultForeground = Color.White;
             DefaultBackground = Color.Black;
