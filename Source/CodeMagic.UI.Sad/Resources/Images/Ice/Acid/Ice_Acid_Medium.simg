@@ -19,7 +19,7 @@
         <B>157</B>
       </background-color>
     </pixel>
-    <pixel symbol=".">
+    <pixel glyph="46">
       <color>
         <R>255</R>
         <G>255</G>

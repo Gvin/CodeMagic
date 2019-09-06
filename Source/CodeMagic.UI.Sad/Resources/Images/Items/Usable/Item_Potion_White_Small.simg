@@ -10,7 +10,7 @@
   <row>
     <pixel />
     <pixel />
-    <pixel symbol="▄">
+    <pixel glyph="220">
       <color>
         <R>135</R>
         <G>87</G>

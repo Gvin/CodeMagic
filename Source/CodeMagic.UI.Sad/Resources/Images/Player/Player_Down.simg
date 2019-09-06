@@ -6,14 +6,14 @@
     <pixel />
   </row>
   <row>
-    <pixel symbol="◄">
+    <pixel glyph="17">
       <color>
         <R>128</R>
         <G>0</G>
         <B>128</B>
       </color>
     </pixel>
-    <pixel symbol="☻">
+    <pixel glyph="2">
       <color>
         <R>0</R>
         <G>255</G>
@@ -25,7 +25,7 @@
         <B>128</B>
       </background-color>
     </pixel>
-    <pixel symbol="►">
+    <pixel glyph="16">
       <color>
         <R>128</R>
         <G>0</G>
@@ -35,7 +35,7 @@
   </row>
   <row>
     <pixel />
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>

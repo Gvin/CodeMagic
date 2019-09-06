@@ -8,7 +8,7 @@ namespace CodeMagic.UI.Sad
 {
     static class Program
     {
-        public const int Width = 120;
+        public const int Width = 100;
         public const int Height = 50;
 
         public const int MapCellImageSize = 3;
@@ -20,8 +20,8 @@ namespace CodeMagic.UI.Sad
             FontProvider.InitializeFont();
 
             // Setup the engine and create the main window.
-            var gameWidth = (int) Math.Floor(Width * FontProvider.FontSizeMultiplier);
-            var gameHeight = (int) Math.Floor(Height * FontProvider.FontSizeMultiplier);
+            var gameWidth = (int) Math.Floor(Width * FontProvider.FontHorizontalMultiplier);
+            var gameHeight = (int) Math.Floor(Height * FontProvider.FontVerticalMultiplier);
             Game.Create(gameWidth, gameHeight);
 
             // Hook the start event so we can add consoles to the system.

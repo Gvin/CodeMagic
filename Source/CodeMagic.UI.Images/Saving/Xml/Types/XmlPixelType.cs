@@ -13,13 +13,20 @@ namespace CodeMagic.UI.Images.Saving.Xml.Types
 
         public XmlPixelType(SymbolsImage.Pixel pixel)
         {
-            Symbol = pixel.Symbol?.ToString();
+            Glyph = pixel.Symbol;
             Color = pixel.Color.HasValue ? new XmlColorType(pixel.Color.Value) : null;
             BackgroundColor = pixel.BackgroundColor.HasValue ? new XmlColorType(pixel.BackgroundColor.Value) : null;
         }
 
-        [XmlAttribute("symbol")]
-        public string Symbol { get; set; }
+        [XmlIgnore]
+        public int? Glyph { get; set; }
+
+        [XmlAttribute("glyph")]
+        public string GlyphData
+        {
+            get => Glyph.HasValue ? Glyph.ToString() : null;
+            set => Glyph = value == null ? (int?)null : int.Parse(value);
+        }
 
         [XmlElement("color")]
         public XmlColorType Color { get; set; }

@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
-<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="20" height="10">
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="14" height="12">
   <row>
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -24,7 +18,14 @@
   </row>
   <row>
     <pixel />
-    <pixel symbol="▼">
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -36,7 +37,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -48,7 +49,49 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="176">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -60,7 +103,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -72,159 +115,25 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
         <B>0</B>
       </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
     </pixel>
     <pixel />
   </row>
   <row>
     <pixel />
-    <pixel symbol="▼">
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -236,7 +145,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -248,7 +157,49 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="176">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -260,7 +211,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -272,163 +223,12 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
         <B>0</B>
       </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
     </pixel>
     <pixel />
   </row>
@@ -436,8 +236,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -449,7 +248,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -461,7 +260,35 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="176">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -473,7 +300,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -485,103 +312,6 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -590,8 +320,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -603,7 +332,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -615,7 +344,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -627,7 +356,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -639,7 +368,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -651,7 +380,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -663,7 +392,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -675,7 +404,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -687,55 +416,6 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -744,8 +424,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -757,7 +436,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -769,7 +448,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -781,7 +460,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -793,7 +472,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -805,7 +484,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -817,7 +496,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -829,7 +508,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -841,55 +520,6 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -898,8 +528,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -911,7 +540,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -923,7 +552,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -935,7 +564,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -947,7 +576,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -959,7 +588,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -971,7 +600,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -983,7 +612,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -995,55 +624,6 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -1052,8 +632,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1065,7 +644,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1077,7 +656,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1089,7 +668,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1101,7 +680,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1113,7 +692,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1125,7 +704,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1137,7 +716,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1149,55 +728,6 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -1206,8 +736,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1219,7 +748,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1231,7 +760,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1243,7 +772,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1255,7 +784,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1267,7 +796,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1279,7 +808,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1291,7 +820,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
+    <pixel glyph="31">
       <color>
         <R>0</R>
         <G>255</G>
@@ -1303,55 +832,6 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -1360,9 +840,211 @@
     <pixel />
     <pixel />
     <pixel />
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
     <pixel />
     <pixel />
     <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="31">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
     <pixel />
     <pixel />
     <pixel />

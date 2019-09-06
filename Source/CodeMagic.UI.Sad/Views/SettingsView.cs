@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
@@ -54,7 +53,7 @@ namespace CodeMagic.UI.Sad.Views
 
             nextFontSizeButton = new Button(1)
             {
-                Position = new Point(23, 10),
+                Position = new Point(21, 10),
                 Text = ">",
                 CanFocus = false
             };
@@ -65,8 +64,8 @@ namespace CodeMagic.UI.Sad.Views
         private void SwitchFontSize(bool forward)
         {
             var diff = forward ? 1 : -1;
-            var size = (Font.FontSizes) Enum.Parse(typeof(Font.FontSizes), Properties.Settings.Default.FontSize);
-            var sizes = Enum.GetValues(typeof(Font.FontSizes)).Cast<Font.FontSizes>().ToList();
+            var size = FontProvider.GetConfiguredFontSize();
+            var sizes = Enum.GetValues(typeof(FontSize)).Cast<FontSize>().ToList();
 
             var currentIndex = sizes.IndexOf(size);
             var nextIndex = currentIndex + diff;
@@ -75,6 +74,29 @@ namespace CodeMagic.UI.Sad.Views
 
             Properties.Settings.Default.FontSize = sizes[nextIndex].ToString();
             Properties.Settings.Default.Save();
+        }
+
+        private string GetFontSizeName(FontSize fontSize)
+        {
+            switch (fontSize)
+            {
+                case FontSize.X1:
+                    return "x1";
+                case FontSize.X0_5:
+                    return "x0.5";
+                case FontSize.X0_75:
+                    return "x0.75";
+                case FontSize.X2:
+                    return "x2";
+                default:
+                    throw new ArgumentException($"Unknown font size: {fontSize}");
+            }
+        }
+
+        private string GetCurrentFontSizeName()
+        {
+            var size = FontProvider.GetConfiguredFontSize();
+            return GetFontSizeName(size);
         }
 
         private void BrowseForCodeEditor()
@@ -106,7 +128,7 @@ namespace CodeMagic.UI.Sad.Views
 
             Print(2, 10, "Font Size:");
             Clear(15, 10, 10);
-            Print(15, 10, new ColoredString(Properties.Settings.Default.FontSize, Color.Gray, DefaultBackground));
+            Print(15, 10, new ColoredString(GetCurrentFontSizeName(), Color.Gray, DefaultBackground));
         }
 
         protected override bool ProcessKeyPressed(AsciiKey key)

@@ -11,7 +11,7 @@
     <pixel />
   </row>
   <row>
-    <pixel symbol="═">
+    <pixel glyph="205">
       <color>
         <R>192</R>
         <G>192</G>
@@ -23,7 +23,7 @@
         <B>64</B>
       </background-color>
     </pixel>
-    <pixel symbol="═">
+    <pixel glyph="205">
       <color>
         <R>192</R>
         <G>192</G>
@@ -35,7 +35,7 @@
         <B>64</B>
       </background-color>
     </pixel>
-    <pixel symbol="═">
+    <pixel glyph="205">
       <color>
         <R>192</R>
         <G>192</G>

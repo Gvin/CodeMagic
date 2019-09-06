@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
-    <pixel symbol="▓">
+    <pixel glyph="178">
       <color>
         <R>128</R>
         <G>128</G>
@@ -13,7 +13,7 @@
         <B>169</B>
       </background-color>
     </pixel>
-    <pixel symbol="▓">
+    <pixel glyph="178">
       <color>
         <R>128</R>
         <G>128</G>
@@ -25,45 +25,7 @@
         <B>169</B>
       </background-color>
     </pixel>
-    <pixel symbol="▓">
-      <color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
-      </color>
-      <background-color>
-        <R>169</R>
-        <G>169</G>
-        <B>169</B>
-      </background-color>
-    </pixel>
-  </row>
-  <row>
-    <pixel symbol="▓">
-      <color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
-      </color>
-      <background-color>
-        <R>169</R>
-        <G>169</G>
-        <B>169</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▓">
-      <color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
-      </color>
-      <background-color>
-        <R>169</R>
-        <G>169</G>
-        <B>169</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="▓">
+    <pixel glyph="178">
       <color>
         <R>128</R>
         <G>128</G>
@@ -77,7 +39,7 @@
     </pixel>
   </row>
   <row>
-    <pixel symbol="▓">
+    <pixel glyph="178">
       <color>
         <R>128</R>
         <G>128</G>
@@ -89,7 +51,7 @@
         <B>169</B>
       </background-color>
     </pixel>
-    <pixel symbol="▓">
+    <pixel glyph="178">
       <color>
         <R>128</R>
         <G>128</G>
@@ -101,7 +63,45 @@
         <B>169</B>
       </background-color>
     </pixel>
-    <pixel symbol="▓">
+    <pixel glyph="178">
+      <color>
+        <R>128</R>
+        <G>128</G>
+        <B>128</B>
+      </color>
+      <background-color>
+        <R>169</R>
+        <G>169</G>
+        <B>169</B>
+      </background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel glyph="178">
+      <color>
+        <R>128</R>
+        <G>128</G>
+        <B>128</B>
+      </color>
+      <background-color>
+        <R>169</R>
+        <G>169</G>
+        <B>169</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="178">
+      <color>
+        <R>128</R>
+        <G>128</G>
+        <B>128</B>
+      </color>
+      <background-color>
+        <R>169</R>
+        <G>169</G>
+        <B>169</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="178">
       <color>
         <R>128</R>
         <G>128</G>

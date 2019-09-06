@@ -11,6 +11,7 @@ using Button = SadConsole.Controls.Button;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
+using ListBox = SadConsole.Controls.ListBox;
 
 namespace SymbolsImageEditor
 {
@@ -18,8 +19,8 @@ namespace SymbolsImageEditor
     {
         private const string SymbolsImageFileFilter = "Symbols Image|*.simg|All|*.*";
         private const string SymbolsImageFileExtension = ".simg";
-        private const int DefaultImageWidth = 20;
-        private const int DefaultImageHeight = 5;
+        private const int DefaultImageWidth = 6;
+        private const int DefaultImageHeight = 8;
 
         private ColorDialog colorPicker;
 
@@ -28,8 +29,10 @@ namespace SymbolsImageEditor
         private DrawingSurface imageControl;
         private System.Drawing.Color backgroundColor = System.Drawing.Color.Black;
 
+        private ListBox symbolsList;
+
         public EditorWindow()
-            : base(Program.Width, Program.Height)
+            : base(Program.Width, Program.Height, Program.Font)
         {
             IsFocused = true;
             UseKeyboard = true;
@@ -48,6 +51,17 @@ namespace SymbolsImageEditor
 
         private void InitializeControls()
         {
+            symbolsList = new ListBox(4, Height - 5)
+            {
+                Position = new Point(Width - 5, 2)
+            };
+            for (int index = 0; index < Font.MaxGlyphIndex; index++)
+            {
+                symbolsList.Items.Add((char)index);
+            }
+            symbolsList.SelectedItemChanged += symbolsList_SelectedItemChanged;
+            Add(symbolsList);
+
             var foreColorButton = new Button(1)
             {
                 Position = new Point(1, 2),
@@ -123,9 +137,16 @@ namespace SymbolsImageEditor
             InitializeImageControl();
         }
 
+        private void symbolsList_SelectedItemChanged(object sender, ListBox.SelectedItemEventArgs e)
+        {
+            var symbol = (char) e.Item;
+            brush.Symbol = symbol;
+        }
+
         private void newImageButton_Click(object sender, EventArgs e)
         {
             image = new SymbolsImage(DefaultImageWidth, DefaultImageHeight);
+            InitializeImageControl();
         }
 
         private void setBackgroundColor_Click(object sender, EventArgs e)
@@ -166,7 +187,6 @@ namespace SymbolsImageEditor
         {
             if (imageControl != null)
             {
-                imageControl.MouseButtonClicked -= imageControl_MouseButtonClicked;
                 Remove(imageControl);
             }
             imageControl = new DrawingSurface(image.Width + 2, image.Height + 2)
@@ -181,33 +201,37 @@ namespace SymbolsImageEditor
                 },
                 OnDraw = DrawImage
             };
-            imageControl.MouseButtonClicked += imageControl_MouseButtonClicked;
             Add(imageControl);
         }
 
-        private void imageControl_MouseButtonClicked(object sender, SadConsole.Input.MouseEventArgs args)
+        protected override void OnMouseMove(MouseConsoleState state)
         {
-            var position = args.MouseState.CellPosition;
-            var relativeX = position.X - imageControl.Position.X - 1;
-            var relativeY = position.Y - imageControl.Position.Y - 1;
-
-            if (relativeX < 0 || relativeX >= image.Width || relativeY < 0 || relativeY >= image.Height)
-                return;
-
-            var pixel = image[relativeX, relativeY];
-
-            if (args.MouseState.Mouse.LeftClicked)
+            if (imageControl != null)
             {
-                pixel.Symbol = brush.Symbol;
-                pixel.Color = brush.ForeColor;
-                pixel.BackgroundColor = brush.BackColor;
+                var position = state.CellPosition;
+                var relativeX = position.X - imageControl.Position.X - 1;
+                var relativeY = position.Y - imageControl.Position.Y - 1;
+
+                if (relativeX >= 0 && relativeX < image.Width && relativeY >= 0 && relativeY < image.Height)
+                {
+                    var pixel = image[relativeX, relativeY];
+
+                    if (state.Mouse.LeftButtonDown)
+                    {
+                        pixel.Symbol = brush.Symbol;
+                        pixel.Color = brush.ForeColor;
+                        pixel.BackgroundColor = brush.BackColor;
+                    }
+                    else if (state.Mouse.RightButtonDown)
+                    {
+                        brush.Symbol = (char?) pixel.Symbol;
+                        brush.ForeColor = pixel.Color;
+                        brush.BackColor = pixel.BackgroundColor;
+                    }
+                }
             }
-            else if (args.MouseState.Mouse.RightClicked)
-            {
-                brush.Symbol = pixel.Symbol;
-                brush.ForeColor = pixel.Color;
-                brush.BackColor = pixel.BackgroundColor;
-            }
+
+            base.OnMouseMove(state);
         }
 
         private void loadImageButton_Click(object sender, EventArgs args)
@@ -268,14 +292,7 @@ namespace SymbolsImageEditor
         {
             if (keyboard.IsKeyPressed(Keys.Insert))
             {
-                if (!Clipboard.ContainsText())
-                    return false;
-
-                var clipboardData = Clipboard.GetText();
-                if (clipboardData.Length == 0 || clipboardData.Length > 1)
-                    return false;
-
-                brush.Symbol = clipboardData[0];
+                brush.Symbol = 0;
                 return true;
             }
 
@@ -285,11 +302,19 @@ namespace SymbolsImageEditor
                 return true;
             }
 
-            if (keyboard.KeysPressed.Count == 1)
+            if (brush.Symbol.HasValue)
             {
-                var symbol = keyboard.KeysPressed[0].Character;
-                brush.Symbol = symbol;
-                return true;
+                if (keyboard.IsKeyPressed(Keys.PageUp))
+                {
+                    var nextSymbol = brush.Symbol.Value + 1;
+                    brush.Symbol = Math.Min(Font.MaxGlyphIndex, nextSymbol);
+                }
+
+                if (keyboard.IsKeyPressed(Keys.PageDown))
+                {
+                    var prevSymbol = brush.Symbol.Value - 1;
+                    brush.Symbol = Math.Max(0, prevSymbol);
+                }
             }
 
             return base.ProcessKeyboard(keyboard);
@@ -311,7 +336,8 @@ namespace SymbolsImageEditor
             if (brush.Symbol.HasValue)
             {
                 Fill(dX + 8, 1, 5, Color.White, Color.Black, ' ');
-                Print(dX + 8, 1, new ColoredGlyph(Glyphs.GetGlyph(brush.Symbol.Value)));
+                Print(dX + 8, 1, new ColoredGlyph(brush.Symbol.Value));
+                Print(dX + 10, 1, brush.Symbol.ToString());
             }
             else
             {
@@ -347,7 +373,7 @@ namespace SymbolsImageEditor
 
     public class Brush
     {
-        public char? Symbol { get; set; }
+        public int? Symbol { get; set; }
 
         public System.Drawing.Color? ForeColor { get; set; }
 

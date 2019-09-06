@@ -73,7 +73,7 @@ namespace CodeMagic.UI.Sad.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("One")]
+        [global::System.Configuration.DefaultSettingValueAttribute("X1")]
         public string FontSize {
             get {
                 return ((string)(this["FontSize"]));

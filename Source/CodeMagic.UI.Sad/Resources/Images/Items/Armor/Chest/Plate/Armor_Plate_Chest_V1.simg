@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
-<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="20" height="10">
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="14" height="12">
   <row>
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -24,14 +18,7 @@
   </row>
   <row>
     <pixel />
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
@@ -52,56 +39,42 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
@@ -122,28 +95,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
@@ -154,14 +106,7 @@
   </row>
   <row>
     <pixel />
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
@@ -182,56 +127,42 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
@@ -252,28 +183,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
@@ -286,7 +196,6 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
     <pixel>
       <background-color>
         <R>255</R>
@@ -308,35 +217,14 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>0</R>
         <G>255</G>
@@ -364,14 +252,6 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -380,7 +260,6 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
     <pixel>
       <background-color>
         <R>255</R>
@@ -437,35 +316,6 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -474,7 +324,6 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
     <pixel>
       <background-color>
         <R>255</R>
@@ -531,35 +380,6 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -568,19 +388,6 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
-    <pixel symbol="\">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
     <pixel>
       <background-color>
         <R>255</R>
@@ -637,33 +444,6 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="/">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -672,104 +452,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="\">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="_">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="_">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="_">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="_">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="_">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="_">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel symbol="_">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
+    <pixel>
       <background-color>
         <R>255</R>
         <G>0</G>
@@ -783,26 +466,48 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="/">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
+    <pixel>
       <background-color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
-    <pixel />
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
     <pixel />
     <pixel />
     <pixel />
@@ -811,92 +516,62 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="░">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -905,9 +580,131 @@
     <pixel />
     <pixel />
     <pixel />
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
     <pixel />
     <pixel />
     <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="167">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="169">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
     <pixel />
     <pixel />
     <pixel />

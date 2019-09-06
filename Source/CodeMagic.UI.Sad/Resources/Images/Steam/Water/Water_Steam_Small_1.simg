@@ -3,7 +3,7 @@
   <row>
     <pixel />
     <pixel />
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>255</R>
         <G>255</G>
@@ -17,7 +17,7 @@
     <pixel />
   </row>
   <row>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>255</R>
         <G>255</G>

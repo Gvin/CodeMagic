@@ -56,7 +56,7 @@ namespace CodeMagic.UI.Sad.Views
         {
             playerStats = new PlayerStatsControl(40, 40, game)
             {
-                Position = new Point(80, 0)
+                Position = new Point(Width - 40, 0)
             };
             Add(playerStats);
 
@@ -106,7 +106,7 @@ namespace CodeMagic.UI.Sad.Views
 
             openInventoryButton = new Button(30, 3)
             {
-                Position = new Point(81, 16),
+                Position = new Point(Width - 39, 16),
                 Text = "[I] Inventory",
                 CanFocus = false,
                 Theme = standardButtonTheme
@@ -116,7 +116,7 @@ namespace CodeMagic.UI.Sad.Views
 
             openSpellBookButton = new Button(30, 3)
             {
-                Position = new Point(81, 19),
+                Position = new Point(Width - 39, 19),
                 Text = "[C] Spell Book",
                 CanFocus = false
             };
@@ -126,7 +126,7 @@ namespace CodeMagic.UI.Sad.Views
 
             showItemsOnFloorButton = new Button(30, 3)
             {
-                Position = new Point(81, 22),
+                Position = new Point(Width - 39, 22),
                 Text = "[G] Check Floor",
                 CanFocus = false
             };

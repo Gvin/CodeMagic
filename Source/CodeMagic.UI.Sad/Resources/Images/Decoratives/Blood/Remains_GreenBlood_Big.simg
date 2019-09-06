@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
-    <pixel symbol=".">
+    <pixel glyph="46">
       <color>
         <R>0</R>
         <G>255</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="~">
+    <pixel glyph="126">
       <color>
         <R>0</R>
         <G>255</G>
@@ -20,7 +20,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol=",">
+    <pixel glyph="44">
       <color>
         <R>0</R>
         <G>255</G>
@@ -29,7 +29,7 @@
     </pixel>
   </row>
   <row>
-    <pixel symbol="`">
+    <pixel glyph="96">
       <color>
         <R>0</R>
         <G>255</G>
@@ -41,7 +41,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="S">
+    <pixel glyph="83">
       <color>
         <R>0</R>
         <G>128</G>
@@ -53,7 +53,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="{">
+    <pixel glyph="123">
       <color>
         <R>0</R>
         <G>255</G>
@@ -67,14 +67,14 @@
     </pixel>
   </row>
   <row>
-    <pixel symbol="'">
+    <pixel glyph="39">
       <color>
         <R>0</R>
         <G>255</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="?">
+    <pixel glyph="63">
       <color>
         <R>0</R>
         <G>255</G>
@@ -86,7 +86,7 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel symbol="&quot;">
+    <pixel glyph="34">
       <color>
         <R>0</R>
         <G>255</G>

@@ -3,19 +3,25 @@
   <row>
     <pixel />
     <pixel />
-    <pixel />
+    <pixel glyph="220">
+      <color>
+        <R>135</R>
+        <G>87</G>
+        <B>71</B>
+      </color>
+    </pixel>
     <pixel />
     <pixel />
   </row>
   <row>
     <pixel />
     <pixel />
-    <pixel symbol="▄">
-      <color>
-        <R>135</R>
-        <G>87</G>
-        <B>71</B>
-      </color>
+    <pixel>
+      <background-color>
+        <R>230</R>
+        <G>0</G>
+        <B>230</B>
+      </background-color>
     </pixel>
     <pixel />
     <pixel />

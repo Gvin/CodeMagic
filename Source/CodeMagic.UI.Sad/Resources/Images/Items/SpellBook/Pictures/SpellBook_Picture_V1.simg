@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
-<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="8" height="5">
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="6" height="6">
   <row>
-    <pixel />
-    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -13,50 +11,14 @@
   <row>
     <pixel />
     <pixel />
-    <pixel />
-    <pixel symbol="↓">
+    <pixel glyph="247">
       <color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
-    <pixel symbol="↑">
-      <color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel />
-    <pixel />
-    <pixel />
-  </row>
-  <row>
-    <pixel />
-    <pixel />
-    <pixel symbol="→">
-      <color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="▲">
-      <color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="▼">
-      <color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel symbol="←">
+    <pixel glyph="247">
       <color>
         <R>255</R>
         <G>0</G>
@@ -69,6 +31,44 @@
   <row>
     <pixel />
     <pixel />
+    <pixel glyph="22">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="22">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel glyph="28">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="28">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
     <pixel />
     <pixel />
     <pixel />
@@ -77,8 +77,6 @@
     <pixel />
   </row>
   <row>
-    <pixel />
-    <pixel />
     <pixel />
     <pixel />
     <pixel />

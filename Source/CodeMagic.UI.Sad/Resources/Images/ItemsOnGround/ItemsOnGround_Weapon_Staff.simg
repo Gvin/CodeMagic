@@ -8,7 +8,7 @@
   <row>
     <pixel />
     <pixel />
-    <pixel symbol="\">
+    <pixel glyph="92">
       <color>
         <R>255</R>
         <G>0</G>

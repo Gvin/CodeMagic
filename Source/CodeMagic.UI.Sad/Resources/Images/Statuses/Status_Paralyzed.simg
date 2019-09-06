@@ -13,7 +13,7 @@
   <row>
     <pixel />
     <pixel />
-    <pixel symbol="P">
+    <pixel glyph="80">
       <color>
         <R>0</R>
         <G>0</G>

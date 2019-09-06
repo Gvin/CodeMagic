@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
-    <pixel symbol="▓">
+    <pixel glyph="178">
       <color>
         <R>128</R>
         <G>128</G>
@@ -13,7 +13,7 @@
         <B>169</B>
       </background-color>
     </pixel>
-    <pixel symbol="▓">
+    <pixel glyph="178">
       <color>
         <R>128</R>
         <G>128</G>
@@ -25,7 +25,7 @@
         <B>169</B>
       </background-color>
     </pixel>
-    <pixel symbol=" ">
+    <pixel glyph="32">
       <color>
         <R>153</R>
         <G>153</G>
@@ -39,7 +39,7 @@
     </pixel>
   </row>
   <row>
-    <pixel symbol="▓">
+    <pixel glyph="178">
       <color>
         <R>128</R>
         <G>128</G>
@@ -51,7 +51,7 @@
         <B>169</B>
       </background-color>
     </pixel>
-    <pixel symbol="▓">
+    <pixel glyph="178">
       <color>
         <R>128</R>
         <G>128</G>
@@ -63,7 +63,7 @@
         <B>169</B>
       </background-color>
     </pixel>
-    <pixel symbol="←">
+    <pixel glyph="27">
       <color>
         <R>255</R>
         <G>168</G>
@@ -77,7 +77,7 @@
     </pixel>
   </row>
   <row>
-    <pixel symbol=" ">
+    <pixel glyph="32">
       <color>
         <R>153</R>
         <G>153</G>
@@ -89,7 +89,7 @@
         <B>89</B>
       </background-color>
     </pixel>
-    <pixel symbol="↑">
+    <pixel glyph="24">
       <color>
         <R>255</R>
         <G>168</G>
@@ -101,7 +101,7 @@
         <B>89</B>
       </background-color>
     </pixel>
-    <pixel symbol="\">
+    <pixel glyph="92">
       <color>
         <R>153</R>
         <G>153</G>

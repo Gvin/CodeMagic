@@ -2,7 +2,7 @@
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
     <pixel />
-    <pixel symbol=",">
+    <pixel glyph="44">
       <color>
         <R>125</R>
         <G>190</G>
@@ -12,7 +12,7 @@
     <pixel />
   </row>
   <row>
-    <pixel symbol=".">
+    <pixel glyph="46">
       <color>
         <R>125</R>
         <G>190</G>
@@ -31,7 +31,7 @@
   <row>
     <pixel />
     <pixel />
-    <pixel symbol="`">
+    <pixel glyph="96">
       <color>
         <R>125</R>
         <G>190</G>

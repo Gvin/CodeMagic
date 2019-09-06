@@ -98,7 +98,7 @@ namespace CodeMagic.UI.Sad.Controls
         private void DrawFrame()
         {
             Surface.Fill(0, 0, Width, FrameColor, BackColor, Glyphs.GetGlyph('─'));
-            Surface.Print(78, 0, new ColoredGlyph(Glyphs.GetGlyph('┴'), FrameColor, BackColor));
+            Surface.Print(Width - 39, 0, new ColoredGlyph(Glyphs.GetGlyph('┴'), FrameColor, BackColor));
         }
     }
 }

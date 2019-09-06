@@ -6,7 +6,7 @@
     <pixel />
   </row>
   <row>
-    <pixel symbol="♠">
+    <pixel glyph="6">
       <color>
         <R>255</R>
         <G>255</G>

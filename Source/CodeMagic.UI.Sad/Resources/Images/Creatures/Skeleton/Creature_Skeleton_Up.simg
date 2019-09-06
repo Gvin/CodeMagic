@@ -2,7 +2,7 @@
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
     <pixel />
-    <pixel symbol="▲">
+    <pixel glyph="30">
       <color>
         <R>0</R>
         <G>255</G>
@@ -12,30 +12,30 @@
     <pixel />
   </row>
   <row>
-    <pixel symbol="→">
+    <pixel glyph="26">
       <color>
-        <R>221</R>
-        <G>207</G>
-        <B>181</B>
+        <R>255</R>
+        <G>255</G>
+        <B>255</B>
       </color>
     </pixel>
-    <pixel symbol="☻">
+    <pixel glyph="2">
       <color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
       <background-color>
-        <R>221</R>
-        <G>207</G>
-        <B>181</B>
+        <R>255</R>
+        <G>255</G>
+        <B>255</B>
       </background-color>
     </pixel>
-    <pixel symbol="←">
+    <pixel glyph="27">
       <color>
-        <R>221</R>
-        <G>207</G>
-        <B>181</B>
+        <R>255</R>
+        <G>255</G>
+        <B>255</B>
       </color>
     </pixel>
   </row>

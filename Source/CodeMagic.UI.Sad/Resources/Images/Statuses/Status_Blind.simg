@@ -13,7 +13,7 @@
   <row>
     <pixel />
     <pixel />
-    <pixel symbol="☼">
+    <pixel glyph="15">
       <color>
         <R>0</R>
         <G>0</G>

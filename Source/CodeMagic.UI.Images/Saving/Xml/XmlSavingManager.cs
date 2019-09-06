@@ -29,14 +29,7 @@ namespace CodeMagic.UI.Images.Saving.Xml
                     var pixel = image[x, y];
                     var dataPixel = data.Rows[y].Pixels[x];
 
-                    if (!string.IsNullOrEmpty(dataPixel.Symbol))
-                    {
-                        pixel.Symbol = dataPixel.Symbol[0];
-                    }
-                    else
-                    {
-                        pixel.Symbol = null;
-                    }
+                    pixel.Symbol = dataPixel.Glyph;
                     pixel.Color = dataPixel.Color?.GetColor();
                     pixel.BackgroundColor = dataPixel.BackgroundColor?.GetColor();
                 }

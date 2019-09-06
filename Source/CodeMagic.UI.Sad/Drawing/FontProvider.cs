@@ -5,50 +5,53 @@ namespace CodeMagic.UI.Sad.Drawing
 {
     public static class FontProvider
     {
-        private static Font.FontSizes fontSize;
+        private const string Normal1FontPath = @".\Resources\Fonts\Font_X1.font";
+
+        private static FontSize fontSize;
 
         public static void InitializeFont()
         {
             if (string.IsNullOrEmpty(Properties.Settings.Default.FontSize))
             {
-                fontSize = Font.FontSizes.One;
+                fontSize = FontSize.X1;
                 Properties.Settings.Default.FontSize = fontSize.ToString();
                 Properties.Settings.Default.Save();
                 return;
             }
 
-            fontSize = (Font.FontSizes) Enum.Parse(typeof(Font.FontSizes), Properties.Settings.Default.FontSize);
+            fontSize = GetConfiguredFontSize();
         }
 
-        public static double FontSizeMultiplier
+        public static FontSize GetConfiguredFontSize()
         {
-            get
+            var parsed = Enum.TryParse(Properties.Settings.Default.FontSize, true, out FontSize result);
+            if (!parsed)
             {
-                switch (fontSize)
-                {
-                    case Font.FontSizes.Quarter:
-                        return 0.25d;
-                    case Font.FontSizes.Half:
-                        return 0.5d;
-                    case Font.FontSizes.One:
-                        return 1d;
-                    case Font.FontSizes.Two:
-                        return 2d;
-                    case Font.FontSizes.Three:
-                        return 3d;
-                    case Font.FontSizes.Four:
-                        return 4d;
-                    default:
-                        throw new ArgumentException($"Unknown font size: {fontSize}");
-                }
+                result = FontSize.X1;
+                Properties.Settings.Default.FontSize = result.ToString();
+                Properties.Settings.Default.Save();
             }
+
+            return result;
         }
 
-        public static Font CurrentFont => GetFontMaster().GetFont(fontSize);
+        public static double FontVerticalMultiplier => 1d;
+
+        public static double FontHorizontalMultiplier => 2d;
+
+        public static Font CurrentFont => GetFontMaster().GetFont(Font.FontSizes.One);
 
         private static FontMaster GetFontMaster()
         {
-            return Global.FontDefault.Master;
+            return Global.LoadFont(Normal1FontPath);
         }
+    }
+
+    public enum FontSize
+    {
+        X1,
+        X0_5,
+        X0_75,
+        X2
     }
 }

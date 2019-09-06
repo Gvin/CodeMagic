@@ -107,11 +107,11 @@ namespace CodeMagic.UI.Sad.Views
                     Appearance_ControlFocused = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255))
                 }
             };
-            filterTextBox = new TextBox(50)
+            filterTextBox = new TextBox(Width - 69)
             {
                 Position = new Point(10, 3),
                 Theme = textBoxTheme,
-                MaxLength = 45
+                MaxLength = Width - 70
             };
             Add(filterTextBox);
 

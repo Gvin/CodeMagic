@@ -16,6 +16,10 @@
           <image>Sword_Handle_V10</image>
           <image>Sword_Handle_V11</image>
           <image>Sword_Handle_V12</image>
+          <image>Sword_Handle_V13</image>
+          <image>Sword_Handle_V14</image>
+          <image>Sword_Handle_V15</image>
+          <image>Sword_Handle_V16</image>
         </handle>
         <guard>
           <image>Sword_Guard_V1</image>
@@ -27,6 +31,8 @@
           <image>Sword_Guard_V7</image>
           <image>Sword_Guard_V8</image>
           <image>Sword_Guard_V9</image>
+          <image>Sword_Guard_V10</image>
+          <image>Sword_Guard_V11</image>
         </guard>
         <blade>
           <image>Sword_Blade_V1</image>
@@ -38,9 +44,6 @@
           <image>Sword_Blade_V7</image>
           <image>Sword_Blade_V8</image>
           <image>Sword_Blade_V9</image>
-          <image>Sword_Blade_V10</image>
-          <image>Sword_Blade_V11</image>
-          <image>Sword_Blade_V12</image>
         </blade>
       </images>
 
@@ -145,6 +148,10 @@
           <image>Sword_Handle_V10</image>
           <image>Sword_Handle_V11</image>
           <image>Sword_Handle_V12</image>
+          <image>Sword_Handle_V13</image>
+          <image>Sword_Handle_V14</image>
+          <image>Sword_Handle_V15</image>
+          <image>Sword_Handle_V16</image>
         </handle>
         <guard>
           <image>Dagger_Guard_V1</image>
@@ -264,6 +271,10 @@
           <image>Sword_Handle_V10</image>
           <image>Sword_Handle_V11</image>
           <image>Sword_Handle_V12</image>
+          <image>Sword_Handle_V13</image>
+          <image>Sword_Handle_V14</image>
+          <image>Sword_Handle_V15</image>
+          <image>Sword_Handle_V16</image>
         </handle>
         <shaft>
           <image>Mace_Shaft_V1</image>
@@ -276,6 +287,8 @@
           <image>Mace_Head_V3</image>
           <image>Mace_Head_V4</image>
           <image>Mace_Head_V5</image>
+          <image>Mace_Head_V6</image>
+          <image>Mace_Head_V7</image>
         </head>
       </images>
 
@@ -380,6 +393,10 @@
           <image>Sword_Handle_V10</image>
           <image>Sword_Handle_V11</image>
           <image>Sword_Handle_V12</image>
+          <image>Sword_Handle_V13</image>
+          <image>Sword_Handle_V14</image>
+          <image>Sword_Handle_V15</image>
+          <image>Sword_Handle_V16</image>
         </handle>
         <shaft>
           <image>Mace_Shaft_V1</image>
@@ -388,6 +405,7 @@
         </shaft>
         <head>
           <image>Axe_Head_V1</image>
+          <image>Axe_Head_V2</image>
         </head>
       </images>
 
@@ -1071,6 +1089,9 @@
           <image>Armor_Plate_Chest_V1</image>
           <image>Armor_Plate_Chest_V2</image>
           <image>Armor_Plate_Chest_V3</image>
+          <image>Armor_Plate_Chest_V4</image>
+          <image>Armor_Plate_Chest_V5</image>
+          <image>Armor_Plate_Chest_V6</image>
         </images>
         <rareness-configuration>
           <rareness value="Trash">
@@ -1648,6 +1669,8 @@
           <image>Armor_Plate_Helmet_V2</image>
           <image>Armor_Plate_Helmet_V3</image>
           <image>Armor_Plate_Helmet_V4</image>
+          <image>Armor_Plate_Helmet_V5</image>
+          <image>Armor_Plate_Helmet_V6</image>
         </images>
         <rareness-configuration>
           <rareness value="Trash">
@@ -1805,6 +1828,8 @@
         <images>
           <image>Armor_Leather_Leggings_V1</image>
           <image>Armor_Leather_Leggings_V2</image>
+          <image>Armor_Leather_Leggings_V3</image>
+          <image>Armor_Leather_Leggings_V4</image>
         </images>
         <rareness-configuration>
           <rareness value="Trash">
@@ -1931,8 +1956,6 @@
       <item class="Mail" name="Mail">
         <images>
           <image>Armor_Mail_Leggings_V1</image>
-          <image>Armor_Mail_Leggings_V2</image>
-          <image>Armor_Mail_Leggings_V3</image>
         </images>
         <rareness-configuration>
           <rareness value="Trash">
@@ -2070,8 +2093,6 @@
       <item class="ScaleMail" name="Scale Mail">
         <images>
           <image>Armor_ScaleMail_Leggings_V1</image>
-          <image>Armor_ScaleMail_Leggings_V2</image>
-          <image>Armor_ScaleMail_Leggings_V3</image>
         </images>
         <rareness-configuration>
           <rareness value="Trash">

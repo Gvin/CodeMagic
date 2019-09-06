@@ -32,7 +32,7 @@ namespace CodeMagic.UI.Sad.Common
                     {
                         var foreColor = pixel.Color?.ToXna() ?? defaultForeColor;
                         surface.Print(printX, printY,
-                            new ColoredGlyph(Glyphs.GetGlyph(pixel.Symbol.Value), foreColor, backColor));
+                            new ColoredGlyph(pixel.Symbol.Value, foreColor, backColor));
                     }
                     else
                     {

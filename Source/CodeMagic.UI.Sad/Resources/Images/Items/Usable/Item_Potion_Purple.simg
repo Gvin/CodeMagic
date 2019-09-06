@@ -3,14 +3,7 @@
   <row>
     <pixel />
     <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-  </row>
-  <row>
-    <pixel />
-    <pixel />
-    <pixel symbol="▄">
+    <pixel glyph="220">
       <color>
         <R>135</R>
         <G>87</G>
@@ -18,6 +11,31 @@
       </color>
     </pixel>
     <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel>
+      <background-color>
+        <R>230</R>
+        <G>0</G>
+        <B>230</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>230</R>
+        <G>0</G>
+        <B>230</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>230</R>
+        <G>0</G>
+        <B>230</B>
+      </background-color>
+    </pixel>
     <pixel />
   </row>
   <row>

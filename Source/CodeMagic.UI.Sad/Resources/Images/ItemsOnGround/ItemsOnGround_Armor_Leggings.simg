@@ -13,7 +13,7 @@
   <row>
     <pixel />
     <pixel />
-    <pixel symbol="Π">
+    <pixel glyph="239">
       <color>
         <R>255</R>
         <G>0</G>

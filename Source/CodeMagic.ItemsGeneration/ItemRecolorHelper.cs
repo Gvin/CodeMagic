@@ -16,7 +16,7 @@ namespace CodeMagic.ItemsGeneration
             {ItemMaterial.Silver, new ColorPalette(Color.FromArgb(224, 224, 224), Color.FromArgb(171, 171, 171), Color.Violet)},
             {ItemMaterial.ElvesMetal, new ColorPalette(Color.FromArgb(217, 255, 179), Color.FromArgb(102, 204, 0), Color.Red)},
             {ItemMaterial.DwarfsMetal, new ColorPalette(Color.FromArgb(255, 255, 179), Color.FromArgb(204, 204, 0), Color.LightSkyBlue)},
-            {ItemMaterial.Mythril, new ColorPalette(Color.FromArgb(247, 230, 255), Color.FromArgb(157, 0, 230), Color.Lime)}
+            {ItemMaterial.Mythril, new ColorPalette(Color.FromArgb(194, 194, 163), Color.FromArgb(153, 153, 102), Color.Lime)}
         };
 
         private static readonly Color ReplaceColor1 = Color.FromArgb(255, 0, 0);

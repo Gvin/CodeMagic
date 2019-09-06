@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
-    <pixel symbol="╔">
+    <pixel glyph="201">
       <color>
         <R>192</R>
         <G>192</G>
@@ -13,7 +13,7 @@
         <B>64</B>
       </background-color>
     </pixel>
-    <pixel symbol="╤">
+    <pixel glyph="209">
       <color>
         <R>192</R>
         <G>192</G>
@@ -25,7 +25,7 @@
         <B>64</B>
       </background-color>
     </pixel>
-    <pixel symbol="╗">
+    <pixel glyph="187">
       <color>
         <R>192</R>
         <G>192</G>
@@ -39,7 +39,7 @@
     </pixel>
   </row>
   <row>
-    <pixel symbol="╟">
+    <pixel glyph="199">
       <color>
         <R>192</R>
         <G>192</G>
@@ -51,7 +51,7 @@
         <B>64</B>
       </background-color>
     </pixel>
-    <pixel symbol="☼">
+    <pixel glyph="15">
       <color>
         <R>64</R>
         <G>0</G>
@@ -63,7 +63,7 @@
         <B>64</B>
       </background-color>
     </pixel>
-    <pixel symbol="╢">
+    <pixel glyph="182">
       <color>
         <R>192</R>
         <G>192</G>
@@ -77,7 +77,7 @@
     </pixel>
   </row>
   <row>
-    <pixel symbol="╚">
+    <pixel glyph="200">
       <color>
         <R>192</R>
         <G>192</G>
@@ -89,7 +89,7 @@
         <B>64</B>
       </background-color>
     </pixel>
-    <pixel symbol="╧">
+    <pixel glyph="207">
       <color>
         <R>192</R>
         <G>192</G>
@@ -101,7 +101,7 @@
         <B>64</B>
       </background-color>
     </pixel>
-    <pixel symbol="╝">
+    <pixel glyph="188">
       <color>
         <R>192</R>
         <G>192</G>

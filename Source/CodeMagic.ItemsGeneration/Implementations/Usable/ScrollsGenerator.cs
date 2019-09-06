@@ -75,7 +75,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Usable
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
             'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
             'Y', 'Z', 'Ç', 'Ä', 'Å', 'È', 'Æ', 'Ö', 'Ü', 'Γ', 'Σ', 'Θ',
-            'Ω', 'Φ', 'Π'
+            'Ω', 'Φ', 'Π', 'Ñ'
         };
 
         private static readonly char[] SmallLetters =
@@ -84,7 +84,7 @@ namespace CodeMagic.ItemsGeneration.Implementations.Usable
             'm', 'm', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
             'y', 'z', 'ϋ', 'έ', 'â', 'ä', 'à', 'å', 'ç', 'ê', 'ë', 'è',
             'ï', 'î', 'ì', 'æ', 'ô', 'ö', 'ò', 'û', 'ù', 'ÿ', 'α', 'β',
-            'π', 'σ', 'μ', 'γ', 'θ', 'δ', 'φ', 'ε', ' ', '\'', '`'
+            'π', 'σ', 'μ', 'γ', 'θ', 'δ', 'φ', 'ε', ' ', '\'', '`', 'ñ'
         };
 
         private const int MinNameLength = 4;

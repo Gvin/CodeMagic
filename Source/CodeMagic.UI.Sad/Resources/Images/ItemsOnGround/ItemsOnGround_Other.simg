@@ -7,7 +7,7 @@
   </row>
   <row>
     <pixel />
-    <pixel symbol="≡">
+    <pixel glyph="240">
       <color>
         <R>128</R>
         <G>128</G>

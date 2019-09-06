@@ -8,7 +8,7 @@
   <row>
     <pixel />
     <pixel />
-    <pixel symbol="│">
+    <pixel glyph="179">
       <color>
         <R>128</R>
         <G>64</G>

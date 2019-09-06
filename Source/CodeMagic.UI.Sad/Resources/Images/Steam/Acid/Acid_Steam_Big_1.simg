@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>183</R>
         <G>255</G>
@@ -9,7 +9,7 @@
       </color>
     </pixel>
     <pixel />
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>183</R>
         <G>255</G>
@@ -19,7 +19,7 @@
   </row>
   <row>
     <pixel />
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>183</R>
         <G>255</G>
@@ -29,7 +29,7 @@
     <pixel />
   </row>
   <row>
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>183</R>
         <G>255</G>
@@ -37,7 +37,7 @@
       </color>
     </pixel>
     <pixel />
-    <pixel symbol="░">
+    <pixel glyph="176">
       <color>
         <R>183</R>
         <G>255</G>
