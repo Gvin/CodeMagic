@@ -14,10 +14,10 @@ namespace CodeMagic.UI.Sad
         public const int MapCellImageSize = 3;
 
         [STAThread]
-        static void Main(string[] args)
+        static void Main()
         {
             GameConfigurator.Configure();
-            FontProvider.InitializeFont();
+            FontProvider.InitializeFont(new WinFormsScreenSizeProvider(), Width, Height);
 
             // Setup the engine and create the main window.
             var gameWidth = (int) Math.Floor(Width * FontProvider.FontHorizontalMultiplier);

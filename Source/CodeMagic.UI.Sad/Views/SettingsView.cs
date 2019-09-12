@@ -82,9 +82,9 @@ namespace CodeMagic.UI.Sad.Views
             {
                 case FontSize.X1:
                     return "x1";
-                case FontSize.X0_5:
+                case FontSize.X05:
                     return "x0.5";
-                case FontSize.X0_75:
+                case FontSize.X075:
                     return "x0.75";
                 case FontSize.X2:
                     return "x2";

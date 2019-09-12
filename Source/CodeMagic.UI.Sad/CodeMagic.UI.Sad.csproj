@@ -67,6 +67,7 @@
     <Compile Include="Controls\StandardButton.cs" />
     <Compile Include="Drawing\CellImageHelper.cs" />
     <Compile Include="Drawing\FontProvider.cs" />
+    <Compile Include="Drawing\ScreenSizeProvider.cs" />
     <Compile Include="Drawing\ObjectEffects\DamageEffect.cs" />
     <Compile Include="Drawing\ImageProviding\InventoryImagesFactory.cs" />
     <Compile Include="Drawing\ImageProviding\WorldImagesFactory.cs" />
@@ -118,6 +119,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Fonts\Font_X075.font">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Fonts\Font_X1.font">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -171,6 +175,9 @@
     <Content Include="Configuration\Spells.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Fonts\Font_X075.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Fonts\Font_X1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -189,6 +196,6 @@
     <Error Condition="!Exists('..\packages\MonoGame.Framework.DesktopGL.3.7.1.189\build\MonoGame.Framework.DesktopGL.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MonoGame.Framework.DesktopGL.3.7.1.189\build\MonoGame.Framework.DesktopGL.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y $(ProjectDir)Resources $(TargetDir)Resources /E</PostBuildEvent>
+    <PostBuildEvent>xcopy /y $(ProjectDir)Resources\Images $(TargetDir)Resources\Images /E /I</PostBuildEvent>
   </PropertyGroup>
 </Project>
