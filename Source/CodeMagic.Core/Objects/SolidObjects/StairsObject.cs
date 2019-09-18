@@ -32,12 +32,7 @@ namespace CodeMagic.Core.Objects.SolidObjects
             if (!(game.World.CurrentLocation is DungeonLocation dungeon))
                 throw new ArgumentException("Can only use stairs in dungeon locations.");
 
-            game.RemovePlayerFromMap();
             dungeon.MoveUp(game);
-            if (dungeon.PlayerPosition != null)
-            {
-                game.UpdatePlayerPosition(dungeon.PlayerPosition);
-            }
         }
     }
 }

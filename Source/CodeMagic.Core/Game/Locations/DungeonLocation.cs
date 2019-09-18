@@ -38,6 +38,8 @@ namespace CodeMagic.Core.Game.Locations
 
         public void MoveUp(IGameCore game)
         {
+            game.RemovePlayerFromMap();
+
             levels[CurrentLevel - 1].PlayerPosition = game.PlayerPosition;
 
             CurrentLevel--;
@@ -51,10 +53,14 @@ namespace CodeMagic.Core.Game.Locations
             var level = levels[CurrentLevel - 1];
             CurrentArea = level.Map;
             PlayerPosition = level.PlayerPosition;
+
+            game.UpdatePlayerPosition(PlayerPosition);
         }
 
         public void MoveDown(IGameCore game)
         {
+            game.RemovePlayerFromMap();
+
             levels[CurrentLevel - 1].PlayerPosition = game.PlayerPosition;
 
             CurrentLevel++;
@@ -63,6 +69,7 @@ namespace CodeMagic.Core.Game.Locations
                 var level = levels[CurrentLevel - 1];
                 CurrentArea = level.Map;
                 PlayerPosition = level.PlayerPosition;
+                game.UpdatePlayerPosition(PlayerPosition);
                 return;
             }
 
@@ -70,6 +77,7 @@ namespace CodeMagic.Core.Game.Locations
             CurrentArea.Refresh(game.GameTime);
             levels.Add(new StoredMap(CurrentArea, null));
             PlayerPosition = newPlayerPosition;
+            game.UpdatePlayerPosition(PlayerPosition);
         }
 
         private ItemRareness Rareness { get; }
