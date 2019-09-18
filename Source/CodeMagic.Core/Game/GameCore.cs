@@ -4,6 +4,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Locations;
 using CodeMagic.Core.Game.PlayerActions;
+using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
 
@@ -81,12 +82,18 @@ namespace CodeMagic.Core.Game
 
         private void ProcessSystemTurn()
         {
-            CurrentTurn += World.CurrentLocation.TurnCycle;
             gameTimeManager.RegisterTurn(World.CurrentLocation.TurnCycle);
 
             var backgroundUpdateTask = World.UpdateStoredLocations(GameTime);
 
+            CurrentTurn++;
             UpdateMap();
+
+            for (int counter = 0; counter < World.CurrentLocation.TurnCycle - 1; counter++)
+            {
+                CurrentTurn++;
+                ((IDynamicObject)Player).Update(Map, Journal, PlayerPosition);
+            }
 
             backgroundUpdateTask.Wait();
         }

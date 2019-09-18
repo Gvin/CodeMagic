@@ -9,19 +9,19 @@ namespace CodeMagic.Core.Area.EnvironmentData
 {
     public class MagicEnergy
     {
-        public static int MaxEnergy => ConfigurationManager.Current.Physics.MagicEnergyConfiguration.MaxValue;
-
         private int energy;
         private readonly IMagicEnergyConfiguration configuration;
         private int disturbance;
 
-        public MagicEnergy()
+        public MagicEnergy(IMagicEnergyConfiguration configuration)
         {
-            configuration = ConfigurationManager.Current.Physics.MagicEnergyConfiguration;
+            this.configuration = configuration;
 
             energy = configuration.MaxValue;
             disturbance = 0;
         }
+
+        public int MaxEnergy => configuration.MaxValue;
 
         public int Energy
         {

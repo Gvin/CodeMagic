@@ -32,6 +32,8 @@ namespace CodeMagic.Core.Area
 
         int MagicEnergyLevel { get; set; }
 
+        int MaxMagicEnergyLevel { get; }
+
         int MagicDisturbanceLevel { get; set; }
     }
 }

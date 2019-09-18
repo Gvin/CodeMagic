@@ -10,7 +10,7 @@ namespace CodeMagic.Core.Area
     public class GlobalAreaMap : IAreaMap
     {
         private readonly Dictionary<Type, Point> objectPositionCache;
-        private readonly AreaMapCell[][] cells;
+        private readonly GlobalAreaMapCell[][] cells;
         private readonly Dictionary<string, IDestroyableObject> destroyableObjects;
         private readonly IEnvironmentLightManager environmentLightManager;
 
@@ -25,13 +25,13 @@ namespace CodeMagic.Core.Area
             Width = width;
             Height = height;
 
-            cells = new AreaMapCell[height][];
+            cells = new GlobalAreaMapCell[height][];
             for (var y = 0; y < height; y++)
             {
-                cells[y] = new AreaMapCell[width];
+                cells[y] = new GlobalAreaMapCell[width];
                 for (var x = 0; x < width; x++)
                 {
-                    cells[y][x] = new AreaMapCell();
+                    cells[y][x] = new GlobalAreaMapCell();
                 }
             }
         }
@@ -122,9 +122,9 @@ namespace CodeMagic.Core.Area
             return null;
         }
 
-        public AreaMapCell GetOriginalCell(int x, int y)
+        private GlobalAreaMapCell GetOriginalCell(int x, int y)
         {
-            return (AreaMapCell)GetCell(x, y);
+            return (GlobalAreaMapCell)GetCell(x, y);
         }
 
         public IAreaMapCell GetCell(Point point)
@@ -197,7 +197,7 @@ namespace CodeMagic.Core.Area
                 for (var x = 0; x < cells[y].Length; x++)
                 {
                     var position = new Point(x, y);
-                    var cell = (AreaMapCell)GetCell(position);
+                    var cell = (GlobalAreaMapCell)GetCell(position);
                     cell.PostUpdate(this, journal, position);
                     cell.ResetDynamicObjectsState();
                 }

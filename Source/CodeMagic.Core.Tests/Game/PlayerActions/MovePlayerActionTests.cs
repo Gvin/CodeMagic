@@ -26,9 +26,9 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
             gameMock.SetupGet(game => game.Player).Returns(playerMock.Object);
             gameMock.SetupGet(game => game.PlayerPosition).Returns(playerPosition);
 
-            var cell1 = new AreaMapCell();
+            var cell1 = new AreaMapCell(null);
             cell1.ObjectsCollection.Add(playerMock.Object);
-            var cell2 = new AreaMapCell();
+            var cell2 = new AreaMapCell(null);
 
             var newPosition = new Point(endX, endY);
 
@@ -84,12 +84,12 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
             gameMock.SetupGet(game => game.Player).Returns(playerMock.Object);
             gameMock.SetupGet(game => game.PlayerPosition).Returns(playerPosition);
 
-            var cell1 = new AreaMapCell();
+            var cell1 = new AreaMapCell(null);
             cell1.ObjectsCollection.Add(playerMock.Object);
 
             var blockingObjectMock = new Mock<IMapObject>();
             blockingObjectMock.SetupGet(obj => obj.BlocksMovement).Returns(true);
-            var cell2 = new AreaMapCell();
+            var cell2 = new AreaMapCell(null);
             cell2.ObjectsCollection.Add(blockingObjectMock.Object);
 
             var newPosition = new Point(0, 1);

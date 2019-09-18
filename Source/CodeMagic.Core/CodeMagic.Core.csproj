@@ -47,11 +47,13 @@
   <ItemGroup>
     <Compile Include="Area\AreaMap.cs" />
     <Compile Include="Area\AreaMapCell.cs" />
+    <Compile Include="Area\AreaMapCellBase.cs" />
     <Compile Include="Area\EnvironmentData\Environment.cs" />
     <Compile Include="Area\EnvironmentData\MagicEnergy.cs" />
     <Compile Include="Area\EnvironmentData\Pressure.cs" />
     <Compile Include="Area\FloorTypes.cs" />
     <Compile Include="Area\GlobalAreaMap.cs" />
+    <Compile Include="Area\GlobalAreaMapCell.cs" />
     <Compile Include="Area\IAreaMap.cs" />
     <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Area\AreaMapFragment.cs" />

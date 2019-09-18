@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using CodeMagic.Core.Common;
+using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
@@ -33,7 +34,7 @@ namespace CodeMagic.Core.Area
                 cells[y] = new AreaMapCell[width];
                 for (var x = 0; x < width; x++)
                 {
-                    cells[y][x] = new AreaMapCell();
+                    cells[y][x] = new AreaMapCell(ConfigurationManager.Current.Physics.MagicEnergyConfiguration);
                 }
             }
         }

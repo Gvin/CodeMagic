@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Core.Area.EnvironmentData;
+using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
@@ -8,93 +9,44 @@ using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.DecorativeObjects;
-using CodeMagic.Core.Objects.LiquidObjects;
-using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Statuses;
 using Environment = CodeMagic.Core.Area.EnvironmentData.Environment;
 
 namespace CodeMagic.Core.Area
 {
-    public class AreaMapCell : IAreaMapCell
+    public class AreaMapCell : AreaMapCellBase
     {
-        public AreaMapCell()
+        public AreaMapCell(IMagicEnergyConfiguration magicEnergyConfiguration)
         {
-            ObjectsCollection = new MapObjectsCollection();
             Environment = new Environment();
-            MagicEnergy = new MagicEnergy();
-            LightLevel = new CellLightData();
+            MagicEnergy = new MagicEnergy(magicEnergyConfiguration);
         }
 
         public MagicEnergy MagicEnergy { get; }
 
         public Environment Environment { get; }
 
-        IMapObject[] IAreaMapCell.Objects => ObjectsCollection.ToArray();
-
-        public int GetVolume<T>() where T : ILiquidObject
-        {
-            return ObjectsCollection.GetVolume<T>();
-        }
-
-        public void RemoveVolume<T>(int volume) where T : ILiquidObject
-        {
-            ObjectsCollection.RemoveVolume<T>(volume);
-        }
-
-        public MapObjectsCollection ObjectsCollection { get; }
-
-        public CellLightData LightLevel { get; }
-
-        public bool BlocksMovement
-        {
-            get { return ObjectsCollection.Any(obj => obj.BlocksMovement); }
-        }
-
-        public bool HasSolidObjects => ObjectsCollection.OfType<WallObject>().Any();
-
-        public bool BlocksEnvironment
-        {
-            get { return ObjectsCollection.Any(obj => obj.BlocksEnvironment); }
-        }
-
-        public bool BlocksVisibility
-        {
-            get { return ObjectsCollection.Any(obj => obj.BlocksVisibility); }
-        }
-
-        public bool BlocksProjectiles
-        {
-            get { return ObjectsCollection.Any(obj => obj.BlocksProjectiles); }
-        }
-
-        public IDestroyableObject GetBiggestDestroyable()
-        {
-            var destroyable = ObjectsCollection.OfType<IDestroyableObject>().ToArray();
-            var bigDestroyable = destroyable.FirstOrDefault(obj => obj.BlocksMovement);
-            if (bigDestroyable != null)
-                return bigDestroyable;
-            return destroyable.LastOrDefault();
-        }
-
-        public int Temperature
+        public override int Temperature
         {
             get => Environment.Temperature;
             set => Environment.Temperature = value;
         }
 
-        public int Pressure
+        public override int Pressure
         {
             get => Environment.Pressure;
             set => Environment.Pressure = value;
         }
 
-        public int MagicEnergyLevel
+        public override int MagicEnergyLevel
         {
             get => MagicEnergy.Energy;
             set => MagicEnergy.Energy = value;
         }
 
-        public int MagicDisturbanceLevel
+        public override int MaxMagicEnergyLevel => MagicEnergy.MaxEnergy;
+
+        public override int MagicDisturbanceLevel
         {
             get => MagicEnergy.Disturbance;
             set => MagicEnergy.Disturbance = value;
