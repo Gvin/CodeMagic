@@ -4,24 +4,24 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.MapGeneration.MapGenerators;
+using CodeMagic.MapGeneration.Dungeon.MapGenerators;
 using Point = CodeMagic.Core.Game.Point;
 
-namespace CodeMagic.MapGeneration
+namespace CodeMagic.MapGeneration.Dungeon
 {
-    public class MapGenerator : IMapGenerator
+    public class DungeonMapGenerator : IDungeonMapGenerator
     {
         private readonly Dictionary<MapType, IMapAreaGenerator> generators;
         private readonly bool writeMapFile;
 
-        public MapGenerator(bool writeMapFile = false)
+        public DungeonMapGenerator(bool writeMapFile = false)
         {
             this.writeMapFile = writeMapFile;
 
-            var wallsFactory = new MapObjectsFactory(WallObjectConfiguration.WallType.Stone);
+            var wallsFactory = new DungeonMapObjectsFactory(WallObjectConfiguration.WallType.Stone);
             generators = new Dictionary<MapType, IMapAreaGenerator>
             {
-                {MapType.Dungeon, new DungeonMapGenerator(wallsFactory)},
+                {MapType.Dungeon, new DungeonRoomsMapGenerator(wallsFactory)},
                 {MapType.Labyrinth, new LabyrinthMapGenerator(wallsFactory)}
             };
         }
@@ -54,11 +54,9 @@ namespace CodeMagic.MapGeneration
             var generator = generators[mapType];
             var map = generator.Generate(size, out playerPosition);
 
-            ApplyFloorType(map, floorType);
-            
-            new ObjectsGenerator().GenerateObjects(map);
+            new DungeonObjectsGenerator().GenerateObjects(map);
 
-            new NpcGenerator().GenerateNpc(level, size, mapType, map, playerPosition);
+            new DungeonNpcGenerator().GenerateNpc(level, size, mapType, map, playerPosition);
 
             if (writeMapFile)
             {
@@ -104,15 +102,6 @@ namespace CodeMagic.MapGeneration
                     }
                     file.WriteLine(line);
                 }
-            }
-        }
-
-        private void ApplyFloorType(IAreaMap map, FloorTypes floorType)
-        {
-            for (int y = 0; y < map.Height; y++)
-            for (int x = 0; x < map.Width; x++)
-            {
-                map.GetCell(x, y).FloorType = floorType;
             }
         }
 

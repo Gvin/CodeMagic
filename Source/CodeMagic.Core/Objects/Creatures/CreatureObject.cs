@@ -34,7 +34,7 @@ namespace CodeMagic.Core.Objects.Creatures
 
         public int MaxVisibilityRange { get; }
 
-        public override void Damage(Journal journal, int damage, Element element)
+        public override void Damage(IJournal journal, int damage, Element element)
         {
             base.Damage(journal, damage, element);
 
@@ -49,7 +49,7 @@ namespace CodeMagic.Core.Objects.Creatures
             }
         }
 
-        private void CheckFrozen(int damage, Journal journal)
+        private void CheckFrozen(int damage, IJournal journal)
         {
             var chance = (int)Math.Round(damage * FrozenChanceMultiplier);
             if (RandomHelper.CheckChance(chance))
@@ -58,7 +58,7 @@ namespace CodeMagic.Core.Objects.Creatures
             }
         }
 
-        private void CheckParalyzed(int damage, Journal journal)
+        private void CheckParalyzed(int damage, IJournal journal)
         {
             var chance = (int) Math.Round(damage * ParalyzedChanceMultiplier);
             if (RandomHelper.CheckChance(chance))

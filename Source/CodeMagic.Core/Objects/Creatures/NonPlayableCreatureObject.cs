@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.CreaturesLogic;
 using CodeMagic.Core.CreaturesLogic.Strategies;
 using CodeMagic.Core.Game;
@@ -48,17 +49,17 @@ namespace CodeMagic.Core.Objects.Creatures
             }
         }
 
-        public void Update(IGameCore game, Point position)
+        public void Update(IAreaMap map, IJournal journal, Point position)
         {
             turnsCounter += 1;
             if (turnsCounter >= Speed)
             {
-                Logic.Update(this, game, position);
+                Logic.Update(this, map, journal, position);
                 turnsCounter -= Speed;
             }
         }
 
-        public virtual void Attack(IDestroyableObject target, Journal journal)
+        public virtual void Attack(IDestroyableObject target, IJournal journal)
         {
         }
 
@@ -68,14 +69,14 @@ namespace CodeMagic.Core.Objects.Creatures
 
         protected Logic Logic { get; }
 
-        public override void OnDeath(IGameCore game, Point position)
+        public override void OnDeath(IAreaMap map, IJournal journal, Point position)
         {
-            base.OnDeath(game, position);
+            base.OnDeath(map, journal, position);
 
             var remains = GenerateRemains();
             if (remains != null)
             {
-                game.Map.AddObject(position, remains);
+                map.AddObject(position, remains);
             }
 
             var loot = GenerateLoot();
@@ -83,7 +84,7 @@ namespace CodeMagic.Core.Objects.Creatures
             {
                 foreach (var item in loot)
                 {
-                    game.Map.AddObject(position, item);
+                    map.AddObject(position, item);
                 }
             }
         }

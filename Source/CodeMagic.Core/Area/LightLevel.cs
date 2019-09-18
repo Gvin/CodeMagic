@@ -4,7 +4,7 @@
     {
         Darkness = 0,
         Dusk1 = 1,
-        Disk2 = 2,
+        Dusk2 = 2,
         Dim1 = 3,
         Dim2 = 4,
         Medium = 5,

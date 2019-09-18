@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Spells.Script;
@@ -18,13 +20,12 @@ namespace CodeMagic.Core.Spells.SpellActions
             volume = (int)actionData.volume;
         }
 
-        public override Point Perform(IGameCore game, Point position)
+        public override Point Perform(IAreaMap map, IJournal journal, Point position)
         {
-            var cell = game.Map.GetCell(position);
-            if (cell.BlocksMovement)
+            if (map.GetCell(position).BlocksMovement)
                 return position;
 
-            cell.Objects.AddVolumeObject(Injector.Current.Create<IWaterLiquidObject>(volume));
+            map.AddObject(position, Injector.Current.Create<IWaterLiquidObject>(volume));
             return position;
         }
 

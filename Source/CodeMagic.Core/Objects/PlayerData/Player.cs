@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Statuses;
@@ -108,28 +110,28 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         public int HitChance => CalculateHitChance(Equipment.Weapon.HitChance);
 
-        public void Update(IGameCore game, Point position)
+        public void Update(IAreaMap map, IJournal journal, Point position)
         {
             if (Mana < MaxMana)
             {
-                var cell = game.Map.GetCell(position);
-                var manaToRegenerate = Math.Min(ManaRegeneration, cell.MagicEnergy.Energy);
-                cell.MagicEnergy.Energy -= manaToRegenerate;
+                var cell = map.GetCell(position);
+                var manaToRegenerate = Math.Min(ManaRegeneration, cell.MagicEnergyLevel);
+                cell.MagicEnergyLevel -= manaToRegenerate;
                 Mana += manaToRegenerate;
             }
 
             var weight = Inventory.GetWeight();
             if (weight > MaxCarryWeight)
             {
-                Statuses.Add(new OverweightObjectStatus(), game.Journal);
+                Statuses.Add(new OverweightObjectStatus(), journal);
             }
         }
 
         public bool Updated { get; set; }
 
-        public override void OnDeath(IGameCore game, Point position)
+        public override void OnDeath(IAreaMap map, IJournal journal, Point position)
         {
-            base.OnDeath(game, position);
+            base.OnDeath(map, journal, position);
 
             Died?.Invoke(this, EventArgs.Empty);
         }

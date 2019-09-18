@@ -42,16 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalWorld\GlobalWorldMapGenerator.cs" />
+    <Compile Include="Home\HomeLocationMapGenerator.cs" />
     <Compile Include="MapGenerationException.cs" />
-    <Compile Include="MapGenerator.cs" />
-    <Compile Include="MapGenerators\DungeonMapGenerator.cs" />
-    <Compile Include="MapGenerators\IMapAreaGenerator.cs" />
-    <Compile Include="MapGenerators\LabyrinthMapGenerator.cs" />
-    <Compile Include="MonstersGenerator.cs" />
-    <Compile Include="NpcGenerator.cs" />
-    <Compile Include="ObjectsGenerator.cs" />
+    <Compile Include="Dungeon\DungeonMapGenerator.cs" />
+    <Compile Include="Dungeon\MapGenerators\DungeonRoomsMapGenerator.cs" />
+    <Compile Include="Dungeon\MapGenerators\IMapAreaGenerator.cs" />
+    <Compile Include="Dungeon\MapGenerators\LabyrinthMapGenerator.cs" />
+    <Compile Include="Dungeon\DungeonMonstersGenerator.cs" />
+    <Compile Include="Dungeon\DungeonNpcGenerator.cs" />
+    <Compile Include="Dungeon\DungeonObjectsGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MapObjectsFactory.cs" />
+    <Compile Include="Dungeon\DungeonMapObjectsFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">

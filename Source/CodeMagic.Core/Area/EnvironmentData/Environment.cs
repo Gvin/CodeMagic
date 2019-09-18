@@ -44,7 +44,7 @@ namespace CodeMagic.Core.Area.EnvironmentData
             pressure.Normalize();
         }
 
-        public void ApplyEnvironment(IDestroyableObject destroyable, Journal journal)
+        public void ApplyEnvironment(IDestroyableObject destroyable, IJournal journal)
         {
             var temperatureDamage = temperature.GetTemperatureDamage(out var temperDamageElement);
             var pressureDamage = pressure.GetPressureDamage();

@@ -1,7 +1,7 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 
-namespace CodeMagic.MapGeneration.MapGenerators
+namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
 {
     internal interface IMapAreaGenerator
     {

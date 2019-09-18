@@ -6,7 +6,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 
-namespace CodeMagic.MapGeneration.MapGenerators
+namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
 {
     internal class LabyrinthMapGenerator : IMapAreaGenerator
     {
@@ -16,9 +16,9 @@ namespace CodeMagic.MapGeneration.MapGenerators
 
         private const int TorchChance = 10;
 
-        private readonly MapObjectsFactory mapObjectsFactory;
+        private readonly DungeonMapObjectsFactory mapObjectsFactory;
 
-        public LabyrinthMapGenerator(MapObjectsFactory mapObjectsFactory)
+        public LabyrinthMapGenerator(DungeonMapObjectsFactory mapObjectsFactory)
         {
             this.mapObjectsFactory = mapObjectsFactory;
         }
@@ -39,8 +39,8 @@ namespace CodeMagic.MapGeneration.MapGenerators
 
             var endPosition = GetEndPosition(map, playerPosition);
 
-            map.AddObject(playerPosition, mapObjectsFactory.CreateTrapDoor());
-            map.AddObject(endPosition, mapObjectsFactory.CreateStairsUp());
+            map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
+            map.AddObject(endPosition, mapObjectsFactory.CreateTrapDoor());
 
             return map;
         }
@@ -91,7 +91,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
 
         private IAreaMap ConvertToAreaMap(Room[][] roomsMap, int width, int height)
         {
-            var map = new AreaMap(width, height);
+            var map = new AreaMap(width, height, new InsideEnvironmentLightManager());
 
             var currentMapY = 1;
             foreach (var row in roomsMap)
@@ -133,6 +133,14 @@ namespace CodeMagic.MapGeneration.MapGenerators
             for (var x = 0; x < map.Width; x++)
             {
                 map.AddObject(x, 0, mapObjectsFactory.CreateWall(TorchChance));
+            }
+
+            for (int y = 0; y < map.Height; y++)
+            {
+                for (int x = 0; x < map.Width; x++)
+                {
+                    map.AddObject(x, y, mapObjectsFactory.CreateFloor());
+                }
             }
 
             return map;

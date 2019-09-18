@@ -53,28 +53,28 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public string Type => LiquidType;
 
-        public void Update(IGameCore game, Point position)
+        public void Update(IAreaMap map, IJournal journal, Point position)
         {
-            var cell = game.Map.GetCell(position);
+            var cell = map.GetCell(position);
 
             if (Volume <= 0)
             {
-                cell.Objects.Remove(this);
+                map.RemoveObject(position, this);
                 return;
             }
 
-            if (cell.Environment.Temperature >= ignitionTemperature)
+            if (cell.Temperature >= ignitionTemperature)
             {
                 ProcessBurning(cell);
             }
 
             if (Volume >= MinVolumeForEffect)
             { 
-                ApplyOilyStatus(cell, game.Journal);
+                ApplyOilyStatus(cell, journal);
             }
         }
 
-        private void ApplyOilyStatus(AreaMapCell cell, Journal journal)
+        private void ApplyOilyStatus(IAreaMapCell cell, IJournal journal)
         {
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)
@@ -83,16 +83,16 @@ namespace CodeMagic.Core.Objects.LiquidObjects
             }
         }
 
-        private void ProcessBurning(AreaMapCell cell)
+        private void ProcessBurning(IAreaMapCell cell)
         {
-            if (cell.Environment.Temperature < BurningTemperature)
+            if (cell.Temperature < BurningTemperature)
             {
-                var temperatureDiff = BurningTemperature - cell.Environment.Temperature;
+                var temperatureDiff = BurningTemperature - cell.Temperature;
                 var temperatureChange = Math.Min(temperatureDiff, heatSpeed);
-                cell.Environment.Temperature += temperatureChange;
+                cell.Temperature += temperatureChange;
             }
 
-            var burnedVolume = (int)Math.Ceiling(cell.Environment.Temperature * burningRate);
+            var burnedVolume = (int)Math.Ceiling(cell.Temperature * burningRate);
             Volume -= burnedVolume;
         }
 

@@ -6,7 +6,7 @@ namespace CodeMagic.Core.Statuses
 {
     public interface IObjectStatus
     {
-        bool Update(IDestroyableObject owner, AreaMapCell cell, Journal journal);
+        bool Update(IDestroyableObject owner, AreaMapCell cell, IJournal journal);
 
         string Type { get; }
     }

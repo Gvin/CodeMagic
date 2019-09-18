@@ -83,7 +83,7 @@ namespace CodeMagic.Core.Area.EnvironmentData
             }
         }
 
-        public void ApplyMagicEnvironment(IDestroyableObject destroyable, Journal journal)
+        public void ApplyMagicEnvironment(IDestroyableObject destroyable, IJournal journal)
         {
             var damage = CalculateDamage();
             if (damage <= 0)

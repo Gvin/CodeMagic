@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.ObjectEffects;
@@ -14,9 +15,9 @@ namespace CodeMagic.Core.Objects
 
         int MaxHealth { get; set; }
 
-        void OnDeath(IGameCore game, Point position);
+        void OnDeath(IAreaMap map, IJournal journal, Point position);
 
-        void Damage(Journal journal, int value, Element element);
+        void Damage(IJournal journal, int value, Element element);
 
         ObjectStatusesCollection Statuses { get; }
 

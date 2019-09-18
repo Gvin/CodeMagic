@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
@@ -112,7 +113,7 @@ namespace CodeMagic.Core.Objects
 
         private int CatchFireChanceMultiplier { get; }
 
-        public virtual void Damage(Journal journal, int damage, Element element)
+        public virtual void Damage(IJournal journal, int damage, Element element)
         {
             if (damage < 0)
                 throw new ArgumentException($"Damage should be greater or equal 0. Got {damage}.");
@@ -153,7 +154,7 @@ namespace CodeMagic.Core.Objects
             };
         }
 
-        private void CheckCatchFire(int damage, Journal journal)
+        private void CheckCatchFire(int damage, IJournal journal)
         {
             var catchFireChance = damage * CatchFireChanceMultiplier;
 
@@ -169,7 +170,7 @@ namespace CodeMagic.Core.Objects
             }
         }
 
-        public virtual void OnDeath(IGameCore game, Point position)
+        public virtual void OnDeath(IAreaMap map, IJournal journal, Point position)
         {
         }
 

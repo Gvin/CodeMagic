@@ -21,20 +21,23 @@ namespace CodeMagic.UI.Sad.Drawing
             LightLevelManager = new LightLevelManager();
         }
 
-        public static SymbolsImage GetCellImage(AreaMapCell cell)
+        public static SymbolsImage GetCellImage(IAreaMapCell cell)
         {
             if (cell == null)
                 return EmptyImage;
-
-            var image = GetFloorImage(cell);
 
             var objectsImages = cell.Objects
                 .Where(obj => obj.IsVisible)
                 .OrderBy(obj => obj.ZIndex)
                 .Select(GetObjectImage)
-                .Where(img => img != null);
+                .Where(img => img != null)
+                .ToArray();
 
-            foreach (var objectImage in objectsImages)
+            var image = objectsImages.FirstOrDefault();
+            if (image == null)
+                return EmptyImage;
+
+            foreach (var objectImage in objectsImages.Skip(1))
             {
                 image = SymbolsImage.Combine(image, objectImage);
             }
@@ -43,7 +46,7 @@ namespace CodeMagic.UI.Sad.Drawing
             return ApplyObjectEffects(cell, image);
         }
 
-        private static SymbolsImage ApplyObjectEffects(AreaMapCell cell, SymbolsImage image)
+        private static SymbolsImage ApplyObjectEffects(IAreaMapCell cell, SymbolsImage image)
         {
             var bigObject = cell.Objects.OfType<IDestroyableObject>().FirstOrDefault(obj => obj.BlocksMovement);
             if (bigObject == null || !bigObject.ObjectEffects.Any())
@@ -65,11 +68,6 @@ namespace CodeMagic.UI.Sad.Drawing
         private static SymbolsImage GetObjectImage(IMapObject mapObject)
         {
             return WorldImagesFactory.GetImage(mapObject);
-        }
-
-        private static SymbolsImage GetFloorImage(AreaMapCell cell)
-        {
-            return ImagesStorage.Current.GetImage("Floor_Stone");
         }
     }
 }

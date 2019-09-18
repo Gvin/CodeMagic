@@ -1,5 +1,7 @@
 ﻿using System.Drawing;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Spells;
 using Point = CodeMagic.Core.Game.Point;
@@ -18,14 +20,14 @@ namespace CodeMagic.Core.Objects.SolidObjects
             EnergyLeft = configuration.LifeTime;
         }
 
-        public void Update(IGameCore game, Point position)
+        public void Update(IAreaMap map, IJournal journal, Point position)
         {
             EnergyLeft--;
             if (EnergyLeft > 0)
                 return;
 
-            var cell = game.Map.GetCell(position);
-            cell.Objects.Remove(this);
+            var cell = map.GetCell(position);
+            map.RemoveObject(position, this);
         }
 
         public UpdateOrder UpdateOrder => UpdateOrder.Early;

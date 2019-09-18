@@ -4,6 +4,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.IceObjects;
 using CodeMagic.Core.Objects.SteamObjects;
 
@@ -41,63 +42,63 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public ObjectSize Size => ObjectSize.Huge;
 
-        public void Update(IGameCore game, Point position)
+        public void Update(IAreaMap map, IJournal journal, Point position)
         {
-            var cell = game.Map.GetCell(position);
+            var cell = map.GetCell(position);
 
             if (Volume == 0)
             {
-                cell.Objects.Remove(this);
+                map.RemoveObject(position, this);
                 return;
             }
 
-            if (cell.Environment.Temperature >= Configuration.BoilingPoint)
+            if (cell.Temperature >= Configuration.BoilingPoint)
             {
-                ProcessBoiling(cell);
+                ProcessBoiling(map, position, cell);
             }
 
-            if (cell.Environment.Temperature <= Configuration.FreezingPoint)
+            if (cell.Temperature <= Configuration.FreezingPoint)
             {
-                ProcessFreezing(cell);
+                ProcessFreezing(map, position, cell);
             }
 
-            UpdateLiquid(game, position);
+            UpdateLiquid(map, journal, position);
         }
 
-        protected virtual void UpdateLiquid(IGameCore game, Point position)
+        protected virtual void UpdateLiquid(IAreaMap map, IJournal journal, Point position)
         {
             // Do nothing.
         }
 
-        private void ProcessBoiling(AreaMapCell cell)
+        private void ProcessBoiling(IAreaMap map, Point position, IAreaMapCell cell)
         {
-            var excessTemperature = cell.Environment.Temperature - Configuration.BoilingPoint;
+            var excessTemperature = cell.Temperature - Configuration.BoilingPoint;
             var volumeToLowerTemp = (int)Math.Floor(excessTemperature * Configuration.EvaporationTemperatureMultiplier);
             var volumeToBecomeSteam = Math.Min(volumeToLowerTemp, Volume);
             var heatLoss = (int)Math.Floor(volumeToBecomeSteam * Configuration.EvaporationTemperatureMultiplier);
 
-            cell.Environment.Temperature -= heatLoss;
+            cell.Temperature -= heatLoss;
             Volume -= volumeToBecomeSteam;
 
             var steamVolume = volumeToBecomeSteam * Configuration.EvaporationMultiplier;
-            cell.Environment.Pressure += steamVolume * Configuration.Steam.PressureMultiplier;
+            cell.Pressure += steamVolume * Configuration.Steam.PressureMultiplier;
             
-            cell.Objects.AddVolumeObject(CreateSteam(steamVolume));
+            map.AddObject(position, CreateSteam(steamVolume));
         }
 
         protected abstract ISteamObject CreateSteam(int volume);
 
-        private void ProcessFreezing(AreaMapCell cell)
+        private void ProcessFreezing(IAreaMap map, Point position, IAreaMapCell cell)
         {
-            var missingTemperature = Configuration.FreezingPoint - cell.Environment.Temperature;
+            var missingTemperature = Configuration.FreezingPoint - cell.Temperature;
             var volumeToRaiseTemp = (int)Math.Floor(missingTemperature * Configuration.FreezingTemperatureMultiplier);
             var volumeToFreeze = Math.Min(volumeToRaiseTemp, Volume);
             var heatGain = (int)Math.Floor(volumeToFreeze / Configuration.FreezingTemperatureMultiplier);
 
-            cell.Environment.Temperature += heatGain;
+            cell.Temperature += heatGain;
             Volume -= volumeToFreeze;
 
-            cell.Objects.AddVolumeObject(CreateIce(volumeToFreeze));
+            map.AddObject(position, CreateIce(volumeToFreeze));
         }
 
         protected abstract IIceObject CreateIce(int volume);

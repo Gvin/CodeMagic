@@ -62,8 +62,7 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
 
         public enum ObjectType
         {
-            StonesSmall,
-            TrapDoor
+            StonesSmall
         }
     }
 }

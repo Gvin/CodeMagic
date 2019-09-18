@@ -32,7 +32,7 @@ namespace CodeMagic.Core.Items
             game.Journal.Write(new FailedToUseScrollMessage());
             game.Player.Damage(game.Journal, MagicDamageOnFailedScroll, Element.Magic);
             game.Journal.Write(new EnvironmentDamageMessage(game.Player, MagicDamageOnFailedScroll, Element.Magic));
-            game.Map.GetCell(game.PlayerPosition).MagicEnergy.Disturbance += DisturbanceIncrementOnFailedScroll;
+            game.Map.GetCell(game.PlayerPosition).MagicDisturbanceLevel += DisturbanceIncrementOnFailedScroll;
             return false;
         }
 

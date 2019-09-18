@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
@@ -12,12 +14,15 @@ namespace CodeMagic.Core.Area
         private readonly Dictionary<Type, Point> objectPositionCache;
         private readonly AreaMapCell[][] cells;
         private readonly Dictionary<string, IDestroyableObject> destroyableObjects;
+        private readonly IEnvironmentLightManager environmentLightManager;
 
-        public AreaMap(int width, int height)
+        public AreaMap(int width, int height, IEnvironmentLightManager environmentLightManager, int lightSpreadFactor = 1)
         {
             objectPositionCache = new Dictionary<Type, Point>();
-
+            this.environmentLightManager = environmentLightManager;
             destroyableObjects = new Dictionary<string, IDestroyableObject>();
+
+            LightDropFactor = lightSpreadFactor;
 
             Width = width;
             Height = height;
@@ -33,6 +38,10 @@ namespace CodeMagic.Core.Area
             }
         }
 
+        public int LightDropFactor { get; }
+
+        public Light BackgroundLight { get; private set; }
+
         public IDestroyableObject GetDestroyableObject(string id)
         {
             if (destroyableObjects.ContainsKey(id))
@@ -45,7 +54,7 @@ namespace CodeMagic.Core.Area
 
         public int Height { get; }
 
-        public AreaMapCell GetCell(int x, int y)
+        public IAreaMapCell GetCell(int x, int y)
         {
             if (x < 0 || x >= Width)
                 throw new ArgumentOutOfRangeException(nameof(x), x, $"Coordinate X value is {x} which doesn't match map size {Width}");
@@ -55,12 +64,12 @@ namespace CodeMagic.Core.Area
             return cells[y][x];
         }
 
-        public AreaMapCell TryGetCell(Point position)
+        public IAreaMapCell TryGetCell(Point position)
         {
             return TryGetCell(position.X, position.Y);
         }
 
-        public AreaMapCell TryGetCell(int x, int y)
+        public IAreaMapCell TryGetCell(int x, int y)
         {
             if (!ContainsCell(x, y))
                 return null;
@@ -80,7 +89,7 @@ namespace CodeMagic.Core.Area
                 destroyableObjects.Add(destroyableObject.Id, destroyableObject);
             }
 
-            GetCell(position).Objects.Add(@object);
+            GetOriginalCell(position.X, position.Y).ObjectsCollection.Add(@object);
 
             if (@object is IPlacedHandler placedHandler)
             {
@@ -95,7 +104,7 @@ namespace CodeMagic.Core.Area
                 destroyableObjects.Remove(destroyableObject.Id);
             }
 
-            GetCell(position).Objects.Remove(@object);
+            GetOriginalCell(position.X, position.Y).ObjectsCollection.Remove(@object);
         }
 
         public Point GetObjectPosition<T>() where T : IMapObject
@@ -117,7 +126,7 @@ namespace CodeMagic.Core.Area
                 for (var x = 0; x < row.Length; x++)
                 {
                     var cell = row[x];
-                    if (cell.Objects.Any(selector))
+                    if (cell.ObjectsCollection.Any(selector))
                         return new Point(x, y);
                 }
             }
@@ -125,7 +134,12 @@ namespace CodeMagic.Core.Area
             return null;
         }
 
-        public AreaMapCell GetCell(Point point)
+        public AreaMapCell GetOriginalCell(int x, int y)
+        {
+            return (AreaMapCell) GetCell(x, y);
+        }
+
+        public IAreaMapCell GetCell(Point point)
         {
             return GetCell(point.X, point.Y);
         }
@@ -140,16 +154,16 @@ namespace CodeMagic.Core.Area
             return ContainsCell(point.X, point.Y);
         }
 
-        public AreaMapCell[][] GetMapPart(Point position, int radius)
+        public IAreaMapCell[][] GetMapPart(Point position, int radius)
         {
             var startIndexX = position.X - radius;
             var startIndexY = position.Y - radius;
             var visionDiameter = radius * 2 + 1;
 
-            var result = new AreaMapCell[visionDiameter][];
+            var result = new IAreaMapCell[visionDiameter][];
             for (var y = 0; y < visionDiameter; y++)
             {
-                result[y] = new AreaMapCell[visionDiameter];
+                result[y] = new IAreaMapCell[visionDiameter];
                 for (var x = 0; x < visionDiameter; x++)
                 {
                     result[y][x] = TryGetCell(startIndexX + x, startIndexY + y);
@@ -159,32 +173,36 @@ namespace CodeMagic.Core.Area
             return result;
         }
 
-        public void Refresh()
+        public void Refresh(DateTime gameTime)
         {
+            BackgroundLight = environmentLightManager.GetEnvironmentLight(gameTime);
+            MapLightLevelHelper.ResetLightLevel(this);
             MapLightLevelHelper.UpdateLightLevel(this);
         }
 
-        public void PreUpdate(IGameCore game)
+        public void PreUpdate(IJournal journal)
         {
             PreUpdateCells();
         }
 
-        public void Update(IGameCore game)
+        public void Update(IJournal journal, DateTime gameTime)
         {
+            BackgroundLight = environmentLightManager.GetEnvironmentLight(gameTime);
+
             objectPositionCache.Clear();
 
-            UpdateCells(game, UpdateOrder.Early);
+            UpdateCells(journal, UpdateOrder.Early);
 
             MapLightLevelHelper.ResetLightLevel(this);
             MapLightLevelHelper.UpdateLightLevel(this);
 
-            UpdateCells(game, UpdateOrder.Medium);
-            UpdateCells(game, UpdateOrder.Late);
+            UpdateCells(journal, UpdateOrder.Medium);
+            UpdateCells(journal, UpdateOrder.Late);
 
-            PostUpdateCells(game);
+            PostUpdateCells(journal);
         }
 
-        private void UpdateCells(IGameCore game, UpdateOrder order)
+        private void UpdateCells(IJournal journal, UpdateOrder order)
         {
             for (var y = 0; y < cells.Length; y++)
             {
@@ -192,7 +210,7 @@ namespace CodeMagic.Core.Area
                 for (var x = 0; x < row.Length; x++)
                 {
                     var cell = row[x];
-                    cell.Update(game, new Point(x, y), order);
+                    cell.Update(this, journal, new Point(x, y), order);
                 }
             }
         }
@@ -205,7 +223,7 @@ namespace CodeMagic.Core.Area
                 for (var x = 0; x < row.Length; x++)
                 {
                     var cell = row[x];
-                    var cellDestroyableObjects = cell.Objects.OfType<IDestroyableObject>();
+                    var cellDestroyableObjects = cell.ObjectsCollection.OfType<IDestroyableObject>();
                     foreach (var destroyableObject in cellDestroyableObjects)
                     {
                         destroyableObject.ClearDamageRecords();
@@ -214,16 +232,16 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void PostUpdateCells(IGameCore game)
+        private void PostUpdateCells(IJournal journal)
         {
-            var mergedCells = new List<CellsPair>();
+            var mergedCells = new CellPairsStorage(Width, Height);
             for (var y = 0; y < cells.Length; y++)
             {
                 for (var x = 0; x < cells[y].Length; x++)
                 {
                     var position = new Point(x, y);
-                    var cell = GetCell(position);
-                    cell.PostUpdate(game, position);
+                    var cell = (AreaMapCell)GetCell(position);
+                    cell.PostUpdate(this, journal, position);
                     cell.ResetDynamicObjectsState();
                     cell.UpdateEnvironment();
                     MergeCellEnvironment(position, cell, mergedCells);
@@ -231,14 +249,14 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void MergeCellEnvironment(Point position, AreaMapCell cell, List<CellsPair> mergedCells)
+        private void MergeCellEnvironment(Point position, AreaMapCell cell, CellPairsStorage mergedCells)
         {
             if (cell.BlocksEnvironment)
                 return;
             SpreadEnvironment(position, cell, mergedCells);
         }
 
-        private void SpreadEnvironment(Point position, AreaMapCell cell, List<CellsPair> mergedCells)
+        private void SpreadEnvironment(Point position, AreaMapCell cell, CellPairsStorage mergedCells)
         {
             TrySpreadEnvironment(position, Direction.North, cell, mergedCells);
             TrySpreadEnvironment(position, Direction.South, cell, mergedCells);
@@ -246,16 +264,17 @@ namespace CodeMagic.Core.Area
             TrySpreadEnvironment(position, Direction.East, cell, mergedCells);
         }
 
-        private void TrySpreadEnvironment(Point position, Direction direction, AreaMapCell cell, List<CellsPair> mergedCells)
+        private void TrySpreadEnvironment(Point position, Direction direction, AreaMapCell cell, CellPairsStorage mergedCells)
         {
             var nextPosition = Point.GetPointInDirection(position, direction);
             if (!ContainsCell(nextPosition))
                 return;
 
-            var nextCell = GetCell(nextPosition);
-            if (mergedCells.Any(merge => merge.ContainsPair(cell, nextCell)))
+            var nextCell = (AreaMapCell) GetCell(nextPosition);
+
+            if (mergedCells.ContainsPair(position, direction))
                 return;
-            mergedCells.Add(new CellsPair(cell, nextCell));
+            mergedCells.RegisterPair(position, direction);
 
             cell.MagicEnergy.Merge(nextCell.MagicEnergy);
 
@@ -266,21 +285,50 @@ namespace CodeMagic.Core.Area
             cell.Environment.Balance(nextCell.Environment);
         }
 
-        private class CellsPair
+        private class CellPairsStorage
         {
-            public CellsPair(AreaMapCell cell1, AreaMapCell cell2)
+            private readonly List<Direction>[,] pairs;
+
+            public CellPairsStorage(int width, int height)
             {
-                Cell1 = cell1;
-                Cell2 = cell2;
+                pairs = new List<Direction>[width, height];
+                for (int y = 0; y < height; y++)
+                {
+                    for (int x = 0; x < width; x++)
+                    {
+                        pairs[x, y] = new List<Direction>();
+                    }
+                }
             }
 
-            private AreaMapCell Cell1 { get; }
-
-            private AreaMapCell Cell2 { get; }
-
-            public bool ContainsPair(AreaMapCell checkCell1, AreaMapCell checkCell2)
+            public void RegisterPair(Point initialCell, Direction direction)
             {
-                return (Cell1 == checkCell1 && Cell2 == checkCell2) || (Cell2 == checkCell1 && Cell1 == checkCell2);
+                pairs[initialCell.X, initialCell.Y].Add(direction);
+                var targetCell = Point.GetPointInDirection(initialCell, direction);
+                var invertedDirection = InvertDirection(direction);
+                pairs[targetCell.X, targetCell.Y].Add(invertedDirection);
+            }
+
+            public bool ContainsPair(Point initialCell, Direction direction)
+            {
+                return pairs[initialCell.X, initialCell.Y].Contains(direction);
+            }
+
+            private Direction InvertDirection(Direction direction)
+            {
+                switch (direction)
+                {
+                    case Direction.North:
+                        return Direction.South;
+                    case Direction.South:
+                        return Direction.North;
+                    case Direction.West:
+                        return Direction.East;
+                    case Direction.East:
+                        return Direction.West;
+                    default:
+                        throw new ArgumentException($"Unknown direction: {direction}");
+                }
             }
         }
     }

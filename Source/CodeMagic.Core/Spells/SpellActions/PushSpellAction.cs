@@ -4,6 +4,7 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Spells.Script;
@@ -24,13 +25,13 @@ namespace CodeMagic.Core.Spells.SpellActions
             force = (int) actionData.force;
         }
 
-        public override Point Perform(IGameCore game, Point position)
+        public override Point Perform(IAreaMap map, IJournal journal, Point position)
         {
-            var target = GetTarget(game.Map, position);
+            var target = GetTarget(map, position);
             if (target == null)
                 return position;
 
-            var remainingForce = TryPush(target, game, position, out var currentPosition);
+            var remainingForce = TryPush(target, map, journal, position, out var currentPosition);
             if (remainingForce == 0)
                 return position;
 
@@ -40,37 +41,37 @@ namespace CodeMagic.Core.Spells.SpellActions
 
             if (target is IDestroyableObject destroyableTarget)
             {
-                destroyableTarget.Damage(game.Journal, damage, Element.Blunt);
-                game.Journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt));
+                destroyableTarget.Damage(journal, damage, Element.Blunt);
+                journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt));
             }
 
-            ApplyCollideDamageToCell(game, collideCellPosition, damage);
+            ApplyCollideDamageToCell(map, journal, collideCellPosition, damage);
 
             return position;
         }
 
-        private void ApplyCollideDamageToCell(IGameCore game, Point position, int damage)
+        private void ApplyCollideDamageToCell(IAreaMap map, IJournal journal, Point position, int damage)
         {
-            var cell = game.Map.TryGetCell(position);
+            var cell = map.TryGetCell(position);
             if (cell == null)
                 return;
 
             var collidedObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var collidedObject in collidedObjects)
             {
-                collidedObject.Damage(game.Journal, damage, Element.Blunt);
-                game.Journal.Write(new EnvironmentDamageMessage(collidedObject, damage, Element.Blunt));
+                collidedObject.Damage(journal, damage, Element.Blunt);
+                journal.Write(new EnvironmentDamageMessage(collidedObject, damage, Element.Blunt));
             }
         }
 
-        private int TryPush(IMapObject target, IGameCore game, Point position, out Point currentPosition)
+        private int TryPush(IMapObject target, IAreaMap map, IJournal journal, Point position, out Point currentPosition)
         {
             currentPosition = position;
             var initialForce = GetInitialForce(target);
             for (var remainingForce = initialForce; remainingForce > 0; remainingForce--)
             {
                 var nextPosition = Point.GetPointInDirection(currentPosition, direction);
-                var movementResult = MovementHelper.MoveObject(target, game, currentPosition, nextPosition);
+                var movementResult = MovementHelper.MoveObject(target, map, journal, currentPosition, nextPosition);
                 if (!movementResult.Success)
                     return remainingForce;
 

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace CodeMagic.Core.Game.Journaling
 {
-    public class Journal
+    public class Journal : IJournal
     {
         private readonly ITurnProvider turnProvider;
         private readonly List<JournalMessageData> messages;

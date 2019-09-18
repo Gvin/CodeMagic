@@ -18,7 +18,7 @@ namespace CodeMagic.Core.Statuses
             this.owner = owner;
         }
 
-        public void Add(IObjectStatus status, Journal journal)
+        public void Add(IObjectStatus status, IJournal journal)
         {
             if (statuses.ContainsKey(status.Type))
             {
@@ -52,7 +52,7 @@ namespace CodeMagic.Core.Statuses
             return statuses.ContainsKey(statusType);
         }
 
-        public void Update(AreaMapCell cell, Journal journal)
+        public void Update(AreaMapCell cell, IJournal journal)
         {
             foreach (var status in statuses.Values.ToArray())
             {

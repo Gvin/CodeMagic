@@ -8,18 +8,18 @@ using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.DecorativeObjects;
+using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Statuses;
 using Environment = CodeMagic.Core.Area.EnvironmentData.Environment;
 
 namespace CodeMagic.Core.Area
 {
-    public class AreaMapCell
+    public class AreaMapCell : IAreaMapCell
     {
         public AreaMapCell()
         {
-            Objects = new MapObjectsCollection();
-            FloorType = FloorTypes.Stone;
+            ObjectsCollection = new MapObjectsCollection();
             Environment = new Environment();
             MagicEnergy = new MagicEnergy();
             LightLevel = new CellLightData();
@@ -29,60 +29,94 @@ namespace CodeMagic.Core.Area
 
         public Environment Environment { get; }
 
-        public MapObjectsCollection Objects { get; }
+        IMapObject[] IAreaMapCell.Objects => ObjectsCollection.ToArray();
 
-        public FloorTypes FloorType { get; set; }
+        public int GetVolume<T>() where T : ILiquidObject
+        {
+            return ObjectsCollection.GetVolume<T>();
+        }
 
-        public CellLightData LightLevel { get; set; }
+        public void RemoveVolume<T>(int volume) where T : ILiquidObject
+        {
+            ObjectsCollection.RemoveVolume<T>(volume);
+        }
+
+        public MapObjectsCollection ObjectsCollection { get; }
+
+        public CellLightData LightLevel { get; }
 
         public bool BlocksMovement
         {
-            get { return Objects.Any(obj => obj.BlocksMovement); }
+            get { return ObjectsCollection.Any(obj => obj.BlocksMovement); }
         }
 
-        public bool HasSolidObjects => Objects.OfType<WallObject>().Any();
+        public bool HasSolidObjects => ObjectsCollection.OfType<WallObject>().Any();
 
         public bool BlocksEnvironment
         {
-            get { return Objects.Any(obj => obj.BlocksEnvironment); }
+            get { return ObjectsCollection.Any(obj => obj.BlocksEnvironment); }
         }
 
         public bool BlocksVisibility
         {
-            get { return Objects.Any(obj => obj.BlocksVisibility); }
+            get { return ObjectsCollection.Any(obj => obj.BlocksVisibility); }
         }
 
         public bool BlocksProjectiles
         {
-            get { return Objects.Any(obj => obj.BlocksProjectiles); }
+            get { return ObjectsCollection.Any(obj => obj.BlocksProjectiles); }
         }
 
         public IDestroyableObject GetBiggestDestroyable()
         {
-            var destroyable = Objects.OfType<IDestroyableObject>().ToArray();
+            var destroyable = ObjectsCollection.OfType<IDestroyableObject>().ToArray();
             var bigDestroyable = destroyable.FirstOrDefault(obj => obj.BlocksMovement);
             if (bigDestroyable != null)
                 return bigDestroyable;
             return destroyable.LastOrDefault();
         }
 
-        public void Update(IGameCore game, Point position, UpdateOrder updateOrder)
+        public int Temperature
         {
-            ProcessDynamicObjects(game, position, updateOrder);
+            get => Environment.Temperature;
+            set => Environment.Temperature = value;
         }
 
-        public void PostUpdate(IGameCore game, Point position)
+        public int Pressure
         {
-            ProcessDestroyableObjects(game, position);
+            get => Environment.Pressure;
+            set => Environment.Pressure = value;
+        }
+
+        public int MagicEnergyLevel
+        {
+            get => MagicEnergy.Energy;
+            set => MagicEnergy.Energy = value;
+        }
+
+        public int MagicDisturbanceLevel
+        {
+            get => MagicEnergy.Disturbance;
+            set => MagicEnergy.Disturbance = value;
+        }
+
+        public void Update(IAreaMap map, IJournal journal, Point position, UpdateOrder updateOrder)
+        {
+            ProcessDynamicObjects(map, journal, position, updateOrder);
+        }
+
+        public void PostUpdate(IAreaMap map, IJournal journal, Point position)
+        {
+            ProcessDestroyableObjects(map, journal, position);
         }
 
         public void UpdateEnvironment()
         {
             Environment.Normalize();
 
-            if (Environment.Temperature >= FireDecorativeObject.SmallFireTemperature && !Objects.OfType<FireDecorativeObject>().Any())
+            if (Environment.Temperature >= FireDecorativeObject.SmallFireTemperature && !ObjectsCollection.OfType<FireDecorativeObject>().Any())
             {
-                Objects.Add(Injector.Current.Create<IFireDecorativeObject>(Environment.Temperature));
+                ObjectsCollection.Add(Injector.Current.Create<IFireDecorativeObject>(Environment.Temperature));
             }
 
             MagicEnergy.Update();
@@ -90,38 +124,38 @@ namespace CodeMagic.Core.Area
 
         public void ResetDynamicObjectsState()
         {
-            foreach (var dynamicObject in Objects.OfType<IDynamicObject>())
+            foreach (var dynamicObject in ObjectsCollection.OfType<IDynamicObject>())
             {
                 dynamicObject.Updated = false;
             }
         }
 
-        private void ProcessDynamicObjects(IGameCore game, Point position, UpdateOrder updateOrder)
+        private void ProcessDynamicObjects(IAreaMap map, IJournal journal, Point position, UpdateOrder updateOrder)
         {
-            var dynamicObjects = Objects.OfType<IDynamicObject>()
+            var dynamicObjects = ObjectsCollection.OfType<IDynamicObject>()
                 .Where(obj => !obj.Updated && obj.UpdateOrder == updateOrder).ToArray();
             foreach (var dynamicObject in dynamicObjects)
             {
-                dynamicObject.Update(game, position);
+                dynamicObject.Update(map, journal, position);
                 dynamicObject.Updated = true;
             }
         }
 
-        private void ProcessDestroyableObjects(IGameCore game, Point position)
+        private void ProcessDestroyableObjects(IAreaMap map, IJournal journal, Point position)
         {
-            var destroyableObjects = Objects.OfType<IDestroyableObject>().ToArray();
-            ProcessStatusesAndEnvironment(destroyableObjects, game.Journal);
+            var destroyableObjects = ObjectsCollection.OfType<IDestroyableObject>().ToArray();
+            ProcessStatusesAndEnvironment(destroyableObjects, journal);
 
             var deadObjects = destroyableObjects.Where(obj => obj.Health <= 0).ToArray();
             foreach (var deadObject in deadObjects)
             {
-                game.Map.RemoveObject(position, deadObject);
-                game.Journal.Write(new DeathMessage(deadObject));
-                deadObject.OnDeath(game, position);
+                map.RemoveObject(position, deadObject);
+                journal.Write(new DeathMessage(deadObject));
+                deadObject.OnDeath(map, journal, position);
             }
         }
 
-        private void ProcessStatusesAndEnvironment(IDestroyableObject[] destroyableObjects, Journal journal)
+        private void ProcessStatusesAndEnvironment(IDestroyableObject[] destroyableObjects, IJournal journal)
         {
             foreach (var destroyableObject in destroyableObjects)
             {
@@ -145,8 +179,8 @@ namespace CodeMagic.Core.Area
 
         private void CheckFireSpread(AreaMapCell other)
         {
-            var localIgnitable = Objects.OfType<IFireSpreadingObject>().FirstOrDefault(obj => obj.SpreadsFire);
-            var otherIgnitable = Objects.OfType<IFireSpreadingObject>().FirstOrDefault(obj => obj.SpreadsFire);
+            var localIgnitable = ObjectsCollection.OfType<IFireSpreadingObject>().FirstOrDefault(obj => obj.SpreadsFire);
+            var otherIgnitable = ObjectsCollection.OfType<IFireSpreadingObject>().FirstOrDefault(obj => obj.SpreadsFire);
 
             if (localIgnitable == null || otherIgnitable == null)
                 return;
@@ -164,8 +198,8 @@ namespace CodeMagic.Core.Area
 
         private void CheckSpreadingObjects(AreaMapCell other)
         {
-            var localSpreadingObjects = Objects.OfType<ISpreadingObject>().ToArray();
-            var otherSpreadingObjects = other.Objects.OfType<ISpreadingObject>().ToArray();
+            var localSpreadingObjects = ObjectsCollection.OfType<ISpreadingObject>().ToArray();
+            var otherSpreadingObjects = other.ObjectsCollection.OfType<ISpreadingObject>().ToArray();
 
             foreach (var spreadingObject in localSpreadingObjects)
             {
@@ -188,7 +222,7 @@ namespace CodeMagic.Core.Area
         {
             var spreadAmount = Math.Min(liquid.MaxSpreadVolume, liquid.Volume - liquid.MaxVolumeBeforeSpread);
             var separated = liquid.Separate(spreadAmount);
-            target.Objects.AddVolumeObject(separated);
+            target.ObjectsCollection.AddVolumeObject(separated);
         }
     }
 }

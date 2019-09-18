@@ -7,9 +7,9 @@ using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.SolidObjects;
 
-namespace CodeMagic.MapGeneration
+namespace CodeMagic.MapGeneration.Dungeon
 {
-    internal class ObjectsGenerator
+    internal class DungeonObjectsGenerator
     {
         private const double StonesCountMultiplier = 0.1;
         private const int MaxPositionSearchTries = 20;

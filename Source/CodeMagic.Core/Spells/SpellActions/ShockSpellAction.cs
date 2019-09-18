@@ -31,25 +31,25 @@ namespace CodeMagic.Core.Spells.SpellActions
             heatMultiplier = GetHeatMultiplier();
         }
 
-        public override Point Perform(IGameCore game, Point position)
+        public override Point Perform(IAreaMap map, IJournal journal, Point position)
         {
-            var currentCell = game.Map.GetCell(position);
-            ApplyShockToCell(power, currentCell, game.Journal);
+            var currentCell = map.GetCell(position);
+            ApplyShockToCell(power, currentCell, journal);
 
             if (!GetIfCellConductsElectricity(currentCell)) // No water - no spreading
                 return position;
 
             var processedCells = new List<Point> {position};
             var spreadPower = (int) Math.Floor(power * waterTransferMultiplier);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.North), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.South), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.West), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.East), spreadPower, processedCells);
+            ProcessShockSpreadToCell(map, journal, Point.GetPointInDirection(position, Direction.North), spreadPower, processedCells);
+            ProcessShockSpreadToCell(map, journal, Point.GetPointInDirection(position, Direction.South), spreadPower, processedCells);
+            ProcessShockSpreadToCell(map, journal, Point.GetPointInDirection(position, Direction.West), spreadPower, processedCells);
+            ProcessShockSpreadToCell(map, journal, Point.GetPointInDirection(position, Direction.East), spreadPower, processedCells);
 
             return position;
         }
 
-        private void ProcessShockSpreadToCell(IGameCore game, Point position, int value, List<Point> processedCells)
+        private void ProcessShockSpreadToCell(IAreaMap map, IJournal journal, Point position, int value, List<Point> processedCells)
         {
             if (value == 0)
                 return;
@@ -58,7 +58,7 @@ namespace CodeMagic.Core.Spells.SpellActions
                 return;
 
             processedCells.Add(position);
-            var currentCell = game.Map.TryGetCell(position);
+            var currentCell = map.TryGetCell(position);
             if (currentCell == null)
                 return;
 
@@ -66,36 +66,36 @@ namespace CodeMagic.Core.Spells.SpellActions
                 return;
 
             processedCells.Add(position);
-            ApplyShockToCell(value, currentCell, game.Journal);
+            ApplyShockToCell(value, currentCell, journal);
 
             var spreadPower = (int)Math.Floor(value * waterTransferMultiplier);
 
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.North), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.South), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.West), spreadPower, processedCells);
-            ProcessShockSpreadToCell(game, Point.GetPointInDirection(position, Direction.East), spreadPower, processedCells);
+            ProcessShockSpreadToCell(map, journal, Point.GetPointInDirection(position, Direction.North), spreadPower, processedCells);
+            ProcessShockSpreadToCell(map, journal, Point.GetPointInDirection(position, Direction.South), spreadPower, processedCells);
+            ProcessShockSpreadToCell(map, journal, Point.GetPointInDirection(position, Direction.West), spreadPower, processedCells);
+            ProcessShockSpreadToCell(map, journal, Point.GetPointInDirection(position, Direction.East), spreadPower, processedCells);
         }
 
-        private bool GetIfCellConductsElectricity(AreaMapCell cell)
+        private bool GetIfCellConductsElectricity(IAreaMapCell cell)
         {
             return GetIfCellContainsWater(cell) || GetIfCellContainsWet(cell);
         }
 
-        private bool GetIfCellContainsWater(AreaMapCell cell)
+        private bool GetIfCellContainsWater(IAreaMapCell cell)
         {
             return cell.Objects.OfType<WaterLiquidObject>().Any();
         }
 
-        private bool GetIfCellContainsWet(AreaMapCell cell)
+        private bool GetIfCellContainsWet(IAreaMapCell cell)
         {
             return cell.Objects.OfType<IDestroyableObject>()
                 .Any(obj => obj.Statuses.Contains(WetObjectStatus.StatusType));
         }
 
-        private void ApplyShockToCell(int value, AreaMapCell cell, Journal journal)
+        private void ApplyShockToCell(int value, IAreaMapCell cell, IJournal journal)
         {
             var heat = value * heatMultiplier;
-            cell.Environment.Temperature += heat;
+            cell.Temperature += heat;
 
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)

@@ -1,35 +1,45 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Locations;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
-using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Implementations.Items;
 using CodeMagic.Implementations.Objects.Creatures;
-using CodeMagic.Implementations.Objects.SolidObjects;
-using CodeMagic.MapGeneration;
-using Point = CodeMagic.Core.Game.Point;
+using CodeMagic.MapGeneration.GlobalWorld;
+using CodeMagic.MapGeneration.Home;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
     public class GameManager
     {
-        private const bool UseFakeMap = false;
+        private const int GlobalWorldMapSize = 60;
+        private const int HomeAreaMapSize = 60;
 
         public GameCore StartGame()
         {
             var player = CreatePlayer();
-            return new GameCore(CreateMapGenerator(), player);
+            var startingLocation = CreateHomeLocation();
+            var game = new GameCore(startingLocation, player);
+            startingLocation.CurrentArea.Refresh(game.GameTime);
+
+            game.World.AddLocation(CreateGlobalWorldLocation());
+
+            return game;
         }
 
-        private IMapGenerator CreateMapGenerator()
+        private ILocation CreateHomeLocation()
         {
-            if (UseFakeMap)
-            {
-                return new FakeMapGenerator();
-            }
+            var map = new HomeLocationMapGenerator().GenerateMap(HomeAreaMapSize, HomeAreaMapSize, out var playerPosition);
+            return new SimpleLocation(HomeLocationMapGenerator.LocationId, map, playerPosition);
+        }
 
-            return new MapGenerator(Properties.Settings.Default.DebugWriteMapToFile);
+        private GlobalWorldLocation CreateGlobalWorldLocation()
+        {
+            var map = new GlobalWorldMapGenerator().GenerateMap(GlobalWorldMapSize, GlobalWorldMapSize, out var playerPos);
+            return new GlobalWorldLocation(GlobalWorldMapGenerator.LocationId, map)
+            {
+                PlayerPosition = playerPos
+            };
         }
 
         private IPlayer CreatePlayer()
@@ -59,27 +69,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Inventory.AddItem(itemsGenerator.GenerateUsable(ItemRareness.Common));
 
             return player;
-        }
-
-        private class FakeMapGenerator : IMapGenerator
-        {
-            public IAreaMap GenerateNewMap(int level, out Point playerPosition)
-            {
-                playerPosition = new Point(0, 0);
-
-                var map = new AreaMap(10, 10);
-
-                map.AddObject(3, 3, new TorchWallImpl(new TorchWallObjectConfiguration
-                {
-                    LightPower = LightLevel.Bright1,
-                    Type = WallObjectConfiguration.WallType.Stone
-                }));
-
-                var monster = new MonstersGenerator().GenerateRandomMonster(1);
-                map.AddObject(2, 2, monster);
-
-                return map;
-            }
         }
     }
 }

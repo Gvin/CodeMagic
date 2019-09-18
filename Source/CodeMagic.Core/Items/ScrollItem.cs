@@ -1,4 +1,5 @@
 ﻿using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Spells;
 
@@ -20,6 +21,12 @@ namespace CodeMagic.Core.Items
 
         public virtual bool Use(IGameCore game)
         {
+            if (!game.World.CurrentLocation.CanCast)
+            {
+                game.Journal.Write(new CastNotAllowedMessage());
+                return true;
+            }
+
             var codeSpell = Injector.Current.Create<ICodeSpell>(game.Player, SpellName, code, Mana);
             game.Map.AddObject(game.PlayerPosition, codeSpell);
             return false;

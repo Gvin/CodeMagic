@@ -18,6 +18,12 @@ namespace CodeMagic.Core.Game.PlayerActions
         {
             newPosition = game.PlayerPosition;
 
+            if (!game.World.CurrentLocation.CanCast)
+            {
+                game.Journal.Write(new CastNotAllowedMessage());
+                return false;
+            }
+
             if (game.Player.Mana < spell.ManaCost)
             {
                 game.Player.Mana = 0;

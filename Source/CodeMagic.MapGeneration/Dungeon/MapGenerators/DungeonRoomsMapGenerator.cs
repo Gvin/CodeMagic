@@ -6,16 +6,16 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using Point = System.Drawing.Point;
 
-namespace CodeMagic.MapGeneration.MapGenerators
+namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
 {
-    internal class DungeonMapGenerator : IMapAreaGenerator
+    internal class DungeonRoomsMapGenerator : IMapAreaGenerator
     {
         private const int TorchChance = 5;
         private const int MaxBuildRetries = 10;
 
-        private readonly MapObjectsFactory mapObjectsFactory;
+        private readonly DungeonMapObjectsFactory mapObjectsFactory;
 
-        public DungeonMapGenerator(MapObjectsFactory mapObjectsFactory)
+        public DungeonRoomsMapGenerator(DungeonMapObjectsFactory mapObjectsFactory)
         {
             this.mapObjectsFactory = mapObjectsFactory;
         }
@@ -49,7 +49,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
             var map = ConvertMap(simplifiedMap, width, height);
             playerPosition = FindPlayerPosition(map);
 
-            map.AddObject(playerPosition, mapObjectsFactory.CreateTrapDoor());
+            map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
 
             return map;
         }
@@ -94,12 +94,14 @@ namespace CodeMagic.MapGeneration.MapGenerators
 
         private IAreaMap ConvertMap(int[][] map, int width, int height)
         {
-            var result = new AreaMap(width, height);
+            var result = new AreaMap(width, height, new InsideEnvironmentLightManager());
 
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
+                    result.AddObject(x, y, mapObjectsFactory.CreateFloor());
+
                     if (map[y][x] == MapBuilder.FilledCell)
                     {
                         var wall = mapObjectsFactory.CreateWall(TorchChance);
@@ -113,7 +115,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                     }
                     else if (map[y][x] == MapBuilder.StairsCell)
                     {
-                        var stairs = mapObjectsFactory.CreateStairsUp();
+                        var stairs = mapObjectsFactory.CreateTrapDoor();
                         result.AddObject(x, y, stairs);
                     }
                 }

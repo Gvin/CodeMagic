@@ -27,7 +27,7 @@ namespace CodeMagic.Core.Statuses
             burnTime = 0;
         }
 
-        public bool Update(IDestroyableObject owner, AreaMapCell cell, Journal journal)
+        public bool Update(IDestroyableObject owner, AreaMapCell cell, IJournal journal)
         {
             if (burnTime >= burnBeforeExtinguishCheck)
             {

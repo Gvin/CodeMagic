@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 
@@ -11,7 +13,7 @@ namespace CodeMagic.Core.CreaturesLogic.Strategies
     {
         private Direction? currentDirection;
 
-        public bool Update(INonPlayableCreatureObject creature, IGameCore game, Point position)
+        public bool Update(INonPlayableCreatureObject creature, IAreaMap map, IJournal journal, Point position)
         {
             if (!currentDirection.HasValue)
             {
@@ -19,7 +21,7 @@ namespace CodeMagic.Core.CreaturesLogic.Strategies
             }
 
             var targetPoint = Point.GetPointInDirection(position, currentDirection.Value);
-            var movementResult = MovementHelper.MoveCreature(creature, game, position, targetPoint, true, true);
+            var movementResult = MovementHelper.MoveCreature(creature, map, journal, position, targetPoint, true, true);
             if (!movementResult.Success)
             {
                 currentDirection = null;
