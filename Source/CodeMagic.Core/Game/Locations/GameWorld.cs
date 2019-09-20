@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CodeMagic.Core.Common;
 
 namespace CodeMagic.Core.Game.Locations
 {
@@ -17,15 +18,16 @@ namespace CodeMagic.Core.Game.Locations
 
         public ILocation CurrentLocation { get; private set; }
 
-        public void TravelToLocation(IGameCore game, ILocation newLocation)
+        public void TravelToLocation(IGameCore game, ILocation newLocation, Direction enterDirection)
         {
             game.RemovePlayerFromMap();
 
             if (CurrentLocation.KeepOnLeave)
             {
-                CurrentLocation.PlayerPosition = game.PlayerPosition;
                 storedLocations.Add(CurrentLocation);
             }
+
+            CurrentLocation.ProcessPlayerLeave(game);
 
             if (storedLocations.Contains(newLocation))
             {
@@ -33,16 +35,18 @@ namespace CodeMagic.Core.Game.Locations
             }
 
             CurrentLocation = newLocation;
-            game.UpdatePlayerPosition(newLocation.PlayerPosition);
+            CurrentLocation.ProcessPlayerEnter(game);
+            var locationEnterDirection = DirectionHelper.InvertDirection(enterDirection);
+            game.UpdatePlayerPosition(newLocation.GetEnterPoint(locationEnterDirection));
         }
 
-        public void TravelToLocation(IGameCore game, string locationId)
+        public void TravelToLocation(IGameCore game, string locationId, Direction enterDirection)
         {
             var location = storedLocations.FirstOrDefault(loc => string.Equals(loc.Id, locationId));
             if (location == null)
                 throw new KeyNotFoundException($"Location with id \"{locationId}\" not found in stored locations.");
 
-            TravelToLocation(game, location);
+            TravelToLocation(game, location, enterDirection);
         }
 
         public void AddLocation(ILocation location)

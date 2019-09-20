@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Configuration;
@@ -135,7 +134,7 @@ namespace CodeMagic.Core.Area
             return null;
         }
 
-        public AreaMapCell GetOriginalCell(int x, int y)
+        private AreaMapCell GetOriginalCell(int x, int y)
         {
             return (AreaMapCell) GetCell(x, y);
         }
@@ -306,30 +305,13 @@ namespace CodeMagic.Core.Area
             {
                 pairs[initialCell.X, initialCell.Y].Add(direction);
                 var targetCell = Point.GetPointInDirection(initialCell, direction);
-                var invertedDirection = InvertDirection(direction);
+                var invertedDirection = DirectionHelper.InvertDirection(direction);
                 pairs[targetCell.X, targetCell.Y].Add(invertedDirection);
             }
 
             public bool ContainsPair(Point initialCell, Direction direction)
             {
                 return pairs[initialCell.X, initialCell.Y].Contains(direction);
-            }
-
-            private Direction InvertDirection(Direction direction)
-            {
-                switch (direction)
-                {
-                    case Direction.North:
-                        return Direction.South;
-                    case Direction.South:
-                        return Direction.North;
-                    case Direction.West:
-                        return Direction.East;
-                    case Direction.East:
-                        return Direction.West;
-                    default:
-                        throw new ArgumentException($"Unknown direction: {direction}");
-                }
             }
         }
     }

@@ -37,7 +37,15 @@ namespace CodeMagic.Core.Game.PlayerActions
                 return false;
             }
             var moveResult = MovementHelper.MoveCreature(game.Player, game.Map, game.Journal, game.PlayerPosition, direction, true, true);
-            newPosition = moveResult.NewPosition;
+            if (moveResult.LocationEdge)
+            {
+                game.World.TravelToLocation(game, "world", direction);
+                newPosition = game.PlayerPosition;
+            }
+            else
+            {
+                newPosition = moveResult.NewPosition;
+            }
             return moveResult.Success;
         }
     }

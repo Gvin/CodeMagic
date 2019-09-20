@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Common;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 
@@ -11,6 +12,7 @@ namespace CodeMagic.Core.Game.Locations
     {
         private readonly List<StoredMap> levels;
         private readonly IDungeonMapGenerator dungeonMapGenerator;
+        private Direction enterDirection;
 
         public DungeonLocation(ItemRareness rareness)
         {
@@ -24,13 +26,19 @@ namespace CodeMagic.Core.Game.Locations
             Id = $"dungeon_{Guid.NewGuid()}";
         }
 
-        public Point PlayerPosition { get; set; }
+        private Point PlayerPosition { get; set; }
 
         public string Id { get; }
 
+        private int GetMaxLevel(ItemRareness rareness)
+        {
+            return (int) rareness * 2 + 1;
+        }
+
         public void Initialize(DateTime gameTime)
         {
-            CurrentArea = dungeonMapGenerator.GenerateNewMap(CurrentLevel, out var newPlayerPosition);
+            var maxLevel = GetMaxLevel(Rareness);
+            CurrentArea = dungeonMapGenerator.GenerateNewMap(CurrentLevel, maxLevel, out var newPlayerPosition);
             CurrentArea.Refresh(gameTime);
             levels.Add(new StoredMap(CurrentArea, null));
             PlayerPosition = newPlayerPosition;
@@ -46,7 +54,7 @@ namespace CodeMagic.Core.Game.Locations
 
             if (CurrentLevel == 0) // Exiting dungeon
             {
-                game.World.TravelToLocation(game, "world");
+                game.World.TravelToLocation(game, "world", DirectionHelper.InvertDirection(enterDirection));
                 return;
             }
 
@@ -73,7 +81,8 @@ namespace CodeMagic.Core.Game.Locations
                 return;
             }
 
-            CurrentArea = dungeonMapGenerator.GenerateNewMap(CurrentLevel, out var newPlayerPosition);
+            var maxLevel = GetMaxLevel(Rareness);
+            CurrentArea = dungeonMapGenerator.GenerateNewMap(CurrentLevel, maxLevel, out var newPlayerPosition);
             CurrentArea.Refresh(game.GameTime);
             levels.Add(new StoredMap(CurrentArea, null));
             PlayerPosition = newPlayerPosition;
@@ -87,6 +96,21 @@ namespace CodeMagic.Core.Game.Locations
         public IAreaMap CurrentArea { get; private set; }
 
         public int TurnCycle => 1;
+
+        public void ProcessPlayerEnter(IGameCore game)
+        {
+            enterDirection = game.Player.Direction;
+        }
+
+        public void ProcessPlayerLeave(IGameCore game)
+        {
+            // Do nothing
+        }
+
+        public Point GetEnterPoint(Direction direction)
+        {
+            return PlayerPosition;
+        }
 
         public Task BackgroundUpdate(DateTime gameTime, int turnsCount)
         {

@@ -20,7 +20,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             this.mapObjectsFactory = mapObjectsFactory;
         }
 
-        public IAreaMap Generate(MapSize size, out Core.Game.Point playerPosition)
+        public IAreaMap Generate(MapSize size, bool isLastLevel, out Core.Game.Point playerPosition)
         {
             var builder = new MapBuilder(1, 1);
             switch (size)
@@ -46,7 +46,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             var height = simplifiedMap.Length;
             var width = simplifiedMap[0].Length;
 
-            var map = ConvertMap(simplifiedMap, width, height);
+            var map = ConvertMap(simplifiedMap, isLastLevel, width, height);
             playerPosition = FindPlayerPosition(map);
 
             map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
@@ -92,7 +92,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             throw new ApplicationException("Unable to find player position.");
         }
 
-        private IAreaMap ConvertMap(int[][] map, int width, int height)
+        private IAreaMap ConvertMap(int[][] map, bool isLastLevel, int width, int height)
         {
             var result = new AreaMap(width, height, new InsideEnvironmentLightManager());
 
@@ -113,10 +113,18 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
                         var door = mapObjectsFactory.CreateDoor(horizontal);
                         result.AddObject(x, y, door);
                     }
-                    else if (map[y][x] == MapBuilder.StairsCell)
+                    else if (map[y][x] == MapBuilder.TrapDoorCell)
                     {
-                        var stairs = mapObjectsFactory.CreateTrapDoor();
-                        result.AddObject(x, y, stairs);
+                        if (isLastLevel)
+                        {
+                            var exitPortal = mapObjectsFactory.CreateExitPortal();
+                            result.AddObject(x, y, exitPortal);
+                        }
+                        else
+                        {
+                            var trapDoor = mapObjectsFactory.CreateTrapDoor();
+                            result.AddObject(x, y, trapDoor);
+                        }
                     }
                 }
             }
@@ -399,7 +407,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             public const int FilledCell = 1;
             public const int EmptyCell = 0;
             public const int DoorCell = 3;
-            public const int StairsCell = 4;
+            public const int TrapDoorCell = 4;
 
             private readonly Random random;
 
@@ -1004,7 +1012,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
                     var centerX = (int)Math.Round((rctCurrentRoom.Left + rctCurrentRoom.Right) / 2d);
                     var centerY = (int)Math.Round((rctCurrentRoom.Top + rctCurrentRoom.Bottom) / 2d);
 
-                    Map[centerX, centerY] = StairsCell;
+                    Map[centerX, centerY] = TrapDoorCell;
                 }
             }
 

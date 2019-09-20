@@ -4,6 +4,7 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration.Dungeon.MapGenerators;
 using Point = CodeMagic.Core.Game.Point;
 
@@ -26,10 +27,10 @@ namespace CodeMagic.MapGeneration.Dungeon
             };
         }
 
-        public IAreaMap GenerateNewMap(int level, out Point playerPosition)
+        public IAreaMap GenerateNewMap(int level, int maxLevel, out Point playerPosition)
         {
             var size = GenerateMapSize();
-            return GenerateMap(level, size, FloorTypes.Stone, out playerPosition);
+            return GenerateMap(level, maxLevel, size, out playerPosition);
         }
 
         private MapSize GenerateMapSize()
@@ -46,13 +47,13 @@ namespace CodeMagic.MapGeneration.Dungeon
 
         private IAreaMap GenerateMap(
             int level,
-            MapSize size, 
-            FloorTypes floorType,
+            int maxLevel,
+            MapSize size,
             out Point playerPosition)
         {
             var mapType = GenerateMapType(level);
             var generator = generators[mapType];
-            var map = generator.Generate(size, out playerPosition);
+            var map = generator.Generate(size, level == maxLevel, out playerPosition);
 
             new DungeonObjectsGenerator().GenerateObjects(map);
 
@@ -75,34 +76,49 @@ namespace CodeMagic.MapGeneration.Dungeon
                     var line = string.Empty;
                     for (int x = 0; x < map.Width; x++)
                     {
-                        var cell = map.GetCell(x, y);
-                        if (cell.Objects.OfType<WallObject>().Any())
-                        {
-                            line += "█";
-                        }
-                        else if (cell.Objects.OfType<DoorObject>().Any())
-                        {
-                            line += "▒";
-                        }
-                        else if (cell.Objects.OfType<StairsObject>().Any())
-                        {
-                            line += "≡";
-                        }
-                        else
-                        {
-                            if (playerPosition.X == x && playerPosition.Y == y)
-                            {
-                                line += "+";
-                            }
-                            else
-                            {
-                                line += " ";
-                            }
-                        }
+                        
+                        line += GetCellSymbol(x, y, map, playerPosition);
                     }
                     file.WriteLine(line);
                 }
             }
+        }
+
+        private string GetCellSymbol(int x, int y, IAreaMap map, Point playerPosition)
+        {
+            if (playerPosition.X == x && playerPosition.Y == y)
+            {
+                return "+";
+            }
+
+            var cell = map.GetCell(x, y);
+
+            if (cell.Objects.OfType<WallObject>().Any())
+            {
+                return "█";
+            }
+
+            if (cell.Objects.OfType<DoorObject>().Any())
+            {
+                return "▒";
+            }
+
+            if (cell.Objects.OfType<TrapDoorObject>().Any())
+            {
+                return "v";
+            }
+
+            if (cell.Objects.OfType<StairsObject>().Any())
+            {
+                return "^";
+            }
+
+            if (cell.Objects.OfType<ExitPortalObject>().Any())
+            {
+                return "#";
+            }
+
+            return " ";
         }
 
         private MapType GenerateMapType(int level)

@@ -42,7 +42,7 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
             game.Map.AddObject(position, new GlobalMapObject(GlobalMapObject.Type.DungeonClosed));
             var dungeon = new DungeonLocation(dungeonRareness);
             dungeon.Initialize(game.GameTime);
-            game.World.TravelToLocation(game, dungeon);
+            game.World.TravelToLocation(game, dungeon, game.Player.Direction);
         }
 
         public string Name => "Dungeon Enter";

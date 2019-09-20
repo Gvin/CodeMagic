@@ -19,10 +19,10 @@ namespace CodeMagic.Core.Items
 
     public enum ItemRareness
     {
-        Trash,
-        Common,
-        Uncommon,
-        Rare,
-        Epic
+        Trash = 0,
+        Common = 1,
+        Uncommon = 2,
+        Rare = 3,
+        Epic = 4
     }
 }

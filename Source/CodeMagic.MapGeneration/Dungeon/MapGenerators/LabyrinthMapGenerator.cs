@@ -23,7 +23,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             this.mapObjectsFactory = mapObjectsFactory;
         }
 
-        public IAreaMap Generate(MapSize size, out Point playerPosition)
+        public IAreaMap Generate(MapSize size, bool isLastLevel, out Point playerPosition)
         {
             var mapSize = GetSize(size);
 
@@ -40,7 +40,14 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             var endPosition = GetEndPosition(map, playerPosition);
 
             map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
-            map.AddObject(endPosition, mapObjectsFactory.CreateTrapDoor());
+            if (isLastLevel)
+            {
+                map.AddObject(endPosition, mapObjectsFactory.CreateExitPortal());
+            }
+            else
+            {
+                map.AddObject(endPosition, mapObjectsFactory.CreateTrapDoor());
+            }
 
             return map;
         }

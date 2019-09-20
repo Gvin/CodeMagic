@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Locations;
@@ -15,11 +16,11 @@ namespace CodeMagic.Core.Game
         private readonly object worldLockObject = new object();
         private readonly GameTimeManager gameTimeManager;
 
-        public GameCore(ILocation startingLocation, IPlayer player)
+        public GameCore(ILocation startingLocation, IPlayer player, Point playerPosition)
         {
             World = new GameWorld(startingLocation);
 
-            PlayerPosition = startingLocation.PlayerPosition;
+            PlayerPosition = playerPosition;
             Player = player;
 
             Map.AddObject(PlayerPosition, Player);

@@ -1,7 +1,10 @@
-﻿using CodeMagic.Core.Area;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CodeMagic.Core.Area;
+using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Implementations.Objects;
 using CodeMagic.Implementations.Objects.Floor;
+using CodeMagic.Implementations.Objects.SolidObjects;
 
 namespace CodeMagic.MapGeneration.Home
 {
@@ -9,9 +12,17 @@ namespace CodeMagic.MapGeneration.Home
     {
         public const string LocationId = "home";
 
-        public IAreaMap GenerateMap(int width, int height, out Point playerPosition)
+        public IAreaMap GenerateMap(int width, int height, out Dictionary<Direction, Point> locationEnters, out Point playerPosition)
         {
             var map = new AreaMap(width, height, new OutsideEnvironmentLightManager());
+
+            locationEnters = new Dictionary<Direction, Point>
+            {
+                {Direction.North, new Point(width / 2 - 1, 0)},
+                {Direction.South, new Point(width / 2 - 1, height - 1)},
+                {Direction.East, new Point(width - 1, height / 2 - 1)},
+                {Direction.West, new Point(0, height / 2 - 1)}
+            };
 
             for (int y = 0; y < map.Height; y++)
             {
@@ -19,14 +30,17 @@ namespace CodeMagic.MapGeneration.Home
                 {
                     map.AddObject(x, y, new FloorObject(FloorObject.Type.Grass));
 
-                    if (x == 0 || y == 0 || x == map.Width - 1 || y == map.Height - 1)
+                    if (!locationEnters.Values.Any(pos => pos.X == x && pos.Y == y) &&
+                        RandomHelper.CheckChance(20))
                     {
-                        map.AddObject(x, y, new LocationExitTriggerObject());
+                        map.AddObject(x, y, new TreeObject());
                     }
                 }
             }
 
-            playerPosition = new Point(2, 2);
+            
+
+            playerPosition = new Point(1, 1);
 
             return map;
         }

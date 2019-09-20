@@ -5,6 +5,6 @@ namespace CodeMagic.Core.Game
 {
     public interface IDungeonMapGenerator : IInjectable
     {
-        IAreaMap GenerateNewMap(int level, out Point playerPosition);
+        IAreaMap GenerateNewMap(int level, int maxLevel, out Point playerPosition);
     }
 }

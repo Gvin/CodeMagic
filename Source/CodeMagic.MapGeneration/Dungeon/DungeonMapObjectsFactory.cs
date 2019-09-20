@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Area;
+﻿using System;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.SolidObjects;
@@ -14,6 +15,11 @@ namespace CodeMagic.MapGeneration.Dungeon
         public DungeonMapObjectsFactory(WallObjectConfiguration.WallType wallType)
         {
             this.wallType = wallType;
+        }
+
+        public IMapObject CreateExitPortal()
+        {
+            return new ExitPortalObject();
         }
 
         public IMapObject CreateFloor()

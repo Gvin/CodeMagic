@@ -73,12 +73,13 @@
     <Compile Include="Objects\LiquidObjects\AcidLiquidImpl.cs" />
     <Compile Include="Objects\LiquidObjects\OilLiquidImpl.cs" />
     <Compile Include="Objects\LiquidObjects\WaterLiquidImpl.cs" />
-    <Compile Include="Objects\LocationExitTriggerObject.cs" />
     <Compile Include="Objects\SolidObjects\DoorObjectImpl.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWallImpl.cs" />
+    <Compile Include="Objects\SolidObjects\ExitPortalObject.cs" />
     <Compile Include="Objects\SolidObjects\StairsObjectImpl.cs" />
     <Compile Include="Objects\SolidObjects\TorchWallImpl.cs" />
     <Compile Include="Objects\SolidObjects\TrapDoorObjectImpl.cs" />
+    <Compile Include="Objects\SolidObjects\TreeObject.cs" />
     <Compile Include="Objects\SolidObjects\WallImpl.cs" />
     <Compile Include="Objects\SteamObjects\AcidSteamImpl.cs" />
     <Compile Include="Objects\SteamObjects\WaterSteamImpl.cs" />

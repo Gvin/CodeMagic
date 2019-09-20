@@ -1,16 +1,20 @@
-﻿using CodeMagic.Core.Game;
+﻿using System.Drawing;
+using CodeMagic.Core.Area;
+using CodeMagic.Core.Common;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.UI.Images;
+using Point = CodeMagic.Core.Game.Point;
 
-namespace CodeMagic.Implementations.Objects.GlobalMap
+namespace CodeMagic.Implementations.Objects.SolidObjects
 {
-    public class HomeObject : IMapObject, IUsableObject, IWorldImageProvider
+    public class ExitPortalObject : IMapObject, IUsableObject, IWorldImageProvider, ILightObject
     {
-        private const string WorldImageName = "GlobalMap_Home";
+        private const string WorldImageName = "Mechanism_Portal";
 
-        public string Name => "Home";
+        public string Name => "Exit Portal";
 
-        public bool BlocksMovement => true;
+        public bool BlocksMovement => false;
 
         public bool BlocksProjectiles => false;
 
@@ -31,12 +35,17 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
 
         public void Use(IGameCore game, Point position)
         {
-            game.World.TravelToLocation(game, "home", game.Player.Direction);
+            game.World.TravelToLocation(game, "world", Direction.North);
         }
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             return storage.GetImage(WorldImageName);
         }
+
+        public ILightSource[] LightSources => new ILightSource[]
+        {
+            new StaticLightSource(LightLevel.Dusk2, Color.Red)
+        };
     }
 }

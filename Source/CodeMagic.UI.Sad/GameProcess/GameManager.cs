@@ -18,28 +18,27 @@ namespace CodeMagic.UI.Sad.GameProcess
         public GameCore StartGame()
         {
             var player = CreatePlayer();
-            var startingLocation = CreateHomeLocation();
-            var game = new GameCore(startingLocation, player);
+            var startingLocation = CreateHomeLocation(out var playerPosition);
+            var game = new GameCore(startingLocation, player, playerPosition);
             startingLocation.CurrentArea.Refresh(game.GameTime);
 
-            game.World.AddLocation(CreateGlobalWorldLocation());
+            var globalWorldLocation = CreateGlobalWorldLocation();
+            globalWorldLocation.CurrentArea.Refresh(game.GameTime);
+            game.World.AddLocation(globalWorldLocation);
 
             return game;
         }
 
-        private ILocation CreateHomeLocation()
+        private ILocation CreateHomeLocation(out Point playerPosition)
         {
-            var map = new HomeLocationMapGenerator().GenerateMap(HomeAreaMapSize, HomeAreaMapSize, out var playerPosition);
-            return new SimpleLocation(HomeLocationMapGenerator.LocationId, map, playerPosition);
+            var map = new HomeLocationMapGenerator().GenerateMap(HomeAreaMapSize, HomeAreaMapSize, out var enterPositions, out playerPosition);
+            return new SimpleLocation(HomeLocationMapGenerator.LocationId, map, enterPositions);
         }
 
         private GlobalWorldLocation CreateGlobalWorldLocation()
         {
-            var map = new GlobalWorldMapGenerator().GenerateMap(GlobalWorldMapSize, GlobalWorldMapSize, out var playerPos);
-            return new GlobalWorldLocation(GlobalWorldMapGenerator.LocationId, map)
-            {
-                PlayerPosition = playerPos
-            };
+            var map = new GlobalWorldMapGenerator().GenerateMap(GlobalWorldMapSize, GlobalWorldMapSize, out var playerHomePosition);
+            return new GlobalWorldLocation(GlobalWorldMapGenerator.LocationId, map, playerHomePosition);
         }
 
         private IPlayer CreatePlayer()

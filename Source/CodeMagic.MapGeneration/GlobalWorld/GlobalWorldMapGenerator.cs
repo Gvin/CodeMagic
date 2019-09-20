@@ -16,7 +16,7 @@ namespace CodeMagic.MapGeneration.GlobalWorld
         private const int MinDistanceFromHome = 7;
         private const int MinDistanceFromDungeon = 5;
 
-        public IAreaMap GenerateMap(int width, int height, out Point playerPosition)
+        public IAreaMap GenerateMap(int width, int height, out Point playerHomePosition)
         {
             var map = new GlobalAreaMap(width, height, new OutsideEnvironmentLightManager(), 2);
 
@@ -34,12 +34,10 @@ namespace CodeMagic.MapGeneration.GlobalWorld
                 }
             }
 
-            var homePosition = GenerateHomePosition(map);
-            map.AddObject(homePosition, new HomeObject());
+            playerHomePosition = GenerateHomePosition(map);
+            map.AddObject(playerHomePosition, new HomeObject());
 
-            playerPosition = GeneratePlayerPosition(homePosition);
-
-            GenerateDungeons(map, homePosition);
+            GenerateDungeons(map, playerHomePosition);
             return map;
         }
 
@@ -86,13 +84,6 @@ namespace CodeMagic.MapGeneration.GlobalWorld
             throw new MapGenerationException("Unable to generate dungeon location.");
         }
 
-        private Point GeneratePlayerPosition(Point homePoint)
-        {
-            var direction =
-                RandomHelper.GetRandomElement(Enum.GetValues(typeof(Direction)).Cast<Direction>().ToArray());
-            return Point.GetPointInDirection(homePoint, direction);
-        }
-
         private Point GenerateHomePosition(IAreaMap map)
         {
             const int retryCount = 100;
@@ -119,9 +110,9 @@ namespace CodeMagic.MapGeneration.GlobalWorld
             if (map.GetCell(x, y).BlocksMovement)
                 return false;
 
-            if (map.GetCell(x - 1, y).BlocksMovement &&
-                map.GetCell(x + 1, y).BlocksMovement &&
-                map.GetCell(x, y - 1).BlocksMovement &&
+            if (map.GetCell(x - 1, y).BlocksMovement ||
+                map.GetCell(x + 1, y).BlocksMovement ||
+                map.GetCell(x, y - 1).BlocksMovement ||
                 map.GetCell(x, y + 1).BlocksMovement)
                 return false;
 

@@ -1,23 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Common;
 using CodeMagic.Core.Game.Journaling;
 
 namespace CodeMagic.Core.Game.Locations
 {
     public class SimpleLocation : ILocation
     {
-        public SimpleLocation(string id, IAreaMap currentArea, Point playerPosition, bool canCast = true, bool canFight = true, bool keepOnLeave = true)
+        private readonly Dictionary<Direction, Point> enterPositions;
+
+        public SimpleLocation(
+            string id, 
+            IAreaMap currentArea, 
+            Dictionary<Direction, Point> enterPositions, 
+            bool canCast = true, 
+            bool canFight = true, 
+            bool keepOnLeave = true)
         {
             Id = id;
             CurrentArea = currentArea;
             CanCast = canCast;
             CanFight = canFight;
             KeepOnLeave = keepOnLeave;
-            PlayerPosition = playerPosition;
+            this.enterPositions = enterPositions.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
-
-        public Point PlayerPosition { get; set; }
 
         public string Id { get; }
 
@@ -30,6 +39,20 @@ namespace CodeMagic.Core.Game.Locations
         public IAreaMap CurrentArea { get; }
 
         public int TurnCycle => 1;
+        public void ProcessPlayerEnter(IGameCore game)
+        {
+            // Do nothing
+        }
+
+        public void ProcessPlayerLeave(IGameCore game)
+        {
+            // Do nothing
+        }
+
+        public Point GetEnterPoint(Direction direction)
+        {
+            return enterPositions[direction];
+        }
 
         public Task BackgroundUpdate(DateTime gameTime, int turnsCount)
         {

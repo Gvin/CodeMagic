@@ -31,9 +31,15 @@ namespace SymbolsImageEditor
 
         private ListBox symbolsList;
 
+        private int newImageWidth;
+        private int newImageHeight;
+
         public EditorWindow()
             : base(Program.Width, Program.Height, Program.Font)
         {
+            newImageWidth = DefaultImageWidth;
+            newImageHeight = DefaultImageHeight;
+
             IsFocused = true;
             UseKeyboard = true;
             brush = new Brush();
@@ -134,6 +140,42 @@ namespace SymbolsImageEditor
             saveImageButton.Click += saveImageButton_Click;
             Add(saveImageButton);
 
+            var incNewImageWidth = new Button(1)
+            {
+                Position = new Point(18, 20),
+                Text = "^",
+                CanFocus = false
+            };
+            incNewImageWidth.Click += (sender, args) => newImageWidth++;
+            Add(incNewImageWidth);
+
+            var decNewImageWidth = new Button(1)
+            {
+                Position = new Point(24, 20),
+                Text = "v",
+                CanFocus = false
+            };
+            decNewImageWidth.Click += (sender, args) => newImageWidth = Math.Max(1, newImageWidth - 1);
+            Add(decNewImageWidth);
+
+            var incNewImageHeight = new Button(1)
+            {
+                Position = new Point(18, 22),
+                Text = "^",
+                CanFocus = false
+            };
+            incNewImageHeight.Click += (sender, args) => newImageHeight++;
+            Add(incNewImageHeight);
+
+            var decNewImageHeight = new Button(1)
+            {
+                Position = new Point(24, 22),
+                Text = "v",
+                CanFocus = false
+            };
+            decNewImageHeight.Click += (sender, args) => newImageHeight = Math.Max(1, newImageHeight - 1);
+            Add(decNewImageHeight);
+
             InitializeImageControl();
         }
 
@@ -145,7 +187,7 @@ namespace SymbolsImageEditor
 
         private void newImageButton_Click(object sender, EventArgs e)
         {
-            image = new SymbolsImage(DefaultImageWidth, DefaultImageHeight);
+            image = new SymbolsImage(newImageWidth, newImageHeight);
             InitializeImageControl();
         }
 
@@ -325,6 +367,12 @@ namespace SymbolsImageEditor
             base.Update(time);
 
             DrawBrush();
+
+            Print(1, 20, "New image width:");
+            Print(20, 20, newImageWidth.ToString());
+
+            Print(1, 22, "New image height:");
+            Print(20, 22, newImageHeight.ToString());
         }
 
         private void DrawBrush()

@@ -1,18 +1,17 @@
-﻿using CodeMagic.Core.Game;
-using CodeMagic.Core.Objects;
+﻿using CodeMagic.Core.Objects;
 using CodeMagic.UI.Images;
 
-namespace CodeMagic.Implementations.Objects.GlobalMap
+namespace CodeMagic.Implementations.Objects.SolidObjects
 {
-    public class HomeObject : IMapObject, IUsableObject, IWorldImageProvider
+    public class TreeObject : IMapObject, IWorldImageProvider
     {
-        private const string WorldImageName = "GlobalMap_Home";
+        private const string WorldImageName = "Tree";
 
-        public string Name => "Home";
+        public string Name => "Tree";
 
         public bool BlocksMovement => true;
 
-        public bool BlocksProjectiles => false;
+        public bool BlocksProjectiles => true;
 
         public bool IsVisible => true;
 
@@ -28,11 +27,6 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
         }
 
         public ObjectSize Size => ObjectSize.Huge;
-
-        public void Use(IGameCore game, Point position)
-        {
-            game.World.TravelToLocation(game, "home", game.Player.Direction);
-        }
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Common;
 
 namespace CodeMagic.Core.Game.Locations
 {
@@ -10,7 +11,7 @@ namespace CodeMagic.Core.Game.Locations
 
         IAreaMap CurrentArea { get; }
 
-        Point PlayerPosition { get; set; }
+        Point GetEnterPoint(Direction direction);
 
         Task BackgroundUpdate(DateTime gameTime, int turnsCount);
 
@@ -21,5 +22,9 @@ namespace CodeMagic.Core.Game.Locations
         bool CanFight { get; }
 
         int TurnCycle { get; }
+
+        void ProcessPlayerEnter(IGameCore game);
+
+        void ProcessPlayerLeave(IGameCore game);
     }
 }

@@ -4,7 +4,7 @@ namespace CodeMagic.Core.Game
 {
     public class GameTimeManager
     {
-        private static readonly TimeSpan TimePerTurn = TimeSpan.FromMinutes(3);
+        private static readonly TimeSpan TimePerTurn = TimeSpan.FromMinutes(1);
 
         public GameTimeManager()
         {

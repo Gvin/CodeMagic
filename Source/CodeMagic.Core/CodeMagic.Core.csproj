@@ -94,6 +94,7 @@
     <Compile Include="CreaturesLogic\Strategies\PatrolAreaStrategy.cs" />
     <Compile Include="CreaturesLogic\TargetStrategies\ITargetStrategy.cs" />
     <Compile Include="CreaturesLogic\TargetStrategies\PlayerTargetStrategy.cs" />
+    <Compile Include="Common\DirectionHelper.cs" />
     <Compile Include="Game\GameTimeManager.cs" />
     <Compile Include="Game\Journaling\Messages\CastNotAllowedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\FightNotAllowedMessage.cs" />
