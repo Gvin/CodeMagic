@@ -118,7 +118,7 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
                     case Type.Grass:
                     case Type.Wheat:
                     case Type.Dirt:
-                        return ZIndex.FloorCover;
+                        return ZIndex.Floor;
                     case Type.Forest:
                     case Type.Rock:
                         return ZIndex.AreaDecoration;

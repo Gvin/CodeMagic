@@ -42,7 +42,7 @@ namespace CodeMagic.Core.Game.Locations
 
             return new Task(() =>
             {
-                while (turnsCount >= TurnCycle)
+                while (turnsCounter >= TurnCycle)
                 {
                     turnsCounter -= TurnCycle;
                     CurrentArea.PreUpdate(journal);

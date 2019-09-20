@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
 using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;

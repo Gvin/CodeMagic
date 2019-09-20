@@ -74,7 +74,7 @@ namespace CodeMagic.Implementations.Items
 
                     if (equiped)
                     {
-                        protectionLine.Add(ItemTextHelper.GetValueString(value, "%"));;
+                        protectionLine.Add(ItemTextHelper.GetValueString(value, "%"));
                     }
                     else
                     {
