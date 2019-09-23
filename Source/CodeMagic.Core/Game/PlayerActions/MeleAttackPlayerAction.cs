@@ -11,6 +11,12 @@ namespace CodeMagic.Core.Game.PlayerActions
         public bool Perform(IGameCore game, out Point newPosition)
         {
             newPosition = game.PlayerPosition;
+            if (!game.World.CurrentLocation.CanFight)
+            {
+                game.Journal.Write(new FightNotAllowedMessage());
+                return false;
+            }
+
             if (game.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
             {
                 game.Journal.Write(new ParalyzedMessage());

@@ -4,9 +4,9 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
 
-namespace CodeMagic.MapGeneration
+namespace CodeMagic.MapGeneration.Dungeon
 {
-    internal class NpcGenerator
+    internal class DungeonNpcGenerator
     {
         private const int MaxMobsCount = 100;
         private const int MinDistanceFromPlayer = 6;
@@ -23,11 +23,11 @@ namespace CodeMagic.MapGeneration
             {MapSize.Big, 2d}
         };
 
-        private readonly MonstersGenerator monstersGenerator;
+        private readonly DungeonMonstersGenerator monstersGenerator;
 
-        public NpcGenerator()
+        public DungeonNpcGenerator()
         {
-            monstersGenerator = new MonstersGenerator();
+            monstersGenerator = new DungeonMonstersGenerator();
         }
 
         public void GenerateNpc(int level, MapSize mapSize, MapType mapType, IAreaMap map, Point playerPosition)

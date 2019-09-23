@@ -82,9 +82,29 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetNotEnoughManaToScrollMessage(notEnoughManaToScrollMessage);
                 case FailedToUseScrollMessage failedToUseScrollMessage:
                     return GetFailedToUseScrollMessage(failedToUseScrollMessage);
+                case CastNotAllowedMessage castNotAllowedMessage:
+                    return GetCastNotAllowedMessage(castNotAllowedMessage);
+                case FightNotAllowedMessage fightNotAllowedMessage:
+                    return GetFightNotAllowedMessage(fightNotAllowedMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetFightNotAllowedMessage(FightNotAllowedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("Fighting is not allowed in this area"),
+            };
+        }
+
+        private ColoredString[] GetCastNotAllowedMessage(CastNotAllowedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("Casting is not allowed in this area"),
+            };
         }
 
         private ColoredString[] GetFailedToUseScrollMessage(FailedToUseScrollMessage message)

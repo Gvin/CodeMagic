@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Spells.Script;
 
@@ -22,14 +24,14 @@ namespace CodeMagic.Core.Spells.SpellActions
             this.spell = spell;
         }
 
-        public override Point Perform(IGameCore game, Point position)
+        public override Point Perform(IAreaMap map, IJournal journal, Point position)
         {
             var currentPosition = position;
 
             for (var step = 1; step <= distance; step++)
             {
                 var newPosition = Point.GetPointInDirection(currentPosition, direction);
-                var movementResult = MovementHelper.MoveSpell(spell, game, currentPosition, newPosition);
+                var movementResult = MovementHelper.MoveSpell(spell, map, journal, currentPosition, newPosition);
                 if (!movementResult.Success)
                     break;
 

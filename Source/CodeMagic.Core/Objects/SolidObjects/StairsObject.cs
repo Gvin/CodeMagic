@@ -1,4 +1,6 @@
-﻿using CodeMagic.Core.Game;
+﻿using System;
+using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Locations;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
@@ -27,7 +29,10 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public void Use(IGameCore game, Point position)
         {
-            game.GoToNextLevel();
+            if (!(game.World.CurrentLocation is DungeonLocation dungeon))
+                throw new ArgumentException("Can only use stairs in dungeon locations.");
+
+            dungeon.MoveUp(game);
         }
     }
 }

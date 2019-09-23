@@ -147,7 +147,7 @@ namespace CodeMagic.UI.Sad.Views
                 return;
             
             var floorInventory = new Inventory(itemsOnFloor);
-            floorInventory.ItemRemoved += (sender, args) => cell.Objects.Remove(args.Item);
+            floorInventory.ItemRemoved += (sender, args) => game.Map.RemoveObject(game.PlayerPosition, args.Item);
 
             new CustomInventoryView(game, "Items On Floor", floorInventory).Show();
         }

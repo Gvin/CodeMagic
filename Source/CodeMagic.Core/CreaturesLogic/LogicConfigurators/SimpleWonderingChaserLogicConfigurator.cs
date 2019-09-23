@@ -1,5 +1,6 @@
 ﻿using CodeMagic.Core.CreaturesLogic.MovementStrategies;
 using CodeMagic.Core.CreaturesLogic.Strategies;
+using CodeMagic.Core.CreaturesLogic.TargetStrategies;
 
 namespace CodeMagic.Core.CreaturesLogic.LogicConfigurators
 {
@@ -8,7 +9,7 @@ namespace CodeMagic.Core.CreaturesLogic.LogicConfigurators
         public void Configure(Logic logic)
         {
             var patrol = new FreeWonderStrategy();
-            var attack = new ChasePlayerStrategy(new SimpleCreatureMovementStrategy());
+            var attack = new ChaseTargetStrategy(new PlayerTargetStrategy(), new SimpleCreatureMovementStrategy());
 
             logic.SetInitialStrategy(patrol);
 

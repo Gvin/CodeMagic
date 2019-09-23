@@ -6,13 +6,13 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Implementations.Objects.Creatures.NonPlayable;
 
-namespace CodeMagic.MapGeneration
+namespace CodeMagic.MapGeneration.Dungeon
 {
-    public class MonstersGenerator
+    public class DungeonMonstersGenerator
     {
         private readonly IMonstersConfiguration configuration;
 
-        public MonstersGenerator()
+        public DungeonMonstersGenerator()
         {
             configuration = ConfigurationManager.Current.Monsters;
         }

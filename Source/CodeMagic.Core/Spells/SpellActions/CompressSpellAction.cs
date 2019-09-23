@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
@@ -16,13 +18,13 @@ namespace CodeMagic.Core.Spells.SpellActions
             pressure = (int) actionData.pressure;
         }
 
-        public override Point Perform(IGameCore game, Point position)
+        public override Point Perform(IAreaMap map, IJournal journal, Point position)
         {
-            var cell = game.Map.GetCell(position);
+            var cell = map.GetCell(position);
             if (cell.BlocksEnvironment)
                 return position;
 
-            cell.Environment.Pressure += pressure;
+            cell.Pressure += pressure;
             return position;
         }
 

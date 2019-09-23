@@ -4,6 +4,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.LiquidObjects;
 
 namespace CodeMagic.Core.Objects.SteamObjects
@@ -84,40 +85,41 @@ namespace CodeMagic.Core.Objects.SteamObjects
             return stringValue;
         }
 
-        public void Update(IGameCore game, Point position)
+        public void Update(IAreaMap map, IJournal journal, Point position)
         {
-            var cell = game.Map.GetCell(position);
+            var cell = map.GetCell(position);
             if (Volume == 0)
             {
-                cell.Objects.Remove(this);
+                map.RemoveObject(position, this);
                 return;
             }
 
-            if (cell.Environment.Temperature < Configuration.BoilingPoint)
+            if (cell.Temperature < Configuration.BoilingPoint)
             {
-                ProcessCondensation(cell);
+                ProcessCondensation(map, position, cell);
             }
 
-            UpdateSteam(game, position);
+            UpdateSteam(map, journal, position);
         }
 
-        protected virtual void UpdateSteam(IGameCore game, Point position)
+        protected virtual void UpdateSteam(IAreaMap map, IJournal journal, Point position)
         {
             // Do nothing.
         }
 
-        private void ProcessCondensation(AreaMapCell cell)
+        private void ProcessCondensation(IAreaMap map, Point position, IAreaMapCell cell)
         {
-            var missingTemperature = Configuration.BoilingPoint - cell.Environment.Temperature;
+            var missingTemperature = Configuration.BoilingPoint - cell.Temperature;
             var volumeToRaiseTemp = (int)Math.Floor(missingTemperature * Configuration.CondensationTemperatureMultiplier);
             var volumeToCondense = Math.Min(volumeToRaiseTemp, Volume);
             var heatGain = (int)Math.Floor(volumeToCondense / Configuration.CondensationTemperatureMultiplier);
 
-            cell.Environment.Temperature += heatGain;
+            cell.Temperature += heatGain;
             Volume -= volumeToCondense;
 
             var liquidVolume = volumeToCondense / Configuration.EvaporationMultiplier;
-            cell.Objects.AddVolumeObject(CreateLiquid(liquidVolume));
+
+            map.AddObject(position, CreateLiquid(liquidVolume));
         }
 
         protected abstract ILiquidObject CreateLiquid(int volume);

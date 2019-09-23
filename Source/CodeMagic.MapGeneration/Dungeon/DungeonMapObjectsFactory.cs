@@ -1,32 +1,34 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.Implementations.Objects.DecorativeObjects;
+using CodeMagic.Implementations.Objects.Floor;
 using CodeMagic.Implementations.Objects.SolidObjects;
 
-namespace CodeMagic.MapGeneration
+namespace CodeMagic.MapGeneration.Dungeon
 {
-    internal class MapObjectsFactory
+    internal class DungeonMapObjectsFactory
     {
         private readonly WallObjectConfiguration.WallType wallType;
 
-        public MapObjectsFactory(WallObjectConfiguration.WallType wallType)
+        public DungeonMapObjectsFactory(WallObjectConfiguration.WallType wallType)
         {
             this.wallType = wallType;
         }
 
-        public DecorativeObject CreateTrapDoor()
+        public IMapObject CreateExitPortal()
         {
-            return new DecorativeObjectImpl(new DecorativeObjectConfiguration
-            {
-                Name = "Trap Door",
-                BlocksMovement = false,
-                Size = ObjectSize.Huge,
-                Type = DecorativeObjectConfiguration.ObjectType.TrapDoor,
-                ZIndex = ZIndex.AreaDecoration
-            });
+            return new ExitPortalObject();
+        }
+
+        public IMapObject CreateFloor()
+        {
+            return new FloorObject(FloorObject.Type.Stone);
+        }
+
+        public IMapObject CreateStairs()
+        {
+            return new StairsObjectImpl();
         }
 
         public DoorObject CreateDoor(bool horizontal)
@@ -34,9 +36,9 @@ namespace CodeMagic.MapGeneration
             return new DoorObjectImpl(horizontal);
         }
 
-        public StairsObject CreateStairsUp()
+        public IMapObject CreateTrapDoor()
         {
-            return new StairsObjectImpl();
+            return new TrapDoorObjectImpl();
         }
 
         public WallObject CreateWall()

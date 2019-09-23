@@ -15,7 +15,7 @@ namespace CodeMagic.Core.Statuses
             lifeTime = 0;
         }
 
-        public bool Update(IDestroyableObject owner, AreaMapCell cell, Journal journal)
+        public bool Update(IDestroyableObject owner, IAreaMapCell cell, IJournal journal)
         {
             if (lifeTime >= maxLifeTime)
             {

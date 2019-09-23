@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Spells;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Spells.Script;
 
 namespace CodeMagic.Core.Spells.SpellActions
@@ -32,13 +34,13 @@ namespace CodeMagic.Core.Spells.SpellActions
             distance = (int) actionData.distance;
         }
 
-        public Point Perform(IGameCore game, Point position)
+        public Point Perform(IAreaMap map, IJournal journal, Point position)
         {
             var castPosition = Point.GetPointInDirection(position, direction, distance);
-            if (!game.Map.ContainsCell(castPosition))
+            if (!map.ContainsCell(castPosition))
                 return position;
 
-            action.Perform(game, castPosition);
+            action.Perform(map, journal, castPosition);
             return position;
         }
 

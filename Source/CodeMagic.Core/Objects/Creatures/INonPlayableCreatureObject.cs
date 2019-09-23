@@ -5,7 +5,7 @@ namespace CodeMagic.Core.Objects.Creatures
 {
     public interface INonPlayableCreatureObject : ICreatureObject, IDynamicObject
     {
-        void Attack(IDestroyableObject target, Journal journal);
+        void Attack(IDestroyableObject target, IJournal journal);
 
         RemainsType RemainsType { get; }
     }

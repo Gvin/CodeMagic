@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects.IceObjects;
 using CodeMagic.Core.Objects.SteamObjects;
@@ -38,11 +40,11 @@ namespace CodeMagic.Core.Objects.LiquidObjects
             return Injector.Current.Create<IWaterLiquidObject>(volume);
         }
 
-        protected override void UpdateLiquid(IGameCore game, Point position)
+        protected override void UpdateLiquid(IAreaMap map, IJournal journal, Point position)
         {
-            base.UpdateLiquid(game, position);
+            base.UpdateLiquid(map, journal, position);
 
-            var cell = game.Map.GetCell(position);
+            var cell = map.GetCell(position);
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)
             {
@@ -52,7 +54,7 @@ namespace CodeMagic.Core.Objects.LiquidObjects
                 destroyable.Statuses.Remove(OnFireObjectStatus.StatusType);
                 destroyable.Statuses.Remove(OilyObjectStatus.StatusType);
 
-                destroyable.Statuses.Add(new WetObjectStatus(Configuration), game.Journal);
+                destroyable.Statuses.Add(new WetObjectStatus(Configuration), journal);
             }
         }
     }

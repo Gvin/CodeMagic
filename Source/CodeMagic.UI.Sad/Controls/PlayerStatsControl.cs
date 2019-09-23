@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
 using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
@@ -61,8 +60,8 @@ namespace CodeMagic.UI.Sad.Controls
             Surface.Print(2, 6, "Area Mana:");
 
             const int manaBarLength = 30;
-            var manaLevelPercent = (float) cell.MagicEnergy.Energy / MagicEnergy.MaxEnergy;
-            var disturbanceLevelPercent = (float)cell.MagicEnergy.Disturbance / MagicEnergy.MaxEnergy;
+            var manaLevelPercent = (float) cell.MagicEnergyLevel / cell.MaxMagicEnergyLevel;
+            var disturbanceLevelPercent = (float)cell.MagicDisturbanceLevel / cell.MaxMagicEnergyLevel;
 
             var manaLevelLength = (int) Math.Floor(manaBarLength * manaLevelPercent);
             var disturbanceLevelLength = (int) Math.Ceiling(manaBarLength * disturbanceLevelPercent);

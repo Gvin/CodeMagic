@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using Point = CodeMagic.Core.Game.Point;
 
@@ -13,7 +13,7 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
 
     public class FireDecorativeObject : IFireDecorativeObject, IDynamicObject, ILightObject
     {
-        private const LightLevel SmallFireLightLevel = LightLevel.Disk2;
+        private const LightLevel SmallFireLightLevel = LightLevel.Dusk2;
         private const LightLevel MediumFireLightLevel = LightLevel.Dim2;
         private const LightLevel BigFireLightLevel = LightLevel.Medium;
 
@@ -52,16 +52,16 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
 
         public UpdateOrder UpdateOrder => UpdateOrder.Early;
 
-        public void Update(IGameCore game, Point position)
+        public void Update(IAreaMap map, IJournal journal, Point position)
         {
-            var cell = game.Map.GetCell(position);
-            if (cell.Environment.Temperature < SmallFireTemperature)
+            var cell = map.GetCell(position);
+            if (cell.Temperature < SmallFireTemperature)
             {
-                cell.Objects.Remove(this);
+                map.RemoveObject(position, this);
                 return;
             }
 
-            Type = GetFireType(cell.Environment.Temperature);
+            Type = GetFireType(cell.Temperature);
         }
 
         public bool Updated { get; set; }

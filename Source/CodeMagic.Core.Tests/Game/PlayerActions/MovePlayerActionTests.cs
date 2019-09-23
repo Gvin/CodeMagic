@@ -26,9 +26,9 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
             gameMock.SetupGet(game => game.Player).Returns(playerMock.Object);
             gameMock.SetupGet(game => game.PlayerPosition).Returns(playerPosition);
 
-            var cell1 = new AreaMapCell();
-            cell1.Objects.Add(playerMock.Object);
-            var cell2 = new AreaMapCell();
+            var cell1 = new AreaMapCell(null);
+            cell1.ObjectsCollection.Add(playerMock.Object);
+            var cell2 = new AreaMapCell(null);
 
             var newPosition = new Point(endX, endY);
 
@@ -47,8 +47,8 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
 
             action.Perform(gameMock.Object, out var endPosition);
 
-            CollectionAssert.IsEmpty(cell1.Objects);
-            CollectionAssert.Contains(cell2.Objects, playerMock.Object);
+            CollectionAssert.IsEmpty(cell1.ObjectsCollection);
+            CollectionAssert.Contains(cell2.ObjectsCollection, playerMock.Object);
         }
 
         [Test]
@@ -84,13 +84,13 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
             gameMock.SetupGet(game => game.Player).Returns(playerMock.Object);
             gameMock.SetupGet(game => game.PlayerPosition).Returns(playerPosition);
 
-            var cell1 = new AreaMapCell();
-            cell1.Objects.Add(playerMock.Object);
+            var cell1 = new AreaMapCell(null);
+            cell1.ObjectsCollection.Add(playerMock.Object);
 
             var blockingObjectMock = new Mock<IMapObject>();
             blockingObjectMock.SetupGet(obj => obj.BlocksMovement).Returns(true);
-            var cell2 = new AreaMapCell();
-            cell2.Objects.Add(blockingObjectMock.Object);
+            var cell2 = new AreaMapCell(null);
+            cell2.ObjectsCollection.Add(blockingObjectMock.Object);
 
             var newPosition = new Point(0, 1);
 
@@ -109,8 +109,8 @@ namespace CodeMagic.Core.Tests.Game.PlayerActions
 
             action.Perform(gameMock.Object, out var endPosition);
 
-            CollectionAssert.DoesNotContain(cell2.Objects, playerMock.Object);
-            CollectionAssert.Contains(cell1.Objects, playerMock.Object);
+            CollectionAssert.DoesNotContain(cell2.ObjectsCollection, playerMock.Object);
+            CollectionAssert.Contains(cell1.ObjectsCollection, playerMock.Object);
         }
     }
 }

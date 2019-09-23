@@ -27,7 +27,7 @@ namespace CodeMagic.Core.Statuses
             burnTime = 0;
         }
 
-        public bool Update(IDestroyableObject owner, AreaMapCell cell, Journal journal)
+        public bool Update(IDestroyableObject owner, IAreaMapCell cell, IJournal journal)
         {
             if (burnTime >= burnBeforeExtinguishCheck)
             {
@@ -46,11 +46,11 @@ namespace CodeMagic.Core.Statuses
             journal.Write(new BurningDamageMessage(owner, damage));
             owner.Damage(journal, damage, Element.Fire);
 
-            var temperatureDiff = cell.Environment.Temperature - burningTemperature;
+            var temperatureDiff = cell.Temperature - burningTemperature;
             if (temperatureDiff > 0)
             {
                 var cellTemperatureIncrement = Math.Min(temperatureDiff, CellTemperatureIncreaseMax);
-                cell.Environment.Temperature += cellTemperatureIncrement;
+                cell.Temperature += cellTemperatureIncrement;
             }
 
             return true;

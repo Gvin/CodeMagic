@@ -6,21 +6,21 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using Point = System.Drawing.Point;
 
-namespace CodeMagic.MapGeneration.MapGenerators
+namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
 {
-    internal class DungeonMapGenerator : IMapAreaGenerator
+    internal class DungeonRoomsMapGenerator : IMapAreaGenerator
     {
         private const int TorchChance = 5;
         private const int MaxBuildRetries = 10;
 
-        private readonly MapObjectsFactory mapObjectsFactory;
+        private readonly DungeonMapObjectsFactory mapObjectsFactory;
 
-        public DungeonMapGenerator(MapObjectsFactory mapObjectsFactory)
+        public DungeonRoomsMapGenerator(DungeonMapObjectsFactory mapObjectsFactory)
         {
             this.mapObjectsFactory = mapObjectsFactory;
         }
 
-        public IAreaMap Generate(MapSize size, out Core.Game.Point playerPosition)
+        public IAreaMap Generate(MapSize size, bool isLastLevel, out Core.Game.Point playerPosition)
         {
             var builder = new MapBuilder(1, 1);
             switch (size)
@@ -46,10 +46,10 @@ namespace CodeMagic.MapGeneration.MapGenerators
             var height = simplifiedMap.Length;
             var width = simplifiedMap[0].Length;
 
-            var map = ConvertMap(simplifiedMap, width, height);
+            var map = ConvertMap(simplifiedMap, isLastLevel, width, height);
             playerPosition = FindPlayerPosition(map);
 
-            map.AddObject(playerPosition, mapObjectsFactory.CreateTrapDoor());
+            map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
 
             return map;
         }
@@ -92,14 +92,16 @@ namespace CodeMagic.MapGeneration.MapGenerators
             throw new ApplicationException("Unable to find player position.");
         }
 
-        private IAreaMap ConvertMap(int[][] map, int width, int height)
+        private IAreaMap ConvertMap(int[][] map, bool isLastLevel, int width, int height)
         {
-            var result = new AreaMap(width, height);
+            var result = new AreaMap(width, height, new InsideEnvironmentLightManager());
 
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
+                    result.AddObject(x, y, mapObjectsFactory.CreateFloor());
+
                     if (map[y][x] == MapBuilder.FilledCell)
                     {
                         var wall = mapObjectsFactory.CreateWall(TorchChance);
@@ -111,10 +113,18 @@ namespace CodeMagic.MapGeneration.MapGenerators
                         var door = mapObjectsFactory.CreateDoor(horizontal);
                         result.AddObject(x, y, door);
                     }
-                    else if (map[y][x] == MapBuilder.StairsCell)
+                    else if (map[y][x] == MapBuilder.TrapDoorCell)
                     {
-                        var stairs = mapObjectsFactory.CreateStairsUp();
-                        result.AddObject(x, y, stairs);
+                        if (isLastLevel)
+                        {
+                            var exitPortal = mapObjectsFactory.CreateExitPortal();
+                            result.AddObject(x, y, exitPortal);
+                        }
+                        else
+                        {
+                            var trapDoor = mapObjectsFactory.CreateTrapDoor();
+                            result.AddObject(x, y, trapDoor);
+                        }
                     }
                 }
             }
@@ -397,7 +407,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
             public const int FilledCell = 1;
             public const int EmptyCell = 0;
             public const int DoorCell = 3;
-            public const int StairsCell = 4;
+            public const int TrapDoorCell = 4;
 
             private readonly Random random;
 
@@ -1002,7 +1012,7 @@ namespace CodeMagic.MapGeneration.MapGenerators
                     var centerX = (int)Math.Round((rctCurrentRoom.Left + rctCurrentRoom.Right) / 2d);
                     var centerY = (int)Math.Round((rctCurrentRoom.Top + rctCurrentRoom.Bottom) / 2d);
 
-                    Map[centerX, centerY] = StairsCell;
+                    Map[centerX, centerY] = TrapDoorCell;
                 }
             }
 

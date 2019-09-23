@@ -45,7 +45,7 @@ namespace CodeMagic.UI.Sad.Controls
             }
         }
 
-        private void DrawCell(int mapX, int mapY, AreaMapCell cell)
+        private void DrawCell(int mapX, int mapY, IAreaMapCell cell)
         {
             var image = CellImageHelper.GetCellImage(cell);
 
@@ -59,7 +59,7 @@ namespace CodeMagic.UI.Sad.Controls
 
         #region Debug Data Drawing
 
-        private void DrawDebugData(int realX, int realY, AreaMapCell cell)
+        private void DrawDebugData(int realX, int realY, IAreaMapCell cell)
         {
             if (Properties.Settings.Default.DebugDrawTemperature)
                 DrawTemperature(realX, realY, cell);
@@ -69,7 +69,7 @@ namespace CodeMagic.UI.Sad.Controls
                 DrawMagicEnergy(realX, realY + 1, cell);
         }
 
-        private void DrawLightLevel(int x, int y, AreaMapCell cell)
+        private void DrawLightLevel(int x, int y, IAreaMapCell cell)
         {
             if (cell == null)
                 return;
@@ -78,22 +78,22 @@ namespace CodeMagic.UI.Sad.Controls
             Surface.Print(x, y, new ColoredString(value.ToString(), Color.Yellow, Color.Black));
         }
 
-        private void DrawTemperature(int x, int y, AreaMapCell cell)
+        private void DrawTemperature(int x, int y, IAreaMapCell cell)
         {
             if (cell == null)
                 return;
 
-            var value = cell.Environment.Temperature / 10;
+            var value = cell.Temperature / 10;
             Surface.Print(x, y, new ColoredString(value.ToString(), Color.Red, Color.Black));
         }
 
-        private void DrawMagicEnergy(int x, int y, AreaMapCell cell)
+        private void DrawMagicEnergy(int x, int y, IAreaMapCell cell)
         {
             if (cell == null)
                 return;
 
-            Surface.Print(x, y, new ColoredString(cell.MagicEnergy.Energy.ToString(), Color.Blue, Color.Black));
-            Surface.Print(x, y + 1, new ColoredString(cell.MagicEnergy.Disturbance.ToString(), Color.Blue, Color.Black));
+            Surface.Print(x, y, new ColoredString(cell.MagicEnergyLevel.ToString(), Color.Blue, Color.Black));
+            Surface.Print(x, y + 1, new ColoredString(cell.MagicDisturbanceLevel.ToString(), Color.Blue, Color.Black));
         }
 
         #endregion

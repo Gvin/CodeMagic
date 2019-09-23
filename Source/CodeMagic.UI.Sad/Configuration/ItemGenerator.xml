@@ -2521,6 +2521,11 @@
 
   <bonuses>
     <group type="All">
+      <rareness value="Trash">
+        <bonus type="WeightBonus">
+          <value key="WeightDecrease">10</value>
+        </bonus>
+      </rareness>
       <rareness value="Common">
         <bonus type="WeightBonus">
           <value key="WeightDecrease">30</value>
@@ -2539,6 +2544,16 @@
     </group>
 
     <group type="Equipable" inherit-from="All">
+      <rareness value="Trash">
+        <bonus type="HealthBonus">
+          <value key="Min">2</value>
+          <value key="Max">5</value>
+        </bonus>
+        <bonus type="ManaBonus">
+          <value key="Min">20</value>
+          <value key="Max">50</value>
+        </bonus>
+      </rareness>
       <rareness value="Common">
         <bonus type="HealthBonus">
           <value key="Min">5</value>
@@ -2584,6 +2599,16 @@
     </group>
 
     <group type="Weapon" inherit-from="Equipable">
+      <rareness value="Trash">
+        <bonus type="DamageBonus">
+          <value key="Min">0</value>
+          <value key="Max">1</value>
+          <value key="Difference">1</value>
+        </bonus>
+        <bonus type="LightBonus">
+          <value key="Power">Dusk1</value>
+        </bonus>
+      </rareness>
       <rareness value="Common">
         <bonus type="DamageBonus">
           <value key="Min">1</value>
@@ -2591,7 +2616,7 @@
           <value key="Difference">1</value>
         </bonus>
         <bonus type="LightBonus">
-          <value key="Power">Dusk1,Disk2</value>
+          <value key="Power">Dusk1,Dusk2</value>
         </bonus>
       </rareness>
       <rareness value="Uncommon">

@@ -2,7 +2,7 @@
 {
     public class AreaMapFragment
     {
-        public AreaMapFragment(AreaMapCell[][] cells, int width, int height)
+        public AreaMapFragment(IAreaMapCell[][] cells, int width, int height)
         {
             Width = width;
             Height = height;
@@ -13,11 +13,11 @@
 
         public int Height { get; }
 
-        public AreaMapCell GetCell(int x, int y)
+        public IAreaMapCell GetCell(int x, int y)
         {
             return Cells[y][x];
         }
 
-        private AreaMapCell[][] Cells { get; }
+        private IAreaMapCell[][] Cells { get; }
     }
 }

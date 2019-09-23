@@ -60,9 +60,9 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("emitLight", new Func<int, int, JsValue>(GetEmitLightSpellAction));
         }
 
-        public ISpellAction Execute(IGameCore game, Point position, ICodeSpell spell, int lifeTime)
+        public ISpellAction Execute(IAreaMap map, IJournal journal, Point position, ICodeSpell spell, int lifeTime)
         {
-            var result = ExecuteCode(game, position, spell, lifeTime);
+            var result = ExecuteCode(map, journal, position, spell, lifeTime);
             if (result == null)
             {
                 return new EmptySpellAction();
@@ -77,9 +77,9 @@ namespace CodeMagic.Core.Spells.Script
             return action;
         }
 
-        private dynamic ExecuteCode(IGameCore game, Point position, ICodeSpell spell, int lifeTime)
+        private dynamic ExecuteCode(IAreaMap map, IJournal journal, Point position, ICodeSpell spell, int lifeTime)
         {
-            ConfigureDynamicEngineFunctions(game, position, spell);
+            ConfigureDynamicEngineFunctions(map, journal, position, spell);
 
             JsValue mainFunction;
             try
@@ -117,25 +117,25 @@ namespace CodeMagic.Core.Spells.Script
             return result;
         }
 
-        private void ConfigureDynamicEngineFunctions(IGameCore game, Point position, ICodeSpell spell)
+        private void ConfigureDynamicEngineFunctions(IAreaMap map, IJournal journal, Point position, ICodeSpell spell)
         {
-            jsEngine.SetValue("getLightLevel", new Func<int>(() => GetLightLevel(game.Map, position)));
-            jsEngine.SetValue("getCaster", new Func<JsValue>(() => ConvertDestroyable(caster, game.Map).ToJson(jsEngine)));
-            jsEngine.SetValue("log", new Action<object>(message => LogMessage(game.Journal, spell, message)));
+            jsEngine.SetValue("getLightLevel", new Func<int>(() => GetLightLevel(map, position)));
+            jsEngine.SetValue("getCaster", new Func<JsValue>(() => ConvertDestroyable(caster, map).ToJson(jsEngine)));
+            jsEngine.SetValue("log", new Action<object>(message => LogMessage(journal, spell, message)));
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
             jsEngine.SetValue("getPosition", new Func<JsValue>(() => ConvertPoint(position)));
-            jsEngine.SetValue("getTemperature", new Func<int>(() => game.Map.GetCell(position).Environment.Temperature));
+            jsEngine.SetValue("getTemperature", new Func<int>(() => map.GetCell(position).Temperature));
             jsEngine.SetValue("getIsSolidWall",
-                new Func<string, bool>((direction) => GetIfCellIsSolid(game.Map, position, direction)));
-            jsEngine.SetValue("getObjectsUnder", new Func<JsValue[]>(() => GetObjectsUnder(game.Map, position)));
+                new Func<string, bool>((direction) => GetIfCellIsSolid(map, position, direction)));
+            jsEngine.SetValue("getObjectsUnder", new Func<JsValue[]>(() => GetObjectsUnder(map, position)));
 
             jsEngine.SetValue("scanForWalls",
-                new Func<int, bool[][]>(radius => ScanForWalls(game.Map, position, radius, spell)));
+                new Func<int, bool[][]>(radius => ScanForWalls(map, position, radius, spell)));
             jsEngine.SetValue("scanForObjects",
-                new Func<int, JsValue[]>(radius => ScanForObjects(game.Map, position, radius, spell)));
+                new Func<int, JsValue[]>(radius => ScanForObjects(map, position, radius, spell)));
         }
 
-        private void LogMessage(Journal journal, ICodeSpell spell, object message)
+        private void LogMessage(IJournal journal, ICodeSpell spell, object message)
         {
             journal.Write(new SpellLogMessage(spell.Name, GetMessageString(message)));
         }

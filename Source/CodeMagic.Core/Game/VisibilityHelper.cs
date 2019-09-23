@@ -16,7 +16,7 @@ namespace CodeMagic.Core.Game
             return new AreaMapFragment(areaOfVisibility, visibilityDiameter, visibilityDiameter);
         }
 
-        private static void ApplyVisibilityBlockers(AreaMapCell[][] visibleArea, Point[] visibilityBlockers)
+        private static void ApplyVisibilityBlockers(IAreaMapCell[][] visibleArea, Point[] visibilityBlockers)
         {
             var center = (visibleArea.Length - 1) / 2;
             var viewerPosition = new Point(center, center);
@@ -41,7 +41,7 @@ namespace CodeMagic.Core.Game
                 Point.IsOnLine(objectPosition, position, blocker));
         }
 
-        private static Point[] GetVisibilityBlockers(AreaMapCell[][] visibleArea)
+        private static Point[] GetVisibilityBlockers(IAreaMapCell[][] visibleArea)
         {
             var result = new List<Point>();
             for (var y = 0; y < visibleArea.Length; y++)

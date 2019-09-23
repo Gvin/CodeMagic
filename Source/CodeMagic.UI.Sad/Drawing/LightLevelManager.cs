@@ -7,7 +7,7 @@ namespace CodeMagic.UI.Sad.Drawing
 {
     public class LightLevelManager
     {
-        private const float LightLevelPercentMultiplier = 0.3f;
+        private const float LightLevelPercentMultiplier = 0.20f;
 
         public SymbolsImage ApplyLightLevel(SymbolsImage image, CellLightData lightData)
         {

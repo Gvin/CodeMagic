@@ -1,7 +1,9 @@
-﻿using CodeMagic.Core.Area;
+﻿using System;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Game.Locations;
 using CodeMagic.Core.Game.PlayerActions;
+using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
 
@@ -9,52 +11,29 @@ namespace CodeMagic.Core.Game
 {
     public class GameCore : ITurnProvider, IGameCore
     {
-        private readonly object mapLockObject = new object();
-        private readonly IMapGenerator mapGenerator;
-        private IAreaMap map;
+        private readonly object worldLockObject = new object();
+        private readonly GameTimeManager gameTimeManager;
 
-        public GameCore(IMapGenerator mapGenerator, IPlayer player)
+        public GameCore(ILocation startingLocation, IPlayer player, Point playerPosition)
         {
-            this.mapGenerator = mapGenerator;
+            World = new GameWorld(startingLocation);
+
+            PlayerPosition = playerPosition;
             Player = player;
+
+            Map.AddObject(PlayerPosition, Player);
 
             Journal = new Journal(this);
 
             CurrentTurn = 1;
-            Level = 1;
-
-            Journal.Write(new DungeonLevelMessage(Level));
-
-            GenerateNewMap();
-        }
-
-        private void GenerateNewMap()
-        {
-            lock (mapLockObject)
-            {
-                Map = mapGenerator.GenerateNewMap(Level, out var playerPosition);
-
-                PlayerPosition = playerPosition;
-                Map.AddObject(PlayerPosition, Player);
-                Map.Refresh();
-            }
+            gameTimeManager = new GameTimeManager();
         }
 
         public int CurrentTurn { get; private set; }
 
-        public int Level { get; private set; }
+        public GameWorld World { get; }
 
-        public IAreaMap Map
-        {
-            get
-            {
-                lock (mapLockObject)
-                {
-                    return map;
-                }
-            }
-            private set => map = value;
-        }
+        public IAreaMap Map => World.CurrentLocation.CurrentArea;
 
         public IPlayer Player { get; }
 
@@ -62,11 +41,22 @@ namespace CodeMagic.Core.Game
 
         public Point PlayerPosition { get; private set; }
 
+        public DateTime GameTime
+        {
+            get
+            {
+                lock (worldLockObject)
+                {
+                    return gameTimeManager.CurrentTime;
+                }
+            }
+        }
+
         public void PerformPlayerAction(IPlayerAction action)
         {
-            lock (mapLockObject)
+            lock (worldLockObject)
             {
-                Map.PreUpdate(this);
+                Map.PreUpdate(Journal);
 
                 var endsTurn = action.Perform(this, out var newPosition);
                 PlayerPosition = newPosition;
@@ -83,19 +73,28 @@ namespace CodeMagic.Core.Game
             }
         }
 
-        public void GoToNextLevel()
+        public void UpdatePlayerPosition(Point newPlayerPosition)
         {
-            Level++;
-            
-            GenerateNewMap();
-
-            Journal.Write(new DungeonLevelMessage(Level));
+            Map.AddObject(newPlayerPosition, Player);
+            PlayerPosition = newPlayerPosition;
         }
 
         private void ProcessSystemTurn()
         {
-            UpdateMap();
+            gameTimeManager.RegisterTurn(World.CurrentLocation.TurnCycle);
+
+            var backgroundUpdateTask = World.UpdateStoredLocations(GameTime);
+
             CurrentTurn++;
+            UpdateMap();
+
+            for (int counter = 0; counter < World.CurrentLocation.TurnCycle - 1; counter++)
+            {
+                CurrentTurn++;
+                ((IDynamicObject)Player).Update(Map, Journal, PlayerPosition);
+            }
+
+            backgroundUpdateTask.Wait();
         }
 
         private bool GetIfPlayerIsFrozen()
@@ -105,22 +104,22 @@ namespace CodeMagic.Core.Game
 
         private void UpdateMap()
         {
-            Map.Update(this);
+            Map.Update(Journal, GameTime);
         }
 
         public AreaMapFragment GetVisibleArea()
         {
-            var visibleArea = VisibilityHelper.GetVisibleArea(Player.VisibilityRange, PlayerPosition, Map);
+            var visibleArea = VisibilityHelper.GetVisibleArea(Player.VisibilityRange, PlayerPosition, World.CurrentLocation.CurrentArea);
             if (Player.VisibilityRange == Player.MaxVisibilityRange)
                 return visibleArea;
 
             var visibilityDifference = Player.MaxVisibilityRange - Player.VisibilityRange;
             var visibleAreaDiameter = Player.MaxVisibilityRange * 2 + 1;
-            var result = new AreaMapCell[visibleAreaDiameter][];
+            var result = new IAreaMapCell[visibleAreaDiameter][];
 
             for (int y = 0; y < visibleAreaDiameter; y++)
             {
-                result[y] = new AreaMapCell[visibleAreaDiameter];
+                result[y] = new IAreaMapCell[visibleAreaDiameter];
             }
 
             for (int y = 0; y < visibleArea.Height; y++)
@@ -134,6 +133,11 @@ namespace CodeMagic.Core.Game
             }
 
             return new AreaMapFragment(result, visibleAreaDiameter, visibleAreaDiameter);
+        }
+
+        public void RemovePlayerFromMap()
+        {
+            Map.RemoveObject(PlayerPosition, Player);
         }
     }
 }

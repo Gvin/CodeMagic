@@ -24,7 +24,7 @@ namespace CodeMagic.Core.Objects.Creatures
             RemainsType = configuration.RemainsType;
         }
 
-        public override void Attack(IDestroyableObject target, Journal journal)
+        public override void Attack(IDestroyableObject target, IJournal journal)
         {
             base.Attack(target, journal);
 

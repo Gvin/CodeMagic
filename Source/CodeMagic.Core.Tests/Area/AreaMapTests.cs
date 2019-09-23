@@ -11,7 +11,7 @@ namespace CodeMagic.Core.Tests.Area
         public void ConstructorTest()
         {
             // Act
-            var map = new AreaMap(5, 5);
+            var map = new AreaMap(5, 5, new InsideEnvironmentLightManager());
 
             // Assert
             var cell = map.GetCell(2, 2);
@@ -27,7 +27,7 @@ namespace CodeMagic.Core.Tests.Area
         public void GetCellValidTest(int width, int height, int checkX, int checkY)
         {
             // Arrange
-            var map = new AreaMap(width, height);
+            var map = new AreaMap(width, height, new InsideEnvironmentLightManager());
 
             // Act
             var cell = map.GetCell(checkX, checkY);
@@ -42,7 +42,7 @@ namespace CodeMagic.Core.Tests.Area
         [TestCase(3, 3, 0, 3, "Y")]
         public void GetCellInvalidTest(int width, int height, int checkX, int checkY, string errorArgument)
         {
-            var map = new AreaMap(width, height);
+            var map = new AreaMap(width, height, new InsideEnvironmentLightManager());
 
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
@@ -63,7 +63,7 @@ namespace CodeMagic.Core.Tests.Area
         [TestCase(3, 3, 0, 3, ExpectedResult = false)]
         public bool ContainsCellTest(int width, int height, int checkX, int checkY)
         {
-            var map = new AreaMap(width, height);
+            var map = new AreaMap(width, height, new InsideEnvironmentLightManager());
             return map.ContainsCell(checkX, checkY);
         }
     }

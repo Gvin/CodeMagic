@@ -64,6 +64,10 @@
     <Compile Include="Objects\DecorativeObjects\CreatureRemainsObjectImpl.cs" />
     <Compile Include="Objects\DecorativeObjects\DecorativeObjectImpl.cs" />
     <Compile Include="Objects\DecorativeObjects\FireObjectImpl.cs" />
+    <Compile Include="Objects\Floor\FloorObject.cs" />
+    <Compile Include="Objects\GlobalMap\DungeonEnterObject.cs" />
+    <Compile Include="Objects\GlobalMap\GlobalMapObject.cs" />
+    <Compile Include="Objects\GlobalMap\HomeObject.cs" />
     <Compile Include="Objects\IceObjects\AcidIceImpl.cs" />
     <Compile Include="Objects\IceObjects\WaterIceImpl.cs" />
     <Compile Include="Objects\LiquidObjects\AcidLiquidImpl.cs" />
@@ -71,8 +75,11 @@
     <Compile Include="Objects\LiquidObjects\WaterLiquidImpl.cs" />
     <Compile Include="Objects\SolidObjects\DoorObjectImpl.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWallImpl.cs" />
+    <Compile Include="Objects\SolidObjects\ExitPortalObject.cs" />
     <Compile Include="Objects\SolidObjects\StairsObjectImpl.cs" />
     <Compile Include="Objects\SolidObjects\TorchWallImpl.cs" />
+    <Compile Include="Objects\SolidObjects\TrapDoorObjectImpl.cs" />
+    <Compile Include="Objects\SolidObjects\TreeObject.cs" />
     <Compile Include="Objects\SolidObjects\WallImpl.cs" />
     <Compile Include="Objects\SteamObjects\AcidSteamImpl.cs" />
     <Compile Include="Objects\SteamObjects\WaterSteamImpl.cs" />

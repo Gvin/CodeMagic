@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
@@ -10,35 +11,37 @@ namespace CodeMagic.Core.Area
 
         int Height { get; }
 
+        int LightDropFactor { get; }
+
         /// <summary>
         /// Refreshes map before the first rendering.
         /// Calculates light level and etc.
         /// </summary>
-        void Refresh();
+        void Refresh(DateTime gameTime);
 
         /// <summary>
         /// Gets cell with specified coordinates.
         /// Throws exception if coordinates are not on the map.
         /// </summary>
-        AreaMapCell GetCell(int x, int y);
+        IAreaMapCell GetCell(int x, int y);
 
         /// <summary>
         /// Gets cell with specified position.
         /// Throws exception if position is not on the map.
         /// </summary>
-        AreaMapCell GetCell(Point point);
+        IAreaMapCell GetCell(Point point);
 
         /// <summary>
         /// Gets cell with specified position.
         /// Returns null if position is not on the map.
         /// </summary>
-        AreaMapCell TryGetCell(Point point);
+        IAreaMapCell TryGetCell(Point point);
 
         /// <summary>
         /// Gets cell with specified coordinates.
         /// Returns null if coordinates are not on the map.
         /// </summary>
-        AreaMapCell TryGetCell(int x, int y);
+        IAreaMapCell TryGetCell(int x, int y);
 
         /// <summary>
         /// Gets if map contains cell with specified coordinates.
@@ -54,13 +57,13 @@ namespace CodeMagic.Core.Area
         /// Resets damage records for all destroyable objects.
         /// Should be called before player action.
         /// </summary>
-        void PreUpdate(IGameCore game);
+        void PreUpdate(IJournal journal);
 
         /// <summary>
         /// Updates entire map.
         /// Should be called after player action.
         /// </summary>
-        void Update(IGameCore game);
+        void Update(IJournal journal, DateTime gameTime);
 
         IDestroyableObject GetDestroyableObject(string id);
 
@@ -68,10 +71,12 @@ namespace CodeMagic.Core.Area
 
         void RemoveObject(Point position, IMapObject @object);
 
-        AreaMapCell[][] GetMapPart(Point position, int radius);
+        IAreaMapCell[][] GetMapPart(Point position, int radius);
 
         Point GetObjectPosition<T>() where T : IMapObject;
 
         Point GetObjectPosition(Func<IMapObject, bool> selector);
+
+        Light BackgroundLight { get; }
     }
 }

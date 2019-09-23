@@ -5,6 +5,7 @@ using CodeMagic.Core.Common;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.LiquidObjects;
@@ -67,36 +68,36 @@ namespace CodeMagic.Core.Objects.IceObjects
 
         public ZIndex ZIndex => ZIndex.FloorCover;
 
-        public void Update(IGameCore game, Point position)
+        public void Update(IAreaMap map, IJournal journal, Point position)
         {
-            var cell = game.Map.GetCell(position);
+            var cell = map.GetCell(position);
             if (Volume <= 0)
-                cell.Objects.Remove(this);
+                map.RemoveObject(position, this);
 
-            if (cell.Environment.Temperature > Configuration.FreezingPoint)
+            if (cell.Temperature > Configuration.FreezingPoint)
             {
-                ProcessMelting(cell);
+                ProcessMelting(map, position, cell);
             }
         }
 
-        private void ProcessMelting(AreaMapCell cell)
+        private void ProcessMelting(IAreaMap map, Point position, IAreaMapCell cell)
         {
-            var excessTemperature = cell.Environment.Temperature - Configuration.FreezingPoint;
+            var excessTemperature = cell.Temperature - Configuration.FreezingPoint;
             var volumeToLowerTemp = (int)Math.Floor(excessTemperature * Configuration.MeltingTemperatureMultiplier);
             var volumeToMelt = Math.Min(volumeToLowerTemp, Volume);
             var heatLoss = (int)Math.Floor(volumeToMelt * Configuration.MeltingTemperatureMultiplier);
 
-            cell.Environment.Temperature -= heatLoss;
+            cell.Temperature -= heatLoss;
             Volume -= volumeToMelt;
 
-            cell.Objects.AddVolumeObject(CreateLiquid(volumeToMelt));
+            map.AddObject(position, CreateLiquid(volumeToMelt));
         }
 
         protected abstract ILiquidObject CreateLiquid(int volume);
 
         public bool Updated { get; set; }
 
-        public Point ProcessStepOn(IGameCore game, Point position, ICreatureObject target, Point initialTargetPosition)
+        public Point ProcessStepOn(IAreaMap map, IJournal journal, Point position, ICreatureObject target, Point initialTargetPosition)
         {
             if (Volume < MinVolumeForEffect)
                 return position;
@@ -105,31 +106,31 @@ namespace CodeMagic.Core.Objects.IceObjects
             if (!direction.HasValue)
                 throw new ApplicationException("Unable to get movement direction.");
 
-            var remainingSpeed = TryMoveTarget(game, position, target, direction.Value, out var newPosition, out var blockCell);
+            var remainingSpeed = TryMoveTarget(map, journal, position, target, direction.Value, out var newPosition, out var blockCell);
             if (remainingSpeed <= 0)
                 return newPosition;
 
             var damage = remainingSpeed * SlideSpeedDamageMultiplier;
-            target.Damage(game.Journal, damage, Element.Blunt);
-            game.Journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt));
+            target.Damage(journal, damage, Element.Blunt);
+            journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt));
 
             var blockObject = blockCell.GetBiggestDestroyable();
             if (blockObject != null)
             {
-                blockObject.Damage(game.Journal, damage, Element.Blunt);
-                game.Journal.Write(new EnvironmentDamageMessage(blockObject, damage, Element.Blunt));
+                blockObject.Damage(journal, damage, Element.Blunt);
+                journal.Write(new EnvironmentDamageMessage(blockObject, damage, Element.Blunt));
             }
             return newPosition;
         }
 
-        private int TryMoveTarget(IGameCore game, Point position, ICreatureObject target, Direction direction, out Point newPosition, out AreaMapCell blockCell)
+        private int TryMoveTarget(IAreaMap map, IJournal journal, Point position, ICreatureObject target, Direction direction, out Point newPosition, out IAreaMapCell blockCell)
         {
             newPosition = position;
             blockCell = null;
             for (var remainingSpeed = MaxSlideDistance; remainingSpeed > 0; remainingSpeed--)
             {
                 var nextPosition = Point.GetPointInDirection(newPosition, direction);
-                var nextCell = game.Map.TryGetCell(nextPosition);
+                var nextCell = map.TryGetCell(nextPosition);
                 if (nextCell == null)
                     return 0;
                 
@@ -139,7 +140,7 @@ namespace CodeMagic.Core.Objects.IceObjects
                     return remainingSpeed;
                 }
 
-                var movementResult = MovementHelper.MoveObject(target, game, newPosition, nextPosition, false);
+                var movementResult = MovementHelper.MoveObject(target, map, journal, newPosition, nextPosition, false);
                 if (!movementResult.Success)
                     return remainingSpeed;
 
@@ -152,7 +153,7 @@ namespace CodeMagic.Core.Objects.IceObjects
             return 0;
         }
 
-        private bool CellContainsIce(AreaMapCell cell)
+        private bool CellContainsIce(IAreaMapCell cell)
         {
             var iceObject = cell.Objects.OfType<IIceObject>().FirstOrDefault();
             if (iceObject == null)
