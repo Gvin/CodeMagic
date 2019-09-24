@@ -98,6 +98,7 @@
     <Compile Include="Game\GameTimeManager.cs" />
     <Compile Include="Game\Journaling\Messages\CastNotAllowedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\FightNotAllowedMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\StoringLocationNotAllowedMessage.cs" />
     <Compile Include="Game\Locations\DungeonLocation.cs" />
     <Compile Include="Game\Locations\GameWorld.cs" />
     <Compile Include="Game\IGameCore.cs" />

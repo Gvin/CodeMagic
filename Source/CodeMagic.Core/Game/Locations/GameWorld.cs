@@ -54,8 +54,18 @@ namespace CodeMagic.Core.Game.Locations
 
         public ILocation CurrentLocation { get; private set; }
 
-        public void TravelToLocation(IGameCore game, ILocation newLocation, Direction enterDirection)
+        public void TravelToLocation(IGameCore game, ILocation newLocation, Direction enterDirection, Point position = null)
         {
+            if (string.Equals(newLocation.Id, CurrentLocation.Id))
+            {
+                if (position == null)
+                    throw new ArgumentException("Unable to move through current location without position.");
+
+                game.RemovePlayerFromMap();
+                game.UpdatePlayerPosition(position);
+                return;
+            }
+
             lock (storedLocations)
             {
                 var oldStoredLocation =
@@ -84,20 +94,38 @@ namespace CodeMagic.Core.Game.Locations
 
                 CurrentLocation = newLocation;
                 CurrentLocation.ProcessPlayerEnter(game);
-                var locationEnterDirection = DirectionHelper.InvertDirection(enterDirection);
-                game.UpdatePlayerPosition(newLocation.GetEnterPoint(locationEnterDirection));
+                if (position == null)
+                {
+                    var locationEnterDirection = DirectionHelper.InvertDirection(enterDirection);
+                    game.UpdatePlayerPosition(newLocation.GetEnterPoint(locationEnterDirection));
+                }
+                else
+                {
+                    game.UpdatePlayerPosition(position);
+                }
 
                 TravelFinished?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        public void TravelToLocation(IGameCore game, string locationId, Direction enterDirection)
+        public void TravelToLocation(IGameCore game, string locationId, Direction enterDirection, Point position = null)
         {
-            var location = storedLocations.Select(storedLoc => storedLoc.Location).FirstOrDefault(loc => string.Equals(loc.Id, locationId));
-            if (location == null)
-                throw new KeyNotFoundException($"Location with id \"{locationId}\" not found in stored locations.");
+            if (string.Equals(CurrentLocation.Id, locationId))
+            {
+                TravelToLocation(game, CurrentLocation, enterDirection, position);
+                return;
+            }
 
-            TravelToLocation(game, location, enterDirection);
+            var storedLocation = GetStoredLocation(locationId);
+            TravelToLocation(game, storedLocation.Location, enterDirection, position);
+        }
+
+        private StoredLocation GetStoredLocation(string id)
+        {
+            lock (storedLocations)
+            {
+                return storedLocations.FirstOrDefault(loc => string.Equals(loc.Location.Id, id));
+            }
         }
 
         public void AddLocation(ILocation location)

@@ -44,11 +44,14 @@
   <ItemGroup>
     <Compile Include="IImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
+    <Compile Include="Items\ItemBase.cs" />
     <Compile Include="Items\Materials\BlankScroll.cs" />
     <Compile Include="Items\TorchItem.cs" />
     <Compile Include="Items\Usable\AncientScrollItemImpl.cs" />
     <Compile Include="Items\Usable\HealthManaRestorationItem.cs" />
     <Compile Include="Items\Usable\ScrollItemImpl.cs" />
+    <Compile Include="Items\Usable\TeleporterStoneActive.cs" />
+    <Compile Include="Items\Usable\TeleporterStoneInactive.cs" />
     <Compile Include="IWorldImageProvider.cs" />
     <Compile Include="Items\ArmorItemImpl.cs" />
     <Compile Include="Items\ItemTextHelper.cs" />

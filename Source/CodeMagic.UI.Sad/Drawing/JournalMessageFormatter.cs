@@ -86,9 +86,19 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetCastNotAllowedMessage(castNotAllowedMessage);
                 case FightNotAllowedMessage fightNotAllowedMessage:
                     return GetFightNotAllowedMessage(fightNotAllowedMessage);
+                case StoringLocationNotAllowedMessage storingLocationNotAllowedMessage:
+                    return GetStoringLocationNotAllowedMessage(storingLocationNotAllowedMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetStoringLocationNotAllowedMessage(StoringLocationNotAllowedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("This area is too unstable to store its location."),
+            };
         }
 
         private ColoredString[] GetFightNotAllowedMessage(FightNotAllowedMessage message)

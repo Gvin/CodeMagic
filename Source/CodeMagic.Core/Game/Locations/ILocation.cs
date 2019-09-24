@@ -7,6 +7,8 @@ namespace CodeMagic.Core.Game.Locations
 {
     public interface ILocation
     {
+        string Name { get; }
+
         string Id { get; }
 
         IAreaMap CurrentArea { get; }

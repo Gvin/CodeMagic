@@ -4,6 +4,7 @@ using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Implementations.Items;
+using CodeMagic.Implementations.Items.Usable;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.MapGeneration.GlobalWorld;
 using CodeMagic.MapGeneration.Home;
@@ -47,7 +48,7 @@ namespace CodeMagic.UI.Sad.GameProcess
         private ILocation CreateHomeLocation(out Point playerPosition)
         {
             var map = new HomeLocationMapGenerator().GenerateMap(HomeAreaMapSize, HomeAreaMapSize, out var enterPositions, out playerPosition);
-            return new SimpleLocation(HomeLocationMapGenerator.LocationId, map, enterPositions);
+            return new SimpleLocation(HomeLocationMapGenerator.LocationId, "Home", map, enterPositions);
         }
 
         private GlobalWorldLocation CreateGlobalWorldLocation()
@@ -81,6 +82,8 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             player.Inventory.AddItem(itemsGenerator.GenerateUsable(ItemRareness.Common));
             player.Inventory.AddItem(itemsGenerator.GenerateUsable(ItemRareness.Common));
+
+            player.Inventory.AddItem(new TeleporterStoneInactive());
 
             return player;
         }

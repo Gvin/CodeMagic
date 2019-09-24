@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
+using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 
@@ -29,6 +29,8 @@ namespace CodeMagic.Core.Game.Locations
         private Point PlayerPosition { get; set; }
 
         public string Id { get; }
+
+        public string Name => "Dungeon";
 
         private int GetMaxLevel(ItemRareness rareness)
         {
@@ -63,6 +65,8 @@ namespace CodeMagic.Core.Game.Locations
             PlayerPosition = level.PlayerPosition;
 
             game.UpdatePlayerPosition(PlayerPosition);
+
+            game.Journal.Write(new DungeonLevelMessage(CurrentLevel));
         }
 
         public void MoveDown(IGameCore game)
@@ -87,6 +91,8 @@ namespace CodeMagic.Core.Game.Locations
             levels.Add(new StoredMap(CurrentArea, null));
             PlayerPosition = newPlayerPosition;
             game.UpdatePlayerPosition(PlayerPosition);
+
+            game.Journal.Write(new DungeonLevelMessage(CurrentLevel));
         }
 
         private ItemRareness Rareness { get; }
@@ -99,6 +105,7 @@ namespace CodeMagic.Core.Game.Locations
 
         public void ProcessPlayerEnter(IGameCore game)
         {
+            game.Journal.Write(new DungeonLevelMessage(CurrentLevel));
             enterDirection = game.Player.Direction;
         }
 
