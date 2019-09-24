@@ -95,6 +95,7 @@
     <Compile Include="Views\SettingsView.cs" />
     <Compile Include="Views\SpellBookView.cs" />
     <Compile Include="Views\SpellsLibraryViewBase.cs" />
+    <Compile Include="Views\TravelInProgressView.cs" />
     <Compile Include="Views\View.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

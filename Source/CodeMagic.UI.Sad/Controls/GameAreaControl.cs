@@ -35,6 +35,9 @@ namespace CodeMagic.UI.Sad.Controls
 
             var visibleArea = game.GetVisibleArea();
 
+            if (visibleArea == null)
+                return;
+
             for (int y = 0; y < visibleArea.Height; y++)
             {
                 for (int x = 0; x < visibleArea.Width; x++)

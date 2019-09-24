@@ -11,6 +11,11 @@ namespace CodeMagic.Core.Game
             CurrentTime = new DateTime(3581, 6, 25, 12, 00, 00);
         }
 
+        private GameTimeManager(DateTime currentTime)
+        {
+            CurrentTime = currentTime;
+        }
+
         public DateTime CurrentTime { get; private set; }
 
         public void RegisterTurn(int turnsCount)
@@ -19,6 +24,11 @@ namespace CodeMagic.Core.Game
             {
                 CurrentTime += TimePerTurn;
             }
+        }
+
+        public GameTimeManager Clone()
+        {
+            return new GameTimeManager(CurrentTime);
         }
     }
 }

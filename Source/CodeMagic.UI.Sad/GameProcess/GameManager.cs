@@ -7,6 +7,7 @@ using CodeMagic.Implementations.Items;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.MapGeneration.GlobalWorld;
 using CodeMagic.MapGeneration.Home;
+using CodeMagic.UI.Sad.Views;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
@@ -14,6 +15,8 @@ namespace CodeMagic.UI.Sad.GameProcess
     {
         private const int GlobalWorldMapSize = 60;
         private const int HomeAreaMapSize = 60;
+
+        private TravelInProgressView travelInProgressView;
 
         public GameCore StartGame()
         {
@@ -25,6 +28,18 @@ namespace CodeMagic.UI.Sad.GameProcess
             var globalWorldLocation = CreateGlobalWorldLocation();
             globalWorldLocation.CurrentArea.Refresh(game.GameTime);
             game.World.AddLocation(globalWorldLocation);
+
+            game.World.TravelStarted += (sender, args) =>
+            {
+                travelInProgressView = new TravelInProgressView();
+                travelInProgressView.Show();
+            };
+
+            game.World.TravelFinished += (sender, args) =>
+            {
+                travelInProgressView?.Close();
+                travelInProgressView = null;
+            };
 
             return game;
         }

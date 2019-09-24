@@ -106,6 +106,8 @@ namespace CodeMagic.UI.Sad.Views
 
         private void startGameButton_Click(object sender, EventArgs args)
         {
+            currentGame.Dispose();
+
             Close();
 
             var game = new GameManager().StartGame();

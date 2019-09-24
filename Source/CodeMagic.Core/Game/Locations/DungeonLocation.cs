@@ -112,7 +112,7 @@ namespace CodeMagic.Core.Game.Locations
             return PlayerPosition;
         }
 
-        public Task BackgroundUpdate(DateTime gameTime, int turnsCount)
+        public void BackgroundUpdate(DateTime gameTime)
         {
             throw new InvalidOperationException("Dungeon locations should not be updated in background.");
         }

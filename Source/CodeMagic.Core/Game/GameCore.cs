@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Locations;
@@ -13,6 +14,7 @@ namespace CodeMagic.Core.Game
     {
         private readonly object worldLockObject = new object();
         private readonly GameTimeManager gameTimeManager;
+        private Task updateTask;
 
         public GameCore(ILocation startingLocation, IPlayer player, Point playerPosition)
         {
@@ -56,20 +58,31 @@ namespace CodeMagic.Core.Game
         {
             lock (worldLockObject)
             {
-                Map.PreUpdate(Journal);
+                if (updateTask != null)
+                    return;
 
-                var endsTurn = action.Perform(this, out var newPosition);
-                PlayerPosition = newPosition;
-
-                if (endsTurn)
+                updateTask = new Task(() =>
                 {
-                    ProcessSystemTurn();
+                    Map.PreUpdate(Journal);
 
-                    if (GetIfPlayerIsFrozen())
+                    var endsTurn = action.Perform(this, out var newPosition);
+                    PlayerPosition = newPosition;
+
+                    if (endsTurn)
                     {
                         ProcessSystemTurn();
+
+                        if (GetIfPlayerIsFrozen())
+                        {
+                            ProcessSystemTurn();
+                        }
                     }
-                }
+
+                    updateTask = null;
+                });
+
+                updateTask.Start();
+                
             }
         }
 
@@ -81,9 +94,9 @@ namespace CodeMagic.Core.Game
 
         private void ProcessSystemTurn()
         {
-            gameTimeManager.RegisterTurn(World.CurrentLocation.TurnCycle);
+            World.UpdateStoredLocations(gameTimeManager);
 
-            var backgroundUpdateTask = World.UpdateStoredLocations(GameTime);
+            gameTimeManager.RegisterTurn(World.CurrentLocation.TurnCycle);
 
             CurrentTurn++;
             UpdateMap();
@@ -93,8 +106,6 @@ namespace CodeMagic.Core.Game
                 CurrentTurn++;
                 ((IDynamicObject)Player).Update(Map, Journal, PlayerPosition);
             }
-
-            backgroundUpdateTask.Wait();
         }
 
         private bool GetIfPlayerIsFrozen()
@@ -109,6 +120,9 @@ namespace CodeMagic.Core.Game
 
         public AreaMapFragment GetVisibleArea()
         {
+            if (updateTask != null)
+                return null;
+
             var visibleArea = VisibilityHelper.GetVisibleArea(Player.VisibilityRange, PlayerPosition, World.CurrentLocation.CurrentArea);
             if (Player.VisibilityRange == Player.MaxVisibilityRange)
                 return visibleArea;
@@ -138,6 +152,13 @@ namespace CodeMagic.Core.Game
         public void RemovePlayerFromMap()
         {
             Map.RemoveObject(PlayerPosition, Player);
+        }
+
+        public void Dispose()
+        {
+            updateTask?.Wait();
+            updateTask?.Dispose();
+            World.Dispose();
         }
     }
 }

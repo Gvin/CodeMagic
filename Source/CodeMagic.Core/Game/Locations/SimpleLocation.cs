@@ -54,18 +54,12 @@ namespace CodeMagic.Core.Game.Locations
             return enterPositions[direction];
         }
 
-        public Task BackgroundUpdate(DateTime gameTime, int turnsCount)
+        public void BackgroundUpdate(DateTime gameTime)
         {
             var journal = new BackgroundJournal();
 
-            return new Task(() =>
-            {
-                for (int counter = 0; counter < turnsCount; counter++)
-                {
-                    CurrentArea.PreUpdate(journal);
-                    CurrentArea.Update(journal, gameTime);
-                }
-            });
+            CurrentArea.PreUpdate(journal);
+            CurrentArea.Update(journal, gameTime);
         }
     }
 }

@@ -1,48 +1,99 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CodeMagic.Core.Common;
 
 namespace CodeMagic.Core.Game.Locations
 {
-    public class GameWorld
+    public class GameWorld : IDisposable
     {
-        private readonly List<ILocation> storedLocations;
+        private const int MaxRemainingUpdatesForTravel = 3;
+
+        public event EventHandler TravelStarted;
+        public event EventHandler TravelFinished;
+
+        private readonly List<StoredLocation> storedLocations;
+        private readonly Task backgroundUpdateTask;
+        private readonly CancellationTokenSource backgroundUpdateCancellationToken;
 
         public GameWorld(ILocation startingLocation)
         {
-            storedLocations = new List<ILocation>();
+            storedLocations = new List<StoredLocation>();
             CurrentLocation = startingLocation;
+
+            backgroundUpdateCancellationToken = new CancellationTokenSource();
+            backgroundUpdateTask = new Task(
+                () => PerformBackgroundUpdate(backgroundUpdateCancellationToken.Token), 
+                backgroundUpdateCancellationToken.Token, 
+                TaskCreationOptions.LongRunning);
+            backgroundUpdateTask.Start();
+        }
+
+        private void PerformBackgroundUpdate(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                var updated = false;
+
+                lock (storedLocations)
+                {
+                    foreach (var storedLocation in storedLocations)
+                    {
+                        updated = updated || storedLocation.PerformSingleBackgroundUpdate();
+                    }
+                }
+
+                if (!updated)
+                {
+                    Task.Delay(500).Wait();
+                }
+            }
         }
 
         public ILocation CurrentLocation { get; private set; }
 
         public void TravelToLocation(IGameCore game, ILocation newLocation, Direction enterDirection)
         {
-            game.RemovePlayerFromMap();
-
-            if (CurrentLocation.KeepOnLeave)
+            lock (storedLocations)
             {
-                storedLocations.Add(CurrentLocation);
+                var oldStoredLocation =
+                    storedLocations.FirstOrDefault(loc => string.Equals(loc.Location.Id, newLocation.Id));
+
+                if (oldStoredLocation != null && oldStoredLocation.RemainingUpdatesCount > MaxRemainingUpdatesForTravel)
+                {
+                    TravelStarted?.Invoke(this, EventArgs.Empty);
+                }
+
+                game.RemovePlayerFromMap();
+
+                if (CurrentLocation.KeepOnLeave)
+                {
+                    storedLocations.Add(new StoredLocation(CurrentLocation));
+                }
+
+                CurrentLocation.ProcessPlayerLeave(game);
+
+                
+                if (oldStoredLocation != null)
+                {
+                    oldStoredLocation.PerformBackgroundUpdates();
+                    storedLocations.Remove(oldStoredLocation);
+                }
+
+                CurrentLocation = newLocation;
+                CurrentLocation.ProcessPlayerEnter(game);
+                var locationEnterDirection = DirectionHelper.InvertDirection(enterDirection);
+                game.UpdatePlayerPosition(newLocation.GetEnterPoint(locationEnterDirection));
+
+                TravelFinished?.Invoke(this, EventArgs.Empty);
             }
-
-            CurrentLocation.ProcessPlayerLeave(game);
-
-            if (storedLocations.Contains(newLocation))
-            {
-                storedLocations.Remove(newLocation);
-            }
-
-            CurrentLocation = newLocation;
-            CurrentLocation.ProcessPlayerEnter(game);
-            var locationEnterDirection = DirectionHelper.InvertDirection(enterDirection);
-            game.UpdatePlayerPosition(newLocation.GetEnterPoint(locationEnterDirection));
         }
 
         public void TravelToLocation(IGameCore game, string locationId, Direction enterDirection)
         {
-            var location = storedLocations.FirstOrDefault(loc => string.Equals(loc.Id, locationId));
+            var location = storedLocations.Select(storedLoc => storedLoc.Location).FirstOrDefault(loc => string.Equals(loc.Id, locationId));
             if (location == null)
                 throw new KeyNotFoundException($"Location with id \"{locationId}\" not found in stored locations.");
 
@@ -51,22 +102,90 @@ namespace CodeMagic.Core.Game.Locations
 
         public void AddLocation(ILocation location)
         {
-            if (storedLocations.Contains(location))
-                throw new ArgumentException("Such location already exists in the world.");
-            if (!location.KeepOnLeave)
-                throw new ArgumentException("Added location should be marked as KeepOnLeave.");
+            lock (storedLocations)
+            {
+                if (storedLocations.Any(loc => string.Equals(loc.Location.Id, location.Id)))
+                    throw new ArgumentException("Such location already exists in the world.");
+                if (!location.KeepOnLeave)
+                    throw new ArgumentException("Added location should be marked as KeepOnLeave.");
 
-            storedLocations.Add(location);
+                storedLocations.Add(new StoredLocation(location));
+            }
         }
 
-        public Task UpdateStoredLocations(DateTime gameTime)
+        public void UpdateStoredLocations(GameTimeManager gameTimeManager)
         {
-            var updateTasks = storedLocations.Select(location => location.BackgroundUpdate(gameTime, CurrentLocation.TurnCycle)).ToArray();
-            foreach (var updateTask in updateTasks.Where(task => !task.IsCompleted))
+            lock (storedLocations)
             {
-                updateTask.Start();
+                var localTimeManager = gameTimeManager.Clone();
+
+                for (int counter = 0; counter < CurrentLocation.TurnCycle; counter++)
+                {
+                    localTimeManager.RegisterTurn(1);
+                    foreach (var storedLocation in storedLocations)
+                    {
+                        storedLocation.AddBackgroundUpdate(localTimeManager.CurrentTime);
+                    }
+                }
             }
-            return Task.WhenAll(updateTasks);
+        }
+
+        private class StoredLocation
+        {
+            public StoredLocation(ILocation location)
+            {
+                Location = location;
+                backgroundUpdates = new List<BackgroundUpdate>();
+            }
+
+            public ILocation Location { get; }
+
+            private readonly List<BackgroundUpdate> backgroundUpdates;
+
+            public void AddBackgroundUpdate(DateTime gameTime)
+            {
+                backgroundUpdates.Add(new BackgroundUpdate(gameTime));
+            }
+
+            public bool PerformSingleBackgroundUpdate()
+            {
+                var backgroundUpdate = backgroundUpdates.FirstOrDefault();
+                if (backgroundUpdate == null)
+                    return false;
+
+                Location.BackgroundUpdate(backgroundUpdate.GameTime);
+                backgroundUpdates.Remove(backgroundUpdate);
+
+                return true;
+            }
+
+            public void PerformBackgroundUpdates()
+            {
+                foreach (var backgroundUpdate in backgroundUpdates.ToArray())
+                {
+                    Location.BackgroundUpdate(backgroundUpdate.GameTime);
+                    backgroundUpdates.Remove(backgroundUpdate);
+                }
+            }
+
+            public int RemainingUpdatesCount => backgroundUpdates.Count;
+
+            private class BackgroundUpdate
+            {
+                public BackgroundUpdate(DateTime gameTime)
+                {
+                    GameTime = gameTime;
+                }
+
+                public DateTime GameTime { get; }
+            }
+        }
+
+        public void Dispose()
+        {
+            backgroundUpdateCancellationToken.Cancel();
+            backgroundUpdateTask.Wait();
+            backgroundUpdateTask.Dispose();
         }
     }
 }

@@ -7,7 +7,7 @@ using CodeMagic.Core.Objects.PlayerData;
 
 namespace CodeMagic.Core.Game
 {
-    public interface IGameCore
+    public interface IGameCore : IDisposable
     {
         DateTime GameTime { get; }
 

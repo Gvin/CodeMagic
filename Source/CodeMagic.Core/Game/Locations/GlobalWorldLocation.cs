@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game.Journaling;
@@ -8,7 +7,7 @@ namespace CodeMagic.Core.Game.Locations
 {
     public class GlobalWorldLocation : ILocation
     {
-        private const int WorldMoveTurnCycle = 10;
+        private const int WorldMoveTurnCycle = 20;
 
         private int turnsCounter;
         private Point enterObjectPosition;
@@ -35,20 +34,17 @@ namespace CodeMagic.Core.Game.Locations
             return Point.GetPointInDirection(enterObjectPosition, DirectionHelper.InvertDirection(direction));
         }
 
-        public Task BackgroundUpdate(DateTime gameTime, int turnsCount)
+        public void BackgroundUpdate(DateTime gameTime)
         {
-            turnsCounter += turnsCount;
+            turnsCounter++;
             var journal = new BackgroundJournal();
 
-            return new Task(() =>
+            while (turnsCounter >= TurnCycle)
             {
-                while (turnsCounter >= TurnCycle)
-                {
-                    turnsCounter -= TurnCycle;
-                    CurrentArea.PreUpdate(journal);
-                    CurrentArea.Update(journal, gameTime);
-                }
-            });
+                turnsCounter -= TurnCycle;
+                CurrentArea.PreUpdate(journal);
+                CurrentArea.Update(journal, gameTime);
+            }
         }
 
         public bool KeepOnLeave => true;

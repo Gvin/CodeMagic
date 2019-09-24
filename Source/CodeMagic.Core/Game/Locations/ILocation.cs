@@ -13,7 +13,7 @@ namespace CodeMagic.Core.Game.Locations
 
         Point GetEnterPoint(Direction direction);
 
-        Task BackgroundUpdate(DateTime gameTime, int turnsCount);
+        void BackgroundUpdate(DateTime gameTime);
 
         bool KeepOnLeave { get; }
 
