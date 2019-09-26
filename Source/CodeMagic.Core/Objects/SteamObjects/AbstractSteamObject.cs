@@ -37,6 +37,8 @@ namespace CodeMagic.Core.Objects.SteamObjects
 
         public bool BlocksProjectiles => false;
 
+        public bool BlocksAttack => false;
+
         public bool IsVisible => true;
 
         public bool BlocksVisibility => Thickness >= 100;

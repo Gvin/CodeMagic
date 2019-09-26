@@ -33,6 +33,8 @@ namespace CodeMagic.Implementations.Objects.Floor
             }
         }
 
+        public bool BlocksAttack => false;
+
         public bool BlocksMovement => false;
 
         public bool BlocksProjectiles => false;

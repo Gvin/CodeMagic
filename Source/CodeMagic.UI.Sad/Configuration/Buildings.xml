@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<buildings-configuration>
+  <building id="palisade" auto-unlock="true">
+    <name>Palisade</name>
+    <description>
+      <l>Tall solid wall made of wooden logs.</l>
+      <l>Can withstand some damage.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_Palisade_Horizontal</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <material name="Wood" type="resource_wood">1</material>
+    </cost>
+    <unlocks>
+      <id>palisade_gates</id>
+      <id>palisade_embrasure</id>
+    </unlocks>
+  </building>
+  <building id="palisade_gates" auto-unlock="false">
+    <name>Palisade Gates</name>
+    <description>
+      <l>Gates made of wooden logs.</l>
+      <l>Can withstand some damage.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_PalisadeGates_Horizontal_Closed</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <material name="Wood" type="resource_wood">1</material>
+    </cost>
+  </building>
+  <building id="palisade_embrasure" auto-unlock="false">
+    <name>Palisade Embrasure</name>
+    <description>
+      <l>Tall solid wall made of wooden logs.</l>
+      <l>Can withstand some damage.</l>
+      <l>It has a hole that can be used for watching or casting.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_PalisadeEmbrasure_Horizontal</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <material name="Wood" type="resource_wood">1</material>
+    </cost>
+  </building>
+</buildings-configuration>

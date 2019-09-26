@@ -1,9 +1,12 @@
-﻿using CodeMagic.Core.Game;
+﻿using System.Linq;
+using CodeMagic.Core.Configuration;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Locations;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Implementations.Items;
+using CodeMagic.Implementations.Items.Materials;
 using CodeMagic.Implementations.Items.Usable;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.MapGeneration.GlobalWorld;
@@ -48,7 +51,7 @@ namespace CodeMagic.UI.Sad.GameProcess
         private ILocation CreateHomeLocation(out Point playerPosition)
         {
             var map = new HomeLocationMapGenerator().GenerateMap(HomeAreaMapSize, HomeAreaMapSize, out var enterPositions, out playerPosition);
-            return new SimpleLocation(HomeLocationMapGenerator.LocationId, "Home", map, enterPositions);
+            return new SimpleLocation(HomeLocationMapGenerator.LocationId, "Home", map, enterPositions, true);
         }
 
         private GlobalWorldLocation CreateGlobalWorldLocation()
@@ -69,6 +72,11 @@ namespace CodeMagic.UI.Sad.GameProcess
                 VisibilityRange = 4,
                 MaxCarryWeight = 25000
             });
+
+            foreach (var building in ConfigurationManager.Current.Buildings.Buildings.Where(building => building.AutoUnlock))
+            {
+                player.UnlockBuilding(building);
+            }
 
             var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
 

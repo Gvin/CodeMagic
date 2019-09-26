@@ -1,7 +1,5 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Implementations.Objects.Floor;
 using CodeMagic.Implementations.Objects.SolidObjects;
 
@@ -9,13 +7,6 @@ namespace CodeMagic.MapGeneration.Dungeon
 {
     internal class DungeonMapObjectsFactory
     {
-        private readonly WallObjectConfiguration.WallType wallType;
-
-        public DungeonMapObjectsFactory(WallObjectConfiguration.WallType wallType)
-        {
-            this.wallType = wallType;
-        }
-
         public IMapObject CreateExitPortal()
         {
             return new ExitPortalObject();
@@ -31,9 +22,9 @@ namespace CodeMagic.MapGeneration.Dungeon
             return new StairsObjectImpl();
         }
 
-        public DoorObject CreateDoor(bool horizontal)
+        public IMapObject CreateDoor()
         {
-            return new DoorObjectImpl(horizontal);
+            return new DungeonDoor();
         }
 
         public IMapObject CreateTrapDoor()
@@ -41,26 +32,17 @@ namespace CodeMagic.MapGeneration.Dungeon
             return new TrapDoorObjectImpl();
         }
 
-        public WallObject CreateWall()
+        public IMapObject CreateWall()
         {
-            return new WallImpl(new WallObjectConfiguration
-            {
-                Name = "Wall",
-                Type = wallType
-            });
+            return new DungeonWall();
         }
 
-        public WallObject CreateTorchWall()
+        public IMapObject CreateTorchWall()
         {
-            return new TorchWallImpl(new TorchWallObjectConfiguration
-            {
-                Name = "Torch Wall",
-                Type = wallType,
-                LightPower = LightLevel.Medium
-            });
+            return new DungeonTorchWall();
         }
 
-        public WallObject CreateWall(int torchChance)
+        public IMapObject CreateWall(int torchChance)
         {
             if (RandomHelper.CheckChance(torchChance))
             {

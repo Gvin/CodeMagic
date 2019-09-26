@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\BuildingDetailsControl.cs" />
     <Compile Include="Controls\CustomListBox.cs" />
     <Compile Include="Controls\GameAreaControl.cs" />
     <Compile Include="Controls\GameLogoControl.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="GameProcess\GameConfigurator.cs" />
     <Compile Include="GameProcess\GameManager.cs" />
     <Compile Include="SpellsLibrary\SpellsLibraryManager.cs" />
+    <Compile Include="Views\BuildingsView.cs" />
     <Compile Include="Views\EditSpellView.cs" />
     <Compile Include="Views\GameView.cs" />
     <Compile Include="Views\InGameMenuView.cs" />
@@ -161,6 +163,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configuration\Buildings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Configuration\ItemGenerator.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

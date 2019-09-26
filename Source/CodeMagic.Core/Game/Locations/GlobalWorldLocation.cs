@@ -24,6 +24,8 @@ namespace CodeMagic.Core.Game.Locations
 
         public string Name => "World";
 
+        public bool CanBuild => false;
+
         public IAreaMap CurrentArea { get; }
 
         private void StorePlayerPosition(Point position, Direction direction)

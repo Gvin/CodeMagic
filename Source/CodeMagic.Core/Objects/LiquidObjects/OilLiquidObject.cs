@@ -49,6 +49,8 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public ObjectSize Size => ObjectSize.Huge;
 
+        public bool BlocksAttack => false;
+
         public string Name => "Oil";
 
         public string Type => LiquidType;

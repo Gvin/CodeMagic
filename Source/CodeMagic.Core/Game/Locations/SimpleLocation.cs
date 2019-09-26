@@ -16,6 +16,7 @@ namespace CodeMagic.Core.Game.Locations
             string name,
             IAreaMap currentArea, 
             Dictionary<Direction, Point> enterPositions, 
+            bool canBuild = false,
             bool canCast = true, 
             bool canFight = true, 
             bool keepOnLeave = true)
@@ -25,11 +26,14 @@ namespace CodeMagic.Core.Game.Locations
             CurrentArea = currentArea;
             CanCast = canCast;
             CanFight = canFight;
+            CanBuild = canBuild;
             KeepOnLeave = keepOnLeave;
             this.enterPositions = enterPositions.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         public string Id { get; }
+
+        public bool CanBuild { get; }
 
         public string Name { get; }
 

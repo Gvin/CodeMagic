@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 
@@ -24,6 +23,8 @@ namespace CodeMagic.Core.Game.Locations
         bool CanFight { get; }
 
         int TurnCycle { get; }
+
+        bool CanBuild { get; }
 
         void ProcessPlayerEnter(IGameCore game);
 

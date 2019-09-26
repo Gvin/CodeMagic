@@ -54,6 +54,27 @@ namespace CodeMagic.Core.Items
             }
         }
 
+        public void RemoveItem(Type itemType)
+        {
+            lock (stacks)
+            {
+                var existingStack = stacks.FirstOrDefault(stack => itemType.IsInstanceOfType(stack.TopItem));
+                if (existingStack == null)
+                {
+                    throw new InvalidOperationException($"Item of type {itemType.FullName} not found in inventory.");
+                }
+
+                var item = existingStack.TopItem;
+                existingStack.Remove(item);
+                if (existingStack.Count == 0)
+                {
+                    stacks.Remove(existingStack);
+                }
+
+                ItemRemoved?.Invoke(this, new ItemEventArgs(item));
+            }
+        }
+
         public void RemoveItem(IItem item)
         {
             lock (stacks)
@@ -72,6 +93,11 @@ namespace CodeMagic.Core.Items
 
                 ItemRemoved?.Invoke(this, new ItemEventArgs(item));
             }
+        }
+
+        public int GetItemsCount(Type type)
+        {
+            return stacks.Where(stack => type.IsInstanceOfType(stack.TopItem)).Sum(stack => stack.Count);
         }
 
         public int ItemsCount => stacks.Sum(stack => stack.Count);

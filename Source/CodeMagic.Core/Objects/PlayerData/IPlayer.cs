@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeMagic.Core.Configuration.Buildings;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.Creatures;
 
@@ -23,5 +24,9 @@ namespace CodeMagic.Core.Objects.PlayerData
         int MaxVisibilityRange { get; }
 
         event EventHandler Died;
+
+        bool GetIfBuildingUnlocked(IBuildingConfiguration building);
+
+        bool UnlockBuilding(IBuildingConfiguration building);
     }
 }

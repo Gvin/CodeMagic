@@ -2,17 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.Core.Common;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
 {
     public class MapObjectsCollection : IEnumerable<IMapObject>
     {
-        private readonly List<IMapObject> objects;
+        private readonly ConcurrentList<IMapObject> objects;
 
         public MapObjectsCollection()
         {
-            objects = new List<IMapObject>();
+            objects = new ConcurrentList<IMapObject>();
         }
 
         public void Add(IMapObject mapObject)

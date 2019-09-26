@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Game.PlayerActions
@@ -23,7 +22,7 @@ namespace CodeMagic.Core.Game.PlayerActions
                 return true;
             }
 
-            if (game.Map.GetCell(game.PlayerPosition).Objects.OfType<IWallObject>().Any())
+            if (game.Map.GetCell(game.PlayerPosition).Objects.Any(obj => obj.BlocksAttack))
                 return true;
 
             var targetPoint = Point.GetPointInDirection(game.PlayerPosition, game.Player.Direction);
@@ -31,7 +30,7 @@ namespace CodeMagic.Core.Game.PlayerActions
             if (targetCell == null)
                 return true;
 
-            if (targetCell.Objects.OfType<IWallObject>().Any())
+            if (targetCell.Objects.Any(obj => obj.BlocksAttack))
                 return true;
 
             var possibleTargets = targetCell.Objects.OfType<IDestroyableObject>().ToArray();

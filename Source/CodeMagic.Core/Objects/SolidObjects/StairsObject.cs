@@ -18,6 +18,8 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public bool BlocksEnvironment => false;
 
+        public bool BlocksAttack => false;
+
         public ZIndex ZIndex => ZIndex.BigDecoration;
 
         public bool Equals(IMapObject other)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
@@ -88,9 +89,85 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetFightNotAllowedMessage(fightNotAllowedMessage);
                 case StoringLocationNotAllowedMessage storingLocationNotAllowedMessage:
                     return GetStoringLocationNotAllowedMessage(storingLocationNotAllowedMessage);
+                case BuildingCompleteMessage buildingCompleteMessage:
+                    return GetBuildingCompleteMessage(buildingCompleteMessage);
+                case ResourcesRequiredToBuildMessage resourcesRequiredToBuildMessage:
+                    return GetResourcesRequiredToBuildMessage(resourcesRequiredToBuildMessage);
+                case BuildingSiteRemovedMessage buildingSiteRemovedMessage:
+                    return GetBuildingSiteRemovedMessage(buildingSiteRemovedMessage);
+                case CellBlockedForBuildingMessage cellBlockedForBuildingMessage:
+                    return GetCellBlockedForBuildingMessage(cellBlockedForBuildingMessage);
+                case BuildingSitePlacesMessage buildingSitePlacesMessage:
+                    return GetBuildingSitePlacesMessage(buildingSitePlacesMessage);
+                case BuildingUnlockedMessage buildingUnlockedMessage:
+                    return GetBuildingUnlockedMessage(buildingUnlockedMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetBuildingUnlockedMessage(BuildingUnlockedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("New building unlocked: ["),
+                new ColoredString(message.Building.Name, new Cell(ItemDrawingHelper.GetRarenessColor(message.Building.Rareness))), 
+                new ColoredString("]"), 
+            };
+        }
+
+        private ColoredString[] GetBuildingSitePlacesMessage(BuildingSitePlacesMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("["),
+                new ColoredString(message.Building.Name, new Cell(ItemDrawingHelper.GetRarenessColor(message.Building.Rareness))),
+                new ColoredString("] building site is placed"),
+            };
+        }
+
+        private ColoredString[] GetCellBlockedForBuildingMessage(CellBlockedForBuildingMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("Target area cannot be used for building"),
+            };
+        }
+
+        private ColoredString[] GetBuildingSiteRemovedMessage(BuildingSiteRemovedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("Building site removed"),
+            };
+        }
+
+        private ColoredString[] GetResourcesRequiredToBuildMessage(ResourcesRequiredToBuildMessage message)
+        {
+            if (message.RemainingResources == null || message.RemainingResources.Count == 0)
+            {
+                return new[]
+                {
+                    new ColoredString($"{message.RemainingTime} turns remaining to finish building."),
+                };
+            }
+
+            var resourcesString = string.Join(", ",
+                message.RemainingResources.Select(resource => $"{resource.Value} {resource.Key}"));
+            return new []
+            {
+                new ColoredString($"{message.RemainingTime} turns and the following resources are required to finish this building: {resourcesString}")
+            };
+        }
+
+        private ColoredString[] GetBuildingCompleteMessage(BuildingCompleteMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"Building ["),
+                new ColoredString(message.Building.Name, new Cell(ItemDrawingHelper.GetRarenessColor(message.Building.Rareness))),
+                new ColoredString("] is complete."), 
+            };
         }
 
         private ColoredString[] GetStoringLocationNotAllowedMessage(StoringLocationNotAllowedMessage message)

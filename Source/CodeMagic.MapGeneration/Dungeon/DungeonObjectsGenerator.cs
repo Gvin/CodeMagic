@@ -46,7 +46,7 @@ namespace CodeMagic.MapGeneration.Dungeon
 
                 var position = new Point(randomX, randomY);
                 var cell = map.GetCell(position);
-                var wall = cell.Objects.OfType<WallObject>().FirstOrDefault();
+                var wall = cell.Objects.OfType<WallBase>().FirstOrDefault();
                 if (wall == null)
                 {
                     return position;

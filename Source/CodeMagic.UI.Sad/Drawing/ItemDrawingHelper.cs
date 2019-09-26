@@ -8,7 +8,12 @@ namespace CodeMagic.UI.Sad.Drawing
     {
         public static Color GetItemColor(IItem item)
         {
-            switch (item.Rareness)
+            return GetRarenessColor(item.Rareness);
+        }
+
+        public static Color GetRarenessColor(ItemRareness rareness)
+        {
+            switch (rareness)
             {
                 case ItemRareness.Trash:
                     return Color.Gray;

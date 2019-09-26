@@ -18,6 +18,8 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 
         public bool BlocksProjectiles => false;
 
+        public bool BlocksAttack => false;
+
         public bool IsVisible => true;
 
         public bool BlocksVisibility => false;

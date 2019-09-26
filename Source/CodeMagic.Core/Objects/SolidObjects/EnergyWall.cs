@@ -7,7 +7,7 @@ using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public interface IEnergyWall : IWallObject, IInjectable
+    public interface IEnergyWall : IMapObject, IInjectable
     {
     }
 
@@ -43,6 +43,9 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public string Name { get; }
         public bool BlocksMovement => true;
+
+        public bool BlocksAttack => false;
+
         public bool BlocksProjectiles => true;
         public bool IsVisible => true;
         public bool BlocksVisibility => false;

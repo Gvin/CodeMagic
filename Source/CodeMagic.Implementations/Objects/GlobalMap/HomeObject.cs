@@ -10,6 +10,8 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
 
         public string Name => "Home";
 
+        public bool BlocksAttack => true;
+
         public bool BlocksMovement => true;
 
         public bool BlocksProjectiles => false;

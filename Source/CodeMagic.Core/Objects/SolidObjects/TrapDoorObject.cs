@@ -16,6 +16,8 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public bool BlocksVisibility => false;
 
+        public bool BlocksAttack => false;
+
         public bool BlocksEnvironment => false;
 
         public ZIndex ZIndex => ZIndex.BigDecoration;

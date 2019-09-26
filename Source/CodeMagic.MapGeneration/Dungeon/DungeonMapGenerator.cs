@@ -19,7 +19,7 @@ namespace CodeMagic.MapGeneration.Dungeon
         {
             this.writeMapFile = writeMapFile;
 
-            var wallsFactory = new DungeonMapObjectsFactory(WallObjectConfiguration.WallType.Stone);
+            var wallsFactory = new DungeonMapObjectsFactory();
             generators = new Dictionary<MapType, IMapAreaGenerator>
             {
                 {MapType.Dungeon, new DungeonRoomsMapGenerator(wallsFactory)},
@@ -93,7 +93,7 @@ namespace CodeMagic.MapGeneration.Dungeon
 
             var cell = map.GetCell(x, y);
 
-            if (cell.Objects.OfType<WallObject>().Any())
+            if (cell.Objects.OfType<WallBase>().Any())
             {
                 return "█";
             }

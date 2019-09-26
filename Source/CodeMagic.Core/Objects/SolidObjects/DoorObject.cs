@@ -2,38 +2,23 @@
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public abstract class DoorObject : IWallObject, IUsableObject
+    public abstract class DoorObject : WallBase, IUsableObject
     {
-        protected DoorObject(bool horizontal)
+        protected DoorObject()
         {
-            Horizontal = horizontal;
             Closed = true;
         }
-
-        protected bool Horizontal { get; }
-
-        public abstract string Name { get; }
-
         protected bool Closed { get; private set; }
 
-        public bool BlocksMovement => Closed;
+        public sealed override bool BlocksMovement => Closed;
 
-        public bool BlocksProjectiles => Closed;
+        public sealed override bool BlocksAttack => Closed;
 
-        public bool IsVisible => true;
+        public override bool BlocksProjectiles => Closed;
 
-        public bool BlocksVisibility => Closed;
+        public override bool BlocksVisibility => Closed;
 
-        public bool BlocksEnvironment => Closed;
-
-        public ZIndex ZIndex => ZIndex.Wall;
-
-        public bool Equals(IMapObject other)
-        {
-            return ReferenceEquals(this, other);
-        }
-
-        public ObjectSize Size => ObjectSize.Huge;
+        public override bool BlocksEnvironment => Closed;
 
         public void Use(IGameCore game, Point position)
         {

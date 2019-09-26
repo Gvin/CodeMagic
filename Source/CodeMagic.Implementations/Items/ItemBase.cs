@@ -19,9 +19,11 @@ namespace CodeMagic.Implementations.Items
 
         public bool IsVisible => true;
 
-        public bool BlocksVisibility => true;
+        public bool BlocksVisibility => false;
 
-        public bool BlocksEnvironment => true;
+        public bool BlocksEnvironment => false;
+
+        public bool BlocksAttack => false;
 
         public ZIndex ZIndex => ZIndex.BigDecoration;
 

@@ -15,6 +15,8 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 
         public bool IsVisible => true;
 
+        public bool BlocksAttack => true;
+
         public bool BlocksVisibility => false;
 
         public bool BlocksEnvironment => false;

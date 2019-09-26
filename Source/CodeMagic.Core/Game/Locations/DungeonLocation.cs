@@ -32,6 +32,8 @@ namespace CodeMagic.Core.Game.Locations
 
         public string Name => "Dungeon";
 
+        public bool CanBuild => false;
+
         private int GetMaxLevel(ItemRareness rareness)
         {
             return (int) rareness * 2 + 1;

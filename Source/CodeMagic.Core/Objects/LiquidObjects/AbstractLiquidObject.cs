@@ -32,6 +32,8 @@ namespace CodeMagic.Core.Objects.LiquidObjects
 
         public bool BlocksProjectiles => false;
 
+        public bool BlocksAttack => false;
+
         public bool IsVisible => true;
 
         public bool BlocksVisibility => false;

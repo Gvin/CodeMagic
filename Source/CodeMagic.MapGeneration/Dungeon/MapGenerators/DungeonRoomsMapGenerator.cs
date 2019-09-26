@@ -109,8 +109,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
                     }
                     else if (map[y][x] == MapBuilder.DoorCell)
                     {
-                        var horizontal = GetIfHorizontalDoor(map, x, y);
-                        var door = mapObjectsFactory.CreateDoor(horizontal);
+                        var door = mapObjectsFactory.CreateDoor();
                         result.AddObject(x, y, door);
                     }
                     else if (map[y][x] == MapBuilder.TrapDoorCell)
@@ -130,15 +129,6 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             }
 
             return result;
-        }
-
-        private bool GetIfHorizontalDoor(int[][] map, int x, int y)
-        {
-            var leftCell = TryGet(map, x - 1, y);
-            var rightCell = TryGet(map, x + 1, y);
-
-            return leftCell.HasValue && leftCell.Value == MapBuilder.FilledCell &&
-                   rightCell.HasValue && rightCell.Value == MapBuilder.FilledCell;
         }
 
         private static int? TryGet(int[][] array, int x, int y)

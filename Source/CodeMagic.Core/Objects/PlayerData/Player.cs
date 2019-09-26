@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Configuration.Buildings;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
@@ -19,6 +20,8 @@ namespace CodeMagic.Core.Objects.PlayerData
         private int maxMana;
         private int manaRegeneration;
 
+        private readonly List<IBuildingConfiguration> unlockedBuildings;
+
         public Player(PlayerConfiguration configuration)
             : base(configuration)
         {
@@ -30,6 +33,8 @@ namespace CodeMagic.Core.Objects.PlayerData
 
             Inventory = new Inventory();
             Inventory.ItemRemoved += Inventory_ItemRemoved;
+
+            unlockedBuildings = new List<IBuildingConfiguration>();
         }
 
         private void Inventory_ItemRemoved(object sender, ItemEventArgs e)
@@ -41,6 +46,20 @@ namespace CodeMagic.Core.Objects.PlayerData
             {
                 Equipment.UnequipItem(equipable);
             }
+        }
+
+        public bool UnlockBuilding(IBuildingConfiguration building)
+        {
+            if (unlockedBuildings.Any(unlocked => unlocked.Type == building.Type))
+                return false;
+
+            unlockedBuildings.Add(building);
+            return true;
+        }
+
+        public bool GetIfBuildingUnlocked(IBuildingConfiguration building)
+        {
+            return unlockedBuildings.Any(unlocked => unlocked.Type == building.Type);
         }
 
         public int MaxCarryWeight { get; }

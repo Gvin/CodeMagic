@@ -46,6 +46,9 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         public string Name => "Fire";
         public bool BlocksMovement => false;
         public bool BlocksProjectiles => false;
+
+        public bool BlocksAttack => false;
+
         public bool BlocksEnvironment => false;
         public bool IsVisible => true;
         public bool BlocksVisibility => false;

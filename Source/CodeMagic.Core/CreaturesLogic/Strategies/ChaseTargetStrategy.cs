@@ -7,7 +7,6 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.CreaturesLogic.Strategies
@@ -82,11 +81,11 @@ namespace CodeMagic.Core.CreaturesLogic.Strategies
         {
             creature.Direction = adjustedTargetDirection;
 
-            if (map.GetCell(position).Objects.OfType<IWallObject>().Any()) // Don't attack if standing inside the wall
+            if (map.GetCell(position).Objects.Any(obj => obj.BlocksAttack)) // Don't attack if standing inside the wall
                 return;
 
             var targetCell = map.GetCell(targetPosition);
-            var wall = targetCell.Objects.FirstOrDefault(obj => obj is IWallObject);
+            var wall = targetCell.Objects.FirstOrDefault(obj => obj.BlocksAttack);
             if (wall != null)
                 return;
 

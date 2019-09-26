@@ -21,6 +21,8 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
 
         public bool BlocksProjectiles => true;
 
+        public bool BlocksAttack => true;
+
         public bool IsVisible => true;
 
         public bool BlocksVisibility => false;

@@ -108,6 +108,8 @@ namespace CodeMagic.Core.Spells
         public bool BlocksProjectiles => false;
         public bool BlocksEnvironment => false;
 
+        public bool BlocksAttack => false;
+
         public ZIndex ZIndex => ZIndex.Spell;
 
         public bool Equals(IMapObject other)

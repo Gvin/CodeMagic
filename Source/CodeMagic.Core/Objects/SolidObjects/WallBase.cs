@@ -5,36 +5,34 @@ using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public class WallObject : IWallObject, IPlacedHandler
+    public abstract class WallBase : IMapObject, IPlacedHandler
     {
         private readonly List<Point> connectedTiles;
 
-        public WallObject(WallObjectConfiguration configuration)
+        protected WallBase()
         {
-            Name = configuration.Name;
-            Type = configuration.Type;
             connectedTiles = new List<Point>();
         }
 
         public ObjectSize Size => ObjectSize.Huge;
 
-        public string Name { get; }
+        public abstract string Name { get; }
 
-        public WallObjectConfiguration.WallType Type { get; }
+        public virtual bool BlocksMovement => true;
 
-        public bool BlocksMovement => true;
+        public virtual bool BlocksAttack => true;
 
         public bool IsVisible => true;
 
-        public bool BlocksVisibility => true;
+        public virtual bool BlocksVisibility => true;
 
-        public bool BlocksProjectiles => true;
+        public virtual bool BlocksProjectiles => true;
 
-        public bool BlocksEnvironment => true;
+        public virtual bool BlocksEnvironment => true;
 
         public ZIndex ZIndex => ZIndex.Wall;
 
-        public bool HasConnectedTile(int relativeX, int relativeY)
+        protected bool HasConnectedTile(int relativeX, int relativeY)
         {
             return connectedTiles.Any(point => point.X == relativeX && point.Y == relativeY);
         }
@@ -63,30 +61,18 @@ namespace CodeMagic.Core.Objects.SolidObjects
             }
         }
 
-        private WallObject GetWall(IAreaMap map, Point position, int relativeX, int relativeY)
+        protected abstract bool CanConnectTo(IMapObject mapObject);
+
+        private WallBase GetWall(IAreaMap map, Point position, int relativeX, int relativeY)
         {
             var nearPosition = new Point(position.X + relativeX, position.Y + relativeY);
             var cell = map.TryGetCell(nearPosition);
-            return cell?.Objects.OfType<WallObject>().FirstOrDefault();
+            return cell?.Objects.OfType<WallBase>().FirstOrDefault(CanConnectTo);
         }
 
         public bool Equals(IMapObject other)
         {
             return ReferenceEquals(other, this);
         }
-    }
-
-    public class WallObjectConfiguration
-    {
-        public enum WallType
-        {
-            Wood,
-            Stone,
-            Hole
-        }
-
-        public string Name { get; set; }
-
-        public WallType Type { get; set; }
     }
 }

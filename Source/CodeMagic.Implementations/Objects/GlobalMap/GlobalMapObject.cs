@@ -63,6 +63,8 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
             }
         }
 
+        public bool BlocksAttack => false;
+
         public bool BlocksProjectiles => false;
 
         public bool IsVisible => true;

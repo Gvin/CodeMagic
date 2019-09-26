@@ -34,7 +34,7 @@ namespace CodeMagic.Core.Area
             get { return ObjectsCollection.Any(obj => obj.BlocksMovement); }
         }
 
-        public bool HasSolidObjects => ObjectsCollection.OfType<WallObject>().Any();
+        public bool HasSolidObjects => ObjectsCollection.OfType<WallBase>().Any();
 
         public bool BlocksEnvironment
         {

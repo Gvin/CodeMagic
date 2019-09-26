@@ -28,6 +28,8 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         public bool IsVisible => true;
 
         public bool BlocksVisibility => false;
+        
+        public bool BlocksAttack => false;
 
         public bool BlocksProjectiles => false;
 

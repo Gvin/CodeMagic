@@ -41,6 +41,8 @@ namespace CodeMagic.Core.Objects
 
         public virtual bool BlocksMovement => false;
 
+        public bool BlocksAttack => false;
+
         public virtual bool IsVisible => true;
 
         public virtual bool BlocksVisibility => false;
