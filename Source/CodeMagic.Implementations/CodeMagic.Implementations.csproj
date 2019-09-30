@@ -45,6 +45,7 @@
     <Compile Include="IImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
     <Compile Include="Items\ItemBase.cs" />
+    <Compile Include="Items\LumberjackAxe.cs" />
     <Compile Include="Items\Materials\BlankScroll.cs" />
     <Compile Include="Items\Materials\BronzeIngot.cs" />
     <Compile Include="Items\Materials\CopperIngot.cs" />
@@ -101,7 +102,7 @@
     <Compile Include="Objects\SolidObjects\StairsObjectImpl.cs" />
     <Compile Include="Objects\SolidObjects\DungeonTorchWall.cs" />
     <Compile Include="Objects\SolidObjects\TrapDoorObjectImpl.cs" />
-    <Compile Include="Objects\SolidObjects\TreeObject.cs" />
+    <Compile Include="Objects\SolidObjects\Tree.cs" />
     <Compile Include="Objects\SolidObjects\DungeonWall.cs" />
     <Compile Include="Objects\SteamObjects\AcidSteamImpl.cs" />
     <Compile Include="Objects\SteamObjects\WaterSteamImpl.cs" />

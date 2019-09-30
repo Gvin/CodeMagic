@@ -7,10 +7,10 @@
   </row>
   <row>
     <pixel />
-    <pixel glyph="240">
+    <pixel glyph="246">
       <color>
         <R>128</R>
-        <G>128</G>
+        <G>0</G>
         <B>255</B>
       </color>
     </pixel>

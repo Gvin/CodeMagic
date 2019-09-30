@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
@@ -24,6 +25,16 @@ namespace CodeMagic.Implementations.Items
 
         public StyledLine[] GetDescription(IPlayer player)
         {
+            var result = GetCharacteristicsDescription(player).ToList();
+
+            result.Add(StyledLine.Empty);
+            result.AddRange(ItemTextHelper.ConvertDescription(description));
+
+            return result.ToArray();
+        }
+
+        protected virtual StyledLine[] GetCharacteristicsDescription(IPlayer player)
+        {
             var equipedWeapon = player.Equipment.Weapon;
 
             var result = new List<StyledLine>();
@@ -41,7 +52,7 @@ namespace CodeMagic.Implementations.Items
 
             AddDamageDescription(result, equipedWeapon);
 
-            var hitChanceLine = new StyledLine {"Hit Chance: "};
+            var hitChanceLine = new StyledLine { "Hit Chance: " };
             if (equipedWeapon == null || Equals(equipedWeapon))
             {
                 hitChanceLine.Add(ItemTextHelper.GetValueString(HitChance, "%", false));
@@ -56,8 +67,6 @@ namespace CodeMagic.Implementations.Items
             ItemTextHelper.AddBonusesDescription(this, equipedWeapon, result);
             result.Add(StyledLine.Empty);
             ItemTextHelper.AddLightBonusDescription(this, result);
-            result.Add(StyledLine.Empty);
-            result.AddRange(ItemTextHelper.ConvertDescription(description));
 
             return result.ToArray();
         }

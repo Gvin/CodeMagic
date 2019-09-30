@@ -54,6 +54,9 @@
     <Compile Include="Configuration\IWeightConfiguration.cs" />
     <Compile Include="Configuration\SpellBook\ISpellBookRarenessConfiguration.cs" />
     <Compile Include="Configuration\SpellBook\ISpellBooksConfiguration.cs" />
+    <Compile Include="Configuration\Tool\IToolConfiguration.cs" />
+    <Compile Include="Configuration\Tool\IToolRarenessConfiguration.cs" />
+    <Compile Include="Configuration\Tool\IToolsConfiguration.cs" />
     <Compile Include="Configuration\Weapon\Blade\IBladeImagesConfiguration.cs" />
     <Compile Include="Configuration\Description\IMaterialDescriptionConfiguration.cs" />
     <Compile Include="Configuration\Description\IRarenessDescriptionConfiguration.cs" />
@@ -75,6 +78,8 @@
     <Compile Include="Implementations\Bonuses\Instances\ProtectionBonusApplier.cs" />
     <Compile Include="Implementations\Bonuses\Instances\WeightBonusApplier.cs" />
     <Compile Include="Implementations\NameBuilder.cs" />
+    <Compile Include="Implementations\Tool\LumberjackAxeGenerator.cs" />
+    <Compile Include="Implementations\Tool\ToolsGenerator.cs" />
     <Compile Include="Implementations\UsableItemsGenerator.cs" />
     <Compile Include="Implementations\ResourcesGenerator.cs" />
     <Compile Include="Implementations\SpellBookGenerator.cs" />

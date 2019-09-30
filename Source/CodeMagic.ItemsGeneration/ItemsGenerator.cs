@@ -7,6 +7,7 @@ using CodeMagic.Implementations;
 using CodeMagic.ItemsGeneration.Configuration;
 using CodeMagic.ItemsGeneration.Implementations;
 using CodeMagic.ItemsGeneration.Implementations.Bonuses;
+using CodeMagic.ItemsGeneration.Implementations.Tool;
 using CodeMagic.ItemsGeneration.Implementations.Weapon;
 
 namespace CodeMagic.ItemsGeneration
@@ -24,6 +25,7 @@ namespace CodeMagic.ItemsGeneration
         private readonly SpellBookGenerator spellBookGenerator;
         private readonly UsableItemsGenerator usableItemsGenerator;
         private readonly ResourcesGenerator resourcesGenerator;
+        private readonly LumberjackAxeGenerator lumberjackAxeGenerator;
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage, IAncientSpellsProvider spellsProvider)
         {
@@ -81,6 +83,12 @@ namespace CodeMagic.ItemsGeneration
             spellBookGenerator = new SpellBookGenerator(configuration.SpellBooksConfiguration, bonusesGenerator, imagesStorage);
             usableItemsGenerator = new UsableItemsGenerator(imagesStorage, spellsProvider);
             resourcesGenerator = new ResourcesGenerator();
+            lumberjackAxeGenerator = new LumberjackAxeGenerator(configuration.ToolsConfiguration.LumberjackAxe, imagesStorage);
+        }
+
+        public IItem GenerateLumberjackAxe(ItemRareness rareness)
+        {
+            return lumberjackAxeGenerator.GenerateTool(rareness);
         }
 
         public WeaponItem GenerateWeapon(ItemRareness rareness)

@@ -5,6 +5,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Implementations.Items;
@@ -366,9 +367,11 @@ namespace CodeMagic.UI.Sad.Drawing
 
         private ColoredString[] GetDeathMessage(DeathMessage message)
         {
+            var deathMessage = message.Object is ICreatureObject ? "died" : "destroyed";
+
             return new[]
             {
-                new ColoredString($"{GetMapObjectName(message.Object)} died", TextColor, BackgroundColor)
+                new ColoredString($"{GetMapObjectName(message.Object)} {deathMessage}", TextColor, BackgroundColor)
             };
         }
 

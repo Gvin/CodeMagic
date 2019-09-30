@@ -52,7 +52,7 @@ namespace CodeMagic.Implementations.Items
             {
                 ItemTextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
-                new StyledLine { "Rude torch made from wood and clothes."}, 
+                new StyledLine {{"Rude torch made from wood and clothes.", ItemTextHelper.DescriptionTextColor}}, 
             };
         }
     }

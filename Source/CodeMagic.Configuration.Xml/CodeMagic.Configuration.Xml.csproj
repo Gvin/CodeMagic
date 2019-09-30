@@ -53,6 +53,9 @@
     <Compile Include="Types\Items\Bonuses\XmlItemGroupBonusesConfiguration.cs" />
     <Compile Include="Types\Items\SpellBook\XmlSpellBookRarenessConfiguration.cs" />
     <Compile Include="Types\Items\SpellBook\XmlSpellBooksConfiguration.cs" />
+    <Compile Include="Types\Items\Tool\XmlToolConfiguration.cs" />
+    <Compile Include="Types\Items\Tool\XmlToolRarenessConfiguration.cs" />
+    <Compile Include="Types\Items\Tool\XmlToolsConfiguration.cs" />
     <Compile Include="Types\Items\XmlElementConfiguration.cs" />
     <Compile Include="Types\Items\Weapon\Blade\XmlBladeImagesConfiguration.cs" />
     <Compile Include="Types\Items\Description\XmlMaterialDescriptionConfiguration.cs" />

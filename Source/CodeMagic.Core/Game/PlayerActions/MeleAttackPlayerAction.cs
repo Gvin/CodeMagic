@@ -48,7 +48,14 @@ namespace CodeMagic.Core.Game.PlayerActions
             var damage = game.Player.Equipment.Weapon.GenerateDamage();
             foreach (var damageValue in damage)
             {
-                target.Damage(game.Journal, damageValue.Value, damageValue.Key);
+                if (target is IResourceObject resourceObject)
+                {
+                    resourceObject.UseTool(game.Player.Equipment.Weapon, game.Journal, damageValue.Value, damageValue.Key);
+                }
+                else
+                {
+                    target.Damage(game.Journal, damageValue.Value, damageValue.Key);
+                }
                 game.Journal.Write(new DealDamageMessage(game.Player, target, damageValue.Value, damageValue.Key));
             }
 

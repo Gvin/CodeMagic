@@ -33,7 +33,7 @@ namespace CodeMagic.MapGeneration.Home
                     if (!locationEnters.Values.Any(pos => pos.X == x && pos.Y == y) &&
                         RandomHelper.CheckChance(20))
                     {
-                        map.AddObject(x, y, new TreeObject());
+                        map.AddObject(x, y, new Tree());
                     }
                 }
             }

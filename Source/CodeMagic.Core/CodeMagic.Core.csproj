@@ -158,6 +158,7 @@
     <Compile Include="Objects\IFireSpreadingObject.cs" />
     <Compile Include="Objects\ILightObject.cs" />
     <Compile Include="Objects\IPlacedHandler.cs" />
+    <Compile Include="Objects\IResourceObject.cs" />
     <Compile Include="Objects\ISpreadingObject.cs" />
     <Compile Include="Objects\IStepReactionObject.cs" />
     <Compile Include="Objects\IUsableObject.cs" />
