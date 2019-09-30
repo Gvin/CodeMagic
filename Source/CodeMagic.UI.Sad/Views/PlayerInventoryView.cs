@@ -41,7 +41,7 @@ namespace CodeMagic.UI.Sad.Views
 
         protected override IEnumerable<InventoryStack> GetStacks()
         {
-            return game.Player.Inventory.Stacks.OrderByDescending(stack => GetIfEquiped(game.Player, stack));
+            return game.Player.Inventory.Stacks.OrderByDescending(stack => PlayerInventoryItem.GetIfEquiped(game.Player, stack));
         }
 
         private void InitializeControls()
@@ -244,55 +244,55 @@ namespace CodeMagic.UI.Sad.Views
         {
             return new PlayerInventoryItem(stack, game.Player);
         }
+    }
 
-        private static bool GetIfEquiped(IPlayer player, InventoryStack stack)
+    public class PlayerInventoryItem : InventoryStackItem
+    {
+        private const string EquipedText = "[Equiped]";
+        private static readonly Color EquipedTextColor = Color.Red;
+
+
+        private readonly IPlayer player;
+
+        public PlayerInventoryItem(InventoryStack itemStack, IPlayer player)
+            : base(itemStack)
+        {
+            this.player = player;
+        }
+
+        protected override ColoredString[] GetNameText(Color backColor)
+        {
+            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
+
+            return new[]
+            {
+                new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, backColor))
+            };
+        }
+
+        protected override ColoredString[] GetAfterNameText(Color backColor)
+        {
+            var result = new List<ColoredString>();
+
+            if (Stack.TopItem.Stackable)
+            {
+                result.Add(new ColoredString($" ({Stack.Count})", new Cell(StackCountColor, backColor)));
+            }
+
+            if (GetIfEquiped(player, Stack))
+            {
+                result.Add(new ColoredString($" {EquipedText}", new Cell(EquipedTextColor, backColor)));
+            }
+
+            return result.ToArray();
+        }
+
+        public static bool GetIfEquiped(IPlayer player, InventoryStack stack)
         {
             if (!(stack.TopItem is IEquipableItem equipable))
                 return false;
 
             return player.Equipment.IsEquiped(equipable);
-        }
-
-        private class PlayerInventoryItem : InventoryStackItem
-        {
-            private const string EquipedText = "[Equiped]";
-            private static readonly Color EquipedTextColor = Color.Red;
-            
-
-            private readonly IPlayer player;
-
-            public PlayerInventoryItem(InventoryStack itemStack, IPlayer player)
-                : base(itemStack)
-            {
-                this.player = player;
-            }
-
-            protected override ColoredString[] GetNameText(Color backColor)
-            {
-                var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
-
-                return new[]
-                {
-                    new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, backColor))
-                };
-            }
-
-            protected override ColoredString[] GetAfterNameText(Color backColor)
-            {
-                var result = new List<ColoredString>();
-
-                if (Stack.TopItem.Stackable)
-                {
-                    result.Add(new ColoredString($" ({Stack.Count})", new Cell(StackCountColor, backColor)));
-                }
-
-                if (GetIfEquiped(player, Stack))
-                {
-                    result.Add(new ColoredString($" {EquipedText}", new Cell(EquipedTextColor, backColor)));
-                }
-
-                return result.ToArray();
-            }
         }
     }
 }

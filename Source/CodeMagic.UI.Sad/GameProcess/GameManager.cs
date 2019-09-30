@@ -93,6 +93,9 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             player.Inventory.AddItem(new TeleporterStoneInactive());
 
+            player.Inventory.AddItem(new Wood());
+            player.Inventory.AddItem(new Wood());
+
             return player;
         }
     }

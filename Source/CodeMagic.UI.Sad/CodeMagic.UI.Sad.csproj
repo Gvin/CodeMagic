@@ -84,6 +84,7 @@
     <Compile Include="GameProcess\GameManager.cs" />
     <Compile Include="SpellsLibrary\SpellsLibraryManager.cs" />
     <Compile Include="Views\BuildingsView.cs" />
+    <Compile Include="Views\StorageInventoryView.cs" />
     <Compile Include="Views\EditSpellView.cs" />
     <Compile Include="Views\GameView.cs" />
     <Compile Include="Views\InGameMenuView.cs" />

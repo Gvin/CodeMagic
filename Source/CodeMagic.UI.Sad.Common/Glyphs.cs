@@ -11,6 +11,7 @@ namespace CodeMagic.UI.Sad.Common
             GlyphsMapping = new Dictionary<char, int>
             {
                 {'│', 179},
+                {'┤', 180},
                 {'─', 196},
                 {'┌', 218},
                 {'┐', 191},

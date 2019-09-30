@@ -7,7 +7,6 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.Buildings
@@ -22,25 +21,13 @@ namespace CodeMagic.Implementations.Objects.Buildings
         private int remainingBuildTime;
         private readonly IBuildingConfiguration buildingConfiguration;
 
-        public BuildingSite(IBuildingConfiguration buildingConfiguration)
+        public BuildingSite(IBuildingConfiguration buildingConfiguration, IMapObject building)
         {
-            building = CreateBuilding(buildingConfiguration.Type);
+            this.building = building;
             this.buildingConfiguration = buildingConfiguration;
             remainingCost = buildingConfiguration.Cost.ToDictionary(cost => cost.Type, cost => cost.Count);
             resourcesNameMapping = buildingConfiguration.Cost.ToDictionary(cost => cost.Type, cost => cost.Name);
             remainingBuildTime = buildingConfiguration.BuildTime;
-        }
-
-        private static IMapObject CreateBuilding(Type buildingType)
-        {
-            if (!typeof(IMapObject).IsAssignableFrom(buildingType))
-                throw new ApplicationException($"Invalid building type: {buildingType.FullName}");
-
-            var constructor = buildingType.GetConstructor(new Type[0]);
-            if (constructor == null)
-                throw new ApplicationException($"Unable to find constructor without arguments for building type: {buildingType.FullName}");
-
-            return constructor.Invoke(new object[0]) as IMapObject;
         }
 
         public string Name => $"{building.Name} Building Site";
@@ -109,6 +96,9 @@ namespace CodeMagic.Implementations.Objects.Buildings
 
         private void ApplyBuildingUnlocks(IGameCore game)
         {
+            if (buildingConfiguration.Unlocks == null)
+                return;
+
             foreach (var unlockId in buildingConfiguration.Unlocks)
             {
                 var buildingConfig =

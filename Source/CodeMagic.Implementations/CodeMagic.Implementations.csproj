@@ -72,10 +72,14 @@
     <Compile Include="MetalRecolorHelper.cs" />
     <Compile Include="Objects\AnimationManager.cs" />
     <Compile Include="Objects\AnimationsBatchManager.cs" />
+    <Compile Include="Objects\Buildings\Box.cs" />
     <Compile Include="Objects\Buildings\BuildingSite.cs" />
+    <Compile Include="Objects\Buildings\Chest.cs" />
+    <Compile Include="Objects\Buildings\IStorageBuilding.cs" />
     <Compile Include="Objects\Buildings\Palisade.cs" />
     <Compile Include="Objects\Buildings\PalisadeEmbrasure.cs" />
     <Compile Include="Objects\Buildings\PalisadeGates.cs" />
+    <Compile Include="Objects\Buildings\StorageBase.cs" />
     <Compile Include="Objects\CodeSpellImpl.cs" />
     <Compile Include="Objects\Creatures\NonPlayable\MonsterCreatureImpl.cs" />
     <Compile Include="Objects\Creatures\PlayerImpl.cs" />

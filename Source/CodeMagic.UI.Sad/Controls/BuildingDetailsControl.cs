@@ -25,6 +25,8 @@ namespace CodeMagic.UI.Sad.Controls
 
         public override void Update(TimeSpan time)
         {
+            Surface.Clear();
+
             base.Update(time);
 
             Surface.Print(1, 0, "Selected Building Details");

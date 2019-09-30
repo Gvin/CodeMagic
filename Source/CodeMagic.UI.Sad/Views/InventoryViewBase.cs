@@ -167,76 +167,76 @@ namespace CodeMagic.UI.Sad.Views
             Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
         }
 
-        protected abstract class InventoryStackItem : ICustomListBoxItem
+        protected abstract InventoryStackItem CreateListBoxItem(InventoryStack stack);
+    }
+
+    public abstract class InventoryStackItem : ICustomListBoxItem
+    {
+        private static readonly Color SelectedItemBackColor = Color.FromNonPremultiplied(255, 128, 0, 255);
+        private static readonly Color DefaultBackColor = Color.Black;
+        protected static readonly Color StackCountColor = Color.White;
+        private static readonly Color WeightColor = Color.Gray;
+
+        protected InventoryStackItem(InventoryStack stack)
         {
-            private static readonly Color SelectedItemBackColor = Color.FromNonPremultiplied(255, 128, 0, 255);
-            private static readonly Color DefaultBackColor = Color.Black;
-            protected static readonly Color StackCountColor = Color.White;
-            private static readonly Color WeightColor = Color.Gray;
+            Stack = stack;
+        }
 
-            protected InventoryStackItem(InventoryStack stack)
+        public InventoryStack Stack { get; }
+
+        public bool Equals(ICustomListBoxItem other)
+        {
+            return ReferenceEquals(this, other);
+        }
+
+        protected abstract ColoredString[] GetNameText(Color backColor);
+
+        protected abstract ColoredString[] GetAfterNameText(Color backColor);
+
+        public void Draw(CellSurface surface, int y, int maxWidth, bool selected)
+        {
+            var backColor = selected ? SelectedItemBackColor : DefaultBackColor;
+            surface.Fill(0, y, maxWidth, null, backColor, null);
+            var text = GetNameText(backColor);
+            var afterNameText = GetAfterNameText(backColor);
+            var formattedText = FormatText(text, afterNameText, backColor, maxWidth);
+            surface.Print(1, y, formattedText);
+            surface.PrintStyledText(1 + formattedText.Count, y, afterNameText);
+            surface.Print(maxWidth - 5, y, new ColoredString(GetWeightText(), WeightColor, backColor));
+        }
+
+        private string GetWeightText()
+        {
+            const double kgMultiplier = 1000d;
+            var weightText = $"{Stack.Weight / kgMultiplier:F2}";
+
+            if (weightText.Length >= 5)
+                return weightText;
+            if (weightText.Length >= 4)
+                return $" {weightText}";
+
+            return $"  {weightText}";
+        }
+
+        private ColoredString FormatText(ColoredString[] initialText, ColoredString[] afterNameText, Color backColor, int maxWidth)
+        {
+            var leftWidth = maxWidth - afterNameText.Sum(part => part.Count) - 8;
+            var glyphs = initialText.SelectMany(part => part.ToArray()).ToArray();
+            var maxTextWidth = Math.Min(leftWidth, glyphs.Length);
+            var textPart = glyphs.Take(maxTextWidth).ToArray();
+
+            if (textPart.Length < glyphs.Length)
             {
-                Stack = stack;
-            }
-
-            public InventoryStack Stack { get; }
-
-            public bool Equals(ICustomListBoxItem other)
-            {
-                return ReferenceEquals(this, other);
-            }
-
-            protected abstract ColoredString[] GetNameText(Color backColor);
-
-            protected abstract ColoredString[] GetAfterNameText(Color backColor);
-
-            public void Draw(CellSurface surface, int y, int maxWidth, bool selected)
-            {
-                var backColor = selected ? SelectedItemBackColor : DefaultBackColor;
-                surface.Fill(0, y, maxWidth, null, backColor, null);
-                var text = GetNameText(backColor);
-                var afterNameText = GetAfterNameText(backColor);
-                var formattedText = FormatText(text, afterNameText, backColor, maxWidth);
-                surface.Print(1, y, formattedText);
-                surface.PrintStyledText(1 + formattedText.Count, y, afterNameText);
-                surface.Print(maxWidth - 5, y, new ColoredString(GetWeightText(), WeightColor, backColor));
-            }
-
-            private string GetWeightText()
-            {
-                const double kgMultiplier = 1000d;
-                var weightText = $"{Stack.Weight / kgMultiplier:F2}";
-
-                if (weightText.Length >= 5)
-                    return weightText;
-                if (weightText.Length >= 4)
-                    return $" {weightText}";
-
-                return $"  {weightText}";
-            }
-
-            private ColoredString FormatText(ColoredString[] initialText, ColoredString[] afterNameText, Color backColor, int maxWidth)
-            {
-                var leftWidth = maxWidth - afterNameText.Sum(part => part.Count) - 8;
-                var glyphs = initialText.SelectMany(part => part.ToArray()).ToArray();
-                var maxTextWidth = Math.Min(leftWidth, glyphs.Length);
-                var textPart = glyphs.Take(maxTextWidth).ToArray();
-
-                if (textPart.Length < glyphs.Length)
+                var result = new List<ColoredGlyph>(textPart);
+                result.AddRange(new[]
                 {
-                    var result = new List<ColoredGlyph>(textPart);
-                    result.AddRange(new []
-                    {
                         new ColoredGlyph('.', WeightColor, backColor),
                         new ColoredGlyph('.', WeightColor, backColor),
                         new ColoredGlyph('.', WeightColor, backColor)
                     });
-                    textPart = result.ToArray();
-                }
-                return new ColoredString(textPart);
+                textPart = result.ToArray();
             }
+            return new ColoredString(textPart);
         }
-
-        protected abstract InventoryStackItem CreateListBoxItem(InventoryStack stack);
     }
 }

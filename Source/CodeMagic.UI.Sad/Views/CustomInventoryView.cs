@@ -202,36 +202,36 @@ namespace CodeMagic.UI.Sad.Views
                 game.PerformPlayerAction(new EmptyPlayerAction());
             }
         }
+    }
 
-        private class CustomInventoryItem : InventoryStackItem
+    public class CustomInventoryItem : InventoryStackItem
+    {
+        public CustomInventoryItem(InventoryStack itemStack)
+            : base(itemStack)
         {
-            public CustomInventoryItem(InventoryStack itemStack)
-                : base(itemStack)
-            {
-            }
+        }
 
-            protected override ColoredString[] GetNameText(Color backColor)
-            {
-                var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
+        protected override ColoredString[] GetNameText(Color backColor)
+        {
+            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
 
+            return new[]
+            {
+                new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, backColor))
+            };
+        }
+
+        protected override ColoredString[] GetAfterNameText(Color backColor)
+        {
+            if (Stack.TopItem.Stackable)
+            {
                 return new[]
                 {
-                    new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, backColor))
+                    new ColoredString($" ({Stack.Count})", new Cell(StackCountColor, backColor))
                 };
             }
 
-            protected override ColoredString[] GetAfterNameText(Color backColor)
-            {
-                if (Stack.TopItem.Stackable)
-                {
-                    return new[]
-                    {
-                        new ColoredString($" ({Stack.Count})", new Cell(StackCountColor, backColor))
-                    };
-                }
-
-                return new ColoredString[0];
-            }
+            return new ColoredString[0];
         }
     }
 }

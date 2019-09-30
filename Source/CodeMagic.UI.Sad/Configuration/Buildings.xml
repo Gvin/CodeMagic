@@ -44,4 +44,34 @@
       <material name="Wood" type="resource_wood">1</material>
     </cost>
   </building>
+
+  <building id="box" auto-unlock="true">
+    <name>Box</name>
+    <description>
+      <l>A big wooden box which can store some items.</l>
+      <l>It is not so big but is easy to build.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_Box</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <material name="Wood" type="resource_wood">1</material>
+    </cost>
+    <unlocks>
+      <id>chest</id>
+    </unlocks>
+  </building>
+  <building id="chest" auto-unlock="false">
+    <name>Chest</name>
+    <description>
+      <l>A standard wooden chest with metal elements.</l>
+      <l>Provides big storage space for your items.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_Chest</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <material name="Wood" type="resource_wood">1</material>
+    </cost>
+  </building>
 </buildings-configuration>

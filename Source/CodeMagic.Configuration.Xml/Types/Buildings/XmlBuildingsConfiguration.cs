@@ -27,7 +27,9 @@ namespace CodeMagic.Configuration.Xml.Types.Buildings
         {
             {"palisade", typeof(Palisade)},
             {"palisade_gates", typeof(PalisadeGates)},
-            {"palisade_embrasure", typeof(PalisadeEmbrasure)}
+            {"palisade_embrasure", typeof(PalisadeEmbrasure)},
+            {"box", typeof(Box)},
+            {"chest", typeof(Chest)}
         };
 
         [XmlIgnore]

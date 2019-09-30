@@ -4,6 +4,7 @@ using CodeMagic.Configuration.Xml.Types.Buildings;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Objects;
 using CodeMagic.Implementations.Objects.Buildings;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
@@ -115,8 +116,8 @@ namespace CodeMagic.UI.Sad.Views
 
         private void PlaceSelectedBuilding()
         {
-            var building = buildingsListBox.SelectedItem?.Building;
-            if (building == null)
+            var buildingConfiguration = buildingsListBox.SelectedItem?.Building;
+            if (buildingConfiguration == null)
                 return;
 
             var playerLookPosition = Core.Game.Point.GetPointInDirection(game.PlayerPosition, game.Player.Direction);
@@ -128,9 +129,34 @@ namespace CodeMagic.UI.Sad.Views
                 return;
             }
 
-            game.Map.AddObject(playerLookPosition, new BuildingSite(building));
-            game.Journal.Write(new BuildingSitePlacesMessage(building));
+            var building = CreateBuilding(buildingConfiguration.Type);
+            game.Map.AddObject(playerLookPosition, new BuildingSite(buildingConfiguration, building));
+            game.Journal.Write(new BuildingSitePlacesMessage(buildingConfiguration));
             Close();
+        }
+
+        private IMapObject CreateBuilding(Type buildingType)
+        {
+            if (!typeof(IMapObject).IsAssignableFrom(buildingType))
+                throw new ApplicationException($"Invalid building type: {buildingType.FullName}");
+
+            var constructor = buildingType.GetConstructor(new Type[0]);
+            if (constructor == null)
+                throw new ApplicationException($"Unable to find constructor without arguments for building type: {buildingType.FullName}");
+
+            var result = constructor.Invoke(new object[0]) as IMapObject;
+
+            if (result is IStorageBuilding storageBuilding)
+            {
+                storageBuilding.Opened += (sender, args) => OpenStorage(storageBuilding);
+            }
+
+            return result;
+        }
+
+        private void OpenStorage(IStorageBuilding storageBuilding)
+        {
+            new StorageInventoryView(game, storageBuilding.Name, storageBuilding.Inventory, storageBuilding.MaxWeight).Show();
         }
 
         private void FillBuildings()
