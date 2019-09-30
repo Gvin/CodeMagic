@@ -13,7 +13,7 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 {
     public class Tree : DestroyableObject, IWorldImageProvider, IResourceObject
     {
-        private const int TotalWoodCount = 20;
+        public const int TotalWoodCount = 20;
         private const int LumberjackAxeDamageMultiplier = 2;
 
         private const string WorldImageName = "Tree";

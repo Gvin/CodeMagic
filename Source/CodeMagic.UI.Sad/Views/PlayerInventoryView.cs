@@ -248,7 +248,7 @@ namespace CodeMagic.UI.Sad.Views
 
     public class PlayerInventoryItem : InventoryStackItem
     {
-        private const string EquipedText = "[Equiped]";
+        private const string EquipedText = "[Eq]";
         private static readonly Color EquipedTextColor = Color.Red;
 
 

@@ -40,7 +40,7 @@ namespace CodeMagic.MapGeneration.GlobalWorld
             }
 
             PlacePatches(map, () => new GlobalMapObject(GlobalMapObject.Type.Rock), RocksCountFactor, RocksSizeFactor);
-            PlacePatches(map, () => new GlobalMapObject(GlobalMapObject.Type.Forest), ForestsCountFactor, ForestsSizeFactor);
+            PlacePatches(map, () => new GlobalMapForest(), ForestsCountFactor, ForestsSizeFactor);
 
 
             playerHomePosition = GenerateHomePosition(map);

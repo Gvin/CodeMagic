@@ -90,6 +90,7 @@
     <Compile Include="Objects\Floor\FloorObject.cs" />
     <Compile Include="Objects\GlobalMap\DungeonEnterObject.cs" />
     <Compile Include="Objects\GlobalMap\GlobalMapObject.cs" />
+    <Compile Include="Objects\GlobalMap\GlobalMapForest.cs" />
     <Compile Include="Objects\GlobalMap\HomeObject.cs" />
     <Compile Include="Objects\IceObjects\AcidIceImpl.cs" />
     <Compile Include="Objects\IceObjects\WaterIceImpl.cs" />

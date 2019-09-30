@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Game.Locations;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
@@ -22,6 +23,8 @@ namespace CodeMagic.Core.Game
 
             PlayerPosition = playerPosition;
             Player = player;
+            Player.Inventory.ItemAdded += Inventory_ItemAdded;
+            Player.Inventory.ItemRemoved += Inventory_ItemRemoved;
 
             Map.AddObject(PlayerPosition, Player);
 
@@ -29,6 +32,16 @@ namespace CodeMagic.Core.Game
 
             CurrentTurn = 1;
             gameTimeManager = new GameTimeManager();
+        }
+
+        private void Inventory_ItemRemoved(object sender, Items.ItemEventArgs e)
+        {
+            Journal.Write(new ItemLostMessage(e.Item));
+        }
+
+        private void Inventory_ItemAdded(object sender, Items.ItemEventArgs e)
+        {
+            Journal.Write(new ItemReceivedMessage(e.Item));
         }
 
         public int CurrentTurn { get; private set; }

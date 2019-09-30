@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace CodeMagic.Core.Game.Journaling
 {
@@ -17,20 +15,22 @@ namespace CodeMagic.Core.Game.Journaling
 
         public void Write(IJournalMessage message)
         {
-            messages.Add(new JournalMessageData(message, turnProvider.CurrentTurn));
+            lock (messages)
+            {
+                messages.Add(new JournalMessageData(message, turnProvider.CurrentTurn));
+            }
         }
 
-        public JournalMessageData[] GetLastMessages(int count)
+        public JournalMessageData[] Messages
         {
-            return messages.Skip(Math.Max(0, messages.Count - count)).ToArray();
+            get
+            {
+                lock (messages)
+                {
+                    return messages.ToArray();
+                }
+            }
         }
-
-        public JournalMessageData[] GetMessages(int startPosition, int count)
-        {
-            return messages.Skip(Math.Max(0, messages.Count - startPosition)).Take(count).ToArray();
-        }
-
-        public JournalMessageData[] Messages => messages.ToArray();
     }
 
     public class JournalMessageData

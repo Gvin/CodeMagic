@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
-    <pixel glyph="5">
-      <color>
-        <R>0</R>
+    <pixel>
+      <background-color>
+        <R>128</R>
         <G>128</G>
         <B>64</B>
-      </color>
+      </background-color>
+    </pixel>
+    <pixel>
       <background-color>
         <R>128</R>
         <G>128</G>
@@ -16,20 +18,8 @@
     <pixel glyph="5">
       <color>
         <R>0</R>
-        <G>128</G>
-        <B>64</B>
-      </color>
-      <background-color>
-        <R>128</R>
-        <G>128</G>
-        <B>64</B>
-      </background-color>
-    </pixel>
-    <pixel glyph="5">
-      <color>
-        <R>0</R>
-        <G>128</G>
-        <B>64</B>
+        <G>94</G>
+        <B>47</B>
       </color>
       <background-color>
         <R>128</R>
@@ -42,8 +32,8 @@
     <pixel glyph="5">
       <color>
         <R>0</R>
-        <G>128</G>
-        <B>64</B>
+        <G>94</G>
+        <B>47</B>
       </color>
       <background-color>
         <R>128</R>
@@ -54,8 +44,8 @@
     <pixel glyph="5">
       <color>
         <R>0</R>
-        <G>128</G>
-        <B>64</B>
+        <G>94</G>
+        <B>47</B>
       </color>
       <background-color>
         <R>128</R>
@@ -63,12 +53,7 @@
         <B>64</B>
       </background-color>
     </pixel>
-    <pixel glyph="5">
-      <color>
-        <R>0</R>
-        <G>128</G>
-        <B>64</B>
-      </color>
+    <pixel>
       <background-color>
         <R>128</R>
         <G>128</G>
@@ -80,9 +65,16 @@
     <pixel glyph="5">
       <color>
         <R>0</R>
+        <G>94</G>
+        <B>47</B>
+      </color>
+      <background-color>
+        <R>128</R>
         <G>128</G>
         <B>64</B>
-      </color>
+      </background-color>
+    </pixel>
+    <pixel>
       <background-color>
         <R>128</R>
         <G>128</G>
@@ -92,20 +84,8 @@
     <pixel glyph="5">
       <color>
         <R>0</R>
-        <G>128</G>
-        <B>64</B>
-      </color>
-      <background-color>
-        <R>128</R>
-        <G>128</G>
-        <B>64</B>
-      </background-color>
-    </pixel>
-    <pixel glyph="5">
-      <color>
-        <R>0</R>
-        <G>128</G>
-        <B>64</B>
+        <G>94</G>
+        <B>47</B>
       </color>
       <background-color>
         <R>128</R>

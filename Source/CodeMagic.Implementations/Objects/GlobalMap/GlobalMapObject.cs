@@ -25,8 +25,6 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
                         return "Wheat";
                     case Type.Rock:
                         return "Rock";
-                    case Type.Forest:
-                        return "Forest";
                     case Type.Dirt:
                         return "Dirt";
                     case Type.DungeonClosed:
@@ -52,8 +50,6 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
                     return "GlobalMap_Wheat";
                 case Type.Rock:
                     return "GlobalMap_Rock";
-                case Type.Forest:
-                    return "GlobalMap_Forest";
                 case Type.Dirt:
                     return "GlobalMap_Dirt";
                 case Type.DungeonClosed:
@@ -80,7 +76,6 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
                     case Type.Grass:
                     case Type.Wheat:
                     case Type.Dirt:
-                    case Type.Forest:
                         return false;
                     case Type.Rock:
                     case Type.DungeonClosed:
@@ -100,7 +95,6 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
                     case Type.Grass:
                     case Type.Wheat:
                     case Type.Dirt:
-                    case Type.Forest:
                     case Type.DungeonClosed:
                         return false;
                     case Type.Rock:
@@ -121,7 +115,6 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
                     case Type.Wheat:
                     case Type.Dirt:
                         return ZIndex.Floor;
-                    case Type.Forest:
                     case Type.Rock:
                         return ZIndex.AreaDecoration;
                     case Type.DungeonClosed:
@@ -144,7 +137,6 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
             Grass,
             Wheat,
             Rock,
-            Forest,
             Dirt,
             DungeonClosed
         }

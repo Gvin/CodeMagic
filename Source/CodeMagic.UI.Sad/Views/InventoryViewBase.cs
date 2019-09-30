@@ -199,10 +199,10 @@ namespace CodeMagic.UI.Sad.Views
             surface.Fill(0, y, maxWidth, null, backColor, null);
             var text = GetNameText(backColor);
             var afterNameText = GetAfterNameText(backColor);
-            var formattedText = FormatText(text, afterNameText, backColor, maxWidth);
+            var formattedText = FormatText(text, afterNameText, backColor, maxWidth - 1);
             surface.Print(1, y, formattedText);
             surface.PrintStyledText(1 + formattedText.Count, y, afterNameText);
-            surface.Print(maxWidth - 5, y, new ColoredString(GetWeightText(), WeightColor, backColor));
+            surface.Print(maxWidth - 6, y, new ColoredString(GetWeightText(), WeightColor, backColor));
         }
 
         private string GetWeightText()
@@ -220,7 +220,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private ColoredString FormatText(ColoredString[] initialText, ColoredString[] afterNameText, Color backColor, int maxWidth)
         {
-            var leftWidth = maxWidth - afterNameText.Sum(part => part.Count) - 8;
+            var leftWidth = maxWidth - afterNameText.Sum(part => part.Count) - 9;
             var glyphs = initialText.SelectMany(part => part.ToArray()).ToArray();
             var maxTextWidth = Math.Min(leftWidth, glyphs.Length);
             var textPart = glyphs.Take(maxTextWidth).ToArray();

@@ -4,6 +4,7 @@ using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.PlayerData;
@@ -102,9 +103,43 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetBuildingSitePlacesMessage(buildingSitePlacesMessage);
                 case BuildingUnlockedMessage buildingUnlockedMessage:
                     return GetBuildingUnlockedMessage(buildingUnlockedMessage);
+                case ItemReceivedMessage itemReceivedMessage:
+                    return GetItemReceivedMessage(itemReceivedMessage);
+                case ItemLostMessage itemLostMessage:
+                    return GetItemLostMessage(itemLostMessage);
+                case ToolRequiredMessage toolRequiredMessage:
+                    return GetToolRequiredMessage(toolRequiredMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetToolRequiredMessage(ToolRequiredMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("Specific tool is required for this action"),
+            };
+        }
+
+        private ColoredString[] GetItemLostMessage(ItemLostMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{PlayerName} have lost ["),
+                GetItemNameText(message.Item),
+                new ColoredString("]"),
+            };
+        }
+
+        private ColoredString[] GetItemReceivedMessage(ItemReceivedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{PlayerName} have got ["),
+                GetItemNameText(message.Item),
+                new ColoredString("]"),
+            };
         }
 
         private ColoredString[] GetBuildingUnlockedMessage(BuildingUnlockedMessage message)
@@ -263,7 +298,7 @@ namespace CodeMagic.UI.Sad.Drawing
             return new[]
             {
                 new ColoredString($"{PlayerName} used [", TextColor, BackgroundColor),
-                new ColoredString(message.Item.Name.ConvertGlyphs(), ItemDrawingHelper.GetItemColor(message.Item), BackgroundColor),
+                GetItemNameText(message.Item),
                 new ColoredString("]", TextColor, BackgroundColor)
             };
         }
@@ -391,6 +426,11 @@ namespace CodeMagic.UI.Sad.Drawing
                 return PlayerName;
 
             return mapObject.Name;
+        }
+
+        private ColoredString GetItemNameText(IItem item)
+        {
+            return new ColoredString(item.Name.ConvertGlyphs(), ItemDrawingHelper.GetItemColor(item), BackgroundColor);
         }
 
         private ColoredString GetDamageText(int damage, Element element)
