@@ -6,18 +6,40 @@ using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Implementations.Items.Materials;
+using CodeMagic.Implementations.Objects.DecorativeObjects;
 
 namespace CodeMagic.MapGeneration.Dungeon
 {
     internal class DungeonObjectsGenerator
     {
         private const double StonesCountMultiplier = 0.1;
+        private const double TorchPostsCountMultiplier = 0.01;
+
         private const int MaxPositionSearchTries = 20;
 
-        public void GenerateObjects(IAreaMap map)
+        public void GenerateObjects(IAreaMap map, bool addTorchPosts)
         {
             var stonesCount = (int) Math.Round(map.Width * map.Height * StonesCountMultiplier);
             AddStones(map, stonesCount);
+
+            if (addTorchPosts)
+            {
+                var torchPostsCount = (int) Math.Round(map.Width * map.Height * TorchPostsCountMultiplier);
+                AddTorchPosts(map, torchPostsCount);
+            }
+        }
+
+        private void AddTorchPosts(IAreaMap map, int count)
+        {
+            for (int counter = 0; counter < count; counter++)
+            {
+                var position = GetFreePosition(map);
+                if (position == null)
+                    continue;
+
+                map.AddObject(position, new TorchPost());
+            }
         }
 
         private void AddStones(IAreaMap map, int stonesCount)
@@ -28,12 +50,7 @@ namespace CodeMagic.MapGeneration.Dungeon
                 if (position == null)
                     continue;
 
-                map.AddObject(position, Injector.Current.Create<IDecorativeObject>(new DecorativeObjectConfiguration
-                {
-                    Name = "Stones",
-                    Size = ObjectSize.Small,
-                    Type = DecorativeObjectConfiguration.ObjectType.StonesSmall
-                }));
+                map.AddObject(position, new Stone());
             }
         }
 
@@ -45,12 +62,8 @@ namespace CodeMagic.MapGeneration.Dungeon
                 var randomY = RandomHelper.GetRandomValue(0, map.Height - 1);
 
                 var position = new Point(randomX, randomY);
-                var cell = map.GetCell(position);
-                var wall = cell.Objects.OfType<WallBase>().FirstOrDefault();
-                if (wall == null)
-                {
+                if (!map.GetCell(position).BlocksMovement)
                     return position;
-                }
             }
             return null;
         }

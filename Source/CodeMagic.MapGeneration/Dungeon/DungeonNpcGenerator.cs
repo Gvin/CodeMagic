@@ -14,7 +14,8 @@ namespace CodeMagic.MapGeneration.Dungeon
         private static readonly Dictionary<MapType, double> MapTypeCountMultiplier = new Dictionary<MapType, double>
         {
             {MapType.Labyrinth, 20d},
-            {MapType.Dungeon, 60d}
+            {MapType.Dungeon, 60d},
+            {MapType.Cave, 40d}
         };
         private static readonly Dictionary<MapSize, double> MapSizeCountMultiplier = new Dictionary<MapSize, double>
         {

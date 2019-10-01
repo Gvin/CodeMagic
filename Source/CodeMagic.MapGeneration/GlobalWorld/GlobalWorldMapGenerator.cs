@@ -161,6 +161,9 @@ namespace CodeMagic.MapGeneration.GlobalWorld
 
         private bool IsEmptyArea(IAreaMap map, int x, int y)
         {
+            if (map.GetCell(x, y).Objects.OfType<GlobalMapForest>().Any())
+                return false;
+
             if (map.GetCell(x, y).BlocksMovement)
                 return false;
 

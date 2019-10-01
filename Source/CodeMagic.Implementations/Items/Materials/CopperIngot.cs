@@ -1,5 +1,4 @@
 ﻿using CodeMagic.Core.Items;
-using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items.Materials
 {

@@ -116,11 +116,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                         new InjectorMappingType {FactoryMethod = args => new EnergyWallImpl((int) args[0])}
                     },
                     {
-                        typeof(IDecorativeObject),
-                        new InjectorMappingType
-                            {FactoryMethod = args => new DecorativeObjectImpl((DecorativeObjectConfiguration) args[0])}
-                    },
-                    {
                         typeof(IFireDecorativeObject),
                         new InjectorMappingType {FactoryMethod = args => new FireObjectImpl((int) args[0])}
                     },

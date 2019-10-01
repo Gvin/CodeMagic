@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.MapGeneration.Dungeon.MapObjectFactories;
 using Point = System.Drawing.Point;
 
 namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
@@ -13,9 +14,9 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
         private const int TorchChance = 5;
         private const int MaxBuildRetries = 10;
 
-        private readonly DungeonMapObjectsFactory mapObjectsFactory;
+        private readonly IDungeonMapObjectFactory mapObjectsFactory;
 
-        public DungeonRoomsMapGenerator(DungeonMapObjectsFactory mapObjectsFactory)
+        public DungeonRoomsMapGenerator(IDungeonMapObjectFactory mapObjectsFactory)
         {
             this.mapObjectsFactory = mapObjectsFactory;
         }
@@ -131,18 +132,6 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             return result;
         }
 
-        private static int? TryGet(int[][] array, int x, int y)
-        {
-            if (y < 0 || y >= array.Length)
-                return null;
-
-            var line = array[y];
-            if (x < 0 || x >= line.Length)
-                return null;
-
-            return line[x];
-        }
-
         private int[][] SimplifyMap(int[,] map, int width, int height)
         {
             var arrayMap = new List<int[]>();
@@ -190,10 +179,10 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
         private int[][] TurnMap(int[][] map)
         {
             var turnedMap = new List<int[]>();
-            for (int x = 0; x < map[0].Length; x++)
+            for (var x = 0; x < map[0].Length; x++)
             {
                 var turnedLine = new List<int>();
-                for (int y = 0; y < map.Length; y++)
+                for (var y = 0; y < map.Length; y++)
                 {
                     turnedLine.Add(map[y][x]);
                 }
@@ -205,7 +194,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
 
         private void ConfigureMediumMap(MapBuilder builder)
         {
-            builder.MapSize = new Size(70, 70);
+            builder.MapSize = new Size(55, 55);
 
             builder.RoomSizeMin = new Size(3, 3);
             builder.RoomSizeMax = new Size(8, 8);
@@ -469,8 +458,11 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
                     if (CorridorGetStart(out Location, out Direction))
                     {
 
-                        CorBuildOutcome = CorridorMakeStraight(ref Location, ref Direction, random.Next(1, CorridorMaxTurns)
-                            , random.Next(0, 100) > 50);
+                        CorBuildOutcome = CorridorMakeStraight(
+                            ref Location, 
+                            ref Direction, 
+                            random.Next(1, CorridorMaxTurns), 
+                            random.Next(0, 100) > 50);
 
                         switch (CorBuildOutcome)
                         {
@@ -591,38 +583,44 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
                     if (startdirection.X == 0)
                     {
                         //room at the top of the map
-                        rctCurrentRoom = new Rectangle()
+                        rctCurrentRoom = new Rectangle
                         {
+                            X = random.Next(0, MapSize.Width - rctCurrentRoom.Width),
+                            Y = 1,
                             Width = random.Next(RoomSizeMin.Width, RoomSizeMax.Width),
                             Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height)
                         };
-                        rctCurrentRoom.X = random.Next(0, MapSize.Width - rctCurrentRoom.Width);
-                        rctCurrentRoom.Y = 1;
                         BuildRoom(false);
 
                         //at the bottom of the map
-                        rctCurrentRoom = new Rectangle();
-                        rctCurrentRoom.Width = random.Next(RoomSizeMin.Width, RoomSizeMax.Width);
-                        rctCurrentRoom.Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height);
-                        rctCurrentRoom.X = random.Next(0, MapSize.Width - rctCurrentRoom.Width);
-                        rctCurrentRoom.Y = MapSize.Height - rctCurrentRoom.Height - 1;
+                        rctCurrentRoom = new Rectangle
+                        {
+                            X = random.Next(0, MapSize.Width - rctCurrentRoom.Width),
+                            Y = MapSize.Height - rctCurrentRoom.Height - 1,
+                            Width = random.Next(RoomSizeMin.Width, RoomSizeMax.Width),
+                            Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height)
+                        };
                         BuildRoom(false);
                     }
                     else//place a room on the east and west side
                     {
                         //west side of room
-                        rctCurrentRoom = new Rectangle();
-                        rctCurrentRoom.Width = random.Next(RoomSizeMin.Width, RoomSizeMax.Width);
-                        rctCurrentRoom.Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height);
-                        rctCurrentRoom.Y = random.Next(0, MapSize.Height - rctCurrentRoom.Height);
-                        rctCurrentRoom.X = 1;
+                        rctCurrentRoom = new Rectangle
+                        {
+                            X = 1,
+                            Y = random.Next(0, MapSize.Height - rctCurrentRoom.Height),
+                            Width = random.Next(RoomSizeMin.Width, RoomSizeMax.Width),
+                            Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height)
+                        };
                         BuildRoom(false);
 
-                        rctCurrentRoom = new Rectangle();
-                        rctCurrentRoom.Width = random.Next(RoomSizeMin.Width, RoomSizeMax.Width);
-                        rctCurrentRoom.Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height);
-                        rctCurrentRoom.Y = random.Next(0, MapSize.Height - rctCurrentRoom.Height);
-                        rctCurrentRoom.X = MapSize.Width - rctCurrentRoom.Width - 2;
+                        rctCurrentRoom = new Rectangle
+                        {
+                            X = MapSize.Width - rctCurrentRoom.Width - 2,
+                            Y = random.Next(0, MapSize.Height - rctCurrentRoom.Height),
+                            Width = random.Next(RoomSizeMin.Width, RoomSizeMax.Width),
+                            Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height)
+                        };
                         BuildRoom(false);
 
                     }
@@ -655,7 +653,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
                     Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height)
                 };
 
-                //startbuilding room from this Point
+                //start building room from this Point
                 Point lc = lPotentialCorridor.Last();
 
                 if (pDirection.X == 0) //north/south direction
@@ -812,8 +810,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             private CorridorItemHit CorridorMakeStraight(ref Point pStart, ref Point pDirection, int pTurns, bool pPreventBackTracking)
             {
 
-                lPotentialCorridor = new List<Point>();
-                lPotentialCorridor.Add(pStart);
+                lPotentialCorridor = new List<Point> {pStart};
 
                 int corridorlength;
                 Point startdirection = new Point(pDirection.X, pDirection.Y);
@@ -861,19 +858,17 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
 
                 if (!ValidatePoint(pPoint.X, pPoint.Y))//invalid Point hit, exit
                     return CorridorItemHit.Invalid;
-                else if (lBuiltCorridors.Contains(pPoint))//in an existing corridor
+                if (lBuiltCorridors.Contains(pPoint))//in an existing corridor
                     return CorridorItemHit.ExistingCorridor;
-                else if (lPotentialCorridor.Contains(pPoint))//hit self
+                if (lPotentialCorridor.Contains(pPoint))//hit self
                     return CorridorItemHit.Self;
-                else if (rctCurrentRoom != null && rctCurrentRoom.Contains(pPoint))//the corridors origin room has been reached, exit
+                if (rctCurrentRoom != null && rctCurrentRoom.Contains(pPoint))//the corridors origin room has been reached, exit
                     return CorridorItemHit.OriginRoom;
-                else
-                {
-                    //is Point in a room
-                    foreach (Rectangle r in rctBuiltRooms)
-                        if (r.Contains(pPoint))
-                            return CorridorItemHit.ExistingRoom;
-                }
+
+                //is Point in a room
+                foreach (Rectangle r in rctBuiltRooms)
+                    if (r.Contains(pPoint))
+                        return CorridorItemHit.ExistingRoom;
 
 
                 //using the property corridor space, check that number of cells on

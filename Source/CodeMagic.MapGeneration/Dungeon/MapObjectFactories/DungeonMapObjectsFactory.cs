@@ -3,9 +3,9 @@ using CodeMagic.Core.Objects;
 using CodeMagic.Implementations.Objects.Floor;
 using CodeMagic.Implementations.Objects.SolidObjects;
 
-namespace CodeMagic.MapGeneration.Dungeon
+namespace CodeMagic.MapGeneration.Dungeon.MapObjectFactories
 {
-    internal class DungeonMapObjectsFactory
+    internal class DungeonMapObjectsFactory : IDungeonMapObjectFactory
     {
         public IMapObject CreateExitPortal()
         {
@@ -35,6 +35,11 @@ namespace CodeMagic.MapGeneration.Dungeon
         public IMapObject CreateWall()
         {
             return new DungeonWall();
+        }
+
+        public IMapObject CreateIndestructibleWall()
+        {
+            return CreateWall();
         }
 
         public IMapObject CreateTorchWall()

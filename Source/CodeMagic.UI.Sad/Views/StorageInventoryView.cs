@@ -320,7 +320,7 @@ namespace CodeMagic.UI.Sad.Views
             const double kgWeightMultiplier = 1000d;
 
             var currentWeight = storage.GetWeight() / kgWeightMultiplier;
-            var maxWeightValue = this.maxWeight / kgWeightMultiplier;
+            var maxWeightValue = maxWeight / kgWeightMultiplier;
             return $"{inventoryName} [Weight: {currentWeight:F2} / {maxWeightValue:F2}]";
         }
     }

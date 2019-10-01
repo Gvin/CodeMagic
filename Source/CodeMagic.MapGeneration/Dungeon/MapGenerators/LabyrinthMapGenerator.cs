@@ -5,6 +5,7 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
+using CodeMagic.MapGeneration.Dungeon.MapObjectFactories;
 
 namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
 {
@@ -16,9 +17,9 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
 
         private const int TorchChance = 10;
 
-        private readonly DungeonMapObjectsFactory mapObjectsFactory;
+        private readonly IDungeonMapObjectFactory mapObjectsFactory;
 
-        public LabyrinthMapGenerator(DungeonMapObjectsFactory mapObjectsFactory)
+        public LabyrinthMapGenerator(IDungeonMapObjectFactory mapObjectsFactory)
         {
             this.mapObjectsFactory = mapObjectsFactory;
         }

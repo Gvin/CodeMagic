@@ -106,7 +106,7 @@ namespace CodeMagic.UI.Sad.Controls
 
         private void DrawDescription(int initialY, IDescriptionProvider descriptionProvider)
         {
-            const int initialX = 3;
+            const int initialX = 1;
             var lines = descriptionProvider.GetDescription(player);
             for (int yShift = 0; yShift < lines.Length; yShift++)
             {

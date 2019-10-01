@@ -44,6 +44,8 @@ namespace CodeMagic.Core.Game
             Journal.Write(new ItemReceivedMessage(e.Item));
         }
 
+        public bool UpdateInProgress => updateTask != null;
+
         public int CurrentTurn { get; private set; }
 
         public GameWorld World { get; }
@@ -71,7 +73,7 @@ namespace CodeMagic.Core.Game
         {
             lock (worldLockObject)
             {
-                if (updateTask != null)
+                if (UpdateInProgress)
                     return;
 
                 updateTask = new Task(() =>

@@ -55,6 +55,9 @@ namespace CodeMagic.UI.Sad.Controls
 
         private void DrawCellManaLevel()
         {
+            if (game.UpdateInProgress)
+                return;
+
             var cell = game.Map.GetCell(game.PlayerPosition);
 
             Surface.Print(2, 6, "Area Mana:");

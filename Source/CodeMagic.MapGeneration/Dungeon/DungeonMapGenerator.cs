@@ -6,6 +6,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration.Dungeon.MapGenerators;
+using CodeMagic.MapGeneration.Dungeon.MapObjectFactories;
 using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.MapGeneration.Dungeon
@@ -19,11 +20,14 @@ namespace CodeMagic.MapGeneration.Dungeon
         {
             this.writeMapFile = writeMapFile;
 
-            var wallsFactory = new DungeonMapObjectsFactory();
+            var dungeonMapObjectsFactory = new DungeonMapObjectsFactory();
+            var caveMapObjectsFactory = new CaveMapObjectsFactory();
+
             generators = new Dictionary<MapType, IMapAreaGenerator>
             {
-                {MapType.Dungeon, new DungeonRoomsMapGenerator(wallsFactory)},
-                {MapType.Labyrinth, new LabyrinthMapGenerator(wallsFactory)}
+                {MapType.Dungeon, new DungeonRoomsMapGenerator(dungeonMapObjectsFactory)},
+                {MapType.Labyrinth, new LabyrinthMapGenerator(dungeonMapObjectsFactory)},
+                {MapType.Cave, new CaveDungeonMapGenerator(caveMapObjectsFactory)}
             };
         }
 
@@ -51,11 +55,14 @@ namespace CodeMagic.MapGeneration.Dungeon
             MapSize size,
             out Point playerPosition)
         {
-            var mapType = GenerateMapType(level);
+            var lastLevel = level == maxLevel;
+            var mapType = GenerateMapType(level, lastLevel);
             var generator = generators[mapType];
-            var map = generator.Generate(size, level == maxLevel, out playerPosition);
+            var map = generator.Generate(size, lastLevel, out playerPosition);
 
-            new DungeonObjectsGenerator().GenerateObjects(map);
+            var generateTorchPosts = mapType == MapType.Cave;
+
+            new DungeonObjectsGenerator().GenerateObjects(map, generateTorchPosts);
 
             new DungeonNpcGenerator().GenerateNpc(level, size, mapType, map, playerPosition);
 
@@ -93,14 +100,14 @@ namespace CodeMagic.MapGeneration.Dungeon
 
             var cell = map.GetCell(x, y);
 
-            if (cell.Objects.OfType<WallBase>().Any())
-            {
-                return "█";
-            }
-
             if (cell.Objects.OfType<DoorObject>().Any())
             {
                 return "▒";
+            }
+
+            if (cell.Objects.OfType<WallBase>().Any())
+            {
+                return "█";
             }
 
             if (cell.Objects.OfType<TrapDoorObject>().Any())
@@ -121,20 +128,27 @@ namespace CodeMagic.MapGeneration.Dungeon
             return " ";
         }
 
-        private MapType GenerateMapType(int level)
+        private MapType GenerateMapType(int level, bool lastLevel)
         {
+            if (lastLevel) // Always caves for the last level.
+                return MapType.Cave;
+
             if (level == 1) // Always dungeons for the 1st level.
                 return MapType.Dungeon;
 
-            if (RandomHelper.CheckChance(20))
+            var chance = RandomHelper.GetRandomValue(0, 100);
+            if (chance < 20) // 20%
                 return MapType.Labyrinth;
-            return MapType.Dungeon;
+            if (chance >= 20 && chance < 30) // 10%
+                return MapType.Cave;
+            return MapType.Dungeon; // 70%
         }
     }
     public enum MapType
     {
         Dungeon,
-        Labyrinth
+        Labyrinth,
+        Cave
     }
 
     public enum MapSize

@@ -55,6 +55,7 @@
     <Compile Include="Items\Materials\MetalType.cs" />
     <Compile Include="Items\Materials\SilverIngot.cs" />
     <Compile Include="Items\Materials\SteelIngot.cs" />
+    <Compile Include="Items\Materials\Stone.cs" />
     <Compile Include="Items\Materials\Wood.cs" />
     <Compile Include="Items\TorchItem.cs" />
     <Compile Include="Items\Usable\AncientScrollItemImpl.cs" />
@@ -85,8 +86,8 @@
     <Compile Include="Objects\Creatures\NonPlayable\MonsterCreatureImpl.cs" />
     <Compile Include="Objects\Creatures\PlayerImpl.cs" />
     <Compile Include="Objects\DecorativeObjects\CreatureRemainsObjectImpl.cs" />
-    <Compile Include="Objects\DecorativeObjects\DecorativeObjectImpl.cs" />
     <Compile Include="Objects\DecorativeObjects\FireObjectImpl.cs" />
+    <Compile Include="Objects\DecorativeObjects\TorchPost.cs" />
     <Compile Include="Objects\Floor\FloorObject.cs" />
     <Compile Include="Objects\GlobalMap\DungeonEnterObject.cs" />
     <Compile Include="Objects\GlobalMap\GlobalMapObject.cs" />
@@ -97,9 +98,11 @@
     <Compile Include="Objects\LiquidObjects\AcidLiquidImpl.cs" />
     <Compile Include="Objects\LiquidObjects\OilLiquidImpl.cs" />
     <Compile Include="Objects\LiquidObjects\WaterLiquidImpl.cs" />
+    <Compile Include="Objects\SolidObjects\CaveWall.cs" />
     <Compile Include="Objects\SolidObjects\DungeonDoor.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWallImpl.cs" />
     <Compile Include="Objects\SolidObjects\ExitPortalObject.cs" />
+    <Compile Include="Objects\SolidObjects\IndestructibleCaveWall.cs" />
     <Compile Include="Objects\SolidObjects\StairsObjectImpl.cs" />
     <Compile Include="Objects\SolidObjects\DungeonTorchWall.cs" />
     <Compile Include="Objects\SolidObjects\TrapDoorObjectImpl.cs" />

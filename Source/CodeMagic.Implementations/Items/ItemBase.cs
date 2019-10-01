@@ -25,7 +25,7 @@ namespace CodeMagic.Implementations.Items
 
         public bool BlocksAttack => false;
 
-        public ZIndex ZIndex => ZIndex.BigDecoration;
+        public ZIndex ZIndex => ZIndex.GroundDecoration;
 
         public bool Equals(IMapObject other)
         {

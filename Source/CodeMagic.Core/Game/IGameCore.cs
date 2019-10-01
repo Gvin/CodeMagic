@@ -19,6 +19,8 @@ namespace CodeMagic.Core.Game
 
         Point PlayerPosition { get; }
 
+        bool UpdateInProgress { get; }
+
         IPlayer Player { get; }
 
         AreaMapFragment GetVisibleArea();

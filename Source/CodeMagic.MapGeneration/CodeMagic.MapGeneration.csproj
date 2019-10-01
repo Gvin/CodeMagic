@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dungeon\MapObjectFactories\CaveMapObjectsFactory.cs" />
+    <Compile Include="Dungeon\MapObjectFactories\IDungeonMapObjectFactory.cs" />
+    <Compile Include="Dungeon\MapGenerators\CaveDungeonMapGenerator.cs" />
     <Compile Include="GlobalWorld\GlobalWorldMapGenerator.cs" />
     <Compile Include="Home\HomeLocationMapGenerator.cs" />
     <Compile Include="MapGenerationException.cs" />
@@ -53,7 +56,7 @@
     <Compile Include="Dungeon\DungeonNpcGenerator.cs" />
     <Compile Include="Dungeon\DungeonObjectsGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Dungeon\DungeonMapObjectsFactory.cs" />
+    <Compile Include="Dungeon\MapObjectFactories\DungeonMapObjectsFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">
