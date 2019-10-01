@@ -22,6 +22,9 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public void Use(IGameCore game, Point position)
         {
+            if (!Closed && game.Map.GetCell(position).BlocksMovement)
+                return;
+
             Closed = !Closed;
         }
     }
