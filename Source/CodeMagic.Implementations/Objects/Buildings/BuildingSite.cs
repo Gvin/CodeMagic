@@ -16,8 +16,8 @@ namespace CodeMagic.Implementations.Objects.Buildings
         private const string WorldImageName = "Building_Site";
 
         private readonly IMapObject building;
-        private readonly Dictionary<Type, int> remainingCost;
-        private readonly Dictionary<Type, string> resourcesNameMapping;
+        private readonly Dictionary<string, int> remainingCost;
+        private readonly Dictionary<string, string> resourcesNameMapping;
         private int remainingBuildTime;
         private readonly IBuildingConfiguration buildingConfiguration;
 
@@ -113,7 +113,7 @@ namespace CodeMagic.Implementations.Objects.Buildings
             }
         }
 
-        private Type GetAvailableMaterialType(Inventory playerInventory)
+        private string GetAvailableMaterialType(Inventory playerInventory)
         {
             foreach (var materialType in remainingCost.Keys.ToArray())
             {

@@ -11,7 +11,7 @@ namespace CodeMagic.Implementations.Items
             LumberjackPower = configuration.LumberjackPower;
         }
 
-        public int LumberjackPower { get; set; }
+        public int LumberjackPower { get; }
 
         protected override StyledLine[] GetCharacteristicsDescription(IPlayer player)
         {

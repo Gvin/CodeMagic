@@ -50,7 +50,7 @@ namespace CodeMagic.Core.Game.PlayerActions
             {
                 if (target is IResourceObject resourceObject)
                 {
-                    resourceObject.UseTool(game.Player.Equipment.Weapon, game.Journal, damageValue.Value, damageValue.Key);
+                    resourceObject.UseTool(game, game.Player.Equipment.Weapon, damageValue.Value, damageValue.Key);
                 }
                 else
                 {

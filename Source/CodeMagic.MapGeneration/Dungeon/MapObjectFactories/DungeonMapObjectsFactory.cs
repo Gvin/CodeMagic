@@ -1,4 +1,6 @@
-﻿using CodeMagic.Core.Game;
+﻿using System;
+using CodeMagic.Core.Game;
+using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Implementations.Objects.Floor;
 using CodeMagic.Implementations.Objects.SolidObjects;
@@ -45,6 +47,11 @@ namespace CodeMagic.MapGeneration.Dungeon.MapObjectFactories
         public IMapObject CreateTorchWall()
         {
             return new DungeonTorchWall();
+        }
+
+        public IMapObject CreateOreWall(ItemRareness rareness)
+        {
+            throw new InvalidOperationException("Ore walls are not supported for dungeon maps");
         }
 
         public IMapObject CreateWall(int torchChance)

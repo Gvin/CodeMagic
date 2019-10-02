@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Objects;
+﻿using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects;
 
 namespace CodeMagic.MapGeneration.Dungeon.MapObjectFactories
 {
@@ -19,6 +20,8 @@ namespace CodeMagic.MapGeneration.Dungeon.MapObjectFactories
         IMapObject CreateIndestructibleWall();
 
         IMapObject CreateTorchWall();
+
+        IMapObject CreateOreWall(ItemRareness rareness);
 
         IMapObject CreateWall(int torchChance);
     }

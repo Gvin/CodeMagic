@@ -26,6 +26,7 @@ namespace CodeMagic.ItemsGeneration
         private readonly UsableItemsGenerator usableItemsGenerator;
         private readonly ResourcesGenerator resourcesGenerator;
         private readonly LumberjackAxeGenerator lumberjackAxeGenerator;
+        private readonly PickaxeGenerator pickaxeGenerator;
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage, IAncientSpellsProvider spellsProvider)
         {
@@ -84,6 +85,12 @@ namespace CodeMagic.ItemsGeneration
             usableItemsGenerator = new UsableItemsGenerator(imagesStorage, spellsProvider);
             resourcesGenerator = new ResourcesGenerator();
             lumberjackAxeGenerator = new LumberjackAxeGenerator(configuration.ToolsConfiguration.LumberjackAxe, imagesStorage);
+            pickaxeGenerator = new PickaxeGenerator(configuration.ToolsConfiguration.Pickaxe, imagesStorage);
+        }
+
+        public IItem GeneratePickaxe(ItemRareness rareness)
+        {
+            return pickaxeGenerator.GenerateTool(rareness);
         }
 
         public IItem GenerateLumberjackAxe(ItemRareness rareness)

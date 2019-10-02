@@ -1,5 +1,8 @@
-﻿using CodeMagic.Core.Game;
+﻿using System.Collections.Generic;
+using CodeMagic.Core.Game;
+using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Implementations.Items.Materials;
 using CodeMagic.Implementations.Objects.Floor;
 using CodeMagic.Implementations.Objects.SolidObjects;
 
@@ -7,6 +10,33 @@ namespace CodeMagic.MapGeneration.Dungeon.MapObjectFactories
 {
     public class CaveMapObjectsFactory : IDungeonMapObjectFactory
     {
+        private static readonly Dictionary<ItemRareness, MetalType[]> OreTypes =
+            new Dictionary<ItemRareness, MetalType[]>
+            {
+                {
+                    ItemRareness.Common, new[]
+                    {
+                        MetalType.Copper,
+                        MetalType.Iron
+                    }
+                },
+                {
+                    ItemRareness.Uncommon, new[]
+                    {
+                        MetalType.Silver,
+                        MetalType.ElvesMetal,
+                        MetalType.DwarfsMetal
+                    }
+                },
+                {
+                    ItemRareness.Rare, new[]
+                    {
+                        MetalType.Mythril,
+                        MetalType.Adamant
+                    }
+                }
+            };
+
         public IMapObject CreateExitPortal()
         {
             return new ExitPortalObject();
@@ -34,17 +64,28 @@ namespace CodeMagic.MapGeneration.Dungeon.MapObjectFactories
 
         public IMapObject CreateWall()
         {
-            return new CaveWall(true);
+            return new MinableCaveWall();
         }
 
         public IMapObject CreateIndestructibleWall()
         {
-            return new CaveWall(false);
+            return new CaveWall();
         }
 
         public IMapObject CreateTorchWall()
         {
             return new DungeonTorchWall();
+        }
+
+        public IMapObject CreateOreWall(ItemRareness rareness)
+        {
+            if (OreTypes.ContainsKey(rareness))
+            {
+                var metalType = RandomHelper.GetRandomElement(OreTypes[rareness]);
+                return new OreCaveWall(metalType);
+            }
+
+            return CreateWall();
         }
 
         public IMapObject CreateWall(int torchChance)

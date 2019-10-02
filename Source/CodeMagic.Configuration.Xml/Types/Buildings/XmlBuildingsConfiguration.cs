@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Xml.Serialization;
 using CodeMagic.Core.Configuration.Buildings;
 using CodeMagic.Core.Items;
-using CodeMagic.Implementations.Items.Materials;
 using CodeMagic.Implementations.Objects.Buildings;
 
 namespace CodeMagic.Configuration.Xml.Types.Buildings
@@ -72,22 +71,8 @@ namespace CodeMagic.Configuration.Xml.Types.Buildings
     [Serializable]
     public class XmlBuildingMaterial : IBuildingMaterialConfiguration
     {
-        private static readonly Dictionary<string, Type> Resources = new Dictionary<string, Type>
-        {
-            {Wood.ResourceKey, typeof(Wood)},
-            {Glass.ResourceKey, typeof(Glass)},
-            {CopperIngot.ResourceKey, typeof(CopperIngot)},
-            {BronzeIngot.ResourceKey, typeof(BronzeIngot)},
-            {IronIngot.ResourceKey, typeof(IronIngot)},
-            {SteelIngot.ResourceKey, typeof(SteelIngot)},
-            {SilverIngot.ResourceKey, typeof(SilverIngot)}
-        };
-
-        [XmlIgnore]
-        public Type Type => Resources[TypeData];
-
         [XmlAttribute("type")]
-        public string TypeData { get; set; }
+        public string Type { get; set; }
 
         [XmlAttribute("name")]
         public string Name { get; set; }

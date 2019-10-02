@@ -5,7 +5,7 @@ using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
-    public abstract class WallBase : IMapObject, IPlacedHandler
+    public abstract class WallBase : IPlaceConnectionObject
     {
         private readonly List<Point> connectedTiles;
 
@@ -15,6 +15,11 @@ namespace CodeMagic.Core.Objects.SolidObjects
         }
 
         public ObjectSize Size => ObjectSize.Huge;
+
+        public void AddConnectedTile(Point position)
+        {
+            connectedTiles.Add(position);
+        }
 
         public abstract string Name { get; }
 
@@ -57,17 +62,17 @@ namespace CodeMagic.Core.Objects.SolidObjects
             if (wallUp != null)
             {
                 connectedTiles.Add(new Point(relativeX, relativeY));
-                wallUp.connectedTiles.Add(new Point(relativeX* (-1), relativeY * (-1)));
+                wallUp.AddConnectedTile(new Point(relativeX* (-1), relativeY * (-1)));
             }
         }
 
         protected abstract bool CanConnectTo(IMapObject mapObject);
 
-        private WallBase GetWall(IAreaMap map, Point position, int relativeX, int relativeY)
+        private IPlaceConnectionObject GetWall(IAreaMap map, Point position, int relativeX, int relativeY)
         {
             var nearPosition = new Point(position.X + relativeX, position.Y + relativeY);
             var cell = map.TryGetCell(nearPosition);
-            return cell?.Objects.OfType<WallBase>().FirstOrDefault(CanConnectTo);
+            return cell?.Objects.OfType<IPlaceConnectionObject>().FirstOrDefault(CanConnectTo);
         }
 
         public bool Equals(IMapObject other)

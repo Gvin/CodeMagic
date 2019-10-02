@@ -133,7 +133,7 @@ namespace CodeMagic.Core.Objects
             if (realDamage == 0)
                 return;
 
-            Health -= realDamage;
+            ApplyRealDamage(realDamage);
 
             if (element == Element.Fire)
             {
@@ -141,6 +141,11 @@ namespace CodeMagic.Core.Objects
             }
 
             ObjectEffects.Add(Injector.Current.Create<IDamageEffect>(realDamage, element));
+        }
+
+        protected virtual void ApplyRealDamage(int damage)
+        {
+            Health -= damage;
         }
 
         public void ClearDamageRecords()

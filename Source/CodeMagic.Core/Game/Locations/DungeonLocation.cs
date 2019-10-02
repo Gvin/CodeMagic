@@ -39,13 +39,26 @@ namespace CodeMagic.Core.Game.Locations
             return (int) rareness * 2 + 1;
         }
 
+        private ItemRareness GetLevelRareness(int level)
+        {
+            switch (level)
+            {
+                case 1:
+                    return ItemRareness.Trash;
+                case 2:
+                case 3:
+                    return ItemRareness.Common;
+                case 4:
+                case 5:
+                    return ItemRareness.Uncommon;
+                default:
+                    return ItemRareness.Rare;
+            }
+        }
+
         public void Initialize(DateTime gameTime)
         {
-            var maxLevel = GetMaxLevel(Rareness);
-            CurrentArea = dungeonMapGenerator.GenerateNewMap(CurrentLevel, maxLevel, out var newPlayerPosition);
-            CurrentArea.Refresh(gameTime);
-            levels.Add(new StoredMap(CurrentArea, null));
-            PlayerPosition = newPlayerPosition;
+            PlayerPosition = GenerateNewLevel(gameTime);
         }
 
         public void MoveUp(IGameCore game)
@@ -87,14 +100,20 @@ namespace CodeMagic.Core.Game.Locations
                 return;
             }
 
-            var maxLevel = GetMaxLevel(Rareness);
-            CurrentArea = dungeonMapGenerator.GenerateNewMap(CurrentLevel, maxLevel, out var newPlayerPosition);
-            CurrentArea.Refresh(game.GameTime);
-            levels.Add(new StoredMap(CurrentArea, null));
-            PlayerPosition = newPlayerPosition;
+            PlayerPosition = GenerateNewLevel(game.GameTime);
             game.UpdatePlayerPosition(PlayerPosition);
 
             game.Journal.Write(new DungeonLevelMessage(CurrentLevel));
+        }
+
+        private Point GenerateNewLevel(DateTime gameTime)
+        {
+            var maxLevel = GetMaxLevel(Rareness);
+            var rareness = GetLevelRareness(CurrentLevel);
+            CurrentArea = dungeonMapGenerator.GenerateNewMap(CurrentLevel, rareness, maxLevel, out var newPlayerPosition);
+            CurrentArea.Refresh(gameTime);
+            levels.Add(new StoredMap(CurrentArea, null));
+            return newPlayerPosition;
         }
 
         private ItemRareness Rareness { get; }

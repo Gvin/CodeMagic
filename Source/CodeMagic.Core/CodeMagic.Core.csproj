@@ -160,6 +160,7 @@
     <Compile Include="Objects\IceObjects\IIceObject.cs" />
     <Compile Include="Objects\IFireSpreadingObject.cs" />
     <Compile Include="Objects\ILightObject.cs" />
+    <Compile Include="Objects\IPlaceConnectionObject.cs" />
     <Compile Include="Objects\IPlacedHandler.cs" />
     <Compile Include="Objects\IResourceObject.cs" />
     <Compile Include="Objects\ISpreadingObject.cs" />

@@ -15,5 +15,7 @@ namespace CodeMagic.Core.Items
         IItem GenerateResource();
 
         IItem GenerateLumberjackAxe(ItemRareness rareness);
+
+        IItem GeneratePickaxe(ItemRareness rareness);
     }
 }

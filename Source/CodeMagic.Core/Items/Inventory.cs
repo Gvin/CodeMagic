@@ -54,14 +54,14 @@ namespace CodeMagic.Core.Items
             }
         }
 
-        public void RemoveItem(Type itemType)
+        public void RemoveItem(string itemKey)
         {
             lock (stacks)
             {
-                var existingStack = stacks.FirstOrDefault(stack => itemType.IsInstanceOfType(stack.TopItem));
+                var existingStack = stacks.FirstOrDefault(stack => string.Equals(stack.TopItem.Key, itemKey));
                 if (existingStack == null)
                 {
-                    throw new InvalidOperationException($"Item of type {itemType.FullName} not found in inventory.");
+                    throw new InvalidOperationException($"Item with key {itemKey} not found in inventory.");
                 }
 
                 var item = existingStack.TopItem;
@@ -95,9 +95,9 @@ namespace CodeMagic.Core.Items
             }
         }
 
-        public int GetItemsCount(Type type)
+        public int GetItemsCount(string itemKey)
         {
-            return stacks.Where(stack => type.IsInstanceOfType(stack.TopItem)).Sum(stack => stack.Count);
+            return stacks.Where(stack => string.Equals(stack.TopItem.Key, itemKey)).Sum(stack => stack.Count);
         }
 
         public int ItemsCount => stacks.Sum(stack => stack.Count);

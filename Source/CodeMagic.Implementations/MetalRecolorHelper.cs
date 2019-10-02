@@ -7,7 +7,7 @@ namespace CodeMagic.Implementations
 {
     public class MetalRecolorHelper
     {
-        private static readonly Dictionary<MetalType, ColorPalette> Palette = new Dictionary<MetalType, ColorPalette>
+        private static readonly Dictionary<MetalType, ColorPalette> MetalsPalette = new Dictionary<MetalType, ColorPalette>
         {
             {MetalType.Copper, new ColorPalette(Color.FromArgb(200, 125, 55), Color.FromArgb(160, 100, 44))},
             {MetalType.Bronze, new ColorPalette(Color.FromArgb(180, 107, 30), Color.FromArgb(123, 77, 30))},
@@ -20,12 +20,29 @@ namespace CodeMagic.Implementations
             {MetalType.Adamant, new ColorPalette(Color.FromArgb(51, 51, 255), Color.FromArgb(0, 0, 179))}
         };
 
+        private static readonly Dictionary<MetalType, ColorPalette> OresPalette = new Dictionary<MetalType, ColorPalette>
+        {
+            {MetalType.Copper, new ColorPalette(Color.FromArgb(255, 128, 0), Color.White)},
+            {MetalType.Iron, new ColorPalette(Color.SaddleBrown, Color.White)},
+            {MetalType.Silver, new ColorPalette(Color.FromArgb(224, 224, 224), Color.White)},
+            {MetalType.ElvesMetal, new ColorPalette(Color.FromArgb(217, 255, 179), Color.White)},
+            {MetalType.DwarfsMetal, new ColorPalette(Color.FromArgb(255, 255, 179), Color.White)},
+            {MetalType.Mythril, new ColorPalette(Color.FromArgb(194, 194, 163), Color.White)},
+            {MetalType.Adamant, new ColorPalette(Color.FromArgb(51, 51, 255), Color.White)}
+        };
+
         private static readonly Color ReplaceColor1 = Color.FromArgb(255, 0, 0);
         private static readonly Color ReplaceColor2 = Color.FromArgb(0, 255, 0);
 
         public static SymbolsImage RecolorMetalImage(SymbolsImage sourceImage, MetalType metal)
         {
-            var palete = Palette[metal];
+            var palete = MetalsPalette[metal];
+            return RecolorImage(sourceImage, palete);
+        }
+
+        public static SymbolsImage RecolorOreImage(SymbolsImage sourceImage, MetalType metal)
+        {
+            var palete = OresPalette[metal];
             return RecolorImage(sourceImage, palete);
         }
 

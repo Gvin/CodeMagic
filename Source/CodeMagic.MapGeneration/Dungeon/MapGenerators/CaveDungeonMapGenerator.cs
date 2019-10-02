@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Items;
 using CodeMagic.MapGeneration.Dungeon.MapObjectFactories;
 
 namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
 {
     internal class CaveDungeonMapGenerator : IMapAreaGenerator
     {
+        private const int OreChance = 5;
+
         private readonly IDungeonMapObjectFactory mapObjectsFactory;
 
         public CaveDungeonMapGenerator(IDungeonMapObjectFactory mapObjectsFactory)
@@ -16,7 +19,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             this.mapObjectsFactory = mapObjectsFactory;
         }
 
-        public IAreaMap Generate(MapSize size, bool isLastLevel, out Point playerPosition)
+        public IAreaMap Generate(MapSize size, ItemRareness rareness, bool isLastLevel, out Point playerPosition)
         {
             var generator = ConfigureMapHandler(size);
             generator.RandomFillMap();
@@ -26,7 +29,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             var height = simplifiedMap.Length;
             var width = simplifiedMap[0].Length;
 
-            var map = ConvertMap(simplifiedMap, width, height);
+            var map = ConvertMap(simplifiedMap, width, height, rareness);
 
             playerPosition = FindPlayerPosition(map);
             map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
@@ -192,7 +195,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             throw new ApplicationException("Unable to find player position.");
         }
 
-        private IAreaMap ConvertMap(int[][] map, int width, int height)
+        private IAreaMap ConvertMap(int[][] map, int width, int height, ItemRareness rareness)
         {
             var result = new AreaMap(width, height, new InsideEnvironmentLightManager());
 
@@ -209,7 +212,9 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
                     }
                     if (map[y][x] == MapHandler.FilledCell)
                     {
-                        var wall = mapObjectsFactory.CreateWall(0);
+                        var wall = RandomHelper.CheckChance(OreChance)
+                            ? mapObjectsFactory.CreateOreWall(rareness)
+                            : mapObjectsFactory.CreateWall(0);
                         result.AddObject(x, y, wall);
                     }
                 }

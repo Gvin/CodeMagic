@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Items;
 using CodeMagic.MapGeneration.Dungeon.MapObjectFactories;
 using Point = System.Drawing.Point;
 
@@ -21,7 +22,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
             this.mapObjectsFactory = mapObjectsFactory;
         }
 
-        public IAreaMap Generate(MapSize size, bool isLastLevel, out Core.Game.Point playerPosition)
+        public IAreaMap Generate(MapSize size, ItemRareness rareness, bool isLastLevel, out Core.Game.Point playerPosition)
         {
             var builder = new MapBuilder(1, 1);
             switch (size)

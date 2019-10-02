@@ -93,6 +93,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Inventory.AddItem(new TeleporterStoneInactive());
 
             player.Inventory.AddItem(itemsGenerator.GenerateLumberjackAxe(ItemRareness.Trash));
+            player.Inventory.AddItem(itemsGenerator.GeneratePickaxe(ItemRareness.Trash));
 
             return player;
         }

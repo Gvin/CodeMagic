@@ -3,5 +3,7 @@
     public interface IToolsConfiguration
     {
         IToolConfiguration LumberjackAxe { get; }
+
+        IToolConfiguration Pickaxe { get; }
     }
 }

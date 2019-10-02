@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.MapGeneration.Dungeon.MapGenerators;
@@ -31,10 +32,10 @@ namespace CodeMagic.MapGeneration.Dungeon
             };
         }
 
-        public IAreaMap GenerateNewMap(int level, int maxLevel, out Point playerPosition)
+        public IAreaMap GenerateNewMap(int level, ItemRareness rareness, int maxLevel, out Point playerPosition)
         {
             var size = GenerateMapSize();
-            return GenerateMap(level, maxLevel, size, out playerPosition);
+            return GenerateMap(level, rareness, maxLevel, size, out playerPosition);
         }
 
         private MapSize GenerateMapSize()
@@ -51,6 +52,7 @@ namespace CodeMagic.MapGeneration.Dungeon
 
         private IAreaMap GenerateMap(
             int level,
+            ItemRareness rareness,
             int maxLevel,
             MapSize size,
             out Point playerPosition)
@@ -58,7 +60,7 @@ namespace CodeMagic.MapGeneration.Dungeon
             var lastLevel = level == maxLevel;
             var mapType = GenerateMapType(level, lastLevel);
             var generator = generators[mapType];
-            var map = generator.Generate(size, lastLevel, out playerPosition);
+            var map = generator.Generate(size, rareness, lastLevel, out playerPosition);
 
             var generateTorchPosts = mapType == MapType.Cave;
 

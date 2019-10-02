@@ -1,10 +1,11 @@
-﻿using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.SolidObjects;
+﻿using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects;
+using CodeMagic.Implementations.Items.Materials;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.SolidObjects
 {
-    public class CaveWall : WallBase, IWorldImageProvider
+    public class MinableCaveWall : MinableWall
     {
         private const string ImageNormal = "Wall_Cave";
         private const string ImageBottom = "Wall_Cave_Bottom";
@@ -12,14 +13,22 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
         private const string ImageBottomRight = "Wall_Cave_Bottom_Right";
         private const string ImageCorner = "Wall_Cave_Corner";
 
-        public override string Name => "Cave Wall";
+        public MinableCaveWall() 
+            : base("Cave Wall", 100)
+        {
+        }
+
+        protected override IItem CreateResource()
+        {
+            return new Stone();
+        }
 
         protected override bool CanConnectTo(IMapObject mapObject)
         {
             return mapObject is CaveWall || mapObject is MinableWall;
         }
 
-        public SymbolsImage GetWorldImage(IImagesStorage storage)
+        public override SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             if (!HasConnectedTile(0, 1) && !HasConnectedTile(1, 0))
             {

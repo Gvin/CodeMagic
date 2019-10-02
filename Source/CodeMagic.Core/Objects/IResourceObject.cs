@@ -6,6 +6,6 @@ namespace CodeMagic.Core.Objects
 {
     public interface IResourceObject
     {
-        void UseTool(WeaponItem weapon, IJournal journal, int damage, Element element);
+        void UseTool(IGameCore game, WeaponItem weapon, int damage, Element element);
     }
 }

@@ -29,7 +29,7 @@ namespace CodeMagic.Core.Configuration.Buildings
 
     public interface IBuildingMaterialConfiguration
     {
-        Type Type { get; }
+        string Type { get; }
 
         string Name { get; }
 

@@ -79,6 +79,7 @@
     <Compile Include="Implementations\Bonuses\Instances\WeightBonusApplier.cs" />
     <Compile Include="Implementations\NameBuilder.cs" />
     <Compile Include="Implementations\Tool\LumberjackAxeGenerator.cs" />
+    <Compile Include="Implementations\Tool\PickaxeGenerator.cs" />
     <Compile Include="Implementations\Tool\ToolsGenerator.cs" />
     <Compile Include="Implementations\UsableItemsGenerator.cs" />
     <Compile Include="Implementations\ResourcesGenerator.cs" />

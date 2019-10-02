@@ -13,12 +13,12 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 {
     public class Tree : DestroyableObject, IWorldImageProvider, IResourceObject
     {
-        public const int TotalWoodCount = 20;
+        private const int MaxWoodCount = 5;
+        private const int MinWoodCount = 0;
+
         private const int LumberjackAxeDamageMultiplier = 2;
 
         private const string WorldImageName = "Tree";
-        private bool isChop;
-        private readonly List<HitData> hitData;
 
         public Tree() : base(new DestroyableObjectConfiguration
         {
@@ -40,8 +40,6 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
             ZIndex = ZIndex.BigDecoration
         })
         {
-            hitData = new List<HitData>();
-            isChop = false;
         }
 
         public override bool BlocksMovement => true;
@@ -51,79 +49,30 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
             return storage.GetImage(WorldImageName);
         }
 
-        public void UseTool(WeaponItem weapon, IJournal journal, int damage, Element element)
+        public void UseTool(IGameCore game, WeaponItem weapon, int damage, Element element)
         {
-            isChop = true;
-
-            var realDamage = GetToolDamage(weapon, damage);
-            var toolPower = GetToolPower(weapon);
-            hitData.Add(new HitData(realDamage, toolPower));
-
-            Damage(journal, realDamage, element);
-            
-            isChop = false;
-        }
-
-        private int GetToolDamage(WeaponItem item, int damage)
-        {
-            if (item is LumberjackAxe)
-                return damage * LumberjackAxeDamageMultiplier;
-
-            return damage;
-        }
-
-        private int GetToolPower(WeaponItem item)
-        {
-            if (item is LumberjackAxe axe)
-                return axe.LumberjackPower;
-
-            return 10;
-        }
-
-        public override void Damage(IJournal journal, int damage, Element element)
-        {
-            base.Damage(journal, damage, element);
-
-            if (!isChop)
+            if (weapon is LumberjackAxe axe)
             {
-                hitData.Add(new HitData(damage, 0));
+                var realDamage = damage * LumberjackAxeDamageMultiplier;
+                if (RandomHelper.CheckChance(axe.LumberjackPower))
+                {
+                    game.Player.Inventory.AddItem(new Wood());
+                }
+                ApplyRealDamage(realDamage);
+                return;
             }
+            Damage(game.Journal, damage, element);
         }
 
         public override void OnDeath(IAreaMap map, IJournal journal, Point position)
         {
             base.OnDeath(map, journal, position);
 
-            var woodCount = GetWoodCount();
+            var woodCount = RandomHelper.GetRandomValue(MinWoodCount, MaxWoodCount);
             for (var counter = 0; counter < woodCount; counter++)
             {
                 map.AddObject(position, new Wood());
             }
-        }
-
-        private int GetWoodCount()
-        {
-            var result = 0d;
-            foreach (var data in hitData)
-            {
-                var percent = data.Damage / (double) MaxHealth;
-                result += percent * data.ToolPower;
-            }
-
-            return (int) Math.Round(TotalWoodCount * result / 100);
-        }
-
-        private class HitData
-        {
-            public HitData(int damage, int toolPower)
-            {
-                Damage = damage;
-                ToolPower = toolPower;
-            }
-
-            public int Damage { get; }
-
-            public int ToolPower { get; }
         }
     }
 }

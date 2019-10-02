@@ -2752,5 +2752,94 @@
         </rareness>
       </rareness-configuration>
     </lumberjack-axe>
+
+    <pickaxe>
+      <inventory-image>Weapon_Pickaxe</inventory-image>
+
+      <weight>
+        <value material="Wood">1200</value>
+        <value material="Iron">1600</value>
+        <value material="Steel">1600</value>
+        <value material="Silver">2200</value>
+        <value material="ElvesMetal">1000</value>
+        <value material="DwarfsMetal">3200</value>
+        <value material="Mythril">500</value>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <damage>
+            <value element="Blunt">
+              <min-value>1</min-value>
+              <max-value>2</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>1</min-max-damage-difference>
+          <min-hit-chance>60</min-hit-chance>
+          <max-hit-chance>75</max-hit-chance>
+          <max-tool-power>15</max-tool-power>
+          <min-tool-power>10</min-tool-power>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <damage>
+            <value element="Blunt">
+              <min-value>2</min-value>
+              <max-value>5</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>2</min-max-damage-difference>
+          <min-hit-chance>65</min-hit-chance>
+          <max-hit-chance>80</max-hit-chance>
+          <max-tool-power>30</max-tool-power>
+          <min-tool-power>15</min-tool-power>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <damage>
+            <value element="Blunt">
+              <min-value>5</min-value>
+              <max-value>7</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>2</min-max-damage-difference>
+          <min-hit-chance>70</min-hit-chance>
+          <max-hit-chance>85</max-hit-chance>
+          <max-tool-power>45</max-tool-power>
+          <min-tool-power>30</min-tool-power>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <damage>
+            <value element="Blunt">
+              <min-value>7</min-value>
+              <max-value>10</max-value>
+            </value>
+          </damage>
+          <min-max-damage-difference>3</min-max-damage-difference>
+          <min-hit-chance>75</min-hit-chance>
+          <max-hit-chance>85</max-hit-chance>
+          <max-tool-power>60</max-tool-power>
+          <min-tool-power>45</min-tool-power>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </pickaxe>
   </tools>
 </item-generator-configuration>

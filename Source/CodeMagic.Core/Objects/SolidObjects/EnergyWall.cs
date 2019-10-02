@@ -44,7 +44,7 @@ namespace CodeMagic.Core.Objects.SolidObjects
         public string Name { get; }
         public bool BlocksMovement => true;
 
-        public bool BlocksAttack => false;
+        public bool BlocksAttack => true;
 
         public bool BlocksProjectiles => true;
         public bool IsVisible => true;

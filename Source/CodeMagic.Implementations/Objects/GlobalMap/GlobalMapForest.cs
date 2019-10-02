@@ -4,13 +4,15 @@ using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Implementations.Items;
 using CodeMagic.Implementations.Items.Materials;
-using CodeMagic.Implementations.Objects.SolidObjects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.GlobalMap
 {
     public class GlobalMapForest : IMapObject, IWorldImageProvider, IUsableObject
     {
+        private const int MinWoodCount = 10;
+        private const int MaxWoodCount = 20;
+
         private static readonly string[] ImagesForest = {
             "GlobalMap_Forest1",
             "GlobalMap_Forest2",
@@ -73,7 +75,8 @@ namespace CodeMagic.Implementations.Objects.GlobalMap
                 return;
             }
 
-            var woodCount = (int) Math.Round(Tree.TotalWoodCount * axe.LumberjackPower / 100d);
+            var maxWoodCount = RandomHelper.GetRandomValue(MinWoodCount, MaxWoodCount);
+            var woodCount = (int) Math.Round(maxWoodCount * axe.LumberjackPower / 100d);
             for (var counter = 0; counter < woodCount; counter++)
             {
                 game.Player.Inventory.AddItem(new Wood());
