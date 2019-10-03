@@ -156,7 +156,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void OpenStorage(IStorageBuilding storageBuilding)
         {
-            new StorageInventoryView(game, storageBuilding.Name, storageBuilding.Inventory, storageBuilding.MaxWeight).Show();
+            new StorageInventoryView(game, storageBuilding.Name, storageBuilding.Inventory, storageBuilding.MaxWeight, null).Show();
         }
 
         private void FillBuildings()

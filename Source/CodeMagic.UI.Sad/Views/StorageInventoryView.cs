@@ -22,20 +22,22 @@ namespace CodeMagic.UI.Sad.Views
         private Button closeButton;
         private readonly string inventoryName;
         private readonly Inventory storage;
-        private readonly int maxWeight;
+        private readonly int? maxWeight;
+        private readonly IItem inventoryItem;
 
         private StandardButton moveStackUpButton;
         private StandardButton moveStackDownButton;
         private StandardButton moveItemUpButton;
         private StandardButton moveItemDownButton;
 
-        public StorageInventoryView(IGameCore game, string inventoryName, Inventory storage, int maxWeight)
+        public StorageInventoryView(IGameCore game, string inventoryName, Inventory storage, int? maxWeight, IItem inventoryItem)
             : base(Program.Width, Program.Height)
         {
             this.game = game;
             this.inventoryName = inventoryName;
             this.storage = storage;
             this.maxWeight = maxWeight;
+            this.inventoryItem = inventoryItem;
 
             InitializeControls(game.Player);
 
@@ -188,7 +190,10 @@ namespace CodeMagic.UI.Sad.Views
                 return;
 
             var item = SelectedStack2.TopItem;
-            if (storage.GetWeight() + item.Weight > maxWeight)
+            if (item.Equals(inventoryItem))
+                return;
+
+            if (maxWeight.HasValue && storage.GetWeight() + item.Weight > maxWeight.Value)
                 return;
 
             game.Player.Inventory.RemoveItem(item);
@@ -216,9 +221,11 @@ namespace CodeMagic.UI.Sad.Views
             if (SelectedStack2 == null)
                 return;
 
-            if (storage.GetWeight() + SelectedStack2.Weight > maxWeight)
+            if (maxWeight.HasValue && storage.GetWeight() + SelectedStack2.Weight > maxWeight.Value)
                 return;
 
+            if (SelectedStack2.TopItem.Equals(inventoryItem))
+                return;
             foreach (var item in SelectedStack2.Items.ToArray())
             {
                 game.Player.Inventory.RemoveItem(item);
@@ -250,8 +257,8 @@ namespace CodeMagic.UI.Sad.Views
         {
             itemDetails.Stack = SelectedStack1 ?? SelectedStack2;
 
-            moveStackUpButton.IsVisible = SelectedStack2 != null;
-            moveItemUpButton.IsVisible = SelectedStack2 != null;
+            moveStackUpButton.IsVisible = SelectedStack2 != null && SelectedStack2.Count > 0 && !SelectedStack2.TopItem.Equals(inventoryItem);
+            moveItemUpButton.IsVisible = SelectedStack2 != null && SelectedStack2.Count > 0 && !SelectedStack2.TopItem.Equals(inventoryItem);
 
             moveStackDownButton.IsVisible = SelectedStack1 != null;
             moveItemDownButton.IsVisible = SelectedStack1 != null;
@@ -317,10 +324,13 @@ namespace CodeMagic.UI.Sad.Views
 
         private string GetTitleWithWeight()
         {
+            if (!maxWeight.HasValue)
+                return inventoryName;
+
             const double kgWeightMultiplier = 1000d;
 
             var currentWeight = storage.GetWeight() / kgWeightMultiplier;
-            var maxWeightValue = maxWeight / kgWeightMultiplier;
+            var maxWeightValue = maxWeight.Value / kgWeightMultiplier;
             return $"{inventoryName} [Weight: {currentWeight:F2} / {maxWeightValue:F2}]";
         }
     }

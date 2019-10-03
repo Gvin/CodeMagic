@@ -82,6 +82,8 @@
     <Compile Include="GameProcess\EditSpellHelper.cs" />
     <Compile Include="GameProcess\GameConfigurator.cs" />
     <Compile Include="GameProcess\GameManager.cs" />
+    <Compile Include="Items\Bag.cs" />
+    <Compile Include="Items\BagOfHolding.cs" />
     <Compile Include="SpellsLibrary\SpellsLibraryManager.cs" />
     <Compile Include="Views\BuildingsView.cs" />
     <Compile Include="Views\StorageInventoryView.cs" />

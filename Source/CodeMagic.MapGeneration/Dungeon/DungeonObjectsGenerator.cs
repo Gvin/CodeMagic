@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Injection;
-using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.DecorativeObjects;
-using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Implementations.Items.Materials;
 using CodeMagic.Implementations.Objects.DecorativeObjects;
 

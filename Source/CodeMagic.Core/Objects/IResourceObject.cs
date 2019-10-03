@@ -1,5 +1,4 @@
 ﻿using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 
 namespace CodeMagic.Core.Objects

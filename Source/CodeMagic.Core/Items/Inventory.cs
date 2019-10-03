@@ -30,6 +30,11 @@ namespace CodeMagic.Core.Items
             }
         }
 
+        public void Clear()
+        {
+            stacks.Clear();
+        }
+
         public void AddItem(IItem item)
         {
             lock (stacks)

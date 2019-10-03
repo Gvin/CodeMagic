@@ -120,6 +120,14 @@ namespace CodeMagic.Core.Game.Locations
             TravelToLocation(game, storedLocation.Location, enterDirection, position);
         }
 
+        public ILocation GetLocation(string id)
+        {
+            if (string.Equals(CurrentLocation.Id, id))
+                return CurrentLocation;
+
+            return GetStoredLocation(id).Location;
+        }
+
         private StoredLocation GetStoredLocation(string id)
         {
             lock (storedLocations)
