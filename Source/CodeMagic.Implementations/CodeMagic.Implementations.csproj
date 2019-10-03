@@ -74,6 +74,7 @@
     <Compile Include="Objects\Buildings\Box.cs" />
     <Compile Include="Objects\Buildings\BuildingSite.cs" />
     <Compile Include="Objects\Buildings\Chest.cs" />
+    <Compile Include="Objects\Buildings\Furnace.cs" />
     <Compile Include="Objects\Buildings\IStorageBuilding.cs" />
     <Compile Include="Objects\Buildings\Palisade.cs" />
     <Compile Include="Objects\Buildings\PalisadeEmbrasure.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
@@ -53,6 +54,32 @@ namespace CodeMagic.UI.Sad.Views
             for (var dY = 0; dY < length; dY++)
             {
                 Print(x, y + dY, coloredGlyph);
+            }
+        }
+
+        protected void DrawImage( int x, int y, SymbolsImage image, Color defaultForeColor, Color defaultBackColor)
+        {
+            for (int posY = 0; posY < image.Height; posY++)
+            {
+                for (int posX = 0; posX < image.Width; posX++)
+                {
+                    var pixel = image[posX, posY];
+                    var backColor = pixel.BackgroundColor?.ToXna() ?? defaultBackColor;
+
+                    var printX = x + posX;
+                    var printY = y + posY;
+
+                    if (pixel.Symbol.HasValue)
+                    {
+                        var foreColor = pixel.Color?.ToXna() ?? defaultForeColor;
+                        Print(printX, printY,
+                            new ColoredGlyph(pixel.Symbol.Value, foreColor, backColor));
+                    }
+                    else
+                    {
+                        Print(printX, printY, new ColoredGlyph(' ', defaultForeColor, backColor));
+                    }
+                }
             }
         }
 

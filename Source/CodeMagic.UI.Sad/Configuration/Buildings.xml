@@ -74,4 +74,18 @@
       <material name="Wood" type="resource_wood">1</material>
     </cost>
   </building>
+
+  <building id="furnace" auto-unlock="true">
+    <name>Furnace</name>
+    <description>
+      <l>A stone furnace.</l>
+      <l>It uses external heat to process items.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_Furnace_Down_Hot</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <material name="Wood" type="resource_wood">1</material>
+    </cost>
+  </building>
 </buildings-configuration>
