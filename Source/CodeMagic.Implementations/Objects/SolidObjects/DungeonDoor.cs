@@ -13,7 +13,7 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 
         public override string Name => "Door";
 
-        protected override bool CanConnectTo(IMapObject mapObject)
+        public override bool CanConnectTo(IMapObject mapObject)
         {
             return mapObject is DungeonWall || mapObject is DungeonTorchWall || mapObject is DungeonDoor;
         }

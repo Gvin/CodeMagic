@@ -23,7 +23,7 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
             return new Stone();
         }
 
-        protected override bool CanConnectTo(IMapObject mapObject)
+        public override bool CanConnectTo(IMapObject mapObject)
         {
             return mapObject is CaveWall || mapObject is MinableWall;
         }

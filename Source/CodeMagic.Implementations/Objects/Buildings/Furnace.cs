@@ -28,9 +28,10 @@ namespace CodeMagic.Implementations.Objects.Buildings
 
         public override string Name => "Furnace";
 
-        protected override bool CanConnectTo(IMapObject mapObject)
+        public override bool CanConnectTo(IMapObject mapObject)
         {
-            return mapObject is WallBase;
+            // TODO: Add connection to solid wall
+            return false;
         }
 
         public int CurrentProgress => (int) Math.Floor(currentProgress);

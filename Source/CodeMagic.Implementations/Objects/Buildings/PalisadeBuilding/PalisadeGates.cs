@@ -2,7 +2,7 @@
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.UI.Images;
 
-namespace CodeMagic.Implementations.Objects.Buildings
+namespace CodeMagic.Implementations.Objects.Buildings.PalisadeBuilding
 {
     public class PalisadeGates : DoorObject, IWorldImageProvider
     {
@@ -13,7 +13,9 @@ namespace CodeMagic.Implementations.Objects.Buildings
 
         public override string Name => "Palisade Gates";
 
-        protected override bool CanConnectTo(IMapObject mapObject)
+        public override bool BlocksEnvironment => false;
+
+        public override bool CanConnectTo(IMapObject mapObject)
         {
             return mapObject is Palisade || mapObject is PalisadeEmbrasure || mapObject is PalisadeGates;
         }

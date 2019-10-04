@@ -91,7 +91,7 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
             return cell?.Objects.OfType<IPlaceConnectionObject>().FirstOrDefault(CanConnectTo);
         }
 
-        protected abstract bool CanConnectTo(IMapObject obj);
+        public abstract bool CanConnectTo(IMapObject obj);
 
         protected abstract IItem CreateResource();
 

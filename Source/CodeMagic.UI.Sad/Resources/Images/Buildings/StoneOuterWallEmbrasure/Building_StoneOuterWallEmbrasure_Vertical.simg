@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
+  <row>
+    <pixel />
+    <pixel glyph="220">
+      <color>
+        <R>85</R>
+        <G>85</G>
+        <B>85</B>
+      </color>
+      <background-color>
+        <R>128</R>
+        <G>128</G>
+        <B>128</B>
+      </background-color>
+    </pixel>
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel glyph="219">
+      <color>
+        <R>59</R>
+        <G>59</G>
+        <B>59</B>
+      </color>
+    </pixel>
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel glyph="220">
+      <color>
+        <R>85</R>
+        <G>85</G>
+        <B>85</B>
+      </color>
+      <background-color>
+        <R>128</R>
+        <G>128</G>
+        <B>128</B>
+      </background-color>
+    </pixel>
+    <pixel />
+  </row>
+</symbols-image>

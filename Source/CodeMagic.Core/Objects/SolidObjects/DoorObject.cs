@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Game;
+﻿using System.Linq;
+using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {
@@ -10,9 +11,9 @@ namespace CodeMagic.Core.Objects.SolidObjects
         }
         protected bool Closed { get; private set; }
 
-        public sealed override bool BlocksMovement => Closed;
+        public override bool BlocksMovement => Closed;
 
-        public sealed override bool BlocksAttack => Closed;
+        public override bool BlocksAttack => Closed;
 
         public override bool BlocksProjectiles => Closed;
 
@@ -22,7 +23,7 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public void Use(IGameCore game, Point position)
         {
-            if (!Closed && game.Map.GetCell(position).BlocksMovement)
+            if (!Closed && game.Map.GetCell(position).Objects.Any(obj => !obj.Equals(this) && obj.BlocksMovement))
                 return;
 
             Closed = !Closed;
