@@ -22,7 +22,9 @@ namespace CodeMagic.Configuration.Xml.Types.Buildings
 
             {"box", typeof(Box)},
             {"chest", typeof(Chest)},
+
             {"furnace", typeof(Furnace)},
+            {Fireplace.BuildingKey, typeof(Fireplace)},
 
             {WoodenWall.BuildingKey, typeof(WoodenWall)},
             {WoodenWallDoor.BuildingKey, typeof(WoodenWallDoor)},

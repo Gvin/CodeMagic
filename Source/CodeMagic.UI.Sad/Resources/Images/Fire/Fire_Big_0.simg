@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
-    <pixel glyph="44">
+    <pixel glyph="28">
       <color>
         <R>255</R>
-        <G>165</G>
+        <G>128</G>
         <B>0</B>
       </color>
     </pixel>
@@ -20,10 +20,10 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel glyph="46">
+    <pixel glyph="28">
       <color>
         <R>255</R>
-        <G>165</G>
+        <G>128</G>
         <B>0</B>
       </color>
     </pixel>
@@ -67,10 +67,10 @@
     </pixel>
   </row>
   <row>
-    <pixel glyph="39">
+    <pixel glyph="28">
       <color>
         <R>255</R>
-        <G>165</G>
+        <G>128</G>
         <B>0</B>
       </color>
     </pixel>
@@ -86,10 +86,10 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel glyph="96">
+    <pixel glyph="28">
       <color>
         <R>255</R>
-        <G>165</G>
+        <G>128</G>
         <B>0</B>
       </color>
     </pixel>

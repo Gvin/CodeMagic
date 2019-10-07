@@ -20,8 +20,11 @@ namespace CodeMagic.Configuration.Xml.Types.Physics
         [XmlElement("transfer-value-difference-multiplier")]
         public double TransferValueToDifferenceMultiplier { get; set; }
 
-        [XmlElement("normalize-speed")]
-        public int NormalizeSpeed { get; set; }
+        [XmlElement("normalize-speed-inside")]
+        public int NormalizeSpeedInside { get; set; }
+
+        [XmlElement("normalize-speed-outside")]
+        public int NormalizeSpeedOutside { get; set; }
 
         [XmlIgnore]
         public ITemperatureDamageConfiguration ColdDamageConfiguration =>ColdDamageConfigurationData;

@@ -199,6 +199,19 @@
       <!-- <material name="Wood" type="resource_wood">1</material> -->
     </cost>
   </building>
+  <building id="fireplace" auto-unlock="true">
+    <name>Fireplace</name>
+    <description>
+      <l>A small outside fireplace.</l>
+      <l>It can be used as light source and cooking station.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_Fireplace</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
 
   <!-- Storage -->-->
   <building id="box" auto-unlock="true">

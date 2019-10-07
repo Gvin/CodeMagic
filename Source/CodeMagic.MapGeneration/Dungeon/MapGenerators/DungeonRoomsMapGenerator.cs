@@ -5,6 +5,7 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects;
 using CodeMagic.MapGeneration.Dungeon.MapObjectFactories;
 using Point = System.Drawing.Point;
 
@@ -103,6 +104,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
                 for (int x = 0; x < width; x++)
                 {
                     result.AddObject(x, y, mapObjectsFactory.CreateFloor());
+                    result.AddObject(x, y, new DungeonRoofObject());
 
                     if (map[y][x] == MapBuilder.FilledCell)
                     {

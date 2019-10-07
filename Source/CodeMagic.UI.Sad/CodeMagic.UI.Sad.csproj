@@ -87,6 +87,7 @@
     <Compile Include="SpellsLibrary\SpellsLibraryManager.cs" />
     <Compile Include="Views\BuildingsView.cs" />
     <Compile Include="Views\BuildingUI\BuildingUIView.cs" />
+    <Compile Include="Views\BuildingUI\FireplaceUIView.cs" />
     <Compile Include="Views\BuildingUI\FurnaceUIView.cs" />
     <Compile Include="Views\StorageInventoryView.cs" />
     <Compile Include="Views\EditSpellView.cs" />

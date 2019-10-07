@@ -38,9 +38,9 @@ namespace CodeMagic.Core.Area.EnvironmentData
             set => pressure.Value = value;
         }
 
-        public void Normalize()
+        public void Normalize(bool isInside)
         {
-            temperature.Normalize();
+            temperature.Normalize(isInside);
             pressure.Normalize();
         }
 

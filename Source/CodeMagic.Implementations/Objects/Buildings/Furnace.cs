@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
@@ -7,12 +8,12 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.Implementations.Items.Materials;
 using CodeMagic.UI.Images;
+using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Implementations.Objects.Buildings
 {
-    public class Furnace : WallBase, IUsableObject, IWorldImageProvider, IDynamicObject
+    public class Furnace : WallBase, IUsableObject, IWorldImageProvider, IDynamicObject, ILightObject
     {
         private IFurnaceItem inputItem;
         private double currentProgress;
@@ -125,6 +126,19 @@ namespace CodeMagic.Implementations.Objects.Buildings
 
         public bool Updated { get; set; }
 
-        public UpdateOrder UpdateOrder => UpdateOrder.Late;
+        public UpdateOrder UpdateOrder => UpdateOrder.Early;
+
+        public ILightSource[] LightSources
+        {
+            get
+            {
+                if (IsHot)
+                {
+                    return new ILightSource[] {new StaticLightSource(LightLevel.Dim1, Color.DarkOrange)};
+                }
+
+                return new ILightSource[0];
+            }
+        }
     }
 }

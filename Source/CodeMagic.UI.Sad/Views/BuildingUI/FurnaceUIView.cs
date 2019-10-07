@@ -24,6 +24,8 @@ namespace CodeMagic.UI.Sad.Views.BuildingUI
             this.furnace = furnace;
 
             InitializeControls();
+
+            RefreshItems(false);
         }
 
         private void InitializeControls()

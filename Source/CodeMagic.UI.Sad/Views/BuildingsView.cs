@@ -163,6 +163,11 @@ namespace CodeMagic.UI.Sad.Views
             {
                 furnace.Used += (sender, args) => { new FurnaceUIView(game, furnace).Show(); };
             }
+
+            if (building is Fireplace fireplace)
+            {
+                fireplace.Used += (sender, args) => { new FireplaceUIView(game, fireplace).Show(); };
+            }
         }
 
         private void OpenStorage(IStorageBuilding storageBuilding)

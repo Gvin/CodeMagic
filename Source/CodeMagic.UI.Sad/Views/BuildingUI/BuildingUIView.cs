@@ -24,7 +24,6 @@ namespace CodeMagic.UI.Sad.Views.BuildingUI
             this.buildingName = buildingName;
 
             InitializeControls();
-            RefreshItems(false);
         }
 
         private void InitializeControls()

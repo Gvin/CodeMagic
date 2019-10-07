@@ -6,6 +6,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects;
 using CodeMagic.MapGeneration.Dungeon.MapObjectFactories;
 
 namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
@@ -149,6 +150,7 @@ namespace CodeMagic.MapGeneration.Dungeon.MapGenerators
                 for (int x = 0; x < map.Width; x++)
                 {
                     map.AddObject(x, y, mapObjectsFactory.CreateFloor());
+                    map.AddObject(x, y, new DungeonRoofObject());
                 }
             }
 

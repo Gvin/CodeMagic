@@ -64,7 +64,11 @@ namespace CodeMagic.Core.Area
 
         public void UpdateEnvironment()
         {
-            Environment.Normalize();
+            CheckFuelObjects();
+
+            var isInside = ObjectsCollection.OfType<IRoofObject>().Any();
+
+            Environment.Normalize(isInside);
 
             if (Environment.Temperature >= FireDecorativeObject.SmallFireTemperature && !ObjectsCollection.OfType<FireDecorativeObject>().Any())
             {
@@ -127,6 +131,23 @@ namespace CodeMagic.Core.Area
         {
             CheckSpreadingObjects(other);
             CheckFireSpread(other);
+        }
+
+        private void CheckFuelObjects()
+        {
+            var fuelObjects = ObjectsCollection
+                .OfType<IFuelObject>()
+                .Where(obj => obj.CanIgnite && Temperature >= obj.IgnitionTemperature)
+                .ToArray();
+            if (fuelObjects.Length == 0)
+                return;
+
+            var maxTemperature = fuelObjects.Max(obj => obj.BurnTemperature);
+            Temperature = maxTemperature;
+            foreach (var fuelObject in fuelObjects)
+            {
+                fuelObject.FuelLeft--;
+            }
         }
 
         private void CheckFireSpread(AreaMapCell other)

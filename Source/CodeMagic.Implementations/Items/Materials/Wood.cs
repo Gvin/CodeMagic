@@ -4,9 +4,16 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items.Materials
 {
-    public class Wood : ItemBase, IWorldImageProvider, IInventoryImageProvider, IDescriptionProvider
+    public class Wood : ItemBase, IWorldImageProvider, IInventoryImageProvider, IDescriptionProvider, IFuelItem
     {
         public const string ResourceKey = "resource_wood";
+
+        private const int DefaultMaxFuel = 120;
+
+        public Wood()
+        {
+            FuelLeft = MaxFuel;
+        }
 
         public override string Name => "Wood";
 
@@ -34,9 +41,21 @@ namespace CodeMagic.Implementations.Items.Materials
             {
                 ItemTextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
+                new StyledLine {$"Fuel: {FuelLeft} / {MaxFuel}"},
+                StyledLine.Empty,
                 new StyledLine {{"A big piece of wood.", ItemTextHelper.DescriptionTextColor}},
                 new StyledLine {{"It can be used for building or as a fuel source.", ItemTextHelper.DescriptionTextColor}}
             };
         }
+
+        public bool CanIgnite => true;
+
+        public int FuelLeft { get; set; }
+
+        public int MaxFuel => DefaultMaxFuel;
+
+        public int BurnTemperature => 700;
+
+        public int IgnitionTemperature => 450;
     }
 }

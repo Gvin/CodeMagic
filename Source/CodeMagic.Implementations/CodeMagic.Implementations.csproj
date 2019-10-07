@@ -73,6 +73,7 @@
     <Compile Include="Objects\AnimationsBatchManager.cs" />
     <Compile Include="Objects\Buildings\Box.cs" />
     <Compile Include="Objects\Buildings\BuildingSite.cs" />
+    <Compile Include="Objects\Buildings\Fireplace.cs" />
     <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWall.cs" />
     <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWallDoor.cs" />
     <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWallGlassWindow.cs" />
