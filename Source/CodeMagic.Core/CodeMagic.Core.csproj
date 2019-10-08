@@ -108,6 +108,7 @@
     <Compile Include="Game\Journaling\Messages\ItemLostMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ItemReceivedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ResourcesRequiredToBuildMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\RoofCollapsedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\StoringLocationNotAllowedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ToolRequiredMessage.cs" />
     <Compile Include="Game\Locations\DungeonLocation.cs" />

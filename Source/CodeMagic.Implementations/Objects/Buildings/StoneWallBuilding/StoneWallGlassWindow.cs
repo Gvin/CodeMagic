@@ -1,11 +1,10 @@
 ﻿using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.Implementations.Objects.Buildings.WoodenWallBuilding;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.Buildings.StoneWallBuilding
 {
-    public class StoneWallGlassWindow : DoorObject, IWorldImageProvider
+    public class StoneWallGlassWindow : DoorObject, IWorldImageProvider, IRoofSupport, IRoofObject
     {
         public const string BuildingKey = "stone_wall_glass_window";
 

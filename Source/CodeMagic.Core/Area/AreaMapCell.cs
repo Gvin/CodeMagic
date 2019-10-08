@@ -52,6 +52,8 @@ namespace CodeMagic.Core.Area
             set => MagicEnergy.Disturbance = value;
         }
 
+        public override bool HasRoof => ObjectsCollection.OfType<IRoofObject>().Any();
+
         public void Update(IAreaMap map, IJournal journal, Point position, UpdateOrder updateOrder)
         {
             ProcessDynamicObjects(map, journal, position, updateOrder);
@@ -62,9 +64,9 @@ namespace CodeMagic.Core.Area
             ProcessDestroyableObjects(map, journal, position);
         }
 
-        public void UpdateEnvironment()
+        public void UpdateEnvironment(IAreaMap map, Point position)
         {
-            CheckFuelObjects();
+            CheckFuelObjects(map, position);
 
             var isInside = ObjectsCollection.OfType<IRoofObject>().Any();
 
@@ -133,7 +135,7 @@ namespace CodeMagic.Core.Area
             CheckFireSpread(other);
         }
 
-        private void CheckFuelObjects()
+        private void CheckFuelObjects(IAreaMap map, Point position)
         {
             var fuelObjects = ObjectsCollection
                 .OfType<IFuelObject>()
@@ -147,6 +149,10 @@ namespace CodeMagic.Core.Area
             foreach (var fuelObject in fuelObjects)
             {
                 fuelObject.FuelLeft--;
+                if (fuelObject.FuelLeft <= 0)
+                {
+                    map.RemoveObject(position, fuelObject);
+                }
             }
         }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
-    <pixel glyph="222">
+    <pixel glyph="219">
       <color>
         <R>157</R>
         <G>157</G>
@@ -20,7 +20,7 @@
         <B>157</B>
       </background-color>
     </pixel>
-    <pixel glyph="221">
+    <pixel glyph="219">
       <color>
         <R>89</R>
         <G>89</G>
@@ -29,7 +29,7 @@
     </pixel>
   </row>
   <row>
-    <pixel glyph="222">
+    <pixel glyph="219">
       <color>
         <R>157</R>
         <G>157</G>
@@ -48,7 +48,7 @@
         <B>255</B>
       </background-color>
     </pixel>
-    <pixel glyph="221">
+    <pixel glyph="219">
       <color>
         <R>89</R>
         <G>89</G>
@@ -57,7 +57,7 @@
     </pixel>
   </row>
   <row>
-    <pixel glyph="222">
+    <pixel glyph="219">
       <color>
         <R>157</R>
         <G>157</G>
@@ -76,7 +76,7 @@
         <B>157</B>
       </background-color>
     </pixel>
-    <pixel glyph="221">
+    <pixel glyph="219">
       <color>
         <R>89</R>
         <G>89</G>

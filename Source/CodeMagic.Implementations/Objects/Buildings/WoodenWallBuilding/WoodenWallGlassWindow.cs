@@ -4,7 +4,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.Buildings.WoodenWallBuilding
 {
-    public class WoodenWallGlassWindow : DoorObject, IWorldImageProvider
+    public class WoodenWallGlassWindow : DoorObject, IWorldImageProvider, IRoofSupport, IRoofObject
     {
         public const string BuildingKey = "wooden_wall_glass_window";
 

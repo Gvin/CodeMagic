@@ -74,10 +74,13 @@
     <Compile Include="Objects\Buildings\Box.cs" />
     <Compile Include="Objects\Buildings\BuildingSite.cs" />
     <Compile Include="Objects\Buildings\Fireplace.cs" />
+    <Compile Include="Objects\Buildings\IRoofSupport.cs" />
+    <Compile Include="Objects\Buildings\Roof.cs" />
     <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWall.cs" />
     <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWallDoor.cs" />
     <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWallGlassWindow.cs" />
     <Compile Include="Objects\Buildings\TorchPost.cs" />
+    <Compile Include="Objects\Buildings\WoodenFloor.cs" />
     <Compile Include="Objects\Buildings\WoodenWallBuilding\WoodenWall.cs" />
     <Compile Include="Objects\Buildings\Chest.cs" />
     <Compile Include="Objects\Buildings\Furnace.cs" />

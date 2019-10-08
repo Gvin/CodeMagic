@@ -4,7 +4,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.Buildings.WoodenWallBuilding
 {
-    public class WoodenWall : WallBase, IWorldImageProvider
+    public class WoodenWall : WallBase, IWorldImageProvider, IRoofSupport, IRoofObject
     {
         public const string BuildingKey = "wooden_wall";
 

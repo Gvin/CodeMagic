@@ -258,4 +258,31 @@
       <!-- <material name="Wood" type="resource_wood">1</material> -->
     </cost>
   </building>
+
+  <building id="roof" auto-unlock="true">
+    <name>Roof</name>
+    <description>
+      <l>A roof which can be built near walls.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_Roof</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+
+  <!-- Floor -->
+  <building id="wooden_floor" auto-unlock="true">
+    <name>Wooden Floor</name>
+    <description>
+      <l>A floor made from wood.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_WoodenFloor</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
 </buildings-configuration>

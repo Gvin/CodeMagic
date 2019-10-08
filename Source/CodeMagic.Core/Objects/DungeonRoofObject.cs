@@ -13,7 +13,7 @@
         public bool BlocksVisibility => false;
         public bool BlocksAttack => false;
         public bool BlocksEnvironment => false;
-        public ZIndex ZIndex => ZIndex.Air;
+        public ZIndex ZIndex => ZIndex.Roof;
         public bool Equals(IMapObject other)
         {
             return ReferenceEquals(this, other);

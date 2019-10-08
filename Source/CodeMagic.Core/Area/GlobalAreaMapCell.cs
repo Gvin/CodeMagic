@@ -9,6 +9,8 @@ namespace CodeMagic.Core.Area
 {
     public class GlobalAreaMapCell : AreaMapCellBase
     {
+        public override bool HasRoof => false;
+
         public override int Temperature
         {
             get => ConfigurationManager.Current.Physics.TemperatureConfiguration.NormalValue;

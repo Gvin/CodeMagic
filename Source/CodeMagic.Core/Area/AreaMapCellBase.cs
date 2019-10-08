@@ -36,6 +36,8 @@ namespace CodeMagic.Core.Area
 
         public bool HasSolidObjects => ObjectsCollection.OfType<WallBase>().Any();
 
+        public abstract bool HasRoof { get; }
+
         public bool BlocksEnvironment
         {
             get { return ObjectsCollection.Any(obj => obj.BlocksEnvironment); }

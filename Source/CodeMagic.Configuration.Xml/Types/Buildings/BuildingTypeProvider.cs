@@ -34,7 +34,11 @@ namespace CodeMagic.Configuration.Xml.Types.Buildings
 
             {StoneWall.BuildingKey, typeof(StoneWall)},
             {StoneWallDoor.BuildingKey, typeof(StoneWallDoor)},
-            {StoneWallGlassWindow.BuildingKey, typeof(StoneWallGlassWindow)}
+            {StoneWallGlassWindow.BuildingKey, typeof(StoneWallGlassWindow)},
+
+            {Roof.BuildingKey, typeof(Roof)},
+
+            {WoodenFloor.BuildingKey, typeof(WoodenFloor)}
         };
 
         public static Type GetBuildingType(string buildingKey)
