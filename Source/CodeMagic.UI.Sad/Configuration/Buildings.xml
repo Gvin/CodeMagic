@@ -213,6 +213,21 @@
     </cost>
   </building>
 
+  <!-- Lighting -->
+  <building id="torch_post" auto-unlock="true">
+    <name>Torch Post</name>
+    <description>
+      <l>A torch on wooden stand.</l>
+      <l>It can be used to provide light.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Decoratives_TorchPost</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+
   <!-- Storage -->-->
   <building id="box" auto-unlock="true">
     <name>Box</name>
