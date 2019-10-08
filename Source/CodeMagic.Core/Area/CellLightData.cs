@@ -32,7 +32,7 @@ namespace CodeMagic.Core.Area
             data.Add(light.Clone());
         }
 
-        public void AddLights(Light[] lights)
+        public void AddLights(IEnumerable<Light> lights)
         {
             foreach (var light in lights)
             {

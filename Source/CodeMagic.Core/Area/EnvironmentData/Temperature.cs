@@ -44,10 +44,10 @@ namespace CodeMagic.Core.Area.EnvironmentData
             }
         }
 
-        public void Normalize()
+        public void Normalize(bool isInside)
         {
             var difference = Math.Abs(configuration.NormalValue - Value);
-            difference = Math.Min(difference, configuration.NormalizeSpeed);
+            difference = Math.Min(difference, isInside ? configuration.NormalizeSpeedInside : configuration.NormalizeSpeedOutside);
 
             if (Value > configuration.NormalValue)
             {

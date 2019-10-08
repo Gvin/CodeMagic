@@ -8,6 +8,7 @@ using CodeMagic.Core.Objects;
 using CodeMagic.Implementations.Objects.Buildings;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
+using CodeMagic.UI.Sad.Views.BuildingUI;
 using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
@@ -146,12 +147,27 @@ namespace CodeMagic.UI.Sad.Views
 
             var result = constructor.Invoke(new object[0]) as IMapObject;
 
-            if (result is IStorageBuilding storageBuilding)
+            AddCustomBuildingHandlers(result);
+
+            return result;
+        }
+
+        private void AddCustomBuildingHandlers(IMapObject building)
+        {
+            if (building is IStorageBuilding storageBuilding)
             {
                 storageBuilding.Opened += (sender, args) => OpenStorage(storageBuilding);
             }
 
-            return result;
+            if (building is Furnace furnace)
+            {
+                furnace.Used += (sender, args) => { new FurnaceUIView(game, furnace).Show(); };
+            }
+
+            if (building is Fireplace fireplace)
+            {
+                fireplace.Used += (sender, args) => { new FireplaceUIView(game, fireplace).Show(); };
+            }
         }
 
         private void OpenStorage(IStorageBuilding storageBuilding)

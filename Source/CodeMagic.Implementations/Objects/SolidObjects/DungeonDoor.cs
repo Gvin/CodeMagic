@@ -6,13 +6,14 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 {
     public class DungeonDoor : DoorObject, IWorldImageProvider
     {
-        private const string ImageOpenedHorizontal = "Door_Opened_Horizontal";
-        private const string ImageOpenedVertical = "Door_Opened_Vertical";
-        private const string ImageClosed = "Door_Closed";
+        private const string ImageOpenedHorizontal = "Door_Dungeon_Opened_Horizontal";
+        private const string ImageOpenedVertical = "Door_Dungeon_Opened_Vertical";
+        private const string ImageClosedVertical = "Door_Dungeon_Closed_Vertical";
+        private const string ImageClosedHorizontal = "Door_Dungeon_Closed_Horizontal";
 
         public override string Name => "Door";
 
-        protected override bool CanConnectTo(IMapObject mapObject)
+        public override bool CanConnectTo(IMapObject mapObject)
         {
             return mapObject is DungeonWall || mapObject is DungeonTorchWall || mapObject is DungeonDoor;
         }
@@ -21,7 +22,10 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
         {
             if (Closed)
             {
-                return storage.GetImage(ImageClosed);
+                if (HasConnectedTile(0, -1) && HasConnectedTile(0, 1))
+                    return storage.GetImage(ImageClosedVertical);
+
+                return storage.GetImage(ImageClosedHorizontal);
             }
 
             if (HasConnectedTile(0, -1) && HasConnectedTile(0, 1))

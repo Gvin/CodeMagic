@@ -17,7 +17,7 @@ namespace CodeMagic.Core.Area
                     var cell = map.GetCell(position);
                     cell.LightLevel.Clear();
 
-                    if (map.BackgroundLight != null)
+                    if (map.BackgroundLight != null && !cell.HasRoof)
                     {
                         cell.LightLevel.AddLight(map.BackgroundLight.Clone());
                     }

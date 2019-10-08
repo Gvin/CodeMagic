@@ -23,7 +23,7 @@ namespace CodeMagic.UI.Sad.Items
 
         public override string Key => "bag";
 
-        public override ItemRareness Rareness => ItemRareness.Rare;
+        public override ItemRareness Rareness => ItemRareness.Common;
 
         public override int Weight => 2000 + inventory.GetWeight();
 

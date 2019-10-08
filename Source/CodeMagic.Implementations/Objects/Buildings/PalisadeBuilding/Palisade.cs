@@ -2,7 +2,7 @@
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.UI.Images;
 
-namespace CodeMagic.Implementations.Objects.Buildings
+namespace CodeMagic.Implementations.Objects.Buildings.PalisadeBuilding
 {
     public class Palisade : WallBase, IWorldImageProvider
     {
@@ -11,6 +11,13 @@ namespace CodeMagic.Implementations.Objects.Buildings
             if (HasConnectedTile(1, 0) && HasConnectedTile(-1, 0) && 
                 HasConnectedTile(0, 1) && HasConnectedTile(0, -1))
                 return storage.GetImage("Building_Palisade_Top_Bottom_Left_Right");
+
+            if (HasConnectedTile(0, -1) && HasConnectedTile(0, 1) &&
+                HasConnectedTile(1, 0))
+                return storage.GetImage("Building_Palisade_Top_Bottom_Right");
+            if (HasConnectedTile(0, -1) && HasConnectedTile(0, 1) &&
+                HasConnectedTile(-1, 0))
+                return storage.GetImage("Building_Palisade_Top_Bottom_Left");
             if (HasConnectedTile(1, 0) && HasConnectedTile(-1, 0) && 
                 HasConnectedTile(0, 1))
                 return storage.GetImage("Building_Palisade_Bottom_Left_Right");
@@ -39,7 +46,9 @@ namespace CodeMagic.Implementations.Objects.Buildings
 
         public override string Name => "Palisade";
 
-        protected override bool CanConnectTo(IMapObject mapObject)
+        public override bool BlocksEnvironment => false;
+
+        public override bool CanConnectTo(IMapObject mapObject)
         {
             return mapObject is Palisade || mapObject is PalisadeEmbrasure || mapObject is PalisadeGates;
         }

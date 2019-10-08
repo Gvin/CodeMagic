@@ -14,7 +14,7 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 
         public override string Name => "Cave Wall";
 
-        protected override bool CanConnectTo(IMapObject mapObject)
+        public override bool CanConnectTo(IMapObject mapObject)
         {
             return mapObject is CaveWall || mapObject is MinableWall;
         }

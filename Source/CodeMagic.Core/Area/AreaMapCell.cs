@@ -52,6 +52,8 @@ namespace CodeMagic.Core.Area
             set => MagicEnergy.Disturbance = value;
         }
 
+        public override bool HasRoof => ObjectsCollection.OfType<IRoofObject>().Any();
+
         public void Update(IAreaMap map, IJournal journal, Point position, UpdateOrder updateOrder)
         {
             ProcessDynamicObjects(map, journal, position, updateOrder);
@@ -62,9 +64,13 @@ namespace CodeMagic.Core.Area
             ProcessDestroyableObjects(map, journal, position);
         }
 
-        public void UpdateEnvironment()
+        public void UpdateEnvironment(IAreaMap map, Point position)
         {
-            Environment.Normalize();
+            CheckFuelObjects(map, position);
+
+            var isInside = ObjectsCollection.OfType<IRoofObject>().Any();
+
+            Environment.Normalize(isInside);
 
             if (Environment.Temperature >= FireDecorativeObject.SmallFireTemperature && !ObjectsCollection.OfType<FireDecorativeObject>().Any())
             {
@@ -127,6 +133,27 @@ namespace CodeMagic.Core.Area
         {
             CheckSpreadingObjects(other);
             CheckFireSpread(other);
+        }
+
+        private void CheckFuelObjects(IAreaMap map, Point position)
+        {
+            var fuelObjects = ObjectsCollection
+                .OfType<IFuelObject>()
+                .Where(obj => obj.CanIgnite && Temperature >= obj.IgnitionTemperature)
+                .ToArray();
+            if (fuelObjects.Length == 0)
+                return;
+
+            var maxTemperature = fuelObjects.Max(obj => obj.BurnTemperature);
+            Temperature = maxTemperature;
+            foreach (var fuelObject in fuelObjects)
+            {
+                fuelObject.FuelLeft--;
+                if (fuelObject.FuelLeft <= 0)
+                {
+                    map.RemoveObject(position, fuelObject);
+                }
+            }
         }
 
         private void CheckFireSpread(AreaMapCell other)

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <buildings-configuration>
+  <!-- Palisade -->
   <building id="palisade" auto-unlock="true">
     <name>Palisade</name>
     <description>
@@ -10,11 +11,13 @@
     <preview-image>Building_Palisade_Horizontal</preview-image>
     <build-time>1</build-time>
     <cost>
-      <material name="Wood" type="resource_wood">1</material>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
     </cost>
     <unlocks>
       <id>palisade_gates</id>
       <id>palisade_embrasure</id>
+      <id>stone_outer_wall</id>
+      <id>wooden_wall</id>
     </unlocks>
   </building>
   <building id="palisade_gates" auto-unlock="false">
@@ -27,7 +30,7 @@
     <preview-image>Building_PalisadeGates_Horizontal_Closed</preview-image>
     <build-time>1</build-time>
     <cost>
-      <material name="Wood" type="resource_wood">1</material>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
     </cost>
   </building>
   <building id="palisade_embrasure" auto-unlock="false">
@@ -41,10 +44,191 @@
     <preview-image>Building_PalisadeEmbrasure_Horizontal</preview-image>
     <build-time>1</build-time>
     <cost>
-      <material name="Wood" type="resource_wood">1</material>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
     </cost>
   </building>
 
+  <!-- Stone Outside Wall -->
+  <building id="stone_outer_wall" auto-unlock="false">
+    <name>Stone Wall</name>
+    <description>
+      <l>Tall solid wall made of stone.</l>
+      <l>Can withstand a lot of damage.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_StoneOuterWall_Horizontal</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+    <unlocks>
+      <id>stone_outer_wall_gates</id>
+      <id>stone_outer_wall_embrasure</id>
+      <id>stone_wall</id>
+    </unlocks>
+  </building>
+  <building id="stone_outer_wall_gates" auto-unlock="false">
+    <name>Stone Wall Gates</name>
+    <description>
+      <l>Gates made of stone.</l>
+      <l>Can withstand a lot of damage.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_StoneOuterWallGates_Horizontal_Closed</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+  <building id="stone_outer_wall_embrasure" auto-unlock="false">
+    <name>Stone Wall Embrasure</name>
+    <description>
+      <l>Tall solid wall made of stone.</l>
+      <l>Can withstand a lot of damage.</l>
+      <l>It has a hole that can be used for watching or casting.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_StoneOuterWallEmbrasure_Horizontal</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+
+  <!-- Wooden Inner Wall -->
+  <building id="wooden_wall" auto-unlock="false">
+    <name>Wooden Wall</name>
+    <description>
+      <l>A wooden building wall.</l>
+      <l>It can be used to build roofed buildings.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_WoodenWall_Bottom</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+    <unlocks>
+      <id>wooden_wall_glass_window</id>
+      <id>wooden_wall_door</id>
+    </unlocks>
+  </building>
+  <building id="wooden_wall_glass_window" auto-unlock="false">
+    <name>Wooden Wall Glass Window</name>
+    <description>
+      <l>A wooden building wall with glass window.</l>
+      <l>It can be used to build roofed buildings.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_WoodenWallGlassWindow_Horizontal_Closed</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+  <building id="wooden_wall_door" auto-unlock="false">
+    <name>Wooden Wall Door</name>
+    <description>
+      <l>A wooden building wall with door.</l>
+      <l>It can be used to build roofed buildings.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_WoodenWallDoor_Horizontal_Closed</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+
+  <!-- Stone Inner Wall -->
+  <building id="stone_wall" auto-unlock="false">
+    <name>Stone Wall</name>
+    <description>
+      <l>A stone building wall.</l>
+      <l>It can be used to build roofed buildings.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_StoneWall_Bottom</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+    <unlocks>
+      <id>stone_wall_glass_window</id>
+      <id>stone_wall_door</id>
+    </unlocks>
+  </building>
+  <building id="stone_wall_glass_window" auto-unlock="false">
+    <name>Stone Wall Glass Window</name>
+    <description>
+      <l>A stone building wall with glass window.</l>
+      <l>It can be used to build roofed buildings.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_StoneWallGlassWindow_Horizontal_Closed</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+  <building id="stone_wall_door" auto-unlock="false">
+    <name>Stone Wall Door</name>
+    <description>
+      <l>A stone building wall with door.</l>
+      <l>It can be used to build roofed buildings.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_StoneWallDoor_Horizontal_Closed</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+
+  <!-- Common working stations -->
+  <building id="furnace" auto-unlock="true">
+    <name>Furnace</name>
+    <description>
+      <l>A stone furnace.</l>
+      <l>It uses external heat to process items.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_Furnace_Down_Hot</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+  <building id="fireplace" auto-unlock="true">
+    <name>Fireplace</name>
+    <description>
+      <l>A small outside fireplace.</l>
+      <l>It can be used as light source and cooking station.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_Fireplace</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+
+  <!-- Lighting -->
+  <building id="torch_post" auto-unlock="true">
+    <name>Torch Post</name>
+    <description>
+      <l>A torch on wooden stand.</l>
+      <l>It can be used to provide light.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Decoratives_TorchPost</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+
+  <!-- Storage -->-->
   <building id="box" auto-unlock="true">
     <name>Box</name>
     <description>
@@ -55,7 +239,7 @@
     <preview-image>Building_Box</preview-image>
     <build-time>1</build-time>
     <cost>
-      <material name="Wood" type="resource_wood">1</material>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
     </cost>
     <unlocks>
       <id>chest</id>
@@ -71,7 +255,34 @@
     <preview-image>Building_Chest</preview-image>
     <build-time>1</build-time>
     <cost>
-      <material name="Wood" type="resource_wood">1</material>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+
+  <building id="roof" auto-unlock="true">
+    <name>Roof</name>
+    <description>
+      <l>A roof which can be built near walls.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_Roof</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+
+  <!-- Floor -->
+  <building id="wooden_floor" auto-unlock="true">
+    <name>Wooden Floor</name>
+    <description>
+      <l>A floor made from wood.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_WoodenFloor</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
     </cost>
   </building>
 </buildings-configuration>

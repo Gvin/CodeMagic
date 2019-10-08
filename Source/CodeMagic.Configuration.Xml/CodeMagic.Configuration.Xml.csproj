@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\Buildings\BuildingTypeProvider.cs" />
     <Compile Include="Types\Buildings\XmlBuildingsConfiguration.cs" />
     <Compile Include="Types\Items\Armor\XmlArmorConfiguration.cs" />
     <Compile Include="Types\Items\Armor\XmlArmorPieceConfiguration.cs" />

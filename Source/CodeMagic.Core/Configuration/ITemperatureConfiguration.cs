@@ -12,7 +12,9 @@
 
         double TransferValueToDifferenceMultiplier { get; }
 
-        int NormalizeSpeed { get; }
+        int NormalizeSpeedInside { get; }
+
+        int NormalizeSpeedOutside { get; }
 
         ITemperatureDamageConfiguration ColdDamageConfiguration { get; }
 

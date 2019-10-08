@@ -6,13 +6,13 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.DecorativeObjects
 {
-    public class TorchPost : IMapObject, ILightObject, IWorldImageProvider
+    public class DungeonTorchPost : IMapObject, ILightObject, IWorldImageProvider
     {
         private const string AnimationName = "Decoratives_TorchPost";
 
         private readonly AnimationsBatchManager animationsManager;
 
-        public TorchPost()
+        public DungeonTorchPost()
         {
             animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
         }
@@ -33,7 +33,7 @@ namespace CodeMagic.Implementations.Objects.DecorativeObjects
 
         public ObjectSize Size => ObjectSize.Huge;
 
-        public ILightSource[] LightSources => new[]
+        public ILightSource[] LightSources => new ILightSource[]
         {
             new StaticLightSource(LightLevel.Medium, Color.FromArgb(255, 204, 102)),
         };

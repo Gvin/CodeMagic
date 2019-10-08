@@ -243,7 +243,7 @@ namespace CodeMagic.Core.Area
                     var cell = (AreaMapCell)GetCell(position);
                     cell.PostUpdate(this, journal, position);
                     cell.ResetDynamicObjectsState();
-                    cell.UpdateEnvironment();
+                    cell.UpdateEnvironment(this, position);
                     MergeCellEnvironment(position, cell, mergedCells);
                 }
             }

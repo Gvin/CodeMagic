@@ -23,6 +23,8 @@ namespace CodeMagic.Core.Area
 
         bool HasSolidObjects { get; }
 
+        bool HasRoof { get; }
+
         IDestroyableObject GetBiggestDestroyable();
 
         int Temperature { get; set; }

@@ -109,9 +109,19 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetItemLostMessage(itemLostMessage);
                 case ToolRequiredMessage toolRequiredMessage:
                     return GetToolRequiredMessage(toolRequiredMessage);
+                case RoofCollapsedMessage roofCollapsedMessage:
+                    return GetRoofCollapsedMessage(roofCollapsedMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetRoofCollapsedMessage(RoofCollapsedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("A roof has collapsed"),
+            };
         }
 
         private ColoredString[] GetToolRequiredMessage(ToolRequiredMessage message)

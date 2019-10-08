@@ -33,7 +33,7 @@ namespace CodeMagic.MapGeneration.Dungeon
                 if (position == null)
                     continue;
 
-                map.AddObject(position, new TorchPost());
+                map.AddObject(position, new DungeonTorchPost());
             }
         }
 

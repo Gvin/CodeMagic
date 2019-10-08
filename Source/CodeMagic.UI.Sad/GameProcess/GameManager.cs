@@ -6,6 +6,7 @@ using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Implementations.Items;
+using CodeMagic.Implementations.Items.Materials;
 using CodeMagic.Implementations.Items.Usable;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.MapGeneration.GlobalWorld;

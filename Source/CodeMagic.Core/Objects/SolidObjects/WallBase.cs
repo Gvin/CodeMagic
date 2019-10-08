@@ -66,13 +66,13 @@ namespace CodeMagic.Core.Objects.SolidObjects
             }
         }
 
-        protected abstract bool CanConnectTo(IMapObject mapObject);
+        public abstract bool CanConnectTo(IMapObject mapObject);
 
         private IPlaceConnectionObject GetWall(IAreaMap map, Point position, int relativeX, int relativeY)
         {
             var nearPosition = new Point(position.X + relativeX, position.Y + relativeY);
             var cell = map.TryGetCell(nearPosition);
-            return cell?.Objects.OfType<IPlaceConnectionObject>().FirstOrDefault(CanConnectTo);
+            return cell?.Objects.OfType<IPlaceConnectionObject>().FirstOrDefault(obj => CanConnectTo(obj) || obj.CanConnectTo(this));
         }
 
         public bool Equals(IMapObject other)

@@ -10,6 +10,7 @@
         Wall = 5,
         Spell = 6,
         Creature = 7,
-        Air = 8
+        Air = 8,
+        Roof = 9
     }
 }

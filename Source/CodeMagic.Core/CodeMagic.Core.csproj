@@ -108,6 +108,7 @@
     <Compile Include="Game\Journaling\Messages\ItemLostMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ItemReceivedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ResourcesRequiredToBuildMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\RoofCollapsedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\StoringLocationNotAllowedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ToolRequiredMessage.cs" />
     <Compile Include="Game\Locations\DungeonLocation.cs" />
@@ -144,6 +145,8 @@
     <Compile Include="Items\ArmorClass.cs" />
     <Compile Include="Items\EquipableItem.cs" />
     <Compile Include="Items\IEquipableItem.cs" />
+    <Compile Include="Items\IFuelItem.cs" />
+    <Compile Include="Items\IFurnaceItem.cs" />
     <Compile Include="Items\IItemsGenerator.cs" />
     <Compile Include="Items\IUsableItem.cs" />
     <Compile Include="Items\ScrollItem.cs" />
@@ -154,15 +157,18 @@
     <Compile Include="Objects\Creatures\MonsterCreatureObject.cs" />
     <Compile Include="Objects\Creatures\Remains\CreatureRemainsGenerator.cs" />
     <Compile Include="Objects\DecorativeObjects\CreatureRemainsObject.cs" />
+    <Compile Include="Objects\DungeonRoofObject.cs" />
     <Compile Include="Objects\IceObjects\AbstractIceObject.cs" />
     <Compile Include="Objects\IceObjects\AcidIceObject.cs" />
     <Compile Include="Objects\IceObjects\WaterIceObject.cs" />
     <Compile Include="Objects\IceObjects\IIceObject.cs" />
+    <Compile Include="Objects\IFuelObject.cs" />
     <Compile Include="Objects\IFireSpreadingObject.cs" />
     <Compile Include="Objects\ILightObject.cs" />
     <Compile Include="Objects\IPlaceConnectionObject.cs" />
     <Compile Include="Objects\IPlacedHandler.cs" />
     <Compile Include="Objects\IResourceObject.cs" />
+    <Compile Include="Objects\IRoofObject.cs" />
     <Compile Include="Objects\ISpreadingObject.cs" />
     <Compile Include="Objects\IStepReactionObject.cs" />
     <Compile Include="Objects\IUsableObject.cs" />

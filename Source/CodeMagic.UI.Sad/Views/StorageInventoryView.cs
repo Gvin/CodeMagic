@@ -253,7 +253,7 @@ namespace CodeMagic.UI.Sad.Views
             ProcessSelectedItemChanged();
         }
 
-        protected virtual void ProcessSelectedItemChanged()
+        private void ProcessSelectedItemChanged()
         {
             itemDetails.Stack = SelectedStack1 ?? SelectedStack2;
 

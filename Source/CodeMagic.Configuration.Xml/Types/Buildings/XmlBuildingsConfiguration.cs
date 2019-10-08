@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using CodeMagic.Core.Configuration.Buildings;
 using CodeMagic.Core.Items;
-using CodeMagic.Implementations.Objects.Buildings;
 
 namespace CodeMagic.Configuration.Xml.Types.Buildings
 {
@@ -21,17 +19,8 @@ namespace CodeMagic.Configuration.Xml.Types.Buildings
     [Serializable]
     public class XmlBuildingConfiguration : IBuildingConfiguration
     {
-        private static readonly Dictionary<string, Type> Buildings = new Dictionary<string, Type>
-        {
-            {"palisade", typeof(Palisade)},
-            {"palisade_gates", typeof(PalisadeGates)},
-            {"palisade_embrasure", typeof(PalisadeEmbrasure)},
-            {"box", typeof(Box)},
-            {"chest", typeof(Chest)}
-        };
-
         [XmlIgnore]
-        public Type Type => Buildings[Id];
+        public Type Type => BuildingTypeProvider.GetBuildingType(Id);
 
         [XmlElement("name")]
         public string Name { get; set; }

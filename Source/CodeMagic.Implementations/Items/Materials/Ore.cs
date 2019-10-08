@@ -1,12 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Items.Materials
 {
-    public class Ore : ItemBase, IDescriptionProvider, IWorldImageProvider, IInventoryImageProvider
+    public class Ore : ItemBase, IDescriptionProvider, IWorldImageProvider, IInventoryImageProvider, IFurnaceItem
     {
+        private static readonly Dictionary<MetalType, OreData> OreTypes = new Dictionary<MetalType, OreData>
+        {
+            {MetalType.Copper, new OreData("Copper Ore", "resource_ore_copper", 9000, ItemRareness.Common, 1000, 2550, 20)},
+            {MetalType.Iron, new OreData("Iron Ore", "resource_ore_iron", 8000, ItemRareness.Common, 1500, 2850, 30)},
+            {MetalType.Silver, new OreData("Silver Ore", "resource_ore_silver", 11000, ItemRareness.Uncommon, 950, 2150, 35)},
+            {MetalType.ElvesMetal, new OreData("Elves Ore", "resource_ore_elves", 5000, ItemRareness.Uncommon, 1500, 2850, 50)},
+            {MetalType.DwarfsMetal, new OreData("Dwarfs Ore", "resource_ore_dwarfs", 16000, ItemRareness.Uncommon, 1800, 3000, 55)},
+            {MetalType.Mythril, new OreData("Mythril Ore", "resource_ore_mythril", 3000, ItemRareness.Rare, 660, 2470, 80)},
+            {MetalType.Adamant, new OreData("Adamant Ore", "resource_ore_adamant", 16000, ItemRareness.Rare, 2870, 6000, 150)}
+        };
+
         public Ore(MetalType metalType)
         {
             MetalType = metalType;
@@ -14,109 +26,24 @@ namespace CodeMagic.Implementations.Items.Materials
 
         public MetalType MetalType { get; }
 
-        public override string Name
+        public override string Name => Data.Name;
+
+        private OreData Data
         {
             get
             {
-                switch (MetalType)
-                {
-                    case MetalType.Copper:
-                        return "Copper Ore";
-                    case MetalType.Iron:
-                        return "Iron Ore";
-                    case MetalType.Silver:
-                        return "Silver Ore";
-                    case MetalType.ElvesMetal:
-                        return "Elves Ore";
-                    case MetalType.DwarfsMetal:
-                        return "Dwarfs Ore";
-                    case MetalType.Mythril:
-                        return "Mythril Ore";
-                    case MetalType.Adamant:
-                        return "Adamant Ore";
-                    default:
-                        throw new ArgumentException($"Bad ore type: {MetalType}");
-                }
+                if (OreTypes.ContainsKey(MetalType))
+                    return OreTypes[MetalType];
+
+                throw new ArgumentException($"Bad ore type: {MetalType}");
             }
         }
 
-        public override string Key
-        {
-            get
-            {
-                switch (MetalType)
-                {
-                    case MetalType.Copper:
-                        return "resource_ore_copper";
-                    case MetalType.Iron:
-                        return "resource_ore_iron";
-                    case MetalType.Silver:
-                        return "resource_ore_silver";
-                    case MetalType.ElvesMetal:
-                        return "resource_ore_elves";
-                    case MetalType.DwarfsMetal:
-                        return "resource_ore_dwarfs";
-                    case MetalType.Mythril:
-                        return "resource_ore_mythril";
-                    case MetalType.Adamant:
-                        return "resource_ore_adamant";
-                    default:
-                        throw new ArgumentException($"Bad ore type: {MetalType}");
-                }
-            }
-        }
+        public override string Key => Data.Key;
 
-        public override ItemRareness Rareness
-        {
-            get
-            {
-                switch (MetalType)
-                {
-                    case MetalType.Copper:
-                        return ItemRareness.Common;
-                    case MetalType.Iron:
-                        return ItemRareness.Common;
-                    case MetalType.Silver:
-                        return ItemRareness.Uncommon;
-                    case MetalType.ElvesMetal:
-                        return ItemRareness.Uncommon;
-                    case MetalType.DwarfsMetal:
-                        return ItemRareness.Uncommon;
-                    case MetalType.Mythril:
-                        return ItemRareness.Rare;
-                    case MetalType.Adamant:
-                        return ItemRareness.Rare;
-                    default:
-                        throw new ArgumentException($"Bad ore type: {MetalType}");
-                }
-            }
-        }
+        public override ItemRareness Rareness => Data.Rareness;
 
-        public override int Weight
-        {
-            get
-            {
-                switch (MetalType)
-                {
-                    case MetalType.Copper:
-                        return 4500;
-                    case MetalType.Iron:
-                        return 4000;
-                    case MetalType.Silver:
-                        return 5500;
-                    case MetalType.ElvesMetal:
-                        return 2500;
-                    case MetalType.DwarfsMetal:
-                        return 8000;
-                    case MetalType.Mythril:
-                        return 1400;
-                    case MetalType.Adamant:
-                        return 8000;
-                    default:
-                        throw new ArgumentException($"Bad ore type: {MetalType}");
-                }
-            }
-        }
+        public override int Weight => Data.Weight;
 
         public override bool Stackable => true;
 
@@ -139,6 +66,42 @@ namespace CodeMagic.Implementations.Items.Materials
         {
             var template = storage.GetImage("Item_Resource_OreTemplate");
             return MetalRecolorHelper.RecolorOreImage(template, MetalType);
+        }
+
+        public int MinTemperature => Data.MinTemperature;
+        public int MaxTemperature => Data.MaxTemperature;
+        public int FurnaceProcessingTime => Data.FurnaceProcessingType;
+        public IItem CreateFurnaceResult()
+        {
+            return new Ingot(MetalType);
+        }
+
+        private class OreData
+        {
+            public OreData(string name, string key, int weight, ItemRareness rareness, int minTemperature, int maxTemperature, int furnaceProcessingType)
+            {
+                Name = name;
+                Key = key;
+                Weight = weight;
+                Rareness = rareness;
+                MinTemperature = minTemperature;
+                MaxTemperature = maxTemperature;
+                FurnaceProcessingType = furnaceProcessingType;
+            }
+
+            public string Name { get; }
+
+            public string Key { get; }
+
+            public int Weight { get; }
+
+            public ItemRareness Rareness { get; }
+
+            public int MinTemperature { get; }
+
+            public int MaxTemperature { get; }
+
+            public int FurnaceProcessingType { get; }
         }
     }
 }

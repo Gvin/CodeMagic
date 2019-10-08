@@ -7,17 +7,17 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 {
     public class DungeonTorchWall : TorchWallBase, IWorldImageProvider
     {
-        private const string ImageNormal = "Wall_Stone";
-        private const string ImageBottom = "Wall_Stone_Bottom_Torch";
-        private const string ImageRight = "Wall_Stone_Right_Torch";
-        private const string ImageBottomRight = "Wall_Stone_Bottom_Right_Torch";
-        private const string ImageCorner = "Wall_Stone_Corner";
+        private const string ImageNormal = "Wall_Dungeon";
+        private const string ImageBottom = "Wall_Dungeon_Bottom_Torch";
+        private const string ImageRight = "Wall_Dungeon_Right_Torch";
+        private const string ImageBottomRight = "Wall_Dungeon_Bottom_Right_Torch";
+        private const string ImageCorner = "Wall_Dungeon_Corner";
 
         private readonly AnimationsBatchManager animationsManager;
 
-        public override string Name => "Stone Wall";
+        public override string Name => "Dungeon Wall";
 
-        protected override bool CanConnectTo(IMapObject mapObject)
+        public override bool CanConnectTo(IMapObject mapObject)
         {
             return mapObject is DungeonWall || mapObject is DungeonTorchWall || mapObject is DungeonDoor;
         }

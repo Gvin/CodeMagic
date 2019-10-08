@@ -22,7 +22,7 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
             this.metalType = metalType;
         }
 
-        protected override bool CanConnectTo(IMapObject mapObject)
+        public override bool CanConnectTo(IMapObject mapObject)
         {
             return mapObject is CaveWall || mapObject is MinableWall;
         }
