@@ -1,12 +1,17 @@
 <?xml version="1.0"?>
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
-    <pixel glyph="219">
+    <pixel glyph="220">
       <color>
+        <R>89</R>
+        <G>45</G>
+        <B>0</B>
+      </color>
+      <background-color>
         <R>128</R>
         <G>64</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
     <pixel glyph="223">
       <color>
@@ -15,38 +20,58 @@
         <B>0</B>
       </color>
     </pixel>
-    <pixel glyph="219">
+    <pixel glyph="179">
       <color>
+        <R>89</R>
+        <G>45</G>
+        <B>0</B>
+      </color>
+      <background-color>
         <R>47</R>
         <G>22</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
   </row>
   <row>
-    <pixel glyph="219">
+    <pixel glyph="220">
       <color>
+        <R>89</R>
+        <G>45</G>
+        <B>0</B>
+      </color>
+      <background-color>
         <R>128</R>
         <G>64</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
     <pixel />
-    <pixel glyph="219">
+    <pixel glyph="179">
       <color>
+        <R>89</R>
+        <G>45</G>
+        <B>0</B>
+      </color>
+      <background-color>
         <R>47</R>
         <G>22</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
   </row>
   <row>
-    <pixel glyph="219">
+    <pixel glyph="220">
       <color>
+        <R>89</R>
+        <G>45</G>
+        <B>0</B>
+      </color>
+      <background-color>
         <R>128</R>
         <G>64</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
     <pixel glyph="220">
       <color>
@@ -55,12 +80,17 @@
         <B>0</B>
       </color>
     </pixel>
-    <pixel glyph="219">
+    <pixel glyph="179">
       <color>
+        <R>89</R>
+        <G>45</G>
+        <B>0</B>
+      </color>
+      <background-color>
         <R>47</R>
         <G>22</G>
         <B>0</B>
-      </color>
+      </background-color>
     </pixel>
   </row>
 </symbols-image>

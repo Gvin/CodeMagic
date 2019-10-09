@@ -5,7 +5,7 @@ namespace CodeMagic.Core.Area
 {
     public interface IAreaMapCell
     {
-        CellLightData LightLevel { get; }
+        LightLevel LightLevel { get; set; }
 
         IMapObject[] Objects { get; }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
@@ -134,7 +133,7 @@ namespace CodeMagic.Implementations.Objects.Buildings
             {
                 if (IsHot)
                 {
-                    return new ILightSource[] {new StaticLightSource(LightLevel.Dim1, Color.DarkOrange)};
+                    return new ILightSource[] {new StaticLightSource(LightLevel.Dim1)};
                 }
 
                 return new ILightSource[0];

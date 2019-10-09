@@ -4,7 +4,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Implementations.Objects.Buildings.StoneWallBuilding
 {
-    public class StoneWallDoor : DoorObject, IWorldImageProvider, IRoofSupport, IRoofObject
+    public class StoneWallDoor : DoorObject, IWorldImageProvider, IRoofSupport
     {
         public const string BuildingKey = "stone_wall_door";
 

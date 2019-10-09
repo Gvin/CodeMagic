@@ -10,7 +10,7 @@ namespace CodeMagic.Core.Area
         protected AreaMapCellBase()
         {
             ObjectsCollection = new MapObjectsCollection();
-            LightLevel = new CellLightData();
+            LightLevel = LightLevel.Darkness;
         }
 
         IMapObject[] IAreaMapCell.Objects => ObjectsCollection.ToArray();
@@ -27,7 +27,7 @@ namespace CodeMagic.Core.Area
 
         public MapObjectsCollection ObjectsCollection { get; }
 
-        public CellLightData LightLevel { get; }
+        public LightLevel LightLevel { get; set; }
 
         public bool BlocksMovement
         {

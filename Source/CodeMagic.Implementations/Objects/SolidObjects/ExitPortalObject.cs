@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using CodeMagic.Core.Area;
+﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
@@ -47,7 +46,7 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 
         public ILightSource[] LightSources => new ILightSource[]
         {
-            new StaticLightSource(LightLevel.Dusk2, Color.Red)
+            new StaticLightSource(LightLevel.Dusk2)
         };
     }
 }

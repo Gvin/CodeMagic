@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using CodeMagic.Core.Area;
+﻿using CodeMagic.Core.Area;
 
 namespace CodeMagic.Core.Objects
 {
@@ -13,21 +12,16 @@ namespace CodeMagic.Core.Objects
         bool IsLightOn { get; }
 
         LightLevel LightPower { get; }
-
-        Color LightColor { get; }
     }
 
     public class StaticLightSource : ILightSource
     {
-        public StaticLightSource(LightLevel lightPower, Color lightColor)
+        public StaticLightSource(LightLevel lightPower)
         {
             LightPower = lightPower;
-            LightColor = lightColor;
         }
 
         public LightLevel LightPower { get; }
-
-        public Color LightColor { get; }
 
         public bool IsLightOn => true;
     }

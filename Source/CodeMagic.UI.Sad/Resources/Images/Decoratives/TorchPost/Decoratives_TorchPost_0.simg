@@ -15,8 +15,8 @@
     <pixel />
     <pixel glyph="179">
       <color>
-        <R>128</R>
-        <G>64</G>
+        <R>64</R>
+        <G>0</G>
         <B>0</B>
       </color>
     </pixel>
@@ -26,8 +26,8 @@
     <pixel />
     <pixel glyph="207">
       <color>
-        <R>128</R>
-        <G>64</G>
+        <R>64</R>
+        <G>0</G>
         <B>0</B>
       </color>
     </pixel>

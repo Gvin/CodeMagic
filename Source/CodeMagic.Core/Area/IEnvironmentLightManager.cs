@@ -4,6 +4,6 @@ namespace CodeMagic.Core.Area
 {
     public interface IEnvironmentLightManager
     {
-        Light GetEnvironmentLight(DateTime gameTime);
+        LightLevel GetEnvironmentLight(DateTime gameTime);
     }
 }

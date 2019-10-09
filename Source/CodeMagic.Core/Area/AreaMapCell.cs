@@ -122,7 +122,7 @@ namespace CodeMagic.Core.Area
                 Environment.ApplyEnvironment(destroyableObject, journal);
                 MagicEnergy.ApplyMagicEnvironment(destroyableObject, journal);
 
-                if (destroyableObject is ICreatureObject && LightLevel.IsBlinding)
+                if (destroyableObject is ICreatureObject && LightLevel == LightLevel.Blinding)
                 {
                     destroyableObject.Statuses.Add(new BlindObjectStatus(), journal);
                 }

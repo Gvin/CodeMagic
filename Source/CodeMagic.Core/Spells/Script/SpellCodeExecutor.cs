@@ -173,9 +173,7 @@ namespace CodeMagic.Core.Spells.Script
         private int GetLightLevel(IAreaMap map, Point position)
         {
             var cell = map.GetCell(position);
-            if (cell.LightLevel.Count == 0)
-                return (int) LightLevel.Darkness;
-            return (int)cell.LightLevel.Max(light => light.Power);
+            return (int)cell.LightLevel;
         }
 
         private JsValue[] ScanForObjects(IAreaMap map, Point position, int radius, ICodeSpell spell)

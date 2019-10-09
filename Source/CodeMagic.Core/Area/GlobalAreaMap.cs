@@ -225,6 +225,6 @@ namespace CodeMagic.Core.Area
             return null;
         }
 
-        public Light BackgroundLight { get; private set; }
+        public LightLevel BackgroundLight { get; private set; }
     }
 }

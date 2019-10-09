@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
@@ -96,7 +95,7 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
 
         public ILightSource[] LightSources => new ILightSource[]
         {
-            new StaticLightSource(LightPower, Color.DarkOrange)
+            new StaticLightSource(LightPower)
         };
     }
 }

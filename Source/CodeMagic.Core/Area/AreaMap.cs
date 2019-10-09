@@ -40,7 +40,7 @@ namespace CodeMagic.Core.Area
 
         public int LightDropFactor { get; }
 
-        public Light BackgroundLight { get; private set; }
+        public LightLevel BackgroundLight { get; private set; }
 
         public IDestroyableObject GetDestroyableObject(string id)
         {

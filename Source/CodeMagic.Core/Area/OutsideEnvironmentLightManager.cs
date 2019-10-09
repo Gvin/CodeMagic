@@ -1,29 +1,28 @@
 ﻿using System;
-using System.Drawing;
 
 namespace CodeMagic.Core.Area
 {
     public class OutsideEnvironmentLightManager : IEnvironmentLightManager
     {
-        public Light GetEnvironmentLight(DateTime gameTime)
+        public LightLevel GetEnvironmentLight(DateTime gameTime)
         {
             if (gameTime.Hour >= 0 && gameTime.Hour < 5)
-                return null;
+                return LightLevel.Darkness;
             if (gameTime.Hour >= 5 && gameTime.Hour < 7)
-                return new Light(Color.White, LightLevel.Dusk2, null);
+                return LightLevel.Dusk2;
             if (gameTime.Hour >= 7 && gameTime.Hour < 8)
-                return new Light(Color.White, LightLevel.Dim1, null);
+                return LightLevel.Dim1;
             if (gameTime.Hour >= 8 && gameTime.Hour < 9)
-                return new Light(Color.White, LightLevel.Dim2, null);
+                return LightLevel.Dim2;
             if (gameTime.Hour >= 9 && gameTime.Hour < 16)
-                return new Light(Color.White, LightLevel.Medium, null);
+                return LightLevel.Medium;
             if (gameTime.Hour >= 16 && gameTime.Hour < 18)
-                return new Light(Color.White, LightLevel.Dim2, null);
+                return LightLevel.Dim2;
             if (gameTime.Hour >= 18 && gameTime.Hour < 19)
-                return new Light(Color.White, LightLevel.Dim1, null);
+                return LightLevel.Dim1;
             if (gameTime.Hour >= 19 && gameTime.Hour < 21)
-                return new Light(Color.White, LightLevel.Dusk2, null);
-            return null;
+                return LightLevel.Dusk2;
+            return LightLevel.Darkness;
         }
     }
 }

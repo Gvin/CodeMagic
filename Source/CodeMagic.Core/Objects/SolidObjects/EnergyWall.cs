@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using CodeMagic.Core.Area;
+﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Spells;
@@ -34,7 +33,7 @@ namespace CodeMagic.Core.Objects.SolidObjects
 
         public ILightSource[] LightSources => new ILightSource[]
         {
-            new StaticLightSource(CodeSpell.DefaultLightLevel, Color.Red)
+            new StaticLightSource(CodeSpell.DefaultLightLevel)
         };
 
         public int EnergyLeft { get; private set; }

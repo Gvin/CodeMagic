@@ -4,9 +4,9 @@ namespace CodeMagic.Core.Area
 {
     public class InsideEnvironmentLightManager : IEnvironmentLightManager
     {
-        public Light GetEnvironmentLight(DateTime gameTime)
+        public LightLevel GetEnvironmentLight(DateTime gameTime)
         {
-            return null;
+            return LightLevel.Darkness;
         }
     }
 }

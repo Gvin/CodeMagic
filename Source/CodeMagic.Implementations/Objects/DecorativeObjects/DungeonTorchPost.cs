@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Objects;
 using CodeMagic.UI.Images;
@@ -35,7 +34,7 @@ namespace CodeMagic.Implementations.Objects.DecorativeObjects
 
         public ILightSource[] LightSources => new ILightSource[]
         {
-            new StaticLightSource(LightLevel.Medium, Color.FromArgb(255, 204, 102)),
+            new StaticLightSource(LightLevel.Medium),
         };
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
@@ -15,12 +16,7 @@ namespace CodeMagic.Core.Area
                 {
                     var position = new Point(x, y);
                     var cell = map.GetCell(position);
-                    cell.LightLevel.Clear();
-
-                    if (map.BackgroundLight != null && !cell.HasRoof)
-                    {
-                        cell.LightLevel.AddLight(map.BackgroundLight.Clone());
-                    }
+                    cell.LightLevel = cell.HasRoof ? LightLevel.Darkness : map.BackgroundLight;
                 }
             }
         }
@@ -43,43 +39,44 @@ namespace CodeMagic.Core.Area
             var lights = cell.Objects.OfType<ILightObject>()
                 .SelectMany(lightObject => lightObject.LightSources)
                 .Where(source => source.IsLightOn && source.LightPower > LightLevel.Darkness)
-                .Select(source => new Light(source))
                 .ToArray();
 
             if (lights.Length == 0)
                 return;
 
-            cell.LightLevel.AddLights(lights);
+            var maxLightPower = lights.Max(light => light.LightPower);
 
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.North), lights);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.South), lights);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.West), lights);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.East), lights);
+            cell.LightLevel = (LightLevel)Math.Max((int)cell.LightLevel, (int)maxLightPower);
+
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.North), maxLightPower);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.South), maxLightPower);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.West), maxLightPower);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.East), maxLightPower);
         }
 
-        private static void SpreadLightLevel(IAreaMap map, Point position, Light[] lights)
+        private static void SpreadLightLevel(IAreaMap map, Point position, LightLevel light)
         {
-            if (lights.Length == 0 || lights.All(light => light.Power <= LightLevel.Darkness))
+            if (light <= LightLevel.Darkness)
                 return;
 
             var cell = map.TryGetCell(position);
             if (cell == null)
                 return;
 
-            cell.LightLevel.AddLights(lights);
+            cell.LightLevel = (LightLevel)Math.Max((int)cell.LightLevel, (int)light);
 
             if (cell.BlocksEnvironment)
                 return;
 
-            var lightsToSpread = lights
-                .Select(light => light.Clone(light.Power - map.LightDropFactor))
-                .Where(light => light.Power > LightLevel.Darkness)
-                .ToArray();
+            var lightPowerToSpread = (int) light - 1;
+            if (lightPowerToSpread <= (int)LightLevel.Darkness)
+                return;
 
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.North), lightsToSpread);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.South), lightsToSpread);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.West), lightsToSpread);
-            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.East), lightsToSpread);
+            var lightToSpread = (LightLevel) lightPowerToSpread;
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.North), lightToSpread);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.South), lightToSpread);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.West), lightToSpread);
+            SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.East), lightToSpread);
         }
     }
 }

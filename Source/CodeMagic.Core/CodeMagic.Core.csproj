@@ -57,7 +57,6 @@
     <Compile Include="Area\IAreaMap.cs" />
     <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Area\AreaMapFragment.cs" />
-    <Compile Include="Area\CellLightData.cs" />
     <Compile Include="Area\IAreaMapCell.cs" />
     <Compile Include="Area\IEnvironmentLightManager.cs" />
     <Compile Include="Area\InsideEnvironmentLightManager.cs" />

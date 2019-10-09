@@ -77,7 +77,7 @@ namespace CodeMagic.UI.Sad.Controls
             if (cell == null)
                 return;
 
-            var value = (int)cell.LightLevel.GetMaxLightLevel();
+            var value = (int)cell.LightLevel;
             Surface.Print(x, y, new ColoredString(value.ToString(), Color.Yellow, Color.Black));
         }
 

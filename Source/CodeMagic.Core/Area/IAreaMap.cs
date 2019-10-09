@@ -77,6 +77,6 @@ namespace CodeMagic.Core.Area
 
         Point GetObjectPosition(Func<IMapObject, bool> selector);
 
-        Light BackgroundLight { get; }
+        LightLevel BackgroundLight { get; }
     }
 }
