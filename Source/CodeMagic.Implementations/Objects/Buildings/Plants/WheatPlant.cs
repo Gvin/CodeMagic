@@ -12,11 +12,11 @@ namespace CodeMagic.Implementations.Objects.Buildings.Plants
 {
     public class WheatPlant : PlantBase
     {
-        private const int GrowingPeriod = 5000;
-        private const int HalfReadyPeriod = 30000;
-        private const int ReadyPeriod = 45000;
-        private const int OvergrownPeriod = 60000;
-        private const int MaxGrowthPeriod = 80000;
+        private const int GrowingPeriod = 2000;
+        private const int HalfReadyPeriod = 15000;
+        private const int ReadyPeriod = 20000;
+        private const int OvergrownPeriod = 25000;
+        private const int MaxGrowthPeriod = 30000;
 
         public WheatPlant() 
             : base(20)
