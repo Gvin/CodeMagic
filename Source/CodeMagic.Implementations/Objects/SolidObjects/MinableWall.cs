@@ -18,29 +18,30 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
         private readonly List<Point> connectedTiles;
 
         protected MinableWall(string name, int health) 
-            : base(new DestroyableObjectConfiguration
-            {
-                Name = name,
-                BaseProtection = new Dictionary<Element, int>
-                {
-                    {Element.Blunt, 90},
-                    {Element.Electricity, 100},
-                    {Element.Fire, 100},
-                    {Element.Frost, 100},
-                    {Element.Magic, 100},
-                    {Element.Piercing, 100},
-                    {Element.Slashing, 90}
-                },
-                ZIndex = ZIndex.Wall,
-                Size = ObjectSize.Huge,
-                Health = health,
-                MaxHealth = health,
-                CatchFireChanceMultiplier = 0,
-                SelfExtinguishChance = 100
-            })
+            : base(health)
         {
+            Name = name;
+
             connectedTiles = new List<Point>();
+
+            BaseProtection.Add(Element.Blunt, 90);
+            BaseProtection.Add(Element.Electricity, 100);
+            BaseProtection.Add(Element.Fire, 100);
+            BaseProtection.Add(Element.Frost, 100);
+            BaseProtection.Add(Element.Magic, 100);
+            BaseProtection.Add(Element.Piercing, 100);
+            BaseProtection.Add(Element.Slashing, 90);
         }
+
+        public sealed override ZIndex ZIndex => ZIndex.Wall;
+
+        public sealed override ObjectSize Size => ObjectSize.Huge;
+
+        protected sealed override double CatchFireChanceMultiplier => 0;
+
+        protected sealed override double SelfExtinguishChance => 100;
+
+        public sealed override string Name { get; }
 
         public override bool BlocksEnvironment => true;
 

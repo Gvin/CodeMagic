@@ -2,8 +2,8 @@
 {
     public interface IBurningRelatedStatus
     {
-        int CatchFireChanceModifier { get; }
+        double CatchFireChanceModifier { get; }
 
-        int SelfExtinguishChanceModifier { get; }
+        double SelfExtinguishChanceModifier { get; }
     }
 }

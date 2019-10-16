@@ -19,17 +19,20 @@ namespace CodeMagic.Core.Objects.PlayerData
         private int mana;
         private int maxMana;
         private int manaRegeneration;
+        private double hungerPercent;
+        private readonly double hungerIncrement;
 
         private readonly List<IBuildingConfiguration> unlockedBuildings;
 
-        public Player(PlayerConfiguration configuration)
-            : base(configuration)
+        public Player()
+            : base(100)
         {
             Equipment = new Equipment();
-            MaxMana = configuration.MaxMana;
-            Mana = configuration.Mana;
-            manaRegeneration = configuration.ManaRegeneration;
-            MaxCarryWeight = configuration.MaxCarryWeight;
+            MaxMana = 1000;
+            Mana = 1000;
+            manaRegeneration = 10;
+            MaxCarryWeight = 25000;
+            hungerIncrement = 0.02;
 
             Inventory = new Inventory();
             Inventory.ItemRemoved += Inventory_ItemRemoved;
@@ -47,6 +50,12 @@ namespace CodeMagic.Core.Objects.PlayerData
                 Equipment.UnequipItem(equipable);
             }
         }
+
+        public int HungerPercent
+        {
+            get => (int) Math.Floor(hungerPercent);
+            set => hungerPercent = Math.Min(100d, value);
+        } 
 
         public bool UnlockBuilding(IBuildingConfiguration building)
         {
@@ -72,6 +81,10 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         public Inventory Inventory { get; }
 
+        public override string Name => "Player";
+
+        public override int MaxVisibilityRange => 4;
+
         public override bool BlocksMovement => true;
 
         public int ManaRegeneration
@@ -92,27 +105,10 @@ namespace CodeMagic.Core.Objects.PlayerData
         public int Mana
         {
             get => mana;
-            set
-            {
-                if (value < 0)
-                {
-                    mana = 0;
-                    return;
-                }
-                if (value > MaxMana)
-                {
-                    mana = MaxMana;
-                    return;
-                }
-                mana = value;
-            }
+            set => mana = Math.Max(0, Math.Min(MaxMana, value));
         }
 
-        public override int MaxHealth
-        {
-            get => base.MaxHealth + Equipment.GetBonusHealth();
-            set => base.MaxHealth = value;
-        }
+        public override int MaxHealth => base.MaxHealth + Equipment.GetBonusHealth();
 
         public int MaxMana
         {
@@ -131,12 +127,18 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         public void Update(IAreaMap map, IJournal journal, Point position)
         {
-            if (Mana < MaxMana)
+            if (Mana < MaxMana && !Statuses.Contains(HungryObjectStatus.StatusType))
             {
                 var cell = map.GetCell(position);
                 var manaToRegenerate = Math.Min(ManaRegeneration, cell.MagicEnergyLevel);
                 cell.MagicEnergyLevel -= manaToRegenerate;
                 Mana += manaToRegenerate;
+            }
+
+            hungerPercent = Math.Min(100d, hungerPercent + hungerIncrement);
+            if (hungerPercent >= 100d)
+            {
+                Statuses.Add(new HungryObjectStatus(), journal);
             }
 
             var weight = Inventory.GetWeight();
@@ -154,6 +156,8 @@ namespace CodeMagic.Core.Objects.PlayerData
 
             Died?.Invoke(this, EventArgs.Empty);
         }
+
+        public override ObjectSize Size => ObjectSize.Medium;
 
         protected override int GetProtection(Element element)
         {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
@@ -11,37 +10,30 @@ using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Objects
 {
-    public class DestroyableObject : IDestroyableObject
+    public abstract class DestroyableObject : IDestroyableObject
     {
         private int health;
         private int maxHealth;
-        private readonly Dictionary<Element, int> baseProtection;
+        protected readonly Dictionary<Element, int> BaseProtection;
 
-        public DestroyableObject(DestroyableObjectConfiguration configuration)
+        protected DestroyableObject(int maxHealth)
         {
             Id = Guid.NewGuid().ToString();
-
-            Name = configuration.Name;
-            maxHealth = configuration.MaxHealth;
-            Health = configuration.Health;
-            SelfExtinguishChance = configuration.SelfExtinguishChance;
-            CatchFireChanceMultiplier = configuration.CatchFireChanceMultiplier;
-            ZIndex = configuration.ZIndex;
-            Size = configuration.Size;
-
+            BaseProtection = new Dictionary<Element, int>();
             Statuses = new ObjectStatusesCollection(this);
             ObjectEffects = new List<IObjectEffect>();
 
-            baseProtection = configuration.BaseProtection.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.maxHealth = maxHealth;
+            health = maxHealth;
         }
 
-        public virtual string Id { get; }
+        public string Id { get; }
 
-        public string Name { get; }
+        public abstract string Name { get; }
 
         public virtual bool BlocksMovement => false;
 
-        public bool BlocksAttack => false;
+        public virtual bool BlocksAttack => false;
 
         public virtual bool IsVisible => true;
 
@@ -53,22 +45,22 @@ namespace CodeMagic.Core.Objects
 
         public ObjectStatusesCollection Statuses { get; }
 
-        private int SelfExtinguishChance { get; }
+        protected virtual double SelfExtinguishChance => 15;
 
-        public ZIndex ZIndex { get; }
+        public abstract ZIndex ZIndex { get; }
 
-        public ObjectSize Size { get; }
+        public abstract ObjectSize Size { get; }
 
         public List<IObjectEffect> ObjectEffects { get; }
 
         protected virtual int GetProtection(Element element)
         {
-            if (baseProtection.ContainsKey(element))
-                return baseProtection[element];
+            if (BaseProtection.ContainsKey(element))
+                return BaseProtection[element];
             return 0;
         }
 
-        public int GetSelfExtinguishChance()
+        public double GetSelfExtinguishChance()
         {
             var result = SelfExtinguishChance;
 
@@ -84,36 +76,12 @@ namespace CodeMagic.Core.Objects
         public int Health
         {
             get => health;
-            set
-            {
-                if (value < 0)
-                {
-                    health = 0;
-                    return;
-                }
-                if (value > maxHealth)
-                {
-                    health = maxHealth;
-                    return;
-                }
-                health = value;
-            }
+            set => health = Math.Max(0, Math.Min(MaxHealth, value));
         }
 
-        public virtual int MaxHealth
-        {
-            get => maxHealth;
-            set
-            {
-                if (value < 0)
-                    throw new ArgumentException($"Max Health value cannot be < 0 for object {Name}");
-                maxHealth = value;
-                if (health > maxHealth)
-                    health = maxHealth;
-            }
-        }
+        public virtual int MaxHealth => maxHealth;
 
-        private int CatchFireChanceMultiplier { get; }
+        protected virtual double CatchFireChanceMultiplier => 1;
 
         public virtual void Damage(IJournal journal, int damage, Element element)
         {
@@ -171,7 +139,8 @@ namespace CodeMagic.Core.Objects
                 catchFireChance += burningRelatesStatus.CatchFireChanceModifier;
             }
 
-            if (RandomHelper.CheckChance(catchFireChance))
+            var catchFireWholeChange = (int) Math.Round(catchFireChance);
+            if (RandomHelper.CheckChance(catchFireWholeChange))
             {
                 Statuses.Add(new OnFireObjectStatus(GetFireConfiguration()), journal);
             }
@@ -190,36 +159,5 @@ namespace CodeMagic.Core.Objects
 
             return false;
         }
-    }
-
-    public class DestroyableObjectConfiguration
-    {
-        private const int DefaultCatchFireChanceMultiplier = 1;
-        private const int DefaultSelfExtinguishChance = 15;
-
-        public DestroyableObjectConfiguration()
-        {
-            CatchFireChanceMultiplier = DefaultCatchFireChanceMultiplier;
-            SelfExtinguishChance = DefaultSelfExtinguishChance;
-            ZIndex = ZIndex.BigDecoration;
-            Size = ObjectSize.Medium;
-            BaseProtection = new Dictionary<Element, int>();
-        }
-
-        public Dictionary<Element, int> BaseProtection { get; set; }
-
-        public string Name { get; set; }
-
-        public int Health { get; set; }
-
-        public int MaxHealth { get; set; }
-
-        public int CatchFireChanceMultiplier { get; set; }
-
-        public int SelfExtinguishChance { get; set; }
-
-        public ZIndex ZIndex { get; set; }
-
-        public ObjectSize Size { get; set; }
     }
 }

@@ -34,6 +34,8 @@ namespace CodeMagic.UI.Sad.Controls
 
         private void Draw()
         {
+            Surface.Clear(new Rectangle(2, 1, 17, 4));
+
             Surface.Print(2, 1, "Player Status:");
             Surface.Fill(1, 2, Width - 2, FrameColor, BackgroundColor, Glyphs.GetGlyph('─'));
             Surface.Print(Width - 1, 2,
@@ -45,22 +47,27 @@ namespace CodeMagic.UI.Sad.Controls
                 new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, BackgroundColor));
             Surface.Print(0, 0, new ColoredGlyph(Glyphs.GetGlyph('╤'), FrameColor, BackgroundColor));
 
-            Surface.Print(2, 3, "HP:");
-            Surface.Fill(6, 3, 10, BackgroundColor, BackgroundColor, null);
-            Surface.Print(6, 3, new ColoredString($"{game.Player.Health} / {game.Player.MaxHealth}", Color.Red, BackgroundColor));
-            Surface.Print(2, 4, "Mana:");
-            Surface.Fill(8, 4, 15, BackgroundColor, BackgroundColor, null);
-            Surface.Print(8, 4, new ColoredString($"{game.Player.Mana} / {game.Player.MaxMana}", Color.Blue, BackgroundColor));
+            Surface.PrintStyledText(2, 3, 
+                new ColoredString("HP: "), 
+                new ColoredString($"{game.Player.Health} / {game.Player.MaxHealth}", Color.Red, BackgroundColor));
+            Surface.PrintStyledText(2, 4, 
+                new ColoredString("Mana: "),
+                new ColoredString($"{game.Player.Mana} / {game.Player.MaxMana}", Color.Blue, BackgroundColor));
+            Surface.PrintStyledText(2, 5, 
+                new ColoredString("Hunger: "), 
+                new ColoredString($"{game.Player.HungerPercent}%", Color.Green, BackgroundColor));
         }
 
         private void DrawCellManaLevel()
         {
+            const int yPos = 7;
+
             if (game.UpdateInProgress)
                 return;
 
             var cell = game.Map.GetCell(game.PlayerPosition);
 
-            Surface.Print(2, 6, "Area Mana:");
+            Surface.Print(2, yPos, "Area Mana:");
 
             const int manaBarLength = 30;
             var manaLevelPercent = (float) cell.MagicEnergyLevel / cell.MaxMagicEnergyLevel;
@@ -74,19 +81,19 @@ namespace CodeMagic.UI.Sad.Controls
 
             for (int i = 0; i < disturbanceLevelLength; i++)
             {
-                Surface.Print(shiftX + i, 7, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.BlueViolet));
+                Surface.Print(shiftX + i, yPos + 1, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.BlueViolet));
             }
 
             shiftX += disturbanceLevelLength;
             for (int i = 0; i < leftLength; i++)
             {
-                Surface.Print(shiftX + i, 7, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.DarkBlue));
+                Surface.Print(shiftX + i, yPos + 1, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.DarkBlue));
             }
 
             shiftX += leftLength;
             for (int i = 0; i < manaLevelLength; i++)
             {
-                Surface.Print(shiftX + i, 7, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.Blue));
+                Surface.Print(shiftX + i, yPos + 1, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.Blue));
             }
         }
     }

@@ -22,8 +22,8 @@ namespace CodeMagic.Core.Statuses
         public WetObjectStatus(ILiquidConfiguration configuration)
         {
             maxLifeTime = int.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusLifeTime));
-            CatchFireChanceModifier = int.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusCatchFileChanceModifier));
-            SelfExtinguishChanceModifier = int.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusSelfExtinguishChanceModifier));
+            CatchFireChanceModifier = double.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusCatchFileChanceModifier));
+            SelfExtinguishChanceModifier = double.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusSelfExtinguishChanceModifier));
 
             lifeTime = 0;
         }
@@ -41,9 +41,9 @@ namespace CodeMagic.Core.Statuses
 
         public string Type => StatusType;
 
-        public int CatchFireChanceModifier { get; }
+        public double CatchFireChanceModifier { get; }
 
-        public int SelfExtinguishChanceModifier { get; }
+        public double SelfExtinguishChanceModifier { get; }
 
         private string GetCustomConfigurationValue(ILiquidConfiguration configuration, string key)
         {

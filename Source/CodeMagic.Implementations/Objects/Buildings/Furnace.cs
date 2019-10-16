@@ -7,6 +7,7 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Implementations.Objects.Buildings.StoneWallBuilding;
 using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
 
@@ -30,8 +31,7 @@ namespace CodeMagic.Implementations.Objects.Buildings
 
         public override bool CanConnectTo(IMapObject mapObject)
         {
-            // TODO: Add connection to solid wall
-            return false;
+            return mapObject is StoneWall || mapObject is StoneWallGlassWindow || mapObject is StoneWallDoor;
         }
 
         public int CurrentProgress => (int) Math.Floor(currentProgress);

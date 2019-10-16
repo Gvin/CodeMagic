@@ -13,6 +13,8 @@ namespace CodeMagic.Core.Objects.PlayerData
 
         int HitChance { get; }
 
+        int HungerPercent { get; set; }
+
         int MaxCarryWeight { get; }
 
         int ManaRegeneration { get; set; }

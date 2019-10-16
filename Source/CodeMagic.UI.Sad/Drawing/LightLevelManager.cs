@@ -7,7 +7,12 @@ namespace CodeMagic.UI.Sad.Drawing
 {
     public class LightLevelManager
     {
-        private const float LightLevelPercentMultiplier = 0.17f;
+        private readonly float brightness;
+
+        public LightLevelManager(float brightness)
+        {
+            this.brightness = brightness;
+        }
 
         public SymbolsImage ApplyLightLevel(SymbolsImage image, LightLevel lightData)
         {
@@ -36,7 +41,7 @@ namespace CodeMagic.UI.Sad.Drawing
             return result;
         }
 
-        private static Color ApplyLightLevel(Color color, LightLevel lightLevel)
+        private Color ApplyLightLevel(Color color, LightLevel lightLevel)
         {
             var lightLevelPercent = GetLightLevelPercent(lightLevel);
             var red = Math.Min((int)(color.R * lightLevelPercent), 255);
@@ -47,9 +52,9 @@ namespace CodeMagic.UI.Sad.Drawing
             return darkenedColor;
         }
 
-        private static float GetLightLevelPercent(LightLevel light)
+        private float GetLightLevelPercent(LightLevel light)
         {
-            return (int)light * LightLevelPercentMultiplier;
+            return (int)light * brightness;
         }
     }
 }

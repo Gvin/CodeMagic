@@ -25,6 +25,7 @@ namespace CodeMagic.Configuration.Xml.Types.Buildings
 
             {"furnace", typeof(Furnace)},
             {Fireplace.BuildingKey, typeof(Fireplace)},
+            {GrowingPlace.BuildingKey, typeof(GrowingPlace)},
 
             {TorchPost.BuildingKey, typeof(TorchPost)},
 

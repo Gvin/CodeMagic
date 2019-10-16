@@ -12,11 +12,6 @@ namespace CodeMagic.Implementations.Objects.Creatures
         private const string ImageLeft = "Player_Left";
         private const string ImageRight = "Player_Right";
 
-        public PlayerImpl(PlayerConfiguration configuration) 
-            : base(configuration)
-        {
-        }
-
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             switch (Direction)

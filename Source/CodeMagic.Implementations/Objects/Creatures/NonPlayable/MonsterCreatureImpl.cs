@@ -3,6 +3,7 @@ using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Configuration.Monsters;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.UI.Images;
 
@@ -12,7 +13,8 @@ namespace CodeMagic.Implementations.Objects.Creatures.NonPlayable
     {
         private readonly IMonsterImagesConfiguration images;
 
-        public MonsterCreatureImpl(MonsterCreatureImplConfiguration configuration) : base(configuration)
+        public MonsterCreatureImpl(MonsterCreatureImplConfiguration configuration) 
+            : base(configuration)
         {
             images = configuration.Images;
         }
@@ -50,10 +52,9 @@ namespace CodeMagic.Implementations.Objects.Creatures.NonPlayable
             Name = config.Name;
             LogicPattern = config.LogicPattern;
             Size = config.Size;
-            ZIndex = Core.Objects.ZIndex.Creature;
+            ZIndex = ZIndex.Creature;
             HitChance = config.Stats.HitChance;
             MaxHealth = health;
-            Health = health;
             RemainsType = config.RemainsType;
             CatchFireChanceMultiplier = config.Stats.CatchFireChanceMultiplier;
             SelfExtinguishChance = config.Stats.SelfExtinguishChanceMultiplier;

@@ -27,7 +27,7 @@ namespace CodeMagic.Implementations.Items.Materials
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
-            return storage.GetImage("ItemsOnGround_Other");
+            return storage.GetImage("ItemsOnGround_Resource_Wood");
         }
 
         public SymbolsImage GetInventoryImage(IImagesStorage storage)

@@ -8,6 +8,7 @@ using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Implementations.Items;
 using CodeMagic.Implementations.Items.Materials;
 using CodeMagic.Implementations.Items.Usable;
+using CodeMagic.Implementations.Items.Usable.Food;
 using CodeMagic.Implementations.Objects.Creatures;
 using CodeMagic.MapGeneration.GlobalWorld;
 using CodeMagic.MapGeneration.Home;
@@ -62,16 +63,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 
         private IPlayer CreatePlayer()
         {
-            var player = new PlayerImpl(new PlayerConfiguration
-            {
-                Health = 100,
-                MaxHealth = 100,
-                Mana = 1000,
-                MaxMana = 1000,
-                ManaRegeneration = 10,
-                VisibilityRange = 4,
-                MaxCarryWeight = 25000
-            });
+            var player = new PlayerImpl();
 
             foreach (var building in ConfigurationManager.Current.Buildings.Buildings.Where(building => building.AutoUnlock))
             {
@@ -95,6 +87,8 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             player.Inventory.AddItem(itemsGenerator.GenerateLumberjackAxe(ItemRareness.Trash));
             player.Inventory.AddItem(itemsGenerator.GeneratePickaxe(ItemRareness.Trash));
+
+            player.Inventory.AddItem(new WateringCan());
 
             return player;
         }

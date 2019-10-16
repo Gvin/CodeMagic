@@ -8,14 +8,9 @@ namespace CodeMagic.Core.Objects.Creatures
 {
     public abstract class CreatureObject : DestroyableObject, ICreatureObject
     {
-        private const double ParalyzedChanceMultiplier = 5;
-        private const double FrozenChanceMultiplier = 5;
-
-        protected CreatureObject(CreatureObjectConfiguration configuration) 
-            : base(configuration)
+        protected CreatureObject(int maxHealth)
+            : base(maxHealth)
         {
-            MaxVisibilityRange = configuration.VisibilityRange;
-
             Direction = Direction.North;
         }
 
@@ -32,7 +27,13 @@ namespace CodeMagic.Core.Objects.Creatures
             }
         }
 
-        public int MaxVisibilityRange { get; }
+        public override ZIndex ZIndex => ZIndex.Creature;
+
+        protected virtual double ParalyzedChanceMultiplier => 5;
+
+        protected virtual double FrozenChanceMultiplier => 5;
+
+        public abstract int MaxVisibilityRange { get; }
 
         public override void Damage(IJournal journal, int damage, Element element)
         {
@@ -78,15 +79,5 @@ namespace CodeMagic.Core.Objects.Creatures
         }
 
         public override bool BlocksMovement => true;
-    }
-
-    public class CreatureObjectConfiguration : DestroyableObjectConfiguration
-    {
-        public CreatureObjectConfiguration()
-        {
-            ZIndex = ZIndex.Creature;
-        }
-
-        public int VisibilityRange { get; set; }
     }
 }

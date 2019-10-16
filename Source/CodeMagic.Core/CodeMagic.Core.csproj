@@ -97,6 +97,7 @@
     <Compile Include="CreaturesLogic\TargetStrategies\PlayerTargetStrategy.cs" />
     <Compile Include="Common\DirectionHelper.cs" />
     <Compile Include="Game\GameTimeManager.cs" />
+    <Compile Include="Game\Journaling\Messages\BadPlantingPlaceMessage.cs" />
     <Compile Include="Game\Journaling\Messages\BuildingCompleteMessage.cs" />
     <Compile Include="Game\Journaling\Messages\BuildingSitePlacesMessage.cs" />
     <Compile Include="Game\Journaling\Messages\BuildingSiteRemovedMessage.cs" />
@@ -104,8 +105,11 @@
     <Compile Include="Game\Journaling\Messages\CastNotAllowedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\CellBlockedForBuildingMessage.cs" />
     <Compile Include="Game\Journaling\Messages\FightNotAllowedMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\HungerDecreasedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ItemLostMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ItemReceivedMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\NotHungryMessage.cs" />
+    <Compile Include="Game\Journaling\Messages\NotReadyForHarvestMessage.cs" />
     <Compile Include="Game\Journaling\Messages\ResourcesRequiredToBuildMessage.cs" />
     <Compile Include="Game\Journaling\Messages\RoofCollapsedMessage.cs" />
     <Compile Include="Game\Journaling\Messages\StoringLocationNotAllowedMessage.cs" />
@@ -163,6 +167,7 @@
     <Compile Include="Objects\IceObjects\IIceObject.cs" />
     <Compile Include="Objects\IFuelObject.cs" />
     <Compile Include="Objects\IFireSpreadingObject.cs" />
+    <Compile Include="Objects\IGrowingPlace.cs" />
     <Compile Include="Objects\ILightObject.cs" />
     <Compile Include="Objects\IPlaceConnectionObject.cs" />
     <Compile Include="Objects\IPlacedHandler.cs" />
@@ -229,7 +234,6 @@
     <Compile Include="Objects\ObjectSize.cs" />
     <Compile Include="Objects\PlayerData\IPlayer.cs" />
     <Compile Include="Objects\PlayerData\Player.cs" />
-    <Compile Include="Objects\PlayerData\PlayerConfiguration.cs" />
     <Compile Include="Objects\SolidObjects\DoorObject.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWall.cs" />
     <Compile Include="Objects\SolidObjects\StairsObject.cs" />
@@ -266,6 +270,7 @@
     <Compile Include="Spells\SpellHelper.cs" />
     <Compile Include="Statuses\BlindObjectStatus.cs" />
     <Compile Include="Statuses\FrozenObjectStatus.cs" />
+    <Compile Include="Statuses\HungryObjectStatus.cs" />
     <Compile Include="Statuses\IBurningRelatedStatus.cs" />
     <Compile Include="Statuses\IObjectStatus.cs" />
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />

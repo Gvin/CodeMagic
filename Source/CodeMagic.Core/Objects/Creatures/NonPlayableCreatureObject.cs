@@ -12,20 +12,17 @@ namespace CodeMagic.Core.Objects.Creatures
 {
     public abstract class NonPlayableCreatureObject : CreatureObject, INonPlayableCreatureObject
     {
-        private readonly float normalSpeed;
         private float turnsCounter;
 
-        public NonPlayableCreatureObject(NonPlayableCreatureObjectConfiguration configuration) 
-            : base(configuration)
+        protected NonPlayableCreatureObject(int maxHealth, string logicPattern)
+            : base(maxHealth)
         {
             Logic = new Logic();
-            normalSpeed = 1 / configuration.Speed;
-            RemainsType = configuration.RemainsType;
             turnsCounter = 0;
 
-            if (!string.IsNullOrEmpty(configuration.LogicPattern))
+            if (!string.IsNullOrEmpty(logicPattern))
             {
-                var configurator = StandardLogicFactory.GetConfigurator(configuration.LogicPattern);
+                var configurator = StandardLogicFactory.GetConfigurator(logicPattern);
                 configurator.Configure(Logic);
             }
             else
@@ -34,7 +31,9 @@ namespace CodeMagic.Core.Objects.Creatures
             }
         }
 
-        public RemainsType RemainsType { get; set; }
+        protected virtual float NormalSpeed => 1f;
+
+        public abstract RemainsType RemainsType { get; }
 
         private float Speed
         {
@@ -42,10 +41,10 @@ namespace CodeMagic.Core.Objects.Creatures
             {
                 if (Statuses.Contains(FrozenObjectStatus.StatusType))
                 {
-                    return normalSpeed * FrozenObjectStatus.SpeedMultiplier;
+                    return NormalSpeed * FrozenObjectStatus.SpeedMultiplier;
                 }
 
-                return normalSpeed;
+                return NormalSpeed;
             }
         }
 
@@ -98,19 +97,5 @@ namespace CodeMagic.Core.Objects.Creatures
         {
             return null;
         }
-    }
-
-    public class NonPlayableCreatureObjectConfiguration : CreatureObjectConfiguration
-    {
-        public NonPlayableCreatureObjectConfiguration()
-        {
-            Speed = 1f;
-        }
-
-        public string LogicPattern { get; set; }
-
-        public float Speed { get; set; }
-
-        public RemainsType RemainsType { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CodeMagic.Core.Area;
+﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
@@ -19,27 +18,25 @@ namespace CodeMagic.Implementations.Objects.SolidObjects
 
         private const string WorldImageName = "Tree";
 
-        public Tree() : base(new DestroyableObjectConfiguration
+        public Tree() : base(50)
         {
-            Name = "Tree",
-            BaseProtection = new Dictionary<Element, int>
-            {
-                {Element.Electricity, 100},
-                {Element.Frost, 100},
-                {Element.Magic, 100},
-                {Element.Piercing, 50},
-                {Element.Blunt, 30},
-                {Element.Fire, -50}
-            },
-            CatchFireChanceMultiplier = 3,
-            SelfExtinguishChance = 5,
-            Health = 50,
-            MaxHealth = 50,
-            Size = ObjectSize.Huge,
-            ZIndex = ZIndex.BigDecoration
-        })
-        {
+            BaseProtection.Add(Element.Electricity, 100);
+            BaseProtection.Add(Element.Frost, 100);
+            BaseProtection.Add(Element.Magic, 100);
+            BaseProtection.Add(Element.Piercing, 50);
+            BaseProtection.Add(Element.Blunt, 30);
+            BaseProtection.Add(Element.Fire, -50);
         }
+
+        public override string Name => "Tree";
+
+        protected sealed override double CatchFireChanceMultiplier => 3;
+
+        protected sealed override double SelfExtinguishChance => 5;
+
+        public sealed override ObjectSize Size => ObjectSize.Huge;
+
+        public override ZIndex ZIndex => ZIndex.BigDecoration;
 
         public override bool BlocksMovement => true;
 

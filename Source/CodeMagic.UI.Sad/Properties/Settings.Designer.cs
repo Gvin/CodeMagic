@@ -82,5 +82,17 @@ namespace CodeMagic.UI.Sad.Properties {
                 this["FontSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.17")]
+        public float Brightness {
+            get {
+                return ((float)(this["Brightness"]));
+            }
+            set {
+                this["Brightness"] = value;
+            }
+        }
     }
 }

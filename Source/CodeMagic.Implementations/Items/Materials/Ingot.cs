@@ -140,7 +140,8 @@ namespace CodeMagic.Implementations.Items.Materials
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
-            return storage.GetImage("ItemsOnGround_Other");
+            var template = storage.GetImage("ItemsOnGround_Resource_Ingot");
+            return MetalRecolorHelper.RecolorMetalImage(template, MetalType);
         }
 
         public SymbolsImage GetInventoryImage(IImagesStorage storage)

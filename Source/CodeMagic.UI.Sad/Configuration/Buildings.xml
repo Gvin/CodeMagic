@@ -206,7 +206,19 @@
       <l>It can be used as light source and cooking station.</l>
     </description>
     <rareness>Common</rareness>
-    <preview-image>Building_Fireplace</preview-image>
+    <preview-image>Building_Fireplace_Fuel</preview-image>
+    <build-time>1</build-time>
+    <cost>
+      <!-- <material name="Wood" type="resource_wood">1</material> -->
+    </cost>
+  </building>
+  <building id="growing_place" auto-unlock="true">
+    <name>Growing Place</name>
+    <description>
+      <l>A place for growing plants.</l>
+    </description>
+    <rareness>Common</rareness>
+    <preview-image>Building_GrowingPlace_MediumHumid</preview-image>
     <build-time>1</build-time>
     <cost>
       <!-- <material name="Wood" type="resource_wood">1</material> -->

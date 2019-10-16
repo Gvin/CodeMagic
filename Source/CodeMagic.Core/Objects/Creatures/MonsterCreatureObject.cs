@@ -6,6 +6,7 @@ using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.Creatures.Loot;
 using CodeMagic.Core.Objects.Creatures.Remains;
+using CodeMagic.Core.Objects.DecorativeObjects;
 
 namespace CodeMagic.Core.Objects.Creatures
 {
@@ -14,15 +15,41 @@ namespace CodeMagic.Core.Objects.Creatures
         private readonly ILootConfiguration lootConfiguration;
         private readonly MonsterDamageValue[] damage;
         private readonly int hitChance;
+        private readonly MonsterCreatureObjectConfiguration configuration;
 
         protected MonsterCreatureObject(MonsterCreatureObjectConfiguration configuration) 
-            : base(configuration)
+            : base(configuration.MaxHealth, configuration.LogicPattern)
         {
+            this.configuration = configuration;
+
             damage = configuration.Damage.ToArray();
             hitChance = configuration.HitChance;
             lootConfiguration = configuration.LootConfiguration;
-            RemainsType = configuration.RemainsType;
+
+            if (configuration.BaseProtection != null)
+            {
+                foreach (var pair in configuration.BaseProtection)
+                {
+                    BaseProtection.Add(pair.Key, pair.Value);
+                }
+            }
         }
+
+        public sealed override string Name => configuration.Name;
+
+        public sealed override ObjectSize Size => configuration.Size;
+
+        public sealed override ZIndex ZIndex => configuration.ZIndex;
+
+        public sealed override RemainsType RemainsType => configuration.RemainsType;
+
+        protected sealed override double CatchFireChanceMultiplier => configuration.CatchFireChanceMultiplier;
+
+        protected sealed override double SelfExtinguishChance => configuration.SelfExtinguishChance;
+
+        public sealed override int MaxVisibilityRange => configuration.VisibilityRange;
+
+        protected sealed override float NormalSpeed => configuration.Speed / 1;
 
         public override void Attack(IDestroyableObject target, IJournal journal)
         {
@@ -54,11 +81,12 @@ namespace CodeMagic.Core.Objects.Creatures
         }
     }
 
-    public class MonsterCreatureObjectConfiguration : NonPlayableCreatureObjectConfiguration
+    public class MonsterCreatureObjectConfiguration
     {
         public MonsterCreatureObjectConfiguration()
         {
             Damage = new List<MonsterDamageValue>();
+            BaseProtection = new Dictionary<Element, int>();
         }
 
         public int HitChance { get; set; }
@@ -66,6 +94,28 @@ namespace CodeMagic.Core.Objects.Creatures
         public List<MonsterDamageValue> Damage { get; }
 
         public ILootConfiguration LootConfiguration { get; set; }
+
+        public string Name { get; set; }
+
+        public string LogicPattern { get; set; }
+
+        public ObjectSize Size { get; set; }
+
+        public ZIndex ZIndex { get; set; }
+
+        public int MaxHealth { get; set; }
+
+        public RemainsType RemainsType { get; set; }
+
+        public double CatchFireChanceMultiplier { get; set; }
+
+        public double SelfExtinguishChance { get; set; }
+
+        public int VisibilityRange { get; set; }
+
+        public float Speed { get; set; }
+
+        public Dictionary<Element, int> BaseProtection { get; set; }
     }
 
     public class MonsterDamageValue

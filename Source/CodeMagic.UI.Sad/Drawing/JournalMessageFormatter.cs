@@ -111,9 +111,49 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetToolRequiredMessage(toolRequiredMessage);
                 case RoofCollapsedMessage roofCollapsedMessage:
                     return GetRoofCollapsedMessage(roofCollapsedMessage);
+                case NotHungryMessage notHungryMessage:
+                    return GetNotHungryMessage(notHungryMessage);
+                case HungerDecreasedMessage hungerDecreasedMessage:
+                    return GetHungerDecreasedMessage(hungerDecreasedMessage);
+                case NotReadyForHarvestMessage notReadyForHarvestMessage:
+                    return GetNotReadyForHarvestMessage(notReadyForHarvestMessage);
+                case BadPlantingPlaceMessage badPlantingPlaceMessage:
+                    return GetBadPlantingPlaceMessage(badPlantingPlaceMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
+        }
+
+        private ColoredString[] GetBadPlantingPlaceMessage(BadPlantingPlaceMessage message)
+        {
+            return new[]
+            {
+                new ColoredString("You cannot plant here"),
+            };
+        }
+
+        private ColoredString[] GetNotReadyForHarvestMessage(NotReadyForHarvestMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{message.PlantName} is not ready for harvest"),
+            };
+        }
+
+        private ColoredString[] GetHungerDecreasedMessage(HungerDecreasedMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{PlayerName} restored {message.DecreaseValue}% of hunger"),
+            };
+        }
+
+        private ColoredString[] GetNotHungryMessage(NotHungryMessage message)
+        {
+            return new[]
+            {
+                new ColoredString($"{PlayerName} are not hungry enough to eat something"),
+            };
         }
 
         private ColoredString[] GetRoofCollapsedMessage(RoofCollapsedMessage message)
@@ -468,6 +508,8 @@ namespace CodeMagic.UI.Sad.Drawing
                     return "Wet";
                 case OilyObjectStatus.StatusType:
                     return "Oily";
+                case HungryObjectStatus.StatusType:
+                    return "Hungry";
                 default:
                     throw new ApplicationException($"Unknown object status type: {statusType}");
             }

@@ -22,8 +22,8 @@ namespace CodeMagic.Core.Statuses
         public OilyObjectStatus(ILiquidConfiguration configuration)
         {
             maxLifeTime = int.Parse(GetCustomConfigurationValue(configuration, CustomValueOilyStatusLifeTime));
-            CatchFireChanceModifier = int.Parse(GetCustomConfigurationValue(configuration, CustomValueOilyStatusCatchFireChanceModifier));
-            SelfExtinguishChanceModifier = int.Parse(GetCustomConfigurationValue(configuration, CustomValueOilyStatusSelfExtinguishChanceModifier));
+            CatchFireChanceModifier = double.Parse(GetCustomConfigurationValue(configuration, CustomValueOilyStatusCatchFireChanceModifier));
+            SelfExtinguishChanceModifier = double.Parse(GetCustomConfigurationValue(configuration, CustomValueOilyStatusSelfExtinguishChanceModifier));
 
             lifeTime = 0;
         }
@@ -41,9 +41,9 @@ namespace CodeMagic.Core.Statuses
 
         public string Type => StatusType;
 
-        public int CatchFireChanceModifier { get; }
+        public double CatchFireChanceModifier { get; }
 
-        public int SelfExtinguishChanceModifier { get; }
+        public double SelfExtinguishChanceModifier { get; }
 
         private string GetCustomConfigurationValue(ILiquidConfiguration configuration, string key)
         {

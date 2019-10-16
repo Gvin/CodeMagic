@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
+  <row>
+    <pixel glyph="176">
+      <color>
+        <R>64</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>118</R>
+        <G>88</G>
+        <B>61</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>64</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>118</R>
+        <G>88</G>
+        <B>61</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>64</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>118</R>
+        <G>88</G>
+        <B>61</B>
+      </background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel glyph="176">
+      <color>
+        <R>64</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>118</R>
+        <G>88</G>
+        <B>61</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>64</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>118</R>
+        <G>88</G>
+        <B>61</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>64</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>118</R>
+        <G>88</G>
+        <B>61</B>
+      </background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel glyph="176">
+      <color>
+        <R>64</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>118</R>
+        <G>88</G>
+        <B>61</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>64</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>118</R>
+        <G>88</G>
+        <B>61</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>64</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+      <background-color>
+        <R>118</R>
+        <G>88</G>
+        <B>61</B>
+      </background-color>
+    </pixel>
+  </row>
+</symbols-image>

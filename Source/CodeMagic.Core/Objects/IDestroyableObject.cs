@@ -13,7 +13,7 @@ namespace CodeMagic.Core.Objects
 
         int Health { get; set; }
 
-        int MaxHealth { get; set; }
+        int MaxHealth { get; }
 
         void OnDeath(IAreaMap map, IJournal journal, Point position);
 
@@ -21,7 +21,7 @@ namespace CodeMagic.Core.Objects
 
         ObjectStatusesCollection Statuses { get; }
 
-        int GetSelfExtinguishChance();
+        double GetSelfExtinguishChance();
 
         List<IObjectEffect> ObjectEffects { get; }
 

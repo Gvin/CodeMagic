@@ -57,10 +57,15 @@
     <Compile Include="Items\TorchItem.cs" />
     <Compile Include="Items\Usable\AncientScrollItemImpl.cs" />
     <Compile Include="Items\Usable\BuildingBlueprint.cs" />
+    <Compile Include="Items\Usable\Food\Apple.cs" />
+    <Compile Include="Items\Usable\Food\FoodItemBase.cs" />
+    <Compile Include="Items\Usable\Food\Wheat.cs" />
     <Compile Include="Items\Usable\HealthManaRestorationItem.cs" />
     <Compile Include="Items\Usable\ScrollItemImpl.cs" />
     <Compile Include="Items\Usable\TeleporterStoneActive.cs" />
     <Compile Include="Items\Usable\TeleporterStoneInactive.cs" />
+    <Compile Include="Items\Usable\Seeds\WheatSeeds.cs" />
+    <Compile Include="Items\Usable\WateringCan.cs" />
     <Compile Include="IWorldImageProvider.cs" />
     <Compile Include="Items\ArmorItemImpl.cs" />
     <Compile Include="Items\ItemTextHelper.cs" />
@@ -74,7 +79,11 @@
     <Compile Include="Objects\Buildings\Box.cs" />
     <Compile Include="Objects\Buildings\BuildingSite.cs" />
     <Compile Include="Objects\Buildings\Fireplace.cs" />
+    <Compile Include="Objects\Buildings\GrowingPlace.cs" />
     <Compile Include="Objects\Buildings\IRoofSupport.cs" />
+    <Compile Include="Objects\Buildings\Plants\IPlant.cs" />
+    <Compile Include="Objects\Buildings\Plants\PlantBase.cs" />
+    <Compile Include="Objects\Buildings\Plants\WheatPlant.cs" />
     <Compile Include="Objects\Buildings\Roof.cs" />
     <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWall.cs" />
     <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWallDoor.cs" />

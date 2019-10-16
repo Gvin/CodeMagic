@@ -16,18 +16,24 @@ namespace CodeMagic.Core.Tests.Objects
         public int SetHealthTest(int value, int maxHealth)
         {
             // Arrange
-            var config = new DestroyableObjectConfiguration
-            {
-                Health = 0,
-                MaxHealth = maxHealth
-            };
-            var player = new DestroyableObject(config);
+            var player = new TestDestroyableObject(maxHealth);
 
             // Act
             player.Health = value;
 
             // Assert
             return player.Health;
+        }
+
+        private class TestDestroyableObject : DestroyableObject
+        {
+            public TestDestroyableObject(int maxHealth) : base(maxHealth)
+            {
+            }
+
+            public override string Name => "Test";
+            public override ZIndex ZIndex => ZIndex.Air;
+            public override ObjectSize Size => ObjectSize.Huge;
         }
     }
 }

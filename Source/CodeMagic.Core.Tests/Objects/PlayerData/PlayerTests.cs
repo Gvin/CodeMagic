@@ -16,12 +16,8 @@ namespace CodeMagic.Core.Tests.Objects.PlayerData
         public int SetManaTest(int value, int maxMana)
         {
             // Arrange
-            var config = new PlayerConfiguration
-            {
-                Mana = 0,
-                MaxMana = maxMana
-            };
-            var player = new Player(config);
+            var player = new Player();
+            player.MaxMana = maxMana;
 
             // Act
             player.Mana = value;

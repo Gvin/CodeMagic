@@ -125,6 +125,7 @@ namespace CodeMagic.Core.Spells.Script
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
             jsEngine.SetValue("getPosition", new Func<JsValue>(() => ConvertPoint(position)));
             jsEngine.SetValue("getTemperature", new Func<int>(() => map.GetCell(position).Temperature));
+            jsEngine.SetValue("getHumidity", new Func<int>(() => GetHumidity(map, position)));
             jsEngine.SetValue("getIsSolidWall",
                 new Func<string, bool>((direction) => GetIfCellIsSolid(map, position, direction)));
             jsEngine.SetValue("getObjectsUnder", new Func<JsValue[]>(() => GetObjectsUnder(map, position)));
@@ -275,6 +276,13 @@ namespace CodeMagic.Core.Spells.Script
                 return true;
 
             return map.GetCell(checkPosition).BlocksProjectiles;
+        }
+
+        private int GetHumidity(IAreaMap map, Point position)
+        {
+            var cell = map.GetCell(position);
+            var growingPlace = cell.Objects.OfType<IGrowingPlace>().FirstOrDefault();
+            return growingPlace?.Humidity ?? 0;
         }
 
         #endregion
