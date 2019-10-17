@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.ItemsGeneration.Configuration.SpellBook;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.SpellBook;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.SpellBook
 {

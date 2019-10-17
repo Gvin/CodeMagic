@@ -1,14 +1,14 @@
 ﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
-using CodeMagic.Implementations;
-using CodeMagic.Implementations.Items;
+using CodeMagic.Game;
+using CodeMagic.Game.Items;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Views;
 
 namespace CodeMagic.UI.Sad.Items
 {
-    public class Bag : ItemBase, IWorldImageProvider, IInventoryImageProvider, IDescriptionProvider, IUsableItem
+    public class Bag : Item, IWorldImageProvider, IInventoryImageProvider, IDescriptionProvider, IUsableItem
     {
         private const int MaxWeight = 7000;
 

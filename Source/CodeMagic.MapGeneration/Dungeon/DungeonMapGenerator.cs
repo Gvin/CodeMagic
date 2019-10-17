@@ -5,7 +5,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.Implementations.Objects.SolidObjects;
+using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.MapGeneration.Dungeon.MapGenerators;
 using CodeMagic.MapGeneration.Dungeon.MapObjectFactories;
 using Point = CodeMagic.Core.Game.Point;

@@ -1,5 +1,5 @@
 ﻿using CodeMagic.Core.Spells;
-using CodeMagic.ItemsGeneration;
+using CodeMagic.Game.Items.ItemsGeneration;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {

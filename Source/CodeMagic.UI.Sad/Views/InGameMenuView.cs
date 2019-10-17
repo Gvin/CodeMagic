@@ -101,7 +101,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void exitButton_Click(object sender, EventArgs args)
         {
-            Game.Instance.Exit();
+            SadConsole.Game.Instance.Exit();
         }
 
         private void startGameButton_Click(object sender, EventArgs args)

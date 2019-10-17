@@ -1,6 +1,6 @@
 ﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.ObjectEffects;
-using CodeMagic.Implementations.Items;
+using CodeMagic.Game.Items;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.UI.Sad.Drawing.ObjectEffects

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Xml.Serialization;
 using CodeMagic.Core.Items;
-using CodeMagic.ItemsGeneration.Configuration.Bonuses;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Bonuses;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Bonuses
 {

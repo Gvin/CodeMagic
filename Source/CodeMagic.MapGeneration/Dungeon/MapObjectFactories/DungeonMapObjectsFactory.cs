@@ -2,8 +2,8 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
-using CodeMagic.Implementations.Objects.Floor;
-using CodeMagic.Implementations.Objects.SolidObjects;
+using CodeMagic.Game.Objects.Floor;
+using CodeMagic.Game.Objects.SolidObjects;
 
 namespace CodeMagic.MapGeneration.Dungeon.MapObjectFactories
 {

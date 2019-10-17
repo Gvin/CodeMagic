@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using CodeMagic.Implementations;
+using CodeMagic.Game;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.UI.Sad.Drawing

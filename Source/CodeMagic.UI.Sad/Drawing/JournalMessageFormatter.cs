@@ -9,7 +9,7 @@ using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
-using CodeMagic.Implementations.Items;
+using CodeMagic.Game.Items;
 using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
 using SadConsole;

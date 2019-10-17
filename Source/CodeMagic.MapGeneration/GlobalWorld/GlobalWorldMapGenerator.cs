@@ -5,7 +5,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
-using CodeMagic.Implementations.Objects.GlobalMap;
+using CodeMagic.Game.Objects.GlobalMap;
 
 namespace CodeMagic.MapGeneration.GlobalWorld
 {

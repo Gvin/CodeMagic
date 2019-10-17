@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Xml.Serialization;
 using CodeMagic.Configuration.Xml.Types.Items.Description;
-using CodeMagic.ItemsGeneration.Configuration.Armor;
-using CodeMagic.ItemsGeneration.Configuration.Description;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Armor;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Description;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Armor
 {

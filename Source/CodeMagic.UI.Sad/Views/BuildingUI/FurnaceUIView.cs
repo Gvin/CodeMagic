@@ -1,8 +1,8 @@
 ﻿using System;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Implementations;
-using CodeMagic.Implementations.Objects.Buildings;
+using CodeMagic.Game;
+using CodeMagic.Game.Objects.Buildings;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Drawing;

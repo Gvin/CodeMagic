@@ -1,5 +1,5 @@
 ﻿using CodeMagic.Core.Items;
-using CodeMagic.Implementations;
+using CodeMagic.Game;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.UI.Sad.Drawing.ImageProviding

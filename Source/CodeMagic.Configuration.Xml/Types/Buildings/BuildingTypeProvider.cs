@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeMagic.Implementations.Objects.Buildings;
-using CodeMagic.Implementations.Objects.Buildings.PalisadeBuilding;
-using CodeMagic.Implementations.Objects.Buildings.StoneOuterWallBuilding;
-using CodeMagic.Implementations.Objects.Buildings.StoneWallBuilding;
-using CodeMagic.Implementations.Objects.Buildings.WoodenWallBuilding;
+using CodeMagic.Game.Objects.Buildings;
+using CodeMagic.Game.Objects.Buildings.PalisadeBuilding;
+using CodeMagic.Game.Objects.Buildings.StoneOuterWallBuilding;
+using CodeMagic.Game.Objects.Buildings.StoneWallBuilding;
+using CodeMagic.Game.Objects.Buildings.WoodenWallBuilding;
 
 namespace CodeMagic.Configuration.Xml.Types.Buildings
 {

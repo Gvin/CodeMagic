@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using CodeMagic.Core.Area;
+﻿using CodeMagic.Core.Area;
 
 namespace CodeMagic.Core.Objects.SolidObjects
 {

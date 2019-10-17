@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
-using CodeMagic.Implementations.Items;
+using CodeMagic.Game.Items;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.Drawing.ImageProviding;

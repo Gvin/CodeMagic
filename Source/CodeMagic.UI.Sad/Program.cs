@@ -2,7 +2,6 @@
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.Views;
-using SadConsole;
 
 namespace CodeMagic.UI.Sad
 {
@@ -22,20 +21,20 @@ namespace CodeMagic.UI.Sad
             // Setup the engine and create the main window.
             var gameWidth = (int) Math.Floor(Width * FontProvider.FontHorizontalMultiplier);
             var gameHeight = (int) Math.Floor(Height * FontProvider.FontVerticalMultiplier);
-            Game.Create(gameWidth, gameHeight);
+            SadConsole.Game.Create(gameWidth, gameHeight);
 
             // Hook the start event so we can add consoles to the system.
-            Game.OnInitialize = Init;
+            SadConsole.Game.OnInitialize = Init;
 
             // Start the game.
-            Game.Instance.Run();
-            Game.Instance.Dispose();
+            SadConsole.Game.Instance.Run();
+            SadConsole.Game.Instance.Dispose();
         }
 
         private static void Init()
         {
-            Game.Instance.Window.Title = "C0de Mag1c";
-            Game.Instance.Window.AllowUserResizing = false;
+            SadConsole.Game.Instance.Window.Title = "C0de Mag1c";
+            SadConsole.Game.Instance.Window.AllowUserResizing = false;
 
             var mainMenu = new MainMenuView();
             mainMenu.Show();

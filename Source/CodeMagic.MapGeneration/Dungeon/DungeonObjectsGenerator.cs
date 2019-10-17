@@ -1,8 +1,8 @@
 ﻿using System;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Implementations.Items.Materials;
-using CodeMagic.Implementations.Objects.DecorativeObjects;
+using CodeMagic.Game.Items.Materials;
+using CodeMagic.Game.Objects.DecorativeObjects;
 
 namespace CodeMagic.MapGeneration.Dungeon
 {

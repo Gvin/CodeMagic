@@ -11,7 +11,7 @@ using CodeMagic.Core.Configuration.Buildings;
 using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Configuration.Monsters;
 using CodeMagic.Core.Configuration.Spells;
-using CodeMagic.ItemsGeneration.Configuration;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration;
 
 namespace CodeMagic.Configuration.Xml
 {

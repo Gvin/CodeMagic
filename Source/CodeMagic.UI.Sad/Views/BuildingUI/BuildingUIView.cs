@@ -20,7 +20,7 @@ namespace CodeMagic.UI.Sad.Views.BuildingUI
 
         protected BuildingUIView(IGameCore game, string buildingName) : base(Program.Width, Program.Height)
         {
-            this.Game = game;
+            Game = game;
             this.buildingName = buildingName;
 
             InitializeControls();

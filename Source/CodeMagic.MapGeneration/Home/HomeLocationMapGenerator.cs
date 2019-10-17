@@ -3,8 +3,8 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Implementations.Objects.Floor;
-using CodeMagic.Implementations.Objects.SolidObjects;
+using CodeMagic.Game.Objects.Floor;
+using CodeMagic.Game.Objects.SolidObjects;
 
 namespace CodeMagic.MapGeneration.Home
 {

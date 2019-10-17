@@ -4,7 +4,7 @@ using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Monsters;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Implementations.Objects.Creatures.NonPlayable;
+using CodeMagic.Game.Objects.Creatures.NonPlayable;
 
 namespace CodeMagic.MapGeneration.Dungeon
 {

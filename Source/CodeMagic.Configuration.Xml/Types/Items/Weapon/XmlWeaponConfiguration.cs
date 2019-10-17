@@ -3,10 +3,10 @@ using System.Xml.Serialization;
 using CodeMagic.Configuration.Xml.Types.Items.Description;
 using CodeMagic.Configuration.Xml.Types.Items.Weapon.Blade;
 using CodeMagic.Configuration.Xml.Types.Items.Weapon.Head;
-using CodeMagic.ItemsGeneration.Configuration.Description;
-using CodeMagic.ItemsGeneration.Configuration.Weapon;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Blade;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Head;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Description;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon.Blade;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon.Head;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
 {

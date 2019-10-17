@@ -2,14 +2,14 @@
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
-using CodeMagic.Implementations;
-using CodeMagic.Implementations.Items;
+using CodeMagic.Game;
+using CodeMagic.Game.Items;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Views;
 
 namespace CodeMagic.UI.Sad.Items
 {
-    public class BagOfHolding : ItemBase, IWorldImageProvider, IInventoryImageProvider, IDescriptionProvider, IUsableItem
+    public class BagOfHolding : Item, IWorldImageProvider, IInventoryImageProvider, IDescriptionProvider, IUsableItem
     {
         private Point position;
         private readonly Inventory inventory;

@@ -4,12 +4,12 @@ using CodeMagic.Configuration.Xml.Types.Items.Bonuses;
 using CodeMagic.Configuration.Xml.Types.Items.SpellBook;
 using CodeMagic.Configuration.Xml.Types.Items.Tool;
 using CodeMagic.Configuration.Xml.Types.Items.Weapon;
-using CodeMagic.ItemsGeneration.Configuration;
-using CodeMagic.ItemsGeneration.Configuration.Armor;
-using CodeMagic.ItemsGeneration.Configuration.Bonuses;
-using CodeMagic.ItemsGeneration.Configuration.SpellBook;
-using CodeMagic.ItemsGeneration.Configuration.Tool;
-using CodeMagic.ItemsGeneration.Configuration.Weapon;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Armor;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Bonuses;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.SpellBook;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Tool;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon;
 
 namespace CodeMagic.Configuration.Xml.Types.Items
 {
