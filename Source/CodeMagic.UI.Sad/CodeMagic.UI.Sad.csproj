@@ -73,7 +73,6 @@
     <Compile Include="Drawing\ImageProviding\InventoryImagesFactory.cs" />
     <Compile Include="Drawing\ImageProviding\WorldImagesFactory.cs" />
     <Compile Include="Drawing\ImagesStorage.cs" />
-    <Compile Include="Drawing\ItemDrawingHelper.cs" />
     <Compile Include="Drawing\JournalMessageFormatter.cs" />
     <Compile Include="Drawing\LightLevelManager.cs" />
     <Compile Include="Drawing\ObjectEffects\ObjectEffect.cs" />
@@ -150,10 +149,6 @@
     <ProjectReference Include="..\CodeMagic.Game\CodeMagic.Game.csproj">
       <Project>{204099af-db91-405b-bff4-936c56a85d30}</Project>
       <Name>CodeMagic.Game</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeMagic.MapGeneration\CodeMagic.MapGeneration.csproj">
-      <Project>{a4f02790-b78a-42d2-b1b2-bed6547e7fc3}</Project>
-      <Name>CodeMagic.MapGeneration</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeMagic.UI.Images\CodeMagic.UI.Images.csproj">
       <Project>{c5a8ee43-bc81-4e88-b990-d2ae962c3205}</Project>

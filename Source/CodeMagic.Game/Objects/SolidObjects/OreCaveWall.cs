@@ -1,6 +1,7 @@
 ﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Materials;
 using CodeMagic.UI.Images;
 

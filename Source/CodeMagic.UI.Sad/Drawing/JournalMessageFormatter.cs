@@ -10,6 +10,7 @@ using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.Items;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
 using SadConsole;
@@ -43,6 +44,14 @@ namespace CodeMagic.UI.Sad.Drawing
 
         private ColoredString[] GetMessageBody(IJournalMessage message)
         {
+            if (message is ISelfDescribingJournalMessage selfDescribingMessage)
+            {
+                return selfDescribingMessage.GetDescription().Parts.Select(styledString =>
+                        new ColoredString(styledString.String,
+                            new Cell(styledString.TextColor.ToXna(), BackgroundColor)))
+                    .ToArray();
+            }
+
             switch (message)
             {
                 case EnvironmentDamageMessage environmentDamageMessage:
@@ -71,105 +80,23 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetStatusAddedMessage(statusAddedMessage);
                 case UsedItemMessage usedItemMessage:
                     return GetUsedItemMessage(usedItemMessage);
-                case HealedMessage healedMessage:
-                    return GetHealedMessage(healedMessage);
-                case ManaRestoredMessage manaRestoredMessage:
-                    return GetManaRestoredMessage(manaRestoredMessage);
                 case DamageBlockedMessage damageBlockedMessage:
                     return GetDamageBlockedMessage(damageBlockedMessage);
                 case OverweightBlocksMovementMessage overweightBlocksMovementMessage:
                     return GetOverweightBlocksMovementMessage(overweightBlocksMovementMessage);
                 case DungeonLevelMessage dungeonLevelMessage:
                     return GetDungeonLevelMessage(dungeonLevelMessage);
-                case NotEnoughManaToScrollMessage notEnoughManaToScrollMessage:
-                    return GetNotEnoughManaToScrollMessage(notEnoughManaToScrollMessage);
-                case FailedToUseScrollMessage failedToUseScrollMessage:
-                    return GetFailedToUseScrollMessage(failedToUseScrollMessage);
                 case CastNotAllowedMessage castNotAllowedMessage:
                     return GetCastNotAllowedMessage(castNotAllowedMessage);
                 case FightNotAllowedMessage fightNotAllowedMessage:
                     return GetFightNotAllowedMessage(fightNotAllowedMessage);
-                case StoringLocationNotAllowedMessage storingLocationNotAllowedMessage:
-                    return GetStoringLocationNotAllowedMessage(storingLocationNotAllowedMessage);
-                case BuildingCompleteMessage buildingCompleteMessage:
-                    return GetBuildingCompleteMessage(buildingCompleteMessage);
-                case ResourcesRequiredToBuildMessage resourcesRequiredToBuildMessage:
-                    return GetResourcesRequiredToBuildMessage(resourcesRequiredToBuildMessage);
-                case BuildingSiteRemovedMessage buildingSiteRemovedMessage:
-                    return GetBuildingSiteRemovedMessage(buildingSiteRemovedMessage);
-                case CellBlockedForBuildingMessage cellBlockedForBuildingMessage:
-                    return GetCellBlockedForBuildingMessage(cellBlockedForBuildingMessage);
-                case BuildingSitePlacesMessage buildingSitePlacesMessage:
-                    return GetBuildingSitePlacesMessage(buildingSitePlacesMessage);
-                case BuildingUnlockedMessage buildingUnlockedMessage:
-                    return GetBuildingUnlockedMessage(buildingUnlockedMessage);
                 case ItemReceivedMessage itemReceivedMessage:
                     return GetItemReceivedMessage(itemReceivedMessage);
                 case ItemLostMessage itemLostMessage:
                     return GetItemLostMessage(itemLostMessage);
-                case ToolRequiredMessage toolRequiredMessage:
-                    return GetToolRequiredMessage(toolRequiredMessage);
-                case RoofCollapsedMessage roofCollapsedMessage:
-                    return GetRoofCollapsedMessage(roofCollapsedMessage);
-                case NotHungryMessage notHungryMessage:
-                    return GetNotHungryMessage(notHungryMessage);
-                case HungerDecreasedMessage hungerDecreasedMessage:
-                    return GetHungerDecreasedMessage(hungerDecreasedMessage);
-                case NotReadyForHarvestMessage notReadyForHarvestMessage:
-                    return GetNotReadyForHarvestMessage(notReadyForHarvestMessage);
-                case BadPlantingPlaceMessage badPlantingPlaceMessage:
-                    return GetBadPlantingPlaceMessage(badPlantingPlaceMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
-        }
-
-        private ColoredString[] GetBadPlantingPlaceMessage(BadPlantingPlaceMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("You cannot plant here"),
-            };
-        }
-
-        private ColoredString[] GetNotReadyForHarvestMessage(NotReadyForHarvestMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{message.PlantName} is not ready for harvest"),
-            };
-        }
-
-        private ColoredString[] GetHungerDecreasedMessage(HungerDecreasedMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{PlayerName} restored {message.DecreaseValue}% of hunger"),
-            };
-        }
-
-        private ColoredString[] GetNotHungryMessage(NotHungryMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{PlayerName} are not hungry enough to eat something"),
-            };
-        }
-
-        private ColoredString[] GetRoofCollapsedMessage(RoofCollapsedMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("A roof has collapsed"),
-            };
-        }
-
-        private ColoredString[] GetToolRequiredMessage(ToolRequiredMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("Specific tool is required for this action"),
-            };
         }
 
         private ColoredString[] GetItemLostMessage(ItemLostMessage message)
@@ -192,78 +119,6 @@ namespace CodeMagic.UI.Sad.Drawing
             };
         }
 
-        private ColoredString[] GetBuildingUnlockedMessage(BuildingUnlockedMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("New building unlocked: ["),
-                new ColoredString(message.Building.Name, new Cell(ItemDrawingHelper.GetRarenessColor(message.Building.Rareness))), 
-                new ColoredString("]"), 
-            };
-        }
-
-        private ColoredString[] GetBuildingSitePlacesMessage(BuildingSitePlacesMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("["),
-                new ColoredString(message.Building.Name, new Cell(ItemDrawingHelper.GetRarenessColor(message.Building.Rareness))),
-                new ColoredString("] building site is placed"),
-            };
-        }
-
-        private ColoredString[] GetCellBlockedForBuildingMessage(CellBlockedForBuildingMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("Target area cannot be used for building"),
-            };
-        }
-
-        private ColoredString[] GetBuildingSiteRemovedMessage(BuildingSiteRemovedMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("Building site removed"),
-            };
-        }
-
-        private ColoredString[] GetResourcesRequiredToBuildMessage(ResourcesRequiredToBuildMessage message)
-        {
-            if (message.RemainingResources == null || message.RemainingResources.Count == 0)
-            {
-                return new[]
-                {
-                    new ColoredString($"{message.RemainingTime} turns remaining to finish building."),
-                };
-            }
-
-            var resourcesString = string.Join(", ",
-                message.RemainingResources.Select(resource => $"{resource.Value} {resource.Key}"));
-            return new []
-            {
-                new ColoredString($"{message.RemainingTime} turns and the following resources are required to finish this building: {resourcesString}")
-            };
-        }
-
-        private ColoredString[] GetBuildingCompleteMessage(BuildingCompleteMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"Building ["),
-                new ColoredString(message.Building.Name, new Cell(ItemDrawingHelper.GetRarenessColor(message.Building.Rareness))),
-                new ColoredString("] is complete."), 
-            };
-        }
-
-        private ColoredString[] GetStoringLocationNotAllowedMessage(StoringLocationNotAllowedMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("This area is too unstable to store its location."),
-            };
-        }
-
         private ColoredString[] GetFightNotAllowedMessage(FightNotAllowedMessage message)
         {
             return new[]
@@ -277,24 +132,6 @@ namespace CodeMagic.UI.Sad.Drawing
             return new[]
             {
                 new ColoredString("Casting is not allowed in this area"),
-            };
-        }
-
-        private ColoredString[] GetFailedToUseScrollMessage(FailedToUseScrollMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{PlayerName} failed to use scroll. It's destroyed")
-            };
-        }
-
-        private ColoredString[] GetNotEnoughManaToScrollMessage(NotEnoughManaToScrollMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{PlayerName} have not enough ", TextColor, BackgroundColor),
-                ManaString,
-                new ColoredString(" to create a scroll with this spell", TextColor, BackgroundColor)
             };
         }
 
@@ -320,26 +157,6 @@ namespace CodeMagic.UI.Sad.Drawing
             {
                 new ColoredString($"{GetMapObjectName(message.Target)} blocked "),
                 GetDamageText(message.BlockedValue, message.DamageElement)
-            };
-        }
-
-        private ColoredString[] GetHealedMessage(HealedMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{GetMapObjectName(message.Target)} restored ", TextColor, BackgroundColor),
-                new ColoredString(message.HealValue.ToString(), HealValueColor, BackgroundColor),
-                new ColoredString(" health", TextColor, BackgroundColor)
-            };
-        }
-
-        private ColoredString[] GetManaRestoredMessage(ManaRestoredMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{GetMapObjectName(message.Target)} restored ", TextColor, BackgroundColor),
-                new ColoredString(message.ManaRestoreValue.ToString(), ManaColor, BackgroundColor),
-                new ColoredString(" mana", TextColor, BackgroundColor)
             };
         }
 
@@ -480,7 +297,7 @@ namespace CodeMagic.UI.Sad.Drawing
 
         private ColoredString GetItemNameText(IItem item)
         {
-            return new ColoredString(item.Name.ConvertGlyphs(), ItemDrawingHelper.GetItemColor(item), BackgroundColor);
+            return new ColoredString(item.Name.ConvertGlyphs(), ItemDrawingHelper.GetItemColor(item).ToXna(), BackgroundColor);
         }
 
         private ColoredString GetDamageText(int damage, Element element)

@@ -4,6 +4,7 @@ using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Items;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
@@ -213,7 +214,7 @@ namespace CodeMagic.UI.Sad.Views
 
         protected override ColoredString[] GetNameText(Color backColor)
         {
-            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
+            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem).ToXna();
 
             return new[]
             {

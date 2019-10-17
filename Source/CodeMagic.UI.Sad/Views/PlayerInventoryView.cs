@@ -4,8 +4,9 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.Items;
+using CodeMagic.Game.Items.Usable;
 using CodeMagic.UI.Sad.Common;
-using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -117,7 +118,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void CheckSelectedScrollCode()
         {
-            var selectedScroll = SelectedStack?.TopItem as ScrollItem;
+            var selectedScroll = SelectedStack?.TopItem as ScrollBase;
             if (selectedScroll == null)
                 return;
 
@@ -190,7 +191,7 @@ namespace CodeMagic.UI.Sad.Views
             dropAllItemsButton.IsVisible = SelectedStack != null;
 
             useItemButton.IsVisible = SelectedStack?.TopItem is IUsableItem;
-            checkScrollButton.IsVisible = SelectedStack?.TopItem is ScrollItem;
+            checkScrollButton.IsVisible = SelectedStack?.TopItem is ScrollBase;
 
             if (SelectedStack?.TopItem is IEquipableItem equipable)
             {
@@ -262,7 +263,7 @@ namespace CodeMagic.UI.Sad.Views
 
         protected override ColoredString[] GetNameText(Color backColor)
         {
-            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
+            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem).ToXna();
 
             return new[]
             {

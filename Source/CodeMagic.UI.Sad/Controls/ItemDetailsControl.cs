@@ -69,7 +69,7 @@ namespace CodeMagic.UI.Sad.Controls
             const int initialYShift = 3;
             var maxWidth = Width - 6;
 
-            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
+            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem).ToXna();
             if (Stack.TopItem.Name.Length <= maxWidth)
             {
                 Surface.Print(1, initialYShift, new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, BackColor)));

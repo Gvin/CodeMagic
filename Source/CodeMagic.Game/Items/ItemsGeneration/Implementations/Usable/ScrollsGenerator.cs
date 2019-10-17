@@ -48,7 +48,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Usable
             var damage = RandomHelper.GetRandomValue(minDamage, maxDamage);
             var name = GetName(spell);
 
-            return new AncientScrollItemImpl(new AncientScrollItemConfiguration
+            return new AncientScroll(new AncientScrollItemConfiguration
             {
                 Name = $"{name} Scroll",
                 Code = spell.Code,

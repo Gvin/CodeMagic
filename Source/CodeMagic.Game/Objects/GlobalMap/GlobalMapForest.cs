@@ -1,9 +1,9 @@
 ﻿using System;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Materials;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.GlobalMap

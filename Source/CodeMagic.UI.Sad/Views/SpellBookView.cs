@@ -8,6 +8,7 @@ using CodeMagic.Core.Spells;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Materials;
 using CodeMagic.Game.Items.Usable;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Drawing;
@@ -208,7 +209,7 @@ namespace CodeMagic.UI.Sad.Views
             game.Player.Mana -= scrollCreationCost;
 
             game.Player.Inventory.RemoveItem(blankScroll);
-            var newScroll = new ScrollItemImpl(new ScrollItemConfiguration
+            var newScroll = new Scroll(new ScrollItemConfiguration
             {
                 Name = $"{selectedSpell.Name} Scroll ({selectedSpell.ManaCost})",
                 Key = Guid.NewGuid().ToString(),
@@ -339,7 +340,7 @@ namespace CodeMagic.UI.Sad.Views
             base.Update(time);
 
             Print(2, 1, "Spell Book:");
-            Print(14, 1, new ColoredString(Book.Name, ItemDrawingHelper.GetItemColor(Book), DefaultBackground));
+            Print(14, 1, new ColoredString(Book.Name, ItemDrawingHelper.GetItemColor(Book).ToXna(), DefaultBackground));
 
             Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
             Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));

@@ -2,10 +2,10 @@
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
 using CodeMagic.Game.Items.Usable.Food;
 using CodeMagic.Game.Items.Usable.Seeds;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Buildings.Plants

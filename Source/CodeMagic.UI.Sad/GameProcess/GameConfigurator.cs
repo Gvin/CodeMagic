@@ -22,7 +22,7 @@ using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.Game.Objects.SteamObjects;
 using CodeMagic.Game.Items.ItemsGeneration;
-using CodeMagic.MapGeneration.Dungeon;
+using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.Drawing.ObjectEffects;
 

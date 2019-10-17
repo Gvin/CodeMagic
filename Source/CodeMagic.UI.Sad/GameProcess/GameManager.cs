@@ -8,8 +8,8 @@ using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.Objects.Creatures;
-using CodeMagic.MapGeneration.GlobalWorld;
-using CodeMagic.MapGeneration.Home;
+using CodeMagic.Game.MapGeneration.GlobalWorld;
+using CodeMagic.Game.MapGeneration.Home;
 using CodeMagic.UI.Sad.Views;
 
 namespace CodeMagic.UI.Sad.GameProcess

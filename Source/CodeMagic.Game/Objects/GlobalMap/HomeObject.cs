@@ -1,5 +1,6 @@
 ﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.MapGeneration.Home;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.GlobalMap
@@ -33,7 +34,7 @@ namespace CodeMagic.Game.Objects.GlobalMap
 
         public void Use(IGameCore game, Point position)
         {
-            game.World.TravelToLocation(game, "home", game.Player.Direction);
+            game.World.TravelToLocation(game, HomeLocationMapGenerator.LocationId, game.Player.Direction);
         }
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
