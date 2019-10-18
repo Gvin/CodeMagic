@@ -28,7 +28,6 @@ namespace CodeMagic.UI.Sad.Drawing
         private static readonly Color ManaColor = Color.Blue;
         private static readonly Color ErrorColor = Color.Red;
         private static readonly Color SpellLogMessageColor = Color.Gray;
-        private static readonly Color HealValueColor = Color.Green;
 
         private static readonly ColoredString ManaString = new ColoredString("Mana", ManaColor, BackgroundColor);
 
@@ -86,10 +85,6 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetOverweightBlocksMovementMessage(overweightBlocksMovementMessage);
                 case DungeonLevelMessage dungeonLevelMessage:
                     return GetDungeonLevelMessage(dungeonLevelMessage);
-                case CastNotAllowedMessage castNotAllowedMessage:
-                    return GetCastNotAllowedMessage(castNotAllowedMessage);
-                case FightNotAllowedMessage fightNotAllowedMessage:
-                    return GetFightNotAllowedMessage(fightNotAllowedMessage);
                 case ItemReceivedMessage itemReceivedMessage:
                     return GetItemReceivedMessage(itemReceivedMessage);
                 case ItemLostMessage itemLostMessage:
@@ -116,22 +111,6 @@ namespace CodeMagic.UI.Sad.Drawing
                 new ColoredString($"{PlayerName} have got ["),
                 GetItemNameText(message.Item),
                 new ColoredString("]"),
-            };
-        }
-
-        private ColoredString[] GetFightNotAllowedMessage(FightNotAllowedMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("Fighting is not allowed in this area"),
-            };
-        }
-
-        private ColoredString[] GetCastNotAllowedMessage(CastNotAllowedMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("Casting is not allowed in this area"),
             };
         }
 

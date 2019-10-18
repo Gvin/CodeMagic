@@ -1,7 +1,7 @@
 ﻿using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects;
 using CodeMagic.UI.Images;
 

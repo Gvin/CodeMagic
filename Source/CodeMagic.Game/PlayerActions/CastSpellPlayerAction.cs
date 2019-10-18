@@ -1,9 +1,12 @@
-﻿using CodeMagic.Core.Game.Journaling.Messages;
+﻿using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Core.Spells;
+using CodeMagic.Game.JournalMessages;
 
-namespace CodeMagic.Core.Game.PlayerActions
+namespace CodeMagic.Game.PlayerActions
 {
     public class CastSpellPlayerAction : IPlayerAction
     {

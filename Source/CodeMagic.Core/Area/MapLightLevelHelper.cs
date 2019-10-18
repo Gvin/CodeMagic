@@ -63,7 +63,9 @@ namespace CodeMagic.Core.Area
             if (cell == null)
                 return;
 
-            cell.LightLevel = (LightLevel)Math.Max((int)cell.LightLevel, (int)light);
+            if ((int) light < (int) cell.LightLevel)
+                return;
+            cell.LightLevel = light;
 
             if (cell.BlocksEnvironment)
                 return;

@@ -1,9 +1,12 @@
 ﻿using System.Linq;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.JournalMessages;
 
-namespace CodeMagic.Core.Game.PlayerActions
+namespace CodeMagic.Game.PlayerActions
 {
     public class MeleAttackPlayerAction : IPlayerAction
     {

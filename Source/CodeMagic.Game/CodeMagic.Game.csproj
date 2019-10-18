@@ -136,15 +136,20 @@
     <Compile Include="JournalMessages\BuildingSitePlacesMessage.cs" />
     <Compile Include="JournalMessages\BuildingSiteRemovedMessage.cs" />
     <Compile Include="JournalMessages\BuildingUnlockedMessage.cs" />
+    <Compile Include="JournalMessages\CastNotAllowedMessage.cs" />
     <Compile Include="JournalMessages\CellBlockedForBuildingMessage.cs" />
     <Compile Include="JournalMessages\FailedToUseScrollMessage.cs" />
+    <Compile Include="JournalMessages\FightNotAllowedMessage.cs" />
+    <Compile Include="JournalMessages\HealedMessage.cs" />
     <Compile Include="JournalMessages\HungerDecreasedMessage.cs" />
     <Compile Include="JournalMessages\ISelfDescribingJournalMessage.cs" />
+    <Compile Include="JournalMessages\ManaRestoredMessage.cs" />
     <Compile Include="JournalMessages\NotEnoughManaToScrollMessage.cs" />
     <Compile Include="JournalMessages\NotHungryMessage.cs" />
     <Compile Include="JournalMessages\NotReadyForHarvestMessage.cs" />
     <Compile Include="JournalMessages\ResourcesRequiredToBuildMessage.cs" />
     <Compile Include="JournalMessages\RoofCollapsedMessage.cs" />
+    <Compile Include="JournalMessages\StoringLocationNotAllowedMessage.cs" />
     <Compile Include="JournalMessages\ToolRequiredMessage.cs" />
     <Compile Include="MapGeneration\Dungeon\DungeonMapGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\DungeonMonstersGenerator.cs" />
@@ -219,6 +224,15 @@
     <Compile Include="Objects\SolidObjects\Tree.cs" />
     <Compile Include="Objects\SteamObjects\AcidSteamImpl.cs" />
     <Compile Include="Objects\SteamObjects\WaterSteamImpl.cs" />
+    <Compile Include="PlayerActions\CastSpellPlayerAction.cs" />
+    <Compile Include="PlayerActions\DropItemsPlayerAction.cs" />
+    <Compile Include="PlayerActions\EmptyPlayerAction.cs" />
+    <Compile Include="PlayerActions\EquipItemPlayerAction.cs" />
+    <Compile Include="PlayerActions\MeleAttackPlayerAction.cs" />
+    <Compile Include="PlayerActions\MovePlayerAction.cs" />
+    <Compile Include="PlayerActions\UnequipItemPlayerAction.cs" />
+    <Compile Include="PlayerActions\UseItemPlayerAction.cs" />
+    <Compile Include="PlayerActions\UseObjectPlayerAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StyledLine.cs" />
   </ItemGroup>
@@ -232,5 +246,6 @@
       <Name>CodeMagic.UI.Images</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

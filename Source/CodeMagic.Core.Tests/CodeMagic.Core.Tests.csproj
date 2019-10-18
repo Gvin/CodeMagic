@@ -63,7 +63,6 @@
     <Compile Include="Area\AreaMapCellTests.cs" />
     <Compile Include="Area\AreaMapTests.cs" />
     <Compile Include="Area\TemperatureTests.cs" />
-    <Compile Include="Game\PlayerActions\MovePlayerActionTests.cs" />
     <Compile Include="Game\PointTests.cs" />
     <Compile Include="Objects\DestroyableObjectTests.cs" />
     <Compile Include="Objects\PlayerData\PlayerTests.cs" />

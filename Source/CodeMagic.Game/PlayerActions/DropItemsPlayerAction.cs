@@ -1,7 +1,9 @@
 ﻿using System.Linq;
+using CodeMagic.Core.Game;
+using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
 
-namespace CodeMagic.Core.Game.PlayerActions
+namespace CodeMagic.Game.PlayerActions
 {
     public class DropItemsPlayerAction : IPlayerAction
     {

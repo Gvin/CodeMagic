@@ -4,6 +4,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Game;
 using CodeMagic.Game.Items;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Views;
 

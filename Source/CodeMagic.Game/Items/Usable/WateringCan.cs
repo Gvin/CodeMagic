@@ -7,6 +7,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Game.Objects.Buildings;
+using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
 
@@ -32,21 +33,20 @@ namespace CodeMagic.Game.Items.Usable
         public bool Use(IGameCore game)
         {
             var targetPosition = Point.GetPointInDirection(game.PlayerPosition, game.Player.Direction);
-            var cell = game.Map.TryGetCell(targetPosition);
-            if (cell != null)
-            {
-                UseCan(cell);
-            }
+            UseCan(game.Map, targetPosition);
 
             return true;
         }
 
-        private void UseCan(IAreaMapCell cell)
+        private void UseCan(IAreaMap map, Point position)
         {
-            var growingPlace = cell.Objects.OfType<GrowingPlace>().FirstOrDefault();
-            if (growingPlace != null && canWaterLevel > 0)
+            var cell = map.TryGetCell(position);
+            if (cell == null)
+                return;
+
+            if (canWaterLevel > 0)
             {
-                growingPlace.Humidity += canWaterLevel;
+                map.AddObject(position, new WaterLiquidImpl(canWaterLevel));
                 canWaterLevel = 0;
                 return;
             }
