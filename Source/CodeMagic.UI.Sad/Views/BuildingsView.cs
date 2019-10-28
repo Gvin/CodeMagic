@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Configuration.Xml.Types.Buildings;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Buildings;
 using CodeMagic.Game.Objects.Creatures;

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories;
+using CodeMagic.Game.Objects;
 using Point = System.Drawing.Point;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
@@ -105,7 +105,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
                 for (int x = 0; x < width; x++)
                 {
                     result.AddObject(x, y, mapObjectsFactory.CreateFloor());
-                    result.AddObject(x, y, new DungeonRoofObject());
+                    result.AddObject(x, y, new DungeonRoof());
 
                     if (map[y][x] == MapBuilder.FilledCell)
                     {
@@ -453,7 +453,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
                 PlaceStartRoom();
 
                 //attempt to build the required number of rooms
-                while (rctBuiltRooms.Count() < MaxRoomsCount)
+                while (rctBuiltRooms.Count < MaxRoomsCount)
                 {
                     var lastRoom = rctBuiltRooms.Count == MaxRoomsCount - 1;
                     if (loopctr++ > BreakOut)//bail out if this value is exceeded

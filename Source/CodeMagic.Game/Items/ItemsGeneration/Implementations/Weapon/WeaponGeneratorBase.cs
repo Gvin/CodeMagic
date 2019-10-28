@@ -45,7 +45,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon
             var description = GenerateDescription(rareness, material);
             var bonusesCount = RandomHelper.GetRandomValue(rarenessConfiguration.MinBonuses, rarenessConfiguration.MaxBonuses);
 
-            var itemConfig = new WeaponItemImplConfiguration
+            var itemConfig = new WeaponItemConfiguration
             {
                 Name = name,
                 Key = Guid.NewGuid().ToString(),
@@ -60,7 +60,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon
             };
             bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
 
-            return new WeaponItemImpl(itemConfig);
+            return new WeaponItem(itemConfig);
         }
 
         private SymbolsImage GetWorldImage(ItemMaterial material)

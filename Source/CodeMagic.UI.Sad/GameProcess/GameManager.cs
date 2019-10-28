@@ -1,11 +1,9 @@
 ﻿using System.Linq;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Game.Locations;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.JournalMessages;

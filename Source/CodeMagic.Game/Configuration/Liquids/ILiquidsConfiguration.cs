@@ -1,4 +1,4 @@
-﻿namespace CodeMagic.Core.Configuration.Liquids
+﻿namespace CodeMagic.Game.Configuration.Liquids
 {
     public interface ILiquidsConfiguration
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Configuration;
-using CodeMagic.Core.Configuration.Spells;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Configuration.Spells;
 using CodeMagic.Game.Spells.Script;
 
 namespace CodeMagic.Game.Spells.SpellActions

@@ -52,7 +52,7 @@ namespace CodeMagic.Core.Area
             set => MagicEnergy.Disturbance = value;
         }
 
-        public override bool HasRoof => ObjectsCollection.OfType<IRoofObject>().Any();
+        public override bool HasRoof => ObjectsCollection.OfType<IRoof>().Any();
 
         public void Update(IAreaMap map, IJournal journal, Point position, UpdateOrder updateOrder)
         {
@@ -68,7 +68,7 @@ namespace CodeMagic.Core.Area
         {
             CheckFuelObjects(map, position);
 
-            var isInside = ObjectsCollection.OfType<IRoofObject>().Any();
+            var isInside = ObjectsCollection.OfType<IRoof>().Any();
 
             Environment.Normalize(isInside);
 

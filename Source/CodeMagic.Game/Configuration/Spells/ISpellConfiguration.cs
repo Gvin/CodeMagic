@@ -1,4 +1,4 @@
-﻿namespace CodeMagic.Core.Configuration.Spells
+﻿namespace CodeMagic.Game.Configuration.Spells
 {
     public interface ISpellConfiguration
     {

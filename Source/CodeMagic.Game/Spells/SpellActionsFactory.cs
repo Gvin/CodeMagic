@@ -1,5 +1,4 @@
-﻿using CodeMagic.Core.Spells;
-using CodeMagic.Game.Objects;
+﻿using CodeMagic.Game.Objects;
 using CodeMagic.Game.Spells.SpellActions;
 
 namespace CodeMagic.Game.Spells

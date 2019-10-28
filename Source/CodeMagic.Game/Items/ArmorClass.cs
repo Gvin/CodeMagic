@@ -1,4 +1,4 @@
-﻿namespace CodeMagic.Core.Items
+﻿namespace CodeMagic.Game.Items
 {
     public enum ArmorClass
     {

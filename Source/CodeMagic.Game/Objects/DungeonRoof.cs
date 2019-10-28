@@ -1,10 +1,12 @@
-﻿namespace CodeMagic.Core.Objects
+﻿using CodeMagic.Core.Objects;
+
+namespace CodeMagic.Game.Objects
 {
     /// <summary>
     /// Standard roof for dungeons which covers the whole map.
     /// Provides static roof which does not rely on walls.
     /// </summary>
-    public class DungeonRoofObject : IRoofObject
+    public class DungeonRoof : IRoof
     {
         public string Name => "Dungeon Roof";
         public bool BlocksMovement => false;

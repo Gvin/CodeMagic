@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.Objects.SolidObjects

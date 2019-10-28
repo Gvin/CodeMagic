@@ -1,4 +1,4 @@
-﻿namespace CodeMagic.Core.Configuration.Monsters
+﻿namespace CodeMagic.Game.Configuration.Monsters
 {
     public interface IMonstersConfiguration
     {

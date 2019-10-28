@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodeMagic.Core.Configuration;
-using CodeMagic.Core.Configuration.Buildings;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Configuration.Buildings;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;

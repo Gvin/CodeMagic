@@ -71,7 +71,6 @@
     <Compile Include="Items\IUsableItem.cs" />
     <Compile Include="Items\SpellBook.cs" />
     <Compile Include="Items\Usable\AncientScroll.cs" />
-    <Compile Include="Items\ArmorItemImpl.cs" />
     <Compile Include="Items\IDescriptionProvider.cs" />
     <Compile Include="Items\ItemDrawingHelper.cs" />
     <Compile Include="Items\ItemsGeneration\Configuration\Armor\IArmorConfiguration.cs" />
@@ -154,7 +153,6 @@
     <Compile Include="Items\Usable\TeleporterStoneInactive.cs" />
     <Compile Include="Items\Usable\WateringCan.cs" />
     <Compile Include="Items\WeaponItem.cs" />
-    <Compile Include="Items\WeaponItemImpl.cs" />
     <Compile Include="IWorldImageProvider.cs" />
     <Compile Include="Items\MetalRecolorHelper.cs" />
     <Compile Include="JournalMessages\BadPlantingPlaceMessage.cs" />
@@ -241,7 +239,7 @@
     <Compile Include="Objects\DecorativeObjects\DungeonTorchPost.cs" />
     <Compile Include="Objects\DecorativeObjects\FireObjectImpl.cs" />
     <Compile Include="Objects\DestroyableObject.cs" />
-    <Compile Include="Objects\DungeonRoofObject.cs" />
+    <Compile Include="Objects\DungeonRoof.cs" />
     <Compile Include="Objects\Floor\FloorObject.cs" />
     <Compile Include="Objects\GlobalMap\DungeonEnter.cs" />
     <Compile Include="Objects\GlobalMap\GlobalMapForest.cs" />

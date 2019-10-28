@@ -1,6 +1,7 @@
 ﻿using CodeMagic.Core.Items;
+using CodeMagic.Game.Items;
 
-namespace CodeMagic.Core.Configuration
+namespace CodeMagic.Game.Configuration
 {
     public interface ILootConfiguration
     {

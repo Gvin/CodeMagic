@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.Creatures.Loot;
-using CodeMagic.Core.Objects.Creatures.Remains;
 using CodeMagic.Core.Objects.DecorativeObjects;
+using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Objects.Creatures.Loot;
+using CodeMagic.Game.Objects.Creatures.Remains;
 
 namespace CodeMagic.Game.Objects.Creatures
 {

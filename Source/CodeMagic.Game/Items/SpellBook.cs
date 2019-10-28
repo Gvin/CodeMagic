@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeMagic.Core.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.Spells;
 using CodeMagic.UI.Images;

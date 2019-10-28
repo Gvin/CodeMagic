@@ -1,7 +1,8 @@
 ﻿using CodeMagic.Core.Game;
+using CodeMagic.Core.Items;
 using CodeMagic.Game.Objects.Creatures;
 
-namespace CodeMagic.Core.Items
+namespace CodeMagic.Game.Items
 {
     public interface IUsableItem : IItem
     {

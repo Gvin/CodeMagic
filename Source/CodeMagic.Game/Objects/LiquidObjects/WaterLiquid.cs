@@ -3,7 +3,6 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Statuses;
 using CodeMagic.Game.Objects.IceObjects;
 using CodeMagic.Game.Objects.SteamObjects;
 using CodeMagic.Game.Statuses;

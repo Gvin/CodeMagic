@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
 
-namespace CodeMagic.Core.Objects.Creatures.Loot
+namespace CodeMagic.Game.Objects.Creatures.Loot
 {
     public class ChancesLootGenerator : ILootGenerator
     {

@@ -49,7 +49,7 @@ namespace CodeMagic.Game.Items.Usable
             return ImageInventory3;
         }
 
-        public virtual bool Use(GameCore<Player> game)
+        public override bool Use(GameCore<Player> game)
         {
             if (RandomHelper.CheckChance(100 - damagePercent))
                 return base.Use(game);

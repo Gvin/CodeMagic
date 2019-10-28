@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CodeMagic.Core.Spells
+namespace CodeMagic.Game.Spells
 {
     public class SpellException : Exception
     {

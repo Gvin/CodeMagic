@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using CodeMagic.Core.Configuration;
-using CodeMagic.Core.Configuration.Monsters;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Configuration.Monsters;
 using CodeMagic.Game.Objects.Creatures.NonPlayable;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon

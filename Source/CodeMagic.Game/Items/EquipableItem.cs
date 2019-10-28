@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 
-namespace CodeMagic.Core.Items
+namespace CodeMagic.Game.Items
 {
     public class EquipableItem : Item, IEquipableItem, ILightSource, ILightObject
     {

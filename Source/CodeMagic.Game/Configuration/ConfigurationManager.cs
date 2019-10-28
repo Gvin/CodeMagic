@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
-using CodeMagic.Core.Configuration.Buildings;
-using CodeMagic.Core.Configuration.Liquids;
-using CodeMagic.Core.Configuration.Monsters;
-using CodeMagic.Core.Configuration.Spells;
+using CodeMagic.Core.Configuration;
+using CodeMagic.Game.Configuration.Buildings;
+using CodeMagic.Game.Configuration.Liquids;
+using CodeMagic.Game.Configuration.Monsters;
+using CodeMagic.Game.Configuration.Spells;
 
-namespace CodeMagic.Core.Configuration
+namespace CodeMagic.Game.Configuration
 {
     public static class ConfigurationManager
     {

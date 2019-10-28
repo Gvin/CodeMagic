@@ -41,7 +41,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             var weight = GetWeight(config, material);
 
             var bonusesCount = RandomHelper.GetRandomValue(rarenessConfig.MinBonuses, rarenessConfig.MaxBonuses);
-            var itemConfig = new ArmorItemImplConfiguration
+            var itemConfig = new ArmorItemConfiguration
             {
                 Name = name,
                 Key = Guid.NewGuid().ToString(),
@@ -55,7 +55,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             };
             bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
 
-            return new ArmorItemImpl(itemConfig);
+            return new ArmorItem(itemConfig);
         }
 
         private SymbolsImage GetWorldImage(ItemMaterial material, ArmorType type)

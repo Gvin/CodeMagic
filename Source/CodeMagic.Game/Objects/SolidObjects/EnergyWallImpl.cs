@@ -1,5 +1,4 @@
-﻿using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.UI.Images;
+﻿using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.SolidObjects
 {

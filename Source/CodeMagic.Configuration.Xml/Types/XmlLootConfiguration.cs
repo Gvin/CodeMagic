@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Items;
 
 namespace CodeMagic.Configuration.Xml.Types
 {
@@ -43,7 +45,7 @@ namespace CodeMagic.Configuration.Xml.Types
     public class XmlArmorLootConfiguration : XmlStandardLootConfiguration, IArmorLootConfiguration
     {
         [XmlIgnore]
-        public IChanceConfiguration<ArmorClass>[] Class => ClassData;
+        public IChanceConfiguration<ArmorClass>[] Class => ClassData.ToArray<IChanceConfiguration<ArmorClass>>();
 
         [XmlArray("class-configuration")]
         [XmlArrayItem("value")]
@@ -56,7 +58,7 @@ namespace CodeMagic.Configuration.Xml.Types
         
         
         [XmlIgnore]
-        public IChanceConfiguration<ItemRareness>[] Rareness => RarenessData;
+        public IChanceConfiguration<ItemRareness>[] Rareness => RarenessData.ToArray<IChanceConfiguration<ItemRareness>>();
 
         [XmlArray("rareness-configuration")]
         [XmlArrayItem("value")]
@@ -67,7 +69,7 @@ namespace CodeMagic.Configuration.Xml.Types
     public class XmlSimpleLootConfiguration : ISimpleLootConfiguration
     {
         [XmlIgnore]
-        public IChanceConfiguration<int>[] Count => CountData;
+        public IChanceConfiguration<int>[] Count => CountData.ToArray<IChanceConfiguration<int>>();
 
         [XmlArray("count-configuration")]
         [XmlArrayItem("value")]

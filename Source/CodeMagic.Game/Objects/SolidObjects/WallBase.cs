@@ -2,8 +2,9 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Objects;
 
-namespace CodeMagic.Core.Objects.SolidObjects
+namespace CodeMagic.Game.Objects.SolidObjects
 {
     public abstract class WallBase : IPlaceConnectionObject
     {

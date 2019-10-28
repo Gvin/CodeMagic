@@ -5,7 +5,7 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Spells;
+using CodeMagic.Game.Spells;
 using CodeMagic.Game.Spells.Script;
 using CodeMagic.UI.Images;
 

@@ -1,5 +1,4 @@
-﻿using CodeMagic.Core.Objects;
-using CodeMagic.Game.Objects.Creatures;
+﻿using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.Items
 {

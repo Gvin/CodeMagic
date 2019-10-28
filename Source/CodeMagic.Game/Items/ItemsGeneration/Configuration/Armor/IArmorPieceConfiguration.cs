@@ -1,6 +1,4 @@
-﻿using CodeMagic.Core.Items;
-
-namespace CodeMagic.Game.Items.ItemsGeneration.Configuration.Armor
+﻿namespace CodeMagic.Game.Items.ItemsGeneration.Configuration.Armor
 {
     public interface IArmorPieceConfiguration
     {

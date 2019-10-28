@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
-using CodeMagic.Core.Configuration.Buildings;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.Configuration.Buildings;
 using CodeMagic.Game.Items;
 using CodeMagic.UI.Images;
 

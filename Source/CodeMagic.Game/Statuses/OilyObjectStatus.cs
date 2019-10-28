@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Objects.LiquidObjects;
 
 namespace CodeMagic.Game.Statuses

@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using CodeMagic.Configuration.Xml;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Injection.Configuration;
-using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.ObjectEffects;
-using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.DecorativeObjects;
 using CodeMagic.Game.Objects.SolidObjects;

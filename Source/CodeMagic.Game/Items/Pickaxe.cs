@@ -3,7 +3,7 @@ using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.Items
 {
-    public class Pickaxe : WeaponItemImpl
+    public class Pickaxe : WeaponItem
     {
         public Pickaxe(PickaxeConfiguration configuration)
             : base(configuration)
@@ -34,7 +34,7 @@ namespace CodeMagic.Game.Items
         }
     }
 
-    public class PickaxeConfiguration : WeaponItemImplConfiguration
+    public class PickaxeConfiguration : WeaponItemConfiguration
     {
         public int PickaxePower { get; set; }
     }

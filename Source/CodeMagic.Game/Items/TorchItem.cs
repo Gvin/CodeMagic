@@ -8,7 +8,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
 {
-    public class TorchItem : WeaponItem, IInventoryImageProvider, IWorldImageProvider, IDescriptionProvider
+    public class TorchItem : WeaponItem
     {
         private const string InventoryImage = "Weapon_Torch";
         private const string WorldImage = "ItemsOnGround_Torch";
@@ -36,17 +36,17 @@ namespace CodeMagic.Game.Items
         {
         }
 
-        public SymbolsImage GetInventoryImage(IImagesStorage storage)
+        public override SymbolsImage GetInventoryImage(IImagesStorage storage)
         {
             return storage.GetImage(InventoryImage);
         }
 
-        public SymbolsImage GetWorldImage(IImagesStorage storage)
+        public override SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             return storage.GetImage(WorldImage);
         }
 
-        public StyledLine[] GetDescription(Player player)
+        public override StyledLine[] GetDescription(Player player)
         {
             return new[]
             {

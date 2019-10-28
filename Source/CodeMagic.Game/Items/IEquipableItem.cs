@@ -1,4 +1,6 @@
-﻿namespace CodeMagic.Core.Items
+﻿using CodeMagic.Core.Items;
+
+namespace CodeMagic.Game.Items
 {
     public interface IEquipableItem : IItem
     {

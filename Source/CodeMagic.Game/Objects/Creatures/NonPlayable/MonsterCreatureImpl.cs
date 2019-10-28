@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Core.Common;
-using CodeMagic.Core.Configuration.Monsters;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Game.Configuration.Monsters;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Creatures.NonPlayable

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories;
+using CodeMagic.Game.Objects;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
 {
@@ -206,7 +206,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
                 for (int x = 0; x < width; x++)
                 {
                     result.AddObject(x, y, mapObjectsFactory.CreateFloor());
-                    result.AddObject(x, y, new DungeonRoofObject());
+                    result.AddObject(x, y, new DungeonRoof());
 
                     if (map[y][x] == MapHandler.IndestructibleCell)
                     {

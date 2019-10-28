@@ -1,4 +1,4 @@
-﻿using CodeMagic.Core.Configuration.Buildings;
+﻿using CodeMagic.Game.Configuration.Buildings;
 using CodeMagic.Game.Items;
 
 namespace CodeMagic.Game.JournalMessages

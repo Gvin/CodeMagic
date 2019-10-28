@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.Core.Items;
+using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.Armor;
 

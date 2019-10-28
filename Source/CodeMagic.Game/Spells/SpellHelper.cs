@@ -1,7 +1,7 @@
-﻿using CodeMagic.Core.Common;
-using System.Linq;
+﻿using System.Linq;
+using CodeMagic.Core.Common;
 
-namespace CodeMagic.Core.Spells
+namespace CodeMagic.Game.Spells
 {
     public static class SpellHelper
     {

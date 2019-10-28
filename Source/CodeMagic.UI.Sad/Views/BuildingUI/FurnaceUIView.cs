@@ -1,7 +1,7 @@
 ﻿using System;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Items;
 using CodeMagic.Game;
+using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Buildings;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;

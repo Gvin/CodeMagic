@@ -108,7 +108,7 @@
     <Compile Include="Objects\ILightObject.cs" />
     <Compile Include="Objects\IPlaceConnectionObject.cs" />
     <Compile Include="Objects\IPlacedHandler.cs" />
-    <Compile Include="Objects\IRoofObject.cs" />
+    <Compile Include="Objects\IRoof.cs" />
     <Compile Include="Objects\ISpreadingObject.cs" />
     <Compile Include="Objects\IStepReactionObject.cs" />
     <Compile Include="Objects\IVolumeObject.cs" />

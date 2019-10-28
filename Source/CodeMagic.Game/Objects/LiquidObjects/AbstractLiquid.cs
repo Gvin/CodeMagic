@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Configuration;
-using CodeMagic.Core.Configuration.Liquids;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Objects.IceObjects;
 using CodeMagic.Game.Objects.SteamObjects;
 

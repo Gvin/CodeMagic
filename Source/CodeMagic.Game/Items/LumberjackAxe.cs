@@ -3,7 +3,7 @@ using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.Items
 {
-    public class LumberjackAxe : WeaponItemImpl
+    public class LumberjackAxe : WeaponItem
     {
         public LumberjackAxe(LumberjackAxeConfiguration configuration) 
             : base(configuration)
@@ -34,7 +34,7 @@ namespace CodeMagic.Game.Items
         }
     }
 
-    public class LumberjackAxeConfiguration : WeaponItemImplConfiguration
+    public class LumberjackAxeConfiguration : WeaponItemConfiguration
     {
         public int LumberjackPower { get; set; }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using CodeMagic.Core.Items;
 
-namespace CodeMagic.Core.Configuration.Buildings
+namespace CodeMagic.Game.Configuration.Buildings
 {
     public interface IBuildingsConfiguration
     {

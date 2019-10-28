@@ -6,7 +6,7 @@ using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 using CodeMagic.Game.Items;
 
-namespace CodeMagic.Core.Objects.Creatures.Loot
+namespace CodeMagic.Game.Objects.Creatures.Loot
 {
     public class StandardLootGenerator : ILootGenerator
     {

@@ -1,6 +1,7 @@
-﻿using CodeMagic.Core.Objects;
+﻿using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects;
 
-namespace CodeMagic.Core.Items
+namespace CodeMagic.Game.Items
 {
     public interface IFuelItem : IItem, IFuelObject
     {

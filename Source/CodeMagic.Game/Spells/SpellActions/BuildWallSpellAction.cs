@@ -3,8 +3,6 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
-using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.Core.Spells;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.Game.Spells.Script;
 

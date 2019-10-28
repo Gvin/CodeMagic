@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Items;
 
 namespace CodeMagic.Game.Items
 {

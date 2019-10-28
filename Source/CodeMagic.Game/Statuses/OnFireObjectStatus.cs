@@ -1,12 +1,12 @@
 ﻿using System;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Area.EnvironmentData;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.Configuration;
 
 namespace CodeMagic.Game.Statuses
 {

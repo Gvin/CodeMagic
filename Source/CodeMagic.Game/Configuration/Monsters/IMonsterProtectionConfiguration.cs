@@ -1,6 +1,6 @@
 ﻿using CodeMagic.Core.Game;
 
-namespace CodeMagic.Core.Configuration.Monsters
+namespace CodeMagic.Game.Configuration.Monsters
 {
     public interface IMonsterProtectionConfiguration
     {

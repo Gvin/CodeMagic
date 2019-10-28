@@ -4,7 +4,6 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.Game.MapGeneration.Dungeon.MapGenerators;
 using CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories;

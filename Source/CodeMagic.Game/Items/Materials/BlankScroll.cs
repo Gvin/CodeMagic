@@ -1,5 +1,4 @@
 ﻿using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 

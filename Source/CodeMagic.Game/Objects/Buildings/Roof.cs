@@ -8,7 +8,7 @@ using CodeMagic.Game.JournalMessages;
 
 namespace CodeMagic.Game.Objects.Buildings
 {
-    public class Roof : IRoofObject, IDynamicObject
+    public class Roof : IRoof, IDynamicObject
     {
         public const string BuildingKey = "roof";
 

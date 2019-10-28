@@ -6,9 +6,10 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Buildings.StoneWallBuilding;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
 

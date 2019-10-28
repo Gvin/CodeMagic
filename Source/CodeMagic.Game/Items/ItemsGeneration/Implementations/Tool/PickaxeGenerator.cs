@@ -10,12 +10,12 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Tool
         {
         }
 
-        protected override WeaponItemImplConfiguration GetConfiguration(int toolPower)
+        protected override WeaponItemConfiguration GetConfiguration(int toolPower)
         {
             return new PickaxeConfiguration {PickaxePower = toolPower};
         }
 
-        protected override IItem CreateItem(WeaponItemImplConfiguration config)
+        protected override IItem CreateItem(WeaponItemConfiguration config)
         {
             var realConfig = (PickaxeConfiguration) config;
             return new Pickaxe(realConfig);

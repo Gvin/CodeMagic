@@ -57,9 +57,9 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Tool
             return CreateItem(itemConfig);
         }
 
-        protected abstract WeaponItemImplConfiguration GetConfiguration(int toolPower);
+        protected abstract WeaponItemConfiguration GetConfiguration(int toolPower);
 
-        protected abstract IItem CreateItem(WeaponItemImplConfiguration config);
+        protected abstract IItem CreateItem(WeaponItemConfiguration config);
 
         protected abstract string[] GenerateDescription();
 

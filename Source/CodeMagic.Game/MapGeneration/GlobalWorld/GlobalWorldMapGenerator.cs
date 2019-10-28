@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Objects.GlobalMap;
 
 namespace CodeMagic.Game.MapGeneration.GlobalWorld

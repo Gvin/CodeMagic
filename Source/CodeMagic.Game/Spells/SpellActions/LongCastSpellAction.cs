@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
-using CodeMagic.Core.Configuration;
-using CodeMagic.Core.Configuration.Spells;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Spells;
+using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Configuration.Spells;
 using CodeMagic.Game.Objects;
 using CodeMagic.Game.Spells.Script;
 

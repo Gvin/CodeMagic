@@ -4,7 +4,6 @@ using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Spells;
 using CodeMagic.Game.Objects;
 using CodeMagic.Game.Spells.Script;
 

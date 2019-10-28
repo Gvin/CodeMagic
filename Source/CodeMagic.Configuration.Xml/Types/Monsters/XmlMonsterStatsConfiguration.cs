@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.Core.Configuration.Monsters;
+using CodeMagic.Game.Configuration.Monsters;
 
 namespace CodeMagic.Configuration.Xml.Types.Monsters
 {
@@ -32,14 +33,14 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
         public int HitChance { get; set; }
 
         [XmlIgnore]
-        public IMonsterProtectionConfiguration[] Protection => ProtectionData ?? new IMonsterProtectionConfiguration[0];
+        public IMonsterProtectionConfiguration[] Protection => ProtectionData?.ToArray<IMonsterProtectionConfiguration>() ?? new IMonsterProtectionConfiguration[0];
 
         [XmlArray("protection")]
         [XmlArrayItem("element")]
         public XmlMonsterProtectionConfiguration[] ProtectionData { get; set; }
 
         [XmlIgnore]
-        public IMonsterDamageConfiguration[] Damage => DamageData ?? new IMonsterDamageConfiguration[0];
+        public IMonsterDamageConfiguration[] Damage => DamageData?.ToArray<IMonsterDamageConfiguration>() ?? new IMonsterDamageConfiguration[0];
 
         [XmlArray("damage")]
         [XmlArrayItem("value")]

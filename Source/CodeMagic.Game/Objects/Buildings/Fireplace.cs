@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
