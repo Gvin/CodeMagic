@@ -39,7 +39,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 
         public IMapObject CreateExitPortal()
         {
-            return new ExitPortalObject();
+            return new DungeonExitPortal();
         }
 
         public IMapObject CreateFloor()
@@ -49,7 +49,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 
         public IMapObject CreateStairs()
         {
-            return new StairsObjectImpl();
+            return new DungeonStairs();
         }
 
         public IMapObject CreateDoor()
@@ -59,7 +59,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 
         public IMapObject CreateTrapDoor()
         {
-            return new TrapDoorObjectImpl();
+            return new DungeonTrapDoor();
         }
 
         public IMapObject CreateWall()

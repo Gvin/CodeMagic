@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable
@@ -12,7 +11,7 @@ namespace CodeMagic.Game.Items.Usable
     {
         private const string InventoryImageInactive = "Item_TeleporterStone_Inactive";
 
-        public bool Use(IGameCore game)
+        public bool Use(GameCore<Player> game)
         {
             if (!game.World.CurrentLocation.KeepOnLeave)
             {
@@ -47,7 +46,7 @@ namespace CodeMagic.Game.Items.Usable
             return storage.GetImage(InventoryImageInactive);
         }
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             return new List<StyledLine>
             {

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable
@@ -44,7 +44,7 @@ namespace CodeMagic.Game.Items.Usable
             return storage.GetImage(inventoryImageName);
         }
 
-        public override StyledLine[] GetDescription(IPlayer player)
+        public override StyledLine[] GetDescription(Player player)
         {
             return new[]
             {

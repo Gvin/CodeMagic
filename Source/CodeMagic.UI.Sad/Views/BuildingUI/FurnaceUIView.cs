@@ -3,6 +3,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Game;
 using CodeMagic.Game.Objects.Buildings;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Drawing;
@@ -19,7 +20,7 @@ namespace CodeMagic.UI.Sad.Views.BuildingUI
         private StandardButton removeInputButton;
         private StandardButton removeOutputButton;
 
-        public FurnaceUIView(IGameCore game, Furnace furnace) : base(game, "Furnace")
+        public FurnaceUIView(GameCore<Player> game, Furnace furnace) : base(game, "Furnace")
         {
             this.furnace = furnace;
 

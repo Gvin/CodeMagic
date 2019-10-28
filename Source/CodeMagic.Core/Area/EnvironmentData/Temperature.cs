@@ -12,9 +12,9 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         private readonly ITemperatureConfiguration configuration;
 
-        public Temperature()
+        public Temperature(ITemperatureConfiguration configuration)
         {
-            configuration = ConfigurationManager.Current.Physics.TemperatureConfiguration;
+            this.configuration = configuration;
             value = configuration.NormalValue;
         }
 
@@ -92,7 +92,7 @@ namespace CodeMagic.Core.Area.EnvironmentData
             return GetTemperatureDamage(configuration, value, out damageElement);
         }
 
-        private static int GetTemperatureDamage(ITemperatureConfiguration configuration, int temperature, out Element? damageElement)
+        public static int GetTemperatureDamage(ITemperatureConfiguration configuration, int temperature, out Element? damageElement)
         {
             if (temperature < configuration.ColdDamageConfiguration.TemperatureLevel)
             {
@@ -112,12 +112,6 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
             damageElement = null;
             return 0;
-        }
-
-        public static int GetTemperatureDamage(int temperature, out Element? damageElement)
-        {
-            var configuration = ConfigurationManager.Current.Physics.TemperatureConfiguration;
-            return GetTemperatureDamage(configuration, temperature, out damageElement);
         }
     }
 }

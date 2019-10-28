@@ -5,13 +5,16 @@ using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects;
+using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
 {
     public class MeleAttackPlayerAction : IPlayerAction
     {
-        public bool Perform(IGameCore game, out Point newPosition)
+        public bool Perform(IGameCore gameObject, out Point newPosition)
         {
+            var game = (GameCore<Player>) gameObject;
             newPosition = game.PlayerPosition;
             if (!game.World.CurrentLocation.CanFight)
             {

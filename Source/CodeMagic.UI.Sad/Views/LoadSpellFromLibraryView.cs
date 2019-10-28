@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using CodeMagic.Core.Spells;
+using CodeMagic.Game.Spells;
 using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;

@@ -2,29 +2,25 @@
 using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Game.Locations;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Game
 {
-    public class GameCore : ITurnProvider, IGameCore
+    public class GameCore<TPlayer> : ITurnProvider, IGameCore where TPlayer : IPlayer
     {
         private readonly object worldLockObject = new object();
         private readonly GameTimeManager gameTimeManager;
         private Task updateTask;
 
-        public GameCore(ILocation startingLocation, IPlayer player, Point playerPosition)
+        public GameCore(ILocation startingLocation, TPlayer player, Point playerPosition)
         {
             World = new GameWorld(startingLocation);
 
             PlayerPosition = playerPosition;
             Player = player;
-            Player.Inventory.ItemAdded += Inventory_ItemAdded;
-            Player.Inventory.ItemRemoved += Inventory_ItemRemoved;
 
             Map.AddObject(PlayerPosition, Player);
 
@@ -32,16 +28,6 @@ namespace CodeMagic.Core.Game
 
             CurrentTurn = 1;
             gameTimeManager = new GameTimeManager();
-        }
-
-        private void Inventory_ItemRemoved(object sender, Items.ItemEventArgs e)
-        {
-            Journal.Write(new ItemLostMessage(e.Item));
-        }
-
-        private void Inventory_ItemAdded(object sender, Items.ItemEventArgs e)
-        {
-            Journal.Write(new ItemReceivedMessage(e.Item));
         }
 
         public bool UpdateInProgress => updateTask != null;
@@ -52,7 +38,9 @@ namespace CodeMagic.Core.Game
 
         public IAreaMap Map => World.CurrentLocation.CurrentArea;
 
-        public IPlayer Player { get; }
+        public TPlayer Player { get; }
+
+        IPlayer IGameCore.Player => Player;
 
         public Journal Journal { get; }
 

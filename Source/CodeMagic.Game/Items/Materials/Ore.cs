@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Materials
@@ -47,7 +47,7 @@ namespace CodeMagic.Game.Items.Materials
 
         public override bool Stackable => true;
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             return new[]
             {

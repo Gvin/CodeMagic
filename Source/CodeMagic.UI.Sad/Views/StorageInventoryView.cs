@@ -2,7 +2,7 @@
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework.Input;
@@ -15,7 +15,7 @@ namespace CodeMagic.UI.Sad.Views
 {
     public class StorageInventoryView : View
     {
-        private readonly IGameCore game;
+        private readonly GameCore<Player> game;
         private CustomListBox<InventoryStackItem> itemsList1;
         private CustomListBox<InventoryStackItem> itemsList2;
         private ItemDetailsControl itemDetails;
@@ -30,7 +30,7 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton moveItemUpButton;
         private StandardButton moveItemDownButton;
 
-        public StorageInventoryView(IGameCore game, string inventoryName, Inventory storage, int? maxWeight, IItem inventoryItem)
+        public StorageInventoryView(GameCore<Player> game, string inventoryName, Inventory storage, int? maxWeight, IItem inventoryItem)
             : base(Program.Width, Program.Height)
         {
             this.game = game;
@@ -48,7 +48,7 @@ namespace CodeMagic.UI.Sad.Views
 
         protected InventoryStack SelectedStack2 => itemsList2.SelectedItem?.Stack;
 
-        private void InitializeControls(IPlayer player)
+        private void InitializeControls(Player player)
         {
             closeButton = new StandardButton(15)
             {

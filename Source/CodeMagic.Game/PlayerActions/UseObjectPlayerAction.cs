@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
-using CodeMagic.Core.Objects;
+using CodeMagic.Game.Objects;
+using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
 {
@@ -13,7 +14,7 @@ namespace CodeMagic.Game.PlayerActions
 
             var cell = game.Map.TryGetCell(playerLookPosition);
             var usableObject = cell?.Objects.OfType<IUsableObject>().FirstOrDefault();
-            usableObject?.Use(game, playerLookPosition);
+            usableObject?.Use((GameCore<Player>)game, playerLookPosition);
 
             newPosition = game.PlayerPosition;
             return true;

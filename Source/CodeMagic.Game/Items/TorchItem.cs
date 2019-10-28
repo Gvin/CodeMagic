@@ -3,7 +3,7 @@ using System.Drawing;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
@@ -46,7 +46,7 @@ namespace CodeMagic.Game.Items
             return storage.GetImage(WorldImage);
         }
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             return new[]
             {

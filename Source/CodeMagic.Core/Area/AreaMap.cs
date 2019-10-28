@@ -16,7 +16,7 @@ namespace CodeMagic.Core.Area
         private readonly Dictionary<string, IDestroyableObject> destroyableObjects;
         private readonly IEnvironmentLightManager environmentLightManager;
 
-        public AreaMap(int width, int height, IEnvironmentLightManager environmentLightManager, int lightSpreadFactor = 1)
+        public AreaMap(IPhysicsConfiguration configuration, int width, int height, IEnvironmentLightManager environmentLightManager, int lightSpreadFactor = 1)
         {
             objectPositionCache = new Dictionary<Type, Point>();
             this.environmentLightManager = environmentLightManager;
@@ -33,7 +33,7 @@ namespace CodeMagic.Core.Area
                 cells[y] = new AreaMapCell[width];
                 for (var x = 0; x < width; x++)
                 {
-                    cells[y][x] = new AreaMapCell(ConfigurationManager.Current.Physics.MagicEnergyConfiguration);
+                    cells[y][x] = new AreaMapCell(configuration);
                 }
             }
         }

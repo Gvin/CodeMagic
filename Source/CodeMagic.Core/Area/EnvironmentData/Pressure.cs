@@ -12,9 +12,9 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         private readonly IPressureConfiguration configuration;
 
-        public Pressure()
+        public Pressure(IPressureConfiguration configuration)
         {
-            configuration = ConfigurationManager.Current.Physics.PressureConfiguration;
+            this.configuration = configuration;
 
             value = configuration.NormalValue;
             oldValue = configuration.NormalValue;

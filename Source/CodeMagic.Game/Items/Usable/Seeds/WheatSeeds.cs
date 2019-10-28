@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Buildings;
 using CodeMagic.Game.Objects.Buildings.Plants;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable.Seeds
@@ -18,7 +17,7 @@ namespace CodeMagic.Game.Items.Usable.Seeds
         public override int Weight => 100;
         public override bool Stackable => true;
 
-        public bool Use(IGameCore game)
+        public bool Use(GameCore<Player> game)
         {
             var targetPoint = Point.GetPointInDirection(game.PlayerPosition, game.Player.Direction);
             var targetCell = game.Map.TryGetCell(targetPoint);
@@ -44,7 +43,7 @@ namespace CodeMagic.Game.Items.Usable.Seeds
             return storage.GetImage("ItemsOnGround_WheatSeeds");
         }
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             return new[]
             {

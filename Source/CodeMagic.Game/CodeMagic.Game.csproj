@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jint.2.11.58\lib\net451\Jint.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -42,8 +45,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Buildings\IBuildingsConfiguration.cs" />
+    <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Configuration\ILootConfiguration.cs" />
+    <Compile Include="Configuration\Liquids\ILiquidConfiguration.cs" />
+    <Compile Include="Configuration\Liquids\ILiquidsConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonsterConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonsterDamageConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonsterImagesConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonsterProtectionConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonstersConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonsterStatsConfiguration.cs" />
+    <Compile Include="Configuration\Spells\ISpellConfiguration.cs" />
+    <Compile Include="Configuration\Spells\ISpellsConfiguration.cs" />
     <Compile Include="IInventoryImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
+    <Compile Include="Items\ArmorClass.cs" />
+    <Compile Include="Items\ArmorItem.cs" />
+    <Compile Include="Items\EquipableItem.cs" />
+    <Compile Include="Items\Equipment.cs" />
+    <Compile Include="Items\IEquipableItem.cs" />
+    <Compile Include="Items\IFuelItem.cs" />
+    <Compile Include="Items\IFurnaceItem.cs" />
+    <Compile Include="Items\IItemsGenerator.cs" />
+    <Compile Include="Items\IUsableItem.cs" />
+    <Compile Include="Items\SpellBook.cs" />
     <Compile Include="Items\Usable\AncientScroll.cs" />
     <Compile Include="Items\ArmorItemImpl.cs" />
     <Compile Include="Items\IDescriptionProvider.cs" />
@@ -115,7 +141,6 @@
     <Compile Include="Items\Materials\Wood.cs" />
     <Compile Include="Items\Pickaxe.cs" />
     <Compile Include="Items\SimpleItemImpl.cs" />
-    <Compile Include="Items\SpellBookItemImpl.cs" />
     <Compile Include="Items\TorchItem.cs" />
     <Compile Include="Items\Usable\BuildingBlueprint.cs" />
     <Compile Include="Items\Usable\Food\Apple.cs" />
@@ -128,6 +153,7 @@
     <Compile Include="Items\Usable\TeleporterStoneActive.cs" />
     <Compile Include="Items\Usable\TeleporterStoneInactive.cs" />
     <Compile Include="Items\Usable\WateringCan.cs" />
+    <Compile Include="Items\WeaponItem.cs" />
     <Compile Include="Items\WeaponItemImpl.cs" />
     <Compile Include="IWorldImageProvider.cs" />
     <Compile Include="Items\MetalRecolorHelper.cs" />
@@ -143,14 +169,21 @@
     <Compile Include="JournalMessages\HealedMessage.cs" />
     <Compile Include="JournalMessages\HungerDecreasedMessage.cs" />
     <Compile Include="JournalMessages\ISelfDescribingJournalMessage.cs" />
+    <Compile Include="JournalMessages\ItemLostMessage.cs" />
+    <Compile Include="JournalMessages\ItemReceivedMessage.cs" />
     <Compile Include="JournalMessages\ManaRestoredMessage.cs" />
+    <Compile Include="JournalMessages\NotEnoughManaToCastMessage.cs" />
     <Compile Include="JournalMessages\NotEnoughManaToScrollMessage.cs" />
     <Compile Include="JournalMessages\NotHungryMessage.cs" />
     <Compile Include="JournalMessages\NotReadyForHarvestMessage.cs" />
+    <Compile Include="JournalMessages\OverweightBlocksMovementMessage.cs" />
+    <Compile Include="JournalMessages\ParalyzedMessage.cs" />
     <Compile Include="JournalMessages\ResourcesRequiredToBuildMessage.cs" />
     <Compile Include="JournalMessages\RoofCollapsedMessage.cs" />
+    <Compile Include="JournalMessages\SpellCastMessage.cs" />
     <Compile Include="JournalMessages\StoringLocationNotAllowedMessage.cs" />
     <Compile Include="JournalMessages\ToolRequiredMessage.cs" />
+    <Compile Include="JournalMessages\UsedItemMessage.cs" />
     <Compile Include="MapGeneration\Dungeon\DungeonMapGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\DungeonMonstersGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\DungeonNpcGenerator.cs" />
@@ -194,36 +227,56 @@
     <Compile Include="Objects\Buildings\WoodenWallBuilding\WoodenWall.cs" />
     <Compile Include="Objects\Buildings\WoodenWallBuilding\WoodenWallDoor.cs" />
     <Compile Include="Objects\Buildings\WoodenWallBuilding\WoodenWallGlassWindow.cs" />
-    <Compile Include="Objects\CodeSpellImpl.cs" />
+    <Compile Include="Objects\CodeSpell.cs" />
+    <Compile Include="Objects\Creatures\CreatureObject.cs" />
+    <Compile Include="Objects\Creatures\Loot\ChancesLootGenerator.cs" />
+    <Compile Include="Objects\Creatures\Loot\ILootGenerator.cs" />
+    <Compile Include="Objects\Creatures\Loot\StandardLootGenerator.cs" />
+    <Compile Include="Objects\Creatures\MonsterCreatureObject.cs" />
+    <Compile Include="Objects\Creatures\NonPlayableCreatureObject.cs" />
     <Compile Include="Objects\Creatures\NonPlayable\MonsterCreatureImpl.cs" />
-    <Compile Include="Objects\Creatures\PlayerImpl.cs" />
+    <Compile Include="Objects\Creatures\Player.cs" />
+    <Compile Include="Objects\Creatures\Remains\CreatureRemainsGenerator.cs" />
     <Compile Include="Objects\DecorativeObjects\CreatureRemainsObjectImpl.cs" />
     <Compile Include="Objects\DecorativeObjects\DungeonTorchPost.cs" />
     <Compile Include="Objects\DecorativeObjects\FireObjectImpl.cs" />
+    <Compile Include="Objects\DestroyableObject.cs" />
+    <Compile Include="Objects\DungeonRoofObject.cs" />
     <Compile Include="Objects\Floor\FloorObject.cs" />
-    <Compile Include="Objects\GlobalMap\DungeonEnterObject.cs" />
+    <Compile Include="Objects\GlobalMap\DungeonEnter.cs" />
     <Compile Include="Objects\GlobalMap\GlobalMapForest.cs" />
     <Compile Include="Objects\GlobalMap\GlobalMapObject.cs" />
     <Compile Include="Objects\GlobalMap\HomeObject.cs" />
-    <Compile Include="Objects\IceObjects\AcidIceImpl.cs" />
-    <Compile Include="Objects\IceObjects\WaterIceImpl.cs" />
-    <Compile Include="Objects\LiquidObjects\AcidLiquidImpl.cs" />
-    <Compile Include="Objects\LiquidObjects\OilLiquidImpl.cs" />
-    <Compile Include="Objects\LiquidObjects\WaterLiquidImpl.cs" />
+    <Compile Include="Objects\IceObjects\AbstractIce.cs" />
+    <Compile Include="Objects\IceObjects\AcidIce.cs" />
+    <Compile Include="Objects\IceObjects\IIce.cs" />
+    <Compile Include="Objects\IceObjects\WaterIce.cs" />
+    <Compile Include="Objects\IResourceObject.cs" />
+    <Compile Include="Objects\IUsableObject.cs" />
+    <Compile Include="Objects\LiquidObjects\AbstractLiquid.cs" />
+    <Compile Include="Objects\LiquidObjects\AcidLiquid.cs" />
+    <Compile Include="Objects\LiquidObjects\ILiquid.cs" />
+    <Compile Include="Objects\LiquidObjects\OilLiquid.cs" />
+    <Compile Include="Objects\LiquidObjects\WaterLiquid.cs" />
     <Compile Include="Objects\SolidObjects\CaveWall.cs" />
+    <Compile Include="Objects\SolidObjects\DoorBase.cs" />
     <Compile Include="Objects\SolidObjects\DungeonDoor.cs" />
     <Compile Include="Objects\SolidObjects\DungeonTorchWall.cs" />
     <Compile Include="Objects\SolidObjects\DungeonWall.cs" />
+    <Compile Include="Objects\SolidObjects\EnergyWall.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWallImpl.cs" />
-    <Compile Include="Objects\SolidObjects\ExitPortalObject.cs" />
+    <Compile Include="Objects\SolidObjects\DungeonExitPortal.cs" />
     <Compile Include="Objects\SolidObjects\MinableCaveWall.cs" />
     <Compile Include="Objects\SolidObjects\MinableWall.cs" />
     <Compile Include="Objects\SolidObjects\OreCaveWall.cs" />
-    <Compile Include="Objects\SolidObjects\StairsObjectImpl.cs" />
-    <Compile Include="Objects\SolidObjects\TrapDoorObjectImpl.cs" />
+    <Compile Include="Objects\SolidObjects\DungeonStairs.cs" />
+    <Compile Include="Objects\SolidObjects\TorchWallBase.cs" />
+    <Compile Include="Objects\SolidObjects\DungeonTrapDoor.cs" />
     <Compile Include="Objects\SolidObjects\Tree.cs" />
-    <Compile Include="Objects\SteamObjects\AcidSteamImpl.cs" />
-    <Compile Include="Objects\SteamObjects\WaterSteamImpl.cs" />
+    <Compile Include="Objects\SolidObjects\WallBase.cs" />
+    <Compile Include="Objects\SteamObjects\AbstractSteam.cs" />
+    <Compile Include="Objects\SteamObjects\AcidSteam.cs" />
+    <Compile Include="Objects\SteamObjects\WaterSteam.cs" />
     <Compile Include="PlayerActions\CastSpellPlayerAction.cs" />
     <Compile Include="PlayerActions\DropItemsPlayerAction.cs" />
     <Compile Include="PlayerActions\EmptyPlayerAction.cs" />
@@ -234,6 +287,30 @@
     <Compile Include="PlayerActions\UseItemPlayerAction.cs" />
     <Compile Include="PlayerActions\UseObjectPlayerAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Spells\BookSpell.cs" />
+    <Compile Include="Spells\Script\JsonData.cs" />
+    <Compile Include="Spells\Script\SpellCodeExecutor.cs" />
+    <Compile Include="Spells\SpellActionsFactory.cs" />
+    <Compile Include="Spells\SpellActions\BuildWallSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\CompressSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\CoolAreaSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\CreateWaterSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\DecompressSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\EmitLightSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\EmptySpellAction.cs" />
+    <Compile Include="Spells\SpellActions\HeatAreaSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\ISpellAction.cs" />
+    <Compile Include="Spells\SpellActions\LongCastSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\MoveSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\PushSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\ShockSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\SpellActionBase.cs" />
+    <Compile Include="Spells\SpellActions\TransformWaterSpellAction.cs" />
+    <Compile Include="Spells\SpellException.cs" />
+    <Compile Include="Spells\SpellHelper.cs" />
+    <Compile Include="Statuses\OilyObjectStatus.cs" />
+    <Compile Include="Statuses\OnFireObjectStatus.cs" />
+    <Compile Include="Statuses\WetObjectStatus.cs" />
     <Compile Include="StyledLine.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +323,8 @@
       <Name>CodeMagic.UI.Images</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

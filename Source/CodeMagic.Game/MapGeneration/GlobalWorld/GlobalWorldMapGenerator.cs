@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
@@ -24,7 +25,7 @@ namespace CodeMagic.Game.MapGeneration.GlobalWorld
 
         public IAreaMap GenerateMap(int width, int height, out Point playerHomePosition)
         {
-            var map = new GlobalAreaMap(width, height, new OutsideEnvironmentLightManager(), 2);
+            var map = new GlobalAreaMap(ConfigurationManager.Current.Physics, width, height, new OutsideEnvironmentLightManager(), 2);
 
             for (int y = 0; y < map.Height; y++)
             {
@@ -107,7 +108,7 @@ namespace CodeMagic.Game.MapGeneration.GlobalWorld
                 dungeonsPoints.Add(position);
 
                 var rareness = RandomHelper.GetRandomElement(Enum.GetValues(typeof(ItemRareness)).Cast<ItemRareness>().ToArray());
-                map.AddObject(position, new DungeonEnterObject(rareness));
+                map.AddObject(position, new DungeonEnter(rareness));
             }
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
 
@@ -65,7 +66,7 @@ namespace CodeMagic.Game.Objects.Buildings
             return storage.GetImage("Building_Fireplace_NoFuel");
         }
 
-        public void Use(IGameCore game, Point position)
+        public void Use(GameCore<Player> game, Point position)
         {
             Used?.Invoke(this, EventArgs.Empty);
         }

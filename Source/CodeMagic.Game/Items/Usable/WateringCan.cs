@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.LiquidObjects;
-using CodeMagic.Core.Objects.PlayerData;
-using CodeMagic.Game.Objects.Buildings;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
@@ -30,7 +27,7 @@ namespace CodeMagic.Game.Items.Usable
         public override int Weight => 3000 + canWaterLevel * 1000;
         public override bool Stackable => false;
 
-        public bool Use(IGameCore game)
+        public bool Use(GameCore<Player> game)
         {
             var targetPosition = Point.GetPointInDirection(game.PlayerPosition, game.Player.Direction);
             UseCan(game.Map, targetPosition);
@@ -46,17 +43,17 @@ namespace CodeMagic.Game.Items.Usable
 
             if (canWaterLevel > 0)
             {
-                map.AddObject(position, new WaterLiquidImpl(canWaterLevel));
+                map.AddObject(position, new WaterLiquid(canWaterLevel));
                 canWaterLevel = 0;
                 return;
             }
 
-            var waterVolume = cell.GetVolume<IWaterLiquidObject>();
+            var waterVolume = cell.GetVolume<WaterLiquid>();
             if (waterVolume > 0 && canWaterLevel < MaxWaterLevel)
             {
                 var waterToFill = Math.Min(waterVolume, MaxWaterLevel - canWaterLevel);
                 canWaterLevel += waterToFill;
-                cell.RemoveVolume<IWaterLiquidObject>(waterToFill);
+                cell.RemoveVolume<WaterLiquid>(waterToFill);
             }
         }
 
@@ -70,7 +67,7 @@ namespace CodeMagic.Game.Items.Usable
             return storage.GetImage("ItemsOnGround_Item_WateringCan");
         }
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             return new[]
             {

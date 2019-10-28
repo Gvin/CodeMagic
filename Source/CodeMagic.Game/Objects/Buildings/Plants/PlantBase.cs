@@ -4,6 +4,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Buildings.Plants
@@ -67,6 +68,6 @@ namespace CodeMagic.Game.Objects.Buildings.Plants
 
         public bool Updated { get; set; }
         public UpdateOrder UpdateOrder => UpdateOrder.Late;
-        public abstract void Use(IGameCore game, Point position);
+        public abstract void Use(GameCore<Player> game, Point position);
     }
 }

@@ -102,7 +102,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 
             var cell = map.GetCell(x, y);
 
-            if (cell.Objects.OfType<DoorObject>().Any())
+            if (cell.Objects.OfType<DoorBase>().Any())
             {
                 return "▒";
             }
@@ -112,17 +112,17 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
                 return "█";
             }
 
-            if (cell.Objects.OfType<TrapDoorObject>().Any())
+            if (cell.Objects.OfType<DungeonTrapDoor>().Any())
             {
                 return "v";
             }
 
-            if (cell.Objects.OfType<StairsObject>().Any())
+            if (cell.Objects.OfType<DungeonStairs>().Any())
             {
                 return "^";
             }
 
-            if (cell.Objects.OfType<ExitPortalObject>().Any())
+            if (cell.Objects.OfType<DungeonExitPortal>().Any())
             {
                 return "#";
             }

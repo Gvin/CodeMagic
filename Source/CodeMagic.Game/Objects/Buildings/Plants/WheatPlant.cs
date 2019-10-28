@@ -6,6 +6,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Game.Items.Usable.Food;
 using CodeMagic.Game.Items.Usable.Seeds;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Buildings.Plants
@@ -52,7 +53,7 @@ namespace CodeMagic.Game.Objects.Buildings.Plants
             }
         }
 
-        public override void Use(IGameCore game, Point position)
+        public override void Use(GameCore<Player> game, Point position)
         {
             if (GrowthPeriod >= OvergrownPeriod)
             {

@@ -1,0 +1,19 @@
+﻿using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Game.Objects;
+
+namespace CodeMagic.Game.Spells
+{
+    public class BookSpell
+    {
+        public string Name { get; set; }
+
+        public string Code { get; set; }
+
+        public int ManaCost { get; set; }
+
+        public CodeSpell CreateCodeSpell(ICreatureObject caster)
+        {
+            return new CodeSpell(caster, Name, Code, ManaCost);
+        }
+    }
+}

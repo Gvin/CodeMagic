@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
+using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
@@ -101,7 +102,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
 
         private IAreaMap ConvertToAreaMap(Room[][] roomsMap, int width, int height)
         {
-            var map = new AreaMap(width, height, new InsideEnvironmentLightManager());
+            var map = new AreaMap(ConfigurationManager.Current.Physics, width, height, new InsideEnvironmentLightManager());
 
             var currentMapY = 1;
             foreach (var row in roomsMap)

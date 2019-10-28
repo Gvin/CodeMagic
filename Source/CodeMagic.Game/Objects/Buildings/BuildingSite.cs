@@ -4,10 +4,10 @@ using System.Linq;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Configuration.Buildings;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Buildings
@@ -54,7 +54,7 @@ namespace CodeMagic.Game.Objects.Buildings
 
         public ObjectSize Size => ObjectSize.Huge;
 
-        public void Use(IGameCore game, Point position)
+        public void Use(GameCore<Player> game, Point position)
         {
             if (remainingCost.Count != 0)
             {
@@ -95,7 +95,7 @@ namespace CodeMagic.Game.Objects.Buildings
             }
         }
 
-        private void ApplyBuildingUnlocks(IGameCore game)
+        private void ApplyBuildingUnlocks(GameCore<Player> game)
         {
             if (buildingConfiguration.Unlocks == null)
                 return;

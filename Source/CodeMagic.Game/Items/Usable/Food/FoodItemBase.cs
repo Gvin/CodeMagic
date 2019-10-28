@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable.Food
@@ -19,7 +18,7 @@ namespace CodeMagic.Game.Items.Usable.Food
             this.hungerDecrease = hungerDecrease;
         }
 
-        public bool Use(IGameCore game)
+        public bool Use(GameCore<Player> game)
         {
             if (game.Player.HungerPercent < MinHungerToEat)
             {
@@ -43,7 +42,7 @@ namespace CodeMagic.Game.Items.Usable.Food
 
         public abstract SymbolsImage GetInventoryImage(IImagesStorage storage);
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             var result = new List<StyledLine>
             {

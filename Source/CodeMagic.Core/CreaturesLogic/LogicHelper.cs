@@ -1,8 +1,8 @@
 ﻿using System;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Objects.PlayerData;
 
 namespace CodeMagic.Core.CreaturesLogic
 {

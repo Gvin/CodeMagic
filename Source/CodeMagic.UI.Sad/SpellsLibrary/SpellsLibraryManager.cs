@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using CodeMagic.Core.Spells;
+using CodeMagic.Game.Spells;
 
 namespace CodeMagic.UI.Sad.SpellsLibrary
 {

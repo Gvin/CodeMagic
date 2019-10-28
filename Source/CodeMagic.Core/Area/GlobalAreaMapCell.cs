@@ -9,17 +9,24 @@ namespace CodeMagic.Core.Area
 {
     public class GlobalAreaMapCell : AreaMapCellBase
     {
+        private readonly IPhysicsConfiguration configuration;
+
+        public GlobalAreaMapCell(IPhysicsConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
         public override bool HasRoof => false;
 
         public override int Temperature
         {
-            get => ConfigurationManager.Current.Physics.TemperatureConfiguration.NormalValue;
+            get => configuration.TemperatureConfiguration.NormalValue;
             set { }
         }
 
         public override int Pressure
         {
-            get => ConfigurationManager.Current.Physics.PressureConfiguration.NormalValue;
+            get => configuration.PressureConfiguration.NormalValue;
             set { }
         }
 

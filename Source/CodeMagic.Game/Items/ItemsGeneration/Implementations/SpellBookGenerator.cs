@@ -34,7 +34,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             var inventoryImage = GenerateImage(out var mainColor);
             var worldImage = GetWorldImage(mainColor);
 
-            var itemConfig = new SpellBookItemImplConfiguration
+            var itemConfig = new SpellBookConfiguration
             {
                 Name = DefaultName,
                 Key = Guid.NewGuid().ToString(),
@@ -48,7 +48,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
 
             bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
 
-            return new SpellBookItemImpl(itemConfig);
+            return new SpellBook(itemConfig);
         }
 
         private SymbolsImage GetWorldImage(Color mainImageColor)

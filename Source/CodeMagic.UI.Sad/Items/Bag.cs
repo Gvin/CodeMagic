@@ -1,8 +1,8 @@
 ﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Game;
 using CodeMagic.Game.Items;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Views;
 
@@ -29,7 +29,7 @@ namespace CodeMagic.UI.Sad.Items
 
         public override bool Stackable => false;
 
-        public bool Use(IGameCore game)
+        public bool Use(GameCore<Player> game)
         {
             var view = new StorageInventoryView(game, Name, inventory, MaxWeight, this);
             view.Show();
@@ -47,7 +47,7 @@ namespace CodeMagic.UI.Sad.Items
             return storage.GetImage("Item_Bag");
         }
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             return new[]
             {

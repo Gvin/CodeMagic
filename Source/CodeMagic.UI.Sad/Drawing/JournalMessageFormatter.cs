@@ -4,13 +4,12 @@ using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
-using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Statuses;
 using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
 using SadConsole;
@@ -46,7 +45,7 @@ namespace CodeMagic.UI.Sad.Drawing
             if (message is ISelfDescribingJournalMessage selfDescribingMessage)
             {
                 return selfDescribingMessage.GetDescription().Parts.Select(styledString =>
-                        new ColoredString(styledString.String,
+                        new ColoredString(styledString.String.ConvertGlyphs(),
                             new Cell(styledString.TextColor.ToXna(), BackgroundColor)))
                     .ToArray();
             }
@@ -63,55 +62,21 @@ namespace CodeMagic.UI.Sad.Drawing
                     return GetDealDamageMessage(dealDamageMessage);
                 case SpellOutOfManaMessage spellOutOfManaMessage:
                     return GetSpellOutOfManaMessage(spellOutOfManaMessage);
-                case NotEnoughManaToCastMessage notEnoughManaMessage:
-                    return GetNotEnoughManaToCastMessage(notEnoughManaMessage);
-                case SpellCastMessage spellCastMessage:
-                    return GetSpellCastMessage(spellCastMessage);
                 case SpellErrorMessage spellErrorMessage:
                     return GetSpellErrorMessage(spellErrorMessage);
                 case SpellLogMessage spellLogMessage:
                     return GetSpellLogMessage(spellLogMessage);
                 case AttackMissMessage attackMissMessage:
                     return GetAttackMissMessage(attackMissMessage);
-                case ParalyzedMessage paralyzedMessage:
-                    return GetParalyzedMessage(paralyzedMessage);
                 case StatusAddedMessage statusAddedMessage:
                     return GetStatusAddedMessage(statusAddedMessage);
-                case UsedItemMessage usedItemMessage:
-                    return GetUsedItemMessage(usedItemMessage);
                 case DamageBlockedMessage damageBlockedMessage:
                     return GetDamageBlockedMessage(damageBlockedMessage);
-                case OverweightBlocksMovementMessage overweightBlocksMovementMessage:
-                    return GetOverweightBlocksMovementMessage(overweightBlocksMovementMessage);
                 case DungeonLevelMessage dungeonLevelMessage:
                     return GetDungeonLevelMessage(dungeonLevelMessage);
-                case ItemReceivedMessage itemReceivedMessage:
-                    return GetItemReceivedMessage(itemReceivedMessage);
-                case ItemLostMessage itemLostMessage:
-                    return GetItemLostMessage(itemLostMessage);
                 default:
                     throw new ApplicationException($"Unknown journal message type: {message.GetType().FullName}");
             }
-        }
-
-        private ColoredString[] GetItemLostMessage(ItemLostMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{PlayerName} have lost ["),
-                GetItemNameText(message.Item),
-                new ColoredString("]"),
-            };
-        }
-
-        private ColoredString[] GetItemReceivedMessage(ItemReceivedMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{PlayerName} have got ["),
-                GetItemNameText(message.Item),
-                new ColoredString("]"),
-            };
         }
 
         private ColoredString[] GetDungeonLevelMessage(DungeonLevelMessage message)
@@ -119,14 +84,6 @@ namespace CodeMagic.UI.Sad.Drawing
             return new[]
             {
                 new ColoredString($"{PlayerName} reached {message.Level} level of the dungeon"), 
-            };
-        }
-
-        private ColoredString[] GetOverweightBlocksMovementMessage(OverweightBlocksMovementMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"Inventory is too heavy and {PlayerName} cannot move"),
             };
         }
 
@@ -139,29 +96,11 @@ namespace CodeMagic.UI.Sad.Drawing
             };
         }
 
-        private ColoredString[] GetUsedItemMessage(UsedItemMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{PlayerName} used [", TextColor, BackgroundColor),
-                GetItemNameText(message.Item),
-                new ColoredString("]", TextColor, BackgroundColor)
-            };
-        }
-
         private ColoredString[] GetStatusAddedMessage(StatusAddedMessage message)
         {
             return new[]
             {
                 new ColoredString($"{GetMapObjectName(message.Target)} got [{GetStatusName(message.StatusType)}] status", TextColor, BackgroundColor) 
-            };
-        }
-
-        private ColoredString[] GetParalyzedMessage(ParalyzedMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{PlayerName} paralyzed and cannot move or attack")
             };
         }
 
@@ -193,25 +132,6 @@ namespace CodeMagic.UI.Sad.Drawing
                 new ColoredString(message.SpellName.ConvertGlyphs(), SpellNameColor, BackgroundColor),
                 new ColoredString(": ", TextColor, BackgroundColor),
                 new ColoredString(message.Message, ErrorColor, BackgroundColor)
-            };
-        }
-
-        private ColoredString[] GetSpellCastMessage(SpellCastMessage message)
-        {
-            return new[]
-            {
-                new ColoredString($"{GetMapObjectName(message.Caster)} casted spell ", TextColor, BackgroundColor),
-                new ColoredString(message.SpellName.ConvertGlyphs(), SpellNameColor, BackgroundColor)
-            };
-        }
-
-        private ColoredString[] GetNotEnoughManaToCastMessage(NotEnoughManaToCastMessage message)
-        {
-            return new[]
-            {
-                new ColoredString("You have not enough ", TextColor, BackgroundColor),
-                ManaString,
-                new ColoredString(" to cast this spell", TextColor, BackgroundColor)
             };
         }
 
@@ -272,11 +192,6 @@ namespace CodeMagic.UI.Sad.Drawing
                 return PlayerName;
 
             return mapObject.Name;
-        }
-
-        private ColoredString GetItemNameText(IItem item)
-        {
-            return new ColoredString(item.Name.ConvertGlyphs(), ItemDrawingHelper.GetItemColor(item).ToXna(), BackgroundColor);
         }
 
         private ColoredString GetDamageText(int damage, Element element)

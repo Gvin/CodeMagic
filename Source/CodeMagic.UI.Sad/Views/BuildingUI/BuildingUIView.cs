@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework.Input;
@@ -13,12 +14,12 @@ namespace CodeMagic.UI.Sad.Views.BuildingUI
 {
     public abstract class BuildingUIView : View
     {
-        protected readonly IGameCore Game;
+        protected readonly GameCore<Player> Game;
         private CustomListBox<InventoryStackItem> itemsList;
         private Button closeButton;
         private readonly string buildingName;
 
-        protected BuildingUIView(IGameCore game, string buildingName) : base(Program.Width, Program.Height)
+        protected BuildingUIView(GameCore<Player> game, string buildingName) : base(Program.Width, Program.Height)
         {
             Game = game;
             this.buildingName = buildingName;

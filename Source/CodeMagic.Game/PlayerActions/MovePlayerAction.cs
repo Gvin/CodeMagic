@@ -4,6 +4,7 @@ using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.JournalMessages;
 
 namespace CodeMagic.Game.PlayerActions
 {

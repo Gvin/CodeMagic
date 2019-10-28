@@ -3,7 +3,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.LiquidObjects;
+using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Buildings
@@ -69,12 +69,12 @@ namespace CodeMagic.Game.Objects.Buildings
         public void Update(IAreaMap map, IJournal journal, Point position)
         {
             var cell = map.GetCell(position);
-            var waterVolume = cell.GetVolume<IWaterLiquidObject>();
+            var waterVolume = cell.GetVolume<WaterLiquid>();
             if (waterVolume > 0)
             {
                 var possibleConsumption = Math.Min(MaxWaterConsumption, waterVolume);
                 var consumption = Math.Min(possibleConsumption, (int)Math.Floor(MaxHumidity - Humidity));
-                cell.RemoveVolume<IWaterLiquidObject>(consumption);
+                cell.RemoveVolume<WaterLiquid>(consumption);
                 Humidity += consumption;
             }
 

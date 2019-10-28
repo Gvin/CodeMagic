@@ -7,20 +7,12 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Injection.Configuration;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Objects.DecorativeObjects;
-using CodeMagic.Core.Objects.IceObjects;
-using CodeMagic.Core.Objects.LiquidObjects;
 using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Core.Objects.SolidObjects;
-using CodeMagic.Core.Objects.SteamObjects;
-using CodeMagic.Core.Spells;
-using CodeMagic.Game.Objects;
+using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.DecorativeObjects;
-using CodeMagic.Game.Objects.IceObjects;
-using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.Game.Objects.SolidObjects;
-using CodeMagic.Game.Objects.SteamObjects;
 using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.UI.Sad.Drawing;
@@ -79,37 +71,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                                 ImagesStorage.Current, new AncientSpellsProvider())
                         }
                     },
-                    // Liquid
-                    {
-                        typeof(IWaterLiquidObject),
-                        new InjectorMappingType {FactoryMethod = args => new WaterLiquidImpl((int) args[0])}
-                    },
-                    {
-                        typeof(IAcidLiquidObject),
-                        new InjectorMappingType {FactoryMethod = args => new AcidLiquidImpl((int) args[0])}
-                    },
-                    {
-                        typeof(IOilLiquidObject),
-                        new InjectorMappingType {FactoryMethod = args => new OilLiquidImpl((int) args[0])}
-                    },
-                    // Ice
-                    {
-                        typeof(IWaterIceObject),
-                        new InjectorMappingType {FactoryMethod = args => new WaterIceImpl((int) args[0])}
-                    },
-                    {
-                        typeof(IAcidIceObject),
-                        new InjectorMappingType {FactoryMethod = args => new AcidIceImpl((int) args[0])}
-                    },
-                    // Steam
-                    {
-                        typeof(IWaterSteamObject),
-                        new InjectorMappingType {FactoryMethod = args => new WaterSteamImpl((int) args[0])}
-                    },
-                    {
-                        typeof(IAcidSteamObject),
-                        new InjectorMappingType {FactoryMethod = args => new AcidSteamImpl((int) args[0])}
-                    },
                     // Objects
                     {
                         typeof(IEnergyWall),
@@ -122,14 +83,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                     {
                         typeof(ICreatureRemainsObject),
                         new InjectorMappingType { FactoryMethod = args => new CreatureRemainsObjectImpl((CreatureRemainsObjectConfiguration) args[0])}
-                    },
-                    {
-                        typeof(ICodeSpell),
-                        new InjectorMappingType
-                        {
-                            FactoryMethod = args => new CodeSpellImpl((ICreatureObject) args[0], (string) args[1],
-                                (string) args[2], (int) args[3])
-                        }
                     },
                     // Misc
                     {

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Spells;
 using CodeMagic.Game.Items.Usable;
+using CodeMagic.Game.Spells;
 
 namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Usable
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
@@ -25,7 +25,7 @@ namespace CodeMagic.Game.Items
             return inventoryImage;
         }
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             var equipedArmor = player.Equipment.Armor[ArmorType];
 

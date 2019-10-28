@@ -4,6 +4,7 @@ using CodeMagic.Core.Objects;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Materials;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.GlobalMap
@@ -67,7 +68,7 @@ namespace CodeMagic.Game.Objects.GlobalMap
             return storage.GetImage(ImagesForest[imageIndex]);
         }
 
-        public void Use(IGameCore game, Point position)
+        public void Use(GameCore<Player> game, Point position)
         {
             if (!(game.Player.Equipment.Weapon is LumberjackAxe axe))
             {

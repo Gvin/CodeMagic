@@ -1,8 +1,8 @@
 ﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable
@@ -22,7 +22,7 @@ namespace CodeMagic.Game.Items.Usable
             Mana = configuration.Mana;
         }
 
-        public virtual bool Use(IGameCore game)
+        public virtual bool Use(GameCore<Player> game)
         {
             if (!game.World.CurrentLocation.CanCast)
             {
@@ -30,7 +30,7 @@ namespace CodeMagic.Game.Items.Usable
                 return true;
             }
 
-            var codeSpell = new CodeSpellImpl(game.Player, SpellName, code, Mana);
+            var codeSpell = new CodeSpell(game.Player, SpellName, code, Mana);
             game.Map.AddObject(game.PlayerPosition, codeSpell);
             return false;
         }
@@ -44,6 +44,6 @@ namespace CodeMagic.Game.Items.Usable
 
         public abstract SymbolsImage GetInventoryImage(IImagesStorage storage);
 
-        public abstract StyledLine[] GetDescription(IPlayer player);
+        public abstract StyledLine[] GetDescription(Player player);
     }
 }

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable
@@ -23,7 +22,7 @@ namespace CodeMagic.Game.Items.Usable
             description = configuration.Description;
         }
 
-        public bool Use(IGameCore game)
+        public bool Use(GameCore<Player> game)
         {
             if (healValue > 0)
             {
@@ -40,7 +39,7 @@ namespace CodeMagic.Game.Items.Usable
             return false;
         }
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             var result = new List<StyledLine>
             {

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Spells;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Materials;
 using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
+using CodeMagic.Game.Spells;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.SpellsLibrary;
 using Microsoft.Xna.Framework;
@@ -31,7 +29,7 @@ namespace CodeMagic.UI.Sad.Views
     {
         private const string DefaultSpellName = "New Spell";
 
-        private readonly IGameCore game;
+        private readonly GameCore<Player> game;
 
         private Button closeButton;
         private CustomListBox<SpellListBoxItem> spellsListBox;
@@ -44,7 +42,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button saveToLibraryButton;
         private Button loadFromLibraryButton;
 
-        public SpellBookView(IGameCore game) 
+        public SpellBookView(GameCore<Player> game) 
             : base(Program.Width, Program.Height)
         {
             this.game = game;

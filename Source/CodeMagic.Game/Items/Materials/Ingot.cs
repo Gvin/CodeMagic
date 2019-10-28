@@ -1,6 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Materials
@@ -150,7 +150,7 @@ namespace CodeMagic.Game.Items.Materials
             return MetalRecolorHelper.RecolorMetalImage(template, MetalType);
         }
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             return new []
             {

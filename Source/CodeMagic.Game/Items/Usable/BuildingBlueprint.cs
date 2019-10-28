@@ -2,8 +2,9 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Core.Objects;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable
@@ -27,7 +28,7 @@ namespace CodeMagic.Game.Items.Usable
 
         public override bool Stackable => false;
 
-        public bool Use(IGameCore game)
+        public bool Use(GameCore<Player> game)
         {
             if (game.Player.UnlockBuilding(building))
             {
@@ -46,7 +47,7 @@ namespace CodeMagic.Game.Items.Usable
             return storage.GetImage("Item_Blueprint");
         }
 
-        public StyledLine[] GetDescription(IPlayer player)
+        public StyledLine[] GetDescription(Player player)
         {
             return new[]
             {

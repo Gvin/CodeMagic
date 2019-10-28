@@ -1,7 +1,8 @@
 ﻿using System.Drawing;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.Items;
 
 namespace CodeMagic.Game.JournalMessages
 {
@@ -25,12 +26,17 @@ namespace CodeMagic.Game.JournalMessages
 
         public abstract StyledLine GetDescription();
 
-        protected string GetMapObjectName(IMapObject mapObject)
+        protected static string GetMapObjectName(IMapObject mapObject)
         {
             if (mapObject is IPlayer)
                 return PlayerName;
 
             return mapObject.Name;
+        }
+
+        protected static StyledString GetItemNameText(IItem item)
+        {
+            return new StyledString(item.Name, ItemDrawingHelper.GetItemColor(item));
         }
     }
 }

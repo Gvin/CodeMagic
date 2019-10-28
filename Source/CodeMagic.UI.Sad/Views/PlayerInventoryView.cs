@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Core.Objects;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Usable;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.GameProcess;
@@ -23,7 +23,7 @@ namespace CodeMagic.UI.Sad.Views
     {
         private const string Title = "Player Inventory";
 
-        private readonly IGameCore game;
+        private readonly GameCore<Player> game;
 
         private Button useItemButton;
         private Button equipItemButton;
@@ -32,7 +32,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button dropAllItemsButton;
         private Button checkScrollButton;
 
-        public PlayerInventoryView(IGameCore game) 
+        public PlayerInventoryView(GameCore<Player> game) 
             : base(GetTitleWithWeight(game.Player), game.Player)
         {
             this.game = game;
@@ -254,9 +254,9 @@ namespace CodeMagic.UI.Sad.Views
         private static readonly Color EquipedTextColor = Color.Red;
 
 
-        private readonly IPlayer player;
+        private readonly Player player;
 
-        public PlayerInventoryItem(InventoryStack itemStack, IPlayer player)
+        public PlayerInventoryItem(InventoryStack itemStack, Player player)
             : base(itemStack)
         {
             this.player = player;
@@ -289,7 +289,7 @@ namespace CodeMagic.UI.Sad.Views
             return result.ToArray();
         }
 
-        public static bool GetIfEquiped(IPlayer player, InventoryStack stack)
+        public static bool GetIfEquiped(Player player, InventoryStack stack)
         {
             if (!(stack.TopItem is IEquipableItem equipable))
                 return false;

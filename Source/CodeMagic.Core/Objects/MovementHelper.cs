@@ -5,7 +5,6 @@ using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Spells;
 
 namespace CodeMagic.Core.Objects
 {
@@ -41,9 +40,9 @@ namespace CodeMagic.Core.Objects
             return MoveMapObject(mapObject, map, journal, startPoint, endPoint, cell => !cell.BlocksMovement, processStepReaction);
         }
 
-        public static MovementResult MoveSpell(ICodeSpell spell, IAreaMap map, IJournal journal, Point startPoint, Point endPoint)
+        public static MovementResult MoveProjectile(IMapObject projectile, IAreaMap map, IJournal journal, Point startPoint, Point endPoint)
         {
-            return MoveMapObject(spell, map, journal, startPoint, endPoint, cell => !cell.BlocksProjectiles, false);
+            return MoveMapObject(projectile, map, journal, startPoint, endPoint, cell => !cell.BlocksProjectiles, false);
         }
 
         private static MovementResult MoveMapObject(IMapObject mapObject, IAreaMap map, IJournal journal, Point startPoint, Point endPoint,

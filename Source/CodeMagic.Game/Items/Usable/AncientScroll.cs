@@ -2,8 +2,8 @@
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
-using CodeMagic.Core.Objects.PlayerData;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable
@@ -49,7 +49,7 @@ namespace CodeMagic.Game.Items.Usable
             return ImageInventory3;
         }
 
-        public sealed override bool Use(IGameCore game)
+        public virtual bool Use(GameCore<Player> game)
         {
             if (RandomHelper.CheckChance(100 - damagePercent))
                 return base.Use(game);
@@ -113,7 +113,7 @@ namespace CodeMagic.Game.Items.Usable
             return storage.GetImage(inventoryImageName);
         }
 
-        public override StyledLine[] GetDescription(IPlayer player)
+        public override StyledLine[] GetDescription(Player player)
         {
             return new[]
             {

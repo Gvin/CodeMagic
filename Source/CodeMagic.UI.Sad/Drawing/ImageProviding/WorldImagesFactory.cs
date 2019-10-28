@@ -1,6 +1,7 @@
 ﻿using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game;
+using CodeMagic.Game.Statuses;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.UI.Sad.Drawing.ImageProviding

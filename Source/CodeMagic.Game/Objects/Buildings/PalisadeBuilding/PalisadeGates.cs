@@ -1,10 +1,11 @@
 ﻿using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Buildings.PalisadeBuilding
 {
-    public class PalisadeGates : DoorObject, IWorldImageProvider
+    public class PalisadeGates : DoorBase, IWorldImageProvider
     {
         private const string WorldImageVerticalClosed = "Building_PalisadeGates_Vertical_Closed";
         private const string WorldImageVerticalOpened = "Building_PalisadeGates_Vertical_Opened";

@@ -2,6 +2,7 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Buildings
@@ -32,7 +33,8 @@ namespace CodeMagic.Game.Objects.Buildings
         }
 
         public ObjectSize Size => ObjectSize.Huge;
-        public void Use(IGameCore game, Point position)
+
+        public void Use(GameCore<Player> game, Point position)
         {
             Opened?.Invoke(this, EventArgs.Empty);
         }

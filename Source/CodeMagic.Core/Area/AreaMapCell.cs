@@ -16,10 +16,10 @@ namespace CodeMagic.Core.Area
 {
     public class AreaMapCell : AreaMapCellBase
     {
-        public AreaMapCell(IMagicEnergyConfiguration magicEnergyConfiguration)
+        public AreaMapCell(IPhysicsConfiguration configuration)
         {
-            Environment = new Environment();
-            MagicEnergy = new MagicEnergy(magicEnergyConfiguration);
+            Environment = new Environment(configuration);
+            MagicEnergy = new MagicEnergy(configuration.MagicEnergyConfiguration);
         }
 
         public MagicEnergy MagicEnergy { get; }

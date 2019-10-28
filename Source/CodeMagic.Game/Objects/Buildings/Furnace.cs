@@ -8,6 +8,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.SolidObjects;
 using CodeMagic.Game.Objects.Buildings.StoneWallBuilding;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
 
@@ -50,7 +51,7 @@ namespace CodeMagic.Game.Objects.Buildings
 
         public IItem OutputItem { get; set; }
 
-        public void Use(IGameCore game, Point position)
+        public void Use(GameCore<Player> game, Point position)
         {
             Used?.Invoke(this, EventArgs.Empty);
         }

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.Items
 {
@@ -13,7 +13,7 @@ namespace CodeMagic.Game.Items
 
         public int PickaxePower { get; }
 
-        protected override StyledLine[] GetCharacteristicsDescription(IPlayer player)
+        protected override StyledLine[] GetCharacteristicsDescription(Player player)
         {
             var result = base.GetCharacteristicsDescription(player).ToList();
 

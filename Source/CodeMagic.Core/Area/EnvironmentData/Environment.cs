@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
@@ -13,10 +14,10 @@ namespace CodeMagic.Core.Area.EnvironmentData
         private readonly Temperature temperature;
         private readonly Pressure pressure;
 
-        public Environment()
+        public Environment(IPhysicsConfiguration configuration)
         {
-            temperature = new Temperature();
-            pressure = new Pressure();
+            temperature = new Temperature(configuration.TemperatureConfiguration);
+            pressure = new Pressure(configuration.PressureConfiguration);
         }
 
         public int Temperature

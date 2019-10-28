@@ -1,4 +1,6 @@
-﻿namespace CodeMagic.Core.Game.PlayerActions
+﻿using CodeMagic.Core.Objects;
+
+namespace CodeMagic.Core.Game.PlayerActions
 {
     public interface IPlayerAction
     {

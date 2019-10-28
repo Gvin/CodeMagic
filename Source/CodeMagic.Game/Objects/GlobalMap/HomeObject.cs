@@ -1,6 +1,7 @@
 ﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.MapGeneration.Home;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.GlobalMap
@@ -32,7 +33,7 @@ namespace CodeMagic.Game.Objects.GlobalMap
 
         public ObjectSize Size => ObjectSize.Huge;
 
-        public void Use(IGameCore game, Point position)
+        public void Use(GameCore<Player> game, Point position)
         {
             game.World.TravelToLocation(game, HomeLocationMapGenerator.LocationId, game.Player.Direction);
         }

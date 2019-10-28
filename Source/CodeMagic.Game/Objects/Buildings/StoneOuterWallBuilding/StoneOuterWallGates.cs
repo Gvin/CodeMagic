@@ -1,10 +1,11 @@
 ﻿using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Buildings.StoneOuterWallBuilding
 {
-    public class StoneOuterWallGates : DoorObject, IWorldImageProvider
+    public class StoneOuterWallGates : DoorBase, IWorldImageProvider
     {
         private const string WorldImageVerticalClosed = "Building_StoneOuterWallGates_Vertical_Closed";
         private const string WorldImageVerticalOpened = "Building_StoneOuterWallGates_Vertical_Opened";

@@ -4,7 +4,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.SolidObjects
 {
-    public class DungeonDoor : DoorObject, IWorldImageProvider
+    public class DungeonDoor : DoorBase, IWorldImageProvider
     {
         private const string ImageOpenedHorizontal = "Door_Dungeon_Opened_Horizontal";
         private const string ImageOpenedVertical = "Door_Dungeon_Opened_Vertical";

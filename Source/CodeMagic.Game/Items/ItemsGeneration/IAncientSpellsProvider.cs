@@ -1,4 +1,4 @@
-﻿using CodeMagic.Core.Spells;
+﻿using CodeMagic.Game.Spells;
 
 namespace CodeMagic.Game.Items.ItemsGeneration
 {

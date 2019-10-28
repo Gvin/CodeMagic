@@ -4,6 +4,7 @@ using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
@@ -19,7 +20,7 @@ namespace CodeMagic.UI.Sad.Views
 {
     public class GameView : View
     {
-        private readonly IGameCore game;
+        private readonly GameCore<Player> game;
 
         private PlayerStatsControl playerStats;
         private GameAreaControl gameArea;
@@ -35,7 +36,7 @@ namespace CodeMagic.UI.Sad.Views
         private ButtonTheme standardButtonTheme;
         private ButtonTheme disabledButtonTheme;
 
-        public GameView(IGameCore game) 
+        public GameView(GameCore<Player> game) 
             : base(Program.Width, Program.Height)
         {
             UseKeyboard = true;

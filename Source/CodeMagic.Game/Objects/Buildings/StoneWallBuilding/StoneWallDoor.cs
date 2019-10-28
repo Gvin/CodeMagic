@@ -1,10 +1,11 @@
 ﻿using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.SolidObjects;
+using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Buildings.StoneWallBuilding
 {
-    public class StoneWallDoor : DoorObject, IWorldImageProvider, IRoofSupport
+    public class StoneWallDoor : DoorBase, IWorldImageProvider, IRoofSupport
     {
         public const string BuildingKey = "stone_wall_door";
 

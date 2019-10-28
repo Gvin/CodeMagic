@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
@@ -97,7 +98,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
 
         private IAreaMap ConvertMap(int[][] map, bool isLastLevel, int width, int height)
         {
-            var result = new AreaMap(width, height, new InsideEnvironmentLightManager());
+            var result = new AreaMap(ConfigurationManager.Current.Physics, width, height, new InsideEnvironmentLightManager());
 
             for (int y = 0; y < height; y++)
             {
