@@ -1,4 +1,4 @@
-﻿namespace CodeMagic.Core.Configuration
+﻿namespace CodeMagic.Game.Configuration.Physics
 {
     public interface IPressureDamageConfiguration
     {

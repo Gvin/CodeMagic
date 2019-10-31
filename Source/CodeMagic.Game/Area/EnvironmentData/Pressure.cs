@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using CodeMagic.Core.Configuration;
+using CodeMagic.Game.Configuration.Physics;
 
 namespace CodeMagic.Game.Area.EnvironmentData
 {

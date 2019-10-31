@@ -8,8 +8,6 @@ using CodeMagic.Core.Injection.Configuration;
 using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
-using CodeMagic.Game.Objects.DecorativeObjects;
-using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.UI.Sad.Drawing;

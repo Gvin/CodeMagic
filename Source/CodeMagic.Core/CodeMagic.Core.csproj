@@ -63,12 +63,6 @@
     <Compile Include="Area\OutsideEnvironmentLightManager.cs" />
     <Compile Include="Common\ConcurrentList.cs" />
     <Compile Include="Common\Direction.cs" />
-    <Compile Include="Configuration\IMagicEnergyConfiguration.cs" />
-    <Compile Include="Configuration\IPhysicsConfiguration.cs" />
-    <Compile Include="Configuration\IPressureConfiguration.cs" />
-    <Compile Include="Configuration\IPressureDamageConfiguration.cs" />
-    <Compile Include="Configuration\ITemperatureConfiguration.cs" />
-    <Compile Include="Configuration\ITemperatureDamageConfiguration.cs" />
     <Compile Include="CreaturesLogic\LogicConfigurators\ILogicConfigurator.cs" />
     <Compile Include="CreaturesLogic\LogicConfigurators\SimplePatrollingChaserLogicConfigurator.cs" />
     <Compile Include="CreaturesLogic\LogicConfigurators\SimpleWonderingChaserLogicConfigurator.cs" />
@@ -165,6 +159,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Configuration\" />
     <Folder Include="Objects\DecorativeObjects\" />
     <Folder Include="Objects\SolidObjects\" />
     <Folder Include="Objects\SteamObjects\" />

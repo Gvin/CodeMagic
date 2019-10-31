@@ -6,11 +6,11 @@ using CodeMagic.Configuration.Xml.Types.Liquids;
 using CodeMagic.Configuration.Xml.Types.Monsters;
 using CodeMagic.Configuration.Xml.Types.Physics;
 using CodeMagic.Configuration.Xml.Types.Spells;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Buildings;
 using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Configuration.Monsters;
+using CodeMagic.Game.Configuration.Physics;
 using CodeMagic.Game.Configuration.Spells;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
+using CodeMagic.Game.Configuration.Physics;
 
 namespace CodeMagic.Game.Area.EnvironmentData
 {
@@ -16,11 +16,6 @@ namespace CodeMagic.Game.Area.EnvironmentData
         {
             this.configuration = configuration;
             value = configuration.NormalValue;
-        }
-
-        public Temperature(int value)
-        {
-            Value = value;
         }
 
         public int Value

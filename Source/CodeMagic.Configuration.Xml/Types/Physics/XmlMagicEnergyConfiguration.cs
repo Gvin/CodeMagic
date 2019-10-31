@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
-using CodeMagic.Core.Configuration;
+using CodeMagic.Game.Configuration.Physics;
 
 namespace CodeMagic.Configuration.Xml.Types.Physics
 {

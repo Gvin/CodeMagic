@@ -1,7 +1,7 @@
 ﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Game.Configuration.Physics;
 
 namespace CodeMagic.Game.Area.EnvironmentData
 {

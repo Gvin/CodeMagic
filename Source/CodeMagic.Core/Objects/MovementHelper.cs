@@ -25,7 +25,7 @@ namespace CodeMagic.Core.Objects
         }
 
         public static MovementResult MoveCreature(ICreatureObject creature, IAreaMap map, IJournal journal, Point startPoint,
-            Direction direction, bool processStepReaction = true, bool changeDirection = true)
+            Direction direction, bool processStepReaction, bool changeDirection)
         {
             if (changeDirection)
             {

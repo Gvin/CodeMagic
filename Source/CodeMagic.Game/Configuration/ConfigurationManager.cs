@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Game.Configuration.Buildings;
 using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Configuration.Monsters;
+using CodeMagic.Game.Configuration.Physics;
 using CodeMagic.Game.Configuration.Spells;
 
 namespace CodeMagic.Game.Configuration

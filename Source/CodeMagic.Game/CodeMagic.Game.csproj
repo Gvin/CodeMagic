@@ -63,6 +63,12 @@
     <Compile Include="Configuration\Monsters\IMonsterProtectionConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonstersConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonsterStatsConfiguration.cs" />
+    <Compile Include="Configuration\Physics\IMagicEnergyConfiguration.cs" />
+    <Compile Include="Configuration\Physics\IPhysicsConfiguration.cs" />
+    <Compile Include="Configuration\Physics\IPressureConfiguration.cs" />
+    <Compile Include="Configuration\Physics\IPressureDamageConfiguration.cs" />
+    <Compile Include="Configuration\Physics\ITemperatureConfiguration.cs" />
+    <Compile Include="Configuration\Physics\ITemperatureDamageConfiguration.cs" />
     <Compile Include="Configuration\Spells\ISpellConfiguration.cs" />
     <Compile Include="Configuration\Spells\ISpellsConfiguration.cs" />
     <Compile Include="IInventoryImageProvider.cs" />

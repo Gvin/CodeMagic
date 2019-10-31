@@ -20,7 +20,10 @@ namespace CodeMagic.UI.Sad.SpellsLibrary
             {
                 library = new XmlSpellsLibrary();
                 var path = Path.GetDirectoryName(FilePath);
-                Directory.CreateDirectory(path);
+                if (!string.IsNullOrEmpty(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
             }
 
             var resultSpells = new List<XmlBookSpell>(library.Spells ?? new XmlBookSpell[0])
