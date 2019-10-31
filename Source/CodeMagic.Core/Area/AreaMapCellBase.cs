@@ -5,11 +5,14 @@ namespace CodeMagic.Core.Area
 {
     public abstract class AreaMapCellBase : IAreaMapCell
     {
-        protected AreaMapCellBase()
+        protected AreaMapCellBase(IEnvironment environment)
         {
             ObjectsCollection = new MapObjectsCollection();
             LightLevel = LightLevel.Darkness;
+            Environment = environment;
         }
+
+        public IEnvironment Environment { get; }
 
         IMapObject[] IAreaMapCell.Objects => ObjectsCollection.ToArray();
 
@@ -57,15 +60,5 @@ namespace CodeMagic.Core.Area
                 return bigDestroyable;
             return destroyable.LastOrDefault();
         }
-
-        public abstract int Temperature { get; set; }
-
-        public abstract int Pressure { get; set; }
-
-        public abstract int MagicEnergyLevel { get; set; }
-
-        public abstract int MaxMagicEnergyLevel { get; }
-
-        public abstract int MagicDisturbanceLevel { get; set; }
     }
 }

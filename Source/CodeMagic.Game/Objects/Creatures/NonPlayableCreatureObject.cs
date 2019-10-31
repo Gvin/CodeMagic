@@ -7,8 +7,8 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.Objects.DecorativeObjects;
 
 namespace CodeMagic.Game.Objects.Creatures
 {

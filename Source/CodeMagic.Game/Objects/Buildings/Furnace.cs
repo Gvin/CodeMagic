@@ -6,6 +6,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Buildings.StoneWallBuilding;
 using CodeMagic.Game.Objects.Creatures;
@@ -122,7 +123,7 @@ namespace CodeMagic.Game.Objects.Buildings
         private int GetTemperature(IAreaMap map, Point position, Direction direction)
         {
             var targetPos = Point.GetPointInDirection(position, direction);
-            return map.TryGetCell(targetPos)?.Temperature ?? int.MinValue;
+            return map.TryGetCell(targetPos)?.Environment.Temperature() ?? int.MinValue;
         }
 
         public bool Updated { get; set; }

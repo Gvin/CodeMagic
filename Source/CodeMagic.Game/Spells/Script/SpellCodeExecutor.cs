@@ -8,6 +8,7 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Objects;
 using CodeMagic.Game.Spells.SpellActions;
 using Jint;
@@ -125,7 +126,7 @@ namespace CodeMagic.Game.Spells.Script
             jsEngine.SetValue("log", new Action<object>(message => LogMessage(journal, spell, message)));
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
             jsEngine.SetValue("getPosition", new Func<JsValue>(() => ConvertPoint(position)));
-            jsEngine.SetValue("getTemperature", new Func<int>(() => map.GetCell(position).Temperature));
+            jsEngine.SetValue("getTemperature", new Func<int>(() => map.GetCell(position).Temperature()));
             jsEngine.SetValue("getHumidity", new Func<int>(() => GetHumidity(map, position)));
             jsEngine.SetValue("getIsSolidWall",
                 new Func<string, bool>((direction) => GetIfCellIsSolid(map, position, direction)));

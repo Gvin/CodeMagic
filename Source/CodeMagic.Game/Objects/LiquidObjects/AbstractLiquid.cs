@@ -4,6 +4,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Objects.IceObjects;
@@ -55,12 +56,12 @@ namespace CodeMagic.Game.Objects.LiquidObjects
                 return;
             }
 
-            if (cell.Temperature >= Configuration.BoilingPoint)
+            if (cell.Temperature() >= Configuration.BoilingPoint)
             {
                 ProcessBoiling(map, position, cell);
             }
 
-            if (cell.Temperature <= Configuration.FreezingPoint)
+            if (cell.Temperature() <= Configuration.FreezingPoint)
             {
                 ProcessFreezing(map, position, cell);
             }
@@ -75,16 +76,16 @@ namespace CodeMagic.Game.Objects.LiquidObjects
 
         private void ProcessBoiling(IAreaMap map, Point position, IAreaMapCell cell)
         {
-            var excessTemperature = cell.Temperature - Configuration.BoilingPoint;
+            var excessTemperature = cell.Temperature() - Configuration.BoilingPoint;
             var volumeToLowerTemp = (int)Math.Floor(excessTemperature * Configuration.EvaporationTemperatureMultiplier);
             var volumeToBecomeSteam = Math.Min(volumeToLowerTemp, Volume);
             var heatLoss = (int)Math.Floor(volumeToBecomeSteam * Configuration.EvaporationTemperatureMultiplier);
 
-            cell.Temperature -= heatLoss;
+            cell.Environment.Cast().Temperature -= heatLoss;
             Volume -= volumeToBecomeSteam;
 
             var steamVolume = volumeToBecomeSteam * Configuration.EvaporationMultiplier;
-            cell.Pressure += steamVolume * Configuration.Steam.PressureMultiplier;
+            cell.Environment.Cast().Pressure += steamVolume * Configuration.Steam.PressureMultiplier;
             
             map.AddObject(position, CreateSteam(steamVolume));
         }
@@ -93,12 +94,12 @@ namespace CodeMagic.Game.Objects.LiquidObjects
 
         private void ProcessFreezing(IAreaMap map, Point position, IAreaMapCell cell)
         {
-            var missingTemperature = Configuration.FreezingPoint - cell.Temperature;
+            var missingTemperature = Configuration.FreezingPoint - cell.Temperature();
             var volumeToRaiseTemp = (int)Math.Floor(missingTemperature * Configuration.FreezingTemperatureMultiplier);
             var volumeToFreeze = Math.Min(volumeToRaiseTemp, Volume);
             var heatGain = (int)Math.Floor(volumeToFreeze / Configuration.FreezingTemperatureMultiplier);
 
-            cell.Temperature += heatGain;
+            cell.Environment.Cast().Temperature += heatGain;
             Volume -= volumeToFreeze;
 
             map.AddObject(position, CreateIce(volumeToFreeze));

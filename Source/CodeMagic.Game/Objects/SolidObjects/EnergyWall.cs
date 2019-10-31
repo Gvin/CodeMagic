@@ -1,27 +1,30 @@
 ﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
+using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Game.Objects.SolidObjects
 {
-    public interface IEnergyWall : IMapObject, IInjectable
+    public class EnergyWall : IMapObject, IDynamicObject, ILightObject, IWorldImageProvider
     {
-    }
+        private int energyLeft;
+        private const string ImageHighEnergy = "EnergyWall_HighEnergy";
+        private const string ImageMediumEnergy = "EnergyWall_MediumEnergy";
+        private const string ImageLowEnergy = "EnergyWall_LowEnergy";
 
-    public class EnergyWall : IEnergyWall, IDynamicObject, ILightObject
-    {
-        public EnergyWall(EnergyWallConfiguration configuration)
+        private const int MediumEnergy = 3;
+        private const int HighEnergy = 10;
+
+        public EnergyWall(int lifeTime)
         {
-            Name = configuration.Name;
-            EnergyLeft = configuration.LifeTime;
+            energyLeft = lifeTime;
         }
 
         public void Update(IAreaMap map, IJournal journal, Point position)
         {
-            EnergyLeft--;
-            if (EnergyLeft > 0)
+            energyLeft--;
+            if (energyLeft > 0)
                 return;
 
             map.RemoveObject(position, this);
@@ -36,11 +39,9 @@ namespace CodeMagic.Game.Objects.SolidObjects
             new StaticLightSource(CodeSpell.DefaultLightLevel)
         };
 
-        public int EnergyLeft { get; private set; }
-
         public bool Updated { get; set; }
 
-        public string Name { get; }
+        public string Name => "Energy Wall";
         public bool BlocksMovement => true;
 
         public bool BlocksAttack => true;
@@ -57,12 +58,14 @@ namespace CodeMagic.Game.Objects.SolidObjects
         {
             return ReferenceEquals(other, this);
         }
-    }
 
-    public class EnergyWallConfiguration
-    {
-        public string Name { get; set; }
-
-        public int LifeTime { get; set; }
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
+        {
+            if (energyLeft >= HighEnergy)
+                return storage.GetImage(ImageHighEnergy);
+            if (energyLeft >= MediumEnergy)
+                return storage.GetImage(ImageMediumEnergy);
+            return storage.GetImage(ImageLowEnergy);
+        }
     }
 }

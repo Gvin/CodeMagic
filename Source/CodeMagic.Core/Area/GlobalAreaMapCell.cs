@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
@@ -9,40 +8,12 @@ namespace CodeMagic.Core.Area
 {
     public class GlobalAreaMapCell : AreaMapCellBase
     {
-        private readonly IPhysicsConfiguration configuration;
-
-        public GlobalAreaMapCell(IPhysicsConfiguration configuration)
+        public GlobalAreaMapCell(IEnvironment environment)
+            : base(environment)
         {
-            this.configuration = configuration;
         }
 
         public override bool HasRoof => false;
-
-        public override int Temperature
-        {
-            get => configuration.TemperatureConfiguration.NormalValue;
-            set { }
-        }
-
-        public override int Pressure
-        {
-            get => configuration.PressureConfiguration.NormalValue;
-            set { }
-        }
-
-        public override int MagicEnergyLevel
-        {
-            get => int.MaxValue;
-            set { }
-        }
-
-        public override int MaxMagicEnergyLevel => int.MaxValue;
-
-        public override int MagicDisturbanceLevel
-        {
-            get => 0;
-            set { }
-        }
 
         public void Update(IAreaMap map, IJournal journal, Point position, UpdateOrder updateOrder)
         {

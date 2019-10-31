@@ -1,12 +1,8 @@
-﻿using CodeMagic.Core.Injection;
+﻿using CodeMagic.Core.Objects;
 
-namespace CodeMagic.Core.Objects.DecorativeObjects
+namespace CodeMagic.Game.Objects.DecorativeObjects
 {
-    public interface ICreatureRemainsObject : IMapObject, IInjectable
-    {
-    }
-
-    public abstract class CreatureRemainsObject : ICreatureRemainsObject
+    public abstract class CreatureRemainsObject : IMapObject
     {
         protected readonly RemainsType Type;
 

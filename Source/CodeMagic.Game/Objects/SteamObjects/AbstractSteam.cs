@@ -4,6 +4,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Objects.LiquidObjects;
@@ -97,7 +98,7 @@ namespace CodeMagic.Game.Objects.SteamObjects
                 return;
             }
 
-            if (cell.Temperature < Configuration.BoilingPoint)
+            if (cell.Temperature() < Configuration.BoilingPoint)
             {
                 ProcessCondensation(map, position, cell);
             }
@@ -112,12 +113,12 @@ namespace CodeMagic.Game.Objects.SteamObjects
 
         private void ProcessCondensation(IAreaMap map, Point position, IAreaMapCell cell)
         {
-            var missingTemperature = Configuration.BoilingPoint - cell.Temperature;
+            var missingTemperature = Configuration.BoilingPoint - cell.Temperature();
             var volumeToRaiseTemp = (int)Math.Floor(missingTemperature * Configuration.CondensationTemperatureMultiplier);
             var volumeToCondense = Math.Min(volumeToRaiseTemp, Volume);
             var heatGain = (int)Math.Floor(volumeToCondense / Configuration.CondensationTemperatureMultiplier);
 
-            cell.Temperature += heatGain;
+            cell.Environment.Cast().Temperature += heatGain;
             Volume -= volumeToCondense;
 
             var liquidVolume = volumeToCondense / Configuration.EvaporationMultiplier;

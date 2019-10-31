@@ -4,6 +4,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
@@ -48,7 +49,7 @@ namespace CodeMagic.Game.Objects.Buildings.Plants
 
         private void CheckTemperature(IAreaMapCell cell)
         {
-            if (cell.Temperature > MaxTemperature || cell.Temperature < MinTemperature)
+            if (cell.Temperature() > MaxTemperature || cell.Temperature() < MinTemperature)
             {
                 Health--;
             }

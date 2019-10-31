@@ -1,5 +1,5 @@
 ﻿using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.DecorativeObjects;
+using CodeMagic.Game.Objects.DecorativeObjects;
 
 namespace CodeMagic.Game.Configuration.Monsters
 {

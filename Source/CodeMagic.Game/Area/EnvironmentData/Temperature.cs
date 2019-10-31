@@ -3,7 +3,7 @@ using System.Diagnostics;
 using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 
-namespace CodeMagic.Core.Area.EnvironmentData
+namespace CodeMagic.Game.Area.EnvironmentData
 {
     [DebuggerDisplay("{" + nameof(Value) + "} C")]
     public class Temperature

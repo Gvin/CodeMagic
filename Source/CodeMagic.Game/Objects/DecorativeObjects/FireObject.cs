@@ -1,16 +1,14 @@
 ﻿using System;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Injection;
+using CodeMagic.Core.Objects;
+using CodeMagic.Game.Area.EnvironmentData;
+using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
 
-namespace CodeMagic.Core.Objects.DecorativeObjects
+namespace CodeMagic.Game.Objects.DecorativeObjects
 {
-    public interface IFireDecorativeObject : IMapObject, IInjectable
-    {
-    }
-
-    public class FireDecorativeObject : IFireDecorativeObject, IDynamicObject, ILightObject
+    public class FireObject : IMapObject, IDynamicObject, ILightObject, IWorldImageProvider
     {
         private const LightLevel SmallFireLightLevel = LightLevel.Dusk2;
         private const LightLevel MediumFireLightLevel = LightLevel.Dim2;
@@ -20,27 +18,36 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         private const int BigFireTemperature = 1500;
         public const int SmallFireTemperature = 600;
 
-        public const string ObjectTypeSmallFire = "SmallFire";
-        public const string ObjectTypeMediumFire = "MediumFire";
-        public const string ObjectTypeBigFire = "BigFire";
+        private int temperature;
 
-        public FireDecorativeObject(int temperature)
+        private const string ImageSmall = "Fire_Small";
+        private const string ImageMedium = "Fire_Medium";
+        private const string ImageBig = "Fire_Big";
+
+        private readonly AnimationsBatchManager animations;
+
+        public FireObject(int temperature)
         {
-            Type = GetFireType(temperature);
+            animations = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
+            this.temperature = temperature;
         }
 
-        private string GetFireType(int temperature)
+        public SymbolsImage GetWorldImage(IImagesStorage storage)
+        {
+            var animationName = GetAnimationName();
+            return animations.GetImage(storage, animationName);
+        }
+
+        private string GetAnimationName()
         {
             if (temperature >= BigFireTemperature)
-                return ObjectTypeBigFire;
+                return ImageBig;
             if (temperature >= MediumFireTemperature)
-                return ObjectTypeMediumFire;
-            return ObjectTypeSmallFire;
+                return ImageMedium;
+            return ImageSmall;
         }
 
         public ObjectSize Size => ObjectSize.Huge;
-
-        public string Type { get; private set; }
 
         public string Name => "Fire";
         public bool BlocksMovement => false;
@@ -57,13 +64,13 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         public void Update(IAreaMap map, IJournal journal, Point position)
         {
             var cell = map.GetCell(position);
-            if (cell.Temperature < SmallFireTemperature)
+            if (cell.Temperature() < SmallFireTemperature)
             {
                 map.RemoveObject(position, this);
                 return;
             }
 
-            Type = GetFireType(cell.Temperature);
+            temperature = cell.Temperature();
         }
 
         public bool Updated { get; set; }
@@ -79,17 +86,11 @@ namespace CodeMagic.Core.Objects.DecorativeObjects
         {
             get
             {
-                switch (Type)
-                {
-                    case ObjectTypeSmallFire:
-                        return SmallFireLightLevel;
-                    case ObjectTypeMediumFire:
-                        return MediumFireLightLevel;
-                    case ObjectTypeBigFire:
-                        return BigFireLightLevel;
-                    default:
-                        throw new ApplicationException($"Unknown fire object type: {Type}");
-                }
+                if (temperature >= BigFireTemperature)
+                    return BigFireLightLevel;
+                if (temperature >= MediumFireTemperature)
+                    return MediumFireLightLevel;
+                return SmallFireLightLevel;
             }
         }
 

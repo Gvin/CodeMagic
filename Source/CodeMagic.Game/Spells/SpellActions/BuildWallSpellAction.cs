@@ -2,7 +2,6 @@
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Injection;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.Game.Spells.Script;
 
@@ -22,7 +21,7 @@ namespace CodeMagic.Game.Spells.SpellActions
 
         public override Point Perform(IAreaMap map, IJournal journal, Point position)
         {
-            var wall = Injector.Current.Create<IEnergyWall>(time);
+            var wall = new EnergyWall(time);
             map.AddObject(position, wall);
             return position;
         }

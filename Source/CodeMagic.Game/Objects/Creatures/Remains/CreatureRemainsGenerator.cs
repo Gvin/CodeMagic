@@ -1,20 +1,18 @@
-﻿using CodeMagic.Core.Injection;
-using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Objects.DecorativeObjects;
+﻿using CodeMagic.Core.Objects;
+using CodeMagic.Game.Objects.DecorativeObjects;
 
 namespace CodeMagic.Game.Objects.Creatures.Remains
 {
     public class CreatureRemainsGenerator
     {
-        public IMapObject GenerateRemains(INonPlayableCreatureObject creature)
+        public IMapObject GenerateRemains(NonPlayableCreatureObject creature)
         {
             var remainsConfig = GetRemainsConfiguration(creature);
-            var remainsObject = Injector.Current.Create<ICreatureRemainsObject>(remainsConfig);
+            var remainsObject = new CreatureRemainsObjectImpl(remainsConfig);
             return remainsObject;
         }
 
-        private CreatureRemainsObjectConfiguration GetRemainsConfiguration(INonPlayableCreatureObject creature)
+        private CreatureRemainsObjectConfiguration GetRemainsConfiguration(NonPlayableCreatureObject creature)
         {
             return new CreatureRemainsObjectConfiguration(creature.RemainsType);
         }

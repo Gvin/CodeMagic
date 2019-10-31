@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="Area\AreaMapCellTests.cs" />
     <Compile Include="Area\AreaMapTests.cs" />
-    <Compile Include="Area\TemperatureTests.cs" />
     <Compile Include="Game\PointTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,6 +1,5 @@
 ﻿using System;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Configuration;
 using Moq;
 using NUnit.Framework;
 
@@ -13,10 +12,10 @@ namespace CodeMagic.Core.Tests.Area
         public void ConstructorTest()
         {
             // Arrange
-            var configurationMock = new Mock<IPhysicsConfiguration>();
+            var environmentMock = new Mock<IEnvironment>();
 
             // Act
-            var map = new AreaMap(configurationMock.Object, 5, 5, new InsideEnvironmentLightManager());
+            var map = new AreaMap(() => environmentMock.Object, 5, 5, new InsideEnvironmentLightManager());
 
             // Assert
             var cell = map.GetCell(2, 2);
@@ -32,10 +31,10 @@ namespace CodeMagic.Core.Tests.Area
         public void GetCellValidTest(int width, int height, int checkX, int checkY)
         {
             // Arrange
-            var configurationMock = new Mock<IPhysicsConfiguration>();
+            var environmentMock = new Mock<IEnvironment>();
 
             // Arrange
-            var map = new AreaMap(configurationMock.Object, width, height, new InsideEnvironmentLightManager());
+            var map = new AreaMap(() => environmentMock.Object, width, height, new InsideEnvironmentLightManager());
 
             // Act
             var cell = map.GetCell(checkX, checkY);
@@ -51,9 +50,9 @@ namespace CodeMagic.Core.Tests.Area
         public void GetCellInvalidTest(int width, int height, int checkX, int checkY, string errorArgument)
         {
             // Arrange
-            var configurationMock = new Mock<IPhysicsConfiguration>();
+            var environmentMock = new Mock<IEnvironment>();
 
-            var map = new AreaMap(configurationMock.Object, width, height, new InsideEnvironmentLightManager());
+            var map = new AreaMap(() => environmentMock.Object, width, height, new InsideEnvironmentLightManager());
 
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
@@ -75,9 +74,9 @@ namespace CodeMagic.Core.Tests.Area
         public bool ContainsCellTest(int width, int height, int checkX, int checkY)
         {
             // Arrange
-            var configurationMock = new Mock<IPhysicsConfiguration>();
+            var environmentMock = new Mock<IEnvironment>();
 
-            var map = new AreaMap(configurationMock.Object, width, height, new InsideEnvironmentLightManager());
+            var map = new AreaMap(() => environmentMock.Object, width, height, new InsideEnvironmentLightManager());
             return map.ContainsCell(checkX, checkY);
         }
     }

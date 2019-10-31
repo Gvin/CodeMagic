@@ -7,6 +7,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.Game.Spells.Script;
 using CodeMagic.Game.Statuses;
@@ -95,7 +96,7 @@ namespace CodeMagic.Game.Spells.SpellActions
         private void ApplyShockToCell(int value, IAreaMapCell cell, IJournal journal)
         {
             var heat = value * heatMultiplier;
-            cell.Temperature += heat;
+            cell.Environment.Cast().Temperature += heat;
 
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)

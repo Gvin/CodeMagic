@@ -2,6 +2,7 @@
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Spells.Script;
 
 namespace CodeMagic.Game.Spells.SpellActions
@@ -24,7 +25,7 @@ namespace CodeMagic.Game.Spells.SpellActions
             if (cell.BlocksEnvironment)
                 return position;
 
-            cell.Pressure -= pressure;
+            cell.Environment.Cast().Pressure -= pressure;
             return position;
         }
 

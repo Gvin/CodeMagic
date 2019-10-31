@@ -3,6 +3,7 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Objects.Floor;
 using CodeMagic.Game.Objects.SolidObjects;
@@ -15,7 +16,7 @@ namespace CodeMagic.Game.MapGeneration.Home
 
         public IAreaMap GenerateMap(int width, int height, out Dictionary<Direction, Point> locationEnters, out Point playerPosition)
         {
-            var map = new AreaMap(ConfigurationManager.Current.Physics, width, height, new OutsideEnvironmentLightManager());
+            var map = new AreaMap(() => new GameEnvironment(ConfigurationManager.Current.Physics), width, height, new OutsideEnvironmentLightManager());
 
             locationEnters = new Dictionary<Direction, Point>
             {

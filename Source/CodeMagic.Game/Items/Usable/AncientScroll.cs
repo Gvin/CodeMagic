@@ -2,6 +2,7 @@
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
@@ -57,7 +58,8 @@ namespace CodeMagic.Game.Items.Usable
             game.Journal.Write(new FailedToUseScrollMessage());
             game.Player.Damage(game.Journal, MagicDamageOnFailedScroll, Element.Magic);
             game.Journal.Write(new EnvironmentDamageMessage(game.Player, MagicDamageOnFailedScroll, Element.Magic));
-            game.Map.GetCell(game.PlayerPosition).MagicDisturbanceLevel += DisturbanceIncrementOnFailedScroll;
+            var environment = (GameEnvironment) game.Map.GetCell(game.PlayerPosition).Environment;
+            environment.MagicDisturbanceLevel += DisturbanceIncrementOnFailedScroll;
             return false;
         }
 

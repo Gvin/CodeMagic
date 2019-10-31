@@ -5,6 +5,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Objects.GlobalMap;
 
@@ -25,7 +26,7 @@ namespace CodeMagic.Game.MapGeneration.GlobalWorld
 
         public IAreaMap GenerateMap(int width, int height, out Point playerHomePosition)
         {
-            var map = new GlobalAreaMap(ConfigurationManager.Current.Physics, width, height, new OutsideEnvironmentLightManager(), 2);
+            var map = new GlobalAreaMap(() => new GlobalMapEnvironment(ConfigurationManager.Current.Physics), width, height, new OutsideEnvironmentLightManager(), 2);
 
             for (int y = 0; y < map.Height; y++)
             {

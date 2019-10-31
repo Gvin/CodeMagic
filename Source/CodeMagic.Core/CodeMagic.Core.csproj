@@ -48,16 +48,13 @@
     <Compile Include="Area\AreaMap.cs" />
     <Compile Include="Area\AreaMapCell.cs" />
     <Compile Include="Area\AreaMapCellBase.cs" />
-    <Compile Include="Area\EnvironmentData\Environment.cs" />
-    <Compile Include="Area\EnvironmentData\MagicEnergy.cs" />
-    <Compile Include="Area\EnvironmentData\Pressure.cs" />
     <Compile Include="Area\FloorTypes.cs" />
     <Compile Include="Area\GlobalAreaMap.cs" />
     <Compile Include="Area\GlobalAreaMapCell.cs" />
     <Compile Include="Area\IAreaMap.cs" />
-    <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Area\AreaMapFragment.cs" />
     <Compile Include="Area\IAreaMapCell.cs" />
+    <Compile Include="Area\IEnvironment.cs" />
     <Compile Include="Area\IEnvironmentLightManager.cs" />
     <Compile Include="Area\InsideEnvironmentLightManager.cs" />
     <Compile Include="Area\LightLevel.cs" />
@@ -101,7 +98,7 @@
     <Compile Include="Injection\IInjectable.cs" />
     <Compile Include="Injection\InjectorImpl.cs" />
     <Compile Include="Injection\Injector.cs" />
-    <Compile Include="Objects\DecorativeObjects\CreatureRemainsObject.cs" />
+    <Compile Include="Objects\Creatures\INonPlayableCreatureObject.cs" />
     <Compile Include="Objects\IFuelObject.cs" />
     <Compile Include="Objects\IFireSpreadingObject.cs" />
     <Compile Include="Objects\IGrowingPlace.cs" />
@@ -137,14 +134,11 @@
     <Compile Include="Game\RandomHelper.cs" />
     <Compile Include="Game\VisibilityHelper.cs" />
     <Compile Include="Objects\Creatures\ICreatureObject.cs" />
-    <Compile Include="Objects\Creatures\INonPlayableCreatureObject.cs" />
-    <Compile Include="Objects\DecorativeObjects\FireDecorativeObject.cs" />
     <Compile Include="Objects\IDynamicObject.cs" />
     <Compile Include="Objects\IMapObject.cs" />
     <Compile Include="Items\IItem.cs" />
     <Compile Include="Items\Inventory.cs" />
     <Compile Include="Items\Item.cs" />
-    <Compile Include="Objects\DecorativeObjects\DecorativeObject.cs" />
     <Compile Include="Objects\IDestroyableObject.cs" />
     <Compile Include="Objects\ObjectEffects\IDamageEffect.cs" />
     <Compile Include="Objects\ObjectEffects\IObjectEffect.cs" />
@@ -171,6 +165,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Objects\DecorativeObjects\" />
     <Folder Include="Objects\SolidObjects\" />
     <Folder Include="Objects\SteamObjects\" />
   </ItemGroup>

@@ -5,7 +5,6 @@ using CodeMagic.Configuration.Xml;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Injection.Configuration;
-using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
@@ -68,19 +67,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                                 ((ConfigurationProvider) ConfigurationManager.Current).ItemGenerator,
                                 ImagesStorage.Current, new AncientSpellsProvider())
                         }
-                    },
-                    // Objects
-                    {
-                        typeof(IEnergyWall),
-                        new InjectorMappingType {FactoryMethod = args => new EnergyWallImpl((int) args[0])}
-                    },
-                    {
-                        typeof(IFireDecorativeObject),
-                        new InjectorMappingType {FactoryMethod = args => new FireObjectImpl((int) args[0])}
-                    },
-                    {
-                        typeof(ICreatureRemainsObject),
-                        new InjectorMappingType { FactoryMethod = args => new CreatureRemainsObjectImpl((CreatureRemainsObjectConfiguration) args[0])}
                     },
                     // Misc
                     {

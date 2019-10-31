@@ -4,6 +4,7 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Statuses;
@@ -66,7 +67,7 @@ namespace CodeMagic.Game.Objects.LiquidObjects
                 return;
             }
 
-            if (cell.Temperature >= ignitionTemperature)
+            if (cell.Temperature() >= ignitionTemperature)
             {
                 ProcessBurning(cell);
             }
@@ -88,14 +89,14 @@ namespace CodeMagic.Game.Objects.LiquidObjects
 
         private void ProcessBurning(IAreaMapCell cell)
         {
-            if (cell.Temperature < BurningTemperature)
+            if (cell.Temperature() < BurningTemperature)
             {
-                var temperatureDiff = BurningTemperature - cell.Temperature;
+                var temperatureDiff = BurningTemperature - cell.Temperature();
                 var temperatureChange = Math.Min(temperatureDiff, heatSpeed);
-                cell.Temperature += temperatureChange;
+                cell.Environment.Cast().Temperature += temperatureChange;
             }
 
-            var burnedVolume = (int)Math.Ceiling(cell.Temperature * burningRate);
+            var burnedVolume = (int)Math.Ceiling(cell.Temperature() * burningRate);
             Volume -= burnedVolume;
         }
 
@@ -161,9 +162,9 @@ namespace CodeMagic.Game.Objects.LiquidObjects
 
         #endregion
 
-        public bool GetIsOnFire(AreaMapCell cell)
+        public bool GetIsOnFire(IAreaMapCell cell)
         {
-            return cell.Environment.Temperature >= ignitionTemperature;
+            return cell.Temperature() >= ignitionTemperature;
         }
 
         public bool SpreadsFire => true;

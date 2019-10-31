@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.DecorativeObjects

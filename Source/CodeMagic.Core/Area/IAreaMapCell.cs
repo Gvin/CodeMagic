@@ -20,18 +20,8 @@ namespace CodeMagic.Core.Area
 
         bool BlocksProjectiles { get; }
 
-        bool HasRoof { get; }
-
         IDestroyableObject GetBiggestDestroyable();
 
-        int Temperature { get; set; }
-
-        int Pressure { get; set; }
-
-        int MagicEnergyLevel { get; set; }
-
-        int MaxMagicEnergyLevel { get; }
-
-        int MagicDisturbanceLevel { get; set; }
+        IEnvironment Environment { get; }
     }
 }

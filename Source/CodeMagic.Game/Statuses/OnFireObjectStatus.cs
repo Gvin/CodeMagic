@@ -1,11 +1,11 @@
 ﻿using System;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Area.EnvironmentData;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 
 namespace CodeMagic.Game.Statuses
@@ -48,11 +48,11 @@ namespace CodeMagic.Game.Statuses
             journal.Write(new BurningDamageMessage(owner, damage));
             owner.Damage(journal, damage, Element.Fire);
 
-            var temperatureDiff = cell.Temperature - burningTemperature;
+            var temperatureDiff = cell.Temperature() - burningTemperature;
             if (temperatureDiff > 0)
             {
                 var cellTemperatureIncrement = Math.Min(temperatureDiff, CellTemperatureIncreaseMax);
-                cell.Temperature += cellTemperatureIncrement;
+                cell.Environment.Cast().Temperature += cellTemperatureIncrement;
             }
 
             return true;

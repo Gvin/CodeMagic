@@ -7,6 +7,7 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Objects.LiquidObjects;
@@ -68,7 +69,7 @@ namespace CodeMagic.Game.Objects.IceObjects
             if (Volume <= 0)
                 map.RemoveObject(position, this);
 
-            if (cell.Temperature > Configuration.FreezingPoint)
+            if (cell.Temperature() > Configuration.FreezingPoint)
             {
                 ProcessMelting(map, position, cell);
             }
@@ -76,12 +77,12 @@ namespace CodeMagic.Game.Objects.IceObjects
 
         private void ProcessMelting(IAreaMap map, Point position, IAreaMapCell cell)
         {
-            var excessTemperature = cell.Temperature - Configuration.FreezingPoint;
+            var excessTemperature = cell.Temperature() - Configuration.FreezingPoint;
             var volumeToLowerTemp = (int)Math.Floor(excessTemperature * Configuration.MeltingTemperatureMultiplier);
             var volumeToMelt = Math.Min(volumeToLowerTemp, Volume);
             var heatLoss = (int)Math.Floor(volumeToMelt * Configuration.MeltingTemperatureMultiplier);
 
-            cell.Temperature -= heatLoss;
+            cell.Environment.Cast().Temperature -= heatLoss;
             Volume -= volumeToMelt;
 
             map.AddObject(position, CreateLiquid(volumeToMelt));

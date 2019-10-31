@@ -45,6 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Area\EnvironmentData\EnvironmentExtensions.cs" />
+    <Compile Include="Area\EnvironmentData\GameEnvironment.cs" />
+    <Compile Include="Area\EnvironmentData\GlobalMapEnvironment.cs" />
+    <Compile Include="Area\EnvironmentData\IGameEnvironment.cs" />
+    <Compile Include="Area\EnvironmentData\MagicEnergy.cs" />
+    <Compile Include="Area\EnvironmentData\Pressure.cs" />
+    <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Configuration\Buildings\IBuildingsConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\ILootConfiguration.cs" />
@@ -235,9 +242,10 @@
     <Compile Include="Objects\Creatures\NonPlayable\MonsterCreatureImpl.cs" />
     <Compile Include="Objects\Creatures\Player.cs" />
     <Compile Include="Objects\Creatures\Remains\CreatureRemainsGenerator.cs" />
+    <Compile Include="Objects\DecorativeObjects\CreatureRemainsObject.cs" />
     <Compile Include="Objects\DecorativeObjects\CreatureRemainsObjectImpl.cs" />
     <Compile Include="Objects\DecorativeObjects\DungeonTorchPost.cs" />
-    <Compile Include="Objects\DecorativeObjects\FireObjectImpl.cs" />
+    <Compile Include="Objects\DecorativeObjects\FireObject.cs" />
     <Compile Include="Objects\DestroyableObject.cs" />
     <Compile Include="Objects\DungeonRoof.cs" />
     <Compile Include="Objects\Floor\FloorObject.cs" />
@@ -262,7 +270,6 @@
     <Compile Include="Objects\SolidObjects\DungeonTorchWall.cs" />
     <Compile Include="Objects\SolidObjects\DungeonWall.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWall.cs" />
-    <Compile Include="Objects\SolidObjects\EnergyWallImpl.cs" />
     <Compile Include="Objects\SolidObjects\DungeonExitPortal.cs" />
     <Compile Include="Objects\SolidObjects\MinableCaveWall.cs" />
     <Compile Include="Objects\SolidObjects\MinableWall.cs" />

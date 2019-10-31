@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using CodeMagic.Core.Configuration;
 
-namespace CodeMagic.Core.Area.EnvironmentData
+namespace CodeMagic.Game.Area.EnvironmentData
 {
     [DebuggerDisplay("{" + nameof(Value) + "} kPa")]
     public class Pressure

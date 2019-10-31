@@ -5,7 +5,7 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 
-namespace CodeMagic.Core.Area.EnvironmentData
+namespace CodeMagic.Game.Area.EnvironmentData
 {
     public class MagicEnergy
     {
@@ -45,7 +45,7 @@ namespace CodeMagic.Core.Area.EnvironmentData
 
         private int CurrentMaxEnergy => configuration.MaxValue - Disturbance;
 
-        public void Update()
+        public void Normalize()
         {
             if (Energy > configuration.DisturbanceStartLevel)
             {
@@ -57,7 +57,7 @@ namespace CodeMagic.Core.Area.EnvironmentData
             Energy = Energy; // Refresh energy value.
         }
 
-        public void Merge(MagicEnergy other)
+        public void Balance(MagicEnergy other)
         {
             if (other.Energy == other.CurrentMaxEnergy && Energy == CurrentMaxEnergy)
                 return;

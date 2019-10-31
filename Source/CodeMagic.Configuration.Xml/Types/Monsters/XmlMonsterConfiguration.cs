@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Xml.Serialization;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Monsters;
+using CodeMagic.Game.Objects.DecorativeObjects;
 
 namespace CodeMagic.Configuration.Xml.Types.Monsters
 {

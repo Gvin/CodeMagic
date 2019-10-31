@@ -8,6 +8,7 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration.Buildings;
 using CodeMagic.Game.Items;
 using CodeMagic.UI.Images;
@@ -136,8 +137,8 @@ namespace CodeMagic.Game.Objects.Creatures
             if (Mana < MaxMana && !Statuses.Contains(HungryObjectStatus.StatusType))
             {
                 var cell = map.GetCell(position);
-                var manaToRegenerate = Math.Min(ManaRegeneration, cell.MagicEnergyLevel);
-                cell.MagicEnergyLevel -= manaToRegenerate;
+                var manaToRegenerate = Math.Min(ManaRegeneration, cell.MagicEnergyLevel());
+                cell.Environment.Cast().MagicEnergyLevel -= manaToRegenerate;
                 Mana += manaToRegenerate;
             }
 

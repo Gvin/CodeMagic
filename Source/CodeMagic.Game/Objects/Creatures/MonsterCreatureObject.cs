@@ -4,10 +4,10 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.DecorativeObjects;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Objects.Creatures.Loot;
 using CodeMagic.Game.Objects.Creatures.Remains;
+using CodeMagic.Game.Objects.DecorativeObjects;
 
 namespace CodeMagic.Game.Objects.Creatures
 {
