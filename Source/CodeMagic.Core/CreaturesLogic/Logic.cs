@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.CreaturesLogic.Strategies;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.Creatures;

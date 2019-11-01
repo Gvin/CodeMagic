@@ -1,15 +1,16 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
-using CodeMagic.Core.CreaturesLogic.MovementStrategies;
-using CodeMagic.Core.CreaturesLogic.TargetStrategies;
+using CodeMagic.Core.CreaturesLogic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.CreaturesLogic.MovementStrategies;
+using CodeMagic.Game.CreaturesLogic.TargetStrategies;
 
-namespace CodeMagic.Core.CreaturesLogic.Strategies
+namespace CodeMagic.Game.CreaturesLogic.Strategies
 {
     public class ChaseTargetStrategy : ICreatureStrategy
     {

@@ -3,7 +3,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.Creatures;
 
-namespace CodeMagic.Core.CreaturesLogic.MovementStrategies
+namespace CodeMagic.Game.CreaturesLogic.MovementStrategies
 {
     public interface ICreatureMovementStrategy
     {

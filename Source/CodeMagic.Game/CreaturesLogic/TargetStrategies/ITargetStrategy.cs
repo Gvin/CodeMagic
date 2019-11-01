@@ -1,6 +1,6 @@
 ﻿using CodeMagic.Core.Objects;
 
-namespace CodeMagic.Core.CreaturesLogic.TargetStrategies
+namespace CodeMagic.Game.CreaturesLogic.TargetStrategies
 {
     public interface ITargetStrategy
     {

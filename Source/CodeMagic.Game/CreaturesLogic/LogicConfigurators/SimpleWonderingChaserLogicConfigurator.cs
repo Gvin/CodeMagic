@@ -1,14 +1,15 @@
-﻿using CodeMagic.Core.CreaturesLogic.MovementStrategies;
-using CodeMagic.Core.CreaturesLogic.Strategies;
-using CodeMagic.Core.CreaturesLogic.TargetStrategies;
+﻿using CodeMagic.Core.CreaturesLogic;
+using CodeMagic.Game.CreaturesLogic.MovementStrategies;
+using CodeMagic.Game.CreaturesLogic.Strategies;
+using CodeMagic.Game.CreaturesLogic.TargetStrategies;
 
-namespace CodeMagic.Core.CreaturesLogic.LogicConfigurators
+namespace CodeMagic.Game.CreaturesLogic.LogicConfigurators
 {
-    public class SimplePatrollingChaserLogicConfigurator : ILogicConfigurator
+    public class SimpleWonderingChaserLogicConfigurator : ILogicConfigurator
     {
         public void Configure(Logic logic)
         {
-            var patrol = new PatrolAreaStrategy();
+            var patrol = new FreeWonderStrategy();
             var attack = new ChaseTargetStrategy(new PlayerTargetStrategy(), new SimpleCreatureMovementStrategy());
 
             logic.SetInitialStrategy(patrol);

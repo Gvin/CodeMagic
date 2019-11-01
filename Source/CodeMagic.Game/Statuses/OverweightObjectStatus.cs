@@ -1,4 +1,6 @@
-﻿namespace CodeMagic.Core.Statuses
+﻿using CodeMagic.Core.Statuses;
+
+namespace CodeMagic.Game.Statuses
 {
     public class OverweightObjectStatus : PassiveObjectStatusBase
     {

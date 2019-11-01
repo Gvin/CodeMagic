@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeMagic.Core.CreaturesLogic.LogicConfigurators;
+using CodeMagic.Game.CreaturesLogic.LogicConfigurators;
 
-namespace CodeMagic.Core.CreaturesLogic
+namespace CodeMagic.Game.CreaturesLogic
 {
     public static class StandardLogicFactory
     {

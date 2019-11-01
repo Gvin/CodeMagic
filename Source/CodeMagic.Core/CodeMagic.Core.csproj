@@ -63,15 +63,8 @@
     <Compile Include="Area\OutsideEnvironmentLightManager.cs" />
     <Compile Include="Common\ConcurrentList.cs" />
     <Compile Include="Common\Direction.cs" />
-    <Compile Include="CreaturesLogic\LogicConfigurators\ILogicConfigurator.cs" />
-    <Compile Include="CreaturesLogic\LogicConfigurators\SimplePatrollingChaserLogicConfigurator.cs" />
-    <Compile Include="CreaturesLogic\LogicConfigurators\SimpleWonderingChaserLogicConfigurator.cs" />
+    <Compile Include="CreaturesLogic\ICreatureStrategy.cs" />
     <Compile Include="CreaturesLogic\LogicHelper.cs" />
-    <Compile Include="CreaturesLogic\StandardLogicFactory.cs" />
-    <Compile Include="CreaturesLogic\Strategies\FreeWonderStrategy.cs" />
-    <Compile Include="CreaturesLogic\Strategies\PatrolAreaStrategy.cs" />
-    <Compile Include="CreaturesLogic\TargetStrategies\ITargetStrategy.cs" />
-    <Compile Include="CreaturesLogic\TargetStrategies\PlayerTargetStrategy.cs" />
     <Compile Include="Common\DirectionHelper.cs" />
     <Compile Include="Game\GameTimeManager.cs" />
     <Compile Include="Game\Locations\GameWorld.cs" />
@@ -97,12 +90,7 @@
     <Compile Include="Objects\IVolumeObject.cs" />
     <Compile Include="Objects\MovementHelper.cs" />
     <Compile Include="CreaturesLogic\CreaturesVisibilityHelper.cs" />
-    <Compile Include="CreaturesLogic\MovementStrategies\ICreatureMovementStrategy.cs" />
-    <Compile Include="CreaturesLogic\MovementStrategies\SimpleCreatureMovementStrategy.cs" />
-    <Compile Include="CreaturesLogic\Strategies\ICreatureStrategy.cs" />
     <Compile Include="CreaturesLogic\Logic.cs" />
-    <Compile Include="CreaturesLogic\Strategies\ChaseTargetStrategy.cs" />
-    <Compile Include="CreaturesLogic\Strategies\StandStillStrategy.cs" />
     <Compile Include="Game\Element.cs" />
     <Compile Include="Game\GameCore.cs" />
     <Compile Include="Game\ITurnProvider.cs" />
@@ -127,18 +115,12 @@
     <Compile Include="Objects\UpdateOrder.cs" />
     <Compile Include="Objects\ZIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Statuses\BlindObjectStatus.cs" />
     <Compile Include="Statuses\FrozenObjectStatus.cs" />
-    <Compile Include="Statuses\HungryObjectStatus.cs" />
     <Compile Include="Statuses\IBurningRelatedStatus.cs" />
     <Compile Include="Statuses\IObjectStatus.cs" />
     <Compile Include="Statuses\IObjectStatusesCollection.cs" />
-    <Compile Include="Statuses\OverweightObjectStatus.cs" />
     <Compile Include="Statuses\ParalyzedObjectStatus.cs" />
     <Compile Include="Statuses\PassiveObjectStatusBase.cs" />
-    <Content Include="Resources\Templates\SpellTemplate.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

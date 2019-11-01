@@ -1,10 +1,12 @@
 ﻿using System;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.Statuses;
 
 namespace CodeMagic.Game.Objects.Creatures
 {
@@ -81,5 +83,17 @@ namespace CodeMagic.Game.Objects.Creatures
         }
 
         public override bool BlocksMovement => true;
+
+        public virtual void Update(IAreaMap map, IJournal journal, Point position)
+        {
+            if (map.GetCell(position).LightLevel >= LightLevel.Blinding)
+            {
+                Statuses.Add(new BlindObjectStatus(), journal);
+            }
+        }
+
+        public bool Updated { get; set; }
+
+        public virtual UpdateOrder UpdateOrder => UpdateOrder.Medium;
     }
 }

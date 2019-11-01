@@ -7,15 +7,15 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Statuses;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration.Buildings;
 using CodeMagic.Game.Items;
+using CodeMagic.Game.Statuses;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Creatures
 {
-    public class Player : CreatureObject, IPlayer, IDynamicObject, ILightObject, IWorldImageProvider
+    public class Player : CreatureObject, IPlayer, ILightObject, IWorldImageProvider
     {
         private const string ImageUp = "Player_Up";
         private const string ImageDown = "Player_Down";
@@ -80,8 +80,6 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int MaxCarryWeight { get; }
 
-        public UpdateOrder UpdateOrder => UpdateOrder.Medium;
-
         public event EventHandler Died;
 
         public Equipment Equipment { get; }
@@ -132,7 +130,7 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int HitChance => CalculateHitChance(Equipment.Weapon.HitChance);
 
-        public void Update(IAreaMap map, IJournal journal, Point position)
+        public override void Update(IAreaMap map, IJournal journal, Point position)
         {
             if (Mana < MaxMana && !Statuses.Contains(HungryObjectStatus.StatusType))
             {
@@ -154,8 +152,6 @@ namespace CodeMagic.Game.Objects.Creatures
                 Statuses.Add(new OverweightObjectStatus(), journal);
             }
         }
-
-        public bool Updated { get; set; }
 
         public override void OnDeath(IAreaMap map, IJournal journal, Point position)
         {

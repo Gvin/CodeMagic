@@ -71,6 +71,18 @@
     <Compile Include="Configuration\Physics\ITemperatureDamageConfiguration.cs" />
     <Compile Include="Configuration\Spells\ISpellConfiguration.cs" />
     <Compile Include="Configuration\Spells\ISpellsConfiguration.cs" />
+    <Compile Include="CreaturesLogic\LogicConfigurators\ILogicConfigurator.cs" />
+    <Compile Include="CreaturesLogic\LogicConfigurators\SimplePatrollingChaserLogicConfigurator.cs" />
+    <Compile Include="CreaturesLogic\LogicConfigurators\SimpleWonderingChaserLogicConfigurator.cs" />
+    <Compile Include="CreaturesLogic\MovementStrategies\ICreatureMovementStrategy.cs" />
+    <Compile Include="CreaturesLogic\MovementStrategies\SimpleCreatureMovementStrategy.cs" />
+    <Compile Include="CreaturesLogic\StandardLogicFactory.cs" />
+    <Compile Include="CreaturesLogic\Strategies\ChaseTargetStrategy.cs" />
+    <Compile Include="CreaturesLogic\Strategies\FreeWonderStrategy.cs" />
+    <Compile Include="CreaturesLogic\Strategies\PatrolAreaStrategy.cs" />
+    <Compile Include="CreaturesLogic\Strategies\StandStillStrategy.cs" />
+    <Compile Include="CreaturesLogic\TargetStrategies\ITargetStrategy.cs" />
+    <Compile Include="CreaturesLogic\TargetStrategies\PlayerTargetStrategy.cs" />
     <Compile Include="IInventoryImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
     <Compile Include="Items\ArmorClass.cs" />
@@ -333,9 +345,12 @@
     <Compile Include="Spells\SpellActions\TransformWaterSpellAction.cs" />
     <Compile Include="Spells\SpellException.cs" />
     <Compile Include="Spells\SpellHelper.cs" />
+    <Compile Include="Statuses\BlindObjectStatus.cs" />
+    <Compile Include="Statuses\HungryObjectStatus.cs" />
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />
     <Compile Include="Statuses\OilyObjectStatus.cs" />
     <Compile Include="Statuses\OnFireObjectStatus.cs" />
+    <Compile Include="Statuses\OverweightObjectStatus.cs" />
     <Compile Include="Statuses\WetObjectStatus.cs" />
     <Compile Include="StyledLine.cs" />
   </ItemGroup>
@@ -351,6 +366,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Templates\SpellTemplate.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

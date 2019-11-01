@@ -44,5 +44,5 @@
 
 function main(lifeTime) {
     // Write your code here.
-    return move("up", 1);
+    return move("north", 1);
 }

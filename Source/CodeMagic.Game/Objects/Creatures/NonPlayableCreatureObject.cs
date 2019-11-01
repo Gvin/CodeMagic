@@ -1,13 +1,14 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.CreaturesLogic;
-using CodeMagic.Core.CreaturesLogic.Strategies;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.CreaturesLogic;
+using CodeMagic.Game.CreaturesLogic.Strategies;
 using CodeMagic.Game.Objects.DecorativeObjects;
 
 namespace CodeMagic.Game.Objects.Creatures
@@ -50,7 +51,7 @@ namespace CodeMagic.Game.Objects.Creatures
             }
         }
 
-        public void Update(IAreaMap map, IJournal journal, Point position)
+        public override void Update(IAreaMap map, IJournal journal, Point position)
         {
             turnsCounter += 1;
             if (turnsCounter >= Speed)
@@ -63,10 +64,6 @@ namespace CodeMagic.Game.Objects.Creatures
         public virtual void Attack(IDestroyableObject target, IJournal journal)
         {
         }
-
-        public bool Updated { get; set; }
-
-        public UpdateOrder UpdateOrder => UpdateOrder.Medium;
 
         protected Logic Logic { get; }
 
