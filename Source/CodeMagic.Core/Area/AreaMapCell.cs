@@ -2,7 +2,6 @@
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Statuses;

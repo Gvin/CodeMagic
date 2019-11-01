@@ -1,9 +1,10 @@
 ﻿using System;
+using CodeMagic.Core.Objects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.DecorativeObjects
 {
-    public class CreatureRemainsObjectImpl : CreatureRemainsObject, IWorldImageProvider
+    public class CreatureRemains : IMapObject, IWorldImageProvider
     {
         private const string ImageBloodSmall = "Remains_Blood_Small";
         private const string ImageBloodMedium = "Remains_Blood_Medium";
@@ -15,9 +16,12 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
 
         private const string ImageBonesMedium = "Remains_Bones_Medium";
 
-        public CreatureRemainsObjectImpl(CreatureRemainsObjectConfiguration configuration) : base(configuration)
+        protected readonly RemainsType Type;
+
+        public CreatureRemains(RemainsType type)
         {
-            Name = GetName(configuration.Type);
+            Type = type;
+            Name = GetName(type);
         }
 
         private static string GetName(RemainsType type)
@@ -37,8 +41,6 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
                     throw new ArgumentException($"Unknown remains type: {type}");
             }
         }
-
-        public override string Name { get; }
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
@@ -71,5 +73,45 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
                     throw new ArgumentException($"Unknown remains type: {Type}");
             }
         }
+
+        #region IMapObject Implementation
+
+        public string Name { get; }
+
+        public bool BlocksMovement => false;
+
+        public bool BlocksProjectiles => false;
+
+        public bool BlocksAttack => false;
+
+        public bool IsVisible => true;
+
+        public bool BlocksVisibility => false;
+
+        public bool BlocksEnvironment => false;
+
+        public ZIndex ZIndex => ZIndex.GroundDecoration;
+
+        public bool Equals(IMapObject other)
+        {
+            return ReferenceEquals(this, other);
+        }
+
+        public ObjectSize Size => ObjectSize.Huge;
+
+        #endregion
+    }
+
+    public enum RemainsType
+    {
+        BloodRedSmall,
+        BloodRedMedium,
+        BloodRedBig,
+
+        BloodGreenSmall,
+        BloodGreenMedium,
+        BloodGreenBig,
+
+        BonesMedium
     }
 }

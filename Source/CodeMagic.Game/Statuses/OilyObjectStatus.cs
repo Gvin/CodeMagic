@@ -9,7 +9,7 @@ using CodeMagic.Game.Objects.LiquidObjects;
 
 namespace CodeMagic.Game.Statuses
 {
-    public class OilyObjectStatus : IObjectStatus, IBurningRelatedStatus
+    public class OilyObjectStatus : IBurningRelatedStatus
     {
         private const string CustomValueOilyStatusLifeTime = "OilyStatus.LifeTime";
         private const string CustomValueOilyStatusCatchFireChanceModifier = "OilyStatus.CatchFireChanceModifier";

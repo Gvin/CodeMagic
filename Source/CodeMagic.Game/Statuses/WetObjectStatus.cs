@@ -9,7 +9,7 @@ using CodeMagic.Game.Objects.LiquidObjects;
 
 namespace CodeMagic.Game.Statuses
 {
-    public class WetObjectStatus : IObjectStatus, IBurningRelatedStatus
+    public class WetObjectStatus : IBurningRelatedStatus
     {
         public const string StatusType = "wet";
 

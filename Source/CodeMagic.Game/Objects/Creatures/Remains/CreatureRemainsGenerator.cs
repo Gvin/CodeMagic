@@ -7,14 +7,7 @@ namespace CodeMagic.Game.Objects.Creatures.Remains
     {
         public IMapObject GenerateRemains(NonPlayableCreatureObject creature)
         {
-            var remainsConfig = GetRemainsConfiguration(creature);
-            var remainsObject = new CreatureRemainsObjectImpl(remainsConfig);
-            return remainsObject;
-        }
-
-        private CreatureRemainsObjectConfiguration GetRemainsConfiguration(NonPlayableCreatureObject creature)
-        {
-            return new CreatureRemainsObjectConfiguration(creature.RemainsType);
+            return new CreatureRemains(creature.RemainsType);
         }
     }
 }

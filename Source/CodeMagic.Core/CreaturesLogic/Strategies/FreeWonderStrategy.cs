@@ -15,7 +15,7 @@ namespace CodeMagic.Core.CreaturesLogic.Strategies
         {
             var direction = RandomHelper.GetRandomElement(Enum.GetValues(typeof(Direction)).Cast<Direction>().ToArray());
             var targetPosition = Point.GetPointInDirection(position, direction);
-            MovementHelper.MoveCreature(creature, map, journal, position, targetPosition);
+            MovementHelper.MoveCreature(creature, map, journal, position, targetPosition, true, true);
             return true;
         }
     }

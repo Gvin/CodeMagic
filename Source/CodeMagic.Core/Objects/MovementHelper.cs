@@ -11,7 +11,7 @@ namespace CodeMagic.Core.Objects
     public static class MovementHelper
     {
         public static MovementResult MoveCreature(ICreatureObject creature, IAreaMap map, IJournal journal, Point startPoint,
-            Point endPoint, bool processStepReaction = true, bool changeDirection = true)
+            Point endPoint, bool processStepReaction, bool changeDirection)
         {
             if (changeDirection)
             {

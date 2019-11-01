@@ -15,7 +15,7 @@ namespace CodeMagic.Core.CreaturesLogic.MovementStrategies
             var possibleMoves = GetPossibleMoves(position, targetPosition);
             foreach (var possibleMove in possibleMoves)
             {
-                var movementResult = MovementHelper.MoveCreature(creature, map, journal, position, possibleMove);
+                var movementResult = MovementHelper.MoveCreature(creature, map, journal, position, possibleMove, true, true);
                 if (movementResult.Success)
                     return true;
             }

@@ -263,8 +263,7 @@
     <Compile Include="Objects\Creatures\NonPlayable\MonsterCreatureImpl.cs" />
     <Compile Include="Objects\Creatures\Player.cs" />
     <Compile Include="Objects\Creatures\Remains\CreatureRemainsGenerator.cs" />
-    <Compile Include="Objects\DecorativeObjects\CreatureRemainsObject.cs" />
-    <Compile Include="Objects\DecorativeObjects\CreatureRemainsObjectImpl.cs" />
+    <Compile Include="Objects\DecorativeObjects\CreatureRemains.cs" />
     <Compile Include="Objects\DecorativeObjects\DungeonTorchPost.cs" />
     <Compile Include="Objects\DecorativeObjects\FireObject.cs" />
     <Compile Include="Objects\DestroyableObject.cs" />

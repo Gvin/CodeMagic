@@ -3,7 +3,6 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Locations;
 
 namespace CodeMagic.Game.Locations
 {
