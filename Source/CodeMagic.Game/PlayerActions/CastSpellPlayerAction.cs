@@ -3,6 +3,7 @@ using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Locations;
 using CodeMagic.Game.Spells;
 
 namespace CodeMagic.Game.PlayerActions
@@ -20,7 +21,7 @@ namespace CodeMagic.Game.PlayerActions
         {
             newPosition = game.PlayerPosition;
 
-            if (!game.World.CurrentLocation.CanCast)
+            if (!game.World.CurrentLocation.CanCast())
             {
                 game.Journal.Write(new CastNotAllowedMessage());
                 return false;

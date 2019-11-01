@@ -5,8 +5,8 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Spells.Script;
 
 namespace CodeMagic.Game.Spells.SpellActions

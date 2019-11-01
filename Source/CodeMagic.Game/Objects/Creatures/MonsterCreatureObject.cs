@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Configuration;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures.Loot;
 using CodeMagic.Game.Objects.Creatures.Remains;
 using CodeMagic.Game.Objects.DecorativeObjects;

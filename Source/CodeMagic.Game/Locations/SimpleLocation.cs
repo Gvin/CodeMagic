@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 
-namespace CodeMagic.Core.Game.Locations
+namespace CodeMagic.Game.Locations
 {
-    public class SimpleLocation : ILocation
+    public class SimpleLocation : IGameLocation
     {
         private readonly Dictionary<Direction, Point> enterPositions;
 
@@ -19,6 +20,7 @@ namespace CodeMagic.Core.Game.Locations
             bool canBuild = false,
             bool canCast = true, 
             bool canFight = true, 
+            bool canUse = true,
             bool keepOnLeave = true)
         {
             Id = id;
@@ -27,6 +29,7 @@ namespace CodeMagic.Core.Game.Locations
             CanCast = canCast;
             CanFight = canFight;
             CanBuild = canBuild;
+            CanUse = canUse;
             KeepOnLeave = keepOnLeave;
             this.enterPositions = enterPositions.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
@@ -40,12 +43,14 @@ namespace CodeMagic.Core.Game.Locations
         public bool CanCast { get; }
 
         public bool CanFight { get; }
+        public bool CanUse { get; }
 
         public bool KeepOnLeave { get; }
 
         public IAreaMap CurrentArea { get; }
 
         public int TurnCycle => 1;
+
         public void ProcessPlayerEnter(IGameCore game)
         {
             // Do nothing

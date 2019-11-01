@@ -18,13 +18,7 @@ namespace CodeMagic.Core.Game.Locations
 
         bool KeepOnLeave { get; }
 
-        bool CanCast { get; }
-
-        bool CanFight { get; }
-
         int TurnCycle { get; }
-
-        bool CanBuild { get; }
 
         void ProcessPlayerEnter(IGameCore game);
 

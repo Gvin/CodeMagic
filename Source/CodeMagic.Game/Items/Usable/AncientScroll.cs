@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;

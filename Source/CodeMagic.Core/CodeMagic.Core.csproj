@@ -74,19 +74,12 @@
     <Compile Include="CreaturesLogic\TargetStrategies\PlayerTargetStrategy.cs" />
     <Compile Include="Common\DirectionHelper.cs" />
     <Compile Include="Game\GameTimeManager.cs" />
-    <Compile Include="Game\Locations\DungeonLocation.cs" />
     <Compile Include="Game\Locations\GameWorld.cs" />
     <Compile Include="Game\IGameCore.cs" />
-    <Compile Include="Game\Locations\GlobalWorldLocation.cs" />
     <Compile Include="Game\Locations\ILocation.cs" />
     <Compile Include="Game\IDungeonMapGenerator.cs" />
     <Compile Include="Game\Journaling\BackgroundJournal.cs" />
     <Compile Include="Game\Journaling\IJournal.cs" />
-    <Compile Include="Game\Journaling\Messages\AttackMissMessage.cs" />
-    <Compile Include="Game\Journaling\Messages\DamageBlockedMessage.cs" />
-    <Compile Include="Game\Journaling\Messages\DungeonLevelMessage.cs" />
-    <Compile Include="Game\Journaling\Messages\StatusAddedMessage.cs" />
-    <Compile Include="Game\Locations\SimpleLocation.cs" />
     <Compile Include="Injection\Configuration\InjectorConfiguration.cs" />
     <Compile Include="Injection\Configuration\InjectorMappingType.cs" />
     <Compile Include="Injection\IInjectable.cs" />
@@ -95,7 +88,6 @@
     <Compile Include="Objects\Creatures\INonPlayableCreatureObject.cs" />
     <Compile Include="Objects\IFuelObject.cs" />
     <Compile Include="Objects\IFireSpreadingObject.cs" />
-    <Compile Include="Objects\IGrowingPlace.cs" />
     <Compile Include="Objects\ILightObject.cs" />
     <Compile Include="Objects\IPlaceConnectionObject.cs" />
     <Compile Include="Objects\IPlacedHandler.cs" />
@@ -116,13 +108,6 @@
     <Compile Include="Game\ITurnProvider.cs" />
     <Compile Include="Game\Journaling\IJournalMessage.cs" />
     <Compile Include="Game\Journaling\Journal.cs" />
-    <Compile Include="Game\Journaling\Messages\BurningDamageMessage.cs" />
-    <Compile Include="Game\Journaling\Messages\DealDamageMessage.cs" />
-    <Compile Include="Game\Journaling\Messages\DeathMessage.cs" />
-    <Compile Include="Game\Journaling\Messages\EnvironmentDamageMessage.cs" />
-    <Compile Include="Game\Journaling\Messages\SpellErrorMessage.cs" />
-    <Compile Include="Game\Journaling\Messages\SpellLogMessage.cs" />
-    <Compile Include="Game\Journaling\Messages\SpellOutOfManaMessage.cs" />
     <Compile Include="Game\PlayerActions\IPlayerAction.cs" />
     <Compile Include="Game\Point.cs" />
     <Compile Include="Game\RandomHelper.cs" />
@@ -147,7 +132,7 @@
     <Compile Include="Statuses\HungryObjectStatus.cs" />
     <Compile Include="Statuses\IBurningRelatedStatus.cs" />
     <Compile Include="Statuses\IObjectStatus.cs" />
-    <Compile Include="Statuses\ObjectStatusesCollection.cs" />
+    <Compile Include="Statuses\IObjectStatusesCollection.cs" />
     <Compile Include="Statuses\OverweightObjectStatus.cs" />
     <Compile Include="Statuses\ParalyzedObjectStatus.cs" />
     <Compile Include="Statuses\PassiveObjectStatusBase.cs" />
@@ -160,9 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
-    <Folder Include="Objects\DecorativeObjects\" />
-    <Folder Include="Objects\SolidObjects\" />
-    <Folder Include="Objects\SteamObjects\" />
+    <Folder Include="Game\Journaling\Messages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

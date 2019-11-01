@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Statuses;
 
 namespace CodeMagic.Game.Objects
@@ -45,7 +45,7 @@ namespace CodeMagic.Game.Objects
 
         public virtual bool BlocksEnvironment => false;
 
-        public ObjectStatusesCollection Statuses { get; }
+        public IObjectStatusesCollection Statuses { get; }
 
         protected virtual double SelfExtinguishChance => 15;
 
@@ -150,6 +150,7 @@ namespace CodeMagic.Game.Objects
 
         public virtual void OnDeath(IAreaMap map, IJournal journal, Point position)
         {
+            journal.Write(new DeathMessage(this));
         }
 
         public bool Equals(IMapObject other)

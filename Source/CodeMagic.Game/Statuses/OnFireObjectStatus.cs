@@ -2,11 +2,11 @@
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
+using CodeMagic.Game.JournalMessages;
 
 namespace CodeMagic.Game.Statuses
 {

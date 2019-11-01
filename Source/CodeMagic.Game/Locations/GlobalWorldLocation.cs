@@ -1,11 +1,13 @@
 ﻿using System;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Game.Locations;
 
-namespace CodeMagic.Core.Game.Locations
+namespace CodeMagic.Game.Locations
 {
-    public class GlobalWorldLocation : ILocation
+    public class GlobalWorldLocation : IGameLocation
     {
         private const int WorldMoveTurnCycle = 20;
 
@@ -56,6 +58,8 @@ namespace CodeMagic.Core.Game.Locations
         public bool CanCast => false;
 
         public bool CanFight => false;
+
+        public bool CanUse => true;
 
         public int TurnCycle => WorldMoveTurnCycle;
         public void ProcessPlayerEnter(IGameCore game)

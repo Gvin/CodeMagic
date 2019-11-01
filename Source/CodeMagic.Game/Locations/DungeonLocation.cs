@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
-using CodeMagic.Core.Game.Journaling.Messages;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.JournalMessages;
 
-namespace CodeMagic.Core.Game.Locations
+namespace CodeMagic.Game.Locations
 {
-    public class DungeonLocation : ILocation
+    public class DungeonLocation : IGameLocation
     {
         private readonly List<StoredMap> levels;
         private readonly IDungeonMapGenerator dungeonMapGenerator;
@@ -150,6 +151,8 @@ namespace CodeMagic.Core.Game.Locations
         public bool CanCast => true;
 
         public bool CanFight => true;
+
+        public bool CanUse => true;
 
         private class StoredMap
         {

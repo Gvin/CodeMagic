@@ -7,6 +7,7 @@ using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Locations;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.MapGeneration.GlobalWorld;
 using CodeMagic.Game.MapGeneration.Home;

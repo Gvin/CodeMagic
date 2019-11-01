@@ -2,12 +2,13 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Statuses;
+using CodeMagic.Game.JournalMessages;
 
-namespace CodeMagic.Core.Statuses
+namespace CodeMagic.Game.Statuses
 {
-    public class ObjectStatusesCollection
+    public class ObjectStatusesCollection : IObjectStatusesCollection
     {
         private readonly Dictionary<string, IObjectStatus> statuses;
         private readonly IDestroyableObject owner;
@@ -31,7 +32,7 @@ namespace CodeMagic.Core.Statuses
             }
         }
 
-        public TStatus[] GetStatuses<TStatus>()
+        public TStatus[] GetStatuses<TStatus>() where TStatus : IObjectStatus
         {
             return statuses.Values.OfType<TStatus>().ToArray();
         }

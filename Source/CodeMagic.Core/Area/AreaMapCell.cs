@@ -56,7 +56,6 @@ namespace CodeMagic.Core.Area
             foreach (var deadObject in deadObjects)
             {
                 map.RemoveObject(position, deadObject);
-                journal.Write(new DeathMessage(deadObject));
                 deadObject.OnDeath(map, journal, position);
             }
         }

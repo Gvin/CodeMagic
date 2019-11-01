@@ -58,7 +58,7 @@ namespace CodeMagic.Core.Items
 
         public bool BlocksEnvironment => false;
 
-        public ZIndex ZIndex => ZIndex.BigDecoration;
+        public ZIndex ZIndex => ZIndex.AreaDecoration;
 
         bool IMapObject.Equals(IMapObject other)
         {

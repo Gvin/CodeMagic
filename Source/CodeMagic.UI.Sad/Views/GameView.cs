@@ -4,6 +4,7 @@ using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Locations;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Sad.Common;
@@ -208,7 +209,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void OpenBuildMenu()
         {
-            if (game.World.CurrentLocation.CanBuild)
+            if (game.World.CurrentLocation.CanBuild())
             {
                 new BuildingsView(game).Show();
             }
@@ -278,7 +279,7 @@ namespace CodeMagic.UI.Sad.Views
             SetButtonEnabled(openSpellBookButton, game.Player.Equipment.SpellBook != null);
             SetButtonEnabled(showItemsOnFloorButton, game.Map.GetCell(game.PlayerPosition).Objects.OfType<IItem>().Any());
 
-            buildButton.IsVisible = game.World.CurrentLocation.CanBuild;
+            buildButton.IsVisible = game.World.CurrentLocation.CanBuild();
         }
     }
 }

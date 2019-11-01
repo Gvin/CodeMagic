@@ -19,7 +19,7 @@ namespace CodeMagic.Core.Objects
 
         void Damage(IJournal journal, int value, Element element);
 
-        ObjectStatusesCollection Statuses { get; }
+        IObjectStatusesCollection Statuses { get; }
 
         double GetSelfExtinguishChance();
 
