@@ -2,7 +2,6 @@
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
@@ -29,7 +28,8 @@ namespace CodeMagic.Game.Items
                 {Element.Fire, 3},
                 {Element.Blunt, 3}
             },
-            LightPower = LightLevel.Dim1
+            LightPower = LightLevel.Dim1,
+            Description = new []{ "Rude torch made from wood and clothes." }
         })
         {
         }
@@ -42,16 +42,6 @@ namespace CodeMagic.Game.Items
         public override SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             return storage.GetImage(WorldImage);
-        }
-
-        public override StyledLine[] GetDescription(Player player)
-        {
-            return new[]
-            {
-                ItemTextHelper.GetWeightLine(Weight),
-                StyledLine.Empty,
-                new StyledLine {{"Rude torch made from wood and clothes.", ItemTextHelper.DescriptionTextColor}}, 
-            };
         }
     }
 }
