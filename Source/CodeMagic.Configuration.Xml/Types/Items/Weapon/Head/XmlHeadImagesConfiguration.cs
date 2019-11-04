@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Head;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon.Head;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Weapon.Head
 {

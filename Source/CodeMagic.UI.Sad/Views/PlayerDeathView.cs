@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Controls;
 using SadConsole.Themes;
-using Game = SadConsole.Game;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -89,7 +88,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void exitGameButton_Click(object sender, EventArgs e)
         {
-            Game.Instance.Exit();
+            SadConsole.Game.Instance.Exit();
         }
     }
 }

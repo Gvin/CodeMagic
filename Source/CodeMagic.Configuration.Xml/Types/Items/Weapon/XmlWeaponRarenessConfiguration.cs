@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Xml.Serialization;
 using CodeMagic.Core.Items;
-using CodeMagic.ItemsGeneration;
-using CodeMagic.ItemsGeneration.Configuration;
-using CodeMagic.ItemsGeneration.Configuration.Weapon;
+using CodeMagic.Game.Items.ItemsGeneration;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
 {

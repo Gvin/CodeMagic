@@ -1,41 +1,18 @@
 ﻿using System.Linq;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
 {
     public class GlobalAreaMapCell : AreaMapCellBase
     {
+        public GlobalAreaMapCell(IEnvironment environment)
+            : base(environment)
+        {
+        }
+
         public override bool HasRoof => false;
-
-        public override int Temperature
-        {
-            get => ConfigurationManager.Current.Physics.TemperatureConfiguration.NormalValue;
-            set { }
-        }
-
-        public override int Pressure
-        {
-            get => ConfigurationManager.Current.Physics.PressureConfiguration.NormalValue;
-            set { }
-        }
-
-        public override int MagicEnergyLevel
-        {
-            get => int.MaxValue;
-            set { }
-        }
-
-        public override int MaxMagicEnergyLevel => int.MaxValue;
-
-        public override int MagicDisturbanceLevel
-        {
-            get => 0;
-            set { }
-        }
 
         public void Update(IAreaMap map, IJournal journal, Point position, UpdateOrder updateOrder)
         {
@@ -75,7 +52,6 @@ namespace CodeMagic.Core.Area
             foreach (var deadObject in deadObjects)
             {
                 map.RemoveObject(position, deadObject);
-                journal.Write(new DeathMessage(deadObject));
                 deadObject.OnDeath(map, journal, position);
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
@@ -86,7 +87,7 @@ namespace CodeMagic.UI.Sad.Controls
             if (cell == null)
                 return;
 
-            var value = cell.Temperature / 10;
+            var value = cell.Temperature() / 10;
             Surface.Print(x, y, new ColoredString(value.ToString(), Color.Red, Color.Black));
         }
 
@@ -95,8 +96,8 @@ namespace CodeMagic.UI.Sad.Controls
             if (cell == null)
                 return;
 
-            Surface.Print(x, y, new ColoredString(cell.MagicEnergyLevel.ToString(), Color.Blue, Color.Black));
-            Surface.Print(x, y + 1, new ColoredString(cell.MagicDisturbanceLevel.ToString(), Color.Blue, Color.Black));
+            Surface.Print(x, y, new ColoredString(cell.MagicEnergyLevel().ToString(), Color.Blue, Color.Black));
+            Surface.Print(x, y + 1, new ColoredString(cell.MagicDisturbanceLevel().ToString(), Color.Blue, Color.Black));
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Area;
+using Moq;
 using NUnit.Framework;
 
 namespace CodeMagic.Core.Tests.Area
@@ -10,8 +11,12 @@ namespace CodeMagic.Core.Tests.Area
         [Test]
         public void ConstructorTest()
         {
+            // Arrange
+            var environmentMock = new Mock<IEnvironment>();
+            var lightManagerMock = new Mock<IEnvironmentLightManager>();
+
             // Act
-            var map = new AreaMap(5, 5, new InsideEnvironmentLightManager());
+            var map = new AreaMap(() => environmentMock.Object, 5, 5, lightManagerMock.Object);
 
             // Assert
             var cell = map.GetCell(2, 2);
@@ -27,7 +32,11 @@ namespace CodeMagic.Core.Tests.Area
         public void GetCellValidTest(int width, int height, int checkX, int checkY)
         {
             // Arrange
-            var map = new AreaMap(width, height, new InsideEnvironmentLightManager());
+            var environmentMock = new Mock<IEnvironment>();
+            var lightManagerMock = new Mock<IEnvironmentLightManager>();
+
+            // Arrange
+            var map = new AreaMap(() => environmentMock.Object, width, height, lightManagerMock.Object);
 
             // Act
             var cell = map.GetCell(checkX, checkY);
@@ -42,8 +51,13 @@ namespace CodeMagic.Core.Tests.Area
         [TestCase(3, 3, 0, 3, "Y")]
         public void GetCellInvalidTest(int width, int height, int checkX, int checkY, string errorArgument)
         {
-            var map = new AreaMap(width, height, new InsideEnvironmentLightManager());
+            // Arrange
+            var environmentMock = new Mock<IEnvironment>();
+            var lightManagerMock = new Mock<IEnvironmentLightManager>();
 
+            var map = new AreaMap(() => environmentMock.Object, width, height, lightManagerMock.Object);
+
+            //Act
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 map.GetCell(checkX, checkY);
@@ -63,7 +77,13 @@ namespace CodeMagic.Core.Tests.Area
         [TestCase(3, 3, 0, 3, ExpectedResult = false)]
         public bool ContainsCellTest(int width, int height, int checkX, int checkY)
         {
-            var map = new AreaMap(width, height, new InsideEnvironmentLightManager());
+            // Arrange
+            var environmentMock = new Mock<IEnvironment>();
+            var lightManagerMock = new Mock<IEnvironmentLightManager>();
+
+            var map = new AreaMap(() => environmentMock.Object, width, height, lightManagerMock.Object);
+
+            // Act
             return map.ContainsCell(checkX, checkY);
         }
     }

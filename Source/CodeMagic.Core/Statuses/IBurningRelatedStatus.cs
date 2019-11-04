@@ -1,6 +1,6 @@
 ﻿namespace CodeMagic.Core.Statuses
 {
-    public interface IBurningRelatedStatus
+    public interface IBurningRelatedStatus : IObjectStatus
     {
         double CatchFireChanceModifier { get; }
 

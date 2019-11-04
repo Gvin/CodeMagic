@@ -68,16 +68,15 @@
     <Compile Include="Controls\StandardButton.cs" />
     <Compile Include="Drawing\CellImageHelper.cs" />
     <Compile Include="Drawing\FontProvider.cs" />
-    <Compile Include="Drawing\ScreenSizeProvider.cs" />
     <Compile Include="Drawing\ObjectEffects\DamageEffect.cs" />
+    <Compile Include="Drawing\ObjectEffects\ObjectEffect.cs" />
+    <Compile Include="Drawing\ObjectEffects\SpellCastEffect.cs" />
+    <Compile Include="Drawing\ScreenSizeProvider.cs" />
     <Compile Include="Drawing\ImageProviding\InventoryImagesFactory.cs" />
     <Compile Include="Drawing\ImageProviding\WorldImagesFactory.cs" />
     <Compile Include="Drawing\ImagesStorage.cs" />
-    <Compile Include="Drawing\ItemDrawingHelper.cs" />
     <Compile Include="Drawing\JournalMessageFormatter.cs" />
     <Compile Include="Drawing\LightLevelManager.cs" />
-    <Compile Include="Drawing\ObjectEffects\ObjectEffect.cs" />
-    <Compile Include="Drawing\ObjectEffects\SpellCastEffect.cs" />
     <Compile Include="GameProcess\AncientSpellsProvider.cs" />
     <Compile Include="GameProcess\EditSpellHelper.cs" />
     <Compile Include="GameProcess\GameConfigurator.cs" />
@@ -147,17 +146,9 @@
       <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
       <Name>CodeMagic.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeMagic.Implementations\CodeMagic.Implementations.csproj">
-      <Project>{47e2b226-c00a-4ef3-ac0b-0a8a243add79}</Project>
-      <Name>CodeMagic.Implementations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeMagic.ItemsGeneration\CodeMagic.ItemsGeneration.csproj">
-      <Project>{f3dc883a-6643-436f-a64c-7268248c1b5e}</Project>
-      <Name>CodeMagic.ItemsGeneration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeMagic.MapGeneration\CodeMagic.MapGeneration.csproj">
-      <Project>{a4f02790-b78a-42d2-b1b2-bed6547e7fc3}</Project>
-      <Name>CodeMagic.MapGeneration</Name>
+    <ProjectReference Include="..\CodeMagic.Game\CodeMagic.Game.csproj">
+      <Project>{204099af-db91-405b-bff4-936c56a85d30}</Project>
+      <Name>CodeMagic.Game</Name>
     </ProjectReference>
     <ProjectReference Include="..\CodeMagic.UI.Images\CodeMagic.UI.Images.csproj">
       <Project>{c5a8ee43-bc81-4e88-b990-d2ae962c3205}</Project>

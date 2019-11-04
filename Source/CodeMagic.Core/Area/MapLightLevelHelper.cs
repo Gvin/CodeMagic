@@ -16,7 +16,7 @@ namespace CodeMagic.Core.Area
                 {
                     var position = new Point(x, y);
                     var cell = map.GetCell(position);
-                    cell.LightLevel = cell.HasRoof ? LightLevel.Darkness : map.BackgroundLight;
+                    cell.LightLevel = cell.Objects.OfType<IRoof>().Any() ? LightLevel.Darkness : map.BackgroundLight;
                 }
             }
         }
@@ -63,7 +63,9 @@ namespace CodeMagic.Core.Area
             if (cell == null)
                 return;
 
-            cell.LightLevel = (LightLevel)Math.Max((int)cell.LightLevel, (int)light);
+            if ((int) light < (int) cell.LightLevel)
+                return;
+            cell.LightLevel = light;
 
             if (cell.BlocksEnvironment)
                 return;

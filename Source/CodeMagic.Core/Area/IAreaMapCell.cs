@@ -1,5 +1,4 @@
 ﻿using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.LiquidObjects;
 
 namespace CodeMagic.Core.Area
 {
@@ -9,9 +8,9 @@ namespace CodeMagic.Core.Area
 
         IMapObject[] Objects { get; }
 
-        int GetVolume<T>() where T : ILiquidObject;
+        int GetVolume<T>() where T : IVolumeObject;
 
-        void RemoveVolume<T>(int volume) where T : ILiquidObject;
+        void RemoveVolume<T>(int volume) where T : IVolumeObject;
 
         bool BlocksMovement { get; }
 
@@ -21,20 +20,8 @@ namespace CodeMagic.Core.Area
 
         bool BlocksProjectiles { get; }
 
-        bool HasSolidObjects { get; }
-
-        bool HasRoof { get; }
-
         IDestroyableObject GetBiggestDestroyable();
 
-        int Temperature { get; set; }
-
-        int Pressure { get; set; }
-
-        int MagicEnergyLevel { get; set; }
-
-        int MaxMagicEnergyLevel { get; }
-
-        int MagicDisturbanceLevel { get; set; }
+        IEnvironment Environment { get; }
     }
 }

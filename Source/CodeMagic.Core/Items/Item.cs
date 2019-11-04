@@ -3,27 +3,31 @@ using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Items
 {
-    public class Item : IItem
+    public abstract class Item : IItem
     {
-        public Item(ItemConfiguration configuration)
+        protected Item(ItemConfiguration configuration)
+            : this()
         {
             Key = configuration.Key;
             Name = configuration.Name;
             Rareness = configuration.Rareness;
             Weight = configuration.Weight;
+        }
 
+        protected Item()
+        {
             Id = Guid.NewGuid().ToString();
         }
 
         public string Id { get; }
 
-        public string Key { get; }
+        public virtual string Key { get; }
 
-        public string Name { get; }
+        public virtual string Name { get; }
 
-        public ItemRareness Rareness { get; }
+        public virtual ItemRareness Rareness { get; }
 
-        public int Weight { get; }
+        public virtual int Weight { get; }
 
         public virtual bool Stackable => true;
 
@@ -54,7 +58,7 @@ namespace CodeMagic.Core.Items
 
         public bool BlocksEnvironment => false;
 
-        public ZIndex ZIndex => ZIndex.BigDecoration;
+        public ZIndex ZIndex => ZIndex.AreaDecoration;
 
         bool IMapObject.Equals(IMapObject other)
         {

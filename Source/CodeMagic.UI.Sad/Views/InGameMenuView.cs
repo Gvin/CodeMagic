@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Game;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework.Input;
@@ -18,9 +19,9 @@ namespace CodeMagic.UI.Sad.Views
         private Button startGameButton;
         private Button exitButton;
 
-        private readonly IGameCore currentGame;
+        private readonly GameCore<Player> currentGame;
 
-        public InGameMenuView(IGameCore currentGame) 
+        public InGameMenuView(GameCore<Player> currentGame) 
             : base(Program.Width, Program.Height)
         {
             this.currentGame = currentGame;
@@ -101,7 +102,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void exitButton_Click(object sender, EventArgs args)
         {
-            Game.Instance.Exit();
+            SadConsole.Game.Instance.Exit();
         }
 
         private void startGameButton_Click(object sender, EventArgs args)

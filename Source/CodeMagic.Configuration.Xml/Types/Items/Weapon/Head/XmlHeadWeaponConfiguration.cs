@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.ItemsGeneration.Configuration;
-using CodeMagic.ItemsGeneration.Configuration.Weapon;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Head;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon.Head;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Weapon.Head
 {

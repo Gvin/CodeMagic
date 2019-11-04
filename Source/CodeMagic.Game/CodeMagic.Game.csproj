@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{204099AF-DB91-405B-BFF4-936C56A85D30}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeMagic.Game</RootNamespace>
+    <AssemblyName>CodeMagic.Game</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jint.2.11.58\lib\net451\Jint.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Area\EnvironmentData\EnvironmentExtensions.cs" />
+    <Compile Include="Area\EnvironmentData\GameEnvironment.cs" />
+    <Compile Include="Area\EnvironmentData\GlobalMapEnvironment.cs" />
+    <Compile Include="Area\EnvironmentData\IGameEnvironment.cs" />
+    <Compile Include="Area\EnvironmentData\MagicEnergy.cs" />
+    <Compile Include="Area\EnvironmentData\Pressure.cs" />
+    <Compile Include="Area\EnvironmentData\Temperature.cs" />
+    <Compile Include="Area\InsideEnvironmentLightManager.cs" />
+    <Compile Include="Area\OutsideEnvironmentLightManager.cs" />
+    <Compile Include="Configuration\Buildings\IBuildingsConfiguration.cs" />
+    <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Configuration\ILootConfiguration.cs" />
+    <Compile Include="Configuration\Liquids\ILiquidConfiguration.cs" />
+    <Compile Include="Configuration\Liquids\ILiquidsConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonsterConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonsterDamageConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonsterImagesConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonsterProtectionConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonstersConfiguration.cs" />
+    <Compile Include="Configuration\Monsters\IMonsterStatsConfiguration.cs" />
+    <Compile Include="Configuration\Physics\IMagicEnergyConfiguration.cs" />
+    <Compile Include="Configuration\Physics\IPhysicsConfiguration.cs" />
+    <Compile Include="Configuration\Physics\IPressureConfiguration.cs" />
+    <Compile Include="Configuration\Physics\IPressureDamageConfiguration.cs" />
+    <Compile Include="Configuration\Physics\ITemperatureConfiguration.cs" />
+    <Compile Include="Configuration\Physics\ITemperatureDamageConfiguration.cs" />
+    <Compile Include="Configuration\Spells\ISpellConfiguration.cs" />
+    <Compile Include="Configuration\Spells\ISpellsConfiguration.cs" />
+    <Compile Include="CreaturesLogic\LogicConfigurators\ILogicConfigurator.cs" />
+    <Compile Include="CreaturesLogic\LogicConfigurators\SimplePatrollingChaserLogicConfigurator.cs" />
+    <Compile Include="CreaturesLogic\LogicConfigurators\SimpleWonderingChaserLogicConfigurator.cs" />
+    <Compile Include="CreaturesLogic\MovementStrategies\ICreatureMovementStrategy.cs" />
+    <Compile Include="CreaturesLogic\MovementStrategies\SimpleCreatureMovementStrategy.cs" />
+    <Compile Include="CreaturesLogic\StandardLogicFactory.cs" />
+    <Compile Include="CreaturesLogic\Strategies\ChaseTargetStrategy.cs" />
+    <Compile Include="CreaturesLogic\Strategies\FreeWonderStrategy.cs" />
+    <Compile Include="CreaturesLogic\Strategies\PatrolAreaStrategy.cs" />
+    <Compile Include="CreaturesLogic\Strategies\StandStillStrategy.cs" />
+    <Compile Include="CreaturesLogic\TargetStrategies\ITargetStrategy.cs" />
+    <Compile Include="CreaturesLogic\TargetStrategies\PlayerTargetStrategy.cs" />
+    <Compile Include="IInventoryImageProvider.cs" />
+    <Compile Include="IImagesStorage.cs" />
+    <Compile Include="Items\ArmorClass.cs" />
+    <Compile Include="Items\ArmorItem.cs" />
+    <Compile Include="Items\EquipableItem.cs" />
+    <Compile Include="Items\Equipment.cs" />
+    <Compile Include="Items\IEquipableItem.cs" />
+    <Compile Include="Items\IFuelItem.cs" />
+    <Compile Include="Items\IFurnaceItem.cs" />
+    <Compile Include="Items\IItemsGenerator.cs" />
+    <Compile Include="Items\IUsableItem.cs" />
+    <Compile Include="Items\SpellBook.cs" />
+    <Compile Include="Items\Usable\AncientScroll.cs" />
+    <Compile Include="Items\IDescriptionProvider.cs" />
+    <Compile Include="Items\ItemDrawingHelper.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Armor\IArmorConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Armor\IArmorPieceConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Armor\IArmorRarenessConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Bonuses\IBonusConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Bonuses\IBonusesConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Bonuses\IBonusRarenessConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Bonuses\IItemGroupBonusesConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Description\IDescriptionConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Description\IMaterialDescriptionConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Description\IRarenessDescriptionConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\IElementConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\IItemGeneratorConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\IWeightConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\SpellBook\ISpellBookRarenessConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\SpellBook\ISpellBooksConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Tool\IToolConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Tool\ItoolRarenessConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Tool\IToolsConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Weapon\Blade\IBladeImagesConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Weapon\Blade\IBladeWeaponConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Weapon\Head\IHeadImagesConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Weapon\Head\IHeadWeaponConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Weapon\IWeaponConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Configuration\Weapon\IWeaponRarenessConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\IAncientSpellsProvider.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\ArmorGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\BonusesGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\DamageBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\HealthBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\IBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\LightBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\ManaBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\ManaRegenerationBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\ProtectionBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\WeightBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\NameBuilder.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\ResourcesGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\SpellBookGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Tool\LumberjackAxeGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Tool\PickaxeGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Tool\ToolsGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\UsableItemsGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Usable\HealthPotionsGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Usable\IUsableItemTypeGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Usable\ManaPotionsGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Usable\RestorationPotionsGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Usable\ScrollsGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Weapon\BladeWeaponGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Weapon\HeadWeaponGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Weapon\IWeaponGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Weapon\WeaponGeneratorBase.cs" />
+    <Compile Include="Items\ItemsGeneration\ItemGeneratorHelper.cs" />
+    <Compile Include="Items\ItemsGeneration\ItemMaterial.cs" />
+    <Compile Include="Items\ItemsGeneration\ItemRecolorHelper.cs" />
+    <Compile Include="Items\ItemsGeneration\ItemsGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\NameGenerationHelper.cs" />
+    <Compile Include="Items\ItemTextHelper.cs" />
+    <Compile Include="Items\LumberjackAxe.cs" />
+    <Compile Include="Items\Materials\BlankScroll.cs" />
+    <Compile Include="Items\Materials\Glass.cs" />
+    <Compile Include="Items\Materials\Ingot.cs" />
+    <Compile Include="Items\Materials\MetalType.cs" />
+    <Compile Include="Items\Materials\Ore.cs" />
+    <Compile Include="Items\Materials\Stone.cs" />
+    <Compile Include="Items\Materials\Wood.cs" />
+    <Compile Include="Items\Pickaxe.cs" />
+    <Compile Include="Items\SimpleItemImpl.cs" />
+    <Compile Include="Items\TorchItem.cs" />
+    <Compile Include="Items\Usable\BuildingBlueprint.cs" />
+    <Compile Include="Items\Usable\Food\Apple.cs" />
+    <Compile Include="Items\Usable\Food\FoodItemBase.cs" />
+    <Compile Include="Items\Usable\Food\Wheat.cs" />
+    <Compile Include="Items\Usable\HealthManaRestorationItem.cs" />
+    <Compile Include="Items\Usable\ScrollBase.cs" />
+    <Compile Include="Items\Usable\Scroll.cs" />
+    <Compile Include="Items\Usable\Seeds\WheatSeeds.cs" />
+    <Compile Include="Items\Usable\TeleporterStoneActive.cs" />
+    <Compile Include="Items\Usable\TeleporterStoneInactive.cs" />
+    <Compile Include="Items\Usable\WateringCan.cs" />
+    <Compile Include="Items\WeaponItem.cs" />
+    <Compile Include="IWorldImageProvider.cs" />
+    <Compile Include="Items\MetalRecolorHelper.cs" />
+    <Compile Include="JournalMessages\AttackMissMessage.cs" />
+    <Compile Include="JournalMessages\BadPlantingPlaceMessage.cs" />
+    <Compile Include="JournalMessages\BuildingCompleteMessage.cs" />
+    <Compile Include="JournalMessages\BuildingSitePlacesMessage.cs" />
+    <Compile Include="JournalMessages\BuildingSiteRemovedMessage.cs" />
+    <Compile Include="JournalMessages\BuildingUnlockedMessage.cs" />
+    <Compile Include="JournalMessages\BurningDamageMessage.cs" />
+    <Compile Include="JournalMessages\CastNotAllowedMessage.cs" />
+    <Compile Include="JournalMessages\CellBlockedForBuildingMessage.cs" />
+    <Compile Include="JournalMessages\DamageBlockedMessage.cs" />
+    <Compile Include="JournalMessages\DealDamageMessage.cs" />
+    <Compile Include="JournalMessages\DeathMessage.cs" />
+    <Compile Include="JournalMessages\DungeonLevelMessage.cs" />
+    <Compile Include="JournalMessages\EnvironmentDamageMessage.cs" />
+    <Compile Include="JournalMessages\FailedToUseScrollMessage.cs" />
+    <Compile Include="JournalMessages\FightNotAllowedMessage.cs" />
+    <Compile Include="JournalMessages\HealedMessage.cs" />
+    <Compile Include="JournalMessages\HungerDecreasedMessage.cs" />
+    <Compile Include="JournalMessages\ISelfDescribingJournalMessage.cs" />
+    <Compile Include="JournalMessages\ItemLostMessage.cs" />
+    <Compile Include="JournalMessages\ItemReceivedMessage.cs" />
+    <Compile Include="JournalMessages\ManaRestoredMessage.cs" />
+    <Compile Include="JournalMessages\NotEnoughManaToCastMessage.cs" />
+    <Compile Include="JournalMessages\NotEnoughManaToScrollMessage.cs" />
+    <Compile Include="JournalMessages\NotHungryMessage.cs" />
+    <Compile Include="JournalMessages\NotReadyForHarvestMessage.cs" />
+    <Compile Include="JournalMessages\OverweightBlocksMovementMessage.cs" />
+    <Compile Include="JournalMessages\ParalyzedMessage.cs" />
+    <Compile Include="JournalMessages\ResourcesRequiredToBuildMessage.cs" />
+    <Compile Include="JournalMessages\RoofCollapsedMessage.cs" />
+    <Compile Include="JournalMessages\SpellCastMessage.cs" />
+    <Compile Include="JournalMessages\SpellErrorMessage.cs" />
+    <Compile Include="JournalMessages\SpellLogMessage.cs" />
+    <Compile Include="JournalMessages\SpellOutOfManaMessage.cs" />
+    <Compile Include="JournalMessages\StatusAddedMessage.cs" />
+    <Compile Include="JournalMessages\StoringLocationNotAllowedMessage.cs" />
+    <Compile Include="JournalMessages\ToolRequiredMessage.cs" />
+    <Compile Include="JournalMessages\UsedItemMessage.cs" />
+    <Compile Include="Locations\DungeonLocation.cs" />
+    <Compile Include="Locations\GlobalWorldLocation.cs" />
+    <Compile Include="Locations\IGameLocation.cs" />
+    <Compile Include="Locations\SimpleLocation.cs" />
+    <Compile Include="MapGeneration\Dungeon\DungeonMapGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\DungeonMonstersGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\DungeonNpcGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\DungeonObjectsGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\MapGenerators\CaveDungeonMapGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\MapGenerators\DungeonRoomsMapGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\MapGenerators\IMapAreaGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\MapGenerators\LabyrinthMapGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\MapObjectFactories\CaveMapObjectsFactory.cs" />
+    <Compile Include="MapGeneration\Dungeon\MapObjectFactories\DungeonMapObjectsFactory.cs" />
+    <Compile Include="MapGeneration\Dungeon\MapObjectFactories\IDungeonMapObjectFactory.cs" />
+    <Compile Include="MapGeneration\GlobalWorld\GlobalWorldMapGenerator.cs" />
+    <Compile Include="MapGeneration\Home\HomeLocationMapGenerator.cs" />
+    <Compile Include="MapGeneration\MapGenerationException.cs" />
+    <Compile Include="Objects\AnimationManager.cs" />
+    <Compile Include="Objects\AnimationsBatchManager.cs" />
+    <Compile Include="Objects\Buildings\Box.cs" />
+    <Compile Include="Objects\Buildings\BuildingSite.cs" />
+    <Compile Include="Objects\Buildings\Chest.cs" />
+    <Compile Include="Objects\Buildings\Fireplace.cs" />
+    <Compile Include="Objects\Buildings\Furnace.cs" />
+    <Compile Include="Objects\Buildings\GrowingPlace.cs" />
+    <Compile Include="Objects\Buildings\IRoofSupport.cs" />
+    <Compile Include="Objects\Buildings\IStorageBuilding.cs" />
+    <Compile Include="Objects\Buildings\PalisadeBuilding\Palisade.cs" />
+    <Compile Include="Objects\Buildings\PalisadeBuilding\PalisadeEmbrasure.cs" />
+    <Compile Include="Objects\Buildings\PalisadeBuilding\PalisadeGates.cs" />
+    <Compile Include="Objects\Buildings\Plants\IPlant.cs" />
+    <Compile Include="Objects\Buildings\Plants\PlantBase.cs" />
+    <Compile Include="Objects\Buildings\Plants\WheatPlant.cs" />
+    <Compile Include="Objects\Buildings\Roof.cs" />
+    <Compile Include="Objects\Buildings\StoneOuterWallBuilding\StoneOuterWall.cs" />
+    <Compile Include="Objects\Buildings\StoneOuterWallBuilding\StoneOuterWallEmbrasure.cs" />
+    <Compile Include="Objects\Buildings\StoneOuterWallBuilding\StoneOuterWallGates.cs" />
+    <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWall.cs" />
+    <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWallDoor.cs" />
+    <Compile Include="Objects\Buildings\StoneWallBuilding\StoneWallGlassWindow.cs" />
+    <Compile Include="Objects\Buildings\StorageBase.cs" />
+    <Compile Include="Objects\Buildings\TorchPost.cs" />
+    <Compile Include="Objects\Buildings\WoodenFloor.cs" />
+    <Compile Include="Objects\Buildings\WoodenWallBuilding\WoodenWall.cs" />
+    <Compile Include="Objects\Buildings\WoodenWallBuilding\WoodenWallDoor.cs" />
+    <Compile Include="Objects\Buildings\WoodenWallBuilding\WoodenWallGlassWindow.cs" />
+    <Compile Include="Objects\CodeSpell.cs" />
+    <Compile Include="Objects\Creatures\CreatureObject.cs" />
+    <Compile Include="Objects\Creatures\Loot\ChancesLootGenerator.cs" />
+    <Compile Include="Objects\Creatures\Loot\ILootGenerator.cs" />
+    <Compile Include="Objects\Creatures\Loot\StandardLootGenerator.cs" />
+    <Compile Include="Objects\Creatures\MonsterCreatureObject.cs" />
+    <Compile Include="Objects\Creatures\NonPlayableCreatureObject.cs" />
+    <Compile Include="Objects\Creatures\NonPlayable\MonsterCreatureImpl.cs" />
+    <Compile Include="Objects\Creatures\Player.cs" />
+    <Compile Include="Objects\Creatures\Remains\CreatureRemainsGenerator.cs" />
+    <Compile Include="Objects\DecorativeObjects\CreatureRemains.cs" />
+    <Compile Include="Objects\DecorativeObjects\DungeonTorchPost.cs" />
+    <Compile Include="Objects\DecorativeObjects\FireObject.cs" />
+    <Compile Include="Objects\DestroyableObject.cs" />
+    <Compile Include="Objects\DungeonRoof.cs" />
+    <Compile Include="Objects\Floor\FloorObject.cs" />
+    <Compile Include="Objects\GlobalMap\DungeonEnter.cs" />
+    <Compile Include="Objects\GlobalMap\GlobalMapForest.cs" />
+    <Compile Include="Objects\GlobalMap\GlobalMapObject.cs" />
+    <Compile Include="Objects\GlobalMap\HomeObject.cs" />
+    <Compile Include="Objects\IceObjects\AbstractIce.cs" />
+    <Compile Include="Objects\IceObjects\AcidIce.cs" />
+    <Compile Include="Objects\IceObjects\IIce.cs" />
+    <Compile Include="Objects\IceObjects\WaterIce.cs" />
+    <Compile Include="Objects\IResourceObject.cs" />
+    <Compile Include="Objects\IUsableObject.cs" />
+    <Compile Include="Objects\LiquidObjects\AbstractLiquid.cs" />
+    <Compile Include="Objects\LiquidObjects\AcidLiquid.cs" />
+    <Compile Include="Objects\LiquidObjects\ILiquid.cs" />
+    <Compile Include="Objects\LiquidObjects\OilLiquid.cs" />
+    <Compile Include="Objects\LiquidObjects\WaterLiquid.cs" />
+    <Compile Include="Objects\SolidObjects\CaveWall.cs" />
+    <Compile Include="Objects\SolidObjects\DoorBase.cs" />
+    <Compile Include="Objects\SolidObjects\DungeonDoor.cs" />
+    <Compile Include="Objects\SolidObjects\DungeonTorchWall.cs" />
+    <Compile Include="Objects\SolidObjects\DungeonWall.cs" />
+    <Compile Include="Objects\SolidObjects\EnergyWall.cs" />
+    <Compile Include="Objects\SolidObjects\DungeonExitPortal.cs" />
+    <Compile Include="Objects\SolidObjects\MinableCaveWall.cs" />
+    <Compile Include="Objects\SolidObjects\MinableWall.cs" />
+    <Compile Include="Objects\SolidObjects\OreCaveWall.cs" />
+    <Compile Include="Objects\SolidObjects\DungeonStairs.cs" />
+    <Compile Include="Objects\SolidObjects\TorchWallBase.cs" />
+    <Compile Include="Objects\SolidObjects\DungeonTrapDoor.cs" />
+    <Compile Include="Objects\SolidObjects\Tree.cs" />
+    <Compile Include="Objects\SolidObjects\WallBase.cs" />
+    <Compile Include="Objects\SteamObjects\AbstractSteam.cs" />
+    <Compile Include="Objects\SteamObjects\AcidSteam.cs" />
+    <Compile Include="Objects\SteamObjects\WaterSteam.cs" />
+    <Compile Include="PlayerActions\CastSpellPlayerAction.cs" />
+    <Compile Include="PlayerActions\DropItemsPlayerAction.cs" />
+    <Compile Include="PlayerActions\EmptyPlayerAction.cs" />
+    <Compile Include="PlayerActions\EquipItemPlayerAction.cs" />
+    <Compile Include="PlayerActions\MeleAttackPlayerAction.cs" />
+    <Compile Include="PlayerActions\MovePlayerAction.cs" />
+    <Compile Include="PlayerActions\UnequipItemPlayerAction.cs" />
+    <Compile Include="PlayerActions\UseItemPlayerAction.cs" />
+    <Compile Include="PlayerActions\UseObjectPlayerAction.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Spells\BookSpell.cs" />
+    <Compile Include="Spells\Script\JsonData.cs" />
+    <Compile Include="Spells\Script\SpellCodeExecutor.cs" />
+    <Compile Include="Spells\SpellActionsFactory.cs" />
+    <Compile Include="Spells\SpellActions\BuildWallSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\CompressSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\CoolAreaSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\CreateWaterSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\DecompressSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\EmitLightSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\EmptySpellAction.cs" />
+    <Compile Include="Spells\SpellActions\HeatAreaSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\ISpellAction.cs" />
+    <Compile Include="Spells\SpellActions\LongCastSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\MoveSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\PushSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\ShockSpellAction.cs" />
+    <Compile Include="Spells\SpellActions\SpellActionBase.cs" />
+    <Compile Include="Spells\SpellActions\TransformWaterSpellAction.cs" />
+    <Compile Include="Spells\SpellException.cs" />
+    <Compile Include="Spells\SpellHelper.cs" />
+    <Compile Include="Statuses\BlindObjectStatus.cs" />
+    <Compile Include="Statuses\HungryObjectStatus.cs" />
+    <Compile Include="Statuses\ObjectStatusesCollection.cs" />
+    <Compile Include="Statuses\OilyObjectStatus.cs" />
+    <Compile Include="Statuses\OnFireObjectStatus.cs" />
+    <Compile Include="Statuses\OverweightObjectStatus.cs" />
+    <Compile Include="Statuses\WetObjectStatus.cs" />
+    <Compile Include="StyledLine.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">
+      <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
+      <Name>CodeMagic.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeMagic.UI.Images\CodeMagic.UI.Images.csproj">
+      <Project>{c5a8ee43-bc81-4e88-b990-d2ae962c3205}</Project>
+      <Name>CodeMagic.UI.Images</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Templates\SpellTemplate.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

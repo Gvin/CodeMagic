@@ -1,0 +1,38 @@
+﻿using System;
+using CodeMagic.Core.Items;
+
+namespace CodeMagic.Game.Configuration.Buildings
+{
+    public interface IBuildingsConfiguration
+    {
+        IBuildingConfiguration[] Buildings { get; }
+    }
+
+    public interface IBuildingConfiguration
+    {
+        Type Type { get; }
+
+        string Name { get; }
+
+        ItemRareness Rareness { get; }
+
+        string Id { get; }
+
+        string[] Unlocks { get; }
+
+        bool AutoUnlock { get; }
+
+        int BuildTime { get; }
+
+        IBuildingMaterialConfiguration[] Cost { get; }
+    }
+
+    public interface IBuildingMaterialConfiguration
+    {
+        string Type { get; }
+
+        string Name { get; }
+
+        int Count { get; }
+    }
+}

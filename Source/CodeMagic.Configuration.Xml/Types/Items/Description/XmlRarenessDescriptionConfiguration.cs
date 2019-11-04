@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using CodeMagic.Core.Items;
-using CodeMagic.ItemsGeneration.Configuration.Description;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Description;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Description
 {

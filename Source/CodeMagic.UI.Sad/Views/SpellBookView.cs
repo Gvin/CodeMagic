@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Spells;
-using CodeMagic.Implementations.Items;
-using CodeMagic.Implementations.Items.Materials;
-using CodeMagic.Implementations.Items.Usable;
+using CodeMagic.Game.Items;
+using CodeMagic.Game.Items.Materials;
+using CodeMagic.Game.Items.Usable;
+using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.Game.PlayerActions;
+using CodeMagic.Game.Spells;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.SpellsLibrary;
 using Microsoft.Xna.Framework;
@@ -29,7 +29,7 @@ namespace CodeMagic.UI.Sad.Views
     {
         private const string DefaultSpellName = "New Spell";
 
-        private readonly IGameCore game;
+        private readonly GameCore<Player> game;
 
         private Button closeButton;
         private CustomListBox<SpellListBoxItem> spellsListBox;
@@ -42,7 +42,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button saveToLibraryButton;
         private Button loadFromLibraryButton;
 
-        public SpellBookView(IGameCore game) 
+        public SpellBookView(GameCore<Player> game) 
             : base(Program.Width, Program.Height)
         {
             this.game = game;
@@ -208,7 +208,7 @@ namespace CodeMagic.UI.Sad.Views
             game.Player.Mana -= scrollCreationCost;
 
             game.Player.Inventory.RemoveItem(blankScroll);
-            var newScroll = new ScrollItemImpl(new ScrollItemConfiguration
+            var newScroll = new Scroll(new ScrollItemConfiguration
             {
                 Name = $"{selectedSpell.Name} Scroll ({selectedSpell.ManaCost})",
                 Key = Guid.NewGuid().ToString(),
@@ -339,7 +339,7 @@ namespace CodeMagic.UI.Sad.Views
             base.Update(time);
 
             Print(2, 1, "Spell Book:");
-            Print(14, 1, new ColoredString(Book.Name, ItemDrawingHelper.GetItemColor(Book), DefaultBackground));
+            Print(14, 1, new ColoredString(Book.Name, ItemDrawingHelper.GetItemColor(Book).ToXna(), DefaultBackground));
 
             Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
             Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));

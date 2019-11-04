@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.Core.Configuration.Spells;
+using CodeMagic.Game.Configuration.Spells;
 
 namespace CodeMagic.Configuration.Xml.Types.Spells
 {

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
-using CodeMagic.Implementations.Items;
+using CodeMagic.Game.Items;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.Drawing.ImageProviding;
@@ -20,9 +20,9 @@ namespace CodeMagic.UI.Sad.Controls
         private static readonly Color BackColor = Color.Black;
 
         private readonly InventoryImagesFactory imagesFactory;
-        private readonly IPlayer player;
+        private readonly Player player;
 
-        public ItemDetailsControl(int width, int height, IPlayer player) 
+        public ItemDetailsControl(int width, int height, Player player) 
             : base(width, height)
         {
             this.player = player;
@@ -69,7 +69,7 @@ namespace CodeMagic.UI.Sad.Controls
             const int initialYShift = 3;
             var maxWidth = Width - 6;
 
-            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
+            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem).ToXna();
             if (Stack.TopItem.Name.Length <= maxWidth)
             {
                 Surface.Print(1, initialYShift, new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, BackColor)));

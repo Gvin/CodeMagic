@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.Core.Configuration;
-using CodeMagic.Core.Configuration.Monsters;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.DecorativeObjects;
+using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Configuration.Monsters;
+using CodeMagic.Game.Objects.DecorativeObjects;
 
 namespace CodeMagic.Configuration.Xml.Types.Monsters
 {
@@ -11,7 +12,7 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
     public class XmlMonsterConfiguration : IMonsterConfiguration
     {
         [XmlIgnore]
-        public IMonsterSpawnConfiguration[] SpawnConfiguration => SpawnConfigurationData;
+        public IMonsterSpawnConfiguration[] SpawnConfiguration => SpawnConfigurationData.ToArray<IMonsterSpawnConfiguration>();
 
         [XmlArray("spawn-configuration")]
         [XmlArrayItem("level")]

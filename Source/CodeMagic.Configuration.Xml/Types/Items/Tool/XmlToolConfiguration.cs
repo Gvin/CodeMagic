@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.ItemsGeneration.Configuration;
-using CodeMagic.ItemsGeneration.Configuration.Tool;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Tool;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Tool
 {
@@ -12,14 +13,14 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Tool
         public string InventoryImageTemplate { get; set; }
 
         [XmlIgnore]
-        public IWeightConfiguration[] Weight => WeightData;
+        public IWeightConfiguration[] Weight => WeightData.ToArray<IWeightConfiguration>();
 
         [XmlArray("weight")]
         [XmlArrayItem("value")]
         public XmlWeightConfiguration[] WeightData { get; set; }
 
         [XmlIgnore]
-        public IToolRarenessConfiguration[] RarenessConfiguration => RarenessConfigurationData;
+        public IToolRarenessConfiguration[] RarenessConfiguration => RarenessConfigurationData.ToArray<IToolRarenessConfiguration>();
 
         [XmlArray("rareness-configuration")]
         [XmlArrayItem("rareness")]

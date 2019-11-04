@@ -2,9 +2,10 @@
 using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Items;
-using CodeMagic.Implementations;
-using CodeMagic.Implementations.Objects.Buildings;
+using CodeMagic.Game;
+using CodeMagic.Game.Items;
+using CodeMagic.Game.Objects.Buildings;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
@@ -22,7 +23,7 @@ namespace CodeMagic.UI.Sad.Views.BuildingUI
         private StandardButton addFuelButton;
         private StandardButton removeFuelButton;
 
-        public FireplaceUIView(IGameCore game, Fireplace fireplace) : base(game, "Fireplace")
+        public FireplaceUIView(GameCore<Player> game, Fireplace fireplace) : base(game, "Fireplace")
         {
             this.fireplace = fireplace;
 

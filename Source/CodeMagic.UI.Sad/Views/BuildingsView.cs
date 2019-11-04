@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Configuration.Xml.Types.Buildings;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling.Messages;
 using CodeMagic.Core.Objects;
-using CodeMagic.Implementations.Objects.Buildings;
+using CodeMagic.Game.Configuration;
+using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Buildings;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Views.BuildingUI;
@@ -22,7 +23,7 @@ namespace CodeMagic.UI.Sad.Views
 {
     public class BuildingsView : View
     {
-        private readonly IGameCore game;
+        private readonly GameCore<Player> game;
 
         private StandardButton closeButton;
         private CustomListBox<BuildingListBoxItem> buildingsListBox;
@@ -31,7 +32,7 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton placeSelectedBuildingButton;
         private StandardButton removeBuildingSiteButton;
 
-        public BuildingsView(IGameCore game) 
+        public BuildingsView(GameCore<Player> game) 
             : base(Program.Width, Program.Height)
         {
             this.game = game;

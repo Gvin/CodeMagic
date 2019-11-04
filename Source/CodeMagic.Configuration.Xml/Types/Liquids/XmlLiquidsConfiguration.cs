@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.Core.Configuration.Liquids;
+using CodeMagic.Game.Configuration.Liquids;
 
 namespace CodeMagic.Configuration.Xml.Types.Liquids
 {

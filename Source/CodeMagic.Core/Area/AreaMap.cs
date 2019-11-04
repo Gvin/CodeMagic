@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Common;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
@@ -16,7 +15,7 @@ namespace CodeMagic.Core.Area
         private readonly Dictionary<string, IDestroyableObject> destroyableObjects;
         private readonly IEnvironmentLightManager environmentLightManager;
 
-        public AreaMap(int width, int height, IEnvironmentLightManager environmentLightManager, int lightSpreadFactor = 1)
+        public AreaMap(Func<IEnvironment> environmentFactory, int width, int height, IEnvironmentLightManager environmentLightManager, int lightSpreadFactor = 1)
         {
             objectPositionCache = new Dictionary<Type, Point>();
             this.environmentLightManager = environmentLightManager;
@@ -33,7 +32,7 @@ namespace CodeMagic.Core.Area
                 cells[y] = new AreaMapCell[width];
                 for (var x = 0; x < width; x++)
                 {
-                    cells[y][x] = new AreaMapCell(ConfigurationManager.Current.Physics.MagicEnergyConfiguration);
+                    cells[y][x] = new AreaMapCell(environmentFactory());
                 }
             }
         }
@@ -243,7 +242,7 @@ namespace CodeMagic.Core.Area
                     var cell = (AreaMapCell)GetCell(position);
                     cell.PostUpdate(this, journal, position);
                     cell.ResetDynamicObjectsState();
-                    cell.UpdateEnvironment(this, position);
+                    cell.Environment.Update(this, position, cell, journal);
                     MergeCellEnvironment(position, cell, mergedCells);
                 }
             }
@@ -276,13 +275,11 @@ namespace CodeMagic.Core.Area
                 return;
             mergedCells.RegisterPair(position, direction);
 
-            cell.MagicEnergy.Merge(nextCell.MagicEnergy);
-
             if (nextCell.BlocksEnvironment)
                 return;
 
             cell.CheckSpreading(nextCell);
-            cell.Environment.Balance(nextCell.Environment);
+            cell.Environment.Balance(cell, nextCell);
         }
 
         private class CellPairsStorage

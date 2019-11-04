@@ -2,7 +2,7 @@
 
 namespace CodeMagic.Core.Objects.Creatures
 {
-    public interface ICreatureObject : IDestroyableObject
+    public interface ICreatureObject : IDestroyableObject, IDynamicObject
     {
         Direction Direction { get; set; }
 

@@ -1,12 +1,9 @@
 ﻿using CodeMagic.Core.Game.Journaling;
-using CodeMagic.Core.Objects.DecorativeObjects;
 
 namespace CodeMagic.Core.Objects.Creatures
 {
-    public interface INonPlayableCreatureObject : ICreatureObject, IDynamicObject
+    public interface INonPlayableCreatureObject : ICreatureObject
     {
         void Attack(IDestroyableObject target, IJournal journal);
-
-        RemainsType RemainsType { get; }
     }
 }

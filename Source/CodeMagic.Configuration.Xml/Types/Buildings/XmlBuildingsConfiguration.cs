@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.Core.Configuration.Buildings;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Configuration.Buildings;
 
 namespace CodeMagic.Configuration.Xml.Types.Buildings
 {
@@ -10,7 +11,7 @@ namespace CodeMagic.Configuration.Xml.Types.Buildings
     public class XmlBuildingsConfiguration : IBuildingsConfiguration
     {
         [XmlIgnore]
-        public IBuildingConfiguration[] Buildings => BuildingsData;
+        public IBuildingConfiguration[] Buildings => BuildingsData.ToArray<IBuildingConfiguration>();
 
         [XmlElement("building")]
         public XmlBuildingConfiguration[] BuildingsData { get; set; }
@@ -50,7 +51,7 @@ namespace CodeMagic.Configuration.Xml.Types.Buildings
         public int BuildTime { get; set; }
 
         [XmlIgnore]
-        public IBuildingMaterialConfiguration[] Cost => CostData;
+        public IBuildingMaterialConfiguration[] Cost => CostData.ToArray<IBuildingMaterialConfiguration>();
 
         [XmlArray("cost")]
         [XmlArrayItem("material")]

@@ -5,14 +5,13 @@ using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Spells;
 
 namespace CodeMagic.Core.Objects
 {
     public static class MovementHelper
     {
         public static MovementResult MoveCreature(ICreatureObject creature, IAreaMap map, IJournal journal, Point startPoint,
-            Point endPoint, bool processStepReaction = true, bool changeDirection = true)
+            Point endPoint, bool processStepReaction, bool changeDirection)
         {
             if (changeDirection)
             {
@@ -26,7 +25,7 @@ namespace CodeMagic.Core.Objects
         }
 
         public static MovementResult MoveCreature(ICreatureObject creature, IAreaMap map, IJournal journal, Point startPoint,
-            Direction direction, bool processStepReaction = true, bool changeDirection = true)
+            Direction direction, bool processStepReaction, bool changeDirection)
         {
             if (changeDirection)
             {
@@ -41,9 +40,9 @@ namespace CodeMagic.Core.Objects
             return MoveMapObject(mapObject, map, journal, startPoint, endPoint, cell => !cell.BlocksMovement, processStepReaction);
         }
 
-        public static MovementResult MoveSpell(ICodeSpell spell, IAreaMap map, IJournal journal, Point startPoint, Point endPoint)
+        public static MovementResult MoveProjectile(IMapObject projectile, IAreaMap map, IJournal journal, Point startPoint, Point endPoint)
         {
-            return MoveMapObject(spell, map, journal, startPoint, endPoint, cell => !cell.BlocksProjectiles, false);
+            return MoveMapObject(projectile, map, journal, startPoint, endPoint, cell => !cell.BlocksProjectiles, false);
         }
 
         private static MovementResult MoveMapObject(IMapObject mapObject, IAreaMap map, IJournal journal, Point startPoint, Point endPoint,

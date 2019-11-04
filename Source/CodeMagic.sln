@@ -17,11 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.UI.Images", "Code
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.UI.Sad.Common", "CodeMagic.UI.Sad.Common\CodeMagic.UI.Sad.Common.csproj", "{30048299-507D-4591-B6CA-18D247AE5CF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.MapGeneration", "CodeMagic.MapGeneration\CodeMagic.MapGeneration.csproj", "{A4F02790-B78A-42D2-B1B2-BED6547E7FC3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.Implementations", "CodeMagic.Implementations\CodeMagic.Implementations.csproj", "{47E2B226-C00A-4EF3-AC0B-0A8A243ADD79}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.ItemsGeneration", "CodeMagic.ItemsGeneration\CodeMagic.ItemsGeneration.csproj", "{F3DC883A-6643-436F-A64C-7268248C1B5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.Game", "CodeMagic.Game\CodeMagic.Game.csproj", "{204099AF-DB91-405B-BFF4-936C56A85D30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,18 +49,10 @@ Global
 		{30048299-507D-4591-B6CA-18D247AE5CF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30048299-507D-4591-B6CA-18D247AE5CF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30048299-507D-4591-B6CA-18D247AE5CF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4F02790-B78A-42D2-B1B2-BED6547E7FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4F02790-B78A-42D2-B1B2-BED6547E7FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4F02790-B78A-42D2-B1B2-BED6547E7FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4F02790-B78A-42D2-B1B2-BED6547E7FC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47E2B226-C00A-4EF3-AC0B-0A8A243ADD79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47E2B226-C00A-4EF3-AC0B-0A8A243ADD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47E2B226-C00A-4EF3-AC0B-0A8A243ADD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47E2B226-C00A-4EF3-AC0B-0A8A243ADD79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3DC883A-6643-436F-A64C-7268248C1B5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3DC883A-6643-436F-A64C-7268248C1B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3DC883A-6643-436F-A64C-7268248C1B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3DC883A-6643-436F-A64C-7268248C1B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{204099AF-DB91-405B-BFF4-936C56A85D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{204099AF-DB91-405B-BFF4-936C56A85D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{204099AF-DB91-405B-BFF4-936C56A85D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{204099AF-DB91-405B-BFF4-936C56A85D30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
@@ -23,7 +23,7 @@ namespace CodeMagic.UI.Sad.Views
         private ItemDetailsControl itemDetails;
         private Button closeButton;
 
-        protected InventoryViewBase(string inventoryName, IPlayer player) 
+        protected InventoryViewBase(string inventoryName, Player player) 
             : base(Program.Width, Program.Height)
         {
             this.inventoryName = inventoryName;
@@ -33,7 +33,7 @@ namespace CodeMagic.UI.Sad.Views
 
         protected InventoryStack SelectedStack => itemsList.SelectedItem?.Stack;
 
-        private void InitializeControls(IPlayer player)
+        private void InitializeControls(Player player)
         {
             var buttonsTheme = new ButtonLinesTheme
             {

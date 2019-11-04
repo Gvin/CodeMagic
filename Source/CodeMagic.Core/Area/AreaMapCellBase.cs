@@ -1,26 +1,27 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Objects.LiquidObjects;
-using CodeMagic.Core.Objects.SolidObjects;
 
 namespace CodeMagic.Core.Area
 {
     public abstract class AreaMapCellBase : IAreaMapCell
     {
-        protected AreaMapCellBase()
+        protected AreaMapCellBase(IEnvironment environment)
         {
             ObjectsCollection = new MapObjectsCollection();
             LightLevel = LightLevel.Darkness;
+            Environment = environment;
         }
+
+        public IEnvironment Environment { get; }
 
         IMapObject[] IAreaMapCell.Objects => ObjectsCollection.ToArray();
 
-        public int GetVolume<T>() where T : ILiquidObject
+        public int GetVolume<T>() where T : IVolumeObject
         {
             return ObjectsCollection.GetVolume<T>();
         }
 
-        public void RemoveVolume<T>(int volume) where T : ILiquidObject
+        public void RemoveVolume<T>(int volume) where T : IVolumeObject
         {
             ObjectsCollection.RemoveVolume<T>(volume);
         }
@@ -33,8 +34,6 @@ namespace CodeMagic.Core.Area
         {
             get { return ObjectsCollection.Any(obj => obj.BlocksMovement); }
         }
-
-        public bool HasSolidObjects => ObjectsCollection.OfType<WallBase>().Any();
 
         public abstract bool HasRoof { get; }
 
@@ -61,15 +60,5 @@ namespace CodeMagic.Core.Area
                 return bigDestroyable;
             return destroyable.LastOrDefault();
         }
-
-        public abstract int Temperature { get; set; }
-
-        public abstract int Pressure { get; set; }
-
-        public abstract int MagicEnergyLevel { get; set; }
-
-        public abstract int MaxMagicEnergyLevel { get; }
-
-        public abstract int MagicDisturbanceLevel { get; set; }
     }
 }

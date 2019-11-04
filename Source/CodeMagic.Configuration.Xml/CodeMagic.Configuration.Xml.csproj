@@ -92,13 +92,9 @@
       <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
       <Name>CodeMagic.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeMagic.Implementations\CodeMagic.Implementations.csproj">
-      <Project>{47e2b226-c00a-4ef3-ac0b-0a8a243add79}</Project>
-      <Name>CodeMagic.Implementations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeMagic.ItemsGeneration\CodeMagic.ItemsGeneration.csproj">
-      <Project>{f3dc883a-6643-436f-a64c-7268248c1b5e}</Project>
-      <Name>CodeMagic.ItemsGeneration</Name>
+    <ProjectReference Include="..\CodeMagic.Game\CodeMagic.Game.csproj">
+      <Project>{204099af-db91-405b-bff4-936c56a85d30}</Project>
+      <Name>CodeMagic.Game</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

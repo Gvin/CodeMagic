@@ -1,17 +1,16 @@
 ﻿using System.Linq;
-using CodeMagic.Core.Configuration;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.Locations;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects.PlayerData;
-using CodeMagic.Implementations.Items;
-using CodeMagic.Implementations.Items.Materials;
-using CodeMagic.Implementations.Items.Usable;
-using CodeMagic.Implementations.Items.Usable.Food;
-using CodeMagic.Implementations.Objects.Creatures;
-using CodeMagic.MapGeneration.GlobalWorld;
-using CodeMagic.MapGeneration.Home;
+using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Items;
+using CodeMagic.Game.Items.Usable;
+using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Locations;
+using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.Game.MapGeneration.GlobalWorld;
+using CodeMagic.Game.MapGeneration.Home;
 using CodeMagic.UI.Sad.Views;
 
 namespace CodeMagic.UI.Sad.GameProcess
@@ -23,12 +22,21 @@ namespace CodeMagic.UI.Sad.GameProcess
 
         private TravelInProgressView travelInProgressView;
 
-        public GameCore StartGame()
+        public GameCore<Player> StartGame()
         {
             var player = CreatePlayer();
             var startingLocation = CreateHomeLocation(out var playerPosition);
-            var game = new GameCore(startingLocation, player, playerPosition);
+            var game = new GameCore<Player>(startingLocation, player, playerPosition);
             startingLocation.CurrentArea.Refresh(game.GameTime);
+
+            player.Inventory.ItemAdded += (sender, args) =>
+            {
+                game.Journal.Write(new ItemReceivedMessage(args.Item));
+            };
+            player.Inventory.ItemRemoved += (sender, args) =>
+            {
+                game.Journal.Write(new ItemLostMessage(args.Item));
+            };
 
             var globalWorldLocation = CreateGlobalWorldLocation();
             globalWorldLocation.CurrentArea.Refresh(game.GameTime);
@@ -61,9 +69,9 @@ namespace CodeMagic.UI.Sad.GameProcess
             return new GlobalWorldLocation(GlobalWorldMapGenerator.LocationId, map, playerHomePosition);
         }
 
-        private IPlayer CreatePlayer()
+        private Player CreatePlayer()
         {
-            var player = new PlayerImpl();
+            var player = new Player();
 
             foreach (var building in ConfigurationManager.Current.Buildings.Buildings.Where(building => building.AutoUnlock))
             {

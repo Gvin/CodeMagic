@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Configuration.Xml.Types.Buildings;
+using CodeMagic.Game.Items;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
@@ -42,7 +43,7 @@ namespace CodeMagic.UI.Sad.Controls
                 var image = ImagesStorage.Current.GetImage(Building.PreviewImage);
                 Surface.DrawImage(2, 3, image, Color.White, Color.Black);
 
-                var nameColor = ItemDrawingHelper.GetRarenessColor(Building.Rareness);
+                var nameColor = ItemDrawingHelper.GetRarenessColor(Building.Rareness).ToXna();
                 Surface.Print(1, 4 + image.Height, Building.Name, nameColor);
 
                 for (var lineIndex = 0; lineIndex < Building.Description.Length; lineIndex++)

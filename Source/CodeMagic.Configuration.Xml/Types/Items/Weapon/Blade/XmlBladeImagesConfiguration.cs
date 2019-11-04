@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
-using CodeMagic.ItemsGeneration.Configuration.Weapon.Blade;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon.Blade;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Weapon.Blade
 {

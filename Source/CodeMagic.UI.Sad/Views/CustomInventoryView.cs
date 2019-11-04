@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Items;
+using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Sad.Common;
-using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -26,7 +27,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button pickUpOneItemButton;
         private Button pickUpAllButton;
 
-        public CustomInventoryView(IGameCore game, string inventoryName, Inventory inventory) 
+        public CustomInventoryView(GameCore<Player> game, string inventoryName, Inventory inventory) 
             : base(inventoryName, game.Player)
         {
             this.game = game;
@@ -213,7 +214,7 @@ namespace CodeMagic.UI.Sad.Views
 
         protected override ColoredString[] GetNameText(Color backColor)
         {
-            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem);
+            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem).ToXna();
 
             return new[]
             {

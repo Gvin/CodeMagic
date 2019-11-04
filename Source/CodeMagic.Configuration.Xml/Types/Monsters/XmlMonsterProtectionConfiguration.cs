@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
-using CodeMagic.Core.Configuration.Monsters;
 using CodeMagic.Core.Game;
+using CodeMagic.Game.Configuration.Monsters;
 
 namespace CodeMagic.Configuration.Xml.Types.Monsters
 {
