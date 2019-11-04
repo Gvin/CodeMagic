@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using CodeMagic.Core.Area;
+﻿using CodeMagic.Core.Area;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 
@@ -14,9 +13,8 @@ namespace CodeMagic.Game.Items
             ManaBonus = configuration.ManaBonus;
             ManaRegenerationBonus = configuration.ManaRegenerationBonus;
 
-            IsLightOn = configuration.LightPower > LightLevel.Darkness && configuration.LightColor != null;
+            IsLightOn = configuration.LightPower > LightLevel.Darkness;
             LightPower = configuration.LightPower;
-            LightColor = configuration.LightColor ?? Color.Black;
         }
 
         public int HealthBonus { get; }
@@ -29,8 +27,6 @@ namespace CodeMagic.Game.Items
 
         public LightLevel LightPower { get; }
 
-        public Color LightColor { get; }
-
         public ILightSource[] LightSources => new ILightSource[] { this };
     }
 
@@ -39,7 +35,6 @@ namespace CodeMagic.Game.Items
         public EquipableItemConfiguration()
         {
             LightPower = LightLevel.Darkness;
-            LightColor = null;
         }
 
         public int HealthBonus { get; set; }
@@ -47,8 +42,6 @@ namespace CodeMagic.Game.Items
         public int ManaBonus { get; set; }
 
         public int ManaRegenerationBonus { get; set; }
-
-        public Color? LightColor { get; set; }
 
         public LightLevel LightPower { get; set; }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
+using CodeMagic.Core.Area;
 
-namespace CodeMagic.Core.Area
+namespace CodeMagic.Game.Area
 {
     public class InsideEnvironmentLightManager : IEnvironmentLightManager
     {

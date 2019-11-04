@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
@@ -30,8 +29,7 @@ namespace CodeMagic.Game.Items
                 {Element.Fire, 3},
                 {Element.Blunt, 3}
             },
-            LightPower = LightLevel.Dim1,
-            LightColor = Color.Orange
+            LightPower = LightLevel.Dim1
         })
         {
         }

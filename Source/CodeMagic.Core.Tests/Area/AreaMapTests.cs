@@ -13,9 +13,10 @@ namespace CodeMagic.Core.Tests.Area
         {
             // Arrange
             var environmentMock = new Mock<IEnvironment>();
+            var lightManagerMock = new Mock<IEnvironmentLightManager>();
 
             // Act
-            var map = new AreaMap(() => environmentMock.Object, 5, 5, new InsideEnvironmentLightManager());
+            var map = new AreaMap(() => environmentMock.Object, 5, 5, lightManagerMock.Object);
 
             // Assert
             var cell = map.GetCell(2, 2);
@@ -32,9 +33,10 @@ namespace CodeMagic.Core.Tests.Area
         {
             // Arrange
             var environmentMock = new Mock<IEnvironment>();
+            var lightManagerMock = new Mock<IEnvironmentLightManager>();
 
             // Arrange
-            var map = new AreaMap(() => environmentMock.Object, width, height, new InsideEnvironmentLightManager());
+            var map = new AreaMap(() => environmentMock.Object, width, height, lightManagerMock.Object);
 
             // Act
             var cell = map.GetCell(checkX, checkY);
@@ -51,9 +53,11 @@ namespace CodeMagic.Core.Tests.Area
         {
             // Arrange
             var environmentMock = new Mock<IEnvironment>();
+            var lightManagerMock = new Mock<IEnvironmentLightManager>();
 
-            var map = new AreaMap(() => environmentMock.Object, width, height, new InsideEnvironmentLightManager());
+            var map = new AreaMap(() => environmentMock.Object, width, height, lightManagerMock.Object);
 
+            //Act
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 map.GetCell(checkX, checkY);
@@ -75,8 +79,11 @@ namespace CodeMagic.Core.Tests.Area
         {
             // Arrange
             var environmentMock = new Mock<IEnvironment>();
+            var lightManagerMock = new Mock<IEnvironmentLightManager>();
 
-            var map = new AreaMap(() => environmentMock.Object, width, height, new InsideEnvironmentLightManager());
+            var map = new AreaMap(() => environmentMock.Object, width, height, lightManagerMock.Object);
+
+            // Act
             return map.ContainsCell(checkX, checkY);
         }
     }

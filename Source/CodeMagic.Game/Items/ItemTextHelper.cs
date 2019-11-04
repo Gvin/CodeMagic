@@ -148,19 +148,12 @@ namespace CodeMagic.Game.Items
             if (!item.IsLightOn)
                 return;
 
-            var colorName = GetLightColorName(item.LightColor);
             var powerDistance = GetLightPowerDistance(item.LightPower);
 
             descriptionResult.Add(new StyledLine
             {
-                $"Light: {powerDistance}m ",
-                new StyledString(colorName, item.LightColor)
+                $"Light: {powerDistance}m"
             });
-        }
-
-        private static string GetLightColorName(Color color)
-        {
-            return color.Name;
         }
 
         private static int GetLightPowerDistance(LightLevel power)

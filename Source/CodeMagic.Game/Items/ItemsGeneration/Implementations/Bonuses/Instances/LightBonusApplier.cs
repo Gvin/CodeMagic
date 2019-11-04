@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
@@ -14,23 +13,12 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
         private const string NamePrefix = "Shining";
         private const string KeyPower = "Power";
 
-        private static readonly Color[] LightColors =
-        {
-            Color.Red,
-            Color.Yellow,
-            Color.Green,
-            Color.Blue
-        };
-
         public void Apply(IBonusConfiguration config, ItemConfiguration itemConfiguration, NameBuilder name)
         {
             var possiblePower = GetPossibleLightPower(config);
             var power = RandomHelper.GetRandomElement(possiblePower);
 
-            var color = RandomHelper.GetRandomElement(LightColors);
-
             var equipableConfig = (EquipableItemConfiguration) itemConfiguration;
-            equipableConfig.LightColor = color;
             equipableConfig.LightPower = power;
 
             name.Prefixes.Add(NamePrefix);

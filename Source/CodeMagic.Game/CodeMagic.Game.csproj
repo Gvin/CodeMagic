@@ -52,6 +52,8 @@
     <Compile Include="Area\EnvironmentData\MagicEnergy.cs" />
     <Compile Include="Area\EnvironmentData\Pressure.cs" />
     <Compile Include="Area\EnvironmentData\Temperature.cs" />
+    <Compile Include="Area\InsideEnvironmentLightManager.cs" />
+    <Compile Include="Area\OutsideEnvironmentLightManager.cs" />
     <Compile Include="Configuration\Buildings\IBuildingsConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\ILootConfiguration.cs" />

@@ -56,11 +56,9 @@
     <Compile Include="Area\IAreaMapCell.cs" />
     <Compile Include="Area\IEnvironment.cs" />
     <Compile Include="Area\IEnvironmentLightManager.cs" />
-    <Compile Include="Area\InsideEnvironmentLightManager.cs" />
     <Compile Include="Area\LightLevel.cs" />
     <Compile Include="Area\MapLightLevelHelper.cs" />
     <Compile Include="Area\MapObjectsCollection.cs" />
-    <Compile Include="Area\OutsideEnvironmentLightManager.cs" />
     <Compile Include="Common\ConcurrentList.cs" />
     <Compile Include="Common\Direction.cs" />
     <Compile Include="CreaturesLogic\ICreatureStrategy.cs" />
