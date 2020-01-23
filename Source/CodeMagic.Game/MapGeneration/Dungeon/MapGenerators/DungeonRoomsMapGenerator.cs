@@ -4,8 +4,6 @@ using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Items;
-using CodeMagic.Game.Area;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories;
@@ -26,7 +24,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
             this.mapObjectsFactory = mapObjectsFactory;
         }
 
-        public IAreaMap Generate(MapSize size, ItemRareness rareness, bool isLastLevel, out Core.Game.Point playerPosition)
+        public IAreaMap Generate(int level, MapSize size, out Core.Game.Point playerPosition)
         {
             var builder = new MapBuilder(1, 1);
             switch (size)
@@ -52,10 +50,13 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
             var height = simplifiedMap.Length;
             var width = simplifiedMap[0].Length;
 
-            var map = ConvertMap(simplifiedMap, isLastLevel, width, height);
+            var map = ConvertMap(level, simplifiedMap, width, height);
             playerPosition = FindPlayerPosition(map);
 
-            map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
+            if (level > 1)
+            {
+                map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
+            }
 
             return map;
         }
@@ -98,9 +99,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
             throw new ApplicationException("Unable to find player position.");
         }
 
-        private IAreaMap ConvertMap(int[][] map, bool isLastLevel, int width, int height)
+        private IAreaMap ConvertMap(int level, int[][] map, int width, int height)
         {
-            var result = new AreaMap(() => new GameEnvironment(ConfigurationManager.Current.Physics), width, height, new InsideEnvironmentLightManager());
+            var result = new AreaMap(level, () => new GameEnvironment(ConfigurationManager.Current.Physics), width, height);
 
             for (int y = 0; y < height; y++)
             {
@@ -121,16 +122,8 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
                     }
                     else if (map[y][x] == MapBuilder.TrapDoorCell)
                     {
-                        if (isLastLevel)
-                        {
-                            var exitPortal = mapObjectsFactory.CreateExitPortal();
-                            result.AddObject(x, y, exitPortal);
-                        }
-                        else
-                        {
-                            var trapDoor = mapObjectsFactory.CreateTrapDoor();
-                            result.AddObject(x, y, trapDoor);
-                        }
+                        var trapDoor = mapObjectsFactory.CreateTrapDoor();
+                        result.AddObject(x, y, trapDoor);
                     }
                 }
             }

@@ -57,7 +57,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\BuildingDetailsControl.cs" />
     <Compile Include="Controls\CustomListBox.cs" />
     <Compile Include="Controls\GameAreaControl.cs" />
     <Compile Include="Controls\GameLogoControl.cs" />
@@ -82,12 +81,7 @@
     <Compile Include="GameProcess\GameConfigurator.cs" />
     <Compile Include="GameProcess\GameManager.cs" />
     <Compile Include="Items\Bag.cs" />
-    <Compile Include="Items\BagOfHolding.cs" />
     <Compile Include="SpellsLibrary\SpellsLibraryManager.cs" />
-    <Compile Include="Views\BuildingsView.cs" />
-    <Compile Include="Views\BuildingUI\BuildingUIView.cs" />
-    <Compile Include="Views\BuildingUI\FireplaceUIView.cs" />
-    <Compile Include="Views\BuildingUI\FurnaceUIView.cs" />
     <Compile Include="Views\StorageInventoryView.cs" />
     <Compile Include="Views\EditSpellView.cs" />
     <Compile Include="Views\GameView.cs" />
@@ -102,7 +96,6 @@
     <Compile Include="Views\SettingsView.cs" />
     <Compile Include="Views\SpellBookView.cs" />
     <Compile Include="Views\SpellsLibraryViewBase.cs" />
-    <Compile Include="Views\TravelInProgressView.cs" />
     <Compile Include="Views\View.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -160,9 +153,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configuration\Buildings.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Configuration\ItemGenerator.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

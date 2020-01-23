@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using CodeMagic.Core.Game;
-using CodeMagic.Core.Items;
+﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
-using CodeMagic.Game.Items.Materials;
 using CodeMagic.Game.Objects.Floor;
 using CodeMagic.Game.Objects.SolidObjects;
 
@@ -10,36 +7,11 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 {
     public class CaveMapObjectsFactory : IDungeonMapObjectFactory
     {
-        private static readonly Dictionary<ItemRareness, MetalType[]> OreTypes =
-            new Dictionary<ItemRareness, MetalType[]>
-            {
-                {
-                    ItemRareness.Common, new[]
-                    {
-                        MetalType.Copper,
-                        MetalType.Iron
-                    }
-                },
-                {
-                    ItemRareness.Uncommon, new[]
-                    {
-                        MetalType.Silver,
-                        MetalType.ElvesMetal,
-                        MetalType.DwarfsMetal
-                    }
-                },
-                {
-                    ItemRareness.Rare, new[]
-                    {
-                        MetalType.Mythril,
-                        MetalType.Adamant
-                    }
-                }
-            };
+        private readonly IDungeonMapGenerator dungeonMapGenerator;
 
-        public IMapObject CreateExitPortal()
+        public CaveMapObjectsFactory(IDungeonMapGenerator dungeonMapGenerator)
         {
-            return new DungeonExitPortal();
+            this.dungeonMapGenerator = dungeonMapGenerator;
         }
 
         public IMapObject CreateFloor()
@@ -59,15 +31,10 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 
         public IMapObject CreateTrapDoor()
         {
-            return new DungeonTrapDoor();
+            return new DungeonTrapDoor(dungeonMapGenerator);
         }
 
         public IMapObject CreateWall()
-        {
-            return new MinableCaveWall();
-        }
-
-        public IMapObject CreateIndestructibleWall()
         {
             return new CaveWall();
         }
@@ -75,17 +42,6 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
         public IMapObject CreateTorchWall()
         {
             return new DungeonTorchWall();
-        }
-
-        public IMapObject CreateOreWall(ItemRareness rareness)
-        {
-            if (OreTypes.ContainsKey(rareness))
-            {
-                var metalType = RandomHelper.GetRandomElement(OreTypes[rareness]);
-                return new OreCaveWall(metalType);
-            }
-
-            return CreateWall();
         }
 
         public IMapObject CreateWall(int torchChance)

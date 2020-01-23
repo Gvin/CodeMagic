@@ -13,10 +13,9 @@ namespace CodeMagic.Core.Tests.Area
         {
             // Arrange
             var environmentMock = new Mock<IEnvironment>();
-            var lightManagerMock = new Mock<IEnvironmentLightManager>();
 
             // Act
-            var map = new AreaMap(() => environmentMock.Object, 5, 5, lightManagerMock.Object);
+            var map = new AreaMap(1, () => environmentMock.Object, 5, 5);
 
             // Assert
             var cell = map.GetCell(2, 2);
@@ -33,10 +32,9 @@ namespace CodeMagic.Core.Tests.Area
         {
             // Arrange
             var environmentMock = new Mock<IEnvironment>();
-            var lightManagerMock = new Mock<IEnvironmentLightManager>();
 
             // Arrange
-            var map = new AreaMap(() => environmentMock.Object, width, height, lightManagerMock.Object);
+            var map = new AreaMap(1, () => environmentMock.Object, width, height);
 
             // Act
             var cell = map.GetCell(checkX, checkY);
@@ -53,9 +51,8 @@ namespace CodeMagic.Core.Tests.Area
         {
             // Arrange
             var environmentMock = new Mock<IEnvironment>();
-            var lightManagerMock = new Mock<IEnvironmentLightManager>();
 
-            var map = new AreaMap(() => environmentMock.Object, width, height, lightManagerMock.Object);
+            var map = new AreaMap(1, () => environmentMock.Object, width, height);
 
             //Act
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
@@ -79,9 +76,8 @@ namespace CodeMagic.Core.Tests.Area
         {
             // Arrange
             var environmentMock = new Mock<IEnvironment>();
-            var lightManagerMock = new Mock<IEnvironmentLightManager>();
 
-            var map = new AreaMap(() => environmentMock.Object, width, height, lightManagerMock.Object);
+            var map = new AreaMap(1, () => environmentMock.Object, width, height);
 
             // Act
             return map.ContainsCell(checkX, checkY);

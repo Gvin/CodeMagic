@@ -4,7 +4,6 @@ using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.JournalMessages;
-using CodeMagic.Game.Locations;
 using CodeMagic.Game.Objects;
 using CodeMagic.Game.Objects.Creatures;
 
@@ -16,11 +15,6 @@ namespace CodeMagic.Game.PlayerActions
         {
             var game = (GameCore<Player>) gameObject;
             newPosition = game.PlayerPosition;
-            if (!game.World.CurrentLocation.CanFight())
-            {
-                game.Journal.Write(new FightNotAllowedMessage());
-                return false;
-            }
 
             if (game.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
             {

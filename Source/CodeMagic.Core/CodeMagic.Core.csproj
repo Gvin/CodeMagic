@@ -49,8 +49,6 @@
     <Compile Include="Area\AreaMapCell.cs" />
     <Compile Include="Area\AreaMapCellBase.cs" />
     <Compile Include="Area\FloorTypes.cs" />
-    <Compile Include="Area\GlobalAreaMap.cs" />
-    <Compile Include="Area\GlobalAreaMapCell.cs" />
     <Compile Include="Area\IAreaMap.cs" />
     <Compile Include="Area\AreaMapFragment.cs" />
     <Compile Include="Area\IAreaMapCell.cs" />
@@ -64,10 +62,7 @@
     <Compile Include="CreaturesLogic\ICreatureStrategy.cs" />
     <Compile Include="CreaturesLogic\LogicHelper.cs" />
     <Compile Include="Common\DirectionHelper.cs" />
-    <Compile Include="Game\GameTimeManager.cs" />
-    <Compile Include="Game\Locations\GameWorld.cs" />
     <Compile Include="Game\IGameCore.cs" />
-    <Compile Include="Game\Locations\ILocation.cs" />
     <Compile Include="Game\IDungeonMapGenerator.cs" />
     <Compile Include="Game\Journaling\BackgroundJournal.cs" />
     <Compile Include="Game\Journaling\IJournal.cs" />

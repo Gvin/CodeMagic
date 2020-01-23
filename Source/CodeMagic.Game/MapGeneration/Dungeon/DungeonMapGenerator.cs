@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Items;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.Game.MapGeneration.Dungeon.MapGenerators;
 using CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories;
@@ -20,8 +19,8 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
         {
             this.writeMapFile = writeMapFile;
 
-            var dungeonMapObjectsFactory = new DungeonMapObjectsFactory();
-            var caveMapObjectsFactory = new CaveMapObjectsFactory();
+            var dungeonMapObjectsFactory = new DungeonMapObjectsFactory(this);
+            var caveMapObjectsFactory = new CaveMapObjectsFactory(this);
 
             generators = new Dictionary<MapType, IMapAreaGenerator>
             {
@@ -31,10 +30,10 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
             };
         }
 
-        public IAreaMap GenerateNewMap(int level, ItemRareness rareness, int maxLevel, out Point playerPosition)
+        public IAreaMap GenerateNewMap(int level, out Point playerPosition)
         {
             var size = GenerateMapSize();
-            return GenerateMap(level, rareness, maxLevel, size, out playerPosition);
+            return GenerateMap(level, size, out playerPosition);
         }
 
         private MapSize GenerateMapSize()
@@ -51,15 +50,12 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 
         private IAreaMap GenerateMap(
             int level,
-            ItemRareness rareness,
-            int maxLevel,
             MapSize size,
             out Point playerPosition)
         {
-            var lastLevel = level == maxLevel;
-            var mapType = GenerateMapType(level, lastLevel);
+            var mapType = GenerateMapType(level);
             var generator = generators[mapType];
-            var map = generator.Generate(size, rareness, lastLevel, out playerPosition);
+            var map = generator.Generate(level, size, out playerPosition);
 
             var generateTorchPosts = mapType == MapType.Cave;
 
@@ -121,19 +117,11 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
                 return "^";
             }
 
-            if (cell.Objects.OfType<DungeonExitPortal>().Any())
-            {
-                return "#";
-            }
-
             return " ";
         }
 
-        private MapType GenerateMapType(int level, bool lastLevel)
+        private MapType GenerateMapType(int level)
         {
-            if (lastLevel) // Always caves for the last level.
-                return MapType.Cave;
-
             if (level == 1) // Always dungeons for the 1st level.
                 return MapType.Dungeon;
 

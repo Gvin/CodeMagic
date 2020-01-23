@@ -1,12 +1,9 @@
-﻿using CodeMagic.Core.Items;
-using CodeMagic.Core.Objects;
+﻿using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 {
     public interface IDungeonMapObjectFactory
     {
-        IMapObject CreateExitPortal();
-
         IMapObject CreateFloor();
 
         IMapObject CreateStairs();
@@ -17,11 +14,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 
         IMapObject CreateWall();
 
-        IMapObject CreateIndestructibleWall();
-
         IMapObject CreateTorchWall();
-
-        IMapObject CreateOreWall(ItemRareness rareness);
 
         IMapObject CreateWall(int torchChance);
     }

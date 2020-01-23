@@ -7,7 +7,6 @@
  * getPosition(): Point - Gets current spell position.
  * getLightLevel(): int - Gets light level in current spell position.
  * getTemperature(): int - Gets temperature in current spell position.
- * getHumidity(): int - Gets humidity level in current spell position.
  * getIsSolidWall(direction: string): bool - Gets if there is a wall in specified direction.
  * getObjectsUnder(): Object[] - Gets all objects in current spell position.
  *

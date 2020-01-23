@@ -7,17 +7,17 @@ namespace CodeMagic.Core.Area
 {
     public interface IAreaMap
     {
+        int Level { get; }
+
         int Width { get; }
 
         int Height { get; }
-
-        int LightDropFactor { get; }
 
         /// <summary>
         /// Refreshes map before the first rendering.
         /// Calculates light level and etc.
         /// </summary>
-        void Refresh(DateTime gameTime);
+        void Refresh();
 
         /// <summary>
         /// Gets cell with specified coordinates.
@@ -63,7 +63,7 @@ namespace CodeMagic.Core.Area
         /// Updates entire map.
         /// Should be called after player action.
         /// </summary>
-        void Update(IJournal journal, DateTime gameTime);
+        void Update(IJournal journal);
 
         IDestroyableObject GetDestroyableObject(string id);
 
@@ -76,7 +76,5 @@ namespace CodeMagic.Core.Area
         Point GetObjectPosition<T>() where T : IMapObject;
 
         Point GetObjectPosition(Func<IMapObject, bool> selector);
-
-        LightLevel BackgroundLight { get; }
     }
 }

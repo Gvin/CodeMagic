@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using CodeMagic.Game.Configuration.Buildings;
 using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Configuration.Monsters;
 using CodeMagic.Game.Configuration.Physics;
@@ -47,7 +46,5 @@ namespace CodeMagic.Game.Configuration
         ISpellsConfiguration Spells { get; }
 
         IMonstersConfiguration Monsters { get; }
-
-        IBuildingsConfiguration Buildings { get; }
     }
 }

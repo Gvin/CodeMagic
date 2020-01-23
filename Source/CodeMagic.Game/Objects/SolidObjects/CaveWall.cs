@@ -15,7 +15,7 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         public override bool CanConnectTo(IMapObject mapObject)
         {
-            return mapObject is CaveWall || mapObject is MinableWall;
+            return mapObject is CaveWall;
         }
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)

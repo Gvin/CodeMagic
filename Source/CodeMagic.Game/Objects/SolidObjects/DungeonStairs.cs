@@ -1,13 +1,9 @@
-﻿using System;
-using CodeMagic.Core.Game;
-using CodeMagic.Core.Objects;
-using CodeMagic.Game.Locations;
-using CodeMagic.Game.Objects.Creatures;
+﻿using CodeMagic.Core.Objects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.SolidObjects
 {
-    public class DungeonStairs : IMapObject, IUsableObject, IWorldImageProvider
+    public class DungeonStairs : IMapObject, IWorldImageProvider
     {
         private const string ImageName = "Stairs_Up";
 
@@ -31,14 +27,6 @@ namespace CodeMagic.Game.Objects.SolidObjects
         }
 
         public ObjectSize Size => ObjectSize.Huge;
-
-        public void Use(GameCore<Player> game, Point position)
-        {
-            if (!(game.World.CurrentLocation is DungeonLocation dungeon))
-                throw new ArgumentException("Can only use stairs in dungeon locations.");
-
-            dungeon.MoveUp(game);
-        }
 
         public string Name => "Stairs";
 

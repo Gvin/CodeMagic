@@ -14,9 +14,5 @@ namespace CodeMagic.Game.Items
         IItem GenerateUsable(ItemRareness rareness);
 
         IItem GenerateResource();
-
-        IItem GenerateLumberjackAxe(ItemRareness rareness);
-
-        IItem GeneratePickaxe(ItemRareness rareness);
     }
 }

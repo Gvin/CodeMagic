@@ -1,33 +1,24 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Locations;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
-using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.JournalMessages;
-using CodeMagic.Game.Locations;
+using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.Game.Objects.Creatures;
-using CodeMagic.Game.MapGeneration.GlobalWorld;
-using CodeMagic.Game.MapGeneration.Home;
-using CodeMagic.UI.Sad.Views;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
     public class GameManager
     {
-        private const int GlobalWorldMapSize = 60;
-        private const int HomeAreaMapSize = 60;
-
-        private TravelInProgressView travelInProgressView;
-
         public GameCore<Player> StartGame()
         {
             var player = CreatePlayer();
-            var startingLocation = CreateHomeLocation(out var playerPosition);
-            var game = new GameCore<Player>(startingLocation, player, playerPosition);
-            startingLocation.CurrentArea.Refresh(game.GameTime);
+
+            var startMap = new DungeonMapGenerator(Properties.Settings.Default.DebugWriteMapToFile).GenerateNewMap(1, out var playerPosition);
+            var game = new GameCore<Player>(startMap, player, playerPosition);
+            startMap.Refresh();
 
             player.Inventory.ItemAdded += (sender, args) =>
             {
@@ -38,45 +29,12 @@ namespace CodeMagic.UI.Sad.GameProcess
                 game.Journal.Write(new ItemLostMessage(args.Item));
             };
 
-            var globalWorldLocation = CreateGlobalWorldLocation();
-            globalWorldLocation.CurrentArea.Refresh(game.GameTime);
-            game.World.AddLocation(globalWorldLocation);
-
-            game.World.TravelStarted += (sender, args) =>
-            {
-                travelInProgressView = new TravelInProgressView();
-                travelInProgressView.Show();
-            };
-
-            game.World.TravelFinished += (sender, args) =>
-            {
-                travelInProgressView?.Close();
-                travelInProgressView = null;
-            };
-
             return game;
-        }
-
-        private ILocation CreateHomeLocation(out Point playerPosition)
-        {
-            var map = new HomeLocationMapGenerator().GenerateMap(HomeAreaMapSize, HomeAreaMapSize, out var enterPositions, out playerPosition);
-            return new SimpleLocation(HomeLocationMapGenerator.LocationId, "Home", map, enterPositions, true);
-        }
-
-        private GlobalWorldLocation CreateGlobalWorldLocation()
-        {
-            var map = new GlobalWorldMapGenerator().GenerateMap(GlobalWorldMapSize, GlobalWorldMapSize, out var playerHomePosition);
-            return new GlobalWorldLocation(GlobalWorldMapGenerator.LocationId, map, playerHomePosition);
         }
 
         private Player CreatePlayer()
         {
             var player = new Player();
-
-            foreach (var building in ConfigurationManager.Current.Buildings.Buildings.Where(building => building.AutoUnlock))
-            {
-                player.UnlockBuilding(building);
-            }
 
             var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
 
@@ -90,13 +48,6 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             player.Inventory.AddItem(itemsGenerator.GenerateUsable(ItemRareness.Common));
             player.Inventory.AddItem(itemsGenerator.GenerateUsable(ItemRareness.Common));
-
-            player.Inventory.AddItem(new TeleporterStoneInactive());
-
-            player.Inventory.AddItem(itemsGenerator.GenerateLumberjackAxe(ItemRareness.Trash));
-            player.Inventory.AddItem(itemsGenerator.GeneratePickaxe(ItemRareness.Trash));
-
-            player.Inventory.AddItem(new WateringCan());
 
             return player;
         }

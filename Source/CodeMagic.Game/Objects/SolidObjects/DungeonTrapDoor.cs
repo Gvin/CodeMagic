@@ -1,7 +1,5 @@
-﻿using System;
-using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
-using CodeMagic.Game.Locations;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
@@ -10,6 +8,13 @@ namespace CodeMagic.Game.Objects.SolidObjects
     public class DungeonTrapDoor : IMapObject, IUsableObject, IWorldImageProvider
     {
         private const string ImageName = "Decoratives_TrapDoor";
+
+        private readonly IDungeonMapGenerator dungeonMapGenerator;
+
+        public DungeonTrapDoor(IDungeonMapGenerator dungeonMapGenerator)
+        {
+            this.dungeonMapGenerator = dungeonMapGenerator;
+        }
 
         public bool BlocksMovement => false;
 
@@ -41,10 +46,8 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         public void Use(GameCore<Player> game, Point position)
         {
-            if (!(game.World.CurrentLocation is DungeonLocation dungeon))
-                throw new ArgumentException("Can only use stairs in dungeon locations.");
-
-            dungeon.MoveDown(game);
+            var newMap = dungeonMapGenerator.GenerateNewMap(game.Map.Level + 1, out var newPlayerPosition);
+            game.ChangeMap(newMap, newPlayerPosition);
         }
     }
 }

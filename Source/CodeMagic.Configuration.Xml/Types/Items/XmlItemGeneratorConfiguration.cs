@@ -2,13 +2,11 @@
 using CodeMagic.Configuration.Xml.Types.Items.Armor;
 using CodeMagic.Configuration.Xml.Types.Items.Bonuses;
 using CodeMagic.Configuration.Xml.Types.Items.SpellBook;
-using CodeMagic.Configuration.Xml.Types.Items.Tool;
 using CodeMagic.Configuration.Xml.Types.Items.Weapon;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.Armor;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.Bonuses;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.SpellBook;
-using CodeMagic.Game.Items.ItemsGeneration.Configuration.Tool;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon;
 
 namespace CodeMagic.Configuration.Xml.Types.Items
@@ -39,11 +37,5 @@ namespace CodeMagic.Configuration.Xml.Types.Items
 
         [XmlElement("bonuses")]
         public XmlBonusesConfiguration BonusesConfigurationData { get; set; }
-
-        [XmlIgnore]
-        public IToolsConfiguration ToolsConfiguration => ToolsConfigurationData;
-
-        [XmlElement("tools")]
-        public XmlToolsConfiguration ToolsConfigurationData { get; set; }
     }
 }

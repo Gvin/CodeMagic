@@ -5,8 +5,6 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Items;
-using CodeMagic.Game.Area;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories;
@@ -29,7 +27,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
             this.mapObjectsFactory = mapObjectsFactory;
         }
 
-        public IAreaMap Generate(MapSize size, ItemRareness rareness, bool isLastLevel, out Point playerPosition)
+        public IAreaMap Generate(int level, MapSize size, out Point playerPosition)
         {
             var mapSize = GetSize(size);
 
@@ -41,19 +39,12 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
             playerPosition.X = playerPosition.X * 2 + 1;
             playerPosition.Y = playerPosition.Y * 2 + 1;
 
-            var map = ConvertToAreaMap(roomsMap, mapSize, mapSize);
+            var map = ConvertToAreaMap(level, roomsMap, mapSize, mapSize);
 
             var endPosition = GetEndPosition(map, playerPosition);
 
             map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
-            if (isLastLevel)
-            {
-                map.AddObject(endPosition, mapObjectsFactory.CreateExitPortal());
-            }
-            else
-            {
-                map.AddObject(endPosition, mapObjectsFactory.CreateTrapDoor());
-            }
+            map.AddObject(endPosition, mapObjectsFactory.CreateTrapDoor());
 
             return map;
         }
@@ -102,9 +93,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
             }
         }
 
-        private IAreaMap ConvertToAreaMap(Room[][] roomsMap, int width, int height)
+        private IAreaMap ConvertToAreaMap(int level, Room[][] roomsMap, int width, int height)
         {
-            var map = new AreaMap(() => new GameEnvironment(ConfigurationManager.Current.Physics), width, height, new InsideEnvironmentLightManager());
+            var map = new AreaMap(level, () => new GameEnvironment(ConfigurationManager.Current.Physics), width, height);
 
             var currentMapY = 1;
             foreach (var row in roomsMap)

@@ -63,9 +63,6 @@ namespace CodeMagic.UI.Sad.Controls
         {
             const int yPos = 7;
 
-            if (game.UpdateInProgress)
-                return;
-
             var cell = game.Map.GetCell(game.PlayerPosition);
 
             Surface.Print(2, yPos, "Area Mana:");

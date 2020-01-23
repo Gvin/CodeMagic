@@ -10,7 +10,6 @@ using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects;
-using CodeMagic.Game.Objects.Buildings;
 using CodeMagic.Game.Spells.SpellActions;
 using Jint;
 using Jint.Native;
@@ -128,7 +127,6 @@ namespace CodeMagic.Game.Spells.Script
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
             jsEngine.SetValue("getPosition", new Func<JsValue>(() => ConvertPoint(position)));
             jsEngine.SetValue("getTemperature", new Func<int>(() => map.GetCell(position).Temperature()));
-            jsEngine.SetValue("getHumidity", new Func<double>(() => GetHumidity(map, position)));
             jsEngine.SetValue("getIsSolidWall",
                 new Func<string, bool>((direction) => GetIfCellIsSolid(map, position, direction)));
             jsEngine.SetValue("getObjectsUnder", new Func<JsValue[]>(() => GetObjectsUnder(map, position)));
@@ -279,13 +277,6 @@ namespace CodeMagic.Game.Spells.Script
                 return true;
 
             return map.GetCell(checkPosition).BlocksProjectiles;
-        }
-
-        private double GetHumidity(IAreaMap map, Point position)
-        {
-            var cell = map.GetCell(position);
-            var growingPlace = cell.Objects.OfType<GrowingPlace>().FirstOrDefault();
-            return growingPlace?.Humidity ?? 0d;
         }
 
         #endregion

@@ -4,7 +4,6 @@ using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
-using CodeMagic.Game.Locations;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Sad.Common;
@@ -32,7 +31,6 @@ namespace CodeMagic.UI.Sad.Views
         private Button openSpellBookButton;
         private StandardButton openInventoryButton;
         private Button showItemsOnFloorButton;
-        private Button buildButton;
 
         private ButtonTheme standardButtonTheme;
         private ButtonTheme disabledButtonTheme;
@@ -134,14 +132,6 @@ namespace CodeMagic.UI.Sad.Views
             };
             showItemsOnFloorButton.Click += showItemsOnFloorButton_Click;
             Add(showItemsOnFloorButton);
-
-            buildButton = new StandardButton(30)
-            {
-                Position = new Point(Width - 39, 25),
-                Text = "[B] Build",
-            };
-            buildButton.Click += (sender, args) => OpenBuildMenu();
-            Add(buildButton);
         }
 
         private void showItemsOnFloorButton_Click(object sender, EventArgs e)
@@ -191,9 +181,6 @@ namespace CodeMagic.UI.Sad.Views
                 case Keys.G:
                     ShowItemsOnFloor();
                     return true;
-                case Keys.B:
-                    OpenBuildMenu();
-                    return true;
                 case Keys.Escape:
                     OpenMainMenu();
                     return true;
@@ -205,14 +192,6 @@ namespace CodeMagic.UI.Sad.Views
 
             game.PerformPlayerAction(action);
             return true;
-        }
-
-        private void OpenBuildMenu()
-        {
-            if (game.World.CurrentLocation.CanBuild())
-            {
-                new BuildingsView(game).Show();
-            }
         }
 
         private IPlayerAction GetPlayerAction(Keys key)
@@ -278,8 +257,6 @@ namespace CodeMagic.UI.Sad.Views
         {
             SetButtonEnabled(openSpellBookButton, game.Player.Equipment.SpellBook != null);
             SetButtonEnabled(showItemsOnFloorButton, game.Map.GetCell(game.PlayerPosition).Objects.OfType<IItem>().Any());
-
-            buildButton.IsVisible = game.World.CurrentLocation.CanBuild();
         }
     }
 }

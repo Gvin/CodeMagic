@@ -53,7 +53,7 @@ namespace CodeMagic.Core.Objects
 
             var nextCell = map.TryGetCell(endPoint);
             if (nextCell == null)
-                return new MovementResult(startPoint, false, true);
+                return new MovementResult(startPoint, false);
 
             if (!canPassFilter(nextCell))
                 return new MovementResult(startPoint, false);
@@ -75,14 +75,11 @@ namespace CodeMagic.Core.Objects
 
     public class MovementResult
     {
-        public MovementResult(Point newPosition, bool success, bool locationEdge = false)
+        public MovementResult(Point newPosition, bool success)
         {
             NewPosition = newPosition;
             Success = success;
-            LocationEdge = locationEdge;
         }
-
-        public bool LocationEdge { get; }
 
         public Point NewPosition { get; }
 

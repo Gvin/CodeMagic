@@ -13,16 +13,13 @@ namespace CodeMagic.Core.Area
         private readonly Dictionary<Type, Point> objectPositionCache;
         private readonly AreaMapCell[][] cells;
         private readonly Dictionary<string, IDestroyableObject> destroyableObjects;
-        private readonly IEnvironmentLightManager environmentLightManager;
 
-        public AreaMap(Func<IEnvironment> environmentFactory, int width, int height, IEnvironmentLightManager environmentLightManager, int lightSpreadFactor = 1)
+        public AreaMap(int level, Func<IEnvironment> environmentFactory, int width, int height)
         {
             objectPositionCache = new Dictionary<Type, Point>();
-            this.environmentLightManager = environmentLightManager;
             destroyableObjects = new Dictionary<string, IDestroyableObject>();
 
-            LightDropFactor = lightSpreadFactor;
-
+            Level = level;
             Width = width;
             Height = height;
 
@@ -37,10 +34,6 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        public int LightDropFactor { get; }
-
-        public LightLevel BackgroundLight { get; private set; }
-
         public IDestroyableObject GetDestroyableObject(string id)
         {
             if (destroyableObjects.ContainsKey(id))
@@ -48,6 +41,8 @@ namespace CodeMagic.Core.Area
 
             return null;
         }
+
+        public int Level { get; }
 
         public int Width { get; }
 
@@ -172,9 +167,8 @@ namespace CodeMagic.Core.Area
             return result;
         }
 
-        public void Refresh(DateTime gameTime)
+        public void Refresh()
         {
-            BackgroundLight = environmentLightManager.GetEnvironmentLight(gameTime);
             MapLightLevelHelper.ResetLightLevel(this);
             MapLightLevelHelper.UpdateLightLevel(this);
         }
@@ -184,10 +178,8 @@ namespace CodeMagic.Core.Area
             PreUpdateCells();
         }
 
-        public void Update(IJournal journal, DateTime gameTime)
+        public void Update(IJournal journal)
         {
-            BackgroundLight = environmentLightManager.GetEnvironmentLight(gameTime);
-
             objectPositionCache.Clear();
 
             UpdateCells(journal, UpdateOrder.Early);

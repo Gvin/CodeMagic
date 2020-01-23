@@ -6,7 +6,6 @@ using CodeMagic.Core.Items;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration;
 using CodeMagic.Game.Items.ItemsGeneration.Implementations;
 using CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses;
-using CodeMagic.Game.Items.ItemsGeneration.Implementations.Tool;
 using CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon;
 
 namespace CodeMagic.Game.Items.ItemsGeneration
@@ -24,8 +23,6 @@ namespace CodeMagic.Game.Items.ItemsGeneration
         private readonly SpellBookGenerator spellBookGenerator;
         private readonly UsableItemsGenerator usableItemsGenerator;
         private readonly ResourcesGenerator resourcesGenerator;
-        private readonly LumberjackAxeGenerator lumberjackAxeGenerator;
-        private readonly PickaxeGenerator pickaxeGenerator;
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage, IAncientSpellsProvider spellsProvider)
         {
@@ -83,18 +80,6 @@ namespace CodeMagic.Game.Items.ItemsGeneration
             spellBookGenerator = new SpellBookGenerator(configuration.SpellBooksConfiguration, bonusesGenerator, imagesStorage);
             usableItemsGenerator = new UsableItemsGenerator(imagesStorage, spellsProvider);
             resourcesGenerator = new ResourcesGenerator();
-            lumberjackAxeGenerator = new LumberjackAxeGenerator(configuration.ToolsConfiguration.LumberjackAxe, imagesStorage);
-            pickaxeGenerator = new PickaxeGenerator(configuration.ToolsConfiguration.Pickaxe, imagesStorage);
-        }
-
-        public IItem GeneratePickaxe(ItemRareness rareness)
-        {
-            return pickaxeGenerator.GenerateTool(rareness);
-        }
-
-        public IItem GenerateLumberjackAxe(ItemRareness rareness)
-        {
-            return lumberjackAxeGenerator.GenerateTool(rareness);
         }
 
         public WeaponItem GenerateWeapon(ItemRareness rareness)

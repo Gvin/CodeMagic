@@ -8,7 +8,6 @@ using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Area.EnvironmentData;
-using CodeMagic.Game.Configuration.Buildings;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Statuses;
 using CodeMagic.UI.Images;
@@ -30,8 +29,6 @@ namespace CodeMagic.Game.Objects.Creatures
         private double hungerPercent;
         private readonly double hungerIncrement;
 
-        private readonly List<IBuildingConfiguration> unlockedBuildings;
-
         public Player() : base(100)
         {
             Equipment = new Equipment();
@@ -43,8 +40,6 @@ namespace CodeMagic.Game.Objects.Creatures
 
             Inventory = new Inventory();
             Inventory.ItemRemoved += Inventory_ItemRemoved;
-
-            unlockedBuildings = new List<IBuildingConfiguration>();
         }
 
         private void Inventory_ItemRemoved(object sender, ItemEventArgs e)
@@ -62,20 +57,6 @@ namespace CodeMagic.Game.Objects.Creatures
         {
             get => (int)Math.Floor(hungerPercent);
             set => hungerPercent = Math.Min(100d, value);
-        }
-
-        public bool UnlockBuilding(IBuildingConfiguration building)
-        {
-            if (unlockedBuildings.Any(unlocked => unlocked.Type == building.Type))
-                return false;
-
-            unlockedBuildings.Add(building);
-            return true;
-        }
-
-        public bool GetIfBuildingUnlocked(IBuildingConfiguration building)
-        {
-            return unlockedBuildings.Any(unlocked => unlocked.Type == building.Type);
         }
 
         public int MaxCarryWeight { get; }
