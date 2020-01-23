@@ -8,7 +8,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 {
     internal class DungeonObjectsGenerator
     {
-        private const double StonesCountMultiplier = 0.1;
+        private const double StonesCountMultiplier = 0.05;
         private const double TorchPostsCountMultiplier = 0.01;
 
         private const int MaxPositionSearchTries = 20;

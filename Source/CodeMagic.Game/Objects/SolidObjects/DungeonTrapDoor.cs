@@ -1,5 +1,6 @@
 ﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
@@ -48,6 +49,7 @@ namespace CodeMagic.Game.Objects.SolidObjects
         {
             var newMap = dungeonMapGenerator.GenerateNewMap(game.Map.Level + 1, out var newPlayerPosition);
             game.ChangeMap(newMap, newPlayerPosition);
+            game.Journal.Write(new DungeonLevelMessage(game.Map.Level));
         }
     }
 }
