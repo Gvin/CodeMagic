@@ -59,6 +59,7 @@
     <Compile Include="Area\MapObjectsCollection.cs" />
     <Compile Include="Common\ConcurrentList.cs" />
     <Compile Include="Common\Direction.cs" />
+    <Compile Include="Common\PerformanceMeter.cs" />
     <Compile Include="CreaturesLogic\ICreatureStrategy.cs" />
     <Compile Include="CreaturesLogic\LogicHelper.cs" />
     <Compile Include="Common\DirectionHelper.cs" />

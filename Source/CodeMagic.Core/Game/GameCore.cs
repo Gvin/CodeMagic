@@ -8,6 +8,8 @@ namespace CodeMagic.Core.Game
 {
     public class GameCore<TPlayer> : ITurnProvider, IGameCore where TPlayer : IPlayer
     {
+        private AreaMapFragment cachedVisibleArea;
+
         public GameCore(IAreaMap map, TPlayer player, Point playerPosition)
         {
             Map = map;
@@ -19,6 +21,8 @@ namespace CodeMagic.Core.Game
             Journal = new Journal(this);
 
             CurrentTurn = 1;
+
+            cachedVisibleArea = null;
         }
 
         public int CurrentTurn { get; private set; }
@@ -42,6 +46,8 @@ namespace CodeMagic.Core.Game
 
         public void PerformPlayerAction(IPlayerAction action)
         {
+            cachedVisibleArea = null;
+
             Map.PreUpdate(Journal);
 
             var endsTurn = action.Perform(this, out var newPosition);
@@ -61,7 +67,7 @@ namespace CodeMagic.Core.Game
         private void ProcessSystemTurn()
         {
             CurrentTurn++;
-            UpdateMap();
+            Map.Update(Journal);
         }
 
         private bool GetIfPlayerIsFrozen()
@@ -69,13 +75,11 @@ namespace CodeMagic.Core.Game
             return Player.Statuses.Contains(FrozenObjectStatus.StatusType);
         }
 
-        private void UpdateMap()
-        {
-            Map.Update(Journal);
-        }
-
         public AreaMapFragment GetVisibleArea()
         {
+            if (cachedVisibleArea != null)
+                return cachedVisibleArea;
+
             var visibleArea = VisibilityHelper.GetVisibleArea(Player.VisibilityRange, PlayerPosition, Map);
             if (Player.VisibilityRange == Player.MaxVisibilityRange)
                 return visibleArea;
@@ -99,7 +103,8 @@ namespace CodeMagic.Core.Game
                 }
             }
 
-            return new AreaMapFragment(result, visibleAreaDiameter, visibleAreaDiameter);
+            cachedVisibleArea = new AreaMapFragment(result, visibleAreaDiameter, visibleAreaDiameter);
+            return cachedVisibleArea;
         }
 
         public void Dispose()

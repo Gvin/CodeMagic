@@ -182,15 +182,28 @@ namespace CodeMagic.Core.Area
         {
             objectPositionCache.Clear();
 
-            UpdateCells(journal, UpdateOrder.Early);
+            using (PerformanceMeter.Start("UpdateCells_Early"))
+            {
+                UpdateCells(journal, UpdateOrder.Early);
+            }
 
             MapLightLevelHelper.ResetLightLevel(this);
             MapLightLevelHelper.UpdateLightLevel(this);
 
-            UpdateCells(journal, UpdateOrder.Medium);
-            UpdateCells(journal, UpdateOrder.Late);
+            using (PerformanceMeter.Start("UpdateCells_Medium"))
+            {
+                UpdateCells(journal, UpdateOrder.Medium);
+            }
 
-            PostUpdateCells(journal);
+            using (PerformanceMeter.Start("UpdateCells_Late"))
+            {
+                UpdateCells(journal, UpdateOrder.Late);
+            }
+
+            using (PerformanceMeter.Start("PostUpdateCells"))
+            {
+                PostUpdateCells(journal);
+            }
         }
 
         private void UpdateCells(IJournal journal, UpdateOrder order)

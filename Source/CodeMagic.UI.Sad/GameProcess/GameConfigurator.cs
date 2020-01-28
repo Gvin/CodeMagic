@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using CodeMagic.Configuration.Xml;
+using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Injection.Configuration;
@@ -25,6 +26,10 @@ namespace CodeMagic.UI.Sad.GameProcess
             ImagesStorage.Current.Load();
 
             InitializeInjector();
+
+#if DEBUG
+            PerformanceMeter.Initialize(@".\Performance.log");
+#endif
         }
 
         private static void InitializeInjector()

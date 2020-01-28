@@ -85,19 +85,28 @@ namespace CodeMagic.UI.Sad.Views
 
         public override bool ProcessKeyboard(Keyboard info)
         {
-            if (info.KeysPressed.Count != 1)
-                return base.ProcessKeyboard(info);
+            if (info.KeysPressed.Count == 1)
+            {
+                var keyPressed = info.KeysPressed[0];
+                return ProcessKeyPressed(keyPressed) || base.ProcessKeyboard(info);
+            }
 
-            var key = info.KeysPressed[0];
-            if (ProcessKeyPressed(key))
-                return true;
+            if (info.KeysDown.Count == 1)
+            {
+                var keyDown = info.KeysDown[0];
+                return ProcessKeyDown(keyDown) || base.ProcessKeyboard(info);
+            }
 
             return base.ProcessKeyboard(info);
         }
 
         protected virtual bool ProcessKeyPressed(AsciiKey key)
         {
-            // Do nothing
+            return false;
+        }
+
+        protected virtual bool ProcessKeyDown(AsciiKey key)
+        {
             return false;
         }
 

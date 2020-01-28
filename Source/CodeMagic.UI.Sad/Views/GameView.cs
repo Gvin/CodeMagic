@@ -20,6 +20,8 @@ namespace CodeMagic.UI.Sad.Views
 {
     public class GameView : View
     {
+        private static readonly TimeSpan KeyProcessFrequency = TimeSpan.FromMilliseconds(200);
+
         private readonly GameCore<Player> game;
 
         private PlayerStatsControl playerStats;
@@ -35,9 +37,13 @@ namespace CodeMagic.UI.Sad.Views
         private ButtonTheme standardButtonTheme;
         private ButtonTheme disabledButtonTheme;
 
+        private DateTime lastKeyProcessed;
+
         public GameView(GameCore<Player> game) 
             : base(Program.Width, Program.Height)
         {
+            lastKeyProcessed = DateTime.Now;
+
             UseKeyboard = true;
 
             this.game = game;
@@ -186,10 +192,32 @@ namespace CodeMagic.UI.Sad.Views
                     return true;
             }
 
-            var action = GetPlayerAction(key.Key);
-            if (action == null)
-                return base.ProcessKeyPressed(key);
+            if (PerformKeyPlayerAction(key.Key))
+                return true;
 
+            return base.ProcessKeyPressed(key);
+        }
+
+        protected override bool ProcessKeyDown(AsciiKey key)
+        {
+            if (PerformKeyPlayerAction(key.Key))
+            {
+                return true;
+            }
+
+            return base.ProcessKeyDown(key);
+        }
+
+        private bool PerformKeyPlayerAction(Keys key)
+        {
+            if (DateTime.Now - lastKeyProcessed < KeyProcessFrequency)
+                return false;
+
+            var action = GetPlayerAction(key);
+            if (action == null)
+                return false;
+
+            lastKeyProcessed = DateTime.Now;
             game.PerformPlayerAction(action);
             return true;
         }
