@@ -20,7 +20,7 @@ namespace CodeMagic.UI.Sad.Views
 {
     public class GameView : View
     {
-        private static readonly TimeSpan KeyProcessFrequency = TimeSpan.FromMilliseconds(200);
+        private static readonly TimeSpan KeyProcessFrequency = TimeSpan.FromMilliseconds(Properties.Settings.Default.MinActionsInterval);
 
         private readonly GameCore<Player> game;
 

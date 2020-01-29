@@ -94,5 +94,17 @@ namespace CodeMagic.UI.Sad.Properties {
                 this["Brightness"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int MinActionsInterval {
+            get {
+                return ((int)(this["MinActionsInterval"]));
+            }
+            set {
+                this["MinActionsInterval"] = value;
+            }
+        }
     }
 }

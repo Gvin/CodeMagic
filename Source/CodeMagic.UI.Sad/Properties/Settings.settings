@@ -23,5 +23,8 @@
     <Setting Name="Brightness" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.17</Value>
     </Setting>
+    <Setting Name="MinActionsInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

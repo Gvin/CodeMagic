@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
-using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.MapGeneration.Dungeon;
