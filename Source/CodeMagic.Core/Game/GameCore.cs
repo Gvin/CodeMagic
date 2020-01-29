@@ -46,8 +46,6 @@ namespace CodeMagic.Core.Game
 
         public void PerformPlayerAction(IPlayerAction action)
         {
-            cachedVisibleArea = null;
-
             Map.PreUpdate(Journal);
 
             var endsTurn = action.Perform(this, out var newPosition);
@@ -62,6 +60,8 @@ namespace CodeMagic.Core.Game
                     ProcessSystemTurn();
                 }
             }
+
+            cachedVisibleArea = null;
         }
 
         private void ProcessSystemTurn()
