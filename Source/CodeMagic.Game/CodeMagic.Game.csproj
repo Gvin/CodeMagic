@@ -149,7 +149,7 @@
     <Compile Include="Items\ItemsGeneration\ItemRecolorHelper.cs" />
     <Compile Include="Items\ItemsGeneration\ItemsGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\NameGenerationHelper.cs" />
-    <Compile Include="Items\ItemTextHelper.cs" />
+    <Compile Include="Items\TextHelper.cs" />
     <Compile Include="Items\Materials\BlankScroll.cs" />
     <Compile Include="Items\Materials\Stone.cs" />
     <Compile Include="Items\Materials\Wood.cs" />
@@ -218,6 +218,7 @@
     <Compile Include="Objects\Creatures\NonPlayableCreatureObject.cs" />
     <Compile Include="Objects\Creatures\NonPlayable\MonsterCreatureImpl.cs" />
     <Compile Include="Objects\Creatures\Player.cs" />
+    <Compile Include="Objects\Creatures\PlayerStats.cs" />
     <Compile Include="Objects\Creatures\Remains\CreatureRemainsGenerator.cs" />
     <Compile Include="Objects\DecorativeObjects\CreatureRemains.cs" />
     <Compile Include="Objects\DecorativeObjects\DungeonTorchPost.cs" />

@@ -32,7 +32,11 @@ namespace CodeMagic.Game.Objects.Creatures
             {
                 Logic.SetInitialStrategy(new StandStillStrategy());
             }
+
+            MaxHealth = maxHealth;
         }
+
+        public override int MaxHealth { get; }
 
         protected virtual float NormalSpeed => 1f;
 

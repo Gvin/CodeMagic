@@ -37,7 +37,7 @@ namespace CodeMagic.Game.Items.Materials
         {
             return new[]
             {
-                ItemTextHelper.GetWeightLine(Weight),
+                TextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
                 new StyledLine {"An empty parchment scroll."},
                 new StyledLine {"A spell can be written to it with mana."},

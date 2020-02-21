@@ -118,10 +118,10 @@ namespace CodeMagic.Game.Items.Usable
         {
             return new[]
             {
-                ItemTextHelper.GetWeightLine(Weight),
+                TextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
                 new StyledLine {$"Spell Name: {SpellName}"},
-                new StyledLine {"Damaged: ", new StyledString($"{damagePercent}%", ItemTextHelper.NegativeValueColor)},
+                new StyledLine {"Damaged: ", new StyledString($"{damagePercent}%", TextHelper.NegativeValueColor)},
                 StyledLine.Empty,
                 new StyledLine {"This scroll looks old and damaged."},
                 new StyledLine {"It's title is written with some unknown language."},

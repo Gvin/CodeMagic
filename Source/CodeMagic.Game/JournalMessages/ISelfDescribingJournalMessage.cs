@@ -45,8 +45,8 @@ namespace CodeMagic.Game.JournalMessages
 
         protected static StyledString GetDamageText(int damage, Element element)
         {
-            var color = ItemTextHelper.GetElementColor(element);
-            var elementText = ItemTextHelper.GetElementName(element);
+            var color = TextHelper.GetElementColor(element);
+            var elementText = TextHelper.GetElementName(element);
             return new StyledString($"{damage} {elementText} damage", color);
         }
 

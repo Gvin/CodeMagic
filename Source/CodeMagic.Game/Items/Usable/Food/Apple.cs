@@ -31,7 +31,7 @@ namespace CodeMagic.Game.Items.Usable.Food
         {
             return new[]
             {
-                new StyledLine {{"A sweet red apple. Juicy and tasty.", ItemTextHelper.DescriptionTextColor}}
+                new StyledLine {{"A sweet red apple. Juicy and tasty.", TextHelper.DescriptionTextColor}}
             };
         }
     }

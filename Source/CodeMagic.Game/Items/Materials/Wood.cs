@@ -39,12 +39,12 @@ namespace CodeMagic.Game.Items.Materials
         {
             return new[]
             {
-                ItemTextHelper.GetWeightLine(Weight),
+                TextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
                 new StyledLine {$"Fuel: {FuelLeft} / {MaxFuel}"},
                 StyledLine.Empty,
-                new StyledLine {{"A big piece of wood.", ItemTextHelper.DescriptionTextColor}},
-                new StyledLine {{"It can be used for building or as a fuel source.", ItemTextHelper.DescriptionTextColor}}
+                new StyledLine {{"A big piece of wood.", TextHelper.DescriptionTextColor}},
+                new StyledLine {{"It can be used for building or as a fuel source.", TextHelper.DescriptionTextColor}}
             };
         }
 

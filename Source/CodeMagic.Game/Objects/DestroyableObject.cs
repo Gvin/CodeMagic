@@ -15,18 +15,16 @@ namespace CodeMagic.Game.Objects
     public abstract class DestroyableObject : IDestroyableObject
     {
         private int health;
-        private int maxHealth;
         protected readonly Dictionary<Element, int> BaseProtection;
 
-        protected DestroyableObject(int maxHealth)
+        protected DestroyableObject(int startHealth = 1)
         {
             Id = Guid.NewGuid().ToString();
             BaseProtection = new Dictionary<Element, int>();
             Statuses = new ObjectStatusesCollection(this);
             ObjectEffects = new List<IObjectEffect>();
 
-            this.maxHealth = maxHealth;
-            health = maxHealth;
+            health = startHealth;
         }
 
         public string Id { get; }
@@ -81,7 +79,7 @@ namespace CodeMagic.Game.Objects
             set => health = Math.Max(0, Math.Min(MaxHealth, value));
         }
 
-        public virtual int MaxHealth => maxHealth;
+        public abstract int MaxHealth { get; }
 
         protected virtual double CatchFireChanceMultiplier => 1;
 

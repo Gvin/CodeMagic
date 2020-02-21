@@ -46,11 +46,11 @@ namespace CodeMagic.Game.Items
 
             if (equipedArmor == null || Equals(equipedArmor))
             {
-                result.Add(ItemTextHelper.GetWeightLine(Weight));
+                result.Add(TextHelper.GetWeightLine(Weight));
             }
             else
             {
-                result.Add(ItemTextHelper.GetCompareWeightLine(Weight, equipedArmor.Weight));
+                result.Add(TextHelper.GetCompareWeightLine(Weight, equipedArmor.Weight));
             }
 
             result.Add(StyledLine.Empty);
@@ -59,11 +59,11 @@ namespace CodeMagic.Game.Items
 
             result.Add(StyledLine.Empty);
 
-            ItemTextHelper.AddBonusesDescription(this, equipedArmor, result);
+            TextHelper.AddBonusesDescription(this, equipedArmor, result);
 
             result.Add(StyledLine.Empty);
 
-            result.AddRange(ItemTextHelper.ConvertDescription(description));
+            result.AddRange(TextHelper.ConvertDescription(description));
 
             return result.ToArray();
         }
@@ -80,18 +80,18 @@ namespace CodeMagic.Game.Items
                 {
                     var protectionLine = new StyledLine
                     {
-                        new StyledString($"{ItemTextHelper.GetElementName(element)}",
-                            ItemTextHelper.GetElementColor(element)),
+                        new StyledString($"{TextHelper.GetElementName(element)}",
+                            TextHelper.GetElementColor(element)),
                         " Protection: "
                     };
 
                     if (equiped)
                     {
-                        protectionLine.Add(ItemTextHelper.GetValueString(value, "%"));
+                        protectionLine.Add(TextHelper.GetValueString(value, "%"));
                     }
                     else
                     {
-                        protectionLine.Add(ItemTextHelper.GetCompareValueString(value, equipedValue, "%"));
+                        protectionLine.Add(TextHelper.GetCompareValueString(value, equipedValue, "%"));
                     }
 
                     descriptionResult.Add(protectionLine);

@@ -40,11 +40,11 @@ namespace CodeMagic.Game.Items
 
             if (equipedBook == null || Equals(equipedBook))
             {
-                result.Add(ItemTextHelper.GetWeightLine(Weight));
+                result.Add(TextHelper.GetWeightLine(Weight));
             }
             else
             {
-                result.Add(ItemTextHelper.GetCompareWeightLine(Weight, equipedBook.Weight));
+                result.Add(TextHelper.GetCompareWeightLine(Weight, equipedBook.Weight));
             }
 
             result.Add(StyledLine.Empty);
@@ -52,11 +52,11 @@ namespace CodeMagic.Game.Items
             var capacityLine = new StyledLine { "Spells Capacity: " };
             if (equipedBook == null || Equals(equipedBook))
             {
-                capacityLine.Add(ItemTextHelper.GetValueString(BookSize, formatBonus: false));
+                capacityLine.Add(TextHelper.GetValueString(BookSize, formatBonus: false));
             }
             else
             {
-                capacityLine.Add(ItemTextHelper.GetCompareValueString(BookSize, equipedBook.BookSize, formatBonus: false));
+                capacityLine.Add(TextHelper.GetCompareValueString(BookSize, equipedBook.BookSize, formatBonus: false));
             }
             result.Add(capacityLine);
 
@@ -64,7 +64,7 @@ namespace CodeMagic.Game.Items
 
             result.Add(StyledLine.Empty);
 
-            result.AddRange(ItemTextHelper.ConvertDescription(description));
+            result.AddRange(TextHelper.ConvertDescription(description));
 
             return result.ToArray();
         }

@@ -30,7 +30,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
                 armorConfig.Protection.Add(element, protection);
             }
 
-            name.Postfixes.Add(string.Format(NamePostfixTemplate, ItemTextHelper.GetElementName(element)));
+            name.Postfixes.Add(string.Format(NamePostfixTemplate, TextHelper.GetElementName(element)));
         }
     }
 }

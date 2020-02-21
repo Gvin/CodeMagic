@@ -20,7 +20,7 @@ namespace CodeMagic.UI.Sad.Drawing.ObjectEffects
 
         public override SymbolsImage GetEffectImage(int width, int height)
         {
-            var color = ItemTextHelper.GetElementColor(Element);
+            var color = TextHelper.GetElementColor(Element);
             var damageText = Value.ToString();
 
             var xShift = 1;

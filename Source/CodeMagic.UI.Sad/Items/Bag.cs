@@ -51,9 +51,9 @@ namespace CodeMagic.UI.Sad.Items
         {
             return new[]
             {
-                ItemTextHelper.GetWeightLine(Weight),
+                TextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
-                new StyledLine{{"A bag made of good leather.", ItemTextHelper.DescriptionTextColor}}
+                new StyledLine{{"A bag made of good leather.", TextHelper.DescriptionTextColor}}
             };
         }
     }

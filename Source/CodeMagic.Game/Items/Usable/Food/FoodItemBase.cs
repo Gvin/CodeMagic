@@ -46,9 +46,9 @@ namespace CodeMagic.Game.Items.Usable.Food
         {
             var result = new List<StyledLine>
             {
-                ItemTextHelper.GetWeightLine(Weight),
+                TextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
-                new StyledLine {"Hunger Decrease: ", ItemTextHelper.GetValueString(hungerDecrease, "%", false)},
+                new StyledLine {"Hunger Decrease: ", TextHelper.GetValueString(hungerDecrease, "%", false)},
                 StyledLine.Empty
             };
             result.AddRange(GetDescriptionText());

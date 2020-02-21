@@ -48,10 +48,10 @@ namespace CodeMagic.Game.Items.Usable
         {
             return new[]
             {
-                ItemTextHelper.GetWeightLine(Weight),
+                TextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
                 new StyledLine {$"Spell Name: {SpellName}"},
-                new StyledLine {"Spell Mana: ", new StyledString(Mana.ToString(), ItemTextHelper.ManaColor)}, 
+                new StyledLine {"Spell Mana: ", new StyledString(Mana.ToString(), TextHelper.ManaColor)}, 
                 StyledLine.Empty, 
                 new StyledLine {"A new scroll that you have created. A single use item."},
                 new StyledLine {"It can be used to cast a spell without mana loss."}

@@ -21,6 +21,8 @@ namespace CodeMagic.Game.Objects.Creatures
         private const string ImageLeft = "Player_Left";
         private const string ImageRight = "Player_Right";
 
+        private const int DefaultStatValue = 1;
+
         private const int MaxProtection = 75;
 
         private int mana;
@@ -28,8 +30,9 @@ namespace CodeMagic.Game.Objects.Creatures
         private int manaRegeneration;
         private double hungerPercent;
         private readonly double hungerIncrement;
+        private readonly Dictionary<PlayerStats, int> stats;
 
-        public Player() : base(100)
+        public Player() : base(GetMaxHealth(DefaultStatValue))
         {
             Equipment = new Equipment();
             MaxMana = 1000;
@@ -40,6 +43,22 @@ namespace CodeMagic.Game.Objects.Creatures
 
             Inventory = new Inventory();
             Inventory.ItemRemoved += Inventory_ItemRemoved;
+
+            stats = new Dictionary<PlayerStats, int>();
+            foreach (var playerStat in Enum.GetValues(typeof(PlayerStats)).Cast<PlayerStats>())
+            {
+                stats.Add(playerStat, DefaultStatValue);
+            }
+        }
+
+        private static int GetMaxHealth(int strength)
+        {
+            return 100 + (strength - DefaultStatValue) * 10;
+        }
+
+        public int GetStat(PlayerStats stat)
+        {
+            return stats[stat];
         }
 
         private void Inventory_ItemRemoved(object sender, ItemEventArgs e)
@@ -88,13 +107,13 @@ namespace CodeMagic.Game.Objects.Creatures
             }
         }
 
+        public override int MaxHealth => GetMaxHealth(stats[PlayerStats.Strength]) + Equipment.GetBonusHealth();
+
         public int Mana
         {
             get => mana;
             set => mana = Math.Max(0, Math.Min(MaxMana, value));
         }
-
-        public override int MaxHealth => base.MaxHealth + Equipment.GetBonusHealth();
 
         public int MaxMana
         {

@@ -42,7 +42,7 @@ namespace CodeMagic.Game.Items.Usable
         {
             var result = new List<StyledLine>
             {
-                ItemTextHelper.GetWeightLine(Weight),
+                TextHelper.GetWeightLine(Weight),
                 StyledLine.Empty
             };
 
@@ -51,7 +51,7 @@ namespace CodeMagic.Game.Items.Usable
                 result.Add(new StyledLine
                 {
                     "Heals ",
-                    new StyledString(healValue.ToString(), ItemTextHelper.HealthColor),
+                    new StyledString(healValue.ToString(), TextHelper.HealthColor),
                     " health when used."
                 });
             }
@@ -61,7 +61,7 @@ namespace CodeMagic.Game.Items.Usable
                 result.Add(new StyledLine
                 {
                     "Restores ",
-                    new StyledString(manaRestoreValue.ToString(), ItemTextHelper.ManaColor),
+                    new StyledString(manaRestoreValue.ToString(), TextHelper.ManaColor),
                     " mana when used."
                 });
             }

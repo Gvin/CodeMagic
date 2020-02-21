@@ -47,7 +47,7 @@ namespace CodeMagic.Game.Items
             var result = GetCharacteristicsDescription(player).ToList();
 
             result.Add(StyledLine.Empty);
-            result.AddRange(ItemTextHelper.ConvertDescription(description));
+            result.AddRange(TextHelper.ConvertDescription(description));
 
             return result.ToArray();
         }
@@ -60,11 +60,11 @@ namespace CodeMagic.Game.Items
 
             if (equipedWeapon == null || Equals(equipedWeapon))
             {
-                result.Add(ItemTextHelper.GetWeightLine(Weight));
+                result.Add(TextHelper.GetWeightLine(Weight));
             }
             else
             {
-                result.Add(ItemTextHelper.GetCompareWeightLine(Weight, equipedWeapon.Weight));
+                result.Add(TextHelper.GetCompareWeightLine(Weight, equipedWeapon.Weight));
             }
 
             result.Add(StyledLine.Empty);
@@ -74,18 +74,18 @@ namespace CodeMagic.Game.Items
             var hitChanceLine = new StyledLine { "Hit Chance: " };
             if (equipedWeapon == null || Equals(equipedWeapon))
             {
-                hitChanceLine.Add(ItemTextHelper.GetValueString(HitChance, "%", false));
+                hitChanceLine.Add(TextHelper.GetValueString(HitChance, "%", false));
             }
             else
             {
-                hitChanceLine.Add(ItemTextHelper.GetCompareValueString(HitChance, equipedWeapon.HitChance, "%", false));
+                hitChanceLine.Add(TextHelper.GetCompareValueString(HitChance, equipedWeapon.HitChance, "%", false));
             }
             result.Add(hitChanceLine);
 
             result.Add(StyledLine.Empty);
-            ItemTextHelper.AddBonusesDescription(this, equipedWeapon, result);
+            TextHelper.AddBonusesDescription(this, equipedWeapon, result);
             result.Add(StyledLine.Empty);
-            ItemTextHelper.AddLightBonusDescription(this, result);
+            TextHelper.AddLightBonusDescription(this, result);
 
             return result.ToArray();
         }
@@ -107,8 +107,8 @@ namespace CodeMagic.Game.Items
 
                 var damageLine = new StyledLine
                 {
-                    new StyledString($"{ItemTextHelper.GetElementName(element)}",
-                        ItemTextHelper.GetElementColor(element)),
+                    new StyledString($"{TextHelper.GetElementName(element)}",
+                        TextHelper.GetElementColor(element)),
                     " Damage: "
                 };
 
@@ -141,8 +141,8 @@ namespace CodeMagic.Game.Items
         private Color GetValueDependentColor(int value, int otherValue)
         {
             if (value == otherValue)
-                return ItemTextHelper.NeutralColor;
-            return value > otherValue ? ItemTextHelper.PositiveValueColor : ItemTextHelper.NegativeValueColor;
+                return TextHelper.NeutralColor;
+            return value > otherValue ? TextHelper.PositiveValueColor : TextHelper.NegativeValueColor;
         }
 
         private static int GetMaxDamage(WeaponItem item, Element element)

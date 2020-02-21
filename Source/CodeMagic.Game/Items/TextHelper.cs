@@ -4,10 +4,11 @@ using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.Items
 {
-    public static class ItemTextHelper
+    public static class TextHelper
     {
         private static readonly Color PhysicalDamageColor = Color.Red;
         private static readonly Color FireDamageColor = Color.Orange;
@@ -25,6 +26,23 @@ namespace CodeMagic.Game.Items
         public static readonly Color HealthColor = Color.Green;
         public static readonly Color ManaColor = Color.Blue;
         public static readonly Color ManaRegenerationColor = Color.DodgerBlue;
+
+        public static string GetStatName(PlayerStats stat)
+        {
+            switch (stat)
+            {
+                case PlayerStats.Strength:
+                    return "Strength";
+                case PlayerStats.Agility:
+                    return "Agility";
+                case PlayerStats.Intelligence:
+                    return "Intelligence";
+                case PlayerStats.Wisdom:
+                    return "Wisdom";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(stat), stat, null);
+            }
+        }
 
         public static StyledLine GetWeightLine(int weight)
         {

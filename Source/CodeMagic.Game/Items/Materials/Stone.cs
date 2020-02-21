@@ -32,10 +32,10 @@ namespace CodeMagic.Game.Items.Materials
         {
             return new[]
             {
-                ItemTextHelper.GetWeightLine(Weight),
+                TextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
-                new StyledLine {{"A normal medium size stone.", ItemTextHelper.DescriptionTextColor}},
-                new StyledLine {{"It can be used for building.", ItemTextHelper.DescriptionTextColor}}
+                new StyledLine {{"A normal medium size stone.", TextHelper.DescriptionTextColor}},
+                new StyledLine {{"It can be used for building.", TextHelper.DescriptionTextColor}}
             };
         }
     }

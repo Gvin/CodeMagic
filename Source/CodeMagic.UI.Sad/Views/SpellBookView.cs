@@ -448,7 +448,7 @@ namespace CodeMagic.UI.Sad.Views
             surface.Print(4, y, spellName, new Cell(spellNameColor, backColor));
 
             var manaCost = GetManaCostText();
-            surface.Print(maxWidth - 5, y, manaCost, new Cell(ItemTextHelper.ManaColor.ToXna(), backColor));
+            surface.Print(maxWidth - 5, y, manaCost, new Cell(TextHelper.ManaColor.ToXna(), backColor));
         }
 
         private string GetManaCostText()

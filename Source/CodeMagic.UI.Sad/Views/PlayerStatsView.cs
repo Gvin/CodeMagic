@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Xml.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
@@ -35,6 +34,26 @@ namespace CodeMagic.UI.Sad.Views
             Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
             PrintProtection(2, 4);
+            PrintPlayerStats(25, 4);
+        }
+
+        private void PrintPlayerStats(int dX, int dY)
+        {
+            Print(dX, dY, "Stats:");
+
+            var stats = Enum.GetValues(typeof(PlayerStats)).Cast<PlayerStats>().ToArray();
+            var maxLength = stats.Select(TextHelper.GetStatName).Select(name => name.Length).Max();
+            for (var index = 0; index < stats.Length; index++)
+            {
+                var stat = stats[index];
+
+                var value = player.GetStat(stat);
+                var name = TextHelper.GetStatName(stat);
+
+                var y = dY + 2 + index;
+                Print(dX, y, name);
+                Print(dX + maxLength + 1, y, value.ToString());
+            }
         }
 
         private void PrintProtection(int dX, int dY)
@@ -42,16 +61,16 @@ namespace CodeMagic.UI.Sad.Views
             Print(dX, dY, "Protection:");
 
             var elements = Enum.GetValues(typeof(Element)).Cast<Element>().ToArray();
-            var maxLength = elements.Select(ItemTextHelper.GetElementName).Select(name => name.Length).Max();
+            var maxLength = elements.Select(TextHelper.GetElementName).Select(name => name.Length).Max();
             for (var index = 0; index < elements.Length; index++)
             {
                 var element = elements[index];
 
                 var protection = player.GetProtection(element);
-                var color = ItemTextHelper.GetElementColor(element).ToXna();
-                var name = ItemTextHelper.GetElementName(element);
+                var color = TextHelper.GetElementColor(element).ToXna();
+                var name = TextHelper.GetElementName(element);
 
-                var y = dY + 1 + index;
+                var y = dY + 2 + index;
                 Print(dX, y, name, color);
                 Print(dX + maxLength + 1, y, $"{protection}%");
             }
