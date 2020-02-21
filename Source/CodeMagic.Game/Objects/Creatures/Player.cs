@@ -143,7 +143,7 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public override ObjectSize Size => ObjectSize.Medium;
 
-        protected override int GetProtection(Element element)
+        public override int GetProtection(Element element)
         {
             var value = base.GetProtection(element) + Equipment.GetProtection(element);
             if (value > MaxProtection)

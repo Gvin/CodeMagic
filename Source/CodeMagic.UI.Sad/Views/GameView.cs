@@ -33,6 +33,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button openSpellBookButton;
         private StandardButton openInventoryButton;
         private Button showItemsOnFloorButton;
+        private StandardButton openPlayerStatsButton;
 
         private ButtonTheme standardButtonTheme;
         private ButtonTheme disabledButtonTheme;
@@ -138,6 +139,14 @@ namespace CodeMagic.UI.Sad.Views
             };
             showItemsOnFloorButton.Click += showItemsOnFloorButton_Click;
             Add(showItemsOnFloorButton);
+
+            openPlayerStatsButton = new StandardButton(30)
+            {
+                Position = new Point(Width - 39, 25),
+                Text = "[V] Player Status"
+            };
+            openPlayerStatsButton.Click += (sender, args) => OpenPlayerStats();
+            Add(openPlayerStatsButton);
         }
 
         private void showItemsOnFloorButton_Click(object sender, EventArgs e)
@@ -186,6 +195,9 @@ namespace CodeMagic.UI.Sad.Views
                     return true;
                 case Keys.G:
                     ShowItemsOnFloor();
+                    return true;
+                case Keys.V:
+                    OpenPlayerStats();
                     return true;
                 case Keys.Escape:
                     OpenMainMenu();
@@ -247,6 +259,11 @@ namespace CodeMagic.UI.Sad.Views
                 default:
                     return null;
             }
+        }
+
+        private void OpenPlayerStats()
+        {
+            new PlayerStatsView(game.Player).Show();
         }
 
         private void OpenMainMenu()

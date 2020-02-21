@@ -55,7 +55,7 @@ namespace CodeMagic.Game.Objects
 
         public List<IObjectEffect> ObjectEffects { get; }
 
-        protected virtual int GetProtection(Element element)
+        public virtual int GetProtection(Element element)
         {
             if (BaseProtection.ContainsKey(element))
                 return BaseProtection[element];
