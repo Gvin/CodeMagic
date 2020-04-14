@@ -2,7 +2,6 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
@@ -89,29 +88,29 @@ namespace CodeMagic.Game.Objects.SteamObjects
             return stringValue;
         }
 
-        public void Update(IAreaMap map, IJournal journal, Point position)
+        public void Update(Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = CurrentGame.Map.GetCell(position);
             if (Volume == 0)
             {
-                map.RemoveObject(position, this);
+                CurrentGame.Map.RemoveObject(position, this);
                 return;
             }
 
             if (cell.Temperature() < Configuration.BoilingPoint)
             {
-                ProcessCondensation(map, position, cell);
+                ProcessCondensation(position, cell);
             }
 
-            UpdateSteam(map, journal, position);
+            UpdateSteam(position);
         }
 
-        protected virtual void UpdateSteam(IAreaMap map, IJournal journal, Point position)
+        protected virtual void UpdateSteam(Point position)
         {
             // Do nothing.
         }
 
-        private void ProcessCondensation(IAreaMap map, Point position, IAreaMapCell cell)
+        private void ProcessCondensation(Point position, IAreaMapCell cell)
         {
             var missingTemperature = Configuration.BoilingPoint - cell.Temperature();
             var volumeToRaiseTemp = (int)Math.Floor(missingTemperature * Configuration.CondensationTemperatureMultiplier);
@@ -123,7 +122,7 @@ namespace CodeMagic.Game.Objects.SteamObjects
 
             var liquidVolume = volumeToCondense / Configuration.EvaporationMultiplier;
 
-            map.AddObject(position, CreateLiquid(liquidVolume));
+            CurrentGame.Map.AddObject(position, CreateLiquid(liquidVolume));
         }
 
         protected abstract ILiquid CreateLiquid(int volume);

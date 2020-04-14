@@ -18,7 +18,7 @@ namespace CodeMagic.Game.Items.Usable.Food
             this.hungerDecrease = hungerDecrease;
         }
 
-        public bool Use(GameCore<Player> game)
+        public bool Use(CurrentGame.GameCore<Player> game)
         {
             if (game.Player.HungerPercent < MinHungerToEat)
             {

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeMagic.Core.Area;
-using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.JournalMessages;
@@ -19,7 +18,7 @@ namespace CodeMagic.Game.Statuses
             this.owner = owner;
         }
 
-        public void Add(IObjectStatus status, IJournal journal)
+        public void Add(IObjectStatus status)
         {
             if (statuses.ContainsKey(status.Type))
             {
@@ -27,7 +26,7 @@ namespace CodeMagic.Game.Statuses
             }
             else
             {
-                journal.Write(new StatusAddedMessage(owner, status.Type));
+                CurrentGame.Journal.Write(new StatusAddedMessage(owner, status.Type));
                 statuses.Add(status.Type, status);
             }
         }
@@ -53,11 +52,11 @@ namespace CodeMagic.Game.Statuses
             return statuses.ContainsKey(statusType);
         }
 
-        public void Update(IAreaMapCell cell, IJournal journal)
+        public void Update(Point position)
         {
             foreach (var status in statuses.Values.ToArray())
             {
-                var keepStatus = status.Update(owner, cell, journal);
+                var keepStatus = status.Update(owner, position);
                 if (!keepStatus)
                 {
                     statuses.Remove(status.Type);

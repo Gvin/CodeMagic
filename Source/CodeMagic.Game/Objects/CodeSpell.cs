@@ -1,7 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Game.JournalMessages;
@@ -55,19 +54,19 @@ namespace CodeMagic.Game.Objects
 
         private LightLevel LightPower { get; set; }
 
-        public void Update(IAreaMap map, IJournal journal, Point position)
+        public void Update(Point position)
         {
             var currentPosition = position;
             try
             {
                 ProcessLightEmitting();
 
-                var action = codeExecutor.Execute(map, journal, position, this, lifeTime);
+                var action = codeExecutor.Execute(position, this, lifeTime);
                 lifeTime++;
 
                 if (action.ManaCost <= Mana)
                 {
-                    currentPosition = action.Perform(map, journal, position);
+                    currentPosition = action.Perform(position);
                     Mana -= action.ManaCost;
                 }
                 else
@@ -78,13 +77,13 @@ namespace CodeMagic.Game.Objects
                 if (Mana != 0)
                     return;
 
-                journal.Write(new SpellOutOfManaMessage(Name));
-                map.RemoveObject(currentPosition, this);
+                CurrentGame.Journal.Write(new SpellOutOfManaMessage(Name));
+                CurrentGame.Map.RemoveObject(currentPosition, this);
             }
             catch (SpellException ex)
             {
-                journal.Write(new SpellErrorMessage(Name, ex.Message));
-                map.RemoveObject(currentPosition, this);
+                CurrentGame.Journal.Write(new SpellErrorMessage(Name, ex.Message));
+                CurrentGame.Map.RemoveObject(currentPosition, this);
             }
         }
 

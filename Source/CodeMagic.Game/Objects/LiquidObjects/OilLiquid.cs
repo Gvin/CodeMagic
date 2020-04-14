@@ -2,7 +2,6 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
@@ -57,13 +56,13 @@ namespace CodeMagic.Game.Objects.LiquidObjects
 
         public string Type => LiquidType;
 
-        public void Update(IAreaMap map, IJournal journal, Point position)
+        public void Update(Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = CurrentGame.Map.GetCell(position);
 
             if (Volume <= 0)
             {
-                map.RemoveObject(position, this);
+                CurrentGame.Map.RemoveObject(position, this);
                 return;
             }
 
@@ -74,16 +73,16 @@ namespace CodeMagic.Game.Objects.LiquidObjects
 
             if (Volume >= MinVolumeForEffect)
             {
-                ApplyOilyStatus(cell, journal);
+                ApplyOilyStatus(cell);
             }
         }
 
-        private void ApplyOilyStatus(IAreaMapCell cell, IJournal journal)
+        private void ApplyOilyStatus(IAreaMapCell cell)
         {
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)
             {
-                destroyable.Statuses.Add(new OilyObjectStatus(Configuration), journal);
+                destroyable.Statuses.Add(new OilyObjectStatus(Configuration));
             }
         }
 

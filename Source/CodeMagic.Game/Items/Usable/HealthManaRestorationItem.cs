@@ -21,7 +21,7 @@ namespace CodeMagic.Game.Items.Usable
             description = configuration.Description;
         }
 
-        public bool Use(GameCore<Player> game)
+        public bool Use(CurrentGame.GameCore<Player> game)
         {
             if (healValue > 0)
             {

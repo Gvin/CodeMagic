@@ -2,6 +2,6 @@
 {
     public interface IPlayerAction
     {
-        bool Perform(IGameCore game, out Point newPosition);
+        bool Perform(out Point newPosition);
     }
 }

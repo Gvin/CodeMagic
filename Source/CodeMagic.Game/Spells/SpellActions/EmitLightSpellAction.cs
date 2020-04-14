@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Game.Objects;
 using CodeMagic.Game.Spells.Script;
 
@@ -25,7 +24,7 @@ namespace CodeMagic.Game.Spells.SpellActions
             this.spell = spell;
         }
 
-        public override Point Perform(IAreaMap map, IJournal journal, Point position)
+        public override Point Perform(Point position)
         {
             spell.SetEmitLight((LightLevel) power, time);
             return position;

@@ -13,12 +13,13 @@ namespace CodeMagic.UI.Sad.GameProcess
 {
     public class GameManager
     {
-        public GameCore<Player> StartGame()
+        public CurrentGame.GameCore<Player> StartGame()
         {
             var player = CreatePlayer();
 
             var startMap = new DungeonMapGenerator(Properties.Settings.Default.DebugWriteMapToFile).GenerateNewMap(1, out var playerPosition);
-            var game = new GameCore<Player>(startMap, player, playerPosition);
+            CurrentGame.Initialize(startMap, player, playerPosition);
+            var game = (CurrentGame.GameCore<Player>) CurrentGame.Game;
             startMap.Refresh();
 
             player.Inventory.ItemAdded += (sender, args) =>

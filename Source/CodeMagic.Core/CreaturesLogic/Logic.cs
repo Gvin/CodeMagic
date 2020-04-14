@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.Creatures;
 
 namespace CodeMagic.Core.CreaturesLogic
@@ -23,35 +21,35 @@ namespace CodeMagic.Core.CreaturesLogic
             currentStrategy = strategy;
         }
 
-        public void AddTransferRule(ICreatureStrategy source, ICreatureStrategy target, Func<INonPlayableCreatureObject, IAreaMap, Point, bool> condition)
+        public void AddTransferRule(ICreatureStrategy source, ICreatureStrategy target, Func<INonPlayableCreatureObject, Point, bool> condition)
         {
             rules.Add(new ChangeStrategyRule(source, target, condition));
         }
 
-        public void Update(INonPlayableCreatureObject creature, IAreaMap map, IJournal journal, Point position)
+        public void Update(INonPlayableCreatureObject creature, Point position)
         {
             var endTurn = false;
             while (!endTurn)
             {
-                var nextStrategy = GetNextStrategy(creature, map, position);
+                var nextStrategy = GetNextStrategy(creature, position);
                 if (nextStrategy != null)
                 {
                     currentStrategy = nextStrategy;
                 }
 
-                endTurn = currentStrategy.Update(creature, map, journal, position);
+                endTurn = currentStrategy.Update(creature, position);
             }
         }
 
-        private ICreatureStrategy GetNextStrategy(INonPlayableCreatureObject creature, IAreaMap map, Point position)
+        private ICreatureStrategy GetNextStrategy(INonPlayableCreatureObject creature, Point position)
         {
-            var matchingRule = rules.FirstOrDefault(rule => rule.Source == currentStrategy && rule.Condition(creature, map, position));
+            var matchingRule = rules.FirstOrDefault(rule => rule.Source == currentStrategy && rule.Condition(creature, position));
             return matchingRule?.Target;
         }
 
         private class ChangeStrategyRule
         {
-            public ChangeStrategyRule(ICreatureStrategy source, ICreatureStrategy target, Func<INonPlayableCreatureObject, IAreaMap, Point, bool> condition)
+            public ChangeStrategyRule(ICreatureStrategy source, ICreatureStrategy target, Func<INonPlayableCreatureObject, Point, bool> condition)
             {
                 Source = source;
                 Target = target;
@@ -62,7 +60,7 @@ namespace CodeMagic.Core.CreaturesLogic
 
             public ICreatureStrategy Target { get; }
 
-            public Func<INonPlayableCreatureObject, IAreaMap, Point, bool> Condition { get; }
+            public Func<INonPlayableCreatureObject, Point, bool> Condition { get; }
         }
     }
 }

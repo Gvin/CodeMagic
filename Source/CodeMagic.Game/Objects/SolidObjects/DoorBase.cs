@@ -22,7 +22,7 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         public override bool BlocksEnvironment => Closed;
 
-        public void Use(GameCore<Player> game, Point position)
+        public void Use(CurrentGame.GameCore<Player> game, Point position)
         {
             if (!Closed && game.Map.GetCell(position).Objects.Any(obj => !obj.Equals(this) && obj.BlocksMovement))
                 return;

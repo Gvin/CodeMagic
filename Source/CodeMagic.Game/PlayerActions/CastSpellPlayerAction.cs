@@ -16,22 +16,22 @@ namespace CodeMagic.Game.PlayerActions
             this.spell = spell;
         }
 
-        public bool Perform(IGameCore game, out Point newPosition)
+        public bool Perform(out Point newPosition)
         {
-            newPosition = game.PlayerPosition;
+            newPosition = CurrentGame.Game.PlayerPosition;
 
-            if (game.Player.Mana < spell.ManaCost)
+            if (CurrentGame.Player.Mana < spell.ManaCost)
             {
-                game.Player.Mana = 0;
-                game.Journal.Write(new NotEnoughManaToCastMessage());
+                CurrentGame.Player.Mana = 0;
+                CurrentGame.Journal.Write(new NotEnoughManaToCastMessage());
                 return true;
             }
 
-            game.Player.Mana -= spell.ManaCost;
-            var codeSpell = spell.CreateCodeSpell(game.Player);
-            game.Journal.Write(new SpellCastMessage(game.Player, spell.Name));
-            game.Map.AddObject(game.PlayerPosition, codeSpell);
-            game.Player.ObjectEffects.Add(Injector.Current.Create<ISpellCastEffect>());
+            CurrentGame.Player.Mana -= spell.ManaCost;
+            var codeSpell = spell.CreateCodeSpell(CurrentGame.Player);
+            CurrentGame.Journal.Write(new SpellCastMessage(CurrentGame.Player, spell.Name));
+            CurrentGame.Map.AddObject(CurrentGame.Game.PlayerPosition, codeSpell);
+            CurrentGame.Player.ObjectEffects.Add(Injector.Current.Create<ISpellCastEffect>());
             return true;
         }
     }

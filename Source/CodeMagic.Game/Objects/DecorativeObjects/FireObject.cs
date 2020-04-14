@@ -1,6 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Area;
-using CodeMagic.Core.Game.Journaling;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.UI.Images;
@@ -61,12 +61,12 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
 
         public UpdateOrder UpdateOrder => UpdateOrder.Early;
 
-        public void Update(IAreaMap map, IJournal journal, Point position)
+        public void Update(Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = CurrentGame.Map.GetCell(position);
             if (cell.Temperature() < SmallFireTemperature)
             {
-                map.RemoveObject(position, this);
+                CurrentGame.Map.RemoveObject(position, this);
                 return;
             }
 

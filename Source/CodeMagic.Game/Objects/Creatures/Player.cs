@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Items;
+using CodeMagic.Game.Objects.DecorativeObjects;
 using CodeMagic.Game.Statuses;
 using CodeMagic.UI.Images;
 
@@ -90,6 +89,11 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public override int MaxVisibilityRange => 4;
 
+        protected override IMapObject GenerateDamageMark()
+        {
+            return new CreatureRemains(RemainsType.BloodRedSmall);
+        }
+
         public override bool BlocksMovement => true;
 
         public int ManaRegeneration
@@ -130,11 +134,11 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int HitChance => CalculateHitChance(Equipment.Weapon.HitChance);
 
-        public override void Update(IAreaMap map, IJournal journal, Point position)
+        public override void Update(Point position)
         {
             if (Mana < MaxMana && !Statuses.Contains(HungryObjectStatus.StatusType))
             {
-                var cell = map.GetCell(position);
+                var cell = CurrentGame.Map.GetCell(position);
                 var manaToRegenerate = Math.Min(ManaRegeneration, cell.MagicEnergyLevel());
                 cell.Environment.Cast().MagicEnergyLevel -= manaToRegenerate;
                 Mana += manaToRegenerate;
@@ -143,19 +147,19 @@ namespace CodeMagic.Game.Objects.Creatures
             hungerPercent = Math.Min(100d, hungerPercent + hungerIncrement);
             if (hungerPercent >= 100d)
             {
-                Statuses.Add(new HungryObjectStatus(), journal);
+                Statuses.Add(new HungryObjectStatus());
             }
 
             var weight = Inventory.GetWeight();
             if (weight > MaxCarryWeight)
             {
-                Statuses.Add(new OverweightObjectStatus(), journal);
+                Statuses.Add(new OverweightObjectStatus());
             }
         }
 
-        public override void OnDeath(IAreaMap map, IJournal journal, Point position)
+        public override void OnDeath(Point position)
         {
-            base.OnDeath(map, journal, position);
+            base.OnDeath(position);
 
             Died?.Invoke(this, EventArgs.Empty);
         }

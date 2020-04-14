@@ -3,7 +3,6 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.CreaturesLogic;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Statuses;
@@ -23,12 +22,12 @@ namespace CodeMagic.Game.CreaturesLogic.Strategies
             this.movementStrategy = movementStrategy;
         }
 
-        public bool Update(INonPlayableCreatureObject creature, IAreaMap map, IJournal journal, Point position)
+        public bool Update(INonPlayableCreatureObject creature, Point position)
         {
             if (creature.Statuses.Contains(ParalyzedObjectStatus.StatusType))
                 return true;
 
-            var visibleArea = VisibilityHelper.GetVisibleArea(creature.VisibilityRange, position, map);
+            var visibleArea = VisibilityHelper.GetVisibleArea(creature.VisibilityRange, position);
             var relativeTargetPosition = GetNearestTargetPosition(visibleArea);
             if (relativeTargetPosition == null)
                 return true;
@@ -39,11 +38,11 @@ namespace CodeMagic.Game.CreaturesLogic.Strategies
             var adjustedTargetDirection = Point.GetAdjustedPointRelativeDirection(position, absoluteTargetPosition);
             if (adjustedTargetDirection.HasValue)
             {
-                AttackTarget(map, journal, creature, position, absoluteTargetPosition, adjustedTargetDirection.Value);
+                AttackTarget(creature, position, absoluteTargetPosition, adjustedTargetDirection.Value);
                 return true;
             }
 
-            TryMoveToTarget(creature, position, absoluteTargetPosition, map, journal);
+            TryMoveToTarget(creature, position, absoluteTargetPosition);
             return true;
         }
 
@@ -73,8 +72,6 @@ namespace CodeMagic.Game.CreaturesLogic.Strategies
         }
 
         private void AttackTarget(
-            IAreaMap map, 
-            IJournal journal, 
             INonPlayableCreatureObject creature, 
             Point position, 
             Point targetPosition, 
@@ -82,10 +79,10 @@ namespace CodeMagic.Game.CreaturesLogic.Strategies
         {
             creature.Direction = adjustedTargetDirection;
 
-            if (map.GetCell(position).Objects.Any(obj => obj.BlocksAttack)) // Don't attack if standing inside the wall
+            if (CurrentGame.Map.GetCell(position).Objects.Any(obj => obj.BlocksAttack)) // Don't attack if standing inside the wall
                 return;
 
-            var targetCell = map.GetCell(targetPosition);
+            var targetCell = CurrentGame.Map.GetCell(targetPosition);
             var wall = targetCell.Objects.FirstOrDefault(obj => obj.BlocksAttack);
             if (wall != null)
                 return;
@@ -94,12 +91,12 @@ namespace CodeMagic.Game.CreaturesLogic.Strategies
             if (target == null)
                 return;
 
-            creature.Attack(target, journal);
+            creature.Attack(targetPosition, target);
         }
 
-        private void TryMoveToTarget(INonPlayableCreatureObject creature, Point position, Point playerPosition, IAreaMap map, IJournal journal)
+        private void TryMoveToTarget(INonPlayableCreatureObject creature, Point position, Point playerPosition)
         {
-            movementStrategy.TryMove(creature, map, journal, position, playerPosition);
+            movementStrategy.TryMove(creature, position, playerPosition);
         }
     }
 }

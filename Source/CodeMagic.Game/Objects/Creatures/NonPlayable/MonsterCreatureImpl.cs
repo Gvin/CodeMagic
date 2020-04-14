@@ -55,6 +55,7 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
             HitChance = config.Stats.HitChance;
             MaxHealth = health;
             RemainsType = config.RemainsType;
+            DamageMarkType = config.DamageMarkType;
             CatchFireChanceMultiplier = config.Stats.CatchFireChanceMultiplier;
             SelfExtinguishChance = config.Stats.SelfExtinguishChanceMultiplier;
             Images = config.Images;

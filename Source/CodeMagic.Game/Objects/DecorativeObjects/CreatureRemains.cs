@@ -14,7 +14,8 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
         private const string ImageGreenBloodMedium = "Remains_GreenBlood_Medium";
         private const string ImageGreenBloodBig = "Remains_GreenBlood_Big";
 
-        private const string ImageBonesMedium = "Remains_Bones_Medium";
+        private const string ImageBonesWhiteSmall = "Remains_Bones_Small";
+        private const string ImageBonesWhiteMedium = "Remains_Bones_Medium";
 
         protected readonly RemainsType Type;
 
@@ -31,11 +32,13 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
                 case RemainsType.BloodRedSmall:
                 case RemainsType.BloodRedMedium:
                 case RemainsType.BloodRedBig:
+                    return "Blood";
                 case RemainsType.BloodGreenSmall:
                 case RemainsType.BloodGreenMedium:
                 case RemainsType.BloodGreenBig:
-                    return "Blood";
-                case RemainsType.BonesMedium:
+                    return "Green Blood";
+                case RemainsType.BonesWhiteSmall:
+                case RemainsType.BonesWhiteMedium:
                     return "Bones";
                 default:
                     throw new ArgumentException($"Unknown remains type: {type}");
@@ -66,8 +69,10 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
                 case RemainsType.BloodGreenBig:
                     return ImageGreenBloodBig;
 
-                case RemainsType.BonesMedium:
-                    return ImageBonesMedium;
+                case RemainsType.BonesWhiteSmall:
+                    return ImageBonesWhiteSmall;
+                case RemainsType.BonesWhiteMedium:
+                    return ImageBonesWhiteMedium;
 
                 default:
                     throw new ArgumentException($"Unknown remains type: {Type}");
@@ -112,6 +117,7 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
         BloodGreenMedium,
         BloodGreenBig,
 
-        BonesMedium
+        BonesWhiteSmall,
+        BonesWhiteMedium
     }
 }

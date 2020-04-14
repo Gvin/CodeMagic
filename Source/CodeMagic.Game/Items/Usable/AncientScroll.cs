@@ -49,13 +49,13 @@ namespace CodeMagic.Game.Items.Usable
             return ImageInventory3;
         }
 
-        public override bool Use(GameCore<Player> game)
+        public override bool Use(CurrentGame.GameCore<Player> game)
         {
             if (RandomHelper.CheckChance(100 - damagePercent))
                 return base.Use(game);
 
             game.Journal.Write(new FailedToUseScrollMessage());
-            game.Player.Damage(game.Journal, MagicDamageOnFailedScroll, Element.Magic);
+            game.Player.Damage(CurrentGame.PlayerPosition, MagicDamageOnFailedScroll, Element.Magic);
             game.Journal.Write(new EnvironmentDamageMessage(game.Player, MagicDamageOnFailedScroll, Element.Magic));
             var environment = (GameEnvironment) game.Map.GetCell(game.PlayerPosition).Environment;
             environment.MagicDisturbanceLevel += DisturbanceIncrementOnFailedScroll;

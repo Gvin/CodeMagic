@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Area\EnvironmentData\EnvironmentExtensions.cs" />
     <Compile Include="Area\EnvironmentData\GameEnvironment.cs" />
-    <Compile Include="Area\EnvironmentData\GlobalMapEnvironment.cs" />
     <Compile Include="Area\EnvironmentData\IGameEnvironment.cs" />
     <Compile Include="Area\EnvironmentData\MagicEnergy.cs" />
     <Compile Include="Area\EnvironmentData\Pressure.cs" />
@@ -219,7 +218,6 @@
     <Compile Include="Objects\Creatures\NonPlayable\MonsterCreatureImpl.cs" />
     <Compile Include="Objects\Creatures\Player.cs" />
     <Compile Include="Objects\Creatures\PlayerStats.cs" />
-    <Compile Include="Objects\Creatures\Remains\CreatureRemainsGenerator.cs" />
     <Compile Include="Objects\DecorativeObjects\CreatureRemains.cs" />
     <Compile Include="Objects\DecorativeObjects\DungeonTorchPost.cs" />
     <Compile Include="Objects\DecorativeObjects\FireObject.cs" />
@@ -230,7 +228,6 @@
     <Compile Include="Objects\IceObjects\AcidIce.cs" />
     <Compile Include="Objects\IceObjects\IIce.cs" />
     <Compile Include="Objects\IceObjects\WaterIce.cs" />
-    <Compile Include="Objects\IResourceObject.cs" />
     <Compile Include="Objects\IUsableObject.cs" />
     <Compile Include="Objects\LiquidObjects\AbstractLiquid.cs" />
     <Compile Include="Objects\LiquidObjects\AcidLiquid.cs" />

@@ -4,16 +4,15 @@ using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.JournalMessages;
-using CodeMagic.Game.Objects;
 using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
 {
     public class MeleAttackPlayerAction : IPlayerAction
     {
-        public bool Perform(IGameCore gameObject, out Point newPosition)
+        public bool Perform(out Point newPosition)
         {
-            var game = (GameCore<Player>) gameObject;
+            var game = (CurrentGame.GameCore<Player>)CurrentGame.Game;
             newPosition = game.PlayerPosition;
 
             if (game.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
@@ -48,14 +47,7 @@ namespace CodeMagic.Game.PlayerActions
             var damage = game.Player.Equipment.Weapon.GenerateDamage();
             foreach (var damageValue in damage)
             {
-                if (target is IResourceObject resourceObject)
-                {
-                    resourceObject.UseTool(game, game.Player.Equipment.Weapon, damageValue.Value, damageValue.Key);
-                }
-                else
-                {
-                    target.Damage(game.Journal, damageValue.Value, damageValue.Key);
-                }
+                target.Damage(targetPoint, damageValue.Value, damageValue.Key);
                 game.Journal.Write(new DealDamageMessage(game.Player, target, damageValue.Value, damageValue.Key));
             }
 

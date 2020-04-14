@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Spells;
 using CodeMagic.Game.Spells.Script;
@@ -27,7 +25,7 @@ namespace CodeMagic.Game.Spells.SpellActions
             manaCostPower = configuration.ManaCostPower;
         }
 
-        public abstract Point Perform(IAreaMap map, IJournal journal, Point position);
+        public abstract Point Perform(Point position);
 
         public abstract int ManaCost { get; }
 

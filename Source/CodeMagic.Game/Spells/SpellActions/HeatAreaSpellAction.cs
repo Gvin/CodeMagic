@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Spells.Script;
 
@@ -19,9 +17,9 @@ namespace CodeMagic.Game.Spells.SpellActions
             temperature = (int)actionData.temperature;
         }
 
-        public override Point Perform(IAreaMap map, IJournal journal, Point position)
+        public override Point Perform(Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = CurrentGame.Map.GetCell(position);
             if (cell.BlocksEnvironment)
                 return position;
 

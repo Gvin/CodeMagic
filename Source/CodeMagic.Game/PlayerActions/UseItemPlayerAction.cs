@@ -15,17 +15,17 @@ namespace CodeMagic.Game.PlayerActions
             this.item = item;
         }
 
-        public bool Perform(IGameCore game, out Point newPosition)
+        public bool Perform(out Point newPosition)
         {
-            game.Journal.Write(new UsedItemMessage(item));
-            var keepItem = item.Use((GameCore<Player>) game);
+            CurrentGame.Journal.Write(new UsedItemMessage(item));
+            var keepItem = item.Use((CurrentGame.GameCore<Player>)CurrentGame.Game);
 
             if (!keepItem)
             {
-                game.Player.Inventory.RemoveItem(item);
+                CurrentGame.Player.Inventory.RemoveItem(item);
             }
 
-            newPosition = game.PlayerPosition;
+            newPosition = CurrentGame.PlayerPosition;
             return true;
         }
     }

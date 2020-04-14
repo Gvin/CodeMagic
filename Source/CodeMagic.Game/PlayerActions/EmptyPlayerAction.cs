@@ -5,10 +5,10 @@ namespace CodeMagic.Game.PlayerActions
 {
     public class EmptyPlayerAction : IPlayerAction
     {
-        public bool Perform(IGameCore game, out Point newPosition)
+        public bool Perform(out Point newPosition)
         {
             // Do nothing.
-            newPosition = game.PlayerPosition;
+            newPosition = CurrentGame.PlayerPosition;
             return true;
         }
     }

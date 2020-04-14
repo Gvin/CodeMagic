@@ -15,7 +15,7 @@ namespace CodeMagic.UI.Sad.Views
 {
     public class StorageInventoryView : View
     {
-        private readonly GameCore<Player> game;
+        private readonly CurrentGame.GameCore<Player> game;
         private CustomListBox<InventoryStackItem> itemsList1;
         private CustomListBox<InventoryStackItem> itemsList2;
         private ItemDetailsControl itemDetails;
@@ -30,7 +30,7 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton moveItemUpButton;
         private StandardButton moveItemDownButton;
 
-        public StorageInventoryView(GameCore<Player> game, string inventoryName, Inventory storage, int? maxWeight, IItem inventoryItem)
+        public StorageInventoryView(CurrentGame.GameCore<Player> game, string inventoryName, Inventory storage, int? maxWeight, IItem inventoryItem)
             : base(Program.Width, Program.Height)
         {
             this.game = game;

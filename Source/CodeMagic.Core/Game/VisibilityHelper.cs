@@ -6,9 +6,9 @@ namespace CodeMagic.Core.Game
 {
     public static class VisibilityHelper
     {
-        public static AreaMapFragment GetVisibleArea(int visibilityRange, Point viewerPosition, IAreaMap map)
+        public static AreaMapFragment GetVisibleArea(int visibilityRange, Point viewerPosition)
         {
-            var areaOfVisibility = map.GetMapPart(viewerPosition, visibilityRange);
+            var areaOfVisibility = CurrentGame.Map.GetMapPart(viewerPosition, visibilityRange);
             var visibilityBlockers = GetVisibilityBlockers(areaOfVisibility);
             ApplyVisibilityBlockers(areaOfVisibility, visibilityBlockers);
 

@@ -3,7 +3,6 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Game.Area.EnvironmentData;
@@ -63,15 +62,15 @@ namespace CodeMagic.Game.Objects.IceObjects
 
         public ZIndex ZIndex => ZIndex.FloorCover;
 
-        public void Update(IAreaMap map, IJournal journal, Point position)
+        public void Update(Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = CurrentGame.Map.GetCell(position);
             if (Volume <= 0)
-                map.RemoveObject(position, this);
+                CurrentGame.Map.RemoveObject(position, this);
 
             if (cell.Temperature() > Configuration.FreezingPoint)
             {
-                ProcessMelting(map, position, cell);
+                ProcessMelting(CurrentGame.Map, position, cell);
             }
         }
 
@@ -92,7 +91,7 @@ namespace CodeMagic.Game.Objects.IceObjects
 
         public bool Updated { get; set; }
 
-        public Point ProcessStepOn(IAreaMap map, IJournal journal, Point position, ICreatureObject target, Point initialTargetPosition)
+        public Point ProcessStepOn(Point position, ICreatureObject target, Point initialTargetPosition)
         {
             if (Volume < MinVolumeForEffect)
                 return position;
@@ -101,31 +100,31 @@ namespace CodeMagic.Game.Objects.IceObjects
             if (!direction.HasValue)
                 throw new ApplicationException("Unable to get movement direction.");
 
-            var remainingSpeed = TryMoveTarget(map, journal, position, target, direction.Value, out var newPosition, out var blockCell);
+            var remainingSpeed = TryMoveTarget(position, target, direction.Value, out var newPosition, out var blockCell);
             if (remainingSpeed <= 0)
                 return newPosition;
 
             var damage = remainingSpeed * SlideSpeedDamageMultiplier;
-            target.Damage(journal, damage, Element.Blunt);
-            journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt));
+            target.Damage(position, damage, Element.Blunt);
+            CurrentGame.Journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt));
 
             var blockObject = blockCell.GetBiggestDestroyable();
             if (blockObject != null)
             {
-                blockObject.Damage(journal, damage, Element.Blunt);
-                journal.Write(new EnvironmentDamageMessage(blockObject, damage, Element.Blunt));
+                blockObject.Damage(position, damage, Element.Blunt);
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(blockObject, damage, Element.Blunt));
             }
             return newPosition;
         }
 
-        private int TryMoveTarget(IAreaMap map, IJournal journal, Point position, ICreatureObject target, Direction direction, out Point newPosition, out IAreaMapCell blockCell)
+        private int TryMoveTarget(Point position, ICreatureObject target, Direction direction, out Point newPosition, out IAreaMapCell blockCell)
         {
             newPosition = position;
             blockCell = null;
             for (var remainingSpeed = MaxSlideDistance; remainingSpeed > 0; remainingSpeed--)
             {
                 var nextPosition = Point.GetPointInDirection(newPosition, direction);
-                var nextCell = map.TryGetCell(nextPosition);
+                var nextCell = CurrentGame.Map.TryGetCell(nextPosition);
                 if (nextCell == null)
                     return 0;
                 
@@ -135,7 +134,7 @@ namespace CodeMagic.Game.Objects.IceObjects
                     return remainingSpeed;
                 }
 
-                var movementResult = MovementHelper.MoveObject(target, map, journal, newPosition, nextPosition, false);
+                var movementResult = MovementHelper.MoveObject(target, newPosition, nextPosition, false);
                 if (!movementResult.Success)
                     return remainingSpeed;
 

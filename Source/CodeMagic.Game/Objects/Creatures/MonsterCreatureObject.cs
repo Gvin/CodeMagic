@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures.Loot;
-using CodeMagic.Game.Objects.Creatures.Remains;
 using CodeMagic.Game.Objects.DecorativeObjects;
 
 namespace CodeMagic.Game.Objects.Creatures
@@ -42,8 +40,6 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public sealed override ZIndex ZIndex => configuration.ZIndex;
 
-        public sealed override RemainsType RemainsType => configuration.RemainsType;
-
         protected sealed override double CatchFireChanceMultiplier => configuration.CatchFireChanceMultiplier;
 
         protected sealed override double SelfExtinguishChance => configuration.SelfExtinguishChance;
@@ -52,31 +48,36 @@ namespace CodeMagic.Game.Objects.Creatures
 
         protected sealed override float NormalSpeed => configuration.Speed / 1;
 
-        public override void Attack(IDestroyableObject target, IJournal journal)
+        public override void Attack(Point position, IDestroyableObject target)
         {
-            base.Attack(target, journal);
+            base.Attack(position, target);
 
             var currentHitChance = CalculateHitChance(hitChance);
             if (!RandomHelper.CheckChance(currentHitChance))
             {
-                journal.Write(new AttackMissMessage(this, target));
+                CurrentGame.Journal.Write(new AttackMissMessage(this, target));
                 return;
             }
 
             foreach (var damageValue in damage)
             {
                 var value = RandomHelper.GetRandomValue(damageValue.MinValue, damageValue.MaxValue);
-                target.Damage(journal, value, damageValue.Element);
-                journal.Write(new DealDamageMessage(this, target, value, damageValue.Element));
+                target.Damage(position, value, damageValue.Element);
+                CurrentGame.Journal.Write(new DealDamageMessage(this, target, value, damageValue.Element));
             }
         }
 
-        protected override IMapObject GenerateRemains()
+        protected sealed override IMapObject GenerateRemains()
         {
-            return new CreatureRemainsGenerator().GenerateRemains(this);
+            return new CreatureRemains(configuration.RemainsType);
         }
 
-        protected override IItem[] GenerateLoot()
+        protected override IMapObject GenerateDamageMark()
+        {
+            return new CreatureRemains(configuration.DamageMarkType);
+        }
+
+        protected sealed override IItem[] GenerateLoot()
         {
             return new ChancesLootGenerator(lootConfiguration).GenerateLoot();
         }
@@ -107,6 +108,8 @@ namespace CodeMagic.Game.Objects.Creatures
         public int MaxHealth { get; set; }
 
         public RemainsType RemainsType { get; set; }
+
+        public RemainsType DamageMarkType { get; set; }
 
         public double CatchFireChanceMultiplier { get; set; }
 

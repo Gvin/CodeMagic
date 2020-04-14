@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.LiquidObjects;
@@ -40,22 +38,22 @@ namespace CodeMagic.Game.Objects.SteamObjects
             return new AcidSteam(volume);
         }
 
-        protected override void UpdateSteam(IAreaMap map, IJournal journal, Point position)
+        protected override void UpdateSteam(Point position)
         {
-            base.UpdateSteam(map, journal, position);
+            base.UpdateSteam(position);
 
             var damageMultiplier = GetAcidDamageMultiplier();
             var damage = (int)Math.Ceiling(damageMultiplier * Volume);
             if (damage == 0)
                 return;
 
-            var cell = map.GetCell(position);
+            var cell = CurrentGame.Map.GetCell(position);
 
             var destroyableObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var destroyable in destroyableObjects)
             {
-                destroyable.Damage(journal, damage, Element.Acid);
-                journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Acid));
+                destroyable.Damage(position, damage, Element.Acid);
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Acid));
             }
         }
 

@@ -29,7 +29,8 @@
       </damage>
     </stats>
     <size>Medium</size>
-    <remains-type>BonesMedium</remains-type>
+    <remains-type>BonesWhiteMedium</remains-type>
+    <damage-mark-type>BonesWhiteSmall</damage-mark-type>
     <loot>
       <weapon>
         <count-configuration>
@@ -90,6 +91,7 @@
     </stats>
     <size>Medium</size>
     <remains-type>BloodGreenMedium</remains-type>
+    <damage-mark-type>BloodGreenSmall</damage-mark-type>
     <loot>
       <weapon>
         <count-configuration>
@@ -167,6 +169,7 @@
     </stats>
     <size>Huge</size>
     <remains-type>BloodGreenBig</remains-type>
+    <damage-mark-type>BloodGreenMedium</damage-mark-type>
     <loot>
       <weapon>
         <count-configuration>
@@ -246,6 +249,7 @@
     </stats>
     <size>Medium</size>
     <remains-type>BloodRedMedium</remains-type>
+    <damage-mark-type>BloodRedSmall</damage-mark-type>
     <loot>
       <weapon>
         <count-configuration>

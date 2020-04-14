@@ -2,7 +2,6 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Configuration.Physics;
 using CodeMagic.Game.JournalMessages;
@@ -58,20 +57,20 @@ namespace CodeMagic.Game.Area.EnvironmentData
             set => pressure.Value = value;
         }
 
-        public void Update(IAreaMap map, Point position, IAreaMapCell cell, IJournal journal)
+        public void Update(Point position, IAreaMapCell cell)
         {
-            CheckFuelObjects(map, position, cell);
+            CheckFuelObjects(position, cell);
 
             foreach (var destroyableObject in cell.Objects.OfType<IDestroyableObject>())
             {
-                ApplyEnvironment(destroyableObject, journal);
+                ApplyEnvironment(destroyableObject, position);
             }
 
             Normalize(cell.Objects.OfType<IRoof>().Any());
 
             if (temperature.Value >= FireObject.SmallFireTemperature && !cell.Objects.OfType<FireObject>().Any())
             {
-                map.AddObject(position, new FireObject(temperature.Value));
+                CurrentGame.Map.AddObject(position, new FireObject(temperature.Value));
             }
         }
 
@@ -82,7 +81,7 @@ namespace CodeMagic.Game.Area.EnvironmentData
             magicEnergy.Normalize();
         }
 
-        private void CheckFuelObjects(IAreaMap map, Point position, IAreaMapCell cell)
+        private void CheckFuelObjects(Point position, IAreaMapCell cell)
         {
             var fuelObjects = cell.Objects
                 .OfType<IFuelObject>()
@@ -98,29 +97,29 @@ namespace CodeMagic.Game.Area.EnvironmentData
                 fuelObject.FuelLeft--;
                 if (fuelObject.FuelLeft <= 0)
                 {
-                    map.RemoveObject(position, fuelObject);
+                    CurrentGame.Map.RemoveObject(position, fuelObject);
                 }
             }
         }
 
-        private void ApplyEnvironment(IDestroyableObject destroyable, IJournal journal)
+        private void ApplyEnvironment(IDestroyableObject destroyable, Point position)
         {
             var temperatureDamage = temperature.GetTemperatureDamage(out var temperDamageElement);
             var pressureDamage = pressure.GetPressureDamage();
 
             if (temperatureDamage > 0 && temperDamageElement.HasValue)
             {
-                journal.Write(new EnvironmentDamageMessage(destroyable, temperatureDamage, temperDamageElement.Value));
-                destroyable.Damage(journal, temperatureDamage, temperDamageElement.Value);
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, temperatureDamage, temperDamageElement.Value));
+                destroyable.Damage(position, temperatureDamage, temperDamageElement.Value);
             }
 
             if (pressureDamage > 0)
             {
-                journal.Write(new EnvironmentDamageMessage(destroyable, pressureDamage, Element.Blunt));
-                destroyable.Damage(journal, pressureDamage, Element.Blunt);
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, pressureDamage, Element.Blunt));
+                destroyable.Damage(position, pressureDamage, Element.Blunt);
             }
 
-            magicEnergy.ApplyMagicEnvironment(destroyable, journal);
+            magicEnergy.ApplyMagicEnvironment(destroyable, position);
         }
 
         public void Balance(IAreaMapCell cell, IAreaMapCell otherCell)

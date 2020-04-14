@@ -57,13 +57,13 @@ namespace CodeMagic.Core.Area
         /// Resets damage records for all destroyable objects.
         /// Should be called before player action.
         /// </summary>
-        void PreUpdate(IJournal journal);
+        void PreUpdate();
 
         /// <summary>
         /// Updates entire map.
         /// Should be called after player action.
         /// </summary>
-        void Update(IJournal journal);
+        void Update();
 
         IDestroyableObject GetDestroyableObject(string id);
 

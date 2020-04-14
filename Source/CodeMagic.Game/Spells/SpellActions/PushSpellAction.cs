@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Spells.Script;
@@ -25,13 +23,13 @@ namespace CodeMagic.Game.Spells.SpellActions
             force = (int) actionData.force;
         }
 
-        public override Point Perform(IAreaMap map, IJournal journal, Point position)
+        public override Point Perform(Point position)
         {
-            var target = GetTarget(map, position);
+            var target = GetTarget(position);
             if (target == null)
                 return position;
 
-            var remainingForce = TryPush(target, map, journal, position, out var currentPosition);
+            var remainingForce = TryPush(target, position, out var currentPosition);
             if (remainingForce == 0)
                 return position;
 
@@ -41,37 +39,37 @@ namespace CodeMagic.Game.Spells.SpellActions
 
             if (target is IDestroyableObject destroyableTarget)
             {
-                destroyableTarget.Damage(journal, damage, Element.Blunt);
-                journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt));
+                destroyableTarget.Damage(currentPosition, damage, Element.Blunt);
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt));
             }
 
-            ApplyCollideDamageToCell(map, journal, collideCellPosition, damage);
+            ApplyCollideDamageToCell(collideCellPosition, damage);
 
             return position;
         }
 
-        private void ApplyCollideDamageToCell(IAreaMap map, IJournal journal, Point position, int damage)
+        private void ApplyCollideDamageToCell(Point position, int damage)
         {
-            var cell = map.TryGetCell(position);
+            var cell = CurrentGame.Map.TryGetCell(position);
             if (cell == null)
                 return;
 
             var collidedObjects = cell.Objects.OfType<IDestroyableObject>();
             foreach (var collidedObject in collidedObjects)
             {
-                collidedObject.Damage(journal, damage, Element.Blunt);
-                journal.Write(new EnvironmentDamageMessage(collidedObject, damage, Element.Blunt));
+                collidedObject.Damage(position, damage, Element.Blunt);
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(collidedObject, damage, Element.Blunt));
             }
         }
 
-        private int TryPush(IMapObject target, IAreaMap map, IJournal journal, Point position, out Point currentPosition)
+        private int TryPush(IMapObject target, Point position, out Point currentPosition)
         {
             currentPosition = position;
             var initialForce = GetInitialForce(target);
             for (var remainingForce = initialForce; remainingForce > 0; remainingForce--)
             {
                 var nextPosition = Point.GetPointInDirection(currentPosition, direction);
-                var movementResult = MovementHelper.MoveObject(target, map, journal, currentPosition, nextPosition);
+                var movementResult = MovementHelper.MoveObject(target, currentPosition, nextPosition);
                 if (!movementResult.Success)
                     return remainingForce;
 
@@ -127,9 +125,9 @@ namespace CodeMagic.Game.Spells.SpellActions
             }
         }
 
-        private IMapObject GetTarget(IAreaMap map, Point position)
+        private IMapObject GetTarget(Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = CurrentGame.Map.GetCell(position);
             return cell.Objects
                 .Where(obj => obj.Size < ObjectSize.Huge)
                 .OrderByDescending(obj => obj.Size)

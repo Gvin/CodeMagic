@@ -39,6 +39,9 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
         [XmlElement("remains-type")]
         public RemainsType RemainsType { get; set; }
 
+        [XmlElement("damage-mark-type")]
+        public RemainsType DamageMarkType { get; set; }
+
         [XmlIgnore]
         public IMonsterStatsConfiguration Stats => StatsData;
 

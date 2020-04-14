@@ -1,7 +1,5 @@
 ﻿using System;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.Area.EnvironmentData;
@@ -29,7 +27,7 @@ namespace CodeMagic.Game.Statuses
             burnTime = 0;
         }
 
-        public bool Update(IDestroyableObject owner, IAreaMapCell cell, IJournal journal)
+        public bool Update(IDestroyableObject owner, Point position)
         {
             if (burnTime >= burnBeforeExtinguishCheck)
             {
@@ -45,9 +43,10 @@ namespace CodeMagic.Game.Statuses
             if (damage == 0)
                 return true;
 
-            journal.Write(new BurningDamageMessage(owner, damage));
-            owner.Damage(journal, damage, Element.Fire);
+            CurrentGame.Journal.Write(new BurningDamageMessage(owner, damage));
+            owner.Damage(position, damage, Element.Fire);
 
+            var cell = CurrentGame.Map.GetCell(position);
             var temperatureDiff = cell.Temperature() - burningTemperature;
             if (temperatureDiff > 0)
             {

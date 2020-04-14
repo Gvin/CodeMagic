@@ -1,15 +1,12 @@
 ﻿using System.Linq;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.CreaturesLogic;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.CreaturesLogic;
 using CodeMagic.Game.CreaturesLogic.Strategies;
-using CodeMagic.Game.Objects.DecorativeObjects;
 
 namespace CodeMagic.Game.Objects.Creatures
 {
@@ -40,8 +37,6 @@ namespace CodeMagic.Game.Objects.Creatures
 
         protected virtual float NormalSpeed => 1f;
 
-        public abstract RemainsType RemainsType { get; }
-
         private float Speed
         {
             get
@@ -55,30 +50,30 @@ namespace CodeMagic.Game.Objects.Creatures
             }
         }
 
-        public override void Update(IAreaMap map, IJournal journal, Point position)
+        public override void Update(Point position)
         {
             turnsCounter += 1;
             if (turnsCounter >= Speed)
             {
-                Logic.Update(this, map, journal, position);
+                Logic.Update(this, position);
                 turnsCounter -= Speed;
             }
         }
 
-        public virtual void Attack(IDestroyableObject target, IJournal journal)
+        public virtual void Attack(Point position, IDestroyableObject target)
         {
         }
 
         protected Logic Logic { get; }
 
-        public override void OnDeath(IAreaMap map, IJournal journal, Point position)
+        public override void OnDeath(Point position)
         {
-            base.OnDeath(map, journal, position);
+            base.OnDeath(position);
 
             var remains = GenerateRemains();
             if (remains != null)
             {
-                map.AddObject(position, remains);
+                CurrentGame.Map.AddObject(position, remains);
             }
 
             var loot = GenerateLoot();
@@ -86,7 +81,7 @@ namespace CodeMagic.Game.Objects.Creatures
             {
                 foreach (var item in loot)
                 {
-                    map.AddObject(position, item);
+                    CurrentGame.Map.AddObject(position, item);
                 }
             }
         }

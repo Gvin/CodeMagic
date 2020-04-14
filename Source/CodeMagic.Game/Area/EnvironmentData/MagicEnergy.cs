@@ -1,6 +1,5 @@
 ﻿using System;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Configuration.Physics;
 using CodeMagic.Game.JournalMessages;
@@ -83,14 +82,14 @@ namespace CodeMagic.Game.Area.EnvironmentData
             }
         }
 
-        public void ApplyMagicEnvironment(IDestroyableObject destroyable, IJournal journal)
+        public void ApplyMagicEnvironment(IDestroyableObject destroyable, Point position)
         {
             var damage = CalculateDamage();
             if (damage <= 0)
                 return;
 
-            destroyable.Damage(journal, damage, Element.Magic);
-            journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Magic));
+            destroyable.Damage(position, damage, Element.Magic);
+            CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Magic));
         }
 
         private int CalculateDamage()

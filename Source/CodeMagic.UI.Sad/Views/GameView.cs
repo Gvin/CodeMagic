@@ -22,7 +22,7 @@ namespace CodeMagic.UI.Sad.Views
     {
         private static readonly TimeSpan KeyProcessFrequency = TimeSpan.FromMilliseconds(Properties.Settings.Default.MinActionsInterval);
 
-        private readonly GameCore<Player> game;
+        private readonly CurrentGame.GameCore<Player> game;
 
         private PlayerStatsControl playerStats;
         private GameAreaControl gameArea;
@@ -40,7 +40,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private DateTime lastKeyProcessed;
 
-        public GameView(GameCore<Player> game) 
+        public GameView(CurrentGame.GameCore<Player> game) 
             : base(Program.Width, Program.Height)
         {
             lastKeyProcessed = DateTime.Now;

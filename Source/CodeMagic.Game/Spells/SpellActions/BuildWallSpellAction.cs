@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.Game.Spells.Script;
 
@@ -19,10 +17,10 @@ namespace CodeMagic.Game.Spells.SpellActions
             time = (int) actionData.time;
         }
 
-        public override Point Perform(IAreaMap map, IJournal journal, Point position)
+        public override Point Perform(Point position)
         {
             var wall = new EnergyWall(time);
-            map.AddObject(position, wall);
+            CurrentGame.Map.AddObject(position, wall);
             return position;
         }
 

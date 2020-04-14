@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 
@@ -10,12 +8,12 @@ namespace CodeMagic.Game.CreaturesLogic.MovementStrategies
 {
     public class SimpleCreatureMovementStrategy : ICreatureMovementStrategy
     {
-        public bool TryMove(ICreatureObject creature, IAreaMap map, IJournal journal, Point position, Point targetPosition)
+        public bool TryMove(ICreatureObject creature, Point position, Point targetPosition)
         {
             var possibleMoves = GetPossibleMoves(position, targetPosition);
             foreach (var possibleMove in possibleMoves)
             {
-                var movementResult = MovementHelper.MoveCreature(creature, map, journal, position, possibleMove, true, true);
+                var movementResult = MovementHelper.MoveCreature(creature, position, possibleMove, true, true);
                 if (movementResult.Success)
                     return true;
             }

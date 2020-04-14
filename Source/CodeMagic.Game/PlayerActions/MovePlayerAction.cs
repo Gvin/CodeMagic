@@ -17,29 +17,29 @@ namespace CodeMagic.Game.PlayerActions
             this.direction = direction;
         }
 
-        public bool Perform(IGameCore game, out Point newPosition)
+        public bool Perform(out Point newPosition)
         {
-            if (game.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
+            if (CurrentGame.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
             {
-                newPosition = game.PlayerPosition;
-                game.Journal.Write(new ParalyzedMessage());
+                newPosition = CurrentGame.PlayerPosition;
+                CurrentGame.Journal.Write(new ParalyzedMessage());
                 return true;
             }
 
-            if (game.Player.Statuses.Contains(OverweightObjectStatus.StatusType))
+            if (CurrentGame.Player.Statuses.Contains(OverweightObjectStatus.StatusType))
             {
-                newPosition = game.PlayerPosition;
-                game.Journal.Write(new OverweightBlocksMovementMessage());
+                newPosition = CurrentGame.PlayerPosition;
+                CurrentGame.Journal.Write(new OverweightBlocksMovementMessage());
                 return true;
             }
 
-            if (game.Player.Direction != direction)
+            if (CurrentGame.Player.Direction != direction)
             {
-                game.Player.Direction = direction;
-                newPosition = game.PlayerPosition;
+                CurrentGame.Player.Direction = direction;
+                newPosition = CurrentGame.PlayerPosition;
                 return false;
             }
-            var moveResult = MovementHelper.MoveCreature(game.Player, game.Map, game.Journal, game.PlayerPosition, direction, true, true);
+            var moveResult = MovementHelper.MoveCreature(CurrentGame.Player, CurrentGame.PlayerPosition, direction, true, true);
             newPosition = moveResult.NewPosition;
             return moveResult.Success;
         }

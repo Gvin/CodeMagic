@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.ObjectEffects;
@@ -83,7 +81,7 @@ namespace CodeMagic.Game.Objects
 
         protected virtual double CatchFireChanceMultiplier => 1;
 
-        public virtual void Damage(IJournal journal, int damage, Element element)
+        public virtual void Damage(Point position, int damage, Element element)
         {
             if (damage < 0)
                 throw new ArgumentException($"Damage should be greater or equal 0. Got {damage}.");
@@ -95,25 +93,25 @@ namespace CodeMagic.Game.Objects
             realDamage = Math.Max(realDamage, 0);
             if (realDamage < damage)
             {
-                journal.Write(new DamageBlockedMessage(this, damage - realDamage, element));
+                CurrentGame.Journal.Write(new DamageBlockedMessage(this, damage - realDamage, element));
             }
 
             if (realDamage == 0)
                 return;
 
-            ApplyRealDamage(realDamage);
-
-            if (element == Element.Fire)
-            {
-                CheckCatchFire(realDamage, journal);
-            }
+            ApplyRealDamage(realDamage, element, position);
 
             ObjectEffects.Add(Injector.Current.Create<IDamageEffect>(realDamage, element));
         }
 
-        protected virtual void ApplyRealDamage(int damage)
+        protected virtual void ApplyRealDamage(int damage, Element element, Point position)
         {
             Health -= damage;
+
+            if (element == Element.Fire)
+            {
+                CheckCatchFire(damage);
+            }
         }
 
         public void ClearDamageRecords()
@@ -129,7 +127,7 @@ namespace CodeMagic.Game.Objects
             };
         }
 
-        private void CheckCatchFire(int damage, IJournal journal)
+        private void CheckCatchFire(int damage)
         {
             var catchFireChance = damage * CatchFireChanceMultiplier;
 
@@ -142,13 +140,13 @@ namespace CodeMagic.Game.Objects
             var catchFireWholeChange = (int) Math.Round(catchFireChance);
             if (RandomHelper.CheckChance(catchFireWholeChange))
             {
-                Statuses.Add(new OnFireObjectStatus(GetFireConfiguration()), journal);
+                Statuses.Add(new OnFireObjectStatus(GetFireConfiguration()));
             }
         }
 
-        public virtual void OnDeath(IAreaMap map, IJournal journal, Point position)
+        public virtual void OnDeath(Point position)
         {
-            journal.Write(new DeathMessage(this));
+            CurrentGame.Journal.Write(new DeathMessage(this));
         }
 
         public bool Equals(IMapObject other)

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Game.Area.EnvironmentData;
@@ -62,9 +60,9 @@ namespace CodeMagic.Game.Spells.Script
             jsEngine.SetValue("emitLight", new Func<int, int, JsValue>(GetEmitLightSpellAction));
         }
 
-        public ISpellAction Execute(IAreaMap map, IJournal journal, Point position, CodeSpell spell, int lifeTime)
+        public ISpellAction Execute(Point position, CodeSpell spell, int lifeTime)
         {
-            var result = ExecuteCode(map, journal, position, spell, lifeTime);
+            var result = ExecuteCode(position, spell, lifeTime);
             if (result == null)
             {
                 return new EmptySpellAction();
@@ -79,9 +77,9 @@ namespace CodeMagic.Game.Spells.Script
             return action;
         }
 
-        private dynamic ExecuteCode(IAreaMap map, IJournal journal, Point position, CodeSpell spell, int lifeTime)
+        private dynamic ExecuteCode(Point position, CodeSpell spell, int lifeTime)
         {
-            ConfigureDynamicEngineFunctions(map, journal, position, spell);
+            ConfigureDynamicEngineFunctions(position, spell);
 
             JsValue mainFunction;
             try
@@ -119,27 +117,27 @@ namespace CodeMagic.Game.Spells.Script
             return result;
         }
 
-        private void ConfigureDynamicEngineFunctions(IAreaMap map, IJournal journal, Point position, CodeSpell spell)
+        private void ConfigureDynamicEngineFunctions(Point position, CodeSpell spell)
         {
-            jsEngine.SetValue("getLightLevel", new Func<int>(() => GetLightLevel(map, position)));
-            jsEngine.SetValue("getCaster", new Func<JsValue>(() => ConvertDestroyable(caster, map).ToJson(jsEngine)));
-            jsEngine.SetValue("log", new Action<object>(message => LogMessage(journal, spell, message)));
+            jsEngine.SetValue("getLightLevel", new Func<int>(() => GetLightLevel(position)));
+            jsEngine.SetValue("getCaster", new Func<JsValue>(() => ConvertDestroyable(caster).ToJson(jsEngine)));
+            jsEngine.SetValue("log", new Action<object>(message => LogMessage(spell, message)));
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
             jsEngine.SetValue("getPosition", new Func<JsValue>(() => ConvertPoint(position)));
-            jsEngine.SetValue("getTemperature", new Func<int>(() => map.GetCell(position).Temperature()));
+            jsEngine.SetValue("getTemperature", new Func<int>(() => CurrentGame.Map.GetCell(position).Temperature()));
             jsEngine.SetValue("getIsSolidWall",
-                new Func<string, bool>((direction) => GetIfCellIsSolid(map, position, direction)));
-            jsEngine.SetValue("getObjectsUnder", new Func<JsValue[]>(() => GetObjectsUnder(map, position)));
+                new Func<string, bool>((direction) => GetIfCellIsSolid(position, direction)));
+            jsEngine.SetValue("getObjectsUnder", new Func<JsValue[]>(() => GetObjectsUnder(position)));
 
             jsEngine.SetValue("scanForWalls",
-                new Func<int, bool[][]>(radius => ScanForWalls(map, position, radius, spell)));
+                new Func<int, bool[][]>(radius => ScanForWalls(position, radius, spell)));
             jsEngine.SetValue("scanForObjects",
-                new Func<int, JsValue[]>(radius => ScanForObjects(map, position, radius, spell)));
+                new Func<int, JsValue[]>(radius => ScanForObjects(position, radius, spell)));
         }
 
-        private void LogMessage(IJournal journal, CodeSpell spell, object message)
+        private void LogMessage(CodeSpell spell, object message)
         {
-            journal.Write(new SpellLogMessage(spell.Name, GetMessageString(message)));
+            CurrentGame.Journal.Write(new SpellLogMessage(spell.Name, GetMessageString(message)));
         }
 
         private void StoreData(string key, object data)
@@ -172,13 +170,13 @@ namespace CodeMagic.Game.Spells.Script
             }
         }
 
-        private int GetLightLevel(IAreaMap map, Point position)
+        private int GetLightLevel(Point position)
         {
-            var cell = map.GetCell(position);
+            var cell = CurrentGame.Map.GetCell(position);
             return (int)cell.LightLevel;
         }
 
-        private JsValue[] ScanForObjects(IAreaMap map, Point position, int radius, CodeSpell spell)
+        private JsValue[] ScanForObjects(Point position, int radius, CodeSpell spell)
         {
             var cost = radius * ScanForObjectsManaCostMultiplier;
             if (spell.Mana < cost)
@@ -188,17 +186,17 @@ namespace CodeMagic.Game.Spells.Script
             }
 
             spell.Mana -= cost;
-            var mapSegment = map.GetMapPart(position, radius);
+            var mapSegment = CurrentGame.Map.GetMapPart(position, radius);
             return mapSegment.SelectMany(row => 
                     row.Where(cell => cell != null)
                         .SelectMany(cell =>
                         cell.Objects
                             .OfType<IDestroyableObject>()
-                            .Select(obj => ConvertDestroyable(obj, map).ToJson(jsEngine))))
+                            .Select(obj => ConvertDestroyable(obj).ToJson(jsEngine))))
                 .ToArray();
         }
 
-        private bool[][] ScanForWalls(IAreaMap map, Point position, int radius, CodeSpell spell)
+        private bool[][] ScanForWalls(Point position, int radius, CodeSpell spell)
         {
             var cost = radius * ScanForWallsManaCostMultiplier;
             if (spell.Mana < cost)
@@ -208,15 +206,15 @@ namespace CodeMagic.Game.Spells.Script
             }
 
             spell.Mana -= cost;
-            var mapSegment = map.GetMapPart(position, radius);
+            var mapSegment = CurrentGame.Map.GetMapPart(position, radius);
             return mapSegment.Select(row => row.Select(cell => cell == null || cell.BlocksProjectiles).ToArray())
                 .ToArray();
         }
 
-        private JsValue[] GetObjectsUnder(IAreaMap map, Point position)
+        private JsValue[] GetObjectsUnder(Point position)
         {
-            var cell = map.GetCell(position);
-            return cell.Objects.OfType<IDestroyableObject>().Select(obj => ConvertDestroyable(obj, map).ToJson(jsEngine))
+            var cell = CurrentGame.Map.GetCell(position);
+            return cell.Objects.OfType<IDestroyableObject>().Select(obj => ConvertDestroyable(obj).ToJson(jsEngine))
                 .ToArray();
         }
 
@@ -231,9 +229,9 @@ namespace CodeMagic.Game.Spells.Script
             }).ToJson(jsEngine);
         }
 
-        private JsonData ConvertDestroyable(IDestroyableObject destroyable, IAreaMap map)
+        private JsonData ConvertDestroyable(IDestroyableObject destroyable)
         {
-            var position = map.GetObjectPosition(obj => obj.Equals(destroyable));
+            var position = CurrentGame.Map.GetObjectPosition(obj => obj.Equals(destroyable));
             var data = new JsonData(new Dictionary<string, object>
             {
                 {"id", destroyable.Id},
@@ -266,17 +264,17 @@ namespace CodeMagic.Game.Spells.Script
             return "object";
         }
 
-        private bool GetIfCellIsSolid(IAreaMap map, Point position, string directionString)
+        private bool GetIfCellIsSolid(Point position, string directionString)
         {
             var parsedDirection = SpellHelper.ParseDirection(directionString);
             if (!parsedDirection.HasValue)
                 throw new SpellException($"Unknown direction value: {directionString}");
 
             var checkPosition = Point.GetPointInDirection(position, parsedDirection.Value);
-            if (!map.ContainsCell(checkPosition))
+            if (!CurrentGame.Map.ContainsCell(checkPosition))
                 return true;
 
-            return map.GetCell(checkPosition).BlocksProjectiles;
+            return CurrentGame.Map.GetCell(checkPosition).BlocksProjectiles;
         }
 
         #endregion

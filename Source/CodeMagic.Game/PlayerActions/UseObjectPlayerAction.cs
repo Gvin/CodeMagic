@@ -8,15 +8,15 @@ namespace CodeMagic.Game.PlayerActions
 {
     public class UseObjectPlayerAction : IPlayerAction
     {
-        public bool Perform(IGameCore game, out Point newPosition)
+        public bool Perform(out Point newPosition)
         {
-            var playerLookPosition = Point.GetPointInDirection(game.PlayerPosition, game.Player.Direction);
+            var playerLookPosition = Point.GetPointInDirection(CurrentGame.PlayerPosition, CurrentGame.Player.Direction);
 
-            var cell = game.Map.TryGetCell(playerLookPosition);
+            var cell = CurrentGame.Map.TryGetCell(playerLookPosition);
             var usableObject = cell?.Objects.OfType<IUsableObject>().FirstOrDefault();
-            usableObject?.Use((GameCore<Player>)game, playerLookPosition);
+            usableObject?.Use((CurrentGame.GameCore<Player>)CurrentGame.Game, playerLookPosition);
 
-            newPosition = game.PlayerPosition;
+            newPosition = CurrentGame.PlayerPosition;
             return true;
         }
     }

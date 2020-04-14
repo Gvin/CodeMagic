@@ -15,7 +15,7 @@ namespace CodeMagic.Game.CreaturesLogic.LogicConfigurators
             logic.SetInitialStrategy(patrol);
 
             logic.AddTransferRule(patrol, attack, LogicHelper.GetIfPlayerVisible);
-            logic.AddTransferRule(attack, patrol, (creature, map, position) => !LogicHelper.GetIfPlayerVisible(creature, map, position));
+            logic.AddTransferRule(attack, patrol, (creature, position) => !LogicHelper.GetIfPlayerVisible(creature, position));
         }
     }
 }

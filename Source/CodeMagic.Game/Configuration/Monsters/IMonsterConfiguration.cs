@@ -19,6 +19,8 @@ namespace CodeMagic.Game.Configuration.Monsters
 
         RemainsType RemainsType { get; }
 
+        RemainsType DamageMarkType { get; }
+
         IMonsterStatsConfiguration Stats { get; }
 
         ILootConfiguration Loot { get; }

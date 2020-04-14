@@ -1,16 +1,15 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.CreaturesLogic
 {
     public static class CreaturesVisibilityHelper
     {
-        public static bool GetIfPointIsVisible(IAreaMap map, Point position, int viewDistance, Point checkPoint)
+        public static bool GetIfPointIsVisible(Point position, int viewDistance, Point checkPoint)
         {
             if (!GetIfPointInVisibilityRange(position, viewDistance, checkPoint))
                 return false;
 
-            var visibleArea = VisibilityHelper.GetVisibleArea(viewDistance, position, map);
+            var visibleArea = VisibilityHelper.GetVisibleArea(viewDistance, position);
             var relativeX = checkPoint.X - position.X + viewDistance;
             var relativeY = checkPoint.Y - position.Y + viewDistance;
 

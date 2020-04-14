@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.Game.Spells.Script;
 
@@ -24,9 +22,9 @@ namespace CodeMagic.Game.Spells.SpellActions
             volume = (int) actionData.volume;
         }
 
-        public override Point Perform(IAreaMap map, IJournal journal, Point position)
+        public override Point Perform(Point position)
         {
-            var targetCell = map.TryGetCell(position);
+            var targetCell = CurrentGame.Map.TryGetCell(position);
             if (targetCell == null)
                 return position;
 
@@ -37,7 +35,7 @@ namespace CodeMagic.Game.Spells.SpellActions
             var transmutingVolume = Math.Min(waterVolume, volume);
 
             targetCell.RemoveVolume<WaterLiquid>(transmutingVolume);
-            map.AddObject(position, CreateTargetLiquid(transmutingVolume));
+            CurrentGame.Map.AddObject(position, CreateTargetLiquid(transmutingVolume));
 
             return position;
         }

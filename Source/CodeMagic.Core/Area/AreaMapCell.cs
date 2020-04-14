@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
@@ -15,14 +14,14 @@ namespace CodeMagic.Core.Area
 
         public override bool HasRoof => ObjectsCollection.OfType<IRoof>().Any();
 
-        public void Update(IAreaMap map, IJournal journal, Point position, UpdateOrder updateOrder)
+        public void Update(Point position, UpdateOrder updateOrder)
         {
-            ProcessDynamicObjects(map, journal, position, updateOrder);
+            ProcessDynamicObjects(position, updateOrder);
         }
 
-        public void PostUpdate(IAreaMap map, IJournal journal, Point position)
+        public void PostUpdate(Point position)
         {
-            ProcessDestroyableObjects(map, journal, position);
+            ProcessDestroyableObjects(position);
         }
 
         public void ResetDynamicObjectsState()
@@ -33,35 +32,35 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void ProcessDynamicObjects(IAreaMap map, IJournal journal, Point position, UpdateOrder updateOrder)
+        private void ProcessDynamicObjects(Point position, UpdateOrder updateOrder)
         {
             var dynamicObjects = ObjectsCollection.OfType<IDynamicObject>()
                 .Where(obj => !obj.Updated && obj.UpdateOrder == updateOrder).ToArray();
             foreach (var dynamicObject in dynamicObjects)
             {
-                dynamicObject.Update(map, journal, position);
+                dynamicObject.Update(position);
                 dynamicObject.Updated = true;
             }
         }
 
-        private void ProcessDestroyableObjects(IAreaMap map, IJournal journal, Point position)
+        private void ProcessDestroyableObjects(Point position)
         {
             var destroyableObjects = ObjectsCollection.OfType<IDestroyableObject>().ToArray();
-            ProcessStatusesAndEnvironment(destroyableObjects, journal);
+            ProcessStatusesAndEnvironment(destroyableObjects, position);
 
             var deadObjects = destroyableObjects.Where(obj => obj.Health <= 0).ToArray();
             foreach (var deadObject in deadObjects)
             {
-                map.RemoveObject(position, deadObject);
-                deadObject.OnDeath(map, journal, position);
+                CurrentGame.Map.RemoveObject(position, deadObject);
+                deadObject.OnDeath(position);
             }
         }
 
-        private void ProcessStatusesAndEnvironment(IDestroyableObject[] destroyableObjects, IJournal journal)
+        private void ProcessStatusesAndEnvironment(IDestroyableObject[] destroyableObjects, Point position)
         {
             foreach (var destroyableObject in destroyableObjects)
             {
-                destroyableObject.Statuses.Update(this, journal);
+                destroyableObject.Statuses.Update(position);
             }
         }
 

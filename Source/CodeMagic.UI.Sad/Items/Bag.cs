@@ -29,7 +29,7 @@ namespace CodeMagic.UI.Sad.Items
 
         public override bool Stackable => false;
 
-        public bool Use(GameCore<Player> game)
+        public bool Use(CurrentGame.GameCore<Player> game)
         {
             var view = new StorageInventoryView(game, Name, inventory, MaxWeight, this);
             view.Show();

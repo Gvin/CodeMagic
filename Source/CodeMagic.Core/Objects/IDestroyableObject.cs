@@ -15,9 +15,9 @@ namespace CodeMagic.Core.Objects
 
         int MaxHealth { get; }
 
-        void OnDeath(IAreaMap map, IJournal journal, Point position);
+        void OnDeath(Point position);
 
-        void Damage(IJournal journal, int value, Element element);
+        void Damage(Point position, int damage, Element element);
 
         IObjectStatusesCollection Statuses { get; }
 

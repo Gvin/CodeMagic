@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
@@ -173,18 +172,18 @@ namespace CodeMagic.Core.Area
             MapLightLevelHelper.UpdateLightLevel(this);
         }
 
-        public void PreUpdate(IJournal journal)
+        public void PreUpdate()
         {
             PreUpdateCells();
         }
 
-        public void Update(IJournal journal)
+        public void Update()
         {
             objectPositionCache.Clear();
 
             using (PerformanceMeter.Start("UpdateCells_Early"))
             {
-                UpdateCells(journal, UpdateOrder.Early);
+                UpdateCells(UpdateOrder.Early);
             }
 
             MapLightLevelHelper.ResetLightLevel(this);
@@ -192,21 +191,21 @@ namespace CodeMagic.Core.Area
 
             using (PerformanceMeter.Start("UpdateCells_Medium"))
             {
-                UpdateCells(journal, UpdateOrder.Medium);
+                UpdateCells(UpdateOrder.Medium);
             }
 
             using (PerformanceMeter.Start("UpdateCells_Late"))
             {
-                UpdateCells(journal, UpdateOrder.Late);
+                UpdateCells(UpdateOrder.Late);
             }
 
             using (PerformanceMeter.Start("PostUpdateCells"))
             {
-                PostUpdateCells(journal);
+                PostUpdateCells();
             }
         }
 
-        private void UpdateCells(IJournal journal, UpdateOrder order)
+        private void UpdateCells(UpdateOrder order)
         {
             for (var y = 0; y < cells.Length; y++)
             {
@@ -214,7 +213,7 @@ namespace CodeMagic.Core.Area
                 for (var x = 0; x < row.Length; x++)
                 {
                     var cell = row[x];
-                    cell.Update(this, journal, new Point(x, y), order);
+                    cell.Update(new Point(x, y), order);
                 }
             }
         }
@@ -236,7 +235,7 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void PostUpdateCells(IJournal journal)
+        private void PostUpdateCells()
         {
             var mergedCells = new CellPairsStorage(Width, Height);
             for (var y = 0; y < cells.Length; y++)
@@ -245,9 +244,9 @@ namespace CodeMagic.Core.Area
                 {
                     var position = new Point(x, y);
                     var cell = (AreaMapCell)GetCell(position);
-                    cell.PostUpdate(this, journal, position);
+                    cell.PostUpdate(position);
                     cell.ResetDynamicObjectsState();
-                    cell.Environment.Update(this, position, cell, journal);
+                    cell.Environment.Update(position, cell);
                     MergeCellEnvironment(position, cell, mergedCells);
                 }
             }

@@ -1,11 +1,10 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game.Journaling;
+﻿using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Statuses
 {
     public interface IObjectStatusesCollection
     {
-        void Add(IObjectStatus status, IJournal journal);
+        void Add(IObjectStatus status);
 
         TStatus[] GetStatuses<TStatus>() where TStatus : IObjectStatus;
 
@@ -13,6 +12,6 @@ namespace CodeMagic.Core.Statuses
 
         bool Contains(string statusType);
 
-        void Update(IAreaMapCell cell, IJournal journal);
+        void Update(Point position);
     }
 }

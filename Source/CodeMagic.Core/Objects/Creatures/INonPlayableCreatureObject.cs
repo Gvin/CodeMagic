@@ -1,9 +1,9 @@
-﻿using CodeMagic.Core.Game.Journaling;
+﻿using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects.Creatures
 {
     public interface INonPlayableCreatureObject : ICreatureObject
     {
-        void Attack(IDestroyableObject target, IJournal journal);
+        void Attack(Point position, IDestroyableObject target);
     }
 }

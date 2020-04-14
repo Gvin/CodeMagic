@@ -3,14 +3,13 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Objects.Creatures;
 
 namespace CodeMagic.Core.Objects
 {
     public static class MovementHelper
     {
-        public static MovementResult MoveCreature(ICreatureObject creature, IAreaMap map, IJournal journal, Point startPoint,
+        public static MovementResult MoveCreature(ICreatureObject creature, Point startPoint,
             Point endPoint, bool processStepReaction, bool changeDirection)
         {
             if (changeDirection)
@@ -21,10 +20,10 @@ namespace CodeMagic.Core.Objects
                 creature.Direction = movementDirection.Value;
             }
 
-            return MoveObject(creature, map, journal, startPoint, endPoint, processStepReaction);
+            return MoveObject(creature, startPoint, endPoint, processStepReaction);
         }
 
-        public static MovementResult MoveCreature(ICreatureObject creature, IAreaMap map, IJournal journal, Point startPoint,
+        public static MovementResult MoveCreature(ICreatureObject creature, Point startPoint,
             Direction direction, bool processStepReaction, bool changeDirection)
         {
             if (changeDirection)
@@ -32,34 +31,34 @@ namespace CodeMagic.Core.Objects
                 creature.Direction = direction;
             }
             var endPoint = Point.GetPointInDirection(startPoint, direction);
-            return MoveObject(creature, map, journal, startPoint, endPoint, processStepReaction);
+            return MoveObject(creature, startPoint, endPoint, processStepReaction);
         }
 
-        public static MovementResult MoveObject(IMapObject mapObject, IAreaMap map, IJournal journal, Point startPoint, Point endPoint, bool processStepReaction = true)
+        public static MovementResult MoveObject(IMapObject mapObject, Point startPoint, Point endPoint, bool processStepReaction = true)
         {
-            return MoveMapObject(mapObject, map, journal, startPoint, endPoint, cell => !cell.BlocksMovement, processStepReaction);
+            return MoveMapObject(mapObject, startPoint, endPoint, cell => !cell.BlocksMovement, processStepReaction);
         }
 
-        public static MovementResult MoveProjectile(IMapObject projectile, IAreaMap map, IJournal journal, Point startPoint, Point endPoint)
+        public static MovementResult MoveProjectile(IMapObject projectile, Point startPoint, Point endPoint)
         {
-            return MoveMapObject(projectile, map, journal, startPoint, endPoint, cell => !cell.BlocksProjectiles, false);
+            return MoveMapObject(projectile, startPoint, endPoint, cell => !cell.BlocksProjectiles, false);
         }
 
-        private static MovementResult MoveMapObject(IMapObject mapObject, IAreaMap map, IJournal journal, Point startPoint, Point endPoint,
+        private static MovementResult MoveMapObject(IMapObject mapObject, Point startPoint, Point endPoint,
             Func<IAreaMapCell, bool> canPassFilter, bool processStepReaction)
         {
             if (!Point.IsAdjustedPoint(startPoint, endPoint))
                 throw new ArgumentException("Movement points are not adjusted.");
 
-            var nextCell = map.TryGetCell(endPoint);
+            var nextCell = CurrentGame.Map.TryGetCell(endPoint);
             if (nextCell == null)
                 return new MovementResult(startPoint, false);
 
             if (!canPassFilter(nextCell))
                 return new MovementResult(startPoint, false);
 
-            map.RemoveObject(startPoint, mapObject);
-            map.AddObject(endPoint, mapObject);
+            CurrentGame.Map.RemoveObject(startPoint, mapObject);
+            CurrentGame.Map.AddObject(endPoint, mapObject);
 
             if (!processStepReaction || !(mapObject is ICreatureObject creature))
                 return new MovementResult(endPoint, true);
@@ -68,7 +67,7 @@ namespace CodeMagic.Core.Objects
             if (stepReactionObject == null)
                 return new MovementResult(endPoint, true);
 
-            var newPosition = stepReactionObject.ProcessStepOn(map, journal, endPoint, creature, startPoint);
+            var newPosition = stepReactionObject.ProcessStepOn(endPoint, creature, startPoint);
             return new MovementResult(newPosition, true);
         }
     }

@@ -15,11 +15,11 @@ namespace CodeMagic.Game.PlayerActions
         }
 
 
-        public bool Perform(IGameCore game, out Point newPosition)
+        public bool Perform(out Point newPosition)
         {
-            ((GameCore<Player>) game).Player.Equipment.EquipItem(item);
+            ((CurrentGame.GameCore<Player>)CurrentGame.Game).Player.Equipment.EquipItem(item);
 
-            newPosition = game.PlayerPosition;
+            newPosition = CurrentGame.PlayerPosition;
             return true;
         }
     }

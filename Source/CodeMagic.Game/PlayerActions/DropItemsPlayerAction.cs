@@ -14,14 +14,14 @@ namespace CodeMagic.Game.PlayerActions
             this.items = items.ToArray();
         }
 
-        public bool Perform(IGameCore game, out Point newPosition)
+        public bool Perform(out Point newPosition)
         {
-            newPosition = game.PlayerPosition;
+            newPosition = CurrentGame.PlayerPosition;
 
             foreach (var item in items)
             {
-                game.Map.AddObject(game.PlayerPosition, item);
-                game.Player.Inventory.RemoveItem(item);
+                CurrentGame.Map.AddObject(CurrentGame.PlayerPosition, item);
+                CurrentGame.Player.Inventory.RemoveItem(item);
             }
 
             return true;

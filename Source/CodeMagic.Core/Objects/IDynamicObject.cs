@@ -1,12 +1,10 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.Journaling;
+﻿using CodeMagic.Core.Game;
 
 namespace CodeMagic.Core.Objects
 {
     public interface IDynamicObject
     {
-        void Update(IAreaMap map, IJournal journal, Point position);
+        void Update(Point position);
 
         bool Updated { get; set; }
 

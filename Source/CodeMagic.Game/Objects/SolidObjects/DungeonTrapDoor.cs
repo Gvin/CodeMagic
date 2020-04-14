@@ -45,7 +45,7 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         public ObjectSize Size => ObjectSize.Huge;
 
-        public void Use(GameCore<Player> game, Point position)
+        public void Use(CurrentGame.GameCore<Player> game, Point position)
         {
             var newMap = dungeonMapGenerator.GenerateNewMap(game.Map.Level + 1, out var newPlayerPosition);
             game.ChangeMap(newMap, newPlayerPosition);

@@ -1,5 +1,4 @@
-﻿using CodeMagic.Core.Area;
-using CodeMagic.Core.Game.Journaling;
+﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Statuses
@@ -15,7 +14,7 @@ namespace CodeMagic.Core.Statuses
             lifeTime = 0;
         }
 
-        public bool Update(IDestroyableObject owner, IAreaMapCell cell, IJournal journal)
+        public bool Update(IDestroyableObject owner, Point position)
         {
             if (lifeTime >= maxLifeTime)
             {
