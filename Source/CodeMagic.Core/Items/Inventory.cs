@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.Core.Saving;
 
 namespace CodeMagic.Core.Items
 {
-    public class Inventory
+    public class Inventory : ISaveable
     {
+        private const string SaveKeyStacks = "Stacks";
+
         public event EventHandler<ItemEventArgs> ItemAdded;
         public event EventHandler<ItemEventArgs> ItemRemoved; 
 
         private readonly List<InventoryStack> stacks;
+
+        public Inventory(SaveData data)
+        {
+            stacks = data.GetObjectsCollection<InventoryStack>(SaveKeyStacks).ToList();
+        }
 
         public Inventory()
         {
@@ -20,6 +28,14 @@ namespace CodeMagic.Core.Items
         {
             stacks = new List<InventoryStack>();
             AddItems(items);
+        }
+
+        public SaveDataBuilder GetSaveData()
+        {
+            return new SaveDataBuilder(GetType(), new Dictionary<string, object>
+            {
+                {SaveKeyStacks, stacks}
+            });
         }
 
         public void AddItems(IEnumerable<IItem> items)
@@ -150,13 +166,28 @@ namespace CodeMagic.Core.Items
         public IItem Item { get; }
     }
 
-    public class InventoryStack
+    public class InventoryStack : ISaveable
     {
+        private const string SaveKeyItems = "Items";
+
         private readonly List<IItem> items;
+
+        public InventoryStack(SaveData data)
+        {
+            items = data.GetObjectsCollection(SaveKeyItems).Cast<IItem>().ToList();
+        }
 
         public InventoryStack(IItem item)
         {
             items = new List<IItem> {item};
+        }
+
+        public SaveDataBuilder GetSaveData()
+        {
+            return new SaveDataBuilder(GetType(), new Dictionary<string, object>
+            {
+                {SaveKeyItems, items}
+            });
         }
 
         public void Add(IItem item)

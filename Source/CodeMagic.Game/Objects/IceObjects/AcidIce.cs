@@ -1,4 +1,5 @@
-﻿using CodeMagic.Game.Objects.LiquidObjects;
+﻿using CodeMagic.Core.Saving;
+using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.IceObjects
@@ -12,13 +13,16 @@ namespace CodeMagic.Game.Objects.IceObjects
         public const int AcidIceMinVolumeForEffect = 50;
 
         public AcidIce(int volume) 
-            : base(volume, AcidLiquid.LiquidType)
+            : base(volume, AcidLiquid.LiquidType, "Acid Ice")
+        {
+        }
+
+        public AcidIce(SaveData data) 
+            : base(data)
         {
         }
 
         protected override int MinVolumeForEffect => AcidIceMinVolumeForEffect;
-
-        public override string Name => "Acid Ice";
 
         public override string Type => ObjectType;
 

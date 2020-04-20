@@ -1,4 +1,5 @@
-﻿using CodeMagic.Game.Objects.LiquidObjects;
+﻿using CodeMagic.Core.Saving;
+using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.IceObjects
@@ -11,14 +12,16 @@ namespace CodeMagic.Game.Objects.IceObjects
         private const string ObjectType = "WaterIce";
         public const int WaterIceMinVolumeForEffect = 50;
 
+        public WaterIce(SaveData data) : base(data)
+        {
+        }
+
         public WaterIce(int volume) 
-            : base(volume, WaterLiquid.LiquidType)
+            : base(volume, WaterLiquid.LiquidType, "Ice")
         {
         }
 
         protected override int MinVolumeForEffect => WaterIceMinVolumeForEffect;
-
-        public override string Name => "Ice";
 
         public override string Type => ObjectType;
 

@@ -3,16 +3,40 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.Game.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
 {
     public class WeaponItem : EquipableItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider
     {
+        private const string SaveKeyDescription = "Description";
+        private const string SaveKeyInventoryImage = "InventoryImage";
+        private const string SaveKeyWorldImage = "WorldImage";
+        private const string SaveKeyHitChance = "HitChance";
+        private const string SaveKeyMinDamage = "MinDamage";
+        private const string SaveKeyMaxDamage = "MaxDamage";
+
         private readonly string[] description;
         private readonly SymbolsImage inventoryImage;
         private readonly SymbolsImage worldImage;
+
+        public WeaponItem(SaveData data) : base(data)
+        {
+            MinDamage = data.GetObject<DictionarySaveable>(SaveKeyMinDamage).Data
+                .ToDictionary(pair => (Element) int.Parse((string) pair.Key), pair => int.Parse((string) pair.Value));
+            MaxDamage = data.GetObject<DictionarySaveable>(SaveKeyMaxDamage).Data
+                .ToDictionary(pair => (Element)int.Parse((string)pair.Key), pair => int.Parse((string)pair.Value));
+
+            HitChance = data.GetIntValue(SaveKeyHitChance);
+
+            description = data.GetValuesCollection(SaveKeyDescription);
+
+            inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage)?.GetImage();
+            worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage)?.GetImage();
+        }
 
         public WeaponItem(WeaponItemConfiguration configuration) 
             : base(configuration)
@@ -26,6 +50,22 @@ namespace CodeMagic.Game.Items
 
             inventoryImage = configuration.InventoryImage;
             worldImage = configuration.WorldImage;
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyDescription, description);
+            data.Add(SaveKeyInventoryImage, inventoryImage != null ? new SymbolsImageSaveable(inventoryImage) : null);
+            data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
+            data.Add(SaveKeyHitChance, HitChance);
+            data.Add(SaveKeyMinDamage,
+                new DictionarySaveable(MinDamage.ToDictionary(pair => (object) (int) pair.Key,
+                    pair => (object) pair.Value)));
+            data.Add(SaveKeyMaxDamage,
+                new DictionarySaveable(MaxDamage.ToDictionary(pair => (object)(int)pair.Key,
+                    pair => (object)pair.Value)));
+            return data;
         }
 
         public Dictionary<Element, int> MaxDamage { get; }

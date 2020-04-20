@@ -190,14 +190,13 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
 
         private IAreaMap ConvertMap(int level, int[][] map, int width, int height)
         {
-            var result = new AreaMap(level, () => new GameEnvironment(ConfigurationManager.Current.Physics), width, height);
+            var result = new AreaMap(level, () => new GameEnvironment(), width, height);
 
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
                     result.AddObject(x, y, mapObjectsFactory.CreateFloor());
-                    result.AddObject(x, y, new DungeonRoof());
 
                     if (map[y][x] == MapHandler.FilledCell || map[y][x] == MapHandler.IndestructibleCell)
                     {

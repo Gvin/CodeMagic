@@ -65,7 +65,6 @@
     <Compile Include="Common\DirectionHelper.cs" />
     <Compile Include="Game\IGameCore.cs" />
     <Compile Include="Game\IDungeonMapGenerator.cs" />
-    <Compile Include="Game\Journaling\BackgroundJournal.cs" />
     <Compile Include="Game\Journaling\IJournal.cs" />
     <Compile Include="Injection\Configuration\InjectorConfiguration.cs" />
     <Compile Include="Injection\Configuration\InjectorMappingType.cs" />
@@ -78,16 +77,15 @@
     <Compile Include="Objects\ILightObject.cs" />
     <Compile Include="Objects\IPlaceConnectionObject.cs" />
     <Compile Include="Objects\IPlacedHandler.cs" />
-    <Compile Include="Objects\IRoof.cs" />
     <Compile Include="Objects\ISpreadingObject.cs" />
     <Compile Include="Objects\IStepReactionObject.cs" />
     <Compile Include="Objects\IVolumeObject.cs" />
+    <Compile Include="Objects\MapObjectBase.cs" />
     <Compile Include="Objects\MovementHelper.cs" />
     <Compile Include="CreaturesLogic\CreaturesVisibilityHelper.cs" />
     <Compile Include="CreaturesLogic\Logic.cs" />
     <Compile Include="Game\Element.cs" />
     <Compile Include="Game\GameCore.cs" />
-    <Compile Include="Game\ITurnProvider.cs" />
     <Compile Include="Game\Journaling\IJournalMessage.cs" />
     <Compile Include="Game\Journaling\Journal.cs" />
     <Compile Include="Game\PlayerActions\IPlayerAction.cs" />
@@ -109,6 +107,11 @@
     <Compile Include="Objects\UpdateOrder.cs" />
     <Compile Include="Objects\ZIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Saving\DictionarySaveable.cs" />
+    <Compile Include="Saving\GridSaveable.cs" />
+    <Compile Include="Saving\ISaveable.cs" />
+    <Compile Include="Saving\SaveData.cs" />
+    <Compile Include="Saving\SaveDataBuilder.cs" />
     <Compile Include="Statuses\FrozenObjectStatus.cs" />
     <Compile Include="Statuses\IBurningRelatedStatus.cs" />
     <Compile Include="Statuses\IObjectStatus.cs" />

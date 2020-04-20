@@ -1,20 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using CodeMagic.Core.Saving;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Physics;
 
 namespace CodeMagic.Game.Area.EnvironmentData
 {
     [DebuggerDisplay("{" + nameof(Value) + "} kPa")]
-    public class Pressure
+    public class Pressure : ISaveable
     {
+        private const string SaveKeyValue = "Value";
+        private const string SaveKeyOldValue = "OldValue";
+
         private int value;
         private int oldValue;
 
         private readonly IPressureConfiguration configuration;
 
-        public Pressure(IPressureConfiguration configuration)
+        public Pressure(SaveData data)
         {
-            this.configuration = configuration;
+            configuration = ConfigurationManager.Current.Physics.PressureConfiguration;
+
+            value = data.GetIntValue(SaveKeyValue);
+            oldValue = data.GetIntValue(SaveKeyOldValue);
+        }
+
+        public Pressure()
+        {
+            configuration = ConfigurationManager.Current.Physics.PressureConfiguration;
 
             value = configuration.NormalValue;
             oldValue = configuration.NormalValue;
@@ -106,6 +120,15 @@ namespace CodeMagic.Game.Area.EnvironmentData
             }
 
             return 0;
+        }
+
+        public SaveDataBuilder GetSaveData()
+        {
+            return new SaveDataBuilder(GetType(), new Dictionary<string, object>
+            {
+                {SaveKeyValue, value},
+                {SaveKeyOldValue, oldValue}
+            });
         }
     }
 }

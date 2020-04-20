@@ -26,12 +26,12 @@ namespace CodeMagic.Game.Spells.Script
 
         private readonly Dictionary<string, object> globalData;
 
-        private readonly ICreatureObject caster;
+        private readonly string casterId;
 
-        public SpellCodeExecutor(ICreatureObject caster, string code)
+        public SpellCodeExecutor(string casterId, string code)
         {
             this.code = code;
-            this.caster = caster;
+            this.casterId = casterId;
 
             jsEngine = new Engine();
             ConfigureEngine();
@@ -120,7 +120,7 @@ namespace CodeMagic.Game.Spells.Script
         private void ConfigureDynamicEngineFunctions(Point position, CodeSpell spell)
         {
             jsEngine.SetValue("getLightLevel", new Func<int>(() => GetLightLevel(position)));
-            jsEngine.SetValue("getCaster", new Func<JsValue>(() => ConvertDestroyable(caster).ToJson(jsEngine)));
+            jsEngine.SetValue("getCaster", new Func<JsValue>(() => ConvertDestroyable(CurrentGame.Map.GetDestroyableObject(casterId)).ToJson(jsEngine)));
             jsEngine.SetValue("log", new Action<object>(message => LogMessage(spell, message)));
             jsEngine.SetValue("getMana", new Func<int>(() => spell.Mana));
             jsEngine.SetValue("getPosition", new Func<JsValue>(() => ConvertPoint(position)));
@@ -251,7 +251,7 @@ namespace CodeMagic.Game.Spells.Script
 
         private string GetObjectType(IDestroyableObject destroyable)
         {
-            if (destroyable.Equals(caster))
+            if (destroyable.Equals(CurrentGame.Map.GetDestroyableObject(casterId)))
             {
                 return "caster";
             }

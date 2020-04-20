@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.Game.Saving;
 using CodeMagic.Game.Spells;
 using CodeMagic.UI.Images;
 
@@ -8,22 +10,55 @@ namespace CodeMagic.Game.Items
 {
     public class SpellBook : EquipableItem, IInventoryImageProvider, IDescriptionProvider, IWorldImageProvider
     {
+        private const string SaveKeyDescription = "Description";
+        private const string SaveKeyInventoryImage = "InventoryImage";
+        private const string SaveKeyWorldImage = "WorldImage";
+        private const string SaveKeySpells = "Spells";
+        private const string SaveKeySize = "Size";
+
         private readonly SymbolsImage inventoryImage;
         private readonly SymbolsImage worldImage;
         private readonly string[] description;
 
+        public SpellBook(SaveData data) : base(data)
+        {
+            BookSize = data.GetIntValue(SaveKeySize);
+            var spellsRaw = data.GetObjectsCollection<BookSpell>(SaveKeySpells);
+            Spells = new BookSpell[BookSize];
+            for (int index = 0; index < spellsRaw.Length; index++)
+            {
+                Spells[index] = spellsRaw[index];
+            }
+
+            inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage).GetImage();
+            worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage).GetImage();
+            description = data.GetValuesCollection(SaveKeyDescription);
+        }
+
         public SpellBook(SpellBookConfiguration configuration) 
             : base(configuration)
         {
-            Spells = new BookSpell[configuration.Size];
+            BookSize = configuration.Size;
+            Spells = new BookSpell[BookSize];
             inventoryImage = configuration.InventoryImage;
             worldImage = configuration.WorldImage;
             description = configuration.Description;
         }
 
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyDescription, description);
+            data.Add(SaveKeyInventoryImage, new SymbolsImageSaveable(inventoryImage));
+            data.Add(SaveKeyWorldImage, new SymbolsImageSaveable(worldImage));
+            data.Add(SaveKeySize, BookSize);
+            data.Add(SaveKeySpells, Spells.Where(spell => spell != null));
+            return data;
+        }
+
         public BookSpell[] Spells { get; }
 
-        public int BookSize => Spells.Length;
+        public int BookSize { get; }
 
         public override bool Stackable => false;
 

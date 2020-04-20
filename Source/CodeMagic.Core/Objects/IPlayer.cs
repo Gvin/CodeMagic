@@ -8,7 +8,7 @@ namespace CodeMagic.Core.Objects
     {
         int Mana { get; set; }
 
-        int MaxMana { get; set; }
+        int MaxMana { get; }
 
         int HitChance { get; }
 
@@ -16,7 +16,7 @@ namespace CodeMagic.Core.Objects
 
         int MaxCarryWeight { get; }
 
-        int ManaRegeneration { get; set; }
+        int ManaRegeneration { get; }
 
         Inventory Inventory { get; }
 

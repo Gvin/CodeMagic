@@ -1,13 +1,16 @@
-﻿using CodeMagic.Core.Game;
+﻿using System.Collections.Generic;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Game.Objects.SolidObjects
 {
-    public class EnergyWall : IMapObject, IDynamicObject, ILightObject, IWorldImageProvider
+    public class EnergyWall : MapObjectBase, IDynamicObject, ILightObject, IWorldImageProvider
     {
-        private int energyLeft;
+        private const string SaveKeyEnergyLeft = "EnergyLeft";
+
         private const string ImageHighEnergy = "EnergyWall_HighEnergy";
         private const string ImageMediumEnergy = "EnergyWall_MediumEnergy";
         private const string ImageLowEnergy = "EnergyWall_LowEnergy";
@@ -15,9 +18,24 @@ namespace CodeMagic.Game.Objects.SolidObjects
         private const int MediumEnergy = 3;
         private const int HighEnergy = 10;
 
+        private int energyLeft;
+
+        public EnergyWall(SaveData data) : base(data)
+        {
+            energyLeft = data.GetIntValue(SaveKeyEnergyLeft);
+        }
+
         public EnergyWall(int lifeTime)
+            : base("Energy Wall")
         {
             energyLeft = lifeTime;
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyEnergyLeft, energyLeft);
+            return data;
         }
 
         public void Update(Point position)
@@ -31,7 +49,7 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         public UpdateOrder UpdateOrder => UpdateOrder.Early;
 
-        public ObjectSize Size => ObjectSize.Huge;
+        public override ObjectSize Size => ObjectSize.Huge;
 
         public ILightSource[] LightSources => new ILightSource[]
         {
@@ -40,23 +58,15 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         public bool Updated { get; set; }
 
-        public string Name => "Energy Wall";
-        public bool BlocksMovement => true;
+        public override bool BlocksMovement => true;
 
-        public bool BlocksAttack => true;
+        public override bool BlocksAttack => true;
 
-        public bool BlocksProjectiles => true;
-        public bool IsVisible => true;
-        public bool BlocksVisibility => false;
+        public override bool BlocksProjectiles => true;
 
-        public bool BlocksEnvironment => true;
+        public override bool BlocksEnvironment => true;
 
-        public ZIndex ZIndex => ZIndex.Wall;
-
-        public bool Equals(IMapObject other)
-        {
-            return ReferenceEquals(other, this);
-        }
+        public override ZIndex ZIndex => ZIndex.Wall;
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {

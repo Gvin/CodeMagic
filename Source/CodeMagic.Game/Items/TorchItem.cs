@@ -2,6 +2,7 @@
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
@@ -10,6 +11,10 @@ namespace CodeMagic.Game.Items
     {
         private const string InventoryImage = "Weapon_Torch";
         private const string WorldImage = "ItemsOnGround_Torch";
+
+        public TorchItem(SaveData data) : base(data)
+        {
+        }
 
         public TorchItem() : base(new WeaponItemConfiguration
         {

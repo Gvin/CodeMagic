@@ -17,11 +17,9 @@ namespace CodeMagic.Game.Objects.LiquidObjects
         public const string LiquidType = "WaterLiquid";
 
         public WaterLiquid(int volume) 
-            : base(volume, LiquidType)
+            : base(volume, LiquidType, "Water")
         {
         }
-
-        public override string Name => "Water";
 
         protected override IIce CreateIce(int volume)
         {
@@ -53,7 +51,7 @@ namespace CodeMagic.Game.Objects.LiquidObjects
                 destroyable.Statuses.Remove(OnFireObjectStatus.StatusType);
                 destroyable.Statuses.Remove(OilyObjectStatus.StatusType);
 
-                destroyable.Statuses.Add(new WetObjectStatus(Configuration));
+                destroyable.Statuses.Add(new WetObjectStatus());
             }
         }
 

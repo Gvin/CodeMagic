@@ -1,21 +1,26 @@
 ﻿using CodeMagic.Core.Items;
+using CodeMagic.Core.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable.Food
 {
     public class Apple : FoodItemBase
     {
-        public Apple() : base(3)
+        public Apple(SaveData data)
+            : base(data)
         {
         }
 
-        public override string Name => "Apple";
-
-        public override string Key => "food_apple";
-
-        public override ItemRareness Rareness => ItemRareness.Common;
-
-        public override int Weight => 100;
+        public Apple() 
+            : base(3, new ItemConfiguration
+            {
+                Key = "food_apple",
+                Name = "Apple",
+                Rareness = ItemRareness.Common,
+                Weight = 100
+            })
+        {
+        }
 
         public override SymbolsImage GetWorldImage(IImagesStorage storage)
         {

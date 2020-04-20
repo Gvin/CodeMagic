@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
-using CodeMagic.Game.Configuration.Physics;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.DecorativeObjects;
 
@@ -11,17 +12,38 @@ namespace CodeMagic.Game.Area.EnvironmentData
 {
     public class GameEnvironment : IGameEnvironment
     {
+        private const string SaveKeyTemperature = "Temperature";
+        private const string SaveKeyPressure = "Pressure";
+        private const string SaveKeyMagicEnergy = "MagicEnergy";
+
         private const double TemperatureToPressureMultiplier = 0.6d;
 
         private readonly Temperature temperature;
         private readonly Pressure pressure;
         private readonly MagicEnergy magicEnergy;
 
-        public GameEnvironment(IPhysicsConfiguration configuration)
+        public GameEnvironment(SaveData data)
         {
-            temperature = new Temperature(configuration.TemperatureConfiguration);
-            pressure = new Pressure(configuration.PressureConfiguration);
-            magicEnergy = new MagicEnergy(configuration.MagicEnergyConfiguration);
+            temperature = data.GetObject<Temperature>(SaveKeyTemperature);
+            pressure = data.GetObject<Pressure>(SaveKeyPressure);
+            magicEnergy = data.GetObject<MagicEnergy>(SaveKeyMagicEnergy);
+        }
+
+        public GameEnvironment()
+        {
+            temperature = new Temperature();
+            pressure = new Pressure();
+            magicEnergy = new MagicEnergy();
+        }
+
+        public SaveDataBuilder GetSaveData()
+        {
+            return new SaveDataBuilder(GetType(), new Dictionary<string, object>
+            {
+                {SaveKeyTemperature, temperature},
+                {SaveKeyPressure, pressure},
+                {SaveKeyMagicEnergy, magicEnergy}
+            });
         }
 
         public int Temperature
@@ -66,7 +88,7 @@ namespace CodeMagic.Game.Area.EnvironmentData
                 ApplyEnvironment(destroyableObject, position);
             }
 
-            Normalize(cell.Objects.OfType<IRoof>().Any());
+            Normalize();
 
             if (temperature.Value >= FireObject.SmallFireTemperature && !cell.Objects.OfType<FireObject>().Any())
             {
@@ -74,9 +96,9 @@ namespace CodeMagic.Game.Area.EnvironmentData
             }
         }
 
-        private void Normalize(bool isInside)
+        private void Normalize()
         {
-            temperature.Normalize(isInside);
+            temperature.Normalize();
             pressure.Normalize();
             magicEnergy.Normalize();
         }

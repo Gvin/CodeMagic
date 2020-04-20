@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Spells;
 using CodeMagic.Game.Spells.Script;
@@ -10,8 +12,15 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects
 {
-    public class CodeSpell : IMapObject, ILightObject, IDynamicObject, IWorldImageProvider
+    public class CodeSpell : MapObjectBase, ILightObject, IDynamicObject, IWorldImageProvider
     {
+        private const string SaveKeyMana = "Mana";
+        private const string SaveKeyLightPower = "LightPower";
+        private const string SaveKeyLifeTime = "LifeTime";
+        private const string SaveKeyRemainingLightTime = "RemainingLightTime";
+        private const string SaveKeyCode = "Code";
+        private const string SaveKeyCasterId = "CasterId";
+
         private const string ImageHighMana = "Spell_HighMana";
         private const string ImageMediumMana = "Spell_MediumMana";
         private const string ImageLowMana = "Spell_LowMana";
@@ -22,23 +31,44 @@ namespace CodeMagic.Game.Objects
         private readonly AnimationsBatchManager animations;
         public const LightLevel DefaultLightLevel = LightLevel.Dusk1;
         private readonly SpellCodeExecutor codeExecutor;
+        private readonly string casterId;
+        private readonly string code;
         private int? remainingLightTime;
         private int lifeTime;
 
-        public CodeSpell(ICreatureObject caster, string name, string code, int mana)
+        public CodeSpell(SaveData data)
+            : base(data)
         {
-            Name = name;
+            Mana = data.GetIntValue(SaveKeyMana);
+            LightPower = (LightLevel) data.GetIntValue(SaveKeyLightPower);
+            lifeTime = data.GetIntValue(SaveKeyLifeTime);
+
+            var remainingLightTimeValue = data.GetStringValue(SaveKeyRemainingLightTime);
+            remainingLightTime = remainingLightTimeValue == null ? (int?) null : int.Parse(remainingLightTimeValue);
+
+            code = data.GetStringValue(SaveKeyCode);
+            casterId = data.GetStringValue(SaveKeyCasterId);
+            codeExecutor = new SpellCodeExecutor(casterId, this.code);
+
+            animations = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.OneByOneStartFromRandom);
+        }
+
+        public CodeSpell(ICreatureObject caster, string name, string code, int mana)
+            : base(name)
+        {
             Mana = mana;
             LightPower = DefaultLightLevel;
             remainingLightTime = null;
             lifeTime = 0;
 
-            codeExecutor = new SpellCodeExecutor(caster, code);
+            casterId = caster.Id;
+            this.code = code;
+            codeExecutor = new SpellCodeExecutor(caster.Id, code);
 
             animations = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.OneByOneStartFromRandom);
         }
 
-        public ObjectSize Size => ObjectSize.Huge;
+        public override ObjectSize Size => ObjectSize.Huge;
 
         public UpdateOrder UpdateOrder => UpdateOrder.Early;
 
@@ -102,21 +132,7 @@ namespace CodeMagic.Game.Objects
             remainingLightTime = remainingLightTime.Value - 1;
         }
 
-        public string Name { get; }
-        public bool BlocksMovement => false;
-        public bool IsVisible => true;
-        public bool BlocksVisibility => false;
-        public bool BlocksProjectiles => false;
-        public bool BlocksEnvironment => false;
-
-        public bool BlocksAttack => false;
-
-        public ZIndex ZIndex => ZIndex.Spell;
-
-        public bool Equals(IMapObject other)
-        {
-            return ReferenceEquals(other, this);
-        }
+        public override ZIndex ZIndex => ZIndex.Spell;
 
         public ILightSource[] LightSources => new ILightSource[]
         {
@@ -130,6 +146,18 @@ namespace CodeMagic.Game.Objects
             if (Mana >= MediumManaLevel)
                 return animations.GetImage(storage, ImageMediumMana);
             return animations.GetImage(storage, ImageLowMana);
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyMana, Mana);
+            data.Add(SaveKeyLightPower, (int) LightPower);
+            data.Add(SaveKeyRemainingLightTime, remainingLightTime);
+            data.Add(SaveKeyCode, code);
+            data.Add(SaveKeyCasterId, casterId);
+            data.Add(SaveKeyLifeTime, lifeTime);
+            return data;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using CodeMagic.Core.Items;
+﻿using System.Collections.Generic;
+using CodeMagic.Core.Items;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
@@ -6,22 +8,36 @@ namespace CodeMagic.Game.Items.Materials
 {
     public class Wood : Item, IWorldImageProvider, IInventoryImageProvider, IDescriptionProvider, IFuelItem
     {
-        public const string ResourceKey = "resource_wood";
+        private const string SaveKeyFuelLeft = "FuelLeft";
+
+        private const string ResourceKey = "resource_wood";
 
         private const int DefaultMaxFuel = 120;
 
+        public Wood(SaveData data)
+            : base(data)
+        {
+            FuelLeft = data.GetIntValue(SaveKeyFuelLeft);
+        }
+
         public Wood()
+            : base(new ItemConfiguration
+            {
+                Key = ResourceKey,
+                Name = "Wood",
+                Rareness = ItemRareness.Trash,
+                Weight = 2000
+            })
         {
             FuelLeft = MaxFuel;
         }
 
-        public override string Name => "Wood";
-
-        public override string Key => ResourceKey;
-
-        public override ItemRareness Rareness => ItemRareness.Common;
-
-        public override int Weight => 2000;
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyFuelLeft, FuelLeft);
+            return data;
+        }
 
         public override bool Stackable => true;
 
@@ -41,10 +57,8 @@ namespace CodeMagic.Game.Items.Materials
             {
                 TextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
-                new StyledLine {$"Fuel: {FuelLeft} / {MaxFuel}"},
-                StyledLine.Empty,
                 new StyledLine {{"A big piece of wood.", TextHelper.DescriptionTextColor}},
-                new StyledLine {{"It can be used for building or as a fuel source.", TextHelper.DescriptionTextColor}}
+                new StyledLine {{"It can be used as a fuel source.", TextHelper.DescriptionTextColor}}
             };
         }
 

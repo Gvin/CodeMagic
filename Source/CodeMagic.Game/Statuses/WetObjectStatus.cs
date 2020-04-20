@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
-using CodeMagic.Core.Game;
-using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Core.Statuses;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Objects.LiquidObjects;
 
 namespace CodeMagic.Game.Statuses
 {
-    public class WetObjectStatus : IBurningRelatedStatus
+    public class WetObjectStatus : PassiveObjectStatusBase, IBurningRelatedStatus
     {
         public const string StatusType = "wet";
 
@@ -16,36 +16,39 @@ namespace CodeMagic.Game.Statuses
         private const string CustomValueWetStatusCatchFileChanceModifier = "WetStatus.CatchFireChanceModifier";
         private const string CustomValueWetStatusSelfExtinguishChanceModifier = "WetStatus.SelfExtinguishChanceModifier";
 
-        private readonly int maxLifeTime;
-        private int lifeTime;
-
-        public WetObjectStatus(ILiquidConfiguration configuration)
+        public WetObjectStatus(SaveData data) : base(data, GetMaxLifeTime())
         {
-            maxLifeTime = int.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusLifeTime));
+            var configuration = GetConfiguration();
             CatchFireChanceModifier = double.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusCatchFileChanceModifier));
             SelfExtinguishChanceModifier = double.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusSelfExtinguishChanceModifier));
-
-            lifeTime = 0;
         }
 
-        public bool Update(IDestroyableObject owner, Point position)
+        public WetObjectStatus()
+            : base(GetMaxLifeTime())
         {
-            if (lifeTime >= maxLifeTime)
-            {
-                return false;
-            }
-
-            lifeTime++;
-            return true;
+            var configuration = GetConfiguration();
+            CatchFireChanceModifier = double.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusCatchFileChanceModifier));
+            SelfExtinguishChanceModifier = double.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusSelfExtinguishChanceModifier));
         }
 
-        public string Type => StatusType;
+        private static ILiquidConfiguration GetConfiguration()
+        {
+            return ConfigurationManager.GetLiquidConfiguration(OilLiquid.LiquidType);
+        }
+
+        private static int GetMaxLifeTime()
+        {
+            var configuration = GetConfiguration();
+            return int.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusLifeTime));
+        }
+
+        public override string Type => StatusType;
 
         public double CatchFireChanceModifier { get; }
 
         public double SelfExtinguishChanceModifier { get; }
 
-        private string GetCustomConfigurationValue(ILiquidConfiguration configuration, string key)
+        private static string GetCustomConfigurationValue(ILiquidConfiguration configuration, string key)
         {
             var stringValue = configuration.CustomValues
                 .FirstOrDefault(value => string.Equals(value.Key, key))?.Value;

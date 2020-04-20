@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Liquids;
@@ -11,39 +13,44 @@ using CodeMagic.Game.Objects.SteamObjects;
 
 namespace CodeMagic.Game.Objects.LiquidObjects
 {
-    public abstract class AbstractLiquid : ILiquid, IDynamicObject
+    public abstract class AbstractLiquid : MapObjectBase, ILiquid, IDynamicObject
     {
+        private const string SaveKeyVolume = "Volume";
+        private const string SaveKeyLiquidType = "LiquidType";
+
         protected readonly ILiquidConfiguration Configuration;
         private int volume;
 
-        protected AbstractLiquid(int volume, string type)
+        protected AbstractLiquid(SaveData data) : base(data)
+        {
+            Type = data.GetStringValue(SaveKeyLiquidType);
+            Configuration = ConfigurationManager.GetLiquidConfiguration(Type);
+            volume = data.GetIntValue(SaveKeyVolume);
+        }
+
+        protected AbstractLiquid(int volume, string type, string name)
+            : base(name)
         {
             Configuration = ConfigurationManager.GetLiquidConfiguration(type);
             Type = type;
             this.volume = volume;
         }
 
-        public UpdateOrder UpdateOrder => UpdateOrder.Medium;
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyVolume, volume);
+            data.Add(SaveKeyLiquidType, Type);
+            return data;
+        }
 
-        public abstract string Name { get; }
+        public UpdateOrder UpdateOrder => UpdateOrder.Medium;
 
         public string Type { get; }
 
-        public bool BlocksMovement => false;
+        public override ZIndex ZIndex => ZIndex.FloorCover;
 
-        public bool BlocksProjectiles => false;
-
-        public bool BlocksAttack => false;
-
-        public bool IsVisible => true;
-
-        public bool BlocksVisibility => false;
-
-        public bool BlocksEnvironment => false;
-
-        public ZIndex ZIndex => ZIndex.FloorCover;
-
-        public ObjectSize Size => ObjectSize.Huge;
+        public override ObjectSize Size => ObjectSize.Huge;
 
         public void Update(Point position)
         {
@@ -139,11 +146,6 @@ namespace CodeMagic.Game.Objects.LiquidObjects
                 throw new ApplicationException($"Custom value {key} not found in the configuration for \"{Type}\".");
 
             return stringValue;
-        }
-
-        public bool Equals(IMapObject other)
-        {
-            return ReferenceEquals(other, this);
         }
     }
 }

@@ -16,6 +16,15 @@ namespace CodeMagic.Core.Area
             objects = new ConcurrentList<IMapObject>();
         }
 
+        public MapObjectsCollection(IEnumerable<IMapObject> objects)
+        {
+            this.objects = new ConcurrentList<IMapObject>();
+            foreach (var mapObject in objects)
+            {
+                this.objects.Add(mapObject);
+            }
+        }
+
         public void Add(IMapObject mapObject)
         {
             switch (mapObject)

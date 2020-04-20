@@ -18,9 +18,9 @@ Simple Fire Breathe spell example:
 function main(lifeTime) {
   var direction = getCaster().direction; // get where spell caster is looking
   if (lifeTime === 0) { // if the spell was just casted
-    move(direction, 1); // move away from caster towards his sight
+    return move(direction, 1); // move away from caster towards his sight
   }
   
-  heat(1000); // burn anything next to caster
+  return heat(1000); // burn anything next to caster
 }
 ```

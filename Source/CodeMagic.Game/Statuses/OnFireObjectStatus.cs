@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
@@ -10,6 +12,10 @@ namespace CodeMagic.Game.Statuses
 {
     public class OnFireObjectStatus : IObjectStatus
     {
+        private const string SaveKeyBurningTemperature = "BurningTemperature";
+        private const string SaveKeyBurnBeforeExtinguishCheck = "BurnBeforeExtinguishCheck";
+        private const string SaveKeyBurnTime = "BurnTime";
+
         private const int CellTemperatureIncreaseMax = 100;
 
         public const string StatusType = "on_fire";
@@ -19,12 +25,29 @@ namespace CodeMagic.Game.Statuses
 
         private int burnTime;
 
+        public OnFireObjectStatus(SaveData data)
+        {
+            burningTemperature = data.GetIntValue(SaveKeyBurningTemperature);
+            burnBeforeExtinguishCheck = data.GetIntValue(SaveKeyBurnBeforeExtinguishCheck);
+            burnTime = data.GetIntValue(SaveKeyBurnTime);
+        }
+
         public OnFireObjectStatus(OnFireObjectStatusConfiguration configuration)
         {
             burningTemperature = configuration.BurningTemperature;
             burnBeforeExtinguishCheck = configuration.BurnBeforeExtinguishCheck;
 
             burnTime = 0;
+        }
+
+        public SaveDataBuilder GetSaveData()
+        {
+            return new SaveDataBuilder(GetType(), new Dictionary<string, object>
+            {
+                {SaveKeyBurnBeforeExtinguishCheck, burnBeforeExtinguishCheck},
+                {SaveKeyBurningTemperature, burningTemperature},
+                {SaveKeyBurnTime, burnTime}
+            });
         }
 
         public bool Update(IDestroyableObject owner, Point position)

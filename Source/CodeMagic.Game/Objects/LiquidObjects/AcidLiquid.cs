@@ -2,6 +2,7 @@
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.IceObjects;
 using CodeMagic.Game.Objects.SteamObjects;
@@ -17,12 +18,14 @@ namespace CodeMagic.Game.Objects.LiquidObjects
         private const string CustomValueDamageToVolumeMultiplier = "DamageToVolumeMultiplier";
         public const string LiquidType = "AcidLiquid";
 
-        public AcidLiquid(int volume) 
-            : base(volume, LiquidType)
+        public AcidLiquid(SaveData data) : base(data)
         {
         }
 
-        public override string Name => "Acid";
+        public AcidLiquid(int volume) 
+            : base(volume, LiquidType, "Acid")
+        {
+        }
 
         protected override IIce CreateIce(int volume)
         {

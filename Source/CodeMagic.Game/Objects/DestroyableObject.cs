@@ -1,53 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.ObjectEffects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Statuses;
 
 namespace CodeMagic.Game.Objects
 {
-    public abstract class DestroyableObject : IDestroyableObject
+    public abstract class DestroyableObject : MapObjectBase, IDestroyableObject
     {
+        private const string SaveKeyId = "Id";
+        private const string SaveKeyBaseProtection = "BaseProtection";
+        private const string SaveKeyHealth = "Health";
+        private const string SaveKeyStatuses = "Statuses";
+
         private int health;
         protected readonly Dictionary<Element, int> BaseProtection;
 
-        protected DestroyableObject(int startHealth = 1)
+        protected DestroyableObject(SaveData data) 
+            : base(data)
+        {
+            Id = data.GetStringValue(SaveKeyId);
+            BaseProtection = data.GetObject<DictionarySaveable>(SaveKeyBaseProtection).Data
+                .ToDictionary(pair => (Element) int.Parse((string) pair.Key), pair => int.Parse((string) pair.Value));
+            Statuses = data.GetObject<ObjectStatusesCollection>(SaveKeyStatuses);
+
+            health = data.GetIntValue(SaveKeyHealth);
+
+            ObjectEffects = new List<IObjectEffect>();
+        }
+
+        protected DestroyableObject(string name, int startHealth = 1)
+            : base(name)
         {
             Id = Guid.NewGuid().ToString();
             BaseProtection = new Dictionary<Element, int>();
-            Statuses = new ObjectStatusesCollection(this);
-            ObjectEffects = new List<IObjectEffect>();
+            Statuses = new ObjectStatusesCollection(Id);
 
             health = startHealth;
+
+            ObjectEffects = new List<IObjectEffect>();
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyId, Id);
+            data.Add(SaveKeyHealth, health);
+            data.Add(SaveKeyStatuses, Statuses);
+            data.Add(SaveKeyBaseProtection,
+                new DictionarySaveable(BaseProtection.ToDictionary(
+                    pair => (object) (int) pair.Key,
+                    pair => (object) pair.Value)));
+            return data;
         }
 
         public string Id { get; }
 
-        public abstract string Name { get; }
-
-        public virtual bool BlocksMovement => false;
-
-        public virtual bool BlocksAttack => false;
-
-        public virtual bool IsVisible => true;
-
-        public virtual bool BlocksVisibility => false;
-
-        public virtual bool BlocksProjectiles => false;
-
-        public virtual bool BlocksEnvironment => false;
-
         public IObjectStatusesCollection Statuses { get; }
 
         protected virtual double SelfExtinguishChance => 15;
-
-        public abstract ZIndex ZIndex { get; }
-
-        public abstract ObjectSize Size { get; }
 
         public List<IObjectEffect> ObjectEffects { get; }
 
@@ -149,7 +166,7 @@ namespace CodeMagic.Game.Objects
             CurrentGame.Journal.Write(new DeathMessage(this));
         }
 
-        public bool Equals(IMapObject other)
+        public override bool Equals(IMapObject other)
         {
             if (other is DestroyableObject destroyable)
             {

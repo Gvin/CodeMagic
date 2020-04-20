@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.SolidObjects
@@ -14,14 +15,18 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         private readonly AnimationsBatchManager animationsManager;
 
-        public override string Name => "Dungeon Wall";
-
         public override bool CanConnectTo(IMapObject mapObject)
         {
             return mapObject is DungeonWall || mapObject is DungeonTorchWall || mapObject is DungeonDoor;
         }
 
+        public DungeonTorchWall(SaveData data) : base(data)
+        {
+            animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
+        }
+
         public DungeonTorchWall()
+            : base("Dungeon Wall")
         {
             animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
         }

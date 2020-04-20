@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
@@ -9,13 +10,29 @@ namespace CodeMagic.Game.Items.Usable.Food
 {
     public abstract class FoodItemBase : Item, IUsableItem, IWorldImageProvider, IInventoryImageProvider, IDescriptionProvider
     {
+        private const string SaveKeyHungerDecrease = "HungerDecrease";
+
         private const int MinHungerToEat = 10;
 
         private readonly int hungerDecrease;
 
-        protected FoodItemBase(int hungerDecrease)
+        protected FoodItemBase(SaveData data)
+            : base(data)
+        {
+            hungerDecrease = data.GetIntValue(SaveKeyHungerDecrease);
+        }
+
+        protected FoodItemBase(int hungerDecrease, ItemConfiguration configuration)
+            : base(configuration)
         {
             this.hungerDecrease = hungerDecrease;
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyHungerDecrease, hungerDecrease);
+            return data;
         }
 
         public bool Use(CurrentGame.GameCore<Player> game)

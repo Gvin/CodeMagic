@@ -1,6 +1,8 @@
-﻿namespace CodeMagic.Core.Objects
+﻿using CodeMagic.Core.Saving;
+
+namespace CodeMagic.Core.Objects
 {
-    public interface IMapObject
+    public interface IMapObject : ISaveable
     {
         string Name { get; }
 

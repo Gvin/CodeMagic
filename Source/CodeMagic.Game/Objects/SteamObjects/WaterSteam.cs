@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.UI.Images;
 
@@ -16,14 +17,17 @@ namespace CodeMagic.Game.Objects.SteamObjects
         private const int ThicknessMedium = 30;
 
         private readonly AnimationsBatchManager animations;
-        
-        public WaterSteam(int volume) 
-            : base(volume, WaterLiquid.LiquidType)
+
+        public WaterSteam(SaveData data) : base(data)
         {
             animations = new AnimationsBatchManager(TimeSpan.FromSeconds(1), AnimationFrameStrategy.Random);
         }
 
-        public override string Name => "Water Steam";
+        public WaterSteam(int volume) 
+            : base(volume, WaterLiquid.LiquidType, "Water Steam")
+        {
+            animations = new AnimationsBatchManager(TimeSpan.FromSeconds(1), AnimationFrameStrategy.Random);
+        }
 
         public override string Type => SteamType;
 

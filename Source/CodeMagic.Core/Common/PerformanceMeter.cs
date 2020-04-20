@@ -9,6 +9,7 @@ namespace CodeMagic.Core.Common
         private static string outputFile;
 
         private static bool Initialized => !string.IsNullOrEmpty(outputFile);
+        private static object OutputFileLock = new object();
 
         public static void Initialize(string outputFilePath)
         {
@@ -34,7 +35,10 @@ namespace CodeMagic.Core.Common
         {
             if (Initialized)
             {
-                File.AppendAllText(outputFile, $"{methodName}: {time}\r\n");
+                lock (OutputFileLock)
+                {
+                    File.AppendAllText(outputFile, $"{methodName}: {time}\r\n");
+                }
             }
         }
 

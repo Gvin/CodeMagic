@@ -1,20 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Physics;
 using CodeMagic.Game.JournalMessages;
 
 namespace CodeMagic.Game.Area.EnvironmentData
 {
-    public class MagicEnergy
+    public class MagicEnergy : ISaveable
     {
+        private const string SaveKeyEnergy = "Energy";
+        private const string SaveKeyDisturbance = "Disturbance";
+
         private int energy;
         private readonly IMagicEnergyConfiguration configuration;
         private int disturbance;
 
-        public MagicEnergy(IMagicEnergyConfiguration configuration)
+        public MagicEnergy(SaveData data)
         {
-            this.configuration = configuration;
+            configuration = ConfigurationManager.Current.Physics.MagicEnergyConfiguration;
+
+            energy = data.GetIntValue(SaveKeyEnergy);
+            disturbance = data.GetIntValue(SaveKeyDisturbance);
+        }
+
+        public MagicEnergy()
+        {
+            configuration = ConfigurationManager.Current.Physics.MagicEnergyConfiguration;
 
             energy = configuration.MaxValue;
             disturbance = 0;
@@ -99,6 +113,15 @@ namespace CodeMagic.Game.Area.EnvironmentData
                 return 0;
 
             return (int) Math.Floor(Disturbance * configuration.DisturbanceDamageMultiplier);
+        }
+
+        public SaveDataBuilder GetSaveData()
+        {
+            return new SaveDataBuilder(GetType(), new Dictionary<string, object>
+            {
+                {SaveKeyEnergy, energy},
+                {SaveKeyDisturbance, disturbance}
+            });
         }
     }
 }

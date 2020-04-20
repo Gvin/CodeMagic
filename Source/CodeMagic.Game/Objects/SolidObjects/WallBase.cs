@@ -3,40 +3,52 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 
 namespace CodeMagic.Game.Objects.SolidObjects
 {
-    public abstract class WallBase : IPlaceConnectionObject
+    public abstract class WallBase : MapObjectBase, IPlaceConnectionObject
     {
+        private const string SaveKeyConnectedTiles = "ConnectedTiles";
+
         private readonly List<Point> connectedTiles;
 
-        protected WallBase()
+        protected WallBase(SaveData data) : base(data)
+        {
+            connectedTiles = data.GetObjectsCollection<Point>(SaveKeyConnectedTiles).ToList();
+        }
+
+        protected WallBase(string name)
+            : base(name)
         {
             connectedTiles = new List<Point>();
         }
 
-        public ObjectSize Size => ObjectSize.Huge;
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyConnectedTiles, connectedTiles);
+            return data;
+        }
+
+        public override ObjectSize Size => ObjectSize.Huge;
 
         public void AddConnectedTile(Point position)
         {
             connectedTiles.Add(position);
         }
 
-        public abstract string Name { get; }
+        public override bool BlocksMovement => true;
 
-        public virtual bool BlocksMovement => true;
+        public override bool BlocksAttack => true;
 
-        public virtual bool BlocksAttack => true;
+        public override bool BlocksVisibility => true;
 
-        public bool IsVisible => true;
+        public override bool BlocksProjectiles => true;
 
-        public virtual bool BlocksVisibility => true;
+        public override bool BlocksEnvironment => true;
 
-        public virtual bool BlocksProjectiles => true;
-
-        public virtual bool BlocksEnvironment => true;
-
-        public ZIndex ZIndex => ZIndex.Wall;
+        public override ZIndex ZIndex => ZIndex.Wall;
 
         protected bool HasConnectedTile(int relativeX, int relativeY)
         {
@@ -74,11 +86,6 @@ namespace CodeMagic.Game.Objects.SolidObjects
             var nearPosition = new Point(position.X + relativeX, position.Y + relativeY);
             var cell = map.TryGetCell(nearPosition);
             return cell?.Objects.OfType<IPlaceConnectionObject>().FirstOrDefault(obj => CanConnectTo(obj) || obj.CanConnectTo(this));
-        }
-
-        public bool Equals(IMapObject other)
-        {
-            return ReferenceEquals(other, this);
         }
     }
 }

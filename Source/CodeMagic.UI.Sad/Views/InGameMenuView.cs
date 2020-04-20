@@ -3,6 +3,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
+using CodeMagic.UI.Sad.Saving;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
 using SadConsole.Controls;
@@ -102,6 +103,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void exitButton_Click(object sender, EventArgs args)
         {
+            new SaveManager().SaveGame();
             SadConsole.Game.Instance.Exit();
         }
 
@@ -111,7 +113,7 @@ namespace CodeMagic.UI.Sad.Views
 
             Close();
 
-            var game = new GameManager().StartGame();
+            var game = GameManager.Current.StartGame();
             var gameView = new GameView(game);
             gameView.Show();
         }

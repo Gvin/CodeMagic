@@ -10,7 +10,6 @@ using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.ItemsGeneration;
-using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.Drawing.ObjectEffects;
 
@@ -79,13 +78,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                         typeof(ISpellCastEffect),
                         new InjectorMappingType
                             {FactoryMethod = args => new SpellCastEffect()}
-                    },
-                    {
-                        typeof(IDungeonMapGenerator),
-                        new InjectorMappingType
-                        {
-                            Object = new DungeonMapGenerator(Properties.Settings.Default.DebugWriteMapToFile)
-                        }
                     }
                 };
             }

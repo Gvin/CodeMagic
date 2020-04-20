@@ -1,36 +1,32 @@
 ﻿using System;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.DecorativeObjects
 {
-    public class DungeonTorchPost : IMapObject, ILightObject, IWorldImageProvider
+    public class DungeonTorchPost : MapObjectBase, ILightObject, IWorldImageProvider
     {
         private const string AnimationName = "Decoratives_TorchPost";
 
         private readonly AnimationsBatchManager animationsManager;
 
-        public DungeonTorchPost()
+        public DungeonTorchPost(SaveData data) 
+            : base(data)
         {
             animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
         }
 
-        public string Name => "Torch Post";
-        public bool BlocksMovement => false;
-        public bool BlocksProjectiles => false;
-        public bool IsVisible => true;
-        public bool BlocksVisibility => false;
-        public bool BlocksAttack => false;
-        public bool BlocksEnvironment => false;
-        public ZIndex ZIndex => ZIndex.BigDecoration;
-
-        public bool Equals(IMapObject other)
+        public DungeonTorchPost() 
+            : base("Torch Post")
         {
-            return ReferenceEquals(this, other);
+            animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
         }
 
-        public ObjectSize Size => ObjectSize.Huge;
+        public override ZIndex ZIndex => ZIndex.BigDecoration;
+
+        public override ObjectSize Size => ObjectSize.Huge;
 
         public ILightSource[] LightSources => new ILightSource[]
         {

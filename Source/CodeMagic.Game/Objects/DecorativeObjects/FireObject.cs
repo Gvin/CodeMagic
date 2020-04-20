@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.UI.Images;
 using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Game.Objects.DecorativeObjects
 {
-    public class FireObject : IMapObject, IDynamicObject, ILightObject, IWorldImageProvider
+    public class FireObject : MapObjectBase, IDynamicObject, ILightObject, IWorldImageProvider
     {
+        private const string SaveKeyTemperature = "Temperature";
+
         private const LightLevel SmallFireLightLevel = LightLevel.Dusk2;
         private const LightLevel MediumFireLightLevel = LightLevel.Dim2;
         private const LightLevel BigFireLightLevel = LightLevel.Medium;
@@ -26,10 +30,25 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
 
         private readonly AnimationsBatchManager animations;
 
+        public FireObject(SaveData data) 
+            : base(data)
+        {
+            animations = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
+            temperature = data.GetIntValue(SaveKeyTemperature);
+        }
+
         public FireObject(int temperature)
+            : base("Fire")
         {
             animations = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
             this.temperature = temperature;
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyTemperature, temperature);
+            return data;
         }
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
@@ -47,17 +66,7 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
             return ImageSmall;
         }
 
-        public ObjectSize Size => ObjectSize.Huge;
-
-        public string Name => "Fire";
-        public bool BlocksMovement => false;
-        public bool BlocksProjectiles => false;
-
-        public bool BlocksAttack => false;
-
-        public bool BlocksEnvironment => false;
-        public bool IsVisible => true;
-        public bool BlocksVisibility => false;
+        public override ObjectSize Size => ObjectSize.Huge;
 
         public UpdateOrder UpdateOrder => UpdateOrder.Early;
 
@@ -75,12 +84,7 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
 
         public bool Updated { get; set; }
 
-        public ZIndex ZIndex => ZIndex.AreaDecoration;
-
-        public bool Equals(IMapObject other)
-        {
-            return ReferenceEquals(other, this);
-        }
+        public override ZIndex ZIndex => ZIndex.AreaDecoration;
 
         private LightLevel LightPower
         {

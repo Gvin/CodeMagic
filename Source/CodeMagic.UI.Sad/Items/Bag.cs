@@ -1,5 +1,7 @@
-﻿using CodeMagic.Core.Game;
+﻿using System.Collections.Generic;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
@@ -10,22 +12,39 @@ namespace CodeMagic.UI.Sad.Items
 {
     public class Bag : Item, IWorldImageProvider, IInventoryImageProvider, IDescriptionProvider, IUsableItem
     {
+        private const string SaveKeyInventory = "Inventory";
+
         private const int MaxWeight = 7000;
 
         private readonly Inventory inventory;
 
+        public Bag(SaveData data) : base(data)
+        {
+            inventory = data.GetObject<Inventory>(SaveKeyInventory);
+        }
+
         public Bag()
+            : base(new ItemConfiguration
+            {
+                Key = "bag",
+                Name = "Bag",
+                Rareness = ItemRareness.Common,
+                Weight = 1000
+            })
         {
             inventory = new Inventory();
         }
 
-        public override string Name => "Bag";
-
-        public override string Key => "bag";
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyInventory, inventory);
+            return data;
+        }
 
         public override ItemRareness Rareness => ItemRareness.Common;
 
-        public override int Weight => 2000 + inventory.GetWeight();
+        public override int Weight => base.Weight + inventory.GetWeight();
 
         public override bool Stackable => false;
 

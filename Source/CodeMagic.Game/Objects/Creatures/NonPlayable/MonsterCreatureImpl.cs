@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Monsters;
 using CodeMagic.UI.Images;
 
@@ -10,12 +13,34 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
 {
     public class MonsterCreatureImpl : MonsterCreatureObject, IWorldImageProvider
     {
-        private readonly IMonsterImagesConfiguration images;
+        private const string SaveKeyConfigurationId = "ConfigurationId";
+
+        private readonly MonsterCreatureImplConfiguration configuration;
+
+        public MonsterCreatureImpl(SaveData data) 
+            : base(data, GetConfiguration(data))
+        {
+            configuration = GetConfiguration(data);
+        }
 
         public MonsterCreatureImpl(MonsterCreatureImplConfiguration configuration) 
             : base(configuration)
         {
-            images = configuration.Images;
+            this.configuration = configuration;
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyConfigurationId, configuration.Id);
+            return data;
+        }
+
+        private static MonsterCreatureImplConfiguration GetConfiguration(SaveData data)
+        {
+            var configId = data.GetStringValue(SaveKeyConfigurationId);
+            var config = ConfigurationManager.Current.Monsters.Monsters.First(monster => string.Equals(monster.Id, configId));
+            return new MonsterCreatureImplConfiguration(config);
         }
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
@@ -29,13 +54,13 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
             switch (Direction)
             {
                 case Direction.North:
-                    return images.North;
+                    return configuration.Images.North;
                 case Direction.South:
-                    return images.South;
+                    return configuration.Images.South;
                 case Direction.West:
-                    return images.West;
+                    return configuration.Images.West;
                 case Direction.East:
-                    return images.East;
+                    return configuration.Images.East;
                 default:
                     throw new ArgumentException($"Unknown creature direction: {Direction}");
             }
@@ -48,6 +73,7 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
         {
             var health = RandomHelper.GetRandomValue(config.Stats.MinHealth, config.Stats.MaxHealth);
 
+            Id = config.Id;
             Name = config.Name;
             LogicPattern = config.LogicPattern;
             Size = config.Size;

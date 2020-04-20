@@ -74,7 +74,7 @@ namespace CodeMagic.UI.Sad.Views
         {
             Close();
 
-            var game = new GameManager().StartGame();
+            var game = GameManager.Current.StartGame();
             var gameView = new GameView(game);
             gameView.Show();
         }

@@ -1,15 +1,38 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 
 namespace CodeMagic.Core.Area
 {
     public abstract class AreaMapCellBase : IAreaMapCell
     {
+        private const string SaveKeyEnvironment = "Environment";
+        private const string SaveKeyObjects = "Objects";
+        private const string SaveKeyLightLevel = "LightLevel";
+
+        protected AreaMapCellBase(SaveData data)
+        {
+            ObjectsCollection = new MapObjectsCollection(data.GetObjectsCollection<IMapObject>(SaveKeyObjects));
+            LightLevel = (LightLevel)data.GetIntValue(SaveKeyLightLevel);
+            Environment = data.GetObject<IEnvironment>(SaveKeyEnvironment);
+        }
+
         protected AreaMapCellBase(IEnvironment environment)
         {
             ObjectsCollection = new MapObjectsCollection();
             LightLevel = LightLevel.Darkness;
             Environment = environment;
+        }
+
+        public SaveDataBuilder GetSaveData()
+        {
+            return new SaveDataBuilder(GetType(), new Dictionary<string, object>
+            {
+                {SaveKeyLightLevel, (int)LightLevel},
+                {SaveKeyObjects, ObjectsCollection},
+                {SaveKeyEnvironment, Environment}
+            });
         }
 
         public IEnvironment Environment { get; }
@@ -34,8 +57,6 @@ namespace CodeMagic.Core.Area
         {
             get { return ObjectsCollection.Any(obj => obj.BlocksMovement); }
         }
-
-        public abstract bool HasRoof { get; }
 
         public bool BlocksEnvironment
         {

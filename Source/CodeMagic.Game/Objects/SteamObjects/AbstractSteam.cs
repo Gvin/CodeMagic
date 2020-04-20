@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Liquids;
@@ -14,46 +16,53 @@ namespace CodeMagic.Game.Objects.SteamObjects
     {
     }
 
-    public abstract class AbstractSteam : ISteam, IDynamicObject
+    public abstract class AbstractSteam : MapObjectBase, ISteam, IDynamicObject
     {
-        protected readonly ILiquidConfiguration Configuration;
+        private const string SaveKeyVolume = "Volume";
+        private const string SaveKeyLiquidType = "LiquidType";
+
+        private readonly ILiquidConfiguration configuration;
+        private readonly string liquidType;
         private int volume;
 
-        protected AbstractSteam(int volume, string liquidType)
+        protected AbstractSteam(SaveData data) : base(data)
         {
-            Configuration = ConfigurationManager.GetLiquidConfiguration(liquidType);
-            if (Configuration == null)
+            liquidType = data.GetStringValue(SaveKeyLiquidType);
+            configuration = ConfigurationManager.GetLiquidConfiguration(liquidType);
+            if (configuration == null)
+                throw new ApplicationException($"Unable to find liquid configuration for liquid type \"{liquidType}\".");
+
+            volume = data.GetIntValue(SaveKeyVolume);
+        }
+
+        protected AbstractSteam(int volume, string liquidType, string name)
+            : base(name)
+        {
+            this.liquidType = liquidType;
+            configuration = ConfigurationManager.GetLiquidConfiguration(liquidType);
+            if (configuration == null)
                 throw new ApplicationException($"Unable to find liquid configuration for liquid type \"{liquidType}\".");
 
             this.volume = volume;
         }
 
-        public ObjectSize Size => ObjectSize.Huge;
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyVolume, volume);
+            data.Add(SaveKeyLiquidType, liquidType);
+            return data;
+        }
+
+        public override ObjectSize Size => ObjectSize.Huge;
 
         public UpdateOrder UpdateOrder => UpdateOrder.Medium;
 
-        public abstract string Name { get; }
+        public override bool BlocksVisibility => Thickness >= 100;
 
-        public bool BlocksMovement => false;
+        protected int Thickness => (int)(Volume * configuration.Steam.ThicknessMultiplier);
 
-        public bool BlocksProjectiles => false;
-
-        public bool BlocksAttack => false;
-
-        public bool IsVisible => true;
-
-        public bool BlocksVisibility => Thickness >= 100;
-
-        public bool BlocksEnvironment => false;
-
-        protected int Thickness => (int)(Volume * Configuration.Steam.ThicknessMultiplier);
-
-        public ZIndex ZIndex => ZIndex.Air;
-
-        public bool Equals(IMapObject other)
-        {
-            return ReferenceEquals(this, other);
-        }
+        public override ZIndex ZIndex => ZIndex.Air;
 
         public abstract string Type { get; }
 
@@ -72,15 +81,15 @@ namespace CodeMagic.Game.Objects.SteamObjects
             }
         }
 
-        public int MaxVolumeBeforeSpread => Configuration.Steam.MaxVolumeBeforeSpread;
+        public int MaxVolumeBeforeSpread => configuration.Steam.MaxVolumeBeforeSpread;
 
-        public int MaxSpreadVolume => Configuration.Steam.MaxSpreadVolume;
+        public int MaxSpreadVolume => configuration.Steam.MaxSpreadVolume;
 
         public abstract ISpreadingObject Separate(int volume);
 
         protected string GetCustomConfigurationValue(string key)
         {
-            var stringValue = Configuration.CustomValues
+            var stringValue = configuration.CustomValues
                 .FirstOrDefault(value => string.Equals(value.Key, key))?.Value;
             if (string.IsNullOrEmpty(stringValue))
                 throw new ApplicationException($"Custom value {key} not found in the configuration for \"{Type}\".");
@@ -97,7 +106,7 @@ namespace CodeMagic.Game.Objects.SteamObjects
                 return;
             }
 
-            if (cell.Temperature() < Configuration.BoilingPoint)
+            if (cell.Temperature() < configuration.BoilingPoint)
             {
                 ProcessCondensation(position, cell);
             }
@@ -112,15 +121,15 @@ namespace CodeMagic.Game.Objects.SteamObjects
 
         private void ProcessCondensation(Point position, IAreaMapCell cell)
         {
-            var missingTemperature = Configuration.BoilingPoint - cell.Temperature();
-            var volumeToRaiseTemp = (int)Math.Floor(missingTemperature * Configuration.CondensationTemperatureMultiplier);
+            var missingTemperature = configuration.BoilingPoint - cell.Temperature();
+            var volumeToRaiseTemp = (int)Math.Floor(missingTemperature * configuration.CondensationTemperatureMultiplier);
             var volumeToCondense = Math.Min(volumeToRaiseTemp, Volume);
-            var heatGain = (int)Math.Floor(volumeToCondense / Configuration.CondensationTemperatureMultiplier);
+            var heatGain = (int)Math.Floor(volumeToCondense / configuration.CondensationTemperatureMultiplier);
 
             cell.Environment.Cast().Temperature += heatGain;
             Volume -= volumeToCondense;
 
-            var liquidVolume = volumeToCondense / Configuration.EvaporationMultiplier;
+            var liquidVolume = volumeToCondense / configuration.EvaporationMultiplier;
 
             CurrentGame.Map.AddObject(position, CreateLiquid(liquidVolume));
         }

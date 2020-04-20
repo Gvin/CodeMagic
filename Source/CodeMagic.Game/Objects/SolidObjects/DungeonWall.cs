@@ -1,4 +1,5 @@
 ﻿using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.SolidObjects
@@ -11,7 +12,13 @@ namespace CodeMagic.Game.Objects.SolidObjects
         private const string ImageBottomRight = "Wall_Dungeon_Bottom_Right";
         private const string ImageCorner = "Wall_Dungeon_Corner";
 
-        public override string Name => "Dungeon Wall";
+        public DungeonWall(SaveData data) : base(data)
+        {
+        }
+
+        public DungeonWall() : base("Dungeon Wall")
+        {
+        }
 
         public override bool CanConnectTo(IMapObject mapObject)
         {

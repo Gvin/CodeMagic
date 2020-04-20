@@ -222,7 +222,6 @@
     <Compile Include="Objects\DecorativeObjects\DungeonTorchPost.cs" />
     <Compile Include="Objects\DecorativeObjects\FireObject.cs" />
     <Compile Include="Objects\DestroyableObject.cs" />
-    <Compile Include="Objects\DungeonRoof.cs" />
     <Compile Include="Objects\Floor\FloorObject.cs" />
     <Compile Include="Objects\IceObjects\AbstractIce.cs" />
     <Compile Include="Objects\IceObjects\AcidIce.cs" />
@@ -257,7 +256,7 @@
     <Compile Include="PlayerActions\UseItemPlayerAction.cs" />
     <Compile Include="PlayerActions\UseObjectPlayerAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Saving\Common\XmlDictionary.cs" />
+    <Compile Include="Saving\SymbolsImageSaveable.cs" />
     <Compile Include="Spells\BookSpell.cs" />
     <Compile Include="Spells\Script\JsonData.cs" />
     <Compile Include="Spells\Script\SpellCodeExecutor.cs" />
@@ -306,5 +305,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

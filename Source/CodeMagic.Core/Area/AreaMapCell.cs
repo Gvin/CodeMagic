@@ -2,17 +2,21 @@
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 
 namespace CodeMagic.Core.Area
 {
     public class AreaMapCell : AreaMapCellBase
     {
+        public AreaMapCell(SaveData data)
+            : base(data)
+        {
+        }
+
         public AreaMapCell(IEnvironment environment)
             : base(environment)
         {
         }
-
-        public override bool HasRoof => ObjectsCollection.OfType<IRoof>().Any();
 
         public void Update(Point position, UpdateOrder updateOrder)
         {

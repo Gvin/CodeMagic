@@ -1,29 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 
 namespace CodeMagic.Core.Items
 {
-    public abstract class Item : IItem
+    public abstract class Item : MapObjectBase, IItem
     {
-        protected Item(ItemConfiguration configuration)
-            : this()
+        private const string SaveKeyId = "Id";
+        private const string SaveKeyKey = "Key";
+        private const string SaveKeyRareness = "Rareness";
+        private const string SaveKeyWeight = "Weight";
+
+        protected Item(SaveData data)
+            : base(data)
         {
-            Key = configuration.Key;
-            Name = configuration.Name;
-            Rareness = configuration.Rareness;
-            Weight = configuration.Weight;
+            Id = data.GetStringValue(SaveKeyId);
+            Key = data.GetStringValue(SaveKeyKey);
+            Rareness = (ItemRareness)data.GetIntValue(SaveKeyRareness);
+            Weight = data.GetIntValue(SaveKeyWeight);
         }
 
-        protected Item()
+        protected Item(ItemConfiguration configuration)
+            : base(configuration.Name)
         {
             Id = Guid.NewGuid().ToString();
+            Key = configuration.Key;
+            Rareness = configuration.Rareness;
+            Weight = configuration.Weight;
         }
 
         public string Id { get; }
 
         public virtual string Key { get; }
-
-        public virtual string Name { get; }
 
         public virtual ItemRareness Rareness { get; }
 
@@ -46,28 +55,21 @@ namespace CodeMagic.Core.Items
 
         #region IMapObject Implementation
 
-        public bool BlocksMovement => false;
+        public override ZIndex ZIndex => ZIndex.AreaDecoration;
 
-        public bool BlocksAttack => false;
-
-        public bool BlocksProjectiles => false;
-
-        public bool IsVisible => true;
-
-        public bool BlocksVisibility => false;
-
-        public bool BlocksEnvironment => false;
-
-        public ZIndex ZIndex => ZIndex.AreaDecoration;
-
-        bool IMapObject.Equals(IMapObject other)
-        {
-            return ReferenceEquals(other, this);
-        }
-
-        public ObjectSize Size => ObjectSize.Small;
+        public override ObjectSize Size => ObjectSize.Small;
 
         #endregion
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyId, Id);
+            data.Add(SaveKeyKey, Key);
+            data.Add(SaveKeyWeight, Weight);
+            data.Add(SaveKeyRareness, (int) Rareness);
+            return data;
+        }
     }
 
     public class ItemConfiguration

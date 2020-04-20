@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Core.Saving;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.Statuses;
 
@@ -11,12 +13,27 @@ namespace CodeMagic.Game.Objects.Creatures
 {
     public abstract class CreatureObject : DestroyableObject, ICreatureObject
     {
+        private const string SaveKeyDirection = "Direction";
+
         private const int BloodMarkPercentage = 20;
 
-        protected CreatureObject(int maxHealth)
-            : base(maxHealth)
+        protected CreatureObject(SaveData data) 
+            : base(data)
+        {
+            Direction = (Direction) data.GetIntValue(SaveKeyDirection);
+        }
+
+        protected CreatureObject(string name, int health) 
+            : base(name, health)
         {
             Direction = Direction.North;
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyDirection, (int) Direction);
+            return data;
         }
 
         public Direction Direction { get; set; }

@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
@@ -7,6 +9,8 @@ namespace CodeMagic.Game.Items.Usable
 {
     public class Scroll : ScrollBase
     {
+        private const string SaveKeyInventoryImageName = "InvantoryImageName";
+
         private const string ImageWorld = "ItemsOnGround_Other";
 
         private const string ImageInventory1 = "Item_Scroll_New_V1";
@@ -15,10 +19,22 @@ namespace CodeMagic.Game.Items.Usable
 
         private readonly string inventoryImageName;
 
+        public Scroll(SaveData data) : base(data)
+        {
+            inventoryImageName = data.GetStringValue(SaveKeyInventoryImageName);
+        }
+
         public Scroll(ScrollItemConfiguration configuration) 
             : base(configuration)
         {
             inventoryImageName = GetInventoryImageName(configuration.Code);
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyInventoryImageName, inventoryImageName);
+            return data;
         }
 
         private static string GetInventoryImageName(string code)

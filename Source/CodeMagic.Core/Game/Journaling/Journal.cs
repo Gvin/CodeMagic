@@ -4,12 +4,10 @@ namespace CodeMagic.Core.Game.Journaling
 {
     public class Journal : IJournal
     {
-        private readonly ITurnProvider turnProvider;
         private readonly List<JournalMessageData> messages;
 
-        public Journal(ITurnProvider turnProvider)
+        public Journal()
         {
-            this.turnProvider = turnProvider;
             messages = new List<JournalMessageData>();
         }
 
@@ -17,7 +15,7 @@ namespace CodeMagic.Core.Game.Journaling
         {
             lock (messages)
             {
-                messages.Add(new JournalMessageData(message, turnProvider.CurrentTurn));
+                messages.Add(new JournalMessageData(message, CurrentGame.Game.CurrentTurn));
             }
         }
 

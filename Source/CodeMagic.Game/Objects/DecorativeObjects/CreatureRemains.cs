@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.DecorativeObjects
 {
-    public class CreatureRemains : IMapObject, IWorldImageProvider
+    public class CreatureRemains : MapObjectBase, IWorldImageProvider
     {
+        private const string SaveKeyRemainsType = "RemainsType";
+
         private const string ImageBloodSmall = "Remains_Blood_Small";
         private const string ImageBloodMedium = "Remains_Blood_Medium";
         private const string ImageBloodBig = "Remains_Blood_Big";
@@ -17,12 +21,18 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
         private const string ImageBonesWhiteSmall = "Remains_Bones_Small";
         private const string ImageBonesWhiteMedium = "Remains_Bones_Medium";
 
-        protected readonly RemainsType Type;
+        private readonly RemainsType type;
+
+        public CreatureRemains(SaveData data)
+            : base(data)
+        {
+            type = (RemainsType) data.GetIntValue(SaveKeyRemainsType);
+        }
 
         public CreatureRemains(RemainsType type)
+            : base(GetName(type))
         {
-            Type = type;
-            Name = GetName(type);
+            this.type = type;
         }
 
         private static string GetName(RemainsType type)
@@ -53,7 +63,7 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
 
         private string GetWorldImageName()
         {
-            switch (Type)
+            switch (type)
             {
                 case RemainsType.BloodRedSmall:
                     return ImageBloodSmall;
@@ -75,36 +85,24 @@ namespace CodeMagic.Game.Objects.DecorativeObjects
                     return ImageBonesWhiteMedium;
 
                 default:
-                    throw new ArgumentException($"Unknown remains type: {Type}");
+                    throw new ArgumentException($"Unknown remains type: {type}");
             }
         }
 
         #region IMapObject Implementation
 
-        public string Name { get; }
+        public override ZIndex ZIndex => ZIndex.GroundDecoration;
 
-        public bool BlocksMovement => false;
-
-        public bool BlocksProjectiles => false;
-
-        public bool BlocksAttack => false;
-
-        public bool IsVisible => true;
-
-        public bool BlocksVisibility => false;
-
-        public bool BlocksEnvironment => false;
-
-        public ZIndex ZIndex => ZIndex.GroundDecoration;
-
-        public bool Equals(IMapObject other)
-        {
-            return ReferenceEquals(this, other);
-        }
-
-        public ObjectSize Size => ObjectSize.Huge;
+        public override ObjectSize Size => ObjectSize.Huge;
 
         #endregion
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyRemainsType, (int) type);
+            return data;
+        }
     }
 
     public enum RemainsType

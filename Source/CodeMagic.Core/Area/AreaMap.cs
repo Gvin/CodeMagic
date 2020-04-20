@@ -4,14 +4,44 @@ using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 
 namespace CodeMagic.Core.Area
 {
     public class AreaMap : IAreaMap
     {
+        private const string SaveKeyLevel = "Level";
+        private const string SaveKeyWidth = "Width";
+        private const string SaveKeyHeight = "Height";
+        private const string SaveKeyCells = "Cells";
+
         private readonly Dictionary<Type, Point> objectPositionCache;
         private readonly AreaMapCell[][] cells;
         private readonly Dictionary<string, IDestroyableObject> destroyableObjects;
+
+        public AreaMap(SaveData dataBuilder)
+        {
+            objectPositionCache = new Dictionary<Type, Point>();
+            destroyableObjects = new Dictionary<string, IDestroyableObject>();
+
+            Level = dataBuilder.GetIntValue(SaveKeyLevel);
+            Width = dataBuilder.GetIntValue(SaveKeyWidth);
+            Height = dataBuilder.GetIntValue(SaveKeyHeight);
+
+            cells = dataBuilder.GetObject<GridSaveable>(SaveKeyCells).Rows.Select(row => row.Cast<AreaMapCell>().ToArray()).ToArray();
+
+            for (var y = 0; y < Height; y++)
+            {
+                for (var x = 0; x < Width; x++)
+                {
+                    var cell = cells[y][x];
+                    foreach (var destroyable in cell.ObjectsCollection.OfType<IDestroyableObject>())
+                    {
+                        destroyableObjects.Add(destroyable.Id, destroyable);
+                    }
+                }
+            }
+        }
 
         public AreaMap(int level, Func<IEnvironment> environmentFactory, int width, int height)
         {
@@ -31,6 +61,18 @@ namespace CodeMagic.Core.Area
                     cells[y][x] = new AreaMapCell(environmentFactory());
                 }
             }
+        }
+
+        public SaveDataBuilder GetSaveData()
+        {
+            var grid = new GridSaveable(cells.Cast<object[]>().ToArray());
+            return new SaveDataBuilder(GetType(), new Dictionary<string, object>
+            {
+                {SaveKeyLevel, Level},
+                {SaveKeyWidth, Width},
+                {SaveKeyHeight, Height},
+                {SaveKeyCells, grid}
+            });
         }
 
         public IDestroyableObject GetDestroyableObject(string id)
@@ -181,7 +223,7 @@ namespace CodeMagic.Core.Area
         {
             objectPositionCache.Clear();
 
-            using (PerformanceMeter.Start("UpdateCells_Early"))
+            using (PerformanceMeter.Start($"Map_UpdateCells_Early[{CurrentGame.Game.CurrentTurn}]"))
             {
                 UpdateCells(UpdateOrder.Early);
             }
@@ -189,17 +231,17 @@ namespace CodeMagic.Core.Area
             MapLightLevelHelper.ResetLightLevel(this);
             MapLightLevelHelper.UpdateLightLevel(this);
 
-            using (PerformanceMeter.Start("UpdateCells_Medium"))
+            using (PerformanceMeter.Start($"Map_UpdateCells_Medium[{CurrentGame.Game.CurrentTurn}]"))
             {
                 UpdateCells(UpdateOrder.Medium);
             }
 
-            using (PerformanceMeter.Start("UpdateCells_Late"))
+            using (PerformanceMeter.Start($"Map_UpdateCells_Late[{CurrentGame.Game.CurrentTurn}]"))
             {
                 UpdateCells(UpdateOrder.Late);
             }
 
-            using (PerformanceMeter.Start("PostUpdateCells"))
+            using (PerformanceMeter.Start($"Map_PostUpdateCells[{CurrentGame.Game.CurrentTurn}]"))
             {
                 PostUpdateCells();
             }

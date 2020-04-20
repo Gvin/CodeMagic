@@ -2,17 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.Game.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
 {
     public class ArmorItem : EquipableItem, IInventoryImageProvider, IDescriptionProvider, IWorldImageProvider
     {
+        private const string SaveKeyInventoryImage = "InventoryImage";
+        private const string SaveKeyWorldImage = "WorldImage";
+        private const string SaveKeyDescription = "Description";
+        private const string SaveKeyProtection = "Protection";
+
         private readonly SymbolsImage inventoryImage;
         private readonly SymbolsImage worldImage;
         private readonly string[] description;
         private readonly Dictionary<Element, int> protection;
+
+        public ArmorItem(SaveData data) : base(data)
+        {
+            inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage)?.GetImage();
+            worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage)?.GetImage();
+            description = data.GetValuesCollection(SaveKeyDescription);
+            protection = data.GetObject<DictionarySaveable>(SaveKeyProtection).Data.ToDictionary(pair =>
+                (Element) int.Parse((string) pair.Key), pair => int.Parse((string) pair.Value));
+        }
 
         public ArmorItem(ArmorItemConfiguration configuration) 
             : base(configuration)
@@ -22,6 +38,18 @@ namespace CodeMagic.Game.Items
             inventoryImage = configuration.InventoryImage;
             worldImage = configuration.WorldImage;
             description = configuration.Description;
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyInventoryImage, inventoryImage !=null ? new SymbolsImageSaveable(inventoryImage) : null);
+            data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
+            data.Add(SaveKeyDescription, description);
+            data.Add(SaveKeyProtection,
+                new DictionarySaveable(protection.ToDictionary(pair => (object) (int) pair.Key,
+                    pair => (object) pair.Value)));
+            return data;
         }
 
         public ArmorType ArmorType { get; }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
@@ -8,16 +10,31 @@ using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Drawing;
+using CodeMagic.UI.Sad.Saving;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
     public class GameManager
     {
+        public static GameManager Current { get; } = new GameManager();
+
+        private Task saveGameTask;
+
+        private GameManager()
+        {
+            DungeonMapGenerator.Initialize(Properties.Settings.Default.DebugWriteMapToFile);
+        }
+
         public CurrentGame.GameCore<Player> StartGame()
         {
+            if (CurrentGame.Game is CurrentGame.GameCore<Player> oldGame)
+            {
+                oldGame.TurnEnded -= game_TurnEnded;
+            }
+
             var player = CreatePlayer();
 
-            var startMap = new DungeonMapGenerator(Properties.Settings.Default.DebugWriteMapToFile).GenerateNewMap(1, out var playerPosition);
+            var startMap = DungeonMapGenerator.Current.GenerateNewMap(1, out var playerPosition);
             CurrentGame.Initialize(startMap, player, playerPosition);
             var game = (CurrentGame.GameCore<Player>) CurrentGame.Game;
             startMap.Refresh();
@@ -31,7 +48,35 @@ namespace CodeMagic.UI.Sad.GameProcess
                 game.Journal.Write(new ItemLostMessage(args.Item));
             };
 
+            game.TurnEnded += game_TurnEnded;
+            new SaveManager().SaveGame();
+
             return game;
+        }
+
+        public CurrentGame.GameCore<Player> LoadGame()
+        {
+            var game = new SaveManager().LoadGame();
+            CurrentGame.Load(game);
+
+            game.Player.Inventory.ItemAdded += (sender, args) =>
+            {
+                game.Journal.Write(new ItemReceivedMessage(args.Item));
+            };
+            game.Player.Inventory.ItemRemoved += (sender, args) =>
+            {
+                game.Journal.Write(new ItemLostMessage(args.Item));
+            };
+
+            game.TurnEnded += game_TurnEnded;
+
+            return game;
+        }
+
+        private void game_TurnEnded(object sender, EventArgs args)
+        {
+            saveGameTask?.Wait();
+            saveGameTask = new SaveManager().SaveGameAsync();
         }
 
         private Player CreatePlayer()

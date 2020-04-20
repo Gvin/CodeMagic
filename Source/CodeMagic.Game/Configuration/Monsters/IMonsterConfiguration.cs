@@ -9,6 +9,8 @@ namespace CodeMagic.Game.Configuration.Monsters
 
         string Type { get; }
 
+        string Id { get; }
+
         string Name { get; }
 
         string LogicPattern { get; }

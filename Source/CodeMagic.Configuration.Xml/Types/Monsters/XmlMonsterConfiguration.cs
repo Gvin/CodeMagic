@@ -21,6 +21,9 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
         [XmlAttribute("type")]
         public string Type { get; set; }
 
+        [XmlAttribute("id")]
+        public string Id { get; set; }
+
         [XmlElement("name")]
         public string Name { get; set; }
 

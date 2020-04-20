@@ -2,6 +2,7 @@
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.UI.Images;
@@ -22,13 +23,16 @@ namespace CodeMagic.Game.Objects.SteamObjects
 
         private readonly AnimationsBatchManager animations;
 
-        public AcidSteam(int volume)
-            : base(volume, AcidLiquid.LiquidType)
+        public AcidSteam(SaveData data) : base(data)
         {
             animations = new AnimationsBatchManager(TimeSpan.FromSeconds(1), AnimationFrameStrategy.Random);
         }
 
-        public override string Name => "Acid Steam";
+        public AcidSteam(int volume)
+            : base(volume, AcidLiquid.LiquidType, "Acid Steam")
+        {
+            animations = new AnimationsBatchManager(TimeSpan.FromSeconds(1), AnimationFrameStrategy.Random);
+        }
 
         public override string Type => SteamType;
 

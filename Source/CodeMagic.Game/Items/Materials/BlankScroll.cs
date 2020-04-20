@@ -1,4 +1,5 @@
 ﻿using CodeMagic.Core.Items;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
@@ -10,6 +11,11 @@ namespace CodeMagic.Game.Items.Materials
 
         private const string WorldImageName = "ItemsOnGround_Other";
         private const string InventoryImageName = "Item_Scroll_Empty";
+
+        public BlankScroll(SaveData data) 
+            : base(data)
+        {
+        }
 
         public BlankScroll() : base(new ItemConfiguration
         {

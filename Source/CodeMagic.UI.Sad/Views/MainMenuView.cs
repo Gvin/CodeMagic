@@ -1,7 +1,12 @@
 ﻿using System;
+using CodeMagic.Core.Game;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
+using SadConsole;
+using SadConsole.Themes;
+using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -9,6 +14,7 @@ namespace CodeMagic.UI.Sad.Views
     {
         private GameLogoControl gameLabel;
         private StandardButton startGameButton;
+        private StandardButton continueGameButton;
         private StandardButton spellsLibraryButton;
         private StandardButton exitButton;
         private StandardButton settingsButton;
@@ -37,9 +43,24 @@ namespace CodeMagic.UI.Sad.Views
             startGameButton.Click += startGameButton_Click;
             Add(startGameButton);
 
-            spellsLibraryButton = new StandardButton(20)
+            continueGameButton = new StandardButton(20)
             {
                 Position = new Point(xPosition - 2, 13),
+                Text = "C0nt1nue Game"
+            };
+            if (CurrentGame.Game == null)
+            {
+                continueGameButton.IsEnabled = false;
+            }
+            else
+            {
+                continueGameButton.Click += continueGameButton_Click;
+            }
+            Add(continueGameButton);
+
+            spellsLibraryButton = new StandardButton(20)
+            {
+                Position = new Point(xPosition - 2, 17),
                 Text = "Spells L1brary"
             };
             spellsLibraryButton.Click += (sender, args) => OpenSpellsLibrary();
@@ -47,7 +68,7 @@ namespace CodeMagic.UI.Sad.Views
 
             settingsButton = new StandardButton(20)
             {
-                Position = new Point(xPosition - 2, 17),
+                Position = new Point(xPosition - 2, 21),
                 Text = "Sett1ngs"
             };
             settingsButton.Click += (sender, args) => OpenSettingsDialog();
@@ -55,7 +76,7 @@ namespace CodeMagic.UI.Sad.Views
 
             exitButton = new StandardButton(20)
             {
-                Position = new Point(xPosition - 2, 21),
+                Position = new Point(xPosition - 2, 25),
                 Text = "Ex1t"
             };
             exitButton.Click += exitButton_Click;
@@ -77,11 +98,23 @@ namespace CodeMagic.UI.Sad.Views
             SadConsole.Game.Instance.Exit();
         }
 
+        private void continueGameButton_Click(object sender, EventArgs args)
+        {
+            if (CurrentGame.Game == null)
+                return;
+
+            Close();
+
+            var game = (CurrentGame.GameCore<Player>) CurrentGame.Game;
+            var gameView = new GameView(game);
+            gameView.Show();
+        }
+
         private void startGameButton_Click(object sender, EventArgs args)
         {
             Close();
 
-            var game = new GameManager().StartGame();
+            var game = GameManager.Current.StartGame();
             var gameView = new GameView(game);
             gameView.Show();
         }

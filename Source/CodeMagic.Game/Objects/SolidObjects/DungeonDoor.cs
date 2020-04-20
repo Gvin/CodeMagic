@@ -1,4 +1,5 @@
 ﻿using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.SolidObjects
@@ -10,7 +11,13 @@ namespace CodeMagic.Game.Objects.SolidObjects
         private const string ImageClosedVertical = "Door_Dungeon_Closed_Vertical";
         private const string ImageClosedHorizontal = "Door_Dungeon_Closed_Horizontal";
 
-        public override string Name => "Door";
+        public DungeonDoor(SaveData data) : base(data)
+        {
+        }
+
+        public DungeonDoor() : base("Door")
+        {
+        }
 
         public override bool CanConnectTo(IMapObject mapObject)
         {

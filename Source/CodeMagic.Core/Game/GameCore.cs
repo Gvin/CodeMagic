@@ -1,7 +1,11 @@
-﻿using CodeMagic.Core.Area;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Core.Game
@@ -38,14 +42,35 @@ namespace CodeMagic.Core.Game
         public static Point PlayerPosition => Game?.PlayerPosition;
 
         public static void Initialize<TPlayer>(IAreaMap map, TPlayer player, Point playerPosition)
-            where TPlayer : IPlayer
+            where TPlayer : class, IPlayer
         {
             Game = new GameCore<TPlayer>(map, player, playerPosition);
         }
 
-        public class GameCore<TPlayer> : ITurnProvider, IGameCore where TPlayer : IPlayer
+        public static void Load(IGameCore loadedGame)
         {
+            Game = loadedGame;
+        }
+
+        public class GameCore<TPlayer> : IGameCore where TPlayer : class, IPlayer
+        {
+            private const string SaveKeyMap = "Map";
+            private const string SaveKeyPlayer = "Player";
+            private const string SaveKeyPlayerPosition = "PlayerPosition";
+            private const string SaveKeyJournal = "Journal";
+            private const string SaveKeyCurrentTurn = "CurrentTurn";
+
             private AreaMapFragment cachedVisibleArea;
+
+            public GameCore(SaveData dataBuilder)
+            {
+                Map = dataBuilder.GetObject<AreaMap>(SaveKeyMap);
+                PlayerPosition = dataBuilder.GetObject<Point>(SaveKeyPlayerPosition);
+                Player = Map.GetCell(PlayerPosition).Objects.OfType<TPlayer>().Single();
+                Journal = new Journal();
+                CurrentTurn = dataBuilder.GetIntValue(SaveKeyCurrentTurn);
+                cachedVisibleArea = null;
+            }
 
             public GameCore(IAreaMap map, TPlayer player, Point playerPosition)
             {
@@ -55,12 +80,14 @@ namespace CodeMagic.Core.Game
 
                 Map.AddObject(PlayerPosition, Player);
 
-                Journal = new Journal(this);
+                Journal = new Journal();
 
                 CurrentTurn = 1;
 
                 cachedVisibleArea = null;
             }
+
+            public event EventHandler TurnEnded;
 
             public int CurrentTurn { get; private set; }
 
@@ -96,6 +123,8 @@ namespace CodeMagic.Core.Game
                     {
                         ProcessSystemTurn();
                     }
+
+                    TurnEnded?.Invoke(this, EventArgs.Empty);
                 }
 
                 cachedVisibleArea = null;
@@ -146,6 +175,19 @@ namespace CodeMagic.Core.Game
 
             public void Dispose()
             {
+            }
+
+            public SaveDataBuilder GetSaveData()
+            {
+                var data = new Dictionary<string, object>
+                {
+                    {SaveKeyMap, Map},
+                    {SaveKeyPlayer, Player},
+                    {SaveKeyPlayerPosition, PlayerPosition},
+                    {SaveKeyJournal, Journal},
+                    {SaveKeyCurrentTurn, CurrentTurn}
+                };
+                return new SaveDataBuilder(GetType(), data);
             }
         }
     }

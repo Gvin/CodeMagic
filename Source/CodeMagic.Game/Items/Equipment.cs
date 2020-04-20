@@ -3,22 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Saving;
 
 namespace CodeMagic.Game.Items
 {
-    public class Equipment
+    public class Equipment : ISaveable
     {
+        private const string SaveKeyWeapon = "Weapon";
+        private const string SaveKeyArmorHelmet = "ArmorHelmet";
+        private const string SaveKeyArmorChest = "ArmorChest";
+        private const string SaveKeyArmorLeggings = "ArmorLeggings";
+        private const string SaveKeySpellBook = "SpellBook";
+
         private static readonly WeaponItem Fists = new WeaponItem(new WeaponItemConfiguration
         {
             MaxDamage = new Dictionary<Element, int> {{Element.Blunt, 2}},
             MinDamage = new Dictionary<Element, int> {{Element.Blunt, 0}},
             HitChance = 50,
             Name = "Fists",
+            Key = "fists",
             Rareness = ItemRareness.Trash,
             Weight = 0
         });
 
         private WeaponItem weapon;
+
+        public Equipment(SaveData data)
+        {
+            weapon = data.GetObject<WeaponItem>(SaveKeyWeapon);
+            SpellBook = data.GetObject<SpellBook>(SaveKeySpellBook);
+            Armor = new Dictionary<ArmorType, ArmorItem>
+            {
+                {ArmorType.Helmet, data.GetObject<ArmorItem>(SaveKeyArmorHelmet)},
+                {ArmorType.Chest, data.GetObject<ArmorItem>(SaveKeyArmorChest)},
+                {ArmorType.Leggings, data.GetObject<ArmorItem>(SaveKeyArmorLeggings)}
+            };
+        }
 
         public Equipment()
         {
@@ -28,6 +48,18 @@ namespace CodeMagic.Game.Items
                 {ArmorType.Chest, null},
                 {ArmorType.Leggings, null}
             };
+        }
+
+        public SaveDataBuilder GetSaveData()
+        {
+            return new SaveDataBuilder(GetType(), new Dictionary<string, object>
+            {
+                {SaveKeyWeapon, weapon},
+                {SaveKeySpellBook, SpellBook},
+                {SaveKeyArmorHelmet, Armor[ArmorType.Helmet]},
+                {SaveKeyArmorChest, Armor[ArmorType.Chest]},
+                {SaveKeyArmorLeggings, Armor[ArmorType.Leggings]}
+            });
         }
 
         public Dictionary<ArmorType, ArmorItem> Armor { get; }

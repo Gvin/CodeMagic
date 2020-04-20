@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <monsters-configuration>
-  <monster type="skeleton">
+  <monster type="skeleton" id="skeleton">
     <spawn-configuration>
       <level value="1" rate="100"/>
       <level value="2" rate="50"/>
@@ -64,7 +64,7 @@
       </resource>
     </loot>
   </monster>
-  <monster type="goblin">
+  <monster type="goblin" id="goblin">
     <name>Goblin</name>
     <spawn-configuration>
       <level value="2" rate="50"/>
@@ -134,7 +134,7 @@
       </resource>
     </loot>
   </monster>
-  <monster type="slime">
+  <monster type="slime" id="slime">
     <name>Green Slime</name>
     <spawn-configuration>
       <level value="3" rate="20"/>
@@ -216,7 +216,7 @@
       </resource>
     </loot>
   </monster>
-  <monster type="knight">
+  <monster type="knight" id="black_knight">
     <spawn-configuration>
       <level value="4" rate="50"/>
       <level value="5" rate="80"/>

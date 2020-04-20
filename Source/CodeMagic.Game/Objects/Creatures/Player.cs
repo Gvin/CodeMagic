@@ -5,6 +5,7 @@ using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.DecorativeObjects;
@@ -15,6 +16,12 @@ namespace CodeMagic.Game.Objects.Creatures
 {
     public class Player : CreatureObject, IPlayer, ILightObject, IWorldImageProvider
     {
+        private const string SaveKeyInventory = "Inventory";
+        private const string SaveKeyEquipment = "Equipment";
+        private const string SaveKeyStats = "Stats";
+        private const string SaveKeyMana = "Mana";
+        private const string SaveKeyHunger = "Hunger";
+
         private const string ImageUp = "Player_Up";
         private const string ImageDown = "Player_Down";
         private const string ImageLeft = "Player_Left";
@@ -25,20 +32,28 @@ namespace CodeMagic.Game.Objects.Creatures
         private const int MaxProtection = 75;
 
         private int mana;
-        private int maxMana;
-        private int manaRegeneration;
         private double hungerPercent;
-        private readonly double hungerIncrement;
+        private readonly double hungerIncrement = 0.02;
         private readonly Dictionary<PlayerStats, int> stats;
 
-        public Player() : base(GetMaxHealth(DefaultStatValue))
+        public Player(SaveData data) : base(data)
+        {
+            Equipment = data.GetObject<Equipment>(SaveKeyEquipment);
+
+            Inventory = data.GetObject<Inventory>(SaveKeyInventory);
+            Inventory.ItemRemoved += Inventory_ItemRemoved;
+
+            stats = data.GetObject<DictionarySaveable>(SaveKeyStats).Data.ToDictionary(
+                pair => (PlayerStats) int.Parse((string)pair.Key),
+                pair => int.Parse((string) pair.Value));
+
+            Mana = data.GetIntValue(SaveKeyMana);
+            hungerPercent = double.Parse(data.GetStringValue(SaveKeyHunger));
+        }
+
+        public Player() : base("Player", GetMaxHealth(DefaultStatValue))
         {
             Equipment = new Equipment();
-            MaxMana = 1000;
-            Mana = 1000;
-            manaRegeneration = 10;
-            MaxCarryWeight = 25000;
-            hungerIncrement = 0.02;
 
             Inventory = new Inventory();
             Inventory.ItemRemoved += Inventory_ItemRemoved;
@@ -48,6 +63,20 @@ namespace CodeMagic.Game.Objects.Creatures
             {
                 stats.Add(playerStat, DefaultStatValue);
             }
+
+            Mana = MaxMana;
+            hungerPercent = 0;
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyEquipment, Equipment);
+            data.Add(SaveKeyInventory, Inventory);
+            data.Add(SaveKeyStats, new DictionarySaveable(stats.ToDictionary(pair => (object)(int)pair.Key, pair => (object)pair.Value)));
+            data.Add(SaveKeyMana, Mana);
+            data.Add(SaveKeyHunger, hungerPercent);
+            return data;
         }
 
         private static int GetMaxHealth(int strength)
@@ -77,15 +106,13 @@ namespace CodeMagic.Game.Objects.Creatures
             set => hungerPercent = Math.Min(100d, value);
         }
 
-        public int MaxCarryWeight { get; }
+        public int MaxCarryWeight => 23000 + 2000 * GetStat(PlayerStats.Strength);
 
         public event EventHandler Died;
 
         public Equipment Equipment { get; }
 
         public Inventory Inventory { get; }
-
-        public override string Name => "Player";
 
         public override int MaxVisibilityRange => 4;
 
@@ -96,22 +123,9 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public override bool BlocksMovement => true;
 
-        public int ManaRegeneration
-        {
-            get => manaRegeneration + Equipment.GetBonusManaRegeneration();
-            set
-            {
-                if (value < 0)
-                {
-                    manaRegeneration = 0;
-                    return;
-                }
+        public int ManaRegeneration => 10 + GetStat(PlayerStats.Wisdom) + Equipment.GetBonusManaRegeneration();
 
-                manaRegeneration = value;
-            }
-        }
-
-        public override int MaxHealth => GetMaxHealth(stats[PlayerStats.Strength]) + Equipment.GetBonusHealth();
+        public override int MaxHealth => GetMaxHealth(GetStat(PlayerStats.Strength)) + Equipment.GetBonusHealth();
 
         public int Mana
         {
@@ -119,23 +133,14 @@ namespace CodeMagic.Game.Objects.Creatures
             set => mana = Math.Max(0, Math.Min(MaxMana, value));
         }
 
-        public int MaxMana
-        {
-            get => maxMana + Equipment.GetBonusMana();
-            set
-            {
-                if (value < 0)
-                    throw new ArgumentException("Max Mana value cannot be < 0");
-                maxMana = value;
-                if (mana > MaxMana)
-                    mana = MaxMana;
-            }
-        }
+        public int MaxMana => 100 + 20 * GetStat(PlayerStats.Intelligence) + Equipment.GetBonusMana();
 
         public int HitChance => CalculateHitChance(Equipment.Weapon.HitChance);
 
         public override void Update(Point position)
         {
+            base.Update(position);
+
             if (Mana < MaxMana && !Statuses.Contains(HungryObjectStatus.StatusType))
             {
                 var cell = CurrentGame.Map.GetCell(position);

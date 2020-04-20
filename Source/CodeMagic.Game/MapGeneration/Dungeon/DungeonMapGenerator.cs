@@ -12,15 +12,22 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 {
     public class DungeonMapGenerator : IDungeonMapGenerator
     {
+        public static DungeonMapGenerator Current { get; private set; }
+
+        public static void Initialize(bool writeMapFile)
+        {
+            Current = new DungeonMapGenerator(writeMapFile);
+        }
+
         private readonly Dictionary<MapType, IMapAreaGenerator> generators;
         private readonly bool writeMapFile;
 
-        public DungeonMapGenerator(bool writeMapFile = false)
+        private DungeonMapGenerator(bool writeMapFile = false)
         {
             this.writeMapFile = writeMapFile;
 
-            var dungeonMapObjectsFactory = new DungeonMapObjectsFactory(this);
-            var caveMapObjectsFactory = new CaveMapObjectsFactory(this);
+            var dungeonMapObjectsFactory = new DungeonMapObjectsFactory();
+            var caveMapObjectsFactory = new CaveMapObjectsFactory();
 
             generators = new Dictionary<MapType, IMapAreaGenerator>
             {

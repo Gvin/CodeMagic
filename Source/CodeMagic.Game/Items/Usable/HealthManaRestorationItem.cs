@@ -1,17 +1,32 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.Game.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable
 {
     public class HealthManaRestorationItem : SimpleItemImpl, IUsableItem, IDescriptionProvider, IWorldImageProvider
     {
+        private const string SaveKeyHealValue = "HealValue";
+        private const string SaveKeyManaRestoreValue = "ManaRestore";
+        private const string SaveKeyDescription = "Description";
+        private const string SaveKeyWorldImage = "WorldImage";
+
         private readonly int healValue;
         private readonly int manaRestoreValue;
         private readonly SymbolsImage worldImage;
         private readonly string description;
+
+        public HealthManaRestorationItem(SaveData data) : base(data)
+        {
+            healValue = data.GetIntValue(SaveKeyHealValue);
+            manaRestoreValue = data.GetIntValue(SaveKeyManaRestoreValue);
+            description = data.GetStringValue(SaveKeyDescription);
+            worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage)?.GetImage();
+        }
 
         public HealthManaRestorationItem(HealthManaRestorationItemConfiguration configuration) : base(configuration)
         {
@@ -19,6 +34,16 @@ namespace CodeMagic.Game.Items.Usable
             manaRestoreValue = configuration.ManaRestoreValue;
             worldImage = configuration.WorldImage;
             description = configuration.Description;
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyHealValue, healValue);
+            data.Add(SaveKeyManaRestoreValue, manaRestoreValue);
+            data.Add(SaveKeyDescription, description);
+            data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
+            return data;
         }
 
         public bool Use(CurrentGame.GameCore<Player> game)

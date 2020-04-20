@@ -1,4 +1,5 @@
 ﻿using CodeMagic.Core.Items;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
@@ -8,13 +9,21 @@ namespace CodeMagic.Game.Items.Materials
     {
         private const string ResourceKey = "resource_stone";
 
-        public override string Name => "Stone";
+        public Stone(SaveData data)
+            : base(data)
+        {
+        }
 
-        public override string Key => ResourceKey;
-
-        public override ItemRareness Rareness => ItemRareness.Common;
-
-        public override int Weight => 3000;
+        public Stone()
+            : base(new ItemConfiguration
+            {
+                Key = ResourceKey,
+                Name = "Stone",
+                Rareness = ItemRareness.Trash,
+                Weight = 3000
+            })
+        {
+        }
 
         public override bool Stackable => true;
 
@@ -34,8 +43,7 @@ namespace CodeMagic.Game.Items.Materials
             {
                 TextHelper.GetWeightLine(Weight),
                 StyledLine.Empty,
-                new StyledLine {{"A normal medium size stone.", TextHelper.DescriptionTextColor}},
-                new StyledLine {{"It can be used for building.", TextHelper.DescriptionTextColor}}
+                new StyledLine {{"A normal medium size stone.", TextHelper.DescriptionTextColor}}
             };
         }
     }

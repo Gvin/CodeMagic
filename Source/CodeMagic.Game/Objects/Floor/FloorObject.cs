@@ -1,58 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Floor
 {
-    public class FloorObject : IMapObject, IWorldImageProvider
+    public class FloorObject : MapObjectBase, IWorldImageProvider
     {
+        private const string SaveKeyFloorType = "FloorType";
+
         private readonly Type floorType;
 
+        public FloorObject(SaveData data) 
+            : base(data)
+        {
+            floorType = (Type) data.GetIntValue(SaveKeyFloorType);
+        }
+
         public FloorObject(Type floorType)
+            : base(GetName(floorType))
         {
             this.floorType = floorType;
         }
 
-        public string Name
+        protected override Dictionary<string, object> GetSaveDataContent()
         {
-            get
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyFloorType, (int) floorType);
+            return data;
+        }
+
+        private static string GetName(Type type)
+        {
+            switch (type)
             {
-                switch (floorType)
-                {
-                    case Type.Grass:
-                        return "Grass";
-                    case Type.Stone:
-                        return "Stone";
-                    case Type.Dirt:
-                        return "Dirt";
-                    case Type.Wood:
-                        return "Wood";
-                    default:
-                        throw new ArgumentException($"Unknown floor type: {floorType}");
-                }
+                case Type.Grass:
+                    return "Grass";
+                case Type.Stone:
+                    return "Stone";
+                case Type.Dirt:
+                    return "Dirt";
+                case Type.Wood:
+                    return "Wood";
+                default:
+                    throw new ArgumentException($"Unknown floor type: {type}");
             }
         }
 
-        public bool BlocksAttack => false;
+        public override ZIndex ZIndex => ZIndex.Floor;
 
-        public bool BlocksMovement => false;
-
-        public bool BlocksProjectiles => false;
-
-        public bool IsVisible => true;
-
-        public bool BlocksVisibility => false;
-
-        public bool BlocksEnvironment => false;
-
-        public ZIndex ZIndex => ZIndex.Floor;
-
-        public bool Equals(IMapObject other)
-        {
-            return ReferenceEquals(this, other);
-        }
-
-        public ObjectSize Size => ObjectSize.Huge;
+        public override ObjectSize Size => ObjectSize.Huge;
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {

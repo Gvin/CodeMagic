@@ -2,6 +2,7 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures.Loot;
@@ -16,8 +17,17 @@ namespace CodeMagic.Game.Objects.Creatures
         private readonly int hitChance;
         private readonly MonsterCreatureObjectConfiguration configuration;
 
+        protected MonsterCreatureObject(SaveData data, MonsterCreatureObjectConfiguration configuration) 
+            : base(data)
+        {
+            this.configuration = configuration;
+            damage = configuration.Damage.ToArray();
+            hitChance = configuration.HitChance;
+            lootConfiguration = configuration.LootConfiguration;
+        }
+
         protected MonsterCreatureObject(MonsterCreatureObjectConfiguration configuration) 
-            : base(configuration.MaxHealth, configuration.LogicPattern)
+            : base(configuration.Name, configuration.MaxHealth, configuration.LogicPattern)
         {
             this.configuration = configuration;
 
@@ -33,8 +43,6 @@ namespace CodeMagic.Game.Objects.Creatures
                 }
             }
         }
-
-        public sealed override string Name => configuration.Name;
 
         public sealed override ObjectSize Size => configuration.Size;
 
@@ -98,6 +106,8 @@ namespace CodeMagic.Game.Objects.Creatures
         public ILootConfiguration LootConfiguration { get; set; }
 
         public string Name { get; set; }
+
+        public string Id { get; set; }
 
         public string LogicPattern { get; set; }
 

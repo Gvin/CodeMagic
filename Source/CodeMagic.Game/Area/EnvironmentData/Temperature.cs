@@ -1,20 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Saving;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Physics;
 
 namespace CodeMagic.Game.Area.EnvironmentData
 {
     [DebuggerDisplay("{" + nameof(Value) + "} C")]
-    public class Temperature
+    public class Temperature : ISaveable
     {
+        private const string SaveKeyValue = "Value";
+
         private int value;
 
         private readonly ITemperatureConfiguration configuration;
 
-        public Temperature(ITemperatureConfiguration configuration)
+        public Temperature(SaveData data)
         {
-            this.configuration = configuration;
+            configuration = ConfigurationManager.Current.Physics.TemperatureConfiguration;
+            value = data.GetIntValue(SaveKeyValue);
+        }
+
+        public Temperature()
+        {
+            configuration = ConfigurationManager.Current.Physics.TemperatureConfiguration;
             value = configuration.NormalValue;
         }
 
@@ -39,10 +50,10 @@ namespace CodeMagic.Game.Area.EnvironmentData
             }
         }
 
-        public void Normalize(bool isInside)
+        public void Normalize()
         {
             var difference = Math.Abs(configuration.NormalValue - Value);
-            difference = Math.Min(difference, isInside ? configuration.NormalizeSpeedInside : configuration.NormalizeSpeedOutside);
+            difference = Math.Min(difference, configuration.NormalizeSpeedInside);
 
             if (Value > configuration.NormalValue)
             {
@@ -107,6 +118,14 @@ namespace CodeMagic.Game.Area.EnvironmentData
 
             damageElement = null;
             return 0;
+        }
+
+        public SaveDataBuilder GetSaveData()
+        {
+            return new SaveDataBuilder(GetType(), new Dictionary<string, object>
+            {
+                {SaveKeyValue, value}
+            });
         }
     }
 }

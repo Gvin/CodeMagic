@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
@@ -10,6 +12,10 @@ namespace CodeMagic.Game.Items.Usable
 {
     public class AncientScroll : ScrollBase
     {
+        private const string SaveKeyDamagePercent = "DamagePercent";
+        private const string SaveKeyDamagedCode = "DamagedCode";
+        private const string SaveKeyInventoryImageName = "InventoryImageName";
+
         private const int MagicDamageOnFailedScroll = 1;
         private const int DisturbanceIncrementOnFailedScroll = 5;
 
@@ -29,11 +35,27 @@ namespace CodeMagic.Game.Items.Usable
         private readonly int damagePercent;
         private readonly string damagedCode;
 
+        public AncientScroll(SaveData data) : base(data)
+        {
+            damagePercent = data.GetIntValue(SaveKeyDamagePercent);
+            damagedCode = data.GetStringValue(SaveKeyDamagedCode);
+            inventoryImageName = data.GetStringValue(SaveKeyInventoryImageName);
+        }
+
         public AncientScroll(AncientScrollItemConfiguration configuration) : base(configuration)
         {
             damagePercent = configuration.DamagePercent;
             damagedCode = GenerateDamagedCode(configuration.Code, configuration.DamagePercent);
             inventoryImageName = GetInventoryImageName(configuration.Code);
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyInventoryImageName, inventoryImageName);
+            data.Add(SaveKeyDamagePercent, damagePercent);
+            data.Add(SaveKeyDamagedCode, damagedCode);
+            return data;
         }
 
         private static string GetInventoryImageName(string code)

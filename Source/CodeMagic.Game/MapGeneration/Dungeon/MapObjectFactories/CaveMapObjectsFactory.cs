@@ -7,13 +7,6 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 {
     public class CaveMapObjectsFactory : IDungeonMapObjectFactory
     {
-        private readonly IDungeonMapGenerator dungeonMapGenerator;
-
-        public CaveMapObjectsFactory(IDungeonMapGenerator dungeonMapGenerator)
-        {
-            this.dungeonMapGenerator = dungeonMapGenerator;
-        }
-
         public IMapObject CreateFloor()
         {
             return new FloorObject(FloorObject.Type.Stone);
@@ -31,7 +24,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 
         public IMapObject CreateTrapDoor()
         {
-            return new DungeonTrapDoor(dungeonMapGenerator);
+            return new DungeonTrapDoor();
         }
 
         public IMapObject CreateWall()

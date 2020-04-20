@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CodeMagic.Core.CreaturesLogic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Core.Saving;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.CreaturesLogic;
 using CodeMagic.Game.CreaturesLogic.Strategies;
@@ -12,13 +14,38 @@ namespace CodeMagic.Game.Objects.Creatures
 {
     public abstract class NonPlayableCreatureObject : CreatureObject, INonPlayableCreatureObject
     {
-        private float turnsCounter;
+        private const string SaveKeyMaxHealth = "MaxHealth";
+        private const string SaveKeyLogicPattern = "LogicPattern";
+        private const string SaveKeyTurnsCounter = "TurnsCounter";
 
-        protected NonPlayableCreatureObject(int maxHealth, string logicPattern)
-            : base(maxHealth)
+        private float turnsCounter;
+        private readonly string logicPattern;
+
+        protected NonPlayableCreatureObject(SaveData data) : base(data)
+        {
+            Logic = new Logic();
+            turnsCounter = float.Parse(data.GetStringValue(SaveKeyTurnsCounter));
+            logicPattern = data.GetStringValue(SaveKeyLogicPattern);
+
+            if (!string.IsNullOrEmpty(logicPattern))
+            {
+                var configurator = StandardLogicFactory.GetConfigurator(logicPattern);
+                configurator.Configure(Logic);
+            }
+            else
+            {
+                Logic.SetInitialStrategy(new StandStillStrategy());
+            }
+
+            MaxHealth = data.GetIntValue(SaveKeyMaxHealth);
+        }
+
+        protected NonPlayableCreatureObject(string name, int maxHealth, string logicPattern)
+            : base(name, maxHealth)
         {
             Logic = new Logic();
             turnsCounter = 0;
+            this.logicPattern = logicPattern;
 
             if (!string.IsNullOrEmpty(logicPattern))
             {
@@ -31,6 +58,15 @@ namespace CodeMagic.Game.Objects.Creatures
             }
 
             MaxHealth = maxHealth;
+        }
+
+        protected override Dictionary<string, object> GetSaveDataContent()
+        {
+            var data = base.GetSaveDataContent();
+            data.Add(SaveKeyLogicPattern, logicPattern);
+            data.Add(SaveKeyMaxHealth, MaxHealth);
+            data.Add(SaveKeyTurnsCounter, turnsCounter);
+            return data;
         }
 
         public override int MaxHealth { get; }
@@ -52,6 +88,8 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public override void Update(Point position)
         {
+            base.Update(position);
+
             turnsCounter += 1;
             if (turnsCounter >= Speed)
             {
