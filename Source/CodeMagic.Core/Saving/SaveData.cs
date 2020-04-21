@@ -55,7 +55,7 @@ namespace CodeMagic.Core.Saving
             var data = Objects[key];
             if (data == null)
                 return null;
-            return DeserializeObject((SaveData)data);
+            return DeserializeObject(data);
         }
 
         public T GetSerializedObject<T>(string key) where T : class

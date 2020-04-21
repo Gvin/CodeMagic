@@ -8,7 +8,16 @@ namespace CodeMagic.Core.Common
     {
         private static string outputFile;
 
-        private static bool Initialized => !string.IsNullOrEmpty(outputFile);
+        private static bool Initialized
+        {
+            get
+            {
+                lock (OutputFileLock)
+                {
+                    return !string.IsNullOrEmpty(outputFile);
+                }
+            }
+        }
         private static object OutputFileLock = new object();
 
         public static void Initialize(string outputFilePath)
