@@ -6,6 +6,7 @@ using NUnit.Framework;
 namespace CodeMagic.Core.Tests.Area
 {
     [TestFixture]
+    [Parallelizable]
     public class AreaMapCellTests
     {
         [TestCase(true, ExpectedResult = true)]

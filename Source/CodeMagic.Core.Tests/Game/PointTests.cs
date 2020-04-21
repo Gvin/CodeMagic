@@ -4,6 +4,7 @@ using NUnit.Framework;
 namespace CodeMagic.Core.Tests.Game
 {
     [TestFixture]
+    [Parallelizable]
     public class PointTests
     {
         [TestCase(0, 0, 0, 2, 1, 1, ExpectedResult = false)]
