@@ -4,6 +4,7 @@ using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Saving;
+using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.Items
 {
@@ -164,29 +165,20 @@ namespace CodeMagic.Game.Items
             return Armor.Sum(pair => pair.Value?.GetProtection(element) ?? 0);
         }
 
-        public int GetBonusMana()
+        public int GetBonus(EquipableBonusType bonusType)
         {
-            var result = weapon?.ManaBonus ?? 0;
-            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.ManaBonus);
-            result += SpellBook?.ManaBonus ?? 0;
+            var result = weapon?.GetBonus(bonusType) ?? 0;
+            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.GetBonus(bonusType));
+            result += SpellBook?.GetBonus(bonusType) ?? 0;
 
             return result;
         }
 
-        public int GetBonusManaRegeneration()
+        public int GetStatsBonus(PlayerStats statType)
         {
-            var result = weapon?.ManaRegenerationBonus ?? 0;
-            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.ManaRegenerationBonus);
-            result += SpellBook?.HealthBonus ?? 0;
-
-            return result;
-        }
-
-        public int GetBonusHealth()
-        {
-            var result = weapon?.HealthBonus ?? 0;
-            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.HealthBonus);
-            result += SpellBook?.HealthBonus ?? 0;
+            var result = weapon?.GetStatBonus(statType) ?? 0;
+            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.GetStatBonus(statType));
+            result += SpellBook?.GetStatBonus(statType) ?? 0;
 
             return result;
         }

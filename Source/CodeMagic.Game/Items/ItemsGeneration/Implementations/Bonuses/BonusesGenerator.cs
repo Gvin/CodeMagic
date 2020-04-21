@@ -18,12 +18,11 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses
         private static readonly Dictionary<string, IBonusApplier> BonusAppliers = new Dictionary<string, IBonusApplier>
         {
             {DamageBonusApplier.BonusType, new DamageBonusApplier()},
-            {HealthBonusApplier.BonusType, new HealthBonusApplier()},
-            {ManaBonusApplier.BonusType, new ManaBonusApplier()},
-            {ManaRegenerationBonusApplier.BonusType, new ManaRegenerationBonusApplier()},
+            {EquipmentBonusApplier.BonusType, new EquipmentBonusApplier()},
             {ProtectionBonusApplier.BonusType, new ProtectionBonusApplier()},
             {WeightBonusApplier.BonusType, new WeightBonusApplier()},
-            {LightBonusApplier.BonusType, new LightBonusApplier()}
+            {LightBonusApplier.BonusType, new LightBonusApplier()},
+            {PlayerStatBonusApplier.BonusType, new PlayerStatBonusApplier()}
         };
 
         private readonly IBonusesConfiguration configuration;

@@ -179,65 +179,71 @@ namespace CodeMagic.Game.Items
             return (int) power;
         }
 
+        private static StyledString GetEquipableBonusTypeName(EquipableBonusType bonusType)
+        {
+            switch (bonusType)
+            {
+                case EquipableBonusType.Health:
+                    return new StyledString("Health", HealthColor);
+                case EquipableBonusType.Mana:
+                    return new StyledString("Mana", ManaColor);
+                case EquipableBonusType.ManaRegeneration:
+                    return new StyledString("Mana Regeneration", ManaRegenerationColor);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(bonusType), bonusType, null);
+            }
+        }
+
         public static void AddBonusesDescription(EquipableItem item, EquipableItem equiped, List<StyledLine> descriptionResult)
         {
             var equalItems = item.Equals(equiped);
 
-            var equipedHealthBonus = equiped?.HealthBonus ?? 0;
-            if (item.HealthBonus > 0 || equipedHealthBonus > 0)
+            foreach (var bonusType in Enum.GetValues(typeof(EquipableBonusType)).Cast<EquipableBonusType>())
             {
-                var healthBonusDescription = new StyledLine
+                var equipedValue = equiped?.GetBonus(bonusType) ?? 0;
+                var value = item.GetBonus(bonusType);
+                if (value == 0 && equipedValue == 0)
+                    continue;
+
+                var bonusName = GetEquipableBonusTypeName(bonusType);
+                var bonusDescription = new StyledLine
                 {
-                    new StyledString("Health", HealthColor),
+                    bonusName,
                     " Bonus: "
                 };
                 if (equalItems)
                 {
-                    healthBonusDescription.Add(GetValueString(item.HealthBonus));
+                    bonusDescription.Add(GetValueString(value));
                 }
                 else
                 {
-                    healthBonusDescription.Add(GetCompareValueString(item.HealthBonus, equipedHealthBonus));
+                    bonusDescription.Add(GetCompareValueString(value, equipedValue));
                 }
-                descriptionResult.Add(healthBonusDescription);
+                descriptionResult.Add(bonusDescription);
             }
 
-            var equipedManaBonus = equiped?.ManaBonus ?? 0;
-            if (item.ManaBonus > 0 || equipedManaBonus > 0)
+            foreach (var stat in Enum.GetValues(typeof(PlayerStats)).Cast<PlayerStats>())
             {
-                var manaBonusDescription = new StyledLine
-                {
-                    new StyledString("Mana", ManaColor),
-                    " Bonus: "
-                };
-                if (equalItems)
-                {
-                    manaBonusDescription.Add(GetValueString(item.ManaBonus));
-                }
-                else
-                {
-                    manaBonusDescription.Add(GetCompareValueString(item.ManaBonus, equipedManaBonus));
-                }
-                descriptionResult.Add(manaBonusDescription);
-            }
+                var equipedValue = equiped?.GetStatBonus(stat) ?? 0;
+                var value = item.GetStatBonus(stat);
+                if (value == 0 && equipedValue == 0)
+                    continue;
 
-            var equipedManaRegenBonus = equiped?.ManaRegenerationBonus ?? 0;
-            if (item.ManaRegenerationBonus > 0 || equipedManaRegenBonus > 0)
-            {
-                var manaRegenBonusDescription = new StyledLine
+                var bonusName = GetStatName(stat);
+                var bonusDescription = new StyledLine
                 {
-                    new StyledString("Mana Regeneration", ManaRegenerationColor),
+                    bonusName,
                     " Bonus: "
                 };
                 if (equalItems)
                 {
-                    manaRegenBonusDescription.Add(GetValueString(item.ManaRegenerationBonus));
+                    bonusDescription.Add(GetValueString(value));
                 }
                 else
                 {
-                    manaRegenBonusDescription.Add(GetCompareValueString(item.ManaRegenerationBonus, equipedManaRegenBonus));
+                    bonusDescription.Add(GetCompareValueString(value, equipedValue));
                 }
-                descriptionResult.Add(manaRegenBonusDescription);
+                descriptionResult.Add(bonusDescription);
             }
         }
 

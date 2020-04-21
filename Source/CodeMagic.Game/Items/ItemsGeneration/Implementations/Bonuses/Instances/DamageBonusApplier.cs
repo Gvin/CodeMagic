@@ -22,7 +22,10 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
             var difference = int.Parse(config.Values[KeyDifference]);
 
             var maxValue = RandomHelper.GetRandomValue(min, max);
-            var minValue = maxValue - difference;
+            var minValue = Math.Max(0, maxValue - difference);
+
+            if (maxValue == 0)
+                return;
 
             if (weaponConfig.MaxDamage.ContainsKey(element))
             {

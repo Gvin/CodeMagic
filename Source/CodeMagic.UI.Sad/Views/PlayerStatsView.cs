@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CodeMagic.Core.Game;
+using CodeMagic.Game;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
@@ -47,12 +48,26 @@ namespace CodeMagic.UI.Sad.Views
             {
                 var stat = stats[index];
 
-                var value = player.GetStat(stat);
+                var pureValue = player.GetPureStat(stat);
+                var bonusValue = player.Equipment.GetStatsBonus(stat);
+                
                 var name = TextHelper.GetStatName(stat);
 
                 var y = dY + 2 + index;
                 Print(dX, y, name);
-                Print(dX + maxLength + 1, y, value.ToString());
+                var bonusText = new StyledLine
+                {
+                    pureValue.ToString()
+                };
+                if (bonusValue != 0)
+                {
+                    var bonusSymbol = bonusValue > 0 ? "+" : "-";
+                    var bonusColor = bonusValue > 0 ? TextHelper.PositiveValueColor : TextHelper.NegativeValueColor;
+                    bonusText.Add(" (");
+                    bonusText.Add($"{bonusSymbol}{bonusValue}", bonusColor);
+                    bonusText.Add(")");
+                }
+                PrintStyledText(dX + maxLength + 1, y, bonusText);
             }
         }
 

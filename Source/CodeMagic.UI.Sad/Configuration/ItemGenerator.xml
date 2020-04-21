@@ -2569,53 +2569,76 @@
 
     <group type="Equipable" inherit-from="All">
       <rareness value="Trash">
-        <bonus type="HealthBonus">
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">Health</value>
           <value key="Min">2</value>
           <value key="Max">5</value>
         </bonus>
-        <bonus type="ManaBonus">
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">Mana</value>
           <value key="Min">20</value>
           <value key="Max">50</value>
         </bonus>
       </rareness>
       <rareness value="Common">
-        <bonus type="HealthBonus">
+        <bonus type="PlayerStatBonus">
+          <value key="Min">1</value>
+          <value key="Max">2</value>
+        </bonus>
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">Health</value>
           <value key="Min">5</value>
           <value key="Max">10</value>
         </bonus>
-        <bonus type="ManaBonus">
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">Mana</value>
           <value key="Min">50</value>
           <value key="Max">100</value>
         </bonus>
-        <bonus type="ManaRegenerationBonus">
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">ManaRegeneration</value>
           <value key="Min">1</value>
           <value key="Max">2</value>
         </bonus>
       </rareness>
       <rareness value="Uncommon">
-        <bonus type="HealthBonus">
+        <bonus type="PlayerStatBonus">
+          <value key="Min">2</value>
+          <value key="Max">3</value>
+        </bonus>
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">Health</value>
           <value key="Min">10</value>
           <value key="Max">15</value>
         </bonus>
-        <bonus type="ManaBonus">
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">Mana</value>
           <value key="Min">100</value>
           <value key="Max">150</value>
         </bonus>
-        <bonus type="ManaRegenerationBonus">
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">ManaRegeneration</value>
           <value key="Min">2</value>
           <value key="Max">4</value>
         </bonus>
       </rareness>
       <rareness value="Rare">
-        <bonus type="HealthBonus">
+        <bonus type="PlayerStatBonus">
+          <value key="Min">3</value>
+          <value key="Max">4</value>
+        </bonus>
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">Health</value>
           <value key="Min">15</value>
           <value key="Max">20</value>
         </bonus>
-        <bonus type="ManaBonus">
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">Mana</value>
           <value key="Min">150</value>
           <value key="Max">200</value>
         </bonus>
-        <bonus type="ManaRegenerationBonus">
+        <bonus type="EquipmentBonus">
+          <value key="BonusType">ManaRegeneration</value>
           <value key="Min">4</value>
           <value key="Max">6</value>
         </bonus>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
+using CodeMagic.Game;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
@@ -81,6 +83,30 @@ namespace CodeMagic.UI.Sad.Views
                     }
                 }
             }
+        }
+
+        public void PrintStyledText(int x, int y, params ColoredString[] text)
+        {
+            var glyphs = text.SelectMany(part => part.ToArray()).ToArray();
+            var coloredString = new ColoredString(glyphs);
+            Print(x, y, coloredString);
+        }
+
+        public void PrintStyledText(int x, int y, StyledLine text)
+        {
+            PrintStyledText(x, y, text.Select(part =>
+                new ColoredString(ConvertString(part.String), part.TextColor.ToXna(), DefaultBackground)).ToArray());
+        }
+
+        private string ConvertString(string initial)
+        {
+            var result = string.Empty;
+            foreach (var symbol in initial)
+            {
+                result += (char)Glyphs.GetGlyph(symbol);
+            }
+
+            return result;
         }
 
         public override bool ProcessKeyboard(Keyboard info)

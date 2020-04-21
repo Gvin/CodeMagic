@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CodeMagic.Core.Game
 {
@@ -40,6 +41,11 @@ namespace CodeMagic.Core.Game
             if (array.Length == 0)
                 throw new ArgumentException("Unable to get random element for empty array.");
             return array[GetRandomValue(0, array.Length - 1)];
+        }
+
+        public static T GetRandomEnumValue<T>() where T : struct, IConvertible
+        {
+            return GetRandomElement(Enum.GetValues(typeof(T)).Cast<T>().ToArray());
         }
     }
 }

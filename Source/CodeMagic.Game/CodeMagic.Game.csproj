@@ -93,6 +93,7 @@
     <Compile Include="Items\IFuelItem.cs" />
     <Compile Include="Items\IFurnaceItem.cs" />
     <Compile Include="Items\IItemsGenerator.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\PlayerStatBonusApplier.cs" />
     <Compile Include="Items\IUsableItem.cs" />
     <Compile Include="Items\SpellBook.cs" />
     <Compile Include="Items\Usable\AncientScroll.cs" />
@@ -123,11 +124,9 @@
     <Compile Include="Items\ItemsGeneration\Implementations\ArmorGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\BonusesGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\DamageBonusApplier.cs" />
-    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\HealthBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\EquipmentBonusApplier.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\IBonusApplier.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\LightBonusApplier.cs" />
-    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\ManaBonusApplier.cs" />
-    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\ManaRegenerationBonusApplier.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\ProtectionBonusApplier.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\WeightBonusApplier.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\NameBuilder.cs" />

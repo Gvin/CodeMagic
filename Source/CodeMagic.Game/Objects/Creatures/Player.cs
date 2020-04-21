@@ -84,7 +84,12 @@ namespace CodeMagic.Game.Objects.Creatures
             return 100 + (strength - DefaultStatValue) * 10;
         }
 
-        public int GetStat(PlayerStats stat)
+        private int GetStat(PlayerStats stat)
+        {
+            return GetPureStat(stat) + Equipment.GetStatsBonus(stat);
+        }
+
+        public int GetPureStat(PlayerStats stat)
         {
             return stats[stat];
         }
@@ -123,9 +128,9 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public override bool BlocksMovement => true;
 
-        public int ManaRegeneration => 10 + GetStat(PlayerStats.Wisdom) + Equipment.GetBonusManaRegeneration();
+        public int ManaRegeneration => 10 + GetStat(PlayerStats.Wisdom) + Equipment.GetBonus(EquipableBonusType.ManaRegeneration);
 
-        public override int MaxHealth => GetMaxHealth(GetStat(PlayerStats.Strength)) + Equipment.GetBonusHealth();
+        public override int MaxHealth => GetMaxHealth(GetStat(PlayerStats.Strength)) + Equipment.GetBonus(EquipableBonusType.Health);
 
         public int Mana
         {
@@ -133,7 +138,7 @@ namespace CodeMagic.Game.Objects.Creatures
             set => mana = Math.Max(0, Math.Min(MaxMana, value));
         }
 
-        public int MaxMana => 100 + 20 * GetStat(PlayerStats.Intelligence) + Equipment.GetBonusMana();
+        public int MaxMana => 100 + 20 * GetStat(PlayerStats.Intelligence) + Equipment.GetBonus(EquipableBonusType.Mana);
 
         public int HitChance => CalculateHitChance(Equipment.Weapon.HitChance);
 
