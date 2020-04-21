@@ -95,15 +95,21 @@ namespace CodeMagic.UI.Sad.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("200")]
         public int MinActionsInterval {
             get {
                 return ((int)(this["MinActionsInterval"]));
             }
-            set {
-                this["MinActionsInterval"] = value;
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int SavingInterval {
+            get {
+                return ((int)(this["SavingInterval"]));
             }
         }
     }

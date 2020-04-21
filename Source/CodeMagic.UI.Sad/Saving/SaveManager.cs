@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -78,6 +77,11 @@ namespace CodeMagic.UI.Sad.Saving
                 return null;
 #endif
             }
+        }
+
+        public void DeleteSave()
+        {
+            File.Delete(SaveFilePath);
         }
 
         private static void WriteSaveFile(string data)

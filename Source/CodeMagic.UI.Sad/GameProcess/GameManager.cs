@@ -19,6 +19,7 @@ namespace CodeMagic.UI.Sad.GameProcess
         public static GameManager Current { get; } = new GameManager();
 
         private Task saveGameTask;
+        private int turnsSinceLastSaving;
 
         private GameManager()
         {
@@ -33,6 +34,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             }
 
             var player = CreatePlayer();
+            player.Died += PlayerOnDied;
 
             var startMap = DungeonMapGenerator.Current.GenerateNewMap(1, out var playerPosition);
             CurrentGame.Initialize(startMap, player, playerPosition);
@@ -51,13 +53,28 @@ namespace CodeMagic.UI.Sad.GameProcess
             game.TurnEnded += game_TurnEnded;
             new SaveManager().SaveGame();
 
+            turnsSinceLastSaving = 0;
+
             return game;
         }
 
-        public CurrentGame.GameCore<Player> LoadGame()
+        private void PlayerOnDied(object sender, EventArgs e)
+        {
+            saveGameTask?.Wait();
+            ((CurrentGame.GameCore<Player>)CurrentGame.Game).TurnEnded -= game_TurnEnded;
+            CurrentGame.Load(null);
+            new SaveManager().DeleteSave();
+        }
+
+        public void LoadGame()
         {
             var game = new SaveManager().LoadGame();
             CurrentGame.Load(game);
+
+            if (game == null)
+                return;
+
+            game.Player.Died += PlayerOnDied;
 
             game.Player.Inventory.ItemAdded += (sender, args) =>
             {
@@ -70,13 +87,18 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             game.TurnEnded += game_TurnEnded;
 
-            return game;
+            turnsSinceLastSaving = 0;
         }
 
         private void game_TurnEnded(object sender, EventArgs args)
         {
-            saveGameTask?.Wait();
-            saveGameTask = new SaveManager().SaveGameAsync();
+            turnsSinceLastSaving++;
+
+            if (turnsSinceLastSaving >= Properties.Settings.Default.SavingInterval)
+            {
+                saveGameTask?.Wait();
+                saveGameTask = new SaveManager().SaveGameAsync();
+            }
         }
 
         private Player CreatePlayer()
