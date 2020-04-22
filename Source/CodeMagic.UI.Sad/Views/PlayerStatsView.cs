@@ -69,6 +69,11 @@ namespace CodeMagic.UI.Sad.Views
                 }
                 PrintStyledText(dX + maxLength + 1, y, bonusText);
             }
+
+            var charsY = dY + 3 + stats.Length;
+            PrintStyledText(dX, charsY + 0, new StyledLine { "Max Health           ", new StyledString(player.MaxHealth.ToString(), TextHelper.HealthColor) });
+            PrintStyledText(dX, charsY + 1, new StyledLine { "Max Mana             ", new StyledString(player.MaxMana.ToString(), TextHelper.ManaColor) });
+            PrintStyledText(dX, charsY + 2, new StyledLine { "Mana Regeneration    ", new StyledString(player.ManaRegeneration.ToString(), TextHelper.ManaRegenerationColor) });
         }
 
         private void PrintProtection(int dX, int dY)

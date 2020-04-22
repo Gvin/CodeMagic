@@ -82,7 +82,7 @@ namespace CodeMagic.Game.Objects.Creatures
 
         private static int GetMaxHealth(int strength)
         {
-            return 100 + (strength - DefaultStatValue) * 10;
+            return 10 + strength * 10;
         }
 
         private int GetStat(PlayerStats stat)
@@ -129,7 +129,7 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public override bool BlocksMovement => true;
 
-        public int ManaRegeneration => 10 + GetStat(PlayerStats.Wisdom) + Equipment.GetBonus(EquipableBonusType.ManaRegeneration);
+        public int ManaRegeneration => 2 + GetStat(PlayerStats.Wisdom) + Equipment.GetBonus(EquipableBonusType.ManaRegeneration);
 
         public override int MaxHealth => GetMaxHealth(GetStat(PlayerStats.Strength)) + Equipment.GetBonus(EquipableBonusType.Health);
 
