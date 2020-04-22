@@ -29,16 +29,45 @@ namespace CodeMagic.Game.Items
 
         private WeaponItem weapon;
 
-        public Equipment(SaveData data)
+        public Equipment(SaveData data, Inventory inventory)
         {
-            weapon = data.GetObject<WeaponItem>(SaveKeyWeapon);
+            var weaponId = data.GetStringValue(SaveKeyWeapon);
+            if (weaponId != null)
+            {
+                weapon = (WeaponItem) inventory.GetItemById(weaponId);
+            }
+
+            var spellBookId = data.GetStringValue(SaveKeySpellBook);
+            if (spellBookId != null)
+            {
+                SpellBook = (Items.SpellBook) inventory.GetItemById(spellBookId);
+            }
             SpellBook = data.GetObject<SpellBook>(SaveKeySpellBook);
+
             Armor = new Dictionary<ArmorType, ArmorItem>
             {
-                {ArmorType.Helmet, data.GetObject<ArmorItem>(SaveKeyArmorHelmet)},
-                {ArmorType.Chest, data.GetObject<ArmorItem>(SaveKeyArmorChest)},
-                {ArmorType.Leggings, data.GetObject<ArmorItem>(SaveKeyArmorLeggings)}
+                {ArmorType.Helmet, null},
+                {ArmorType.Chest, null},
+                {ArmorType.Leggings, null}
             };
+
+            var helmetId = data.GetStringValue(SaveKeyArmorHelmet);
+            if (helmetId != null)
+            {
+                Armor[ArmorType.Helmet] = (ArmorItem) inventory.GetItemById(helmetId);
+            }
+
+            var chestId = data.GetStringValue(SaveKeyArmorChest);
+            if (chestId != null)
+            {
+                Armor[ArmorType.Chest] = (ArmorItem)inventory.GetItemById(chestId);
+            }
+
+            var leggingsId = data.GetStringValue(SaveKeyArmorLeggings);
+            if (leggingsId != null)
+            {
+                Armor[ArmorType.Leggings] = (ArmorItem)inventory.GetItemById(leggingsId);
+            }
         }
 
         public Equipment()
@@ -55,11 +84,11 @@ namespace CodeMagic.Game.Items
         {
             return new SaveDataBuilder(GetType(), new Dictionary<string, object>
             {
-                {SaveKeyWeapon, weapon},
-                {SaveKeySpellBook, SpellBook},
-                {SaveKeyArmorHelmet, Armor[ArmorType.Helmet]},
-                {SaveKeyArmorChest, Armor[ArmorType.Chest]},
-                {SaveKeyArmorLeggings, Armor[ArmorType.Leggings]}
+                {SaveKeyWeapon, weapon?.Id},
+                {SaveKeySpellBook, SpellBook?.Id},
+                {SaveKeyArmorHelmet, Armor[ArmorType.Helmet]?.Id},
+                {SaveKeyArmorChest, Armor[ArmorType.Chest]?.Id},
+                {SaveKeyArmorLeggings, Armor[ArmorType.Leggings]?.Id}
             });
         }
 

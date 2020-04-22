@@ -38,10 +38,11 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public Player(SaveData data) : base(data)
         {
-            Equipment = data.GetObject<Equipment>(SaveKeyEquipment);
-
             Inventory = data.GetObject<Inventory>(SaveKeyInventory);
             Inventory.ItemRemoved += Inventory_ItemRemoved;
+
+            var equipmentData = data.Objects[SaveKeyEquipment];
+            Equipment = new Equipment(equipmentData, Inventory);
 
             stats = data.GetObject<DictionarySaveable>(SaveKeyStats).Data.ToDictionary(
                 pair => (PlayerStats) int.Parse((string)pair.Key),

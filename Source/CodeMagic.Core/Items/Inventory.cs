@@ -145,6 +145,12 @@ namespace CodeMagic.Core.Items
             return stacks.FirstOrDefault(stack => string.Equals(stack.TopItem.Key, itemKey))?.TopItem;
         }
 
+        public IItem GetItemById(string itemId)
+        {
+            return stacks.FirstOrDefault(stack => stack.Items.Any(item => string.Equals(item.Id, itemId)))?.Items
+                .FirstOrDefault(item => string.Equals(item.Id, itemId));
+        }
+
         public bool Contains(string itemKey)
         {
             return stacks.Any(stack => string.Equals(stack.TopItem.Key, itemKey));

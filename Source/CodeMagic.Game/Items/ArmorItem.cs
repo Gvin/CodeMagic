@@ -15,6 +15,7 @@ namespace CodeMagic.Game.Items
         private const string SaveKeyWorldImage = "WorldImage";
         private const string SaveKeyDescription = "Description";
         private const string SaveKeyProtection = "Protection";
+        private const string SaveKetArmorType = "ArmorType";
 
         private readonly SymbolsImage inventoryImage;
         private readonly SymbolsImage worldImage;
@@ -28,6 +29,7 @@ namespace CodeMagic.Game.Items
             description = data.GetValuesCollection(SaveKeyDescription);
             protection = data.GetObject<DictionarySaveable>(SaveKeyProtection).Data.ToDictionary(pair =>
                 (Element) int.Parse((string) pair.Key), pair => int.Parse((string) pair.Value));
+            ArmorType = (ArmorType) data.GetIntValue(SaveKetArmorType);
         }
 
         public ArmorItem(ArmorItemConfiguration configuration) 
@@ -46,6 +48,7 @@ namespace CodeMagic.Game.Items
             data.Add(SaveKeyInventoryImage, inventoryImage !=null ? new SymbolsImageSaveable(inventoryImage) : null);
             data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
             data.Add(SaveKeyDescription, description);
+            data.Add(SaveKetArmorType, (int) ArmorType);
             data.Add(SaveKeyProtection,
                 new DictionarySaveable(protection.ToDictionary(pair => (object) (int) pair.Key,
                     pair => (object) pair.Value)));
