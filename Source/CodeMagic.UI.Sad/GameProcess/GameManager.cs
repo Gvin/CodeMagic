@@ -98,6 +98,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             {
                 saveGameTask?.Wait();
                 saveGameTask = new SaveManager().SaveGameAsync();
+                turnsSinceLastSaving = 0;
             }
         }
 

@@ -26,8 +26,9 @@ namespace CodeMagic.UI.Sad.Saving
 
         public void SaveGame()
         {
+            var turn = CurrentGame.Game.CurrentTurn;
             SaveData data;
-            using (PerformanceMeter.Start($"Saving_GetSaveData[{CurrentGame.Game.CurrentTurn}]"))
+            using (PerformanceMeter.Start($"Saving_GetSaveData[{turn}]"))
             {
                 var dataBuilder = CurrentGame.Game.GetSaveData();
                 data = dataBuilder.ConvertRawData(new JsonDataSerializer());
@@ -40,12 +41,12 @@ namespace CodeMagic.UI.Sad.Saving
             };
 
             string json;
-            using (PerformanceMeter.Start($"Saving_Serialization[{CurrentGame.Game.CurrentTurn}]"))
+            using (PerformanceMeter.Start($"Saving_Serialization[{turn}]"))
             {
                 json = JsonConvert.SerializeObject(gameSaveData);
             }
 
-            using (PerformanceMeter.Start($"Saving_Writing[{CurrentGame.Game.CurrentTurn}]"))
+            using (PerformanceMeter.Start($"Saving_Writing[{turn}]"))
             {
                 WriteSaveFile(json);
             }
