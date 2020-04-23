@@ -15,10 +15,10 @@ namespace CodeMagic.Configuration.Xml.Types.Items
     public class XmlItemGeneratorConfiguration : IItemGeneratorConfiguration
     {
         [XmlIgnore]
-        public IWeaponConfiguration WeaponConfiguration => WeaponConfigurationData;
+        public IWeaponsConfiguration WeaponsConfiguration => WeaponsConfigurationData;
 
         [XmlElement("weapon")]
-        public XmlWeaponConfiguration WeaponConfigurationData { get; set; }
+        public XmlWeaponsConfiguration WeaponsConfigurationData { get; set; }
 
         [XmlIgnore]
         public IArmorConfiguration ArmorConfiguration => ArmorConfigurationData;

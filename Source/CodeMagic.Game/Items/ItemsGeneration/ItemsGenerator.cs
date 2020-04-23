@@ -32,46 +32,46 @@ namespace CodeMagic.Game.Items.ItemsGeneration
             {
                 {
                     WeaponType.Sword,
-                    new BladeWeaponGenerator("Sword", 
+                    new WeaponGenerator("Sword", 
                         WorldImageNameSword,
-                        configuration.WeaponConfiguration.SwordsConfiguration, 
-                        configuration.WeaponConfiguration,
+                        configuration.WeaponsConfiguration.SwordsConfiguration, 
+                        configuration.WeaponsConfiguration,
                         bonusesGenerator,
                         imagesStorage)
                 },
                 {
                     WeaponType.Dagger,
-                    new BladeWeaponGenerator("Dagger", 
+                    new WeaponGenerator("Dagger", 
                         WorldImageNameDagger,
-                        configuration.WeaponConfiguration.DaggersConfiguration,
-                        configuration.WeaponConfiguration,
+                        configuration.WeaponsConfiguration.DaggersConfiguration,
+                        configuration.WeaponsConfiguration,
                         bonusesGenerator,
                         imagesStorage)
                 },
                 {
                     WeaponType.Mace,
-                    new HeadWeaponGenerator("Mace", 
+                    new WeaponGenerator("Mace", 
                         WorldImageNameMace,
-                        configuration.WeaponConfiguration.MacesConfiguration,
-                        configuration.WeaponConfiguration,
+                        configuration.WeaponsConfiguration.MacesConfiguration,
+                        configuration.WeaponsConfiguration,
                         bonusesGenerator,
                         imagesStorage)
                 },
                 {
                     WeaponType.Axe,
-                    new HeadWeaponGenerator("Axe",
+                    new WeaponGenerator("Axe",
                         WorldImageNameAxe,
-                        configuration.WeaponConfiguration.AxesConfiguration,
-                        configuration.WeaponConfiguration,
+                        configuration.WeaponsConfiguration.AxesConfiguration,
+                        configuration.WeaponsConfiguration,
                         bonusesGenerator,
                         imagesStorage)
                 },
                 {
                     WeaponType.Staff,
-                    new HeadWeaponGenerator("Staff",
+                    new WeaponGenerator("Staff",
                         WorldImageNameStaff,
-                        configuration.WeaponConfiguration.StaffsConfiguration,
-                        configuration.WeaponConfiguration,
+                        configuration.WeaponsConfiguration.StaffsConfiguration,
+                        configuration.WeaponsConfiguration,
                         bonusesGenerator,
                         imagesStorage)
                 }

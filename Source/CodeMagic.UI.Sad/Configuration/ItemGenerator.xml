@@ -3,7 +3,7 @@
   <weapon>
     <swords>
       <images>
-        <handle>
+        <sprite index="1">
           <image>Sword_Handle_V1</image>
           <image>Sword_Handle_V2</image>
           <image>Sword_Handle_V3</image>
@@ -20,8 +20,8 @@
           <image>Sword_Handle_V14</image>
           <image>Sword_Handle_V15</image>
           <image>Sword_Handle_V16</image>
-        </handle>
-        <guard>
+        </sprite>
+        <sprite index="2">
           <image>Sword_Guard_V1</image>
           <image>Sword_Guard_V2</image>
           <image>Sword_Guard_V3</image>
@@ -33,8 +33,8 @@
           <image>Sword_Guard_V9</image>
           <image>Sword_Guard_V10</image>
           <image>Sword_Guard_V11</image>
-        </guard>
-        <blade>
+        </sprite>
+        <sprite index="0">
           <image>Sword_Blade_V1</image>
           <image>Sword_Blade_V2</image>
           <image>Sword_Blade_V3</image>
@@ -61,7 +61,7 @@
 		      <image>Sword_Blade_V24</image>
 		      <image>Sword_Blade_V25</image>
 		      <image>Sword_Blade_V26</image>
-        </blade>
+        </sprite>
       </images>
 
       <weight>
@@ -152,7 +152,7 @@
 
     <daggers>
       <images>
-        <handle>
+        <sprite index="1">
           <image>Sword_Handle_V1</image>
           <image>Sword_Handle_V2</image>
           <image>Sword_Handle_V3</image>
@@ -169,22 +169,22 @@
           <image>Sword_Handle_V14</image>
           <image>Sword_Handle_V15</image>
           <image>Sword_Handle_V16</image>
-        </handle>
-        <guard>
+        </sprite>
+        <sprite index="2">
           <image>Dagger_Guard_V1</image>
           <image>Dagger_Guard_V2</image>
           <image>Dagger_Guard_V3</image>
           <image>Dagger_Guard_V4</image>
           <image>Dagger_Guard_V5</image>
           <image>Dagger_Guard_V6</image>
-        </guard>
-        <blade>
+        </sprite>
+        <sprite index="0">
           <image>Dagger_Blade_V1</image>
           <image>Dagger_Blade_V2</image>
           <image>Dagger_Blade_V3</image>
           <image>Dagger_Blade_V4</image>
           <image>Dagger_Blade_V5</image>
-        </blade>
+        </sprite>
       </images>
 
       <weight>
@@ -275,7 +275,7 @@
 
     <maces>
       <images>
-        <handle>
+        <sprite index="2">
           <image>Sword_Handle_V1</image>
           <image>Sword_Handle_V2</image>
           <image>Sword_Handle_V3</image>
@@ -292,13 +292,13 @@
           <image>Sword_Handle_V14</image>
           <image>Sword_Handle_V15</image>
           <image>Sword_Handle_V16</image>
-        </handle>
-        <shaft>
+        </sprite>
+        <sprite index="0">
           <image>Mace_Shaft_V1</image>
           <image>Mace_Shaft_V2</image>
           <image>Mace_Shaft_V3</image>
-        </shaft>
-        <head>
+        </sprite>
+        <sprite index="1">
           <image>Mace_Head_V1</image>
           <image>Mace_Head_V2</image>
           <image>Mace_Head_V3</image>
@@ -312,7 +312,7 @@
           <image>Mace_Head_V11</image>
           <image>Mace_Head_V12</image>
           <image>Mace_Head_V13</image>
-        </head>
+        </sprite>
       </images>
 
       <weight>
@@ -403,7 +403,7 @@
 
     <axes>
       <images>
-        <handle>
+        <sprite index="2">
           <image>Sword_Handle_V1</image>
           <image>Sword_Handle_V2</image>
           <image>Sword_Handle_V3</image>
@@ -420,16 +420,16 @@
           <image>Sword_Handle_V14</image>
           <image>Sword_Handle_V15</image>
           <image>Sword_Handle_V16</image>
-        </handle>
-        <shaft>
+        </sprite>
+        <sprite index="0">
           <image>Mace_Shaft_V1</image>
           <image>Mace_Shaft_V2</image>
           <image>Mace_Shaft_V3</image>
-        </shaft>
-        <head>
+        </sprite>
+        <sprite index="1">
           <image>Axe_Head_V1</image>
           <image>Axe_Head_V2</image>
-        </head>
+        </sprite>
       </images>
 
       <weight>
@@ -520,21 +520,18 @@
 
     <staffs>
       <images>
-        <handle>
-          <image>Weapon_Empty</image>
-        </handle>
-        <shaft>
+        <sprite index="0">
           <image>Mace_Shaft_V1</image>
           <image>Mace_Shaft_V2</image>
           <image>Mace_Shaft_V3</image>
-        </shaft>
-        <head>
+        </sprite>
+        <sprite index="1">
           <image>Staff_Head_V1</image>
           <image>Staff_Head_V2</image>
           <image>Staff_Head_V3</image>
           <image>Staff_Head_V4</image>
           <image>Staff_Head_V5</image>
-        </head>
+        </sprite>
       </images>
 
       <weight>

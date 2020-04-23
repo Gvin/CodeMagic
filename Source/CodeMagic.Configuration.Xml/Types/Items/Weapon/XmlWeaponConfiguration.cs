@@ -1,12 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Xml.Serialization;
-using CodeMagic.Configuration.Xml.Types.Items.Description;
-using CodeMagic.Configuration.Xml.Types.Items.Weapon.Blade;
-using CodeMagic.Configuration.Xml.Types.Items.Weapon.Head;
-using CodeMagic.Game.Items.ItemsGeneration.Configuration.Description;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon;
-using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon.Blade;
-using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon.Head;
 
 namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
 {
@@ -14,40 +10,23 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
     public class XmlWeaponConfiguration : IWeaponConfiguration
     {
         [XmlIgnore]
-        public IBladeWeaponConfiguration SwordsConfiguration => SwordsConfigurationData;
+        public IWeaponImagesConfiguration Images => ImagesData;
 
-        [XmlElement("swords")]
-        public XmlBladeWeaponConfiguration SwordsConfigurationData { get; set; }
-
-        [XmlIgnore]
-        public IBladeWeaponConfiguration DaggersConfiguration => DaggersConfigurationData;
-
-
-        [XmlElement("daggers")]
-        public XmlBladeWeaponConfiguration DaggersConfigurationData { get; set; }
+        [XmlElement("images")]
+        public XmlWeaponImagesConfiguration ImagesData { get; set; }
 
         [XmlIgnore]
-        public IHeadWeaponConfiguration MacesConfiguration => MacesConfigurationData;
+        public IWeightConfiguration[] Weight => WeightData.ToArray<IWeightConfiguration>();
 
-        [XmlElement("maces")]
-        public XmlHeadWeaponConfiguration MacesConfigurationData { get; set; }
-
-        [XmlIgnore]
-        public IHeadWeaponConfiguration AxesConfiguration => AxesConfigurationData;
-
-        [XmlElement("axes")]
-        public XmlHeadWeaponConfiguration AxesConfigurationData { get; set; }
+        [XmlArray("weight")]
+        [XmlArrayItem("value")]
+        public XmlWeightConfiguration[] WeightData { get; set; }
 
         [XmlIgnore]
-        public IHeadWeaponConfiguration StaffsConfiguration => StaffsConfigurationData;
+        public IWeaponRarenessConfiguration[] RarenessConfiguration => RarenessConfigurationData.ToArray<IWeaponRarenessConfiguration>();
 
-        [XmlElement("staffs")]
-        public XmlHeadWeaponConfiguration StaffsConfigurationData { get; set; }
-
-        [XmlIgnore]
-        public IDescriptionConfiguration DescriptionConfiguration => DescriptionConfigurationData;
-
-        [XmlElement("description")]
-        public XmlDescriptionConfiguration DescriptionConfigurationData { get; set; }
+        [XmlArray("rareness-configuration")]
+        [XmlArrayItem("rareness")]
+        public XmlWeaponRarenessConfiguration[] RarenessConfigurationData { get; set; }
     }
 }

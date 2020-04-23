@@ -30,13 +30,10 @@ namespace CodeMagic.UI.Sad.Views
         private ScrollBar journalScroll;
         private JournalBoxControl journalBox;
 
-        private Button openSpellBookButton;
+        private StandardButton openSpellBookButton;
         private StandardButton openInventoryButton;
-        private Button showItemsOnFloorButton;
+        private StandardButton showItemsOnFloorButton;
         private StandardButton openPlayerStatsButton;
-
-        private ButtonTheme standardButtonTheme;
-        private ButtonTheme disabledButtonTheme;
 
         private DateTime lastKeyProcessed;
 
@@ -95,23 +92,6 @@ namespace CodeMagic.UI.Sad.Views
             };
             Add(journalBox);
 
-            standardButtonTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground),
-                    Appearance_ControlDisabled = new Cell(Color.Gray, DefaultBackground)
-                },
-            };
-            disabledButtonTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.Gray, DefaultBackground),
-                    Appearance_ControlDisabled = new Cell(Color.Gray, DefaultBackground)
-                },
-            };
-            
 
             openInventoryButton = new StandardButton(30)
             {
@@ -121,21 +101,19 @@ namespace CodeMagic.UI.Sad.Views
             openInventoryButton.Click += openInventoryButton_Click;
             Add(openInventoryButton);
 
-            openSpellBookButton = new Button(30, 3)
+            openSpellBookButton = new StandardButton(30)
             {
                 Position = new Point(Width - 39, 19),
-                Text = "[C] Spell Book",
-                CanFocus = false
+                Text = "[C] Spell Book"
             };
             openSpellBookButton.Click += openSpellBookButton_Click;
-            SetButtonEnabled(openSpellBookButton, true);
+            openSpellBookButton.IsEnabled = true;
             Add(openSpellBookButton);
 
-            showItemsOnFloorButton = new Button(30, 3)
+            showItemsOnFloorButton = new StandardButton(30)
             {
                 Position = new Point(Width - 39, 22),
-                Text = "[G] Check Floor",
-                CanFocus = false
+                Text = "[G] Check Floor"
             };
             showItemsOnFloorButton.Click += showItemsOnFloorButton_Click;
             Add(showItemsOnFloorButton);
@@ -175,12 +153,6 @@ namespace CodeMagic.UI.Sad.Views
         private void OpenInventory()
         {
             new PlayerInventoryView(game).Show();
-        }
-
-        private void SetButtonEnabled(Button button, bool enabled)
-        {
-            button.IsEnabled = enabled;
-            button.Theme = enabled ? standardButtonTheme : disabledButtonTheme;
         }
 
         protected override bool ProcessKeyPressed(AsciiKey key)
@@ -300,8 +272,8 @@ namespace CodeMagic.UI.Sad.Views
 
         private void UpdateButtonsState()
         {
-            SetButtonEnabled(openSpellBookButton, game.Player.Equipment.SpellBook != null);
-            SetButtonEnabled(showItemsOnFloorButton, game.Map.GetCell(game.PlayerPosition).Objects.OfType<IItem>().Any());
+            openSpellBookButton.IsEnabled = game.Player.Equipment.SpellBook != null;
+            showItemsOnFloorButton.IsEnabled = game.Map.GetCell(game.PlayerPosition).Objects.OfType<IItem>().Any();
         }
     }
 }

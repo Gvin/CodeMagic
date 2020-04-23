@@ -7,7 +7,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Configuration
 {
     public interface IItemGeneratorConfiguration
     {
-        IWeaponConfiguration WeaponConfiguration { get; }
+        IWeaponsConfiguration WeaponsConfiguration { get; }
 
         IArmorConfiguration ArmorConfiguration { get; }
 
