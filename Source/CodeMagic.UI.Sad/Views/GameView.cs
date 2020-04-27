@@ -49,6 +49,12 @@ namespace CodeMagic.UI.Sad.Views
             InitializeControls();
 
             game.Player.Died += Player_Died;
+            game.Player.LeveledUp += Player_LeveledUp;
+        }
+
+        private void Player_LeveledUp(object sender, EventArgs e)
+        {
+            new LevelUpView(game.Player).Show();
         }
 
         private void Player_Died(object sender, EventArgs e)

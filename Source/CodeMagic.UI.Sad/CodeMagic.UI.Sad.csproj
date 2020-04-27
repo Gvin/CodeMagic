@@ -83,6 +83,7 @@
     <Compile Include="Items\Bag.cs" />
     <Compile Include="Saving\SaveManager.cs" />
     <Compile Include="SpellsLibrary\SpellsLibraryManager.cs" />
+    <Compile Include="Views\LevelUpView.cs" />
     <Compile Include="Views\PlayerStatsView.cs" />
     <Compile Include="Views\StorageInventoryView.cs" />
     <Compile Include="Views\EditSpellView.cs" />

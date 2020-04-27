@@ -17,6 +17,11 @@ namespace CodeMagic.UI.Sad.Views
 
         public event EventHandler<ViewClosedEventArgs> Closed;
 
+        public View()
+            : this(Program.Width, Program.Height)
+        {
+        }
+
         public View(int width, int height) 
             : base(width, height, FontProvider.CurrentFont)
         {

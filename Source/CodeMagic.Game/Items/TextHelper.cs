@@ -263,11 +263,6 @@ namespace CodeMagic.Game.Items
                 return $"+{number}";
             }
 
-            if (number < 0)
-            {
-                return $"-{number}";
-            }
-
             return number.ToString();
         }
     }

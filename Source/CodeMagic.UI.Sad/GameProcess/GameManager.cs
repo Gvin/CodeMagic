@@ -161,13 +161,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                     {Element.Piercing, 200},
                     {Element.Slashing, 200},
                     {Element.Magic, 200}
-                },
-                StatBonuses = new Dictionary<PlayerStats, int>
-                {
-                    {PlayerStats.Strength, 100},
-                    {PlayerStats.Agility, 100},
-                    {PlayerStats.Wisdom, 100},
-                    {PlayerStats.Intelligence, 100}
                 }
             });
         }

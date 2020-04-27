@@ -42,6 +42,9 @@ namespace CodeMagic.Game.Objects.Creatures
         private int experience;
         private int level;
 
+        public event EventHandler Died;
+        public event EventHandler LeveledUp;
+
         public Player(SaveData data) : base(data)
         {
             Inventory = data.GetObject<Inventory>(SaveKeyInventory);
@@ -107,7 +110,13 @@ namespace CodeMagic.Game.Objects.Creatures
                 level++;
                 experience -= xpToLevelUp;
                 CurrentGame.Journal.Write(new LevelUpMessage(level));
+                LeveledUp?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        public void IncreaseStat(PlayerStats stat)
+        {
+            stats[stat]++;
         }
 
         public int GetXpToLevelUp()
@@ -149,8 +158,6 @@ namespace CodeMagic.Game.Objects.Creatures
         }
 
         public int MaxCarryWeight => 23000 + 2000 * GetStat(PlayerStats.Strength);
-
-        public event EventHandler Died;
 
         public Equipment Equipment { get; }
 

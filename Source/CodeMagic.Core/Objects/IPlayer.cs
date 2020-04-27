@@ -24,6 +24,10 @@ namespace CodeMagic.Core.Objects
 
         event EventHandler Died;
 
+        int Experience { get; }
+
+        int Level { get; }
+
         void AddExperience(int exp);
     }
 }
