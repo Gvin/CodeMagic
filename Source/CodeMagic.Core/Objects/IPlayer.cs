@@ -23,5 +23,7 @@ namespace CodeMagic.Core.Objects
         int MaxVisibilityRange { get; }
 
         event EventHandler Died;
+
+        void AddExperience(int exp);
     }
 }

@@ -165,6 +165,7 @@
     <Compile Include="JournalMessages\DeathMessage.cs" />
     <Compile Include="JournalMessages\DungeonLevelMessage.cs" />
     <Compile Include="JournalMessages\EnvironmentDamageMessage.cs" />
+    <Compile Include="JournalMessages\ExperienceGainedMessage.cs" />
     <Compile Include="JournalMessages\FailedToUseScrollMessage.cs" />
     <Compile Include="JournalMessages\FightNotAllowedMessage.cs" />
     <Compile Include="JournalMessages\HealedMessage.cs" />

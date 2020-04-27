@@ -31,6 +31,12 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
         public string LogicPattern { get; set; }
 
         [XmlIgnore]
+        public IMonsterExperienceConfiguration Experience => ExperienceData;
+
+        [XmlElement("experience")]
+        public XmlMonsterExperienceConfiguration ExperienceData { get; set; }
+
+        [XmlIgnore]
         public IMonsterImagesConfiguration Images => ImagesData;
 
         [XmlElement("images")]
@@ -66,5 +72,15 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
 
         [XmlAttribute("rate")]
         public int Rate { get; set; }
+    }
+
+    [Serializable]
+    public class XmlMonsterExperienceConfiguration : IMonsterExperienceConfiguration
+    {
+        [XmlAttribute("max")]
+        public int Max { get; set; }
+
+        [XmlAttribute("min")]
+        public int Min { get; set; }
     }
 }

@@ -76,6 +76,7 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
             Id = config.Id;
             Name = config.Name;
             LogicPattern = config.LogicPattern;
+            Experience = config.Experience;
             Size = config.Size;
             ZIndex = ZIndex.Creature;
             HitChance = config.Stats.HitChance;

@@ -4,6 +4,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Configuration.Monsters;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures.Loot;
 using CodeMagic.Game.Objects.DecorativeObjects;
@@ -89,6 +90,14 @@ namespace CodeMagic.Game.Objects.Creatures
         {
             return new ChancesLootGenerator(lootConfiguration).GenerateLoot();
         }
+
+        public override void OnDeath(Point position)
+        {
+            base.OnDeath(position);
+
+            var experience = RandomHelper.GetRandomValue(configuration.Experience.Min, configuration.Experience.Max);
+            CurrentGame.Player.AddExperience(experience);
+        }
     }
 
     public class MonsterCreatureObjectConfiguration
@@ -110,6 +119,8 @@ namespace CodeMagic.Game.Objects.Creatures
         public string Id { get; set; }
 
         public string LogicPattern { get; set; }
+
+        public IMonsterExperienceConfiguration Experience { get; set; }
 
         public ObjectSize Size { get; set; }
 

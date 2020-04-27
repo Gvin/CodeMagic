@@ -7,6 +7,7 @@
     </spawn-configuration>
     <name>Skeleton</name>
     <logic-pattern>SimplePatrollingChaser</logic-pattern>
+    <experience min="2" max="5"/>
     <images>
       <north>Creature_Skeleton_Up</north>
       <south>Creature_Skeleton_Down</south>
@@ -72,6 +73,7 @@
       <level value="4" rate="20"/>
     </spawn-configuration>
     <logic-pattern>SimpleWonderingChaser</logic-pattern>
+    <experience min="5" max="7"/>
     <images>
       <north>Creature_Goblin_Up</north>
       <south>Creature_Goblin_Down</south>
@@ -142,6 +144,7 @@
       <level value="5" rate="20"/>
     </spawn-configuration>
     <logic-pattern>SimpleWonderingChaser</logic-pattern>
+    <experience min="10" max="15"/>
     <images>
       <north>Creature_Slime_Green</north>
       <south>Creature_Slime_Green</south>
@@ -223,6 +226,7 @@
     </spawn-configuration>
     <name>Black Knight</name>
     <logic-pattern>SimplePatrollingChaser</logic-pattern>
+    <experience min="15" max="25"/>
     <images>
       <north>Creature_BlackKnight_Up</north>
       <south>Creature_BlackKnight_Down</south>

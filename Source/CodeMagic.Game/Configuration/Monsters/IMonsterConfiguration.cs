@@ -13,6 +13,8 @@ namespace CodeMagic.Game.Configuration.Monsters
 
         string Name { get; }
 
+        IMonsterExperienceConfiguration Experience { get; }
+
         string LogicPattern { get; }
 
         IMonsterImagesConfiguration Images { get; }
@@ -33,5 +35,12 @@ namespace CodeMagic.Game.Configuration.Monsters
         int Level { get; }
 
         int Rate { get; }
+    }
+
+    public interface IMonsterExperienceConfiguration
+    {
+        int Max { get; }
+
+        int Min { get; }
     }
 }

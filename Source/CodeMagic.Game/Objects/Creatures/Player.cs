@@ -8,6 +8,7 @@ using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Items;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.DecorativeObjects;
 using CodeMagic.Game.Statuses;
 using CodeMagic.UI.Images;
@@ -21,6 +22,7 @@ namespace CodeMagic.Game.Objects.Creatures
         private const string SaveKeyStats = "Stats";
         private const string SaveKeyMana = "Mana";
         private const string SaveKeyHunger = "Hunger";
+        private const string SaveKeyExperience = "Experience";
 
         private const string ImageUp = "Player_Up";
         private const string ImageDown = "Player_Down";
@@ -35,6 +37,7 @@ namespace CodeMagic.Game.Objects.Creatures
         private double hungerPercent;
         private readonly double hungerIncrement = 0.02;
         private readonly Dictionary<PlayerStats, int> stats;
+        private int experience;
 
         public Player(SaveData data) : base(data)
         {
@@ -50,6 +53,7 @@ namespace CodeMagic.Game.Objects.Creatures
 
             Mana = data.GetIntValue(SaveKeyMana);
             hungerPercent = double.Parse(data.GetStringValue(SaveKeyHunger));
+            experience = data.GetIntValue(SaveKeyExperience);
         }
 
         public Player() : base("Player", GetMaxHealth(DefaultStatValue))
@@ -67,6 +71,7 @@ namespace CodeMagic.Game.Objects.Creatures
 
             Mana = MaxMana;
             hungerPercent = 0;
+            experience = 0;
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
@@ -77,7 +82,16 @@ namespace CodeMagic.Game.Objects.Creatures
             data.Add(SaveKeyStats, new DictionarySaveable(stats.ToDictionary(pair => (object)(int)pair.Key, pair => (object)pair.Value)));
             data.Add(SaveKeyMana, Mana);
             data.Add(SaveKeyHunger, hungerPercent);
+            data.Add(SaveKeyExperience, experience);
             return data;
+        }
+
+        public int Experience => experience;
+
+        public void AddExperience(int exp)
+        {
+            experience += exp;
+            CurrentGame.Journal.Write(new ExperienceGainedMessage(exp));
         }
 
         private static int GetMaxHealth(int strength)
