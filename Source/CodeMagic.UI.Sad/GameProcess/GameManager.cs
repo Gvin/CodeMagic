@@ -34,7 +34,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             }
 
             var player = CreatePlayer();
-            player.Died += PlayerOnDied;
 
             var startMap = DungeonMapGenerator.Current.GenerateNewMap(1, out var playerPosition);
             CurrentGame.Initialize(startMap, player, playerPosition);
@@ -58,14 +57,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             return game;
         }
 
-        private void PlayerOnDied(object sender, EventArgs e)
-        {
-            saveGameTask?.Wait();
-            ((CurrentGame.GameCore<Player>)CurrentGame.Game).TurnEnded -= game_TurnEnded;
-            CurrentGame.Load(null);
-            new SaveManager().DeleteSave();
-        }
-
         public void LoadGame()
         {
             var game = new SaveManager().LoadGame();
@@ -73,8 +64,6 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             if (game == null)
                 return;
-
-            game.Player.Died += PlayerOnDied;
 
             game.Player.Inventory.ItemAdded += (sender, args) =>
             {
@@ -99,6 +88,14 @@ namespace CodeMagic.UI.Sad.GameProcess
                 saveGameTask?.Wait();
                 saveGameTask = new SaveManager().SaveGameAsync();
                 turnsSinceLastSaving = 0;
+            }
+
+            if (CurrentGame.Player.Health <= 0)
+            {
+                saveGameTask?.Wait();
+                ((CurrentGame.GameCore<Player>)CurrentGame.Game).TurnEnded -= game_TurnEnded;
+                CurrentGame.Load(null);
+                new SaveManager().DeleteSave();
             }
         }
 
@@ -164,6 +161,13 @@ namespace CodeMagic.UI.Sad.GameProcess
                     {Element.Piercing, 200},
                     {Element.Slashing, 200},
                     {Element.Magic, 200}
+                },
+                StatBonuses = new Dictionary<PlayerStats, int>
+                {
+                    {PlayerStats.Strength, 100},
+                    {PlayerStats.Agility, 100},
+                    {PlayerStats.Wisdom, 100},
+                    {PlayerStats.Intelligence, 100}
                 }
             });
         }
