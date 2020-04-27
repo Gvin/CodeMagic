@@ -16,9 +16,10 @@ namespace CodeMagic.UI.Sad.Views
     public class InGameMenuView : View
     {
         private GameLogoControl gameLabel;
-        private Button continueGameButton;
-        private Button startGameButton;
-        private Button exitButton;
+        private StandardButton continueGameButton;
+        private StandardButton startGameButton;
+        private StandardButton exitToMenuButton;
+        private StandardButton exitButton;
 
         private readonly CurrentGame.GameCore<Player> currentGame;
 
@@ -40,43 +41,44 @@ namespace CodeMagic.UI.Sad.Views
             };
             Add(gameLabel);
 
-            var menuButtonsTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(DefaultForeground, DefaultBackground)
-                }
-            };
-
-            continueGameButton = new Button(20, 3)
+            continueGameButton = new StandardButton(20)
             {
                 Position = new Point(xPosition - 2, 9),
-                Text = "C0nt1nue Game",
-                Theme = menuButtonsTheme,
-                CanFocus = false
+                Text = "C0nt1nue Game"
             };
             continueGameButton.Click += continueGameButton_Click;
             Add(continueGameButton);
 
-            startGameButton = new Button(20, 3)
+            startGameButton = new StandardButton(20)
             {
                 Position = new Point(xPosition - 2, 13),
-                Text = "Start New Game",
-                Theme = menuButtonsTheme,
-                CanFocus = false
+                Text = "Start New Game"
             };
             startGameButton.Click += startGameButton_Click;
             Add(startGameButton);
 
-            exitButton = new Button(20, 3)
+            exitToMenuButton = new StandardButton(20)
             {
                 Position = new Point(xPosition - 2, 17),
-                Text = "Ex1t",
-                Theme = menuButtonsTheme,
-                CanFocus = false
+                Text = "Ex1t t0 Menu"
+            };
+            exitToMenuButton.Click += exitToMenuButton_Click;
+            Add(exitToMenuButton);
+
+            exitButton = new StandardButton(20)
+            {
+                Position = new Point(xPosition - 2, 21),
+                Text = "Ex1t"
             };
             exitButton.Click += exitButton_Click;
             Add(exitButton);
+        }
+
+        private void exitToMenuButton_Click(object sender, EventArgs e)
+        {
+            Close();
+
+            new MainMenuView().Show();
         }
 
         protected override bool ProcessKeyPressed(AsciiKey key)
