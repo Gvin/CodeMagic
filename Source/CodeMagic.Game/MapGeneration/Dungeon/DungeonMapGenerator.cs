@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CodeMagic.Core.Area;
@@ -39,8 +40,23 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 
         public IAreaMap GenerateNewMap(int level, out Point playerPosition)
         {
-            var size = GenerateMapSize();
-            return GenerateMap(level, size, out playerPosition);
+            const int maxAttempts = 100;
+            var attempts = 0;
+            while (attempts < maxAttempts)
+            {
+                attempts++;
+                try
+                {
+                    var size = GenerateMapSize();
+                    return GenerateMap(level, size, out playerPosition);
+                }
+                catch (MapGenerationException)
+                {
+                    // Do nothing
+                }
+            }
+            
+            throw new ApplicationException("Unable to generate map.");
         }
 
         private MapSize GenerateMapSize()

@@ -5,10 +5,7 @@ using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.Saving;
 using Microsoft.Xna.Framework.Input;
-using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Input;
-using SadConsole.Themes;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
