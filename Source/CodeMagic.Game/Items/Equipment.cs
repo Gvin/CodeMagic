@@ -40,9 +40,8 @@ namespace CodeMagic.Game.Items
             var spellBookId = data.GetStringValue(SaveKeySpellBook);
             if (spellBookId != null)
             {
-                SpellBook = (Items.SpellBook) inventory.GetItemById(spellBookId);
+                SpellBook = (SpellBook) inventory.GetItemById(spellBookId);
             }
-            SpellBook = data.GetObject<SpellBook>(SaveKeySpellBook);
 
             Armor = new Dictionary<ArmorType, ArmorItem>
             {
