@@ -43,13 +43,15 @@ namespace CodeMagic.UI.Sad.GameProcess
             using (var liquidsConfig = File.OpenRead(@".\Configuration\Liquids.xml"))
             using (var itemGeneratorConfig = File.OpenRead(@".\Configuration\ItemGenerator.xml"))
             using (var monstersConfig = File.OpenRead(@".\Configuration\Monsters.xml"))
+            using (var levelsConfig = File.OpenRead(@".\Configuration\Levels.xml"))
             {
                 return ConfigurationProvider.Load(
                     spellsConfig,
                     physicsConfig,
                     liquidsConfig,
                     itemGeneratorConfig,
-                    monstersConfig);
+                    monstersConfig,
+                    levelsConfig);
             }
         }
 

@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.Xml.Serialization;
 using CodeMagic.Configuration.Xml.Types.Items;
+using CodeMagic.Configuration.Xml.Types.Levels;
 using CodeMagic.Configuration.Xml.Types.Liquids;
 using CodeMagic.Configuration.Xml.Types.Monsters;
 using CodeMagic.Configuration.Xml.Types.Physics;
 using CodeMagic.Configuration.Xml.Types.Spells;
 using CodeMagic.Game.Configuration;
+using CodeMagic.Game.Configuration.Levels;
 using CodeMagic.Game.Configuration.Liquids;
 using CodeMagic.Game.Configuration.Monsters;
 using CodeMagic.Game.Configuration.Physics;
@@ -21,13 +23,15 @@ namespace CodeMagic.Configuration.Xml
             IPhysicsConfiguration physics,
             ILiquidsConfiguration liquids,
             IItemGeneratorConfiguration itemGenerator,
-            IMonstersConfiguration monsters)
+            IMonstersConfiguration monsters,
+            ILevelsConfiguration levels)
         {
             Spells = spells;
             Physics = physics;
             Liquids = liquids;
             ItemGenerator = itemGenerator;
             Monsters = monsters;
+            Levels = levels;
         }
 
         public ISpellsConfiguration Spells { get; }
@@ -40,21 +44,25 @@ namespace CodeMagic.Configuration.Xml
 
         public IMonstersConfiguration Monsters { get; }
 
+        public ILevelsConfiguration Levels { get; }
+
         public static IConfigurationProvider Load(
             Stream spellsConfigStream,
             Stream physicsConfigStream,
             Stream liquidsConfigStream,
             Stream itemsGeneratorConfigStream,
-            Stream monstersConfigStream)
+            Stream monstersConfigStream,
+            Stream levelsConfigStream)
         {
             var spells = LoadConfig<ISpellsConfiguration, XmlSpellsConfigurationType>(spellsConfigStream);
             var physics = LoadConfig<IPhysicsConfiguration, XmlPhysicsConfigurationType>(physicsConfigStream);
             var liquids = LoadConfig<ILiquidsConfiguration, XmlLiquidsConfiguration>(liquidsConfigStream);
             var monsters = LoadConfig<IMonstersConfiguration, XmlMonstersConfiguration>(monstersConfigStream);
+            var levels = LoadConfig<ILevelsConfiguration, XmlLevelsConfiguration>(levelsConfigStream);
 
             var itemGenerator = LoadConfig<IItemGeneratorConfiguration, XmlItemGeneratorConfiguration>(itemsGeneratorConfigStream);
 
-            return new ConfigurationProvider(spells, physics, liquids, itemGenerator, monsters);
+            return new ConfigurationProvider(spells, physics, liquids, itemGenerator, monsters, levels);
         }
 
         private static TConfig LoadConfig<TConfig, TSerializable>(Stream fileStream)

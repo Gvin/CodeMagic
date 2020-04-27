@@ -1,4 +1,6 @@
-﻿namespace CodeMagic.Game.JournalMessages
+﻿using CodeMagic.Game.Items;
+
+namespace CodeMagic.Game.JournalMessages
 {
     public class ExperienceGainedMessage : SelfDescribingJournalMessage
     {
@@ -13,7 +15,7 @@
         {
             return new StyledLine
             {
-                $"You've got {experience} XP"
+                "You got ", new StyledString(experience, TextHelper.XpColor), " XP"
             };
         }
     }

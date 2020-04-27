@@ -170,6 +170,9 @@
     <Content Include="Configuration\Spells.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configuration\Levels.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Fonts\Font_X075.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

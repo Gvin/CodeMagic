@@ -7,6 +7,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Area.EnvironmentData;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.DecorativeObjects;
@@ -23,6 +24,7 @@ namespace CodeMagic.Game.Objects.Creatures
         private const string SaveKeyMana = "Mana";
         private const string SaveKeyHunger = "Hunger";
         private const string SaveKeyExperience = "Experience";
+        private const string SaveKeyLevel = "Level";
 
         private const string ImageUp = "Player_Up";
         private const string ImageDown = "Player_Down";
@@ -38,6 +40,7 @@ namespace CodeMagic.Game.Objects.Creatures
         private readonly double hungerIncrement = 0.02;
         private readonly Dictionary<PlayerStats, int> stats;
         private int experience;
+        private int level;
 
         public Player(SaveData data) : base(data)
         {
@@ -54,6 +57,7 @@ namespace CodeMagic.Game.Objects.Creatures
             Mana = data.GetIntValue(SaveKeyMana);
             hungerPercent = double.Parse(data.GetStringValue(SaveKeyHunger));
             experience = data.GetIntValue(SaveKeyExperience);
+            level = data.GetIntValue(SaveKeyLevel);
         }
 
         public Player() : base("Player", GetMaxHealth(DefaultStatValue))
@@ -72,6 +76,7 @@ namespace CodeMagic.Game.Objects.Creatures
             Mana = MaxMana;
             hungerPercent = 0;
             experience = 0;
+            level = 1;
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
@@ -83,15 +88,32 @@ namespace CodeMagic.Game.Objects.Creatures
             data.Add(SaveKeyMana, Mana);
             data.Add(SaveKeyHunger, hungerPercent);
             data.Add(SaveKeyExperience, experience);
+            data.Add(SaveKeyLevel, level);
             return data;
         }
 
         public int Experience => experience;
 
+        public int Level => level;
+
         public void AddExperience(int exp)
         {
             experience += exp;
             CurrentGame.Journal.Write(new ExperienceGainedMessage(exp));
+
+            var xpToLevelUp = GetXpToLevelUp();
+            if (experience >= xpToLevelUp)
+            {
+                level++;
+                experience -= xpToLevelUp;
+                CurrentGame.Journal.Write(new LevelUpMessage(level));
+            }
+        }
+
+        public int GetXpToLevelUp()
+        {
+            var config = ConfigurationManager.Current.Levels;
+            return (int)Math.Pow(level, config.PlayerLevels.XpLevelPower) * config.PlayerLevels.XpMultiplier;
         }
 
         private static int GetMaxHealth(int strength)

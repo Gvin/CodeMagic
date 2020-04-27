@@ -26,6 +26,7 @@ namespace CodeMagic.Game.Items
         public static readonly Color HealthColor = Color.Green;
         public static readonly Color ManaColor = Color.Blue;
         public static readonly Color ManaRegenerationColor = Color.DodgerBlue;
+        public static readonly Color XpColor = Color.DarkGoldenrod;
 
         public static string GetStatName(PlayerStats stat)
         {

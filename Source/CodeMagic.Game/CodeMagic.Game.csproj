@@ -55,6 +55,8 @@
     <Compile Include="Area\OutsideEnvironmentLightManager.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\ILootConfiguration.cs" />
+    <Compile Include="Configuration\Levels\ILevelsConfiguration.cs" />
+    <Compile Include="Configuration\Levels\IPlayerLevelsConfiguration.cs" />
     <Compile Include="Configuration\Liquids\ILiquidConfiguration.cs" />
     <Compile Include="Configuration\Liquids\ILiquidsConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonsterConfiguration.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="JournalMessages\ItemLostMessage.cs" />
     <Compile Include="JournalMessages\ItemReceivedMessage.cs" />
     <Compile Include="JournalMessages\ManaRestoredMessage.cs" />
+    <Compile Include="JournalMessages\LevelUpMessage.cs" />
     <Compile Include="JournalMessages\NotEnoughManaToCastMessage.cs" />
     <Compile Include="JournalMessages\NotEnoughManaToScrollMessage.cs" />
     <Compile Include="JournalMessages\NotHungryMessage.cs" />

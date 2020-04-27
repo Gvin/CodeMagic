@@ -62,6 +62,8 @@
     <Compile Include="Types\Items\Weapon\XmlWeaponsConfiguration.cs" />
     <Compile Include="Types\Items\Weapon\XmlWeaponRarenessConfiguration.cs" />
     <Compile Include="Types\Items\XmlWeightConfiguration.cs" />
+    <Compile Include="Types\Levels\XmlLevelsConfiguration.cs" />
+    <Compile Include="Types\Levels\XmlPlayerLevelsConfiguration.cs" />
     <Compile Include="Types\Liquids\XmlLiquidConfigurationType.cs" />
     <Compile Include="Types\Liquids\XmlLiquidsConfiguration.cs" />
     <Compile Include="Types\Monsters\XmlMonsterConfiguration.cs" />
@@ -90,5 +92,6 @@
       <Name>CodeMagic.Game</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
