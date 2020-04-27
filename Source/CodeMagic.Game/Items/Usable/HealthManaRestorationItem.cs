@@ -8,7 +8,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable
 {
-    public class HealthManaRestorationItem : SimpleItemImpl, IUsableItem, IDescriptionProvider, IWorldImageProvider
+    public class HealthManaRestorationItem : SimpleItem, IUsableItem, IDescriptionProvider, IWorldImageProvider
     {
         private const string SaveKeyHealValue = "HealValue";
         private const string SaveKeyManaRestoreValue = "ManaRestore";
@@ -18,13 +18,13 @@ namespace CodeMagic.Game.Items.Usable
         private readonly int healValue;
         private readonly int manaRestoreValue;
         private readonly SymbolsImage worldImage;
-        private readonly string description;
+        private readonly string[] description;
 
         public HealthManaRestorationItem(SaveData data) : base(data)
         {
             healValue = data.GetIntValue(SaveKeyHealValue);
             manaRestoreValue = data.GetIntValue(SaveKeyManaRestoreValue);
-            description = data.GetStringValue(SaveKeyDescription);
+            description = data.GetValuesCollection(SaveKeyDescription);
             worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage)?.GetImage();
         }
 
@@ -92,7 +92,7 @@ namespace CodeMagic.Game.Items.Usable
             }
 
             result.Add(StyledLine.Empty);
-            result.Add(new StyledLine { description });
+            result.AddRange(TextHelper.ConvertDescription(description));
 
             return result.ToArray();
         }
@@ -109,7 +109,7 @@ namespace CodeMagic.Game.Items.Usable
 
         public int ManaRestoreValue { get; set; }
 
-        public string Description { get; set; }
+        public string[] Description { get; set; }
 
         public SymbolsImage WorldImage { get; set; }
     }

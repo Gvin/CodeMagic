@@ -69,8 +69,8 @@ namespace CodeMagic.Game.Items.Usable
                 new StyledLine {$"Spell Name: {SpellName}"},
                 new StyledLine {"Spell Mana: ", new StyledString(Mana.ToString(), TextHelper.ManaColor)}, 
                 StyledLine.Empty, 
-                new StyledLine {"A new scroll that you have created. A single use item."},
-                new StyledLine {"It can be used to cast a spell without mana loss."}
+                new StyledLine {new StyledString("A new scroll that you have created. A single use item.", TextHelper.DescriptionTextColor) },
+                new StyledLine {new StyledString("It can be used to cast a spell without mana loss.", TextHelper.DescriptionTextColor) }
             };
         }
     }

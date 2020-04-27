@@ -36,7 +36,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Usable
         {
             return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
             {
-                Description = "Big jar with bright purple liquid.",
+                Description = new[] {"Big jar with bright purple liquid."},
                 ManaRestoreValue = 600,
                 HealValue = 60,
                 InventoryImage = imagesStorage.GetImage("Item_Potion_Purple_Big"),
@@ -52,7 +52,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Usable
         {
             return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
             {
-                Description = "Medium size jar with bright purple liquid.",
+                Description = new[] {"Medium size jar with bright purple liquid."},
                 ManaRestoreValue = 400,
                 HealValue = 40,
                 InventoryImage = imagesStorage.GetImage("Item_Potion_Purple"),
@@ -68,7 +68,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Usable
         {
             return new HealthManaRestorationItem(new HealthManaRestorationItemConfiguration
             {
-                Description = "A small phial with bright purple liquid.",
+                Description = new[] {"A small phial with bright purple liquid."},
                 ManaRestoreValue = 200,
                 HealValue = 20,
                 InventoryImage = imagesStorage.GetImage("Item_Potion_Purple_Small"),

@@ -6,18 +6,18 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
 {
-    public abstract class SimpleItemImpl : Item, IInventoryImageProvider
+    public abstract class SimpleItem : Item, IInventoryImageProvider
     {
         private const string SaveKeyInventoryImage = "InventoryImage";
 
         private readonly SymbolsImage inventoryImage;
 
-        protected SimpleItemImpl(SaveData data) : base(data)
+        protected SimpleItem(SaveData data) : base(data)
         {
             inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage)?.GetImage();
         }
 
-        protected SimpleItemImpl(SimpleItemConfiguration configuration) 
+        protected SimpleItem(SimpleItemConfiguration configuration) 
             : base(configuration)
         {
             inventoryImage = configuration.InventoryImage;
