@@ -7,18 +7,18 @@
   </row>
   <row>
     <pixel />
-    <pixel />
-    <pixel />
-  </row>
-  <row>
-    <pixel />
-    <pixel glyph="31">
+    <pixel glyph="2">
       <color>
         <R>0</R>
         <G>255</G>
         <B>0</B>
       </color>
     </pixel>
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
     <pixel />
   </row>
 </symbols-image>

@@ -6,19 +6,19 @@
     <pixel />
   </row>
   <row>
-    <pixel />
+    <pixel glyph="17">
+      <color>
+        <R>255</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
     <pixel />
     <pixel />
   </row>
   <row>
     <pixel />
-    <pixel glyph="31">
-      <color>
-        <R>0</R>
-        <G>255</G>
-        <B>0</B>
-      </color>
-    </pixel>
+    <pixel />
     <pixel />
   </row>
 </symbols-image>

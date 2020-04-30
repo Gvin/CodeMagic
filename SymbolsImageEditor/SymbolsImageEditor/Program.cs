@@ -30,7 +30,7 @@ namespace SymbolsImageEditor
 
         private static Font LoadFont()
         {
-            return Global.LoadFont(@".\Resources\font_x1.font").GetFont(Font.FontSizes.One);
+            return Global.LoadFont(@".\Resources\font_x075.font").GetFont(Font.FontSizes.One);
         }
 
         private static void Init()

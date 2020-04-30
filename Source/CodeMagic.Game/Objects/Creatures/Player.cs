@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
@@ -13,6 +14,7 @@ using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.DecorativeObjects;
 using CodeMagic.Game.Statuses;
 using CodeMagic.UI.Images;
+using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Game.Objects.Creatures
 {
@@ -30,6 +32,13 @@ namespace CodeMagic.Game.Objects.Creatures
         private const string ImageDown = "Player_Down";
         private const string ImageLeft = "Player_Left";
         private const string ImageRight = "Player_Right";
+        private const string ImageUpUsable = "Player_Up_Usable";
+        private const string ImageDownUsable = "Player_Down_Usable";
+        private const string ImageLeftUsable = "Player_Left_Usable";
+        private const string ImageRightUsable = "Player_Right_Usable";
+        private const string ImageBodyHorizontal = "Player_Body_Horizontal";
+        private const string ImageBodyVertical = "Player_Body_Vertical";
+        private const string ImageHead = "Player_Head";
 
         private const int DefaultStatValue = 1;
 
@@ -250,16 +259,50 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
+            var body = GetBodyImage(storage);
+            body = SymbolsImage.Recolor(body, new Dictionary<Color, Color>
+            {
+                {Color.FromArgb(255, 0, 0), Color.FromArgb(128, 0, 128)}
+            });
+
+            var head = storage.GetImage(ImageHead);
+
+            var result = SymbolsImage.Combine(body, head);
+            var directionImage = GetDirectionImage(storage);
+
+            return SymbolsImage.Combine(directionImage, result);
+        }
+
+        private SymbolsImage GetDirectionImage(IImagesStorage storage)
+        {
+            var facingPosition = Point.GetPointInDirection(CurrentGame.PlayerPosition, Direction);
+            var facingUsable = CurrentGame.Map.TryGetCell(facingPosition)?.Objects.OfType<IUsableObject>().Any() ?? false;
+
             switch (Direction)
             {
                 case Direction.North:
-                    return storage.GetImage(ImageUp);
+                    return storage.GetImage(facingUsable ? ImageUpUsable : ImageUp);
                 case Direction.South:
-                    return storage.GetImage(ImageDown);
+                    return storage.GetImage(facingUsable ? ImageDownUsable : ImageDown);
                 case Direction.West:
-                    return storage.GetImage(ImageLeft);
+                    return storage.GetImage(facingUsable ? ImageLeftUsable : ImageLeft);
                 case Direction.East:
-                    return storage.GetImage(ImageRight);
+                    return storage.GetImage(facingUsable ? ImageRightUsable : ImageRight);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private SymbolsImage GetBodyImage(IImagesStorage storage)
+        {
+            switch (Direction)
+            {
+                case Direction.North:
+                case Direction.South:
+                    return storage.GetImage(ImageBodyHorizontal);
+                case Direction.West:
+                case Direction.East:
+                    return storage.GetImage(ImageBodyVertical);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
