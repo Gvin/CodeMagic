@@ -23,7 +23,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 
         private GameManager()
         {
-            DungeonMapGenerator.Initialize(Properties.Settings.Default.DebugWriteMapToFile);
+            DungeonMapGenerator.Initialize(ImagesStorage.Current, Properties.Settings.Default.DebugWriteMapToFile);
         }
 
         public CurrentGame.GameCore<Player> StartGame()

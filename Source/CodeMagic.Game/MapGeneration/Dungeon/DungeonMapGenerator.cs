@@ -15,17 +15,19 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
     {
         public static DungeonMapGenerator Current { get; private set; }
 
-        public static void Initialize(bool writeMapFile)
+        public static void Initialize(IImagesStorage imagesStorage, bool writeMapFile)
         {
-            Current = new DungeonMapGenerator(writeMapFile);
+            Current = new DungeonMapGenerator(imagesStorage, writeMapFile);
         }
 
         private readonly Dictionary<MapType, IMapAreaGenerator> generators;
         private readonly bool writeMapFile;
+        private readonly IImagesStorage imagesStorage;
 
-        private DungeonMapGenerator(bool writeMapFile = false)
+        private DungeonMapGenerator(IImagesStorage imagesStorage, bool writeMapFile = false)
         {
             this.writeMapFile = writeMapFile;
+            this.imagesStorage = imagesStorage;
 
             var dungeonMapObjectsFactory = new DungeonMapObjectsFactory();
             var caveMapObjectsFactory = new CaveMapObjectsFactory();
@@ -82,7 +84,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 
             var generateTorchPosts = mapType == MapType.Cave;
 
-            new DungeonObjectsGenerator().GenerateObjects(map, generateTorchPosts);
+            new DungeonObjectsGenerator(imagesStorage).GenerateObjects(map, generateTorchPosts);
 
             new DungeonNpcGenerator().GenerateNpc(level, size, mapType, map, playerPosition);
 

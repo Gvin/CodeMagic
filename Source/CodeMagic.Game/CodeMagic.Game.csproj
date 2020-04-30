@@ -85,6 +85,7 @@
     <Compile Include="CreaturesLogic\Strategies\StandStillStrategy.cs" />
     <Compile Include="CreaturesLogic\TargetStrategies\ITargetStrategy.cs" />
     <Compile Include="CreaturesLogic\TargetStrategies\PlayerTargetStrategy.cs" />
+    <Compile Include="DialogsManager.cs" />
     <Compile Include="IInventoryImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
     <Compile Include="Items\ArmorClass.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="MapGeneration\Dungeon\DungeonMonstersGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\DungeonNpcGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\DungeonObjectsGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\DungeonObjectsGeneratorPatterns.cs" />
     <Compile Include="MapGeneration\Dungeon\MapGenerators\CaveDungeonMapGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\MapGenerators\DungeonRoomsMapGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\MapGenerators\IMapAreaGenerator.cs" />
@@ -222,6 +224,8 @@
     <Compile Include="Objects\DecorativeObjects\FireObject.cs" />
     <Compile Include="Objects\DestroyableObject.cs" />
     <Compile Include="Objects\Floor\FloorObject.cs" />
+    <Compile Include="Objects\Furniture\ContainerObject.cs" />
+    <Compile Include="Objects\Furniture\FurnitureObject.cs" />
     <Compile Include="Objects\IceObjects\AbstractIce.cs" />
     <Compile Include="Objects\IceObjects\AcidIce.cs" />
     <Compile Include="Objects\IceObjects\IIce.cs" />

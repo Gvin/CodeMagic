@@ -7,6 +7,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Injection.Configuration;
 using CodeMagic.Core.Objects.ObjectEffects;
+using CodeMagic.Game;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.ItemsGeneration;
@@ -23,6 +24,8 @@ namespace CodeMagic.UI.Sad.GameProcess
             ConfigurationManager.InitializeConfiguration(config);
 
             ImagesStorage.Current.Load();
+
+            DialogsManager.Initialize(new DialogsProvider());
 
             InitializeInjector();
 
