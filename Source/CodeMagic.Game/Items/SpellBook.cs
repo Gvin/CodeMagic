@@ -98,6 +98,12 @@ namespace CodeMagic.Game.Items
             result.Add(new StyledLine { $"Spells In Book: {Spells.Count(spell => spell != null)}" });
 
             result.Add(StyledLine.Empty);
+            TextHelper.AddBonusesDescription(this, equipedBook, result);
+
+            result.Add(StyledLine.Empty);
+            TextHelper.AddLightBonusDescription(this, result);
+
+            result.Add(StyledLine.Empty);
 
             result.AddRange(TextHelper.ConvertDescription(description));
 
