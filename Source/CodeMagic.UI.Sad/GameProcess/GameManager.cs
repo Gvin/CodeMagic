@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Injection;
 using CodeMagic.Core.Items;
 using CodeMagic.Game.Items;
+using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.Game.Objects.Creatures;
@@ -103,7 +103,7 @@ namespace CodeMagic.UI.Sad.GameProcess
         {
             var player = new Player();
 
-            var itemsGenerator = Injector.Current.Create<IItemsGenerator>();
+            var itemsGenerator = ItemsGeneratorManager.Generator;
 
             var weapon = new TorchItem();
             player.Inventory.AddItem(weapon);
@@ -113,14 +113,25 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Inventory.AddItem(spellBook);
             player.Equipment.EquipItem(spellBook);
 
-            player.Inventory.AddItem(itemsGenerator.GenerateUsable(ItemRareness.Common));
-            player.Inventory.AddItem(itemsGenerator.GenerateUsable(ItemRareness.Common));
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
 
 #if DEBUG
             player.Inventory.AddItem(CreateBanHammer());
 #endif
 
             return player;
+        }
+
+        private IItem GenerateStartingUsable()
+        {
+            while (true)
+            {
+                var usable = ItemsGeneratorManager.Generator.GenerateUsable(ItemRareness.Common);
+                if (usable != null)
+                    return usable;
+            }
+
         }
 
         private IItem CreateBanHammer()

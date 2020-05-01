@@ -35,10 +35,10 @@ namespace CodeMagic.Configuration.Xml.Types
         public XmlStandardLootConfiguration PotionData { get; set; }
 
         [XmlIgnore]
-        public ISimpleLootConfiguration Resource => ResourceData;
+        public ISimpleLootConfiguration Food => FoodData;
 
-        [XmlElement("resource")]
-        public XmlSimpleLootConfiguration ResourceData { get; set; }
+        [XmlElement("food")]
+        public XmlSimpleLootConfiguration FoodData { get; set; }
     }
 
     [Serializable]

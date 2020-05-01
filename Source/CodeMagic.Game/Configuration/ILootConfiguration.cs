@@ -13,7 +13,7 @@ namespace CodeMagic.Game.Configuration
 
         IStandardLootConfiguration Usable { get; }
 
-        ISimpleLootConfiguration Resource { get; }
+        ISimpleLootConfiguration Food { get; }
     }
 
     public interface IArmorLootConfiguration : IStandardLootConfiguration

@@ -2,7 +2,9 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Saving;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.Game.Objects.Creatures.Loot;
 
 namespace CodeMagic.Game.Objects.Furniture
 {
@@ -21,8 +23,10 @@ namespace CodeMagic.Game.Objects.Furniture
         public ContainerObject(ContainerObjectConfiguration configuration) 
             : base(configuration)
         {
-            inventory = new Inventory();
-            // TODO: Fill inventory with loot
+            var lootLevel = CurrentGame.Map.Level + configuration.LootLevelIncrement;
+            var loot = new TreasureLootGenerator(lootLevel, configuration.ContainerType).GenerateLoot();
+
+            inventory = new Inventory(loot);
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
@@ -34,11 +38,28 @@ namespace CodeMagic.Game.Objects.Furniture
 
         public void Use(CurrentGame.GameCore<Player> game, Point position)
         {
+            game.Journal.Write(new ContainerOpenMessage(Name));
             DialogsManager.Provider.OpenInventoryDialog(Name, inventory);
+        }
+
+        public override void OnDeath(Point position)
+        {
+            base.OnDeath(position);
+
+            foreach (var stack in inventory.Stacks)
+            {
+                foreach (var item in stack.Items)
+                {
+                    CurrentGame.Map.AddObject(position, item);
+                }
+            }
         }
     }
 
     public class ContainerObjectConfiguration : FurnitureObjectConfiguration
     {
+        public string ContainerType { get; set; }
+
+        public int LootLevelIncrement { get; set; } = 0;
     }
 }

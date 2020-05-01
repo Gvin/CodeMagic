@@ -80,6 +80,7 @@
     <Compile Include="Types\Spells\XmlSpellConfigurationType.cs" />
     <Compile Include="Types\Physics\XmlTemperatureConfigurationType.cs" />
     <Compile Include="Types\Physics\XmlTemperatureDamageConfigurationType.cs" />
+    <Compile Include="Types\Treasure\XmlTreasureConfiguration.cs" />
     <Compile Include="Types\XmlLootConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>

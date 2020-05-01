@@ -73,6 +73,7 @@
     <Compile Include="Configuration\Physics\ITemperatureDamageConfiguration.cs" />
     <Compile Include="Configuration\Spells\ISpellConfiguration.cs" />
     <Compile Include="Configuration\Spells\ISpellsConfiguration.cs" />
+    <Compile Include="Configuration\Treasure\ITreasureConfiguration.cs" />
     <Compile Include="CreaturesLogic\LogicConfigurators\ILogicConfigurator.cs" />
     <Compile Include="CreaturesLogic\LogicConfigurators\SimplePatrollingChaserLogicConfigurator.cs" />
     <Compile Include="CreaturesLogic\LogicConfigurators\SimpleWonderingChaserLogicConfigurator.cs" />
@@ -95,10 +96,10 @@
     <Compile Include="Items\IEquipableItem.cs" />
     <Compile Include="Items\IFuelItem.cs" />
     <Compile Include="Items\IFurnaceItem.cs" />
-    <Compile Include="Items\IItemsGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\Configuration\Weapon\IWeaponConfiguration.cs" />
     <Compile Include="Items\ItemsGeneration\Configuration\Weapon\IWeaponImagesConfiguration.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\PlayerStatBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\ItemsGeneratorManager.cs" />
     <Compile Include="Items\IUsableItem.cs" />
     <Compile Include="Items\SpellBook.cs" />
     <Compile Include="Items\Usable\AncientScroll.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="JournalMessages\BurningDamageMessage.cs" />
     <Compile Include="JournalMessages\CastNotAllowedMessage.cs" />
     <Compile Include="JournalMessages\CellBlockedForBuildingMessage.cs" />
+    <Compile Include="JournalMessages\ContainerOpenMessage.cs" />
     <Compile Include="JournalMessages\DamageBlockedMessage.cs" />
     <Compile Include="JournalMessages\DealDamageMessage.cs" />
     <Compile Include="JournalMessages\DeathMessage.cs" />
@@ -213,7 +215,7 @@
     <Compile Include="Objects\Creatures\CreatureObject.cs" />
     <Compile Include="Objects\Creatures\Loot\ChancesLootGenerator.cs" />
     <Compile Include="Objects\Creatures\Loot\ILootGenerator.cs" />
-    <Compile Include="Objects\Creatures\Loot\StandardLootGenerator.cs" />
+    <Compile Include="Objects\Creatures\Loot\TreasureLootGenerator.cs" />
     <Compile Include="Objects\Creatures\MonsterCreatureObject.cs" />
     <Compile Include="Objects\Creatures\NonPlayableCreatureObject.cs" />
     <Compile Include="Objects\Creatures\NonPlayable\MonsterCreatureImpl.cs" />

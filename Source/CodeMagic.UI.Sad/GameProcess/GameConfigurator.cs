@@ -9,7 +9,6 @@ using CodeMagic.Core.Injection.Configuration;
 using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Game;
 using CodeMagic.Game.Configuration;
-using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.Drawing.ObjectEffects;
@@ -27,6 +26,11 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             DialogsManager.Initialize(new DialogsProvider());
 
+            ItemsGeneratorManager.Initialize(new ItemsGenerator(
+                config.ItemGenerator,
+                ImagesStorage.Current, 
+                new AncientSpellsProvider()));
+
             InitializeInjector();
 
 #if DEBUG
@@ -39,7 +43,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             Injector.Initialize(new InjectorConfiguration());
         }
 
-        private static IConfigurationProvider LoadConfiguration()
+        private static ConfigurationProvider LoadConfiguration()
         {
             using (var spellsConfig = File.OpenRead(@".\Configuration\Spells.xml"))
             using (var physicsConfig = File.OpenRead(@".\Configuration\Physics.xml"))
@@ -47,6 +51,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             using (var itemGeneratorConfig = File.OpenRead(@".\Configuration\ItemGenerator.xml"))
             using (var monstersConfig = File.OpenRead(@".\Configuration\Monsters.xml"))
             using (var levelsConfig = File.OpenRead(@".\Configuration\Levels.xml"))
+            using (var treasureConfig = File.OpenRead(@".\Configuration\Treasure.xml"))
             {
                 return ConfigurationProvider.Load(
                     spellsConfig,
@@ -54,7 +59,8 @@ namespace CodeMagic.UI.Sad.GameProcess
                     liquidsConfig,
                     itemGeneratorConfig,
                     monstersConfig,
-                    levelsConfig);
+                    levelsConfig,
+                    treasureConfig);
             }
         }
 
@@ -64,15 +70,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             {
                 return new Dictionary<Type, InjectorMappingType>
                 {
-                    {
-                        typeof(IItemsGenerator),
-                        new InjectorMappingType
-                        {
-                            Object = new ItemsGenerator(
-                                ((ConfigurationProvider) ConfigurationManager.Current).ItemGenerator,
-                                ImagesStorage.Current, new AncientSpellsProvider())
-                        }
-                    },
                     // Misc
                     {
                         typeof(IDamageEffect),

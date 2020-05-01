@@ -7,9 +7,23 @@ using CodeMagic.Game.Items.ItemsGeneration.Configuration;
 using CodeMagic.Game.Items.ItemsGeneration.Implementations;
 using CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon;
+using CodeMagic.Game.Items.Usable.Food;
 
 namespace CodeMagic.Game.Items.ItemsGeneration
 {
+    public interface IItemsGenerator
+    {
+        WeaponItem GenerateWeapon(ItemRareness rareness);
+
+        ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass armorClass);
+
+        SpellBook GenerateSpellBook(ItemRareness rareness);
+
+        IItem GenerateUsable(ItemRareness rareness);
+
+        IItem GenerateFood();
+    }
+
     public class ItemsGenerator : IItemsGenerator
     {
         private const string WorldImageNameSword = "ItemsOnGround_Weapon_Sword";
@@ -22,7 +36,6 @@ namespace CodeMagic.Game.Items.ItemsGeneration
         private readonly ArmorGenerator armorGenerator;
         private readonly SpellBookGenerator spellBookGenerator;
         private readonly UsableItemsGenerator usableItemsGenerator;
-        private readonly ResourcesGenerator resourcesGenerator;
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage, IAncientSpellsProvider spellsProvider)
         {
@@ -79,7 +92,6 @@ namespace CodeMagic.Game.Items.ItemsGeneration
             armorGenerator = new ArmorGenerator(configuration.ArmorConfiguration, bonusesGenerator, imagesStorage);
             spellBookGenerator = new SpellBookGenerator(configuration.SpellBooksConfiguration, bonusesGenerator, imagesStorage);
             usableItemsGenerator = new UsableItemsGenerator(imagesStorage, spellsProvider);
-            resourcesGenerator = new ResourcesGenerator();
         }
 
         public WeaponItem GenerateWeapon(ItemRareness rareness)
@@ -113,17 +125,32 @@ namespace CodeMagic.Game.Items.ItemsGeneration
             if (rareness == ItemRareness.Epic)
                 throw new ArgumentException("Item generator cannot generate epic items.");
 
-            while (true)
+            return usableItemsGenerator.GenerateUsableItem(rareness);
+        }
+
+        public IItem GenerateRandomItem(ItemRareness rareness)
+        {
+            var generatorType = RandomHelper.GetRandomValue(1, 5);
+            switch (generatorType)
             {
-                var result = usableItemsGenerator.GenerateUsableItem(rareness);
-                if (result != null)
-                    return result;
+                case 1:
+                    return GenerateWeapon(rareness);
+                case 2:
+                    return GenerateArmor(rareness, RandomHelper.GetRandomEnumValue<ArmorClass>());
+                case 3:
+                    return GenerateSpellBook(rareness);
+                case 4:
+                    return GenerateUsable(rareness);
+                case 5:
+                    return GenerateFood();
+                default:
+                    throw new ApplicationException($"Unknown generator type: {generatorType}.");
             }
         }
 
-        public IItem GenerateResource()
+        public IItem GenerateFood()
         {
-            return resourcesGenerator.GenerateResource();
+            return new Apple();
         }
 
         private WeaponType GetRandomWeaponType()

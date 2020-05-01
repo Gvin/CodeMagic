@@ -9,8 +9,8 @@ namespace SymbolsImageEditor
 {
     static class Program
     {
-        public const int Width = 100;
-        public const int Height = 50;
+        public const int Width = 70;
+        public const int Height = 30;
 
         public static Font Font => LoadFont();
 
