@@ -2577,8 +2577,8 @@
         </bonus>
         <bonus type="EquipmentBonus">
           <value key="BonusType">Mana</value>
-          <value key="Min">20</value>
-          <value key="Max">50</value>
+          <value key="Min">10</value>
+          <value key="Max">30</value>
         </bonus>
       </rareness>
       <rareness value="Common">
@@ -2593,8 +2593,8 @@
         </bonus>
         <bonus type="EquipmentBonus">
           <value key="BonusType">Mana</value>
-          <value key="Min">50</value>
-          <value key="Max">100</value>
+          <value key="Min">30</value>
+          <value key="Max">60</value>
         </bonus>
         <bonus type="EquipmentBonus">
           <value key="BonusType">ManaRegeneration</value>
@@ -2614,7 +2614,7 @@
         </bonus>
         <bonus type="EquipmentBonus">
           <value key="BonusType">Mana</value>
-          <value key="Min">100</value>
+          <value key="Min">60</value>
           <value key="Max">150</value>
         </bonus>
         <bonus type="EquipmentBonus">
