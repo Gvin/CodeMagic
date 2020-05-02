@@ -17,7 +17,7 @@ namespace CodeMagic.Game.Statuses
         public const string StatusType = "oily";
 
         public OilyObjectStatus(SaveData data) 
-            : base(data, GetMaxLifeTime())
+            : base(data)
         {
             var configuration = GetConfiguration();
             CatchFireChanceModifier = double.Parse(GetCustomConfigurationValue(configuration, CustomValueOilyStatusCatchFireChanceModifier));

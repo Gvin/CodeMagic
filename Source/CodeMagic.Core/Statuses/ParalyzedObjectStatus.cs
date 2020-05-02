@@ -8,12 +8,17 @@ namespace CodeMagic.Core.Statuses
         private const int MaxLifeTime = 4;
 
         public ParalyzedObjectStatus(SaveData data) 
-            : base(data, MaxLifeTime)
+            : base(data)
         {
         }
 
         public ParalyzedObjectStatus():
             base(MaxLifeTime)
+        {
+        }
+
+        public ParalyzedObjectStatus(int lifeTimeToLive) :
+            base(lifeTimeToLive)
         {
         }
 

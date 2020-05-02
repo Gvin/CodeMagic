@@ -30,7 +30,7 @@ namespace CodeMagic.Core.Objects
             };
         }
 
-        public string Name { get; }
+        public virtual string Name { get; }
 
         public virtual bool BlocksMovement => false;
 

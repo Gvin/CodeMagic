@@ -52,7 +52,7 @@ namespace CodeMagic.Game.Items
             data.Add(SaveKeyInventoryImage, new SymbolsImageSaveable(inventoryImage));
             data.Add(SaveKeyWorldImage, new SymbolsImageSaveable(worldImage));
             data.Add(SaveKeySize, BookSize);
-            data.Add(SaveKeySpells, Spells.Where(spell => spell != null));
+            data.Add(SaveKeySpells, Spells.Where(spell => spell != null).ToArray());
             return data;
         }
 

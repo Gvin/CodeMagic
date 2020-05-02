@@ -33,6 +33,8 @@ namespace CodeMagic.UI.Sad.GameProcess
                 oldGame.TurnEnded -= game_TurnEnded;
             }
 
+            ItemsGeneratorManager.Generator.Reset();
+
             var player = CreatePlayer();
 
             var startMap = DungeonMapGenerator.Current.GenerateNewMap(1, out var playerPosition);
@@ -113,6 +115,35 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Inventory.AddItem(spellBook);
             player.Equipment.EquipItem(spellBook);
 
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable()); 
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
+            player.Inventory.AddItem(GenerateStartingUsable());
             player.Inventory.AddItem(GenerateStartingUsable());
             player.Inventory.AddItem(GenerateStartingUsable());
 

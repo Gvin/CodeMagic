@@ -42,6 +42,10 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Usable
             }
         }
 
+        public void Reset()
+        {
+        }
+
         private IItem GenerateScroll(ItemRareness rareness, BookSpell[] spells, int minDamage, int maxDamage)
         {
             var spell = RandomHelper.GetRandomElement(spells);

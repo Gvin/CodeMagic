@@ -116,7 +116,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 
                     foreach (var factory in pattern.Get(cursorX, cursorY))
                     {
-                        map.AddObject(new Point(posX, posY), factory());
+                        map.AddObject(new Point(posX, posY), factory(map.Level));
                     }
                 }
             }

@@ -10,6 +10,7 @@ using CodeMagic.Core.Saving;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
+using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.DecorativeObjects;
 using CodeMagic.Game.Statuses;
@@ -27,6 +28,7 @@ namespace CodeMagic.Game.Objects.Creatures
         private const string SaveKeyHunger = "Hunger";
         private const string SaveKeyExperience = "Experience";
         private const string SaveKeyLevel = "Level";
+        private const string SaveKeyKnownPotions = "KnownPotions";
 
         private const string ImageUp = "Player_Up";
         private const string ImageDown = "Player_Down";
@@ -70,6 +72,9 @@ namespace CodeMagic.Game.Objects.Creatures
             hungerPercent = double.Parse(data.GetStringValue(SaveKeyHunger));
             experience = data.GetIntValue(SaveKeyExperience);
             level = data.GetIntValue(SaveKeyLevel);
+
+            KnownPotions = data.GetValuesCollection(SaveKeyKnownPotions).Select(value => (PotionType) int.Parse(value))
+                .ToList();
         }
 
         public Player() : base("Player", GetMaxHealth(DefaultStatValue))
@@ -78,6 +83,8 @@ namespace CodeMagic.Game.Objects.Creatures
 
             Inventory = new Inventory();
             Inventory.ItemRemoved += Inventory_ItemRemoved;
+
+            KnownPotions = new List<PotionType>();
 
             stats = new Dictionary<PlayerStats, int>();
             foreach (var playerStat in Enum.GetValues(typeof(PlayerStats)).Cast<PlayerStats>())
@@ -101,8 +108,11 @@ namespace CodeMagic.Game.Objects.Creatures
             data.Add(SaveKeyHunger, hungerPercent);
             data.Add(SaveKeyExperience, experience);
             data.Add(SaveKeyLevel, level);
+            data.Add(SaveKeyKnownPotions, KnownPotions.Select(type => (int)type).ToArray());
             return data;
         }
+
+        public List<PotionType> KnownPotions { get; }
 
         public int Experience => experience;
 

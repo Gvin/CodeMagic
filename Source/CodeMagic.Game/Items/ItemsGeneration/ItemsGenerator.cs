@@ -22,6 +22,8 @@ namespace CodeMagic.Game.Items.ItemsGeneration
         IItem GenerateUsable(ItemRareness rareness);
 
         IItem GenerateFood();
+
+        void Reset();
     }
 
     public class ItemsGenerator : IItemsGenerator
@@ -102,6 +104,11 @@ namespace CodeMagic.Game.Items.ItemsGeneration
             var weaponType = GetRandomWeaponType();
             var generator = weaponGenerators[weaponType];
             return generator.GenerateWeapon(rareness);
+        }
+
+        public void Reset()
+        {
+            usableItemsGenerator.Reset();
         }
 
         public ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass armorClass)

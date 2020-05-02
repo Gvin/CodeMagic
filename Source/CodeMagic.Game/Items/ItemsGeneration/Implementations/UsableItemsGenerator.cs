@@ -15,9 +15,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
         {
             generators = new Dictionary<UsableItemType, IUsableItemTypeGenerator>
             {
-                {UsableItemType.HealthPotion, new HealthPotionsGenerator(imagesStorage)},
-                {UsableItemType.ManaPotion, new ManaPotionsGenerator(imagesStorage)},
-                {UsableItemType.RestorationPotion, new RestorationPotionsGenerator(imagesStorage)},
+                {UsableItemType.Potion, new PotionsGenerator()},
                 {UsableItemType.Scroll, new ScrollsGenerator(spellsProvider)}
             };
         }
@@ -33,6 +31,14 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             throw new ArgumentException($"Unknown usable item type: {type}");
         }
 
+        public void Reset()
+        {
+            foreach (var generator in generators.Values)
+            {
+                generator.Reset();
+            }
+        }
+
         private UsableItemType GetRandomItemType()
         {
             var types = Enum.GetValues(typeof(UsableItemType)).OfType<UsableItemType>().ToArray();
@@ -41,9 +47,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
 
         private enum UsableItemType
         {
-            HealthPotion,
-            ManaPotion,
-            RestorationPotion,
+            Potion,
             Scroll
         }
     }

@@ -40,8 +40,10 @@ namespace CodeMagic.Core.Saving
                         result.Values.Add(pair.Key, str);
                         break;
                     case IEnumerable collection:
+                        var elementType = collection.GetType().GetElementType();
                         var array = collection.Cast<object>().ToArray();
-                        if (array.All(elem => elem is ISaveable))
+                        if ((array.Length > 0 && array.All(elem => elem is ISaveable)) || 
+                            (elementType != null && elementType.GetInterfaces().Contains(typeof(ISaveable))))
                         {
                             result.ObjectsCollections.Add(pair.Key, array.Cast<ISaveable>().Select(elem => elem.GetSaveData().ConvertRawData(serializer)).ToArray());
                         }

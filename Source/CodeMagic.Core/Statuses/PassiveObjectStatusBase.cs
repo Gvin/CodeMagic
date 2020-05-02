@@ -7,39 +7,36 @@ namespace CodeMagic.Core.Statuses
 {
     public abstract class PassiveObjectStatusBase : IObjectStatus
     {
-        private const string SaveDataLifeTime = "LifeTime";
+        private const string SaveDataTimeToLive = "TimeToLive";
 
-        private readonly int maxLifeTime;
-        private int lifeTime;
+        private int timeToLive;
 
-        protected PassiveObjectStatusBase(SaveData data, int maxLifeTime)
+        protected PassiveObjectStatusBase(SaveData data)
         {
-            this.maxLifeTime = maxLifeTime;
-            lifeTime = data.GetIntValue(SaveDataLifeTime);
+            timeToLive = data.GetIntValue(SaveDataTimeToLive);
         }
 
-        protected PassiveObjectStatusBase(int maxLifeTime)
+        protected PassiveObjectStatusBase(int timeToLive)
         {
-            this.maxLifeTime = maxLifeTime;
-            lifeTime = 0;
+            this.timeToLive = timeToLive;
         }
 
         public SaveDataBuilder GetSaveData()
         {
             return new SaveDataBuilder(GetType(), new Dictionary<string, object>
             {
-                {SaveDataLifeTime, lifeTime}
+                {SaveDataTimeToLive, timeToLive}
             });
         }
 
         public bool Update(IDestroyableObject owner, Point position)
         {
-            if (lifeTime >= maxLifeTime)
+            if (timeToLive <= 0)
             {
                 return false;
             }
 
-            lifeTime++;
+            timeToLive--;
             return true;
         }
 

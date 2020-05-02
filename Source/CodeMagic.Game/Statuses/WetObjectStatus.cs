@@ -16,7 +16,7 @@ namespace CodeMagic.Game.Statuses
         private const string CustomValueWetStatusCatchFileChanceModifier = "WetStatus.CatchFireChanceModifier";
         private const string CustomValueWetStatusSelfExtinguishChanceModifier = "WetStatus.SelfExtinguishChanceModifier";
 
-        public WetObjectStatus(SaveData data) : base(data, GetMaxLifeTime())
+        public WetObjectStatus(SaveData data) : base(data)
         {
             var configuration = GetConfiguration();
             CatchFireChanceModifier = double.Parse(GetCustomConfigurationValue(configuration, CustomValueWetStatusCatchFileChanceModifier));

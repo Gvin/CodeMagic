@@ -99,6 +99,7 @@
     <Compile Include="Items\ItemsGeneration\Configuration\Weapon\IWeaponConfiguration.cs" />
     <Compile Include="Items\ItemsGeneration\Configuration\Weapon\IWeaponImagesConfiguration.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\PlayerStatBonusApplier.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Usable\PotionsGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\ItemsGeneratorManager.cs" />
     <Compile Include="Items\IUsableItem.cs" />
     <Compile Include="Items\SpellBook.cs" />
@@ -135,10 +136,7 @@
     <Compile Include="Items\ItemsGeneration\Implementations\ResourcesGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\SpellBookGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\UsableItemsGenerator.cs" />
-    <Compile Include="Items\ItemsGeneration\Implementations\Usable\HealthPotionsGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Usable\IUsableItemTypeGenerator.cs" />
-    <Compile Include="Items\ItemsGeneration\Implementations\Usable\ManaPotionsGenerator.cs" />
-    <Compile Include="Items\ItemsGeneration\Implementations\Usable\RestorationPotionsGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Usable\ScrollsGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Weapon\IWeaponGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Weapon\WeaponGenerator.cs" />
@@ -151,11 +149,10 @@
     <Compile Include="Items\Materials\BlankScroll.cs" />
     <Compile Include="Items\Materials\Stone.cs" />
     <Compile Include="Items\Materials\Wood.cs" />
-    <Compile Include="Items\SimpleItem.cs" />
     <Compile Include="Items\TorchItem.cs" />
     <Compile Include="Items\Usable\Food\Apple.cs" />
     <Compile Include="Items\Usable\Food\FoodItemBase.cs" />
-    <Compile Include="Items\Usable\HealthManaRestorationItem.cs" />
+    <Compile Include="Items\Usable\Potion.cs" />
     <Compile Include="Items\Usable\ScrollBase.cs" />
     <Compile Include="Items\Usable\Scroll.cs" />
     <Compile Include="Items\WeaponItem.cs" />
@@ -175,6 +172,7 @@
     <Compile Include="JournalMessages\FightNotAllowedMessage.cs" />
     <Compile Include="JournalMessages\HealedMessage.cs" />
     <Compile Include="JournalMessages\HungerDecreasedMessage.cs" />
+    <Compile Include="JournalMessages\HungerIncreasedMessage.cs" />
     <Compile Include="JournalMessages\ISelfDescribingJournalMessage.cs" />
     <Compile Include="JournalMessages\ItemLostMessage.cs" />
     <Compile Include="JournalMessages\ItemReceivedMessage.cs" />

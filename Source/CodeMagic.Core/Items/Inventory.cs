@@ -34,7 +34,7 @@ namespace CodeMagic.Core.Items
         {
             return new SaveDataBuilder(GetType(), new Dictionary<string, object>
             {
-                {SaveKeyStacks, stacks}
+                {SaveKeyStacks, stacks.ToArray()}
             });
         }
 

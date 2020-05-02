@@ -32,7 +32,7 @@ namespace CodeMagic.Game.Statuses
             return new SaveDataBuilder(GetType(), new Dictionary<string, object>
             {
                 {SaveKeyOwnerId, ownerId},
-                {SaveKeyStatuses, statuses.Values}
+                {SaveKeyStatuses, statuses.Values.ToArray()}
             });
         }
 

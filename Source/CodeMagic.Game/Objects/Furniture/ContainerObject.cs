@@ -20,10 +20,10 @@ namespace CodeMagic.Game.Objects.Furniture
             inventory = data.GetObject<Inventory>(SaveKeyInventory);
         }
 
-        public ContainerObject(ContainerObjectConfiguration configuration) 
+        public ContainerObject(ContainerObjectConfiguration configuration, int level) 
             : base(configuration)
         {
-            var lootLevel = CurrentGame.Map.Level + configuration.LootLevelIncrement;
+            var lootLevel = level + configuration.LootLevelIncrement;
             var loot = new TreasureLootGenerator(lootLevel, configuration.ContainerType).GenerateLoot();
 
             inventory = new Inventory(loot);
