@@ -33,7 +33,10 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
                 CreateShelfLeft(storage),
                 CreateShelfRight(storage),
                 // Crate
-                CreateCrate(storage)
+                CreateCrate(storage),
+                // Chest
+                CreateChest(storage),
+                CreateGoldenChest(storage)
             };
 
             return patternsList.ToArray();

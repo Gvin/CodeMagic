@@ -54,6 +54,43 @@
         </armor>
       </loot>
     </container>
+    <container type="chest">
+      <loot>
+        <weapon>
+          <count-configuration>
+            <value chance="50">0</value>
+            <value chance="50">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="70">Trash</value>
+            <value chance="30">Common</value>
+          </rareness-configuration>
+        </weapon>
+        <armor>
+          <count-configuration>
+            <value chance="80">0</value>
+            <value chance="20">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="70">Trash</value>
+            <value chance="30">Common</value>
+          </rareness-configuration>
+          <class-configuration>
+            <value chance="90">Leather</value>
+            <value chance="10">Mail</value>
+          </class-configuration>
+        </armor>
+        <spell-book>
+          <count-configuration>
+            <value chance="10">1</value>
+            <value chance="90">0</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="100">Trash</value>
+          </rareness-configuration>
+        </spell-book>
+      </loot>
+    </container>
   </levels>
   <levels start-level="2" end-level="4">
     <container type="shelf">
@@ -117,6 +154,53 @@
             <value chance="20">Mail</value>
           </class-configuration>
         </armor>
+      </loot>
+    </container>
+    <container type="chest">
+      <loot>
+        <weapon>
+          <count-configuration>
+            <value chance="50">0</value>
+            <value chance="50">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="70">Trash</value>
+            <value chance="30">Common</value>
+          </rareness-configuration>
+        </weapon>
+        <armor>
+          <count-configuration>
+            <value chance="60">0</value>
+            <value chance="40">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="70">Trash</value>
+            <value chance="30">Common</value>
+          </rareness-configuration>
+          <class-configuration>
+            <value chance="80">Leather</value>
+            <value chance="20">Mail</value>
+          </class-configuration>
+        </armor>
+        <usable>
+          <count-configuration>
+            <value chance="80">0</value>
+            <value chance="20">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="100">Common</value>
+          </rareness-configuration>
+        </usable>
+        <spell-book>
+          <count-configuration>
+            <value chance="10">1</value>
+            <value chance="90">0</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="85">Trash</value>
+            <value chance="15">Common</value>
+          </rareness-configuration>
+        </spell-book>
       </loot>
     </container>
   </levels>
@@ -183,6 +267,54 @@
             <value chance="20">Mail</value>
           </class-configuration>
         </armor>
+      </loot>
+    </container>
+    <container type="chest">
+      <loot>
+        <weapon>
+          <count-configuration>
+            <value chance="50">0</value>
+            <value chance="50">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="60">Trash</value>
+            <value chance="40">Common</value>
+          </rareness-configuration>
+        </weapon>
+        <armor>
+          <count-configuration>
+            <value chance="60">0</value>
+            <value chance="40">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="60">Trash</value>
+            <value chance="40">Common</value>
+          </rareness-configuration>
+          <class-configuration>
+            <value chance="80">Leather</value>
+            <value chance="20">Mail</value>
+          </class-configuration>
+        </armor>
+        <usable>
+          <count-configuration>
+            <value chance="80">0</value>
+            <value chance="20">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="90">Common</value>
+            <value chance="10">Uncommon</value>
+          </rareness-configuration>
+        </usable>
+        <spell-book>
+          <count-configuration>
+            <value chance="10">1</value>
+            <value chance="90">0</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="80">Trash</value>
+            <value chance="20">Common</value>
+          </rareness-configuration>
+        </spell-book>
       </loot>
     </container>
   </levels>
@@ -255,6 +387,58 @@
         </armor>
       </loot>
     </container>
+    <container type="chest">
+      <loot>
+        <weapon>
+          <count-configuration>
+            <value chance="50">0</value>
+            <value chance="50">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="40">Trash</value>
+            <value chance="50">Common</value>
+            <value chance="10">Uncommon</value>
+          </rareness-configuration>
+        </weapon>
+        <armor>
+          <count-configuration>
+            <value chance="60">0</value>
+            <value chance="40">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="40">Trash</value>
+            <value chance="50">Common</value>
+            <value chance="10">Uncommon</value>
+          </rareness-configuration>
+          <class-configuration>
+            <value chance="50">Leather</value>
+            <value chance="30">Mail</value>
+            <value chance="20">ScaleMail</value>
+          </class-configuration>
+        </armor>
+        <usable>
+          <count-configuration>
+            <value chance="80">0</value>
+            <value chance="20">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="70">Common</value>
+            <value chance="30">Uncommon</value>
+          </rareness-configuration>
+        </usable>
+        <spell-book>
+          <count-configuration>
+            <value chance="10">1</value>
+            <value chance="90">0</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="50">Trash</value>
+            <value chance="40">Common</value>
+            <value chance="10">Uncommon</value>
+          </rareness-configuration>
+        </spell-book>
+      </loot>
+    </container>
   </levels>
   <levels start-level="8" end-level="10">
     <container type="shelf">
@@ -323,6 +507,58 @@
             <value chance="35">ScaleMail</value>
           </class-configuration>
         </armor>
+      </loot>
+    </container>
+    <container type="chest">
+      <loot>
+        <weapon>
+          <count-configuration>
+            <value chance="50">0</value>
+            <value chance="50">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="20">Trash</value>
+            <value chance="60">Common</value>
+            <value chance="20">Uncommon</value>
+          </rareness-configuration>
+        </weapon>
+        <armor>
+          <count-configuration>
+            <value chance="60">0</value>
+            <value chance="40">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="20">Trash</value>
+            <value chance="60">Common</value>
+            <value chance="20">Uncommon</value>
+          </rareness-configuration>
+          <class-configuration>
+            <value chance="30">Leather</value>
+            <value chance="35">Mail</value>
+            <value chance="35">ScaleMail</value>
+          </class-configuration>
+        </armor>
+        <usable>
+          <count-configuration>
+            <value chance="80">0</value>
+            <value chance="20">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="60">Common</value>
+            <value chance="40">Uncommon</value>
+          </rareness-configuration>
+        </usable>
+        <spell-book>
+          <count-configuration>
+            <value chance="10">1</value>
+            <value chance="90">0</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="30">Trash</value>
+            <value chance="50">Common</value>
+            <value chance="20">Uncommon</value>
+          </rareness-configuration>
+        </spell-book>
       </loot>
     </container>
   </levels>
@@ -398,6 +634,63 @@
             <value chance="10">Plate</value>
           </class-configuration>
         </armor>
+      </loot>
+    </container>
+    <container type="chest">
+      <loot>
+        <weapon>
+          <count-configuration>
+            <value chance="50">0</value>
+            <value chance="50">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="10">Trash</value>
+            <value chance="40">Common</value>
+            <value chance="40">Uncommon</value>
+            <value chance="10">Rare</value>
+          </rareness-configuration>
+        </weapon>
+        <armor>
+          <count-configuration>
+            <value chance="60">0</value>
+            <value chance="40">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="10">Trash</value>
+            <value chance="40">Common</value>
+            <value chance="40">Uncommon</value>
+            <value chance="10">Rare</value>
+          </rareness-configuration>
+          <class-configuration>
+            <value chance="30">Leather</value>
+            <value chance="30">Mail</value>
+            <value chance="30">ScaleMail</value>
+            <value chance="10">Plate</value>
+          </class-configuration>
+        </armor>
+        <usable>
+          <count-configuration>
+            <value chance="80">0</value>
+            <value chance="20">1</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="40">Common</value>
+            <value chance="50">Uncommon</value>
+            <value chance="10">Rare</value>
+          </rareness-configuration>
+        </usable>
+        <spell-book>
+          <count-configuration>
+            <value chance="10">1</value>
+            <value chance="90">0</value>
+          </count-configuration>
+          <rareness-configuration>
+            <value chance="10">Trash</value>
+            <value chance="40">Common</value>
+            <value chance="40">Uncommon</value>
+            <value chance="10">Rare</value>
+          </rareness-configuration>
+        </spell-book>
       </loot>
     </container>
   </levels>

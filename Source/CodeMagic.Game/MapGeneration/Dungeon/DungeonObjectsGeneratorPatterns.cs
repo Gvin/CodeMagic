@@ -141,7 +141,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 
         private static ObjectsPattern CreateCrate(IImagesStorage storage)
         {
-            var pattern = new ObjectsPattern(3, 3, 30, 10);
+            var pattern = new ObjectsPattern(3, 3, 50, 10);
 
             pattern.Add(1, 1, () => new ContainerObject(new ContainerObjectConfiguration
             {
@@ -154,6 +154,59 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
                 MaxWoodCount = 4,
                 ContainerType = "crate",
                 WorldImage = storage.GetImage("Furniture_Crate")
+            }));
+
+            pattern.AddRequirement(1, 1, RequirementIsEmpty);
+            pattern.AddRequirement(1, 0, RequirementIsEmpty);
+            pattern.AddRequirement(1, 2, RequirementIsEmpty);
+            pattern.AddRequirement(0, 1, RequirementIsEmpty);
+            pattern.AddRequirement(2, 1, RequirementIsEmpty);
+
+            return pattern;
+        }
+
+        private static ObjectsPattern CreateChest(IImagesStorage storage)
+        {
+            var pattern = new ObjectsPattern(3, 3, 50, 5);
+
+            pattern.Add(1, 1, () => new ContainerObject(new ContainerObjectConfiguration
+            {
+                Name = "Chest",
+                BlocksMovement = true,
+                MaxHealth = 30,
+                Size = ObjectSize.Big,
+                ZIndex = ZIndex.BigDecoration,
+                MinWoodCount = 1,
+                MaxWoodCount = 4,
+                ContainerType = "chest",
+                WorldImage = storage.GetImage("Furniture_Chest")
+            }));
+
+            pattern.AddRequirement(1, 1, RequirementIsEmpty);
+            pattern.AddRequirement(1, 0, RequirementIsEmpty);
+            pattern.AddRequirement(1, 2, RequirementIsEmpty);
+            pattern.AddRequirement(0, 1, RequirementIsEmpty);
+            pattern.AddRequirement(2, 1, RequirementIsEmpty);
+
+            return pattern;
+        }
+
+        private static ObjectsPattern CreateGoldenChest(IImagesStorage storage)
+        {
+            var pattern = new ObjectsPattern(3, 3, 100, 1);
+
+            pattern.Add(1, 1, () => new ContainerObject(new ContainerObjectConfiguration
+            {
+                Name = "Chest",
+                BlocksMovement = true,
+                MaxHealth = 30,
+                Size = ObjectSize.Big,
+                ZIndex = ZIndex.BigDecoration,
+                MinWoodCount = 1,
+                MaxWoodCount = 4,
+                ContainerType = "chest",
+                LootLevelIncrement = 1,
+                WorldImage = storage.GetImage("Furniture_Chest_Golden")
             }));
 
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
