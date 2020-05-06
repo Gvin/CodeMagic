@@ -8,6 +8,8 @@ namespace CodeMagic.Core.Statuses
     {
         bool Update(IDestroyableObject owner, Point position);
 
+        IObjectStatus Merge(IObjectStatus oldStatus);
+
         string Type { get; }
     }
 }

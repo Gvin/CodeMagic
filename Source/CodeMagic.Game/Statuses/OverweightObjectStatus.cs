@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Statuses;
+﻿using CodeMagic.Core.Saving;
+using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Game.Statuses
 {
@@ -8,6 +9,10 @@ namespace CodeMagic.Game.Statuses
 
         public OverweightObjectStatus() 
             : base(1)
+        {
+        }
+
+        public OverweightObjectStatus(SaveData data) : base(data)
         {
         }
 

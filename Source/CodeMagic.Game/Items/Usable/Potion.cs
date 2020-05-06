@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Saving;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.Game.Statuses;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items.Usable
@@ -100,28 +102,16 @@ namespace CodeMagic.Game.Items.Usable
                         return $"{sizeName}Frost Potion";
                     case PotionType.Hunger:
                         return $"{sizeName}Hunger Potion";
+                    case PotionType.Blind:
+                        return $"{sizeName}Blind Potion";
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
                 }
             }
 
-            switch (color)
-            {
-                case PotionColor.Red:
-                    return $"{sizeName}Red Potion";
-                case PotionColor.Blue:
-                    return $"{sizeName}Blue Potion";
-                case PotionColor.Purple:
-                    return $"{sizeName}Purple Potion";
-                case PotionColor.Green:
-                    return $"{sizeName}Green Potion";
-                case PotionColor.Orange:
-                    return $"{sizeName}Orange Potion";
-                case PotionColor.Yellow:
-                    return $"{sizeName}Yellow Potion";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(color), color, null);
-            }
+            var colorName = GetColorName(color);
+            colorName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(colorName);
+            return $"{sizeName}{colorName} Potion";
         }
 
         private static string GetKey(PotionColor color)
@@ -140,6 +130,8 @@ namespace CodeMagic.Game.Items.Usable
                     return "potion_orange";
                 case PotionColor.Yellow:
                     return "potion_yellow";
+                case PotionColor.White:
+                    return "potion_white";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(color), color, null);
             }
@@ -167,6 +159,9 @@ namespace CodeMagic.Game.Items.Usable
                 case PotionType.Hunger:
                     UseHungerPotion(game);
                     break;
+                case PotionType.Blind:
+                    UseBlindPotion(game);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -190,6 +185,12 @@ namespace CodeMagic.Game.Items.Usable
         {
             var timeToLive = GetFrostPotionEffect(size);
             game.Player.Statuses.Add(new FrozenObjectStatus(timeToLive));
+        }
+
+        private void UseBlindPotion(CurrentGame.GameCore<Player> game)
+        {
+            var timeToLive = GetBlindPotionEffect(size);
+            game.Player.Statuses.Add(new BlindObjectStatus(timeToLive));
         }
 
         private void UseParalyzePotion(CurrentGame.GameCore<Player> game)
@@ -311,6 +312,21 @@ namespace CodeMagic.Game.Items.Usable
             }
         }
 
+        private static int GetBlindPotionEffect(PotionSize size)
+        {
+            switch (size)
+            {
+                case PotionSize.Small:
+                    return 2;
+                case PotionSize.Medium:
+                    return 4;
+                case PotionSize.Big:
+                    return 8;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             switch (color)
@@ -327,6 +343,8 @@ namespace CodeMagic.Game.Items.Usable
                     return storage.GetImage("ItemsOnGround_Potion_Orange");
                 case PotionColor.Yellow:
                     return storage.GetImage("ItemsOnGround_Potion_Yellow");
+                case PotionColor.White:
+                    return storage.GetImage("ItemsOnGround_Potion_White");
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -405,6 +423,18 @@ namespace CodeMagic.Game.Items.Usable
                             return storage.GetImage("Item_Potion_Yellow");
                         case PotionSize.Big:
                             return storage.GetImage("Item_Potion_Yellow_Big");
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                case PotionColor.White:
+                    switch (size)
+                    {
+                        case PotionSize.Small:
+                            return storage.GetImage("Item_Potion_White_Small");
+                        case PotionSize.Medium:
+                            return storage.GetImage("Item_Potion_White");
+                        case PotionSize.Big:
+                            return storage.GetImage("Item_Potion_White_Big");
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
@@ -498,6 +528,14 @@ namespace CodeMagic.Game.Items.Usable
                             $"Increases hunger for {GetHungerPotionEffect(size)}% when used."
                         }
                     };
+                case PotionType.Blind:
+                    return new[]
+                    {
+                        new StyledLine
+                        {
+                            $"Blinds target for {GetBlindPotionEffect(size)} turns when used."
+                        }
+                    };
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -506,24 +544,13 @@ namespace CodeMagic.Game.Items.Usable
         private static string GetCommonDescription(PotionColor color, PotionSize size)
         {
             var sizeDescription = GetSizeDescription(size);
+            var colorName = GetColorName(color);
+            return $"{sizeDescription} with {colorName} liquid.";
+        }
 
-            switch (color)
-            {
-                case PotionColor.Red:
-                    return $"{sizeDescription} with bright red liquid.";
-                case PotionColor.Blue:
-                    return $"{sizeDescription} with bright blue liquid.";
-                case PotionColor.Purple:
-                    return $"{sizeDescription} with bright purple liquid.";
-                case PotionColor.Green:
-                    return $"{sizeDescription} with bright green liquid.";
-                case PotionColor.Orange:
-                    return $"{sizeDescription} with bright orange liquid.";
-                case PotionColor.Yellow:
-                    return $"{sizeDescription} with bright yellow liquid.";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(color), color, null);
-            }
+        private static string GetColorName(PotionColor color)
+        {
+            return color.ToString().ToLower();
         }
 
         private static string GetSizeDescription(PotionSize size)
@@ -556,7 +583,8 @@ namespace CodeMagic.Game.Items.Usable
         Purple,
         Green,
         Orange,
-        Yellow
+        Yellow,
+        White
     }
 
     public enum PotionType
@@ -566,6 +594,7 @@ namespace CodeMagic.Game.Items.Usable
         Restoration,
         Paralyze,
         Frost,
-        Hunger
+        Hunger,
+        Blind
     }
 }

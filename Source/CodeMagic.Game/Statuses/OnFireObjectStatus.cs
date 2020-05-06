@@ -80,6 +80,14 @@ namespace CodeMagic.Game.Statuses
             return true;
         }
 
+        public IObjectStatus Merge(IObjectStatus oldStatus)
+        {
+            if (!(oldStatus is OnFireObjectStatus oldFire))
+                throw new InvalidOperationException($"Unable to merge {nameof(OnFireObjectStatus)} status with {oldStatus.GetType().Name}");
+
+            return oldFire;
+        }
+
         public string Type => StatusType;
     }
 

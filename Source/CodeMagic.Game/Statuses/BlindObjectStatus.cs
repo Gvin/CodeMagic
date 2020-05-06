@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Statuses;
+﻿using CodeMagic.Core.Saving;
+using CodeMagic.Core.Statuses;
 
 namespace CodeMagic.Game.Statuses
 {
@@ -8,8 +9,18 @@ namespace CodeMagic.Game.Statuses
         private const int MaxLifeTime = 4;
         public const double HitChanceMultiplier = 0.1d;
 
+        public BlindObjectStatus(SaveData data) 
+            : base(data)
+        {
+        }
+
         public BlindObjectStatus()
             : base(MaxLifeTime)
+        {
+        }
+
+        public BlindObjectStatus(int timeToLive)
+            : base(timeToLive)
         {
         }
 

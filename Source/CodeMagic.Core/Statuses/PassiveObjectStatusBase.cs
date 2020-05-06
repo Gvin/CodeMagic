@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
@@ -38,6 +39,15 @@ namespace CodeMagic.Core.Statuses
 
             timeToLive--;
             return true;
+        }
+
+        public IObjectStatus Merge(IObjectStatus oldStatus)
+        {
+            if (!(oldStatus is PassiveObjectStatusBase passiveStatus) || oldStatus.Type != Type)
+                throw new InvalidOperationException($"Unable to merge {GetType().Name} status with {oldStatus.GetType().Name}");
+
+            timeToLive += passiveStatus.timeToLive;
+            return this;
         }
 
         public abstract string Type { get; }

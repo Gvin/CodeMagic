@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel glyph="6">
+      <color>
+        <R>255</R>
+        <G>255</G>
+        <B>255</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+</symbols-image>

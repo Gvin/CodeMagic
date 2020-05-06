@@ -40,7 +40,7 @@ namespace CodeMagic.Game.Statuses
         {
             if (statuses.ContainsKey(status.Type))
             {
-                statuses[status.Type] = status;
+                statuses[status.Type] = status.Merge(statuses[status.Type]);
             }
             else
             {
