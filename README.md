@@ -10,7 +10,7 @@ All spells in Code Magic must be written manually by the mage. There are no read
 
 Simple Shock spell example:
 ```JavaScript
-function main(lifeTime) { // This function is called every time while spell has mana
+function main(lifeTime) { // This function is called every turn while spell has mana
   if (lifeTime === 0) { // if the spell was just casted
     var direction = getCaster().direction; // get where spell caster is looking
     return move(direction, 1); // move away 1 cell from caster towards his sight
