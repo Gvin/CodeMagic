@@ -4,13 +4,14 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
+using CodeMagic.Game.Objects.Floor;
 
 namespace CodeMagic.Core.Objects
 {
     public static class MovementHelper
     {
         public static MovementResult MoveCreature(ICreatureObject creature, Point startPoint,
-            Point endPoint, bool processStepReaction, bool changeDirection)
+            Point endPoint, bool processStepReaction, bool changeDirection, bool avoidTraps)
         {
             if (changeDirection)
             {
@@ -20,38 +21,41 @@ namespace CodeMagic.Core.Objects
                 creature.Direction = movementDirection.Value;
             }
 
-            return MoveObject(creature, startPoint, endPoint, processStepReaction);
+            return MoveObject(creature, startPoint, endPoint, processStepReaction, avoidTraps);
         }
 
         public static MovementResult MoveCreature(ICreatureObject creature, Point startPoint,
-            Direction direction, bool processStepReaction, bool changeDirection)
+            Direction direction, bool processStepReaction, bool changeDirection, bool avoidTraps)
         {
             if (changeDirection)
             {
                 creature.Direction = direction;
             }
             var endPoint = Point.GetPointInDirection(startPoint, direction);
-            return MoveObject(creature, startPoint, endPoint, processStepReaction);
+            return MoveObject(creature, startPoint, endPoint, processStepReaction, avoidTraps);
         }
 
-        public static MovementResult MoveObject(IMapObject mapObject, Point startPoint, Point endPoint, bool processStepReaction = true)
+        public static MovementResult MoveObject(IMapObject mapObject, Point startPoint, Point endPoint, bool processStepReaction = true, bool avoidTraps = false)
         {
-            return MoveMapObject(mapObject, startPoint, endPoint, cell => !cell.BlocksMovement, processStepReaction);
+            return MoveMapObject(mapObject, startPoint, endPoint, cell => !cell.BlocksMovement, processStepReaction, avoidTraps);
         }
 
-        public static MovementResult MoveProjectile(IMapObject projectile, Point startPoint, Point endPoint)
+        public static MovementResult MoveProjectile(IMapObject projectile, Point startPoint, Point endPoint, bool avoidTraps = false)
         {
-            return MoveMapObject(projectile, startPoint, endPoint, cell => !cell.BlocksProjectiles, false);
+            return MoveMapObject(projectile, startPoint, endPoint, cell => !cell.BlocksProjectiles, false, avoidTraps);
         }
 
         private static MovementResult MoveMapObject(IMapObject mapObject, Point startPoint, Point endPoint,
-            Func<IAreaMapCell, bool> canPassFilter, bool processStepReaction)
+            Func<IAreaMapCell, bool> canPassFilter, bool processStepReaction, bool avoidTraps)
         {
             if (!Point.IsAdjustedPoint(startPoint, endPoint))
                 throw new ArgumentException("Movement points are not adjusted.");
 
             var nextCell = CurrentGame.Map.TryGetCell(endPoint);
             if (nextCell == null)
+                return new MovementResult(startPoint, false);
+
+            if (avoidTraps && nextCell.Objects.OfType<ITrapObject>().Any())
                 return new MovementResult(startPoint, false);
 
             if (!canPassFilter(nextCell))

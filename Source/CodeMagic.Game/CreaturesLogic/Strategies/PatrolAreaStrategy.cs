@@ -20,7 +20,7 @@ namespace CodeMagic.Game.CreaturesLogic.Strategies
             }
 
             var targetPoint = Point.GetPointInDirection(position, currentDirection.Value);
-            var movementResult = MovementHelper.MoveCreature(creature, position, targetPoint, true, true);
+            var movementResult = MovementHelper.MoveCreature(creature, position, targetPoint, true, true, true);
             if (!movementResult.Success)
             {
                 currentDirection = null;

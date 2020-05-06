@@ -39,7 +39,7 @@ namespace CodeMagic.Game.PlayerActions
                 newPosition = CurrentGame.PlayerPosition;
                 return false;
             }
-            var moveResult = MovementHelper.MoveCreature(CurrentGame.Player, CurrentGame.PlayerPosition, direction, true, true);
+            var moveResult = MovementHelper.MoveCreature(CurrentGame.Player, CurrentGame.PlayerPosition, direction, true, true, false);
             newPosition = moveResult.NewPosition;
             return moveResult.Success;
         }

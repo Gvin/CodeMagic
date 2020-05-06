@@ -224,6 +224,7 @@
     <Compile Include="Objects\DecorativeObjects\FireObject.cs" />
     <Compile Include="Objects\DestroyableObject.cs" />
     <Compile Include="Objects\Floor\FloorObject.cs" />
+    <Compile Include="Objects\Floor\SpikedFloorObject.cs" />
     <Compile Include="Objects\Furniture\ContainerObject.cs" />
     <Compile Include="Objects\Furniture\FurnitureObject.cs" />
     <Compile Include="Objects\IceObjects\AbstractIce.cs" />

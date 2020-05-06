@@ -159,10 +159,17 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
             }, level));
 
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
-            pattern.AddRequirement(1, 0, RequirementIsEmpty);
-            pattern.AddRequirement(1, 2, RequirementIsEmpty);
-            pattern.AddRequirement(0, 1, RequirementIsEmpty);
-            pattern.AddRequirement(2, 1, RequirementIsEmpty);
+
+            pattern.AddRequirement(0, 0, RequirementNotBlocking);
+            pattern.AddRequirement(1, 0, RequirementNotBlocking);
+            pattern.AddRequirement(2, 0, RequirementNotBlocking);
+
+            pattern.AddRequirement(0, 1, RequirementNotBlocking);
+            pattern.AddRequirement(2, 1, RequirementNotBlocking);
+
+            pattern.AddRequirement(0, 2, RequirementNotBlocking);
+            pattern.AddRequirement(1, 2, RequirementNotBlocking);
+            pattern.AddRequirement(2, 2, RequirementNotBlocking);
 
             return pattern;
         }
@@ -185,10 +192,17 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
             }, level));
 
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
-            pattern.AddRequirement(1, 0, RequirementIsEmpty);
-            pattern.AddRequirement(1, 2, RequirementIsEmpty);
-            pattern.AddRequirement(0, 1, RequirementIsEmpty);
-            pattern.AddRequirement(2, 1, RequirementIsEmpty);
+
+            pattern.AddRequirement(0, 0, RequirementNotBlocking);
+            pattern.AddRequirement(1, 0, RequirementNotBlocking);
+            pattern.AddRequirement(2, 0, RequirementNotBlocking);
+
+            pattern.AddRequirement(0, 1, RequirementNotBlocking);
+            pattern.AddRequirement(2, 1, RequirementNotBlocking);
+
+            pattern.AddRequirement(0, 2, RequirementNotBlocking);
+            pattern.AddRequirement(1, 2, RequirementNotBlocking);
+            pattern.AddRequirement(2, 2, RequirementNotBlocking);
 
             return pattern;
         }
@@ -212,15 +226,22 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
             }, level));
 
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
-            pattern.AddRequirement(1, 0, RequirementIsEmpty);
-            pattern.AddRequirement(1, 2, RequirementIsEmpty);
-            pattern.AddRequirement(0, 1, RequirementIsEmpty);
-            pattern.AddRequirement(2, 1, RequirementIsEmpty);
+
+            pattern.AddRequirement(0, 0, RequirementNotBlocking);
+            pattern.AddRequirement(1, 0, RequirementNotBlocking);
+            pattern.AddRequirement(2, 0, RequirementNotBlocking);
+
+            pattern.AddRequirement(0, 1, RequirementNotBlocking);
+            pattern.AddRequirement(2, 1, RequirementNotBlocking);
+
+            pattern.AddRequirement(0, 2, RequirementNotBlocking);
+            pattern.AddRequirement(1, 2, RequirementNotBlocking);
+            pattern.AddRequirement(2, 2, RequirementNotBlocking);
 
             return pattern;
         }
 
-        private static ObjectsPattern CreateWaterPool(IImagesStorage storage)
+        private static ObjectsPattern CreateWaterPool()
         {
             var pattern = new ObjectsPattern(1, 1, 50, 50);
             var volume = RandomHelper.GetRandomValue(20, 100);
@@ -228,9 +249,35 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
             return pattern;
         }
 
+        private static ObjectsPattern CreateSpikedFloor()
+        {
+            var pattern = new ObjectsPattern(3, 3, 50, 10);
+
+            pattern.Add(1, 1, level => new SpikedFloorObject());
+            pattern.AddRequirement(1, 1, RequirementIsEmpty);
+
+            pattern.AddRequirement(0, 0, RequirementNotBlocking);
+            pattern.AddRequirement(1, 0, RequirementNotBlocking);
+            pattern.AddRequirement(2, 0, RequirementNotBlocking);
+
+            pattern.AddRequirement(0, 1, RequirementNotBlocking);
+            pattern.AddRequirement(2, 1, RequirementNotBlocking);
+
+            pattern.AddRequirement(0, 2, RequirementNotBlocking);
+            pattern.AddRequirement(1, 2, RequirementNotBlocking);
+            pattern.AddRequirement(2, 2, RequirementNotBlocking);
+
+            return pattern;
+        }
+
         private static bool RequirementIsWall(IAreaMapCell cell)
         {
             return cell.BlocksEnvironment && !cell.Objects.OfType<DoorBase>().Any();
+        }
+
+        private static bool RequirementNotBlocking(IAreaMapCell cell)
+        {
+            return !cell.BlocksMovement;
         }
 
         private static bool RequirementIsAny(IAreaMapCell cell)
