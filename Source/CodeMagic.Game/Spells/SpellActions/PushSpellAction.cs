@@ -40,7 +40,7 @@ namespace CodeMagic.Game.Spells.SpellActions
             if (target is IDestroyableObject destroyableTarget)
             {
                 destroyableTarget.Damage(currentPosition, damage, Element.Blunt);
-                CurrentGame.Journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt));
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt), target);
             }
 
             ApplyCollideDamageToCell(collideCellPosition, damage);
@@ -58,7 +58,7 @@ namespace CodeMagic.Game.Spells.SpellActions
             foreach (var collidedObject in collidedObjects)
             {
                 collidedObject.Damage(position, damage, Element.Blunt);
-                CurrentGame.Journal.Write(new EnvironmentDamageMessage(collidedObject, damage, Element.Blunt));
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(collidedObject, damage, Element.Blunt), collidedObject);
             }
         }
 

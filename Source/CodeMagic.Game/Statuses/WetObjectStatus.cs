@@ -33,7 +33,7 @@ namespace CodeMagic.Game.Statuses
 
         private static ILiquidConfiguration GetConfiguration()
         {
-            return ConfigurationManager.GetLiquidConfiguration(OilLiquid.LiquidType);
+            return ConfigurationManager.GetLiquidConfiguration(WaterLiquid.LiquidType);
         }
 
         private static int GetMaxLifeTime()

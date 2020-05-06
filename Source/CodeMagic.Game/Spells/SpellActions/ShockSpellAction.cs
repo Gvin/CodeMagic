@@ -101,7 +101,7 @@ namespace CodeMagic.Game.Spells.SpellActions
             foreach (var destroyable in destroyableObjects)
             {
                 destroyable.Damage(position, value, Element.Electricity);
-                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, value, Element.Electricity));
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, value, Element.Electricity), destroyable);
             }
         }
 

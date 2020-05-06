@@ -58,7 +58,7 @@ namespace CodeMagic.Game.Objects.LiquidObjects
             foreach (var destroyable in destroyableObjects)
             {
                 destroyable.Damage(position, damage, Element.Acid);
-                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Acid));
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Acid), destroyable);
             }
         }
 

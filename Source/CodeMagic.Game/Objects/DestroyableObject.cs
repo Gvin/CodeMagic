@@ -110,7 +110,7 @@ namespace CodeMagic.Game.Objects
             realDamage = Math.Max(realDamage, 0);
             if (realDamage < damage)
             {
-                CurrentGame.Journal.Write(new DamageBlockedMessage(this, damage - realDamage, element));
+                CurrentGame.Journal.Write(new DamageBlockedMessage(this, damage - realDamage, element), this);
             }
 
             if (realDamage == 0)
@@ -163,7 +163,7 @@ namespace CodeMagic.Game.Objects
 
         public virtual void OnDeath(Point position)
         {
-            CurrentGame.Journal.Write(new DeathMessage(this));
+            CurrentGame.Journal.Write(new DeathMessage(this), this);
         }
 
         public override bool Equals(IMapObject other)

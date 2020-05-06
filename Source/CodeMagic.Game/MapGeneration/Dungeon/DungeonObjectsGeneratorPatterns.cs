@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Objects.Floor;
 using CodeMagic.Game.Objects.Furniture;
+using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.UI.Images;
 
@@ -215,6 +217,14 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
             pattern.AddRequirement(0, 1, RequirementIsEmpty);
             pattern.AddRequirement(2, 1, RequirementIsEmpty);
 
+            return pattern;
+        }
+
+        private static ObjectsPattern CreateWaterPool(IImagesStorage storage)
+        {
+            var pattern = new ObjectsPattern(1, 1, 50, 50);
+            var volume = RandomHelper.GetRandomValue(20, 100);
+            pattern.Add(0, 0, level => new WaterLiquid(volume));
             return pattern;
         }
 

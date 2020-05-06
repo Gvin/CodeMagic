@@ -64,7 +64,7 @@ namespace CodeMagic.Game.Objects.Creatures
             var currentHitChance = CalculateHitChance(hitChance);
             if (!RandomHelper.CheckChance(currentHitChance))
             {
-                CurrentGame.Journal.Write(new AttackMissMessage(this, target));
+                CurrentGame.Journal.Write(new AttackMissMessage(this, target), this);
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace CodeMagic.Game.Objects.Creatures
             {
                 var value = RandomHelper.GetRandomValue(damageValue.MinValue, damageValue.MaxValue);
                 target.Damage(position, value, damageValue.Element);
-                CurrentGame.Journal.Write(new DealDamageMessage(this, target, value, damageValue.Element));
+                CurrentGame.Journal.Write(new DealDamageMessage(this, target, value, damageValue.Element), this);
             }
         }
 

@@ -66,7 +66,7 @@ namespace CodeMagic.Game.Statuses
             if (damage == 0)
                 return true;
 
-            CurrentGame.Journal.Write(new BurningDamageMessage(owner, damage));
+            CurrentGame.Journal.Write(new BurningDamageMessage(owner, damage), owner);
             owner.Damage(position, damage, Element.Fire);
 
             var cell = CurrentGame.Map.GetCell(position);

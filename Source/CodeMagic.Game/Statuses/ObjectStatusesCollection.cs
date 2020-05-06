@@ -44,7 +44,8 @@ namespace CodeMagic.Game.Statuses
             }
             else
             {
-                CurrentGame.Journal.Write(new StatusAddedMessage(CurrentGame.Map.GetDestroyableObject(ownerId), status.Type));
+                var owner = CurrentGame.Map.GetDestroyableObject(ownerId);
+                CurrentGame.Journal.Write(new StatusAddedMessage(owner, status.Type), owner);
                 statuses.Add(status.Type, status);
             }
         }

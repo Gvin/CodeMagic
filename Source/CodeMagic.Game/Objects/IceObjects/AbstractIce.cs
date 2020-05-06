@@ -119,13 +119,13 @@ namespace CodeMagic.Game.Objects.IceObjects
 
             var damage = remainingSpeed * SlideSpeedDamageMultiplier;
             target.Damage(position, damage, Element.Blunt);
-            CurrentGame.Journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt));
+            CurrentGame.Journal.Write(new EnvironmentDamageMessage(target, damage, Element.Blunt), target);
 
             var blockObject = blockCell.GetBiggestDestroyable();
             if (blockObject != null)
             {
                 blockObject.Damage(position, damage, Element.Blunt);
-                CurrentGame.Journal.Write(new EnvironmentDamageMessage(blockObject, damage, Element.Blunt));
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(blockObject, damage, Element.Blunt), blockObject);
             }
             return newPosition;
         }

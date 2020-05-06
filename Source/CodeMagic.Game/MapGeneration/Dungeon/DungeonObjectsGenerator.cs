@@ -36,7 +36,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
                 CreateCrate(storage),
                 // Chest
                 CreateChest(storage),
-                CreateGoldenChest(storage)
+                CreateGoldenChest(storage),
+                // Water
+                CreateWaterPool(storage)
             };
 
             return patternsList.ToArray();

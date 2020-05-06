@@ -147,6 +147,9 @@ namespace CodeMagic.Core.Game
                     return cachedVisibleArea;
 
                 var visibleArea = VisibilityHelper.GetVisibleArea(Player.VisibilityRange, PlayerPosition);
+                if (visibleArea == null)
+                    return null;
+
                 if (Player.VisibilityRange == Player.MaxVisibilityRange)
                     return visibleArea;
 

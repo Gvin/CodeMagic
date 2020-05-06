@@ -131,13 +131,13 @@ namespace CodeMagic.Game.Area.EnvironmentData
 
             if (temperatureDamage > 0 && temperDamageElement.HasValue)
             {
-                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, temperatureDamage, temperDamageElement.Value));
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, temperatureDamage, temperDamageElement.Value), destroyable);
                 destroyable.Damage(position, temperatureDamage, temperDamageElement.Value);
             }
 
             if (pressureDamage > 0)
             {
-                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, pressureDamage, Element.Blunt));
+                CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, pressureDamage, Element.Blunt), destroyable);
                 destroyable.Damage(position, pressureDamage, Element.Blunt);
             }
 

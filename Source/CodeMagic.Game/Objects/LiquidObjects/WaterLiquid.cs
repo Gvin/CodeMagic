@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.IceObjects;
 using CodeMagic.Game.Objects.SteamObjects;
 using CodeMagic.Game.Statuses;
@@ -18,6 +19,10 @@ namespace CodeMagic.Game.Objects.LiquidObjects
 
         public WaterLiquid(int volume) 
             : base(volume, LiquidType, "Water")
+        {
+        }
+
+        public WaterLiquid(SaveData data) : base(data)
         {
         }
 
