@@ -117,7 +117,6 @@
     <Compile Include="Statuses\IBurningRelatedStatus.cs" />
     <Compile Include="Statuses\IObjectStatus.cs" />
     <Compile Include="Statuses\IObjectStatusesCollection.cs" />
-    <Compile Include="Statuses\ParalyzedObjectStatus.cs" />
     <Compile Include="Statuses\PassiveObjectStatusBase.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,9 +5,9 @@ using CodeMagic.Core.CreaturesLogic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Core.Statuses;
 using CodeMagic.Game.CreaturesLogic.MovementStrategies;
 using CodeMagic.Game.CreaturesLogic.TargetStrategies;
+using CodeMagic.Game.Statuses;
 
 namespace CodeMagic.Game.CreaturesLogic.Strategies
 {

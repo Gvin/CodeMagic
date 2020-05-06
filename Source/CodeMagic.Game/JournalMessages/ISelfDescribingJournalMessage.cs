@@ -70,6 +70,8 @@ namespace CodeMagic.Game.JournalMessages
                     return "Oily";
                 case HungryObjectStatus.StatusType:
                     return "Hungry";
+                case ManaDisturbedObjectStatus.StatusType:
+                    return "Mana Disturbed";
                 default:
                     throw new ApplicationException($"Unknown object status type: {statusType}");
             }

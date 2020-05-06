@@ -118,35 +118,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Inventory.AddItem(GenerateStartingUsable());
             player.Inventory.AddItem(GenerateStartingUsable());
 
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable()); 
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-            player.Inventory.AddItem(GenerateStartingUsable());
-
 #if DEBUG
             player.Inventory.AddItem(CreateBanHammer());
 #endif

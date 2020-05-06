@@ -5,7 +5,7 @@ using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Physics;
-using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Statuses;
 
 namespace CodeMagic.Game.Area.EnvironmentData
 {
@@ -98,21 +98,10 @@ namespace CodeMagic.Game.Area.EnvironmentData
 
         public void ApplyMagicEnvironment(IDestroyableObject destroyable, Point position)
         {
-            var damage = CalculateDamage();
-            if (damage <= 0)
-                return;
-
-            destroyable.Damage(position, damage, Element.Magic);
-            CurrentGame.Journal.Write(new EnvironmentDamageMessage(destroyable, damage, Element.Magic));
-        }
-
-        private int CalculateDamage()
-        {
-            var disturbanceOverLimit = Disturbance - configuration.DisturbanceDamageStartLevel;
-            if (disturbanceOverLimit <= 0)
-                return 0;
-
-            return (int) Math.Floor(Disturbance * configuration.DisturbanceDamageMultiplier);
+            if (Disturbance > configuration.DisturbanceDamageStartLevel)
+            {
+                destroyable.Statuses.Add(new ManaDisturbedObjectStatus());
+            }
         }
 
         public SaveDataBuilder GetSaveData()

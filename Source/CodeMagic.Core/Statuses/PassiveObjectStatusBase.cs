@@ -43,7 +43,7 @@ namespace CodeMagic.Core.Statuses
 
         public IObjectStatus Merge(IObjectStatus oldStatus)
         {
-            if (!(oldStatus is PassiveObjectStatusBase passiveStatus) || oldStatus.Type != Type)
+            if (!(oldStatus is PassiveObjectStatusBase passiveStatus) || !string.Equals(oldStatus.Type, Type))
                 throw new InvalidOperationException($"Unable to merge {GetType().Name} status with {oldStatus.GetType().Name}");
 
             timeToLive += passiveStatus.timeToLive;

@@ -19,9 +19,6 @@ namespace CodeMagic.Configuration.Xml.Types.Physics
         [XmlElement("disturbance-start-level")]
         public int DisturbanceStartLevel { get; set; }
 
-        [XmlElement("disturbance-damage-multiplier")]
-        public double DisturbanceDamageMultiplier { get; set; }
-
         [XmlElement("disturbance-damage-start-level")]
         public int DisturbanceDamageStartLevel { get; set; }
 

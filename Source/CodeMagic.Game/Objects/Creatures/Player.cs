@@ -209,20 +209,39 @@ namespace CodeMagic.Game.Objects.Creatures
         {
             base.Update(position);
 
+            RegenerateMana(position);
+            IncrementHunger();
+            CheckOverweight();
+        }
+
+        private void RegenerateMana(Point position)
+        {
+            var manaRegeneration = ManaRegeneration;
+            if (Statuses.Contains(ManaDisturbedObjectStatus.StatusType))
+            {
+                manaRegeneration = (int)Math.Floor(manaRegeneration / 2d);
+            }
+
             if (Mana < MaxMana && !Statuses.Contains(HungryObjectStatus.StatusType))
             {
                 var cell = CurrentGame.Map.GetCell(position);
-                var manaToRegenerate = Math.Min(ManaRegeneration, cell.MagicEnergyLevel());
+                var manaToRegenerate = Math.Min(manaRegeneration, cell.MagicEnergyLevel());
                 cell.Environment.Cast().MagicEnergyLevel -= manaToRegenerate;
                 Mana += manaToRegenerate;
             }
+        }
 
+        private void IncrementHunger()
+        {
             hungerPercent = Math.Min(100d, hungerPercent + hungerIncrement);
             if (hungerPercent >= 100d)
             {
                 Statuses.Add(new HungryObjectStatus());
             }
+        }
 
+        public void CheckOverweight()
+        {
             var weight = Inventory.GetWeight();
             if (weight > MaxCarryWeight)
             {

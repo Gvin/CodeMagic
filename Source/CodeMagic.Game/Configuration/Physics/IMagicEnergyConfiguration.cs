@@ -10,8 +10,6 @@
 
         int DisturbanceStartLevel { get; }
 
-        double DisturbanceDamageMultiplier { get; }
-
         int DisturbanceDamageStartLevel { get; }
 
         int DisturbanceIncrement { get; }

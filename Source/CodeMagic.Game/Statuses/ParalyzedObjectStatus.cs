@@ -1,6 +1,7 @@
 ﻿using CodeMagic.Core.Saving;
+using CodeMagic.Core.Statuses;
 
-namespace CodeMagic.Core.Statuses
+namespace CodeMagic.Game.Statuses
 {
     public class ParalyzedObjectStatus : PassiveObjectStatusBase
     {

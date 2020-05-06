@@ -283,10 +283,12 @@
     <Compile Include="Spells\SpellHelper.cs" />
     <Compile Include="Statuses\BlindObjectStatus.cs" />
     <Compile Include="Statuses\HungryObjectStatus.cs" />
+    <Compile Include="Statuses\ManaDisturbedObjectStatus.cs" />
     <Compile Include="Statuses\ObjectStatusesCollection.cs" />
     <Compile Include="Statuses\OilyObjectStatus.cs" />
     <Compile Include="Statuses\OnFireObjectStatus.cs" />
     <Compile Include="Statuses\OverweightObjectStatus.cs" />
+    <Compile Include="Statuses\ParalyzedObjectStatus.cs" />
     <Compile Include="Statuses\WetObjectStatus.cs" />
     <Compile Include="StyledLine.cs" />
   </ItemGroup>
