@@ -10,9 +10,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
 {
     internal class CaveDungeonMapGenerator : IMapAreaGenerator
     {
-        private readonly IDungeonMapObjectFactory mapObjectsFactory;
+        private readonly IMapObjectFactory mapObjectsFactory;
 
-        public CaveDungeonMapGenerator(IDungeonMapObjectFactory mapObjectsFactory)
+        public CaveDungeonMapGenerator(IMapObjectFactory mapObjectsFactory)
         {
             this.mapObjectsFactory = mapObjectsFactory;
         }

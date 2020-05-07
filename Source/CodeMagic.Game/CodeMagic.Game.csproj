@@ -205,7 +205,7 @@
     <Compile Include="MapGeneration\Dungeon\MapGenerators\LabyrinthMapGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\MapObjectFactories\CaveMapObjectsFactory.cs" />
     <Compile Include="MapGeneration\Dungeon\MapObjectFactories\DungeonMapObjectsFactory.cs" />
-    <Compile Include="MapGeneration\Dungeon\MapObjectFactories\IDungeonMapObjectFactory.cs" />
+    <Compile Include="MapGeneration\Dungeon\MapObjectFactories\IMapObjectFactory.cs" />
     <Compile Include="MapGeneration\MapGenerationException.cs" />
     <Compile Include="Objects\AnimationManager.cs" />
     <Compile Include="Objects\AnimationsBatchManager.cs" />
@@ -231,6 +231,7 @@
     <Compile Include="Objects\IceObjects\AcidIce.cs" />
     <Compile Include="Objects\IceObjects\IIce.cs" />
     <Compile Include="Objects\IceObjects\WaterIce.cs" />
+    <Compile Include="Objects\ICollideDamageObject.cs" />
     <Compile Include="Objects\IUsableObject.cs" />
     <Compile Include="Objects\LiquidObjects\AbstractLiquid.cs" />
     <Compile Include="Objects\LiquidObjects\AcidLiquid.cs" />
@@ -244,6 +245,8 @@
     <Compile Include="Objects\SolidObjects\DungeonWall.cs" />
     <Compile Include="Objects\SolidObjects\EnergyWall.cs" />
     <Compile Include="Objects\SolidObjects\DungeonStairs.cs" />
+    <Compile Include="Objects\SolidObjects\SolidWallBase.cs" />
+    <Compile Include="Objects\SolidObjects\SpikedDungeonWall.cs" />
     <Compile Include="Objects\SolidObjects\TorchWallBase.cs" />
     <Compile Include="Objects\SolidObjects\DungeonTrapDoor.cs" />
     <Compile Include="Objects\SolidObjects\WallBase.cs" />

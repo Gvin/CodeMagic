@@ -18,9 +18,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
 
         private const int TorchChance = 10;
 
-        private readonly IDungeonMapObjectFactory mapObjectsFactory;
+        private readonly IMapObjectFactory mapObjectsFactory;
 
-        public LabyrinthMapGenerator(IDungeonMapObjectFactory mapObjectsFactory)
+        public LabyrinthMapGenerator(IMapObjectFactory mapObjectsFactory)
         {
             this.mapObjectsFactory = mapObjectsFactory;
         }

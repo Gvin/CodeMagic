@@ -151,10 +151,16 @@ namespace CodeMagic.Game.Objects.IceObjects
                 if (!movementResult.Success)
                     return remainingSpeed;
 
-                newPosition = nextPosition;
+                newPosition = movementResult.NewPosition;
 
                 if (!CellContainsIce(nextCell))
+                {
+                    foreach (var collideDamageObject in nextCell.Objects.OfType<ICollideDamageObject>())
+                    {
+                        collideDamageObject.Damage(target, newPosition);
+                    }
                     return 0;
+                }
             }
 
             return 0;

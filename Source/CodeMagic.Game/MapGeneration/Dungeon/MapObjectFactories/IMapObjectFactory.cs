@@ -2,7 +2,7 @@
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 {
-    public interface IDungeonMapObjectFactory
+    public interface IMapObjectFactory
     {
         IMapObject CreateFloor();
 

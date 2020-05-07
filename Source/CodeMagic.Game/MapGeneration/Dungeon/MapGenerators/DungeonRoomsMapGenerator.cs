@@ -15,9 +15,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
         private const int TorchChance = 5;
         private const int MaxBuildRetries = 10;
 
-        private readonly IDungeonMapObjectFactory mapObjectsFactory;
+        private readonly IMapObjectFactory mapObjectsFactory;
 
-        public DungeonRoomsMapGenerator(IDungeonMapObjectFactory mapObjectsFactory)
+        public DungeonRoomsMapGenerator(IMapObjectFactory mapObjectsFactory)
         {
             this.mapObjectsFactory = mapObjectsFactory;
         }

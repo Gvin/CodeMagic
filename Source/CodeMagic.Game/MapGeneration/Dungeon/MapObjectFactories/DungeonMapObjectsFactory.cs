@@ -7,8 +7,10 @@ using CodeMagic.Game.Objects.SolidObjects;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 {
-    internal class DungeonMapObjectsFactory : IDungeonMapObjectFactory
+    internal class DungeonMapObjectsFactory : IMapObjectFactory
     {
+        private const int SpikedWallChance = 10;
+
         public IMapObject CreateFloor()
         {
             return new FloorObject(FloorObject.Type.Stone);
@@ -31,6 +33,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 
         public IMapObject CreateWall()
         {
+            if (RandomHelper.CheckChance(SpikedWallChance))
+                return new SpikedDungeonWall();
+
             return new DungeonWall();
         }
 

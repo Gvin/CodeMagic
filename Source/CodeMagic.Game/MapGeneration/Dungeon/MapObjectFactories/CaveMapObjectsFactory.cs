@@ -5,7 +5,7 @@ using CodeMagic.Game.Objects.SolidObjects;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories
 {
-    public class CaveMapObjectsFactory : IDungeonMapObjectFactory
+    public class CaveMapObjectsFactory : IMapObjectFactory
     {
         public IMapObject CreateFloor()
         {

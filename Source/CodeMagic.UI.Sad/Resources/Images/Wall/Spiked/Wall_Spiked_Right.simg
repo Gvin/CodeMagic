@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
   <row>
-    <pixel glyph="35">
+    <pixel glyph="37">
       <color>
         <R>183</R>
         <G>171</G>
@@ -13,45 +13,7 @@
         <B>162</B>
       </background-color>
     </pixel>
-    <pixel glyph="35">
-      <color>
-        <R>183</R>
-        <G>171</G>
-        <B>162</B>
-      </color>
-      <background-color>
-        <R>108</R>
-        <G>130</G>
-        <B>162</B>
-      </background-color>
-    </pixel>
-    <pixel glyph="62">
-      <color>
-        <R>183</R>
-        <G>171</G>
-        <B>162</B>
-      </color>
-      <background-color>
-        <R>84</R>
-        <G>91</G>
-        <B>118</B>
-      </background-color>
-    </pixel>
-  </row>
-  <row>
-    <pixel glyph="35">
-      <color>
-        <R>183</R>
-        <G>171</G>
-        <B>162</B>
-      </color>
-      <background-color>
-        <R>108</R>
-        <G>130</G>
-        <B>162</B>
-      </background-color>
-    </pixel>
-    <pixel glyph="35">
+    <pixel glyph="37">
       <color>
         <R>183</R>
         <G>171</G>
@@ -77,7 +39,7 @@
     </pixel>
   </row>
   <row>
-    <pixel glyph="35">
+    <pixel glyph="37">
       <color>
         <R>183</R>
         <G>171</G>
@@ -89,7 +51,45 @@
         <B>162</B>
       </background-color>
     </pixel>
-    <pixel glyph="35">
+    <pixel glyph="37">
+      <color>
+        <R>183</R>
+        <G>171</G>
+        <B>162</B>
+      </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="62">
+      <color>
+        <R>183</R>
+        <G>171</G>
+        <B>162</B>
+      </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel glyph="37">
+      <color>
+        <R>183</R>
+        <G>171</G>
+        <B>162</B>
+      </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="37">
       <color>
         <R>183</R>
         <G>171</G>

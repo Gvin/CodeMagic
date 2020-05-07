@@ -25,16 +25,16 @@
         <B>162</B>
       </background-color>
     </pixel>
-    <pixel glyph="62">
+    <pixel glyph="37">
       <color>
         <R>183</R>
         <G>171</G>
         <B>162</B>
       </color>
       <background-color>
-        <R>84</R>
-        <G>91</G>
-        <B>118</B>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
       </background-color>
     </pixel>
   </row>
@@ -63,42 +63,42 @@
         <B>162</B>
       </background-color>
     </pixel>
-    <pixel glyph="62">
+    <pixel glyph="37">
       <color>
         <R>183</R>
         <G>171</G>
         <B>162</B>
       </color>
       <background-color>
-        <R>84</R>
-        <G>91</G>
-        <B>118</B>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
       </background-color>
     </pixel>
   </row>
   <row>
-    <pixel glyph="251">
+    <pixel glyph="37">
       <color>
         <R>183</R>
         <G>171</G>
         <B>162</B>
       </color>
       <background-color>
-        <R>84</R>
-        <G>91</G>
-        <B>118</B>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
       </background-color>
     </pixel>
-    <pixel glyph="251">
+    <pixel glyph="37">
       <color>
         <R>183</R>
         <G>171</G>
         <B>162</B>
       </color>
       <background-color>
-        <R>84</R>
-        <G>91</G>
-        <B>118</B>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
       </background-color>
     </pixel>
     <pixel glyph="92">

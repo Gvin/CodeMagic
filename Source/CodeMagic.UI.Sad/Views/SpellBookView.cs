@@ -220,8 +220,8 @@ namespace CodeMagic.UI.Sad.Views
             });
             game.Player.Inventory.AddItem(newScroll);
 
-            game.PerformPlayerAction(new EmptyPlayerAction());
             Close();
+            game.PerformPlayerAction(new EmptyPlayerAction());
         }
 
         private void castSpellButton_Click(object sender, EventArgs args)
@@ -287,8 +287,8 @@ namespace CodeMagic.UI.Sad.Views
             if (selectedSpellItem?.Spell == null)
                 return;
 
-            game.PerformPlayerAction(new CastSpellPlayerAction(selectedSpellItem.Spell));
             Close();
+            game.PerformPlayerAction(new CastSpellPlayerAction(selectedSpellItem.Spell));
         }
 
         private void RefreshSpells()
