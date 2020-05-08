@@ -39,6 +39,18 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
             }
 
             name.Prefixes.Add(GetElementPrefix(element));
+            name.AddDescription(GetBonusCode(element), GetBonusDescription(element));
+        }
+
+        private static string GetBonusCode(Element element)
+        {
+            return $"damage_bonus_{element}";
+        }
+
+        private static string GetBonusDescription(Element element)
+        {
+            var elementName = TextHelper.GetElementName(element);
+            return $"It deals additional {elementName} damage to enemy.";
         }
 
         private string GetElementPrefix(Element element)

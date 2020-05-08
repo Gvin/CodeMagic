@@ -10,7 +10,6 @@ namespace CodeMagic.Game.Items
 {
     public class SpellBook : EquipableItem, IInventoryImageProvider, IDescriptionProvider, IWorldImageProvider
     {
-        private const string SaveKeyDescription = "Description";
         private const string SaveKeyInventoryImage = "InventoryImage";
         private const string SaveKeyWorldImage = "WorldImage";
         private const string SaveKeySpells = "Spells";
@@ -18,7 +17,6 @@ namespace CodeMagic.Game.Items
 
         private readonly SymbolsImage inventoryImage;
         private readonly SymbolsImage worldImage;
-        private readonly string[] description;
 
         public SpellBook(SaveData data) : base(data)
         {
@@ -32,7 +30,6 @@ namespace CodeMagic.Game.Items
 
             inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage).GetImage();
             worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage).GetImage();
-            description = data.GetValuesCollection(SaveKeyDescription);
         }
 
         public SpellBook(SpellBookConfiguration configuration) 
@@ -42,13 +39,11 @@ namespace CodeMagic.Game.Items
             Spells = new BookSpell[BookSize];
             inventoryImage = configuration.InventoryImage;
             worldImage = configuration.WorldImage;
-            description = configuration.Description;
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
         {
             var data = base.GetSaveDataContent();
-            data.Add(SaveKeyDescription, description);
             data.Add(SaveKeyInventoryImage, new SymbolsImageSaveable(inventoryImage));
             data.Add(SaveKeyWorldImage, new SymbolsImageSaveable(worldImage));
             data.Add(SaveKeySize, BookSize);
@@ -105,7 +100,7 @@ namespace CodeMagic.Game.Items
 
             result.Add(StyledLine.Empty);
 
-            result.AddRange(TextHelper.ConvertDescription(description));
+            result.AddRange(TextHelper.ConvertDescription(Description));
 
             return result.ToArray();
         }
@@ -123,7 +118,5 @@ namespace CodeMagic.Game.Items
         public SymbolsImage InventoryImage { get; set; }
 
         public SymbolsImage WorldImage { get; set; }
-
-        public string[] Description { get; set; }
     }
 }

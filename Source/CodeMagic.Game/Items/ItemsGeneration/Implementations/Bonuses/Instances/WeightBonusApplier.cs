@@ -14,7 +14,9 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
         {
             var weightDecrease = int.Parse(config.Values[KeyWeightDecrease]);
             itemConfiguration.Weight = (int) Math.Round(itemConfiguration.Weight * (100 - weightDecrease) / 100f);
+
             name.Prefixes.Add(NamePrefix);
+            name.AddDescription("weight_bonus", "It weights less than similar items.");
         }
     }
 }

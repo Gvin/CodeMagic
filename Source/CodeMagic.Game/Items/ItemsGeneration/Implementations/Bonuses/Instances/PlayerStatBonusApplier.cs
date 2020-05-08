@@ -31,7 +31,20 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
                 equipableConfig.StatBonuses.Add(bonusType, 0);
             }
             equipableConfig.StatBonuses[bonusType] += bonus;
+
             name.Postfixes.Add(GetNamePostfix(bonusType));
+            name.AddDescription(GetBonusCode(bonusType), GetBonusText(bonusType));
+        }
+
+        private static string GetBonusCode(PlayerStats stat)
+        {
+            return $"player_stat_bonus_{stat}";
+        }
+
+        private static string GetBonusText(PlayerStats stat)
+        {
+            var statName = TextHelper.GetStatName(stat);
+            return $"It increases your {statName}.";
         }
 
         private static PlayerStats GenerateStat()

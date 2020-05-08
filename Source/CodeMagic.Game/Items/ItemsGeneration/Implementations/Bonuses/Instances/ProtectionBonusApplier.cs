@@ -31,6 +31,18 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
             }
 
             name.Postfixes.Add(string.Format(NamePostfixTemplate, TextHelper.GetElementName(element)));
+            name.AddDescription(GetBonusCode(element), GetBonusDescription(element));
+        }
+
+        private static string GetBonusCode(Element element)
+        {
+            return $"protection_bonus_{element}";
+        }
+
+        private static string GetBonusDescription(Element element)
+        {
+            var elementName = TextHelper.GetElementName(element);
+            return $"It protects you from {elementName} better that similar items.";
         }
     }
 }

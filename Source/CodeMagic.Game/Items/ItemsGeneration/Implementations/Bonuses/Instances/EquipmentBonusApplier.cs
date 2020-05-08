@@ -31,7 +31,29 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
                 equipableConfig.Bonuses.Add(bonusType, 0);
             }
             equipableConfig.Bonuses[bonusType] += bonus;
+
             name.Postfixes.Add(GetNamePostfix(bonusType));
+            name.AddDescription(GetBonusCode(bonusType), GetBonusText(bonusType));
+        }
+
+        private static string GetBonusCode(EquipableBonusType bonusType)
+        {
+            return $"equipment_bonus_{bonusType}";
+        }
+
+        private static string GetBonusText(EquipableBonusType bonusType)
+        {
+            switch (bonusType)
+            {
+                case EquipableBonusType.Health:
+                    return "It affects your body making it stronger.";
+                case EquipableBonusType.Mana:
+                    return "It allows you to store more mana.";
+                case EquipableBonusType.ManaRegeneration:
+                    return "It makes your body replenish mana faster.";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(bonusType), bonusType, null);
+            }
         }
 
         private static string GetNamePostfix(EquipableBonusType bonusType)

@@ -13,6 +13,9 @@ namespace CodeMagic.Game.Items
         private const string SaveKeyBonuses = "Bonuses";
         private const string SaveKeyStatBonuses = "StatBonuses";
         private const string SaveKeyLightPower = "LightPower";
+        private const string SaveKeyDescription = "Description";
+
+        protected readonly string[] Description;
 
         protected EquipableItem(SaveData data) : base(data)
         {
@@ -23,6 +26,8 @@ namespace CodeMagic.Game.Items
 
             LightPower = (LightLevel) data.GetIntValue(SaveKeyLightPower);
             IsLightOn = LightPower > LightLevel.Darkness;
+
+            Description = data.GetValuesCollection(SaveKeyDescription);
         }
 
         protected EquipableItem(EquipableItemConfiguration configuration) 
@@ -33,6 +38,8 @@ namespace CodeMagic.Game.Items
 
             LightPower = configuration.LightPower;
             IsLightOn = LightPower > LightLevel.Darkness;
+
+            Description = configuration.Description?.ToArray() ?? new string[0];
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
@@ -41,6 +48,7 @@ namespace CodeMagic.Game.Items
             data.Add(SaveKeyBonuses, new DictionarySaveable(Bonuses.ToDictionary(pair => (object)(int)pair.Key, pair => (object)pair.Value)));
             data.Add(SaveKeyStatBonuses, new DictionarySaveable(StatBonuses.ToDictionary(pair => (object)(int)pair.Key, pair => (object)pair.Value)));
             data.Add(SaveKeyLightPower, (int) LightPower);
+            data.Add(SaveKeyDescription, Description);
             return data;
         }
 
@@ -85,6 +93,8 @@ namespace CodeMagic.Game.Items
         public Dictionary<PlayerStats, int> StatBonuses { get; set; }
 
         public LightLevel LightPower { get; set; }
+
+        public string[] Description { get; set; }
     }
 
     public enum EquipableBonusType

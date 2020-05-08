@@ -39,11 +39,15 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses
 
             var configurationGroup = GetConfigurationGroup(item);
             var config = GetConfiguration(item.Rareness, configurationGroup);
-            var nameBuilder = new NameBuilder(item.Name);
+            var nameBuilder = new NameBuilder(item.Name, (item as EquipableItemConfiguration)?.Description);
 
             GenerateBonuses(item, nameBuilder, config, bonusesCount);
 
             item.Name = nameBuilder.ToString();
+            if (item is EquipableItemConfiguration equipable)
+            {
+                equipable.Description = nameBuilder.GetDescription();
+            }
         }
 
         private void GenerateBonuses(

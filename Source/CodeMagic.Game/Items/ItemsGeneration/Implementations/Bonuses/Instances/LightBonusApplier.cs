@@ -22,6 +22,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
             equipableConfig.LightPower = power;
 
             name.Prefixes.Add(NamePrefix);
+            name.AddDescription("light_bonus", "It emits some light.");
         }
 
         private LightLevel[] GetPossibleLightPower(IBonusConfiguration config)

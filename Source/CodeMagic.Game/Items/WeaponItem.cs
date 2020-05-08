@@ -12,14 +12,12 @@ namespace CodeMagic.Game.Items
 {
     public class WeaponItem : EquipableItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider
     {
-        private const string SaveKeyDescription = "Description";
         private const string SaveKeyInventoryImage = "InventoryImage";
         private const string SaveKeyWorldImage = "WorldImage";
         private const string SaveKeyHitChance = "HitChance";
         private const string SaveKeyMinDamage = "MinDamage";
         private const string SaveKeyMaxDamage = "MaxDamage";
 
-        private readonly string[] description;
         private readonly SymbolsImage inventoryImage;
         private readonly SymbolsImage worldImage;
 
@@ -31,8 +29,6 @@ namespace CodeMagic.Game.Items
                 .ToDictionary(pair => (Element)int.Parse((string)pair.Key), pair => int.Parse((string)pair.Value));
 
             HitChance = data.GetIntValue(SaveKeyHitChance);
-
-            description = data.GetValuesCollection(SaveKeyDescription);
 
             inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage)?.GetImage();
             worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage)?.GetImage();
@@ -46,8 +42,6 @@ namespace CodeMagic.Game.Items
 
             HitChance = configuration.HitChance;
 
-            description = configuration.Description;
-
             inventoryImage = configuration.InventoryImage;
             worldImage = configuration.WorldImage;
         }
@@ -55,7 +49,6 @@ namespace CodeMagic.Game.Items
         protected override Dictionary<string, object> GetSaveDataContent()
         {
             var data = base.GetSaveDataContent();
-            data.Add(SaveKeyDescription, description);
             data.Add(SaveKeyInventoryImage, inventoryImage != null ? new SymbolsImageSaveable(inventoryImage) : null);
             data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
             data.Add(SaveKeyHitChance, HitChance);
@@ -68,9 +61,9 @@ namespace CodeMagic.Game.Items
             return data;
         }
 
-        public Dictionary<Element, int> MaxDamage { get; }
+        private Dictionary<Element, int> MaxDamage { get; }
 
-        public Dictionary<Element, int> MinDamage { get; }
+        private Dictionary<Element, int> MinDamage { get; }
 
         public Dictionary<Element, int> GenerateDamage()
         {
@@ -87,12 +80,12 @@ namespace CodeMagic.Game.Items
             var result = GetCharacteristicsDescription(player).ToList();
 
             result.Add(StyledLine.Empty);
-            result.AddRange(TextHelper.ConvertDescription(description));
+            result.AddRange(TextHelper.ConvertDescription(Description));
 
             return result.ToArray();
         }
 
-        protected virtual StyledLine[] GetCharacteristicsDescription(Player player)
+        private StyledLine[] GetCharacteristicsDescription(Player player)
         {
             var equipedWeapon = player.Equipment.Weapon;
 
@@ -217,8 +210,6 @@ namespace CodeMagic.Game.Items
         public SymbolsImage InventoryImage { get; set; }
 
         public SymbolsImage WorldImage { get; set; }
-
-        public string[] Description { get; set; }
 
         public Dictionary<Element, int> MaxDamage { get; set; }
 

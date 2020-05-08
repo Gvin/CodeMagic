@@ -13,20 +13,17 @@ namespace CodeMagic.Game.Items
     {
         private const string SaveKeyInventoryImage = "InventoryImage";
         private const string SaveKeyWorldImage = "WorldImage";
-        private const string SaveKeyDescription = "Description";
         private const string SaveKeyProtection = "Protection";
         private const string SaveKetArmorType = "ArmorType";
 
         private readonly SymbolsImage inventoryImage;
         private readonly SymbolsImage worldImage;
-        private readonly string[] description;
         private readonly Dictionary<Element, int> protection;
 
         public ArmorItem(SaveData data) : base(data)
         {
             inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage)?.GetImage();
             worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage)?.GetImage();
-            description = data.GetValuesCollection(SaveKeyDescription);
             protection = data.GetObject<DictionarySaveable>(SaveKeyProtection).Data.ToDictionary(pair =>
                 (Element) int.Parse((string) pair.Key), pair => int.Parse((string) pair.Value));
             ArmorType = (ArmorType) data.GetIntValue(SaveKetArmorType);
@@ -39,7 +36,6 @@ namespace CodeMagic.Game.Items
             ArmorType = configuration.ArmorType;
             inventoryImage = configuration.InventoryImage;
             worldImage = configuration.WorldImage;
-            description = configuration.Description;
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
@@ -47,7 +43,6 @@ namespace CodeMagic.Game.Items
             var data = base.GetSaveDataContent();
             data.Add(SaveKeyInventoryImage, inventoryImage !=null ? new SymbolsImageSaveable(inventoryImage) : null);
             data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
-            data.Add(SaveKeyDescription, description);
             data.Add(SaveKetArmorType, (int) ArmorType);
             data.Add(SaveKeyProtection,
                 new DictionarySaveable(protection.ToDictionary(pair => (object) (int) pair.Key,
@@ -94,7 +89,7 @@ namespace CodeMagic.Game.Items
 
             result.Add(StyledLine.Empty);
 
-            result.AddRange(TextHelper.ConvertDescription(description));
+            result.AddRange(TextHelper.ConvertDescription(Description));
 
             return result.ToArray();
         }
@@ -153,8 +148,6 @@ namespace CodeMagic.Game.Items
         public SymbolsImage InventoryImage { get; set; }
 
         public SymbolsImage WorldImage { get; set; }
-
-        public string[] Description { get; set; }
 
         public Dictionary<Element, int> Protection { get; set; }
 
