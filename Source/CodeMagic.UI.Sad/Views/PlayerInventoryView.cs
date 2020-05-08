@@ -7,7 +7,6 @@ using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
-using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -253,23 +252,12 @@ namespace CodeMagic.UI.Sad.Views
         private const string EquipedText = "[Eq]";
         private static readonly Color EquipedTextColor = Color.Red;
 
-
         private readonly Player player;
 
         public PlayerInventoryItem(InventoryStack itemStack, Player player)
             : base(itemStack)
         {
             this.player = player;
-        }
-
-        protected override ColoredString[] GetNameText(Color backColor)
-        {
-            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem).ToXna();
-
-            return new[]
-            {
-                new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, backColor))
-            };
         }
 
         protected override ColoredString[] GetAfterNameText(Color backColor)

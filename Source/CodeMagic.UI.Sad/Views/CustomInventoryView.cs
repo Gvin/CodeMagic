@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
-using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -210,16 +208,6 @@ namespace CodeMagic.UI.Sad.Views
         public CustomInventoryItem(InventoryStack itemStack)
             : base(itemStack)
         {
-        }
-
-        protected override ColoredString[] GetNameText(Color backColor)
-        {
-            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem).ToXna();
-
-            return new[]
-            {
-                new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, backColor))
-            };
         }
 
         protected override ColoredString[] GetAfterNameText(Color backColor)

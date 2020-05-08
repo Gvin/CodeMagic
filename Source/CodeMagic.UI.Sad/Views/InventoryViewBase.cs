@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
@@ -172,6 +173,7 @@ namespace CodeMagic.UI.Sad.Views
 
     public abstract class InventoryStackItem : ICustomListBoxItem
     {
+        private static readonly Color SelectedItemTextColor = Color.FromNonPremultiplied(0, 0, 0, 255);
         private static readonly Color SelectedItemBackColor = Color.FromNonPremultiplied(255, 128, 0, 255);
         private static readonly Color DefaultBackColor = Color.Black;
         protected static readonly Color StackCountColor = Color.White;
@@ -189,7 +191,15 @@ namespace CodeMagic.UI.Sad.Views
             return ReferenceEquals(this, other);
         }
 
-        protected abstract ColoredString[] GetNameText(Color backColor);
+        private ColoredString[] GetNameText(bool selected, Color backColor)
+        {
+            var itemColor = selected ? SelectedItemTextColor : ItemDrawingHelper.GetItemColor(Stack.TopItem).ToXna();
+
+            return new[]
+            {
+                new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, backColor))
+            };
+        }
 
         protected abstract ColoredString[] GetAfterNameText(Color backColor);
 
@@ -197,7 +207,9 @@ namespace CodeMagic.UI.Sad.Views
         {
             var backColor = selected ? SelectedItemBackColor : DefaultBackColor;
             surface.Fill(0, y, maxWidth, null, backColor, null);
-            var text = GetNameText(backColor);
+
+            var text = GetNameText(selected, backColor);
+
             var afterNameText = GetAfterNameText(backColor);
             var formattedText = FormatText(text, afterNameText, backColor, maxWidth - 1);
             surface.Print(1, y, formattedText);
