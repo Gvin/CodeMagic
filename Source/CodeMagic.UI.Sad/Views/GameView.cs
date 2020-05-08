@@ -34,6 +34,7 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton openInventoryButton;
         private StandardButton showItemsOnFloorButton;
         private StandardButton openPlayerStatsButton;
+        private StandardButton cheatsButton;
 
         private DateTime lastKeyProcessed;
 
@@ -66,6 +67,16 @@ namespace CodeMagic.UI.Sad.Views
 
         private void InitializeControls()
         {
+#if DEBUG
+            cheatsButton = new StandardButton(3)
+            {
+                Text = "*",
+                Position = new Point(Width - 39, 35)
+            };
+            cheatsButton.Click += (sender, args) => { new CheatsView().Show(); };
+            Add(cheatsButton);
+#endif
+
             playerStats = new PlayerStatsControl(40, 40, game)
             {
                 Position = new Point(Width - 40, 0)
