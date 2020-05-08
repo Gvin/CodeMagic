@@ -13,6 +13,8 @@ namespace CodeMagic.UI.Sad.Controls
 {
     public class JournalBoxControl : ControlBase
     {
+        private const int MaxMessagesToDraw = 100;
+
         private static readonly Color FrameColor = Color.Gray;
         private static readonly Color BackColor = Color.Black;
 
@@ -62,7 +64,7 @@ namespace CodeMagic.UI.Sad.Controls
 
             DrawFrame();
 
-            var scrollMax = journal.Messages.Length - maxMessagesCount;
+            var scrollMax = Math.Min(journal.Messages.Length, MaxMessagesToDraw) - maxMessagesCount;
             if (scrollMax < 0)
                 scrollMax = 0;
             scroll.Maximum = scrollMax;
@@ -72,7 +74,7 @@ namespace CodeMagic.UI.Sad.Controls
 
         private void DrawMessages()
         {
-            DrawMessages(journal.Messages.Reverse().ToArray());
+            DrawMessages(journal.Messages.Reverse().Take(MaxMessagesToDraw).ToArray());
         }
 
         private void DrawMessages(JournalMessageData[] messages)

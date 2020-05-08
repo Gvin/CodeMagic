@@ -21,6 +21,8 @@ namespace CodeMagic.Game.Items.ItemsGeneration
 
         IItem GenerateUsable(ItemRareness rareness);
 
+        IItem GenerateResource(ItemRareness rareness);
+
         IItem GenerateFood();
 
         void Reset();
@@ -38,6 +40,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration
         private readonly ArmorGenerator armorGenerator;
         private readonly SpellBookGenerator spellBookGenerator;
         private readonly UsableItemsGenerator usableItemsGenerator;
+        private readonly ResourceItemsGenerator resourceItemsGenerator;
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage, IAncientSpellsProvider spellsProvider)
         {
@@ -94,11 +97,12 @@ namespace CodeMagic.Game.Items.ItemsGeneration
             armorGenerator = new ArmorGenerator(configuration.ArmorConfiguration, bonusesGenerator, imagesStorage);
             spellBookGenerator = new SpellBookGenerator(configuration.SpellBooksConfiguration, bonusesGenerator, imagesStorage);
             usableItemsGenerator = new UsableItemsGenerator(imagesStorage, spellsProvider);
+            resourceItemsGenerator = new ResourceItemsGenerator();
         }
 
         public WeaponItem GenerateWeapon(ItemRareness rareness)
         {
-            if (rareness == ItemRareness.Epic)
+            if (GetIfRarenessExceedMax(rareness))
                 throw new ArgumentException("Item generator cannot generate epic items.");
 
             var weaponType = GetRandomWeaponType();
@@ -113,7 +117,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration
 
         public ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass armorClass)
         {
-            if (rareness == ItemRareness.Epic)
+            if (GetIfRarenessExceedMax(rareness))
                 throw new ArgumentException("Item generator cannot generate epic items.");
 
             return armorGenerator.GenerateArmor(rareness, armorClass);
@@ -121,7 +125,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration
 
         public SpellBook GenerateSpellBook(ItemRareness rareness)
         {
-            if (rareness == ItemRareness.Epic)
+            if (GetIfRarenessExceedMax(rareness))
                 throw new ArgumentException("Item generator cannot generate epic items.");
 
             return spellBookGenerator.GenerateSpellBook(rareness);
@@ -129,35 +133,28 @@ namespace CodeMagic.Game.Items.ItemsGeneration
 
         public IItem GenerateUsable(ItemRareness rareness)
         {
-            if (rareness == ItemRareness.Epic)
+            if (GetIfRarenessExceedMax(rareness))
                 throw new ArgumentException("Item generator cannot generate epic items.");
 
             return usableItemsGenerator.GenerateUsableItem(rareness);
         }
 
-        public IItem GenerateRandomItem(ItemRareness rareness)
+        public IItem GenerateResource(ItemRareness rareness)
         {
-            var generatorType = RandomHelper.GetRandomValue(1, 5);
-            switch (generatorType)
-            {
-                case 1:
-                    return GenerateWeapon(rareness);
-                case 2:
-                    return GenerateArmor(rareness, RandomHelper.GetRandomEnumValue<ArmorClass>());
-                case 3:
-                    return GenerateSpellBook(rareness);
-                case 4:
-                    return GenerateUsable(rareness);
-                case 5:
-                    return GenerateFood();
-                default:
-                    throw new ApplicationException($"Unknown generator type: {generatorType}.");
-            }
+            if (GetIfRarenessExceedMax(rareness))
+                throw new ArgumentException("Item generator cannot generate epic items.");
+
+            return resourceItemsGenerator.GenerateResourceItem(rareness);
         }
 
         public IItem GenerateFood()
         {
             return new Apple();
+        }
+
+        private static bool GetIfRarenessExceedMax(ItemRareness rareness)
+        {
+            return rareness == ItemRareness.Epic;
         }
 
         private WeaponType GetRandomWeaponType()

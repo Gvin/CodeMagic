@@ -24,6 +24,9 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
         private readonly Chance<int>[] usableCountSettings;
         private readonly Chance<ItemRareness>[] usableRarenessSettings;
 
+        private readonly Chance<int>[] resourcesCountSettings;
+        private readonly Chance<ItemRareness>[] resourcesRarenessSettings;
+
         private readonly Chance<int>[] foodCountSettings;
 
         public ChancesLootGenerator(ILootConfiguration lootConfiguration)
@@ -41,6 +44,9 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
             usableCountSettings = GetChanceConfiguration(lootConfiguration.Usable?.Count);
             usableRarenessSettings = GetChanceConfiguration(lootConfiguration.Usable?.Rareness);
 
+            resourcesCountSettings = GetChanceConfiguration(lootConfiguration.Resource?.Count);
+            resourcesRarenessSettings = GetChanceConfiguration(lootConfiguration.Resource?.Rareness);
+
             foodCountSettings = GetChanceConfiguration(lootConfiguration.Food?.Count);
         }
 
@@ -54,7 +60,7 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
                 var items = GenerateItems(
                     weaponCountSettings, 
                     weaponRarenessSettings, 
-                    rareness => generator.GenerateWeapon(rareness));
+                    generator.GenerateWeapon);
                 result.AddRange(items);
             }
 
@@ -72,7 +78,7 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
                 var items = GenerateItems(
                     spellBookCountSettings, 
                     spellBookRarenessSettings, 
-                    rareness => generator.GenerateSpellBook(rareness));
+                    generator.GenerateSpellBook);
                 result.AddRange(items);
             }
 
@@ -81,7 +87,16 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
                 var items = GenerateItems(
                     usableCountSettings, 
                     usableRarenessSettings, 
-                    rareness => generator.GenerateUsable(rareness));
+                    generator.GenerateUsable);
+                result.AddRange(items);
+            }
+
+            if (resourcesCountSettings != null)
+            {
+                var items = GenerateItems(
+                    resourcesCountSettings,
+                    resourcesRarenessSettings,
+                    generator.GenerateResource);
                 result.AddRange(items);
             }
 
