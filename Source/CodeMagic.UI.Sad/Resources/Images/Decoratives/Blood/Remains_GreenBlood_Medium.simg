@@ -5,14 +5,14 @@
     <pixel glyph="46">
       <color>
         <R>0</R>
-        <G>255</G>
+        <G>213</G>
         <B>0</B>
       </color>
     </pixel>
     <pixel glyph="44">
       <color>
         <R>0</R>
-        <G>128</G>
+        <G>72</G>
         <B>0</B>
       </color>
     </pixel>
@@ -21,26 +21,26 @@
     <pixel glyph="39">
       <color>
         <R>0</R>
-        <G>255</G>
+        <G>213</G>
         <B>0</B>
       </color>
     </pixel>
     <pixel glyph="115">
       <color>
         <R>0</R>
-        <G>255</G>
+        <G>213</G>
         <B>0</B>
       </color>
       <background-color>
         <R>0</R>
-        <G>128</G>
+        <G>72</G>
         <B>0</B>
       </background-color>
     </pixel>
     <pixel glyph="59">
       <color>
         <R>0</R>
-        <G>255</G>
+        <G>213</G>
         <B>0</B>
       </color>
     </pixel>
@@ -49,14 +49,14 @@
     <pixel glyph="39">
       <color>
         <R>0</R>
-        <G>128</G>
+        <G>72</G>
         <B>0</B>
       </color>
     </pixel>
     <pixel glyph="96">
       <color>
         <R>0</R>
-        <G>255</G>
+        <G>213</G>
         <B>0</B>
       </color>
     </pixel>
