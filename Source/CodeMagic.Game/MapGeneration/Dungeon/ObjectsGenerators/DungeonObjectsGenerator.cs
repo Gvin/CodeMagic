@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Game.Items.Materials;
-using CodeMagic.Game.Objects.DecorativeObjects;
 
-namespace CodeMagic.Game.MapGeneration.Dungeon
+namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
 {
-    internal partial class DungeonObjectsGenerator
+    internal partial class DungeonObjectsGenerator : IObjectsGenerator
     {
         private const double StonesCountMultiplier = 0.03;
-        private const double TorchPostsCountMultiplier = 0.01;
 
         private const int MaxPositionSearchTries = 20;
 
@@ -46,18 +44,12 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
             return patternsList.ToArray();
         }
 
-        public void GenerateObjects(IAreaMap map, bool addTorchPosts)
+        public void GenerateObjects(IAreaMap map)
         {
             AddPatterns(map);
 
             var stonesCount = (int) Math.Round(map.Width * map.Height * StonesCountMultiplier);
             AddStones(map, stonesCount);
-
-            if (addTorchPosts)
-            {
-                var torchPostsCount = (int) Math.Round(map.Width * map.Height * TorchPostsCountMultiplier);
-                AddTorchPosts(map, torchPostsCount);
-            }
         }
 
         private void AddPatterns(IAreaMap map)
@@ -126,18 +118,6 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
             }
 
             return true;
-        }
-
-        private void AddTorchPosts(IAreaMap map, int count)
-        {
-            for (int counter = 0; counter < count; counter++)
-            {
-                var position = GetFreePosition(map);
-                if (position == null)
-                    continue;
-
-                map.AddObject(position, new DungeonTorchPost());
-            }
         }
 
         private void AddStones(IAreaMap map, int stonesCount)

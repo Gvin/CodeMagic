@@ -7,6 +7,7 @@ using CodeMagic.Core.Items;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.JournalMessages.Scenario;
 using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Drawing;
@@ -50,6 +51,8 @@ namespace CodeMagic.UI.Sad.GameProcess
             {
                 game.Journal.Write(new ItemLostMessage(args.Item));
             };
+
+            game.Journal.Write(new StartGameMessage());
 
             game.TurnEnded += game_TurnEnded;
             new SaveManager().SaveGame();

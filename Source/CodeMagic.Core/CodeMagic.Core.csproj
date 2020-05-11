@@ -80,7 +80,7 @@
     <Compile Include="Objects\IPlacedHandler.cs" />
     <Compile Include="Objects\ISpreadingObject.cs" />
     <Compile Include="Objects\IStepReactionObject.cs" />
-    <Compile Include="Objects\ITrapObject.cs" />
+    <Compile Include="Objects\IDangerousObject.cs" />
     <Compile Include="Objects\IVolumeObject.cs" />
     <Compile Include="Objects\MapObjectBase.cs" />
     <Compile Include="Objects\MovementHelper.cs" />

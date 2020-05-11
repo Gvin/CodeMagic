@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <monsters-configuration>
-  <monster type="skeleton" id="skeleton">
-    <spawn-configuration>
-      <level value="1" rate="100"/>
-      <level value="2" rate="50"/>
-    </spawn-configuration>
+  <monster id="skeleton_weak">
+    <spawn-configuration group="skeleton" min-level="1" force="1"/>
     <name>Skeleton</name>
     <logic-pattern>SimplePatrollingChaser</logic-pattern>
     <experience min="2" max="5"/>
@@ -59,13 +56,9 @@
       </armor>
     </loot>
   </monster>
-  <monster type="goblin" id="goblin">
+  <monster id="goblin_weak">
     <name>Goblin</name>
-    <spawn-configuration>
-      <level value="2" rate="50"/>
-      <level value="3" rate="80"/>
-      <level value="4" rate="20"/>
-    </spawn-configuration>
+    <spawn-configuration group="goblin" min-level="2" force="3"/>
     <logic-pattern>SimpleWonderingChaser</logic-pattern>
     <experience min="5" max="7"/>
     <images>
@@ -124,13 +117,9 @@
       </usable>
     </loot>
   </monster>
-  <monster type="slime" id="slime">
+  <monster id="slime_green">
     <name>Green Slime</name>
-    <spawn-configuration>
-      <level value="3" rate="20"/>
-      <level value="4" rate="30"/>
-      <level value="5" rate="20"/>
-    </spawn-configuration>
+    <spawn-configuration group="slime" min-level="3" force="10"/>
     <logic-pattern>SimpleWonderingChaser</logic-pattern>
     <experience min="10" max="15"/>
     <images>
@@ -201,11 +190,8 @@
       </usable>
     </loot>
   </monster>
-  <monster type="knight" id="black_knight">
-    <spawn-configuration>
-      <level value="4" rate="50"/>
-      <level value="5" rate="80"/>
-    </spawn-configuration>
+  <monster id="knight_black">
+    <spawn-configuration group="knight" min-level="4" force="7"/>
     <name>Black Knight</name>
     <logic-pattern>SimplePatrollingChaser</logic-pattern>
     <experience min="15" max="25"/>

@@ -7,7 +7,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Floor
 {
-    public class SpikedFloorObject : MapObjectBase, IStepReactionObject, IWorldImageProvider, ITrapObject
+    public class SpikedFloorObject : MapObjectBase, IStepReactionObject, IWorldImageProvider, IDangerousObject
     {
         private const string WorldImageName = "Trap_SpikedFloor";
         private const int MinDamage = 2;

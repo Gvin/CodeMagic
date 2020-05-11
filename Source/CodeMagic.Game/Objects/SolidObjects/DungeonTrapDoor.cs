@@ -31,9 +31,13 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         public void Use(CurrentGame.GameCore<Player> game, Point position)
         {
-            var newMap = DungeonMapGenerator.Current.GenerateNewMap(game.Map.Level + 1, out var newPlayerPosition);
-            game.ChangeMap(newMap, newPlayerPosition);
-            game.Journal.Write(new DungeonLevelMessage(game.Map.Level));
+            DialogsManager.Provider.OpenWaitDialog("Descending...", () =>
+            {
+                var newMap = DungeonMapGenerator.Current.GenerateNewMap(game.Map.Level + 1, out var newPlayerPosition);
+                game.ChangeMap(newMap, newPlayerPosition);
+                game.Map.Refresh();
+                game.Journal.Write(new DungeonLevelMessage(game.Map.Level));
+            });
         }
     }
 }

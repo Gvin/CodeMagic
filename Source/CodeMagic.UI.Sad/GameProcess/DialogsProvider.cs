@@ -1,4 +1,5 @@
-﻿using CodeMagic.Core.Game;
+﻿using System;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Game;
 using CodeMagic.Game.Objects.Creatures;
@@ -11,6 +12,11 @@ namespace CodeMagic.UI.Sad.GameProcess
         public void OpenInventoryDialog(string inventoryName, Inventory inventory)
         {
             new CustomInventoryView((CurrentGame.GameCore<Player>) CurrentGame.Game, inventoryName, inventory).Show();
+        }
+
+        public void OpenWaitDialog(string message, Action waitAction)
+        {
+            new WaitMessageView(message, waitAction).Show();
         }
     }
 }

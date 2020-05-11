@@ -13,7 +13,7 @@ namespace CodeMagic.UI.Sad.Views
 {
     public class View : ControlsConsole
     {
-        public static readonly Color FrameColor = Color.Gray;
+        protected static readonly Color FrameColor = Color.Gray;
 
         public event EventHandler<ViewClosedEventArgs> Closed;
 
@@ -44,7 +44,7 @@ namespace CodeMagic.UI.Sad.Views
 
         public void Close(DialogResult? result = null)
         {
-            ViewsManager.Current.RemoveLastView();
+            ViewsManager.Current.RemoveView(this);
             Global.CurrentScreen = ViewsManager.Current.CurrentView;
 
             OnClosed(result);

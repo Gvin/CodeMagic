@@ -187,6 +187,7 @@
     <Compile Include="JournalMessages\ParalyzedMessage.cs" />
     <Compile Include="JournalMessages\ResourcesRequiredToBuildMessage.cs" />
     <Compile Include="JournalMessages\RoofCollapsedMessage.cs" />
+    <Compile Include="JournalMessages\Scenario\StartGameMessage.cs" />
     <Compile Include="JournalMessages\SpellCastMessage.cs" />
     <Compile Include="JournalMessages\SpellErrorMessage.cs" />
     <Compile Include="JournalMessages\SpellLogMessage.cs" />
@@ -196,10 +197,8 @@
     <Compile Include="JournalMessages\ToolRequiredMessage.cs" />
     <Compile Include="JournalMessages\UsedItemMessage.cs" />
     <Compile Include="MapGeneration\Dungeon\DungeonMapGenerator.cs" />
-    <Compile Include="MapGeneration\Dungeon\DungeonMonstersGenerator.cs" />
-    <Compile Include="MapGeneration\Dungeon\DungeonNpcGenerator.cs" />
-    <Compile Include="MapGeneration\Dungeon\DungeonObjectsGenerator.cs" />
-    <Compile Include="MapGeneration\Dungeon\DungeonObjectsGeneratorPatterns.cs" />
+    <Compile Include="MapGeneration\Dungeon\ObjectsGenerators\DungeonObjectsGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\ObjectsGenerators\DungeonObjectsGeneratorPatterns.cs" />
     <Compile Include="MapGeneration\Dungeon\MapGenerators\CaveDungeonMapGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\MapGenerators\DungeonRoomsMapGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\MapGenerators\IMapAreaGenerator.cs" />
@@ -207,6 +206,9 @@
     <Compile Include="MapGeneration\Dungeon\MapObjectFactories\CaveMapObjectsFactory.cs" />
     <Compile Include="MapGeneration\Dungeon\MapObjectFactories\DungeonMapObjectsFactory.cs" />
     <Compile Include="MapGeneration\Dungeon\MapObjectFactories\IMapObjectFactory.cs" />
+    <Compile Include="MapGeneration\Dungeon\MonstersGenerators\DungeonMonstersGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\MonstersGenerators\IMonstersGenerator.cs" />
+    <Compile Include="MapGeneration\Dungeon\ObjectsGenerators\IObjectsGenerator.cs" />
     <Compile Include="MapGeneration\MapGenerationException.cs" />
     <Compile Include="Objects\AnimationManager.cs" />
     <Compile Include="Objects\AnimationsBatchManager.cs" />

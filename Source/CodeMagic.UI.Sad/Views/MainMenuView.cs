@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CodeMagic.Core.Game;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Controls;
@@ -111,9 +112,13 @@ namespace CodeMagic.UI.Sad.Views
         {
             Close();
 
-            var game = GameManager.Current.StartGame();
-            var gameView = new GameView(game);
-            gameView.Show();
+            var generatingView = new WaitMessageView("Starting new game...", () =>
+            {
+                var game = GameManager.Current.StartGame();
+                var gameView = new GameView(game);
+                gameView.Show();
+            });
+            generatingView.Show();
         }
 
         private int GetLabelPosition()

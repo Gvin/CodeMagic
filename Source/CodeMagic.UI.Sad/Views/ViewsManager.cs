@@ -7,28 +7,41 @@ namespace CodeMagic.UI.Sad.Views
     {
         public static ViewsManager Current { get; } = new ViewsManager();
 
-        private readonly Stack<View> views;
+        private readonly List<View> views;
 
         private ViewsManager()
         {
-            views = new Stack<View>();
+            views = new List<View>();
         }
 
         public void AddView(View view)
         {
-            views.Push(view);
+            views.Add(view);
             view.IsFocused = true;
         }
 
-        public void RemoveLastView()
+        public void RemoveView(View view)
         {
-            views.Pop();
+            views.Remove(view);
+
             if (CurrentView != null)
             {
                 CurrentView.IsFocused = true;
             }
         }
 
-        public View CurrentView => views.FirstOrDefault();
+        public void RemoveLastView()
+        {
+            if (views.Count > 0)
+            {
+                views.Remove(views.Last());
+            }
+            if (CurrentView != null)
+            {
+                CurrentView.IsFocused = true;
+            }
+        }
+
+        public View CurrentView => views.LastOrDefault();
     }
 }

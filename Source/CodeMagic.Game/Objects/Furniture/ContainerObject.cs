@@ -60,6 +60,6 @@ namespace CodeMagic.Game.Objects.Furniture
     {
         public string ContainerType { get; set; }
 
-        public int LootLevelIncrement { get; set; } = 0;
+        public int LootLevelIncrement { get; set; }
     }
 }

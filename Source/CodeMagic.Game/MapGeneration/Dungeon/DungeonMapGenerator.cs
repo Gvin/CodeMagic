@@ -7,6 +7,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.Game.MapGeneration.Dungeon.MapGenerators;
 using CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories;
+using CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators;
 using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon
@@ -22,27 +23,25 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 
         private readonly Dictionary<MapType, IMapAreaGenerator> generators;
         private readonly bool writeMapFile;
-        private readonly IImagesStorage imagesStorage;
 
         private DungeonMapGenerator(IImagesStorage imagesStorage, bool writeMapFile = false)
         {
             this.writeMapFile = writeMapFile;
-            this.imagesStorage = imagesStorage;
-
-            var dungeonMapObjectsFactory = new DungeonMapObjectsFactory();
-            var caveMapObjectsFactory = new CaveMapObjectsFactory();
 
             generators = new Dictionary<MapType, IMapAreaGenerator>
             {
-                {MapType.Dungeon, new DungeonRoomsMapGenerator(dungeonMapObjectsFactory)},
-                {MapType.Labyrinth, new LabyrinthMapGenerator(dungeonMapObjectsFactory)},
-                {MapType.Cave, new CaveDungeonMapGenerator(caveMapObjectsFactory)}
+                {MapType.Dungeon, new DungeonRoomsMapGenerator(
+                    new DungeonMapObjectsFactory(), 
+                    new ObjectsGenerators.DungeonObjectsGenerator(imagesStorage), 
+                    new DungeonMonstersGenerator())},
+                {MapType.Labyrinth, new LabyrinthMapGenerator(new DungeonMapObjectsFactory())},
+                {MapType.Cave, new CaveDungeonMapGenerator(new CaveMapObjectsFactory())}
             };
         }
 
         public IAreaMap GenerateNewMap(int level, out Point playerPosition)
         {
-            const int maxAttempts = 100;
+            const int maxAttempts = 500;
             var attempts = 0;
             while (attempts < maxAttempts)
             {
@@ -81,12 +80,6 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
             var mapType = GenerateMapType(level);
             var generator = generators[mapType];
             var map = generator.Generate(level, size, out playerPosition);
-
-            var generateTorchPosts = mapType == MapType.Cave;
-
-            new DungeonObjectsGenerator(imagesStorage).GenerateObjects(map, generateTorchPosts);
-
-            new DungeonNpcGenerator().GenerateNpc(level, size, mapType, map, playerPosition);
 
             if (writeMapFile)
             {
@@ -147,6 +140,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 
         private MapType GenerateMapType(int level)
         {
+            // TODO: Delete only-dungeon
+            return MapType.Dungeon;
+
             if (level == 1) // Always dungeons for the 1st level.
                 return MapType.Dungeon;
 

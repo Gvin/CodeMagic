@@ -4,7 +4,6 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects.Creatures;
-using CodeMagic.Game.Objects.Floor;
 
 namespace CodeMagic.Core.Objects
 {
@@ -55,7 +54,7 @@ namespace CodeMagic.Core.Objects
             if (nextCell == null)
                 return new MovementResult(startPoint, false);
 
-            if (avoidTraps && nextCell.Objects.OfType<ITrapObject>().Any())
+            if (avoidTraps && nextCell.Objects.OfType<IDangerousObject>().Any())
                 return new MovementResult(startPoint, false);
 
             if (!canPassFilter(nextCell))

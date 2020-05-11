@@ -10,7 +10,7 @@ using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.UI.Images;
 
-namespace CodeMagic.Game.MapGeneration.Dungeon
+namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
 {
     internal partial class DungeonObjectsGenerator
     {

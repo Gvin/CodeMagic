@@ -6,6 +6,8 @@ using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories;
+using CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators;
+using CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators;
 using Point = System.Drawing.Point;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
@@ -16,10 +18,16 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
         private const int MaxBuildRetries = 10;
 
         private readonly IMapObjectFactory mapObjectsFactory;
+        private readonly IObjectsGenerator objectsGenerator;
+        private readonly IMonstersGenerator monstersGenerator;
 
-        public DungeonRoomsMapGenerator(IMapObjectFactory mapObjectsFactory)
+        public DungeonRoomsMapGenerator(IMapObjectFactory mapObjectsFactory,
+            IObjectsGenerator objectsGenerator,
+            IMonstersGenerator monstersGenerator)
         {
             this.mapObjectsFactory = mapObjectsFactory;
+            this.objectsGenerator = objectsGenerator;
+            this.monstersGenerator = monstersGenerator;
         }
 
         public IAreaMap Generate(int level, MapSize size, out Core.Game.Point playerPosition)
@@ -42,7 +50,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
 
             var mapBuilt = BuildMap(builder);
             if (!mapBuilt)
-                throw new ApplicationException("Unable to build dungeon map.");
+                throw new MapGenerationException("Unable to build dungeon map.");
 
             var simplifiedMap = SimplifyMap(builder.Map, builder.MapSize.Width, builder.MapSize.Height);
             var height = simplifiedMap.Length;
@@ -55,6 +63,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
             {
                 map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
             }
+
+            objectsGenerator.GenerateObjects(map);
+            monstersGenerator.GenerateMonsters(map, playerPosition);
 
             return map;
         }
