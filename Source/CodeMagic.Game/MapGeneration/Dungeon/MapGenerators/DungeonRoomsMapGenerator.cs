@@ -21,7 +21,8 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
         private readonly IObjectsGenerator objectsGenerator;
         private readonly IMonstersGenerator monstersGenerator;
 
-        public DungeonRoomsMapGenerator(IMapObjectFactory mapObjectsFactory,
+        public DungeonRoomsMapGenerator(
+            IMapObjectFactory mapObjectsFactory,
             IObjectsGenerator objectsGenerator,
             IMonstersGenerator monstersGenerator)
         {
@@ -64,7 +65,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
                 map.AddObject(playerPosition, mapObjectsFactory.CreateStairs());
             }
 
-            objectsGenerator.GenerateObjects(map);
+            objectsGenerator.GenerateObjects(map, playerPosition);
             monstersGenerator.GenerateMonsters(map, playerPosition);
 
             return map;
@@ -433,7 +434,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
                         Map[x, y] = FilledCell;
             }
 
-            #region build methods()
+            #region build methods
 
             /// <summary>
             /// Randomly choose a room and attempt to build a corridor terminated by
@@ -559,13 +560,13 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
             /// </summary>
             private void PlaceStartRoom()
             {
-                rctCurrentRoom = new Rectangle()
+                rctCurrentRoom = new Rectangle
                 {
                     Width = random.Next(RoomSizeMin.Width, RoomSizeMax.Width),
-                    Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height)
+                    Height = random.Next(RoomSizeMin.Height, RoomSizeMax.Height),
+                    X = MapSize.Width / 2,
+                    Y = MapSize.Height / 2
                 };
-                rctCurrentRoom.X = MapSize.Width / 2;
-                rctCurrentRoom.Y = MapSize.Height / 2;
                 BuildRoom(false);
             }
 
@@ -813,7 +814,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
             /// Attempt to make a corridor, storing it in the lPotentialCorridor list
             /// </summary>
             /// <param name="pStart">Start Point of corridor</param>
+            /// <param name="pDirection"></param>
             /// <param name="pTurns">Number of turns to make</param>
+            /// <param name="pPreventBackTracking"></param>
             private CorridorItemHit CorridorMakeStraight(ref Point pStart, ref Point pDirection, int pTurns, bool pPreventBackTracking)
             {
 

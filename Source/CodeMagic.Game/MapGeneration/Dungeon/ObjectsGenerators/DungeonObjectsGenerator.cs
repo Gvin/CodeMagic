@@ -44,15 +44,15 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             return patternsList.ToArray();
         }
 
-        public void GenerateObjects(IAreaMap map)
+        public void GenerateObjects(IAreaMap map, Point playerPosition)
         {
-            AddPatterns(map);
+            AddPatterns(map, playerPosition);
 
             var stonesCount = (int) Math.Round(map.Width * map.Height * StonesCountMultiplier);
             AddStones(map, stonesCount);
         }
 
-        private void AddPatterns(IAreaMap map)
+        private void AddPatterns(IAreaMap map, Point playerPosition)
         {
             foreach (var pattern in patterns)
             {
@@ -60,13 +60,13 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
                 {
                     if (RandomHelper.CheckChance(pattern.Rareness))
                     {
-                        AddPattern(map, pattern);
+                        AddPattern(map, playerPosition, pattern);
                     }
                 }
             }
         }
 
-        private void AddPattern(IAreaMap map, ObjectsPattern pattern)
+        private void AddPattern(IAreaMap map, Point playerPosition, ObjectsPattern pattern)
         {
             const int maxAttempts = 100;
             var attempt = 0;
@@ -74,12 +74,12 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             {
                 attempt++;
 
-                if (TryAddPattern(map, pattern))
+                if (TryAddPattern(map, playerPosition, pattern))
                     return;
             }
         }
 
-        private bool TryAddPattern(IAreaMap map, ObjectsPattern pattern)
+        private bool TryAddPattern(IAreaMap map, Point playerPosition, ObjectsPattern pattern)
         {
             var x = RandomHelper.GetRandomValue(0, map.Width);
             var y = RandomHelper.GetRandomValue(0, map.Height);
@@ -93,6 +93,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
                 {
                     var posX = cursorX + x;
                     var posY = cursorY + y;
+
+                    if (posX == playerPosition.X && posY == playerPosition.Y)
+                        return false;
 
                     var cell = map.TryGetCell(posX, posY);
                     if (cell == null)
