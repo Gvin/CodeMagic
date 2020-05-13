@@ -55,7 +55,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
             var leftForce = GetSquadForce(map.Level);
             var monsterConfig = GenerateMonster(squadMonsters, leftForce);
 
-            while (monsterConfig != null)
+            while (monsterConfig != null && emptyRoomPoints.Count > 0)
             {
                 leftForce -= monsterConfig.SpawnConfiguration.Force;
 

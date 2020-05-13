@@ -2,16 +2,11 @@
 using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Game.Items.Materials;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
 {
     internal partial class DungeonObjectsGenerator : IObjectsGenerator
     {
-        private const double StonesCountMultiplier = 0.03;
-
-        private const int MaxPositionSearchTries = 20;
-
         private readonly ObjectsPattern[] patterns;
 
         public DungeonObjectsGenerator(IImagesStorage storage)
@@ -38,7 +33,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
                 // Water
                 CreateWaterPool(),
                 // Spiked Floor
-                CreateSpikedFloor()
+                CreateSpikedFloor(),
+                // Stone
+                CreateStone()
             };
 
             return patternsList.ToArray();
@@ -46,22 +43,12 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
 
         public void GenerateObjects(IAreaMap map, Point playerPosition)
         {
-            AddPatterns(map, playerPosition);
-
-            var stonesCount = (int) Math.Round(map.Width * map.Height * StonesCountMultiplier);
-            AddStones(map, stonesCount);
-        }
-
-        private void AddPatterns(IAreaMap map, Point playerPosition)
-        {
             foreach (var pattern in patterns)
             {
-                for (int counter = 0; counter < pattern.MaxCount; counter++)
+                var count = (int)Math.Floor(map.Width * map.Height * pattern.MaxCountMultiplier);
+                for (int counter = 0; counter < count; counter++)
                 {
-                    if (RandomHelper.CheckChance(pattern.Rareness))
-                    {
-                        AddPattern(map, playerPosition, pattern);
-                    }
+                    AddPattern(map, playerPosition, pattern);
                 }
             }
         }
@@ -121,32 +108,6 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             }
 
             return true;
-        }
-
-        private void AddStones(IAreaMap map, int stonesCount)
-        {
-            for (int counter = 0; counter < stonesCount; counter++)
-            {
-                var position = GetFreePosition(map);
-                if (position == null)
-                    continue;
-
-                map.AddObject(position, new Stone());
-            }
-        }
-
-        private Point GetFreePosition(IAreaMap map)
-        {
-            for (int counter = 0; counter < MaxPositionSearchTries; counter++)
-            {
-                var randomX = RandomHelper.GetRandomValue(0, map.Width - 1);
-                var randomY = RandomHelper.GetRandomValue(0, map.Height - 1);
-
-                var position = new Point(randomX, randomY);
-                if (!map.GetCell(position).BlocksMovement)
-                    return position;
-            }
-            return null;
         }
     }
 }
