@@ -10,7 +10,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
 {
-    public class WeaponItem : EquipableItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider
+    public class WeaponItem : EquipableItem, IWeaponItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider
     {
         private const string SaveKeyInventoryImage = "InventoryImage";
         private const string SaveKeyWorldImage = "WorldImage";
@@ -128,7 +128,7 @@ namespace CodeMagic.Game.Items
             return result.ToArray();
         }
 
-        private void AddDamageDescription(List<StyledLine> descriptionResult, WeaponItem equipedWeaponLeft, WeaponItem equipedWeaponRight)
+        private void AddDamageDescription(List<StyledLine> descriptionResult, IWeaponItem equipedWeaponLeft, IWeaponItem equipedWeaponRight)
         {
             foreach (Element element in Enum.GetValues(typeof(Element)))
             {
@@ -181,7 +181,7 @@ namespace CodeMagic.Game.Items
             return value > otherValue ? TextHelper.PositiveValueColor : TextHelper.NegativeValueColor;
         }
 
-        public static int GetMaxDamage(WeaponItem item, Element element)
+        public static int GetMaxDamage(IWeaponItem item, Element element)
         {
             if (item == null)
                 return 0;
@@ -189,7 +189,7 @@ namespace CodeMagic.Game.Items
             return item.MaxDamage.ContainsKey(element) ? item.MaxDamage[element] : 0;
         }
 
-        public static int GetMinDamage(WeaponItem item, Element element)
+        public static int GetMinDamage(IWeaponItem item, Element element)
         {
             if (item == null)
                 return 0;

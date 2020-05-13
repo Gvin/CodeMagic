@@ -103,6 +103,7 @@
     <Compile Include="Items\ItemsGeneration\Implementations\Usable\PotionsGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\ItemsGeneratorManager.cs" />
     <Compile Include="Items\IUsableItem.cs" />
+    <Compile Include="Items\IWeaponItem.cs" />
     <Compile Include="Items\SpellBook.cs" />
     <Compile Include="Items\Usable\AncientScroll.cs" />
     <Compile Include="Items\IDescriptionProvider.cs" />

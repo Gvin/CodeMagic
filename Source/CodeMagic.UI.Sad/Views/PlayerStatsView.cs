@@ -127,7 +127,7 @@ namespace CodeMagic.UI.Sad.Views
             }
         }
 
-        private StyledLine[] GetWeaponDetails(WeaponItem weapon)
+        private StyledLine[] GetWeaponDetails(IWeaponItem weapon)
         {
             var result = new List<StyledLine>
             {

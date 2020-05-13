@@ -29,21 +29,21 @@ namespace CodeMagic.Game.Items
             Weight = 0
         });
 
-        private WeaponItem rightWeapon;
-        private WeaponItem leftWeapon;
+        private IWeaponItem rightWeapon;
+        private IWeaponItem leftWeapon;
 
         public Equipment(SaveData data, Inventory inventory)
         {
             var rightWeaponId = data.GetStringValue(SaveKeyRightWeapon);
             if (rightWeaponId != null)
             {
-                rightWeapon = (WeaponItem) inventory.GetItemById(rightWeaponId);
+                rightWeapon = (IWeaponItem) inventory.GetItemById(rightWeaponId);
             }
 
             var leftWeaponId = data.GetStringValue(SaveKeyLeftWeapon);
             if (leftWeaponId != null)
             {
-                leftWeapon = (WeaponItem) inventory.GetItemById(leftWeaponId);
+                leftWeapon = (IWeaponItem) inventory.GetItemById(leftWeaponId);
             }
 
             var spellBookId = data.GetStringValue(SaveKeySpellBook);
@@ -103,13 +103,13 @@ namespace CodeMagic.Game.Items
 
         public Dictionary<ArmorType, ArmorItem> Armor { get; }
 
-        public WeaponItem RightWeapon => rightWeapon ?? Fists;
+        public IWeaponItem RightWeapon => rightWeapon ?? Fists;
 
-        public WeaponItem LeftWeapon => leftWeapon ?? Fists;
+        public IWeaponItem LeftWeapon => leftWeapon ?? Fists;
 
         public bool IsDoubleWielded => rightWeapon == null || leftWeapon == null;
 
-        public void EquipWeapon(WeaponItem weapon, bool isRight)
+        public void EquipWeapon(IWeaponItem weapon, bool isRight)
         {
             if (isRight)
             {
@@ -247,10 +247,14 @@ namespace CodeMagic.Game.Items
         {
             var result = new List<ILightSource>
             {
-                SpellBook,
-                LeftWeapon,
-                RightWeapon
+                SpellBook
             };
+
+            if (leftWeapon is ILightSource leftWeaponLight)
+                result.Add(leftWeaponLight);
+            if (rightWeapon is ILightSource rightWeaponLight)
+                result.Add(rightWeaponLight);
+
             result.AddRange(Armor.Values);
             return result.Where(item => item != null).ToArray();
         }

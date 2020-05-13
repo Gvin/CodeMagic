@@ -195,7 +195,7 @@ namespace CodeMagic.Game.Items
             }
         }
 
-        public static void AddBonusesDescription(EquipableItem item, EquipableItem equiped, List<StyledLine> descriptionResult)
+        public static void AddBonusesDescription(IEquipableItem item, IEquipableItem equiped, List<StyledLine> descriptionResult)
         {
             var equalItems = item.Equals(equiped);
 
