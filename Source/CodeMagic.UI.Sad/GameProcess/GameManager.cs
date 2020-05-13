@@ -112,7 +112,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             var weapon = new TorchItem();
             player.Inventory.AddItem(weapon);
-            player.Equipment.EquipItem(weapon);
+            player.Equipment.EquipWeapon(weapon, true);
 
             var spellBook = itemsGenerator.GenerateSpellBook(ItemRareness.Trash);
             player.Inventory.AddItem(spellBook);

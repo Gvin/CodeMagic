@@ -203,7 +203,9 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int MaxMana => 100 + 20 * GetStat(PlayerStats.Intelligence) + Equipment.GetBonus(EquipableBonusType.Mana);
 
-        public int HitChance => CalculateHitChance(Equipment.Weapon.HitChance);
+        public int HitChanceLeft => CalculateHitChance(Equipment.RightWeapon.HitChance);
+
+        public int HitChanceRight => CalculateHitChance(Equipment.RightWeapon.HitChance);
 
         public override void Update(Point position)
         {
@@ -266,25 +268,7 @@ namespace CodeMagic.Game.Objects.Creatures
             return value;
         }
 
-        public ILightSource[] LightSources
-        {
-            get
-            {
-                var result = new List<ILightSource>();
-                result.AddRange(Equipment.Armor.Values.Where(item => item != null));
-                if (Equipment.Weapon != null)
-                {
-                    result.Add(Equipment.Weapon);
-                }
-
-                if (Equipment.SpellBook != null)
-                {
-                    result.Add(Equipment.SpellBook);
-                }
-
-                return result.ToArray();
-            }
-        }
+        public ILightSource[] LightSources => Equipment.GetLightSources();
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {

@@ -14,28 +14,28 @@
   <row>
     <pixel glyph="17">
       <color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
-      </color>
-    </pixel>
-    <pixel glyph="2">
-      <color>
         <R>0</R>
         <G>0</G>
         <B>0</B>
       </color>
+    </pixel>
+    <pixel glyph="2">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
       <background-color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel glyph="16">
       <color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
       </color>
     </pixel>
   </row>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Game;
@@ -36,6 +37,7 @@ namespace CodeMagic.UI.Sad.Views
 
             PrintProtection(2, 4);
             PrintPlayerStats(25, 4);
+            PrintWeapon(2, 20);
         }
 
         private void PrintPlayerStats(int dX, int dY)
@@ -77,6 +79,85 @@ namespace CodeMagic.UI.Sad.Views
 
             PrintStyledText(dX, charsY + 4, new StyledLine {$"Level: {player.Level}"});
             PrintStyledText(dX, charsY + 5, new StyledLine {"XP:    ", new StyledString($"{player.Experience} / {player.GetXpToLevelUp()}", TextHelper.XpColor)});
+        }
+
+        private void PrintWeapon(int dX, int dY)
+        {
+            Fill(1, dY, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
+            Print(0, dY, new ColoredGlyph(Glyphs.GetGlyph('╠'), FrameColor, DefaultBackground));
+            Print(Width - 1, dY, new ColoredGlyph(Glyphs.GetGlyph('╣'), FrameColor, DefaultBackground));
+
+            PrintStyledText(dX, dY + 1, new StyledLine
+            {
+                "Right Hand Weapon: ",
+                new StyledString(player.Equipment.RightWeapon.Name, ItemDrawingHelper.GetItemColor(player.Equipment.RightWeapon))
+            });
+
+            Fill(1, dY + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
+            Print(0, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
+            Print(Width - 1, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+
+            var rightWeaponDetails = GetWeaponDetails(player.Equipment.RightWeapon);
+            for (int yShift = 0; yShift < rightWeaponDetails.Length; yShift++)
+            {
+                var y = dY + 3 + yShift;
+                PrintStyledText(dX, y, rightWeaponDetails[yShift]);
+            }
+
+            var leftDy = dY + rightWeaponDetails.Length + 4;
+            Fill(1, leftDy, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
+            Print(0, leftDy, new ColoredGlyph(Glyphs.GetGlyph('╠'), FrameColor, DefaultBackground));
+            Print(Width - 1, leftDy, new ColoredGlyph(Glyphs.GetGlyph('╣'), FrameColor, DefaultBackground));
+
+            PrintStyledText(dX, leftDy + 1, new StyledLine
+            {
+                "Left Hand Weapon:  ",
+                new StyledString(player.Equipment.LeftWeapon.Name, ItemDrawingHelper.GetItemColor(player.Equipment.LeftWeapon))
+            });
+
+            Fill(1, leftDy + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
+            Print(0, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
+            Print(Width - 1, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+
+            var leftWeaponDetails = GetWeaponDetails(player.Equipment.LeftWeapon);
+            for (int yShift = 0; yShift < leftWeaponDetails.Length; yShift++)
+            {
+                var y = leftDy + 3 + yShift;
+                PrintStyledText(dX, y, leftWeaponDetails[yShift]);
+            }
+        }
+
+        private StyledLine[] GetWeaponDetails(WeaponItem weapon)
+        {
+            var result = new List<StyledLine>
+            {
+                new StyledLine
+                {
+                    $"Hit Chance: {weapon.HitChance}%"
+                },
+                StyledLine.Empty
+            };
+
+            foreach (Element element in Enum.GetValues(typeof(Element)))
+            {
+                var maxDamage = WeaponItem.GetMaxDamage(weapon, element);
+                var minDamage = WeaponItem.GetMinDamage(weapon, element);
+
+                if (maxDamage == 0 && minDamage == 0)
+                    continue;
+
+                var damageLine = new StyledLine
+                {
+                    new StyledString($"{TextHelper.GetElementName(element)}",
+                        TextHelper.GetElementColor(element)),
+                    " Damage: ",
+                    $"{minDamage} - {maxDamage}"
+                };
+
+                result.Add(damageLine);
+            }
+
+            return result.ToArray();
         }
 
         private void PrintProtection(int dX, int dY)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
 
@@ -10,7 +11,8 @@ namespace CodeMagic.Game.Items
 {
     public class Equipment : ISaveable
     {
-        private const string SaveKeyWeapon = "Weapon";
+        private const string SaveKeyRightWeapon = "RightWeapon";
+        private const string SaveKeyLeftWeapon = "LeftWeapon";
         private const string SaveKeyArmorHelmet = "ArmorHelmet";
         private const string SaveKeyArmorChest = "ArmorChest";
         private const string SaveKeyArmorLeggings = "ArmorLeggings";
@@ -22,19 +24,26 @@ namespace CodeMagic.Game.Items
             MinDamage = new Dictionary<Element, int> {{Element.Blunt, 0}},
             HitChance = 50,
             Name = "Fists",
-            Key = "fists",
+            Key = "default_fists",
             Rareness = ItemRareness.Trash,
             Weight = 0
         });
 
-        private WeaponItem weapon;
+        private WeaponItem rightWeapon;
+        private WeaponItem leftWeapon;
 
         public Equipment(SaveData data, Inventory inventory)
         {
-            var weaponId = data.GetStringValue(SaveKeyWeapon);
-            if (weaponId != null)
+            var rightWeaponId = data.GetStringValue(SaveKeyRightWeapon);
+            if (rightWeaponId != null)
             {
-                weapon = (WeaponItem) inventory.GetItemById(weaponId);
+                rightWeapon = (WeaponItem) inventory.GetItemById(rightWeaponId);
+            }
+
+            var leftWeaponId = data.GetStringValue(SaveKeyLeftWeapon);
+            if (leftWeaponId != null)
+            {
+                leftWeapon = (WeaponItem) inventory.GetItemById(leftWeaponId);
             }
 
             var spellBookId = data.GetStringValue(SaveKeySpellBook);
@@ -83,7 +92,8 @@ namespace CodeMagic.Game.Items
         {
             return new SaveDataBuilder(GetType(), new Dictionary<string, object>
             {
-                {SaveKeyWeapon, weapon?.Id},
+                {SaveKeyRightWeapon, rightWeapon?.Id},
+                {SaveKeyLeftWeapon, leftWeapon?.Id},
                 {SaveKeySpellBook, SpellBook?.Id},
                 {SaveKeyArmorHelmet, Armor[ArmorType.Helmet]?.Id},
                 {SaveKeyArmorChest, Armor[ArmorType.Chest]?.Id},
@@ -93,15 +103,30 @@ namespace CodeMagic.Game.Items
 
         public Dictionary<ArmorType, ArmorItem> Armor { get; }
 
-        public WeaponItem Weapon => weapon ?? Fists;
+        public WeaponItem RightWeapon => rightWeapon ?? Fists;
+
+        public WeaponItem LeftWeapon => leftWeapon ?? Fists;
+
+        public bool IsDoubleWielded => rightWeapon == null || leftWeapon == null;
+
+        public void EquipWeapon(WeaponItem weapon, bool isRight)
+        {
+            if (isRight)
+            {
+                rightWeapon = weapon;
+            }
+            else
+            {
+                leftWeapon = weapon;
+            }
+        }
 
         public void EquipItem(IEquipableItem item)
         {
             switch (item)
             {
-                case WeaponItem weaponItem:
-                    EquipWeapon(weaponItem);
-                    break;
+                case WeaponItem _:
+                    throw new ArgumentException($"Weapon items should be equiped with {nameof(EquipWeapon)}");
                 case ArmorItem armorItem:
                     EquipArmor(armorItem);
                     break;
@@ -117,8 +142,8 @@ namespace CodeMagic.Game.Items
         {
             switch (item)
             {
-                case WeaponItem _:
-                    UnequipWeapon();
+                case WeaponItem weaponItem:
+                    UnequipWeapon(weaponItem);
                     break;
                 case ArmorItem armorItem:
                     UnequipArmor(armorItem.ArmorType);
@@ -140,9 +165,20 @@ namespace CodeMagic.Game.Items
             }
         }
 
-        private void UnequipWeapon()
+        private void UnequipWeapon(WeaponItem weapon)
         {
-            weapon = null;
+            if (rightWeapon != null && rightWeapon.Equals(weapon))
+            {
+                rightWeapon = null;
+            }
+            else if (leftWeapon != null && leftWeapon.Equals(weapon))
+            {
+                leftWeapon = null;
+            }
+            else
+            {
+                throw new ArgumentException($"Weapon {weapon.Key} is not equiped");
+            }
         }
 
         private void UnequipSpellBook()
@@ -151,12 +187,6 @@ namespace CodeMagic.Game.Items
             {
                 SpellBook = null;
             }
-        }
-
-        private void EquipWeapon(WeaponItem newWeapon)
-        {
-            UnequipWeapon();
-            weapon = newWeapon;
         }
 
         private void EquipArmor(ArmorItem newArmor)
@@ -176,7 +206,7 @@ namespace CodeMagic.Game.Items
             switch (item)
             {
                 case WeaponItem weaponItem:
-                    return weapon != null && weapon.Equals(weaponItem);
+                    return (rightWeapon != null && rightWeapon.Equals(weaponItem)) || (leftWeapon != null && leftWeapon.Equals(weaponItem));
                 case ArmorItem armorItem:
                     return Armor[armorItem.ArmorType] != null && Armor[armorItem.ArmorType].Equals(item);
                 case SpellBook spellBookItem:
@@ -195,7 +225,8 @@ namespace CodeMagic.Game.Items
 
         public int GetBonus(EquipableBonusType bonusType)
         {
-            var result = weapon?.GetBonus(bonusType) ?? 0;
+            var result = rightWeapon?.GetBonus(bonusType) ?? 0;
+            result += leftWeapon?.GetBonus(bonusType) ?? 0;
             result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.GetBonus(bonusType));
             result += SpellBook?.GetBonus(bonusType) ?? 0;
 
@@ -204,11 +235,24 @@ namespace CodeMagic.Game.Items
 
         public int GetStatsBonus(PlayerStats statType)
         {
-            var result = weapon?.GetStatBonus(statType) ?? 0;
+            var result = rightWeapon?.GetStatBonus(statType) ?? 0;
+            result += leftWeapon?.GetStatBonus(statType) ?? 0;
             result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.GetStatBonus(statType));
             result += SpellBook?.GetStatBonus(statType) ?? 0;
 
             return result;
+        }
+
+        public ILightSource[] GetLightSources()
+        {
+            var result = new List<ILightSource>
+            {
+                SpellBook,
+                LeftWeapon,
+                RightWeapon
+            };
+            result.AddRange(Armor.Values);
+            return result.Where(item => item != null).ToArray();
         }
     }
 }

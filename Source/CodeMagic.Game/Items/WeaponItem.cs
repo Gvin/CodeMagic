@@ -61,9 +61,9 @@ namespace CodeMagic.Game.Items
             return data;
         }
 
-        private Dictionary<Element, int> MaxDamage { get; }
+        public Dictionary<Element, int> MaxDamage { get; }
 
-        private Dictionary<Element, int> MinDamage { get; }
+        public Dictionary<Element, int> MinDamage { get; }
 
         public Dictionary<Element, int> GenerateDamage()
         {
@@ -87,53 +87,56 @@ namespace CodeMagic.Game.Items
 
         private StyledLine[] GetCharacteristicsDescription(Player player)
         {
-            var equipedWeapon = player.Equipment.Weapon;
-
             var result = new List<StyledLine>();
 
-            if (equipedWeapon == null || Equals(equipedWeapon))
+            if (Equals(player.Equipment.RightWeapon) || Equals(player.Equipment.LeftWeapon))
             {
                 result.Add(TextHelper.GetWeightLine(Weight));
             }
             else
             {
-                result.Add(TextHelper.GetCompareWeightLine(Weight, equipedWeapon.Weight));
+                result.Add(TextHelper.GetCompareWeightLine(Weight, player.Equipment.RightWeapon.Weight));
             }
 
             result.Add(StyledLine.Empty);
 
-            AddDamageDescription(result, equipedWeapon);
+            AddDamageDescription(result, player.Equipment.LeftWeapon, player.Equipment.RightWeapon);
 
             var hitChanceLine = new StyledLine { "Hit Chance: " };
-            if (equipedWeapon == null || Equals(equipedWeapon))
+            if (Equals(player.Equipment.RightWeapon) || Equals(player.Equipment.LeftWeapon))
             {
                 hitChanceLine.Add(TextHelper.GetValueString(HitChance, "%", false));
             }
             else
             {
-                hitChanceLine.Add(TextHelper.GetCompareValueString(HitChance, equipedWeapon.HitChance, "%", false));
+                hitChanceLine.Add(TextHelper.GetCompareValueString(HitChance, player.Equipment.RightWeapon.HitChance, "%", false));
             }
             result.Add(hitChanceLine);
 
             result.Add(StyledLine.Empty);
-            TextHelper.AddBonusesDescription(this, equipedWeapon, result);
+            if (Equals(player.Equipment.RightWeapon) || Equals(player.Equipment.LeftWeapon))
+            {
+                TextHelper.AddBonusesDescription(this, null, result);
+            }
+            else
+            {
+                TextHelper.AddBonusesDescription(this, player.Equipment.RightWeapon, result);
+            }
             result.Add(StyledLine.Empty);
             TextHelper.AddLightBonusDescription(this, result);
 
             return result.ToArray();
         }
 
-        private void AddDamageDescription(List<StyledLine> descriptionResult, WeaponItem equipedWeapon)
+        private void AddDamageDescription(List<StyledLine> descriptionResult, WeaponItem equipedWeaponLeft, WeaponItem equipedWeaponRight)
         {
-            var equiped = Equals(equipedWeapon);
-
             foreach (Element element in Enum.GetValues(typeof(Element)))
             {
                 var maxDamage = GetMaxDamage(this, element);
                 var minDamage = GetMinDamage(this, element);
 
-                var otherMaxDamage = GetMaxDamage(equipedWeapon, element);
-                var otherMinDamage = GetMinDamage(equipedWeapon, element);
+                var otherMaxDamage = GetMaxDamage(equipedWeaponRight, element);
+                var otherMinDamage = GetMinDamage(equipedWeaponRight, element);
 
                 if (maxDamage == 0 && minDamage == 0 && otherMaxDamage == 0 && otherMinDamage == 0)
                     continue;
@@ -145,7 +148,7 @@ namespace CodeMagic.Game.Items
                     " Damage: "
                 };
 
-                if (equiped)
+                if (Equals(equipedWeaponRight) || Equals(equipedWeaponLeft))
                 {
                     damageLine.Add($"{minDamage} - {maxDamage}");
                 }
@@ -178,7 +181,7 @@ namespace CodeMagic.Game.Items
             return value > otherValue ? TextHelper.PositiveValueColor : TextHelper.NegativeValueColor;
         }
 
-        private static int GetMaxDamage(WeaponItem item, Element element)
+        public static int GetMaxDamage(WeaponItem item, Element element)
         {
             if (item == null)
                 return 0;
@@ -186,7 +189,7 @@ namespace CodeMagic.Game.Items
             return item.MaxDamage.ContainsKey(element) ? item.MaxDamage[element] : 0;
         }
 
-        private static int GetMinDamage(WeaponItem item, Element element)
+        public static int GetMinDamage(WeaponItem item, Element element)
         {
             if (item == null)
                 return 0;

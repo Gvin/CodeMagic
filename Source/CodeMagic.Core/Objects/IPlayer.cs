@@ -10,7 +10,9 @@ namespace CodeMagic.Core.Objects
 
         int MaxMana { get; }
 
-        int HitChance { get; }
+        int HitChanceLeft { get; }
+
+        int HitChanceRight { get; }
 
         int HungerPercent { get; set; }
 

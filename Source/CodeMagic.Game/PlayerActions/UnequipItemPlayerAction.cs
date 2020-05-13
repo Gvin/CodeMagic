@@ -1,6 +1,7 @@
 ﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Game.Items;
+using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
@@ -17,6 +18,7 @@ namespace CodeMagic.Game.PlayerActions
         public bool Perform(out Point newPosition)
         {
             ((CurrentGame.GameCore<Player>)CurrentGame.Game).Player.Equipment.UnequipItem(item);
+            CurrentGame.Journal.Write(new ItemUnequipedMessage(item));
 
             newPosition = CurrentGame.PlayerPosition;
             return true;

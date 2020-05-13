@@ -175,8 +175,10 @@
     <Compile Include="JournalMessages\HungerDecreasedMessage.cs" />
     <Compile Include="JournalMessages\HungerIncreasedMessage.cs" />
     <Compile Include="JournalMessages\ISelfDescribingJournalMessage.cs" />
+    <Compile Include="JournalMessages\ItemEquipedMessage.cs" />
     <Compile Include="JournalMessages\ItemLostMessage.cs" />
     <Compile Include="JournalMessages\ItemReceivedMessage.cs" />
+    <Compile Include="JournalMessages\ItemUnequipedMessage.cs" />
     <Compile Include="JournalMessages\ManaRestoredMessage.cs" />
     <Compile Include="JournalMessages\LevelUpMessage.cs" />
     <Compile Include="JournalMessages\NotEnoughManaToCastMessage.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="JournalMessages\StoringLocationNotAllowedMessage.cs" />
     <Compile Include="JournalMessages\ToolRequiredMessage.cs" />
     <Compile Include="JournalMessages\UsedItemMessage.cs" />
+    <Compile Include="JournalMessages\WeaponEquipedMessage.cs" />
     <Compile Include="MapGeneration\Dungeon\DungeonMapGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\ObjectsGenerators\DungeonObjectsGenerator.cs" />
     <Compile Include="MapGeneration\Dungeon\ObjectsGenerators\DungeonObjectsGeneratorPatterns.cs" />
@@ -260,6 +263,7 @@
     <Compile Include="PlayerActions\DropItemsPlayerAction.cs" />
     <Compile Include="PlayerActions\EmptyPlayerAction.cs" />
     <Compile Include="PlayerActions\EquipItemPlayerAction.cs" />
+    <Compile Include="PlayerActions\EquipWeaponPlayerAction.cs" />
     <Compile Include="PlayerActions\MeleAttackPlayerAction.cs" />
     <Compile Include="PlayerActions\MovePlayerAction.cs" />
     <Compile Include="PlayerActions\UnequipItemPlayerAction.cs" />

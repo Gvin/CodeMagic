@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
@@ -10,6 +11,13 @@ namespace CodeMagic.Game.PlayerActions
 {
     public class MeleAttackPlayerAction : IPlayerAction
     {
+        private readonly bool useRightHand;
+
+        public MeleAttackPlayerAction(bool useRightHand)
+        {
+            this.useRightHand = useRightHand;
+        }
+
         public bool Perform(out Point newPosition)
         {
             var game = (CurrentGame.GameCore<Player>)CurrentGame.Game;
@@ -38,13 +46,13 @@ namespace CodeMagic.Game.PlayerActions
             if (target == null)
                 return true;
 
-            if (!RandomHelper.CheckChance(game.Player.HitChance))
+            if (!RandomHelper.CheckChance(useRightHand ? game.Player.HitChanceRight : game.Player.HitChanceLeft))
             {
                 game.Journal.Write(new AttackMissMessage(game.Player, target));
                 return true;
             }
 
-            var damage = game.Player.Equipment.Weapon.GenerateDamage();
+            var damage = GenerateDamage(game);
             foreach (var damageValue in damage)
             {
                 target.Damage(targetPoint, damageValue.Value, damageValue.Key);
@@ -52,6 +60,16 @@ namespace CodeMagic.Game.PlayerActions
             }
 
             return true;
+        }
+
+        private Dictionary<Element, int> GenerateDamage(CurrentGame.GameCore<Player> game)
+        {
+            if (useRightHand)
+            {
+                return game.Player.Equipment.RightWeapon.GenerateDamage();
+            }
+
+            return game.Player.Equipment.LeftWeapon.GenerateDamage();
         }
 
         private IDestroyableObject GetAttackTarget(IDestroyableObject[] possibleTargets)

@@ -7,13 +7,12 @@ using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
+using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Input;
-using SadConsole.Themes;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
@@ -24,12 +23,16 @@ namespace CodeMagic.UI.Sad.Views
 
         private readonly CurrentGame.GameCore<Player> game;
 
-        private Button useItemButton;
-        private Button equipItemButton;
-        private Button takeOffItemButton;
-        private Button dropItemButton;
-        private Button dropAllItemsButton;
-        private Button checkScrollButton;
+        private StandardButton useItemButton;
+
+        private StandardButton equipItemButton;
+        private StandardButton equipRightWeaponButton;
+        private StandardButton equipLeftWeaponButton;
+        private StandardButton takeOffItemButton;
+
+        private StandardButton dropItemButton;
+        private StandardButton dropAllItemsButton;
+        private StandardButton checkScrollButton;
 
         public PlayerInventoryView(CurrentGame.GameCore<Player> game) 
             : base(GetTitleWithWeight(game.Player), game.Player)
@@ -47,70 +50,66 @@ namespace CodeMagic.UI.Sad.Views
 
         private void InitializeControls()
         {
-            var buttonsTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground)
-                }
-            };
-
-            checkScrollButton = new Button(20, 3)
+            checkScrollButton = new StandardButton(20)
             {
                 Position = new Point(Width - 35, 40),
-                Text = "[C] Check Scroll",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[C] Check Scroll"
             };
             checkScrollButton.Click += (sender, args) => CheckSelectedScrollCode();
             Add(checkScrollButton);
 
-            useItemButton = new Button(20, 3)
+            useItemButton = new StandardButton(20)
             {
                 Position = new Point(Width - 57, 40),
-                Text = "[U] Use",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[U] Use"
             };
             useItemButton.Click += (sender, args) => UseSelectedItem();
             Add(useItemButton);
 
-            equipItemButton = new Button(20, 3)
+            equipItemButton = new StandardButton(20)
             {
                 Position = new Point(Width - 57, 40),
-                Text = "[E] Equip",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[E] Equip"
             };
             equipItemButton.Click += (sender, args) => EquipSelectedItem();
             Add(equipItemButton);
 
-            takeOffItemButton = new Button(20, 3)
+            equipLeftWeaponButton = new StandardButton(20)
             {
                 Position = new Point(Width - 57, 40),
-                Text = "[T] Take Off",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[Z] Equip Left"
+            };
+            equipLeftWeaponButton.Click += (sender, args) => EquipSelectedWeapon(false);
+            Add(equipLeftWeaponButton);
+
+            equipRightWeaponButton = new StandardButton(20)
+            {
+                Position = new Point(Width - 36, 40),
+                Text = "[X] Equip Right"
+            };
+            equipRightWeaponButton.Click += (sender, args) => EquipSelectedWeapon(true);
+            Add(equipRightWeaponButton);
+
+            takeOffItemButton = new StandardButton(20)
+            {
+                Position = new Point(Width - 57, 40),
+                Text = "[T] Take Off"
             };
             takeOffItemButton.Click += (sender, args) => TakeOffSelectedItem();
             Add(takeOffItemButton);
 
-            dropItemButton = new Button(20, 3)
+            dropItemButton = new StandardButton(20)
             {
                 Position = new Point(Width - 57, 43),
-                Text = "[D] Drop",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[D] Drop"
             };
             dropItemButton.Click += (sender, args) => DropSelectedItem();
             Add(dropItemButton);
 
-            dropAllItemsButton = new Button(20, 3)
+            dropAllItemsButton = new StandardButton(20)
             {
                 Position = new Point(Width - 57, 46),
-                Text = "[A] Drop All",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[A] Drop All"
             };
             dropAllItemsButton.Click += (sender, args) => DropAllItemsInStack();
             Add(dropAllItemsButton);
@@ -165,7 +164,22 @@ namespace CodeMagic.UI.Sad.Views
             if (game.Player.Equipment.IsEquiped(equipableItem))
                 return;
 
+            if (equipableItem is WeaponItem)
+                return;
+
             game.PerformPlayerAction(new EquipItemPlayerAction(equipableItem));
+            Close();
+        }
+
+        private void EquipSelectedWeapon(bool isRight)
+        {
+            if (!(SelectedStack?.TopItem is WeaponItem weaponItem))
+                return;
+
+            if (game.Player.Equipment.IsEquiped(weaponItem))
+                return;
+
+            game.PerformPlayerAction(new EquipWeaponPlayerAction(weaponItem, isRight));
             Close();
         }
 
@@ -197,7 +211,12 @@ namespace CodeMagic.UI.Sad.Views
             {
                 var equiped = game.Player.Equipment.IsEquiped(equipable);
                 takeOffItemButton.IsVisible = equiped;
-                equipItemButton.IsVisible = !equiped;
+
+                var isWeapon = equipable is WeaponItem;
+
+                equipItemButton.IsVisible = !equiped && !isWeapon;
+                equipLeftWeaponButton.IsVisible = !equiped && isWeapon;
+                equipRightWeaponButton.IsVisible = !equiped && isWeapon;
             }
             else
             {
@@ -215,6 +234,12 @@ namespace CodeMagic.UI.Sad.Views
                     return true;
                 case Keys.E:
                     EquipSelectedItem();
+                    return true;
+                case Keys.Z:
+                    EquipSelectedWeapon(false);
+                    return true;
+                case Keys.X:
+                    EquipSelectedWeapon(true);
                     return true;
                 case Keys.T:
                     TakeOffSelectedItem();
@@ -250,6 +275,8 @@ namespace CodeMagic.UI.Sad.Views
     public class PlayerInventoryItem : InventoryStackItem
     {
         private const string EquipedText = "[Eq]";
+        private const string EquipedLeftText = "[EL]";
+        private const string EquipedRightText = "[ER]";
         private static readonly Color EquipedTextColor = Color.Red;
 
         private readonly Player player;
@@ -269,12 +296,30 @@ namespace CodeMagic.UI.Sad.Views
                 result.Add(new ColoredString($" ({Stack.Count})", new Cell(StackCountColor, backColor)));
             }
 
-            if (GetIfEquiped(player, Stack))
+            var equipedText = GetEquipedText(player, Stack);
+            if (!string.IsNullOrEmpty(equipedText))
             {
-                result.Add(new ColoredString($" {EquipedText}", new Cell(EquipedTextColor, backColor)));
+                result.Add(new ColoredString($" {equipedText}", new Cell(EquipedTextColor, backColor)));
             }
 
             return result.ToArray();
+        }
+
+        private static string GetEquipedText(Player player, InventoryStack stack)
+        {
+            if (!(stack.TopItem is IEquipableItem equipable))
+                return null;
+
+            if (!player.Equipment.IsEquiped(equipable))
+                return null;
+
+            if (!(equipable is WeaponItem weapon))
+                return EquipedText;
+
+            if (player.Equipment.LeftWeapon.Equals(weapon))
+                return EquipedLeftText;
+
+            return EquipedRightText;
         }
 
         public static bool GetIfEquiped(Player player, InventoryStack stack)
