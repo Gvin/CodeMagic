@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
@@ -47,7 +46,9 @@ namespace CodeMagic.Game.PlayerActions
             if (target == null)
                 return true;
 
-            if (!RandomHelper.CheckChance(useRightHand ? game.Player.AccuracyRight : game.Player.AccuracyLeft))
+            var accuracy = useRightHand ? game.Player.AccuracyRight : game.Player.AccuracyLeft;
+            accuracy += game.Player.AccuracyBonus;
+            if (!RandomHelper.CheckChance(accuracy))
             {
                 game.Journal.Write(new AttackMissMessage(game.Player, target));
                 return true;
@@ -72,16 +73,10 @@ namespace CodeMagic.Game.PlayerActions
         private Dictionary<Element, int> GenerateDamage(Player player)
         {
             var weaponDamage = GenerateWeaponDamage(player);
-            var damageMultiplier = 1d + player.DamageBonus/100d;
 
             foreach (var pair in weaponDamage.ToArray())
             {
-                if (pair.Key == Element.Piercing ||
-                    pair.Key == Element.Blunt ||
-                    pair.Key == Element.Slashing)
-                {
-                    weaponDamage[pair.Key] = (int) Math.Round(weaponDamage[pair.Key] * damageMultiplier);
-                }
+                weaponDamage[pair.Key] = AttackHelper.CalculateDamage(pair.Value, pair.Key, player);
             }
 
             return weaponDamage;

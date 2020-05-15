@@ -193,9 +193,12 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public override int MaxVisibilityRange => 4;
 
-        public override int DodgeChance => Math.Min(MaxDodgeChance, 1 * GetStat(PlayerStats.Agility));
+        public override int DodgeChance =>
+            Math.Min(MaxDodgeChance, 1 * (GetStat(PlayerStats.Agility) - DefaultStatValue));
 
-        public int DamageBonus => 2 * GetStat(PlayerStats.Strength);
+        public int DamageBonus => 2 * (GetStat(PlayerStats.Strength) - DefaultStatValue);
+
+        public int AccuracyBonus => 1 * (GetStat(PlayerStats.Agility) - DefaultStatValue);
 
         protected override IMapObject GenerateDamageMark()
         {

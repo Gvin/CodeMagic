@@ -134,7 +134,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 new StyledLine
                 {
-                    $"Accuracy: {weapon.Accuracy}%"
+                    $"Accuracy: {weapon.Accuracy + player.AccuracyBonus}%"
                 },
                 StyledLine.Empty
             };
@@ -143,6 +143,9 @@ namespace CodeMagic.UI.Sad.Views
             {
                 var maxDamage = WeaponItem.GetMaxDamage(weapon, element);
                 var minDamage = WeaponItem.GetMinDamage(weapon, element);
+
+                maxDamage = AttackHelper.CalculateDamage(maxDamage, element, player);
+                minDamage = AttackHelper.CalculateDamage(minDamage, element, player);
 
                 if (maxDamage == 0 && minDamage == 0)
                     continue;

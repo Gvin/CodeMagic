@@ -53,6 +53,7 @@
     <Compile Include="Area\EnvironmentData\Temperature.cs" />
     <Compile Include="Area\InsideEnvironmentLightManager.cs" />
     <Compile Include="Area\OutsideEnvironmentLightManager.cs" />
+    <Compile Include="AttackHelper.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\ILootConfiguration.cs" />
     <Compile Include="Configuration\Levels\ILevelsConfiguration.cs" />
