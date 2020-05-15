@@ -50,6 +50,9 @@ namespace CodeMagic.Game.Objects.Creatures
         private const double HungerIncrement = 0.02;
         private const double RegenerationIncrement = 0.03;
 
+        private const double HungerBlocksRegeneration = 30d;
+        private const double HungerBlocksManaRestore = 70d;
+
         private int mana;
         private double regeneration;
         private double hungerPercent;
@@ -96,8 +99,8 @@ namespace CodeMagic.Game.Objects.Creatures
             }
 
             Mana = MaxMana;
-            hungerPercent = 0;
-            regeneration = 0;
+            hungerPercent = 0d;
+            regeneration = 0d;
             Experience = 0;
             Level = 1;
         }
@@ -110,6 +113,7 @@ namespace CodeMagic.Game.Objects.Creatures
             data.Add(SaveKeyStats, new DictionarySaveable(stats.ToDictionary(pair => (object)(int)pair.Key, pair => (object)pair.Value)));
             data.Add(SaveKeyMana, Mana);
             data.Add(SaveKeyHunger, hungerPercent);
+            data.Add(SaveKeyRegeneration, regeneration);
             data.Add(SaveKeyExperience, Experience);
             data.Add(SaveKeyLevel, Level);
             data.Add(SaveKeyKnownPotions, KnownPotions.Select(type => (int)type).ToArray());
@@ -223,6 +227,12 @@ namespace CodeMagic.Game.Objects.Creatures
 
         private void IncrementRegeneration()
         {
+            if (hungerPercent >= HungerBlocksRegeneration)
+            {
+                regeneration = 0;
+                return;
+            }
+
             regeneration += RegenerationIncrement;
             if (regeneration >= 1d)
             {
@@ -238,6 +248,9 @@ namespace CodeMagic.Game.Objects.Creatures
 
         private void RegenerateMana(Point position)
         {
+            if (hungerPercent >= HungerBlocksManaRestore)
+                return;
+
             var manaRegeneration = ManaRegeneration;
             if (Statuses.Contains(ManaDisturbedObjectStatus.StatusType))
             {
