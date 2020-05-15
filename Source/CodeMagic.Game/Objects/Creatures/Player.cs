@@ -200,6 +200,8 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int AccuracyBonus => 1 * (GetStat(PlayerStats.Agility) - DefaultStatValue);
 
+        public int ScrollReadingBonus => 2 * (GetStat(PlayerStats.Wisdom) - DefaultStatValue);
+
         protected override IMapObject GenerateDamageMark()
         {
             return new CreatureRemains(RemainsType.BloodRedSmall);

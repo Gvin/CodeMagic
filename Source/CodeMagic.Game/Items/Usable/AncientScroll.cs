@@ -73,7 +73,8 @@ namespace CodeMagic.Game.Items.Usable
 
         public override bool Use(CurrentGame.GameCore<Player> game)
         {
-            if (RandomHelper.CheckChance(100 - damagePercent))
+            var chanceToRead = GetChanceToRead(game.Player);
+            if (RandomHelper.CheckChance(chanceToRead))
                 return base.Use(game);
 
             game.Journal.Write(new FailedToUseScrollMessage());
@@ -82,6 +83,11 @@ namespace CodeMagic.Game.Items.Usable
             var environment = (GameEnvironment) game.Map.GetCell(game.PlayerPosition).Environment;
             environment.MagicDisturbanceLevel += DisturbanceIncrementOnFailedScroll;
             return false;
+        }
+
+        private int GetChanceToRead(Player player)
+        {
+            return 100 - damagePercent + player.ScrollReadingBonus;
         }
 
         private static string GenerateDamagedCode(string code, int damagePercent)
