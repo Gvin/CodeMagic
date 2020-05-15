@@ -157,11 +157,11 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
                     var x = position.X + shiftX;
                     var y = position.Y + shiftY;
 
-                    if (occupiedCells[x, y])
-                        return false;
-
                     var cell = map.TryGetCell(x, y);
                     if (cell == null)
+                        return false;
+
+                    if (occupiedCells[x, y])
                         return false;
 
                     if (cell.BlocksMovement || cell.BlocksEnvironment)

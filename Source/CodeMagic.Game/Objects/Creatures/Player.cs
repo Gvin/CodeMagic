@@ -195,6 +195,8 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public override int DodgeChance => Math.Min(MaxDodgeChance, 1 * GetStat(PlayerStats.Agility));
 
+        public int DamageBonus => 2 * GetStat(PlayerStats.Strength);
+
         protected override IMapObject GenerateDamageMark()
         {
             return new CreatureRemains(RemainsType.BloodRedSmall);

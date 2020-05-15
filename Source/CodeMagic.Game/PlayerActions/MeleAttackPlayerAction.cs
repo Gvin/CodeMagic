@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
@@ -58,7 +59,7 @@ namespace CodeMagic.Game.PlayerActions
                 return true;
             }
 
-            var damage = GenerateDamage(game);
+            var damage = GenerateDamage(game.Player);
             foreach (var damageValue in damage)
             {
                 target.Damage(targetPoint, damageValue.Value, damageValue.Key);
@@ -68,14 +69,32 @@ namespace CodeMagic.Game.PlayerActions
             return true;
         }
 
-        private Dictionary<Element, int> GenerateDamage(CurrentGame.GameCore<Player> game)
+        private Dictionary<Element, int> GenerateDamage(Player player)
+        {
+            var weaponDamage = GenerateWeaponDamage(player);
+            var damageMultiplier = 1d + player.DamageBonus/100d;
+
+            foreach (var pair in weaponDamage.ToArray())
+            {
+                if (pair.Key == Element.Piercing ||
+                    pair.Key == Element.Blunt ||
+                    pair.Key == Element.Slashing)
+                {
+                    weaponDamage[pair.Key] = (int) Math.Round(weaponDamage[pair.Key] * damageMultiplier);
+                }
+            }
+
+            return weaponDamage;
+        }
+
+        private Dictionary<Element, int> GenerateWeaponDamage(Player player)
         {
             if (useRightHand)
             {
-                return game.Player.Equipment.RightWeapon.GenerateDamage();
+                return player.Equipment.RightWeapon.GenerateDamage();
             }
 
-            return game.Player.Equipment.LeftWeapon.GenerateDamage();
+            return player.Equipment.LeftWeapon.GenerateDamage();
         }
 
         private IDestroyableObject GetAttackTarget(IDestroyableObject[] possibleTargets)
