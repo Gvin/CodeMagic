@@ -46,9 +46,15 @@ namespace CodeMagic.Game.PlayerActions
             if (target == null)
                 return true;
 
-            if (!RandomHelper.CheckChance(useRightHand ? game.Player.HitChanceRight : game.Player.HitChanceLeft))
+            if (!RandomHelper.CheckChance(useRightHand ? game.Player.AccuracyRight : game.Player.AccuracyLeft))
             {
                 game.Journal.Write(new AttackMissMessage(game.Player, target));
+                return true;
+            }
+
+            if (RandomHelper.CheckChance(target.DodgeChance))
+            {
+                game.Journal.Write(new AttackDodgedMessage(game.Player, target));
                 return true;
             }
 

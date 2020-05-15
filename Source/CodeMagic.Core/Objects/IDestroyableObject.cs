@@ -13,6 +13,8 @@ namespace CodeMagic.Core.Objects
 
         int MaxHealth { get; }
 
+        int DodgeChance { get; }
+
         void OnDeath(Point position);
 
         void Damage(Point position, int damage, Element element);

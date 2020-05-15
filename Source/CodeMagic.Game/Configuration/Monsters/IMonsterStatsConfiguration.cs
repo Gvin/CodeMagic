@@ -14,7 +14,9 @@
 
         int VisibilityRange { get; }
 
-        int HitChance { get; }
+        int Accuracy { get; }
+
+        int DodgeChance { get; }
 
         IMonsterProtectionConfiguration[] Protection { get; }
 

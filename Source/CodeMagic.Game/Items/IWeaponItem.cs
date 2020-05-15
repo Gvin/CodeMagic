@@ -9,7 +9,7 @@ namespace CodeMagic.Game.Items
 
         Dictionary<Element, int> MaxDamage { get; }
 
-        int HitChance { get; }
+        int Accuracy { get; }
 
         Dictionary<Element, int> GenerateDamage();
     }

@@ -23,7 +23,7 @@ namespace CodeMagic.Game.Objects.Creatures
         {
             this.configuration = configuration;
             damage = configuration.Damage.ToArray();
-            hitChance = configuration.HitChance;
+            hitChance = configuration.Accuracy;
             lootConfiguration = configuration.LootConfiguration;
         }
 
@@ -33,7 +33,7 @@ namespace CodeMagic.Game.Objects.Creatures
             this.configuration = configuration;
 
             damage = configuration.Damage.ToArray();
-            hitChance = configuration.HitChance;
+            hitChance = configuration.Accuracy;
             lootConfiguration = configuration.LootConfiguration;
 
             if (configuration.BaseProtection != null)
@@ -44,6 +44,8 @@ namespace CodeMagic.Game.Objects.Creatures
                 }
             }
         }
+
+        public override int DodgeChance => configuration.DodgeChance;
 
         public sealed override ObjectSize Size => configuration.Size;
 
@@ -65,6 +67,12 @@ namespace CodeMagic.Game.Objects.Creatures
             if (!RandomHelper.CheckChance(currentHitChance))
             {
                 CurrentGame.Journal.Write(new AttackMissMessage(this, target), this);
+                return;
+            }
+
+            if (RandomHelper.CheckChance(target.DodgeChance))
+            {
+                CurrentGame.Journal.Write(new AttackDodgedMessage(this, target));
                 return;
             }
 
@@ -108,9 +116,11 @@ namespace CodeMagic.Game.Objects.Creatures
             BaseProtection = new Dictionary<Element, int>();
         }
 
-        public int HitChance { get; set; }
+        public int Accuracy { get; set; }
 
         public List<MonsterDamageValue> Damage { get; }
+
+        public int DodgeChance { get; set; }
 
         public ILootConfiguration LootConfiguration { get; set; }
 

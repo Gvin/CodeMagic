@@ -14,7 +14,7 @@ namespace CodeMagic.Game.Items
     {
         private const string SaveKeyInventoryImage = "InventoryImage";
         private const string SaveKeyWorldImage = "WorldImage";
-        private const string SaveKeyHitChance = "HitChance";
+        private const string SaveKeyAccuracy = "Accuracy";
         private const string SaveKeyMinDamage = "MinDamage";
         private const string SaveKeyMaxDamage = "MaxDamage";
 
@@ -28,7 +28,7 @@ namespace CodeMagic.Game.Items
             MaxDamage = data.GetObject<DictionarySaveable>(SaveKeyMaxDamage).Data
                 .ToDictionary(pair => (Element)int.Parse((string)pair.Key), pair => int.Parse((string)pair.Value));
 
-            HitChance = data.GetIntValue(SaveKeyHitChance);
+            Accuracy = data.GetIntValue(SaveKeyAccuracy);
 
             inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage)?.GetImage();
             worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage)?.GetImage();
@@ -40,7 +40,7 @@ namespace CodeMagic.Game.Items
             MinDamage = configuration.MinDamage.ToDictionary(pair => pair.Key, pair => pair.Value);
             MaxDamage = configuration.MaxDamage.ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            HitChance = configuration.HitChance;
+            Accuracy = configuration.HitChance;
 
             inventoryImage = configuration.InventoryImage;
             worldImage = configuration.WorldImage;
@@ -51,7 +51,7 @@ namespace CodeMagic.Game.Items
             var data = base.GetSaveDataContent();
             data.Add(SaveKeyInventoryImage, inventoryImage != null ? new SymbolsImageSaveable(inventoryImage) : null);
             data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
-            data.Add(SaveKeyHitChance, HitChance);
+            data.Add(SaveKeyAccuracy, Accuracy);
             data.Add(SaveKeyMinDamage,
                 new DictionarySaveable(MinDamage.ToDictionary(pair => (object) (int) pair.Key,
                     pair => (object) pair.Value)));
@@ -71,7 +71,7 @@ namespace CodeMagic.Game.Items
                 pair => RandomHelper.GetRandomValue(MinDamage[pair.Key], pair.Value));
         }
 
-        public int HitChance { get; }
+        public int Accuracy { get; }
 
         public override bool Stackable => false;
 
@@ -102,14 +102,14 @@ namespace CodeMagic.Game.Items
 
             AddDamageDescription(result, player.Equipment.LeftWeapon, player.Equipment.RightWeapon);
 
-            var hitChanceLine = new StyledLine { "Hit Chance: " };
+            var hitChanceLine = new StyledLine { "Accuracy: " };
             if (Equals(player.Equipment.RightWeapon) || Equals(player.Equipment.LeftWeapon))
             {
-                hitChanceLine.Add(TextHelper.GetValueString(HitChance, "%", false));
+                hitChanceLine.Add(TextHelper.GetValueString(Accuracy, "%", false));
             }
             else
             {
-                hitChanceLine.Add(TextHelper.GetCompareValueString(HitChance, player.Equipment.RightWeapon.HitChance, "%", false));
+                hitChanceLine.Add(TextHelper.GetCompareValueString(Accuracy, player.Equipment.RightWeapon.Accuracy, "%", false));
             }
             result.Add(hitChanceLine);
 

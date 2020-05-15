@@ -17,7 +17,8 @@
       <catch-fire-chance-multiplier>1</catch-fire-chance-multiplier>
       <self-extinguish-chance>30</self-extinguish-chance>
       <visibility-range>2</visibility-range>
-      <hit-chance>60</hit-chance>
+      <accuracy>50</accuracy>
+      <dodge-chance>10</dodge-chance>
       <protection>
         <element type="Piercing">30</element>
         <element type="Blunt">-30</element>
@@ -74,7 +75,8 @@
       <catch-fire-chance-multiplier>2</catch-fire-chance-multiplier>
       <self-extinguish-chance>15</self-extinguish-chance>
       <visibility-range>3</visibility-range>
-      <hit-chance>60</hit-chance>
+      <accuracy>60</accuracy>
+      <dodge-chance>15</dodge-chance>
       <damage>
         <value element="Slashing" min="3" max="6"/>
       </damage>
@@ -135,7 +137,8 @@
       <catch-fire-chance-multiplier>3</catch-fire-chance-multiplier>
       <self-extinguish-chance>5</self-extinguish-chance>
       <visibility-range>2</visibility-range>
-      <hit-chance>50</hit-chance>
+      <accuracy>50</accuracy>
+      <dodge-chance>0</dodge-chance>
       <damage>
         <value element="Acid" min="5" max="8"/>
       </damage>
@@ -209,7 +212,8 @@
       <catch-fire-chance-multiplier>2</catch-fire-chance-multiplier>
       <self-extinguish-chance>15</self-extinguish-chance>
       <visibility-range>4</visibility-range>
-      <hit-chance>70</hit-chance>
+      <accuracy>70</accuracy>
+      <dodge-chance>20</dodge-chance>
       <protection>
         <element type="Piercing">30</element>
         <element type="Slashing">30</element>

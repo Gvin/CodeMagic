@@ -62,6 +62,8 @@ namespace CodeMagic.Game.Objects
 
         public string Id { get; }
 
+        public virtual int DodgeChance => 0;
+
         public IObjectStatusesCollection Statuses { get; }
 
         protected virtual double SelfExtinguishChance => 15;

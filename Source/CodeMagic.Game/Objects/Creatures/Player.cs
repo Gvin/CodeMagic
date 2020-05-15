@@ -46,6 +46,7 @@ namespace CodeMagic.Game.Objects.Creatures
         private const int DefaultStatValue = 1;
 
         private const int MaxProtection = 75;
+        private const int MaxDodgeChance = 50;
 
         private const double HungerIncrement = 0.02;
         private const double RegenerationIncrement = 0.03;
@@ -192,6 +193,8 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public override int MaxVisibilityRange => 4;
 
+        public override int DodgeChance => Math.Min(MaxDodgeChance, 1 * GetStat(PlayerStats.Agility));
+
         protected override IMapObject GenerateDamageMark()
         {
             return new CreatureRemains(RemainsType.BloodRedSmall);
@@ -211,9 +214,9 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int MaxMana => 100 + 20 * GetStat(PlayerStats.Intelligence) + Equipment.GetBonus(EquipableBonusType.Mana);
 
-        public int HitChanceLeft => CalculateHitChance(Equipment.RightWeapon.HitChance);
+        public int AccuracyLeft => CalculateHitChance(Equipment.RightWeapon.Accuracy);
 
-        public int HitChanceRight => CalculateHitChance(Equipment.RightWeapon.HitChance);
+        public int AccuracyRight => CalculateHitChance(Equipment.RightWeapon.Accuracy);
 
         public override void Update(Point position)
         {

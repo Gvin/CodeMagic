@@ -76,9 +76,10 @@ namespace CodeMagic.UI.Sad.Views
             PrintStyledText(dX, charsY + 0, new StyledLine { "Max Health           ", new StyledString(player.MaxHealth.ToString(), TextHelper.HealthColor) });
             PrintStyledText(dX, charsY + 1, new StyledLine { "Max Mana             ", new StyledString(player.MaxMana.ToString(), TextHelper.ManaColor) });
             PrintStyledText(dX, charsY + 2, new StyledLine { "Mana Regeneration    ", new StyledString(player.ManaRegeneration.ToString(), TextHelper.ManaRegenerationColor) });
+            PrintStyledText(dX, charsY + 3, new StyledLine { "Dodge Chance         ", $"{player.DodgeChance}%"});
 
-            PrintStyledText(dX, charsY + 4, new StyledLine {$"Level: {player.Level}"});
-            PrintStyledText(dX, charsY + 5, new StyledLine {"XP:    ", new StyledString($"{player.Experience} / {player.GetXpToLevelUp()}", TextHelper.XpColor)});
+            PrintStyledText(dX, charsY + 5, new StyledLine {$"Level: {player.Level}"});
+            PrintStyledText(dX, charsY + 6, new StyledLine {"XP:    ", new StyledString($"{player.Experience} / {player.GetXpToLevelUp()}", TextHelper.XpColor)});
         }
 
         private void PrintWeapon(int dX, int dY)
@@ -133,7 +134,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 new StyledLine
                 {
-                    $"Hit Chance: {weapon.HitChance}%"
+                    $"Accuracy: {weapon.Accuracy}%"
                 },
                 StyledLine.Empty
             };

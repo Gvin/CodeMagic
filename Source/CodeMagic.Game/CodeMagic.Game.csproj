@@ -159,6 +159,7 @@
     <Compile Include="Items\Usable\Scroll.cs" />
     <Compile Include="Items\WeaponItem.cs" />
     <Compile Include="IWorldImageProvider.cs" />
+    <Compile Include="JournalMessages\AttackDodgedMessage.cs" />
     <Compile Include="JournalMessages\AttackMissMessage.cs" />
     <Compile Include="JournalMessages\BurningDamageMessage.cs" />
     <Compile Include="JournalMessages\CastNotAllowedMessage.cs" />

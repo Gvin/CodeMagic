@@ -79,7 +79,8 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
             Experience = config.Experience;
             Size = config.Size;
             ZIndex = ZIndex.Creature;
-            HitChance = config.Stats.HitChance;
+            Accuracy = config.Stats.Accuracy;
+            DodgeChance = config.Stats.DodgeChance;
             MaxHealth = health;
             RemainsType = config.RemainsType;
             DamageMarkType = config.DamageMarkType;

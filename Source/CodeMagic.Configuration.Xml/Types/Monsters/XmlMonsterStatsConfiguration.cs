@@ -29,8 +29,11 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
         [XmlElement("visibility-range")]
         public int VisibilityRange { get; set; }
 
-        [XmlElement("hit-chance")]
-        public int HitChance { get; set; }
+        [XmlElement("accuracy")]
+        public int Accuracy { get; set; }
+
+        [XmlElement("dodge-chance")]
+        public int DodgeChance { get; set; }
 
         [XmlIgnore]
         public IMonsterProtectionConfiguration[] Protection => ProtectionData?.ToArray<IMonsterProtectionConfiguration>() ?? new IMonsterProtectionConfiguration[0];
