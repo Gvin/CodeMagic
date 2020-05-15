@@ -35,7 +35,7 @@ namespace CodeMagic.UI.Sad.Controls
 
         private void Draw()
         {
-            Surface.Clear(new Rectangle(2, 1, 17, 4));
+            Surface.Clear(new Rectangle(2, 1, 17, 5));
 
             Surface.Print(2, 1, "Player Status:");
             Surface.Fill(1, 2, Width - 2, FrameColor, BackgroundColor, Glyphs.GetGlyph('─'));

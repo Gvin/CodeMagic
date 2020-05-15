@@ -29,6 +29,7 @@ namespace CodeMagic.Game.Objects.Creatures
         private const string SaveKeyExperience = "Experience";
         private const string SaveKeyLevel = "Level";
         private const string SaveKeyKnownPotions = "KnownPotions";
+        private const string SaveKeyRegeneration = "Regeneration";
 
         private const string ImageUp = "Player_Up";
         private const string ImageDown = "Player_Down";
@@ -46,12 +47,13 @@ namespace CodeMagic.Game.Objects.Creatures
 
         private const int MaxProtection = 75;
 
+        private const double HungerIncrement = 0.02;
+        private const double RegenerationIncrement = 0.03;
+
         private int mana;
+        private double regeneration;
         private double hungerPercent;
-        private readonly double hungerIncrement = 0.02;
         private readonly Dictionary<PlayerStats, int> stats;
-        private int experience;
-        private int level;
 
         public event EventHandler Died;
         public event EventHandler LeveledUp;
@@ -70,8 +72,9 @@ namespace CodeMagic.Game.Objects.Creatures
 
             Mana = data.GetIntValue(SaveKeyMana);
             hungerPercent = double.Parse(data.GetStringValue(SaveKeyHunger));
-            experience = data.GetIntValue(SaveKeyExperience);
-            level = data.GetIntValue(SaveKeyLevel);
+            regeneration = double.Parse(data.GetStringValue(SaveKeyRegeneration));
+            Experience = data.GetIntValue(SaveKeyExperience);
+            Level = data.GetIntValue(SaveKeyLevel);
 
             KnownPotions = data.GetValuesCollection(SaveKeyKnownPotions).Select(value => (PotionType) int.Parse(value))
                 .ToList();
@@ -94,8 +97,9 @@ namespace CodeMagic.Game.Objects.Creatures
 
             Mana = MaxMana;
             hungerPercent = 0;
-            experience = 0;
-            level = 1;
+            regeneration = 0;
+            Experience = 0;
+            Level = 1;
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
@@ -106,29 +110,29 @@ namespace CodeMagic.Game.Objects.Creatures
             data.Add(SaveKeyStats, new DictionarySaveable(stats.ToDictionary(pair => (object)(int)pair.Key, pair => (object)pair.Value)));
             data.Add(SaveKeyMana, Mana);
             data.Add(SaveKeyHunger, hungerPercent);
-            data.Add(SaveKeyExperience, experience);
-            data.Add(SaveKeyLevel, level);
+            data.Add(SaveKeyExperience, Experience);
+            data.Add(SaveKeyLevel, Level);
             data.Add(SaveKeyKnownPotions, KnownPotions.Select(type => (int)type).ToArray());
             return data;
         }
 
         public List<PotionType> KnownPotions { get; }
 
-        public int Experience => experience;
+        public int Experience { get; private set; }
 
-        public int Level => level;
+        public int Level { get; private set; }
 
         public void AddExperience(int exp)
         {
-            experience += exp;
+            Experience += exp;
             CurrentGame.Journal.Write(new ExperienceGainedMessage(exp));
 
             var xpToLevelUp = GetXpToLevelUp();
-            if (experience >= xpToLevelUp)
+            if (Experience >= xpToLevelUp)
             {
-                level++;
-                experience -= xpToLevelUp;
-                CurrentGame.Journal.Write(new LevelUpMessage(level));
+                Level++;
+                Experience -= xpToLevelUp;
+                CurrentGame.Journal.Write(new LevelUpMessage(Level));
                 LeveledUp?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -141,7 +145,7 @@ namespace CodeMagic.Game.Objects.Creatures
         public int GetXpToLevelUp()
         {
             var config = ConfigurationManager.Current.Levels;
-            return (int)Math.Pow(level, config.PlayerLevels.XpLevelPower) * config.PlayerLevels.XpMultiplier;
+            return (int)Math.Pow(Level, config.PlayerLevels.XpLevelPower) * config.PlayerLevels.XpMultiplier;
         }
 
         private static int GetMaxHealth(int strength)
@@ -173,7 +177,7 @@ namespace CodeMagic.Game.Objects.Creatures
         public int HungerPercent
         {
             get => (int)Math.Floor(hungerPercent);
-            set => hungerPercent = Math.Min(100d, value);
+            set => hungerPercent = Math.Max(0d, Math.Min(100d, value));
         }
 
         public int MaxCarryWeight => 23000 + 2000 * GetStat(PlayerStats.Strength);
@@ -211,9 +215,25 @@ namespace CodeMagic.Game.Objects.Creatures
         {
             base.Update(position);
 
-            RegenerateMana(position);
             IncrementHunger();
+            IncrementRegeneration();
+            RegenerateMana(position);
             CheckOverweight();
+        }
+
+        private void IncrementRegeneration()
+        {
+            regeneration += RegenerationIncrement;
+            if (regeneration >= 1d)
+            {
+                regeneration -= 1d;
+                Health += 1;
+            }
+
+            if (Health == MaxHealth)
+            {
+                regeneration = 0;
+            }
         }
 
         private void RegenerateMana(Point position)
@@ -235,7 +255,7 @@ namespace CodeMagic.Game.Objects.Creatures
 
         private void IncrementHunger()
         {
-            hungerPercent = Math.Min(100d, hungerPercent + hungerIncrement);
+            hungerPercent = Math.Min(100d, hungerPercent + HungerIncrement);
             if (hungerPercent >= 100d)
             {
                 Statuses.Add(new HungryObjectStatus());

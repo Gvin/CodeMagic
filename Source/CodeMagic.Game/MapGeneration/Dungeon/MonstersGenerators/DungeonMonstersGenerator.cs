@@ -13,6 +13,10 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
 {
     internal class DungeonMonstersGenerator : IMonstersGenerator
     {
+        private const int SquadForceMultiplier = 2;
+        private const double SquadForceVariation = 0.2d;
+        private const double SquadsCountMultiplier = 0.01d;
+
         public void GenerateMonsters(IAreaMap map, Point playerPosition)
         {
             var squadsCount = GetSquadsCount(map);
@@ -75,9 +79,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
 
         private static int GetSquadForce(int level)
         {
-            var baseValue = level * 4;
-            var minValue = (int) Math.Floor(baseValue * 0.8d);
-            var maxValue = (int) Math.Ceiling(baseValue * 1.2d);
+            var baseValue = level * SquadForceMultiplier;
+            var minValue = (int) Math.Floor(baseValue * (1d - SquadForceVariation));
+            var maxValue = (int) Math.Ceiling(baseValue * (1d + SquadForceVariation));
             return RandomHelper.GetRandomValue(minValue, maxValue);
         }
 
@@ -171,7 +175,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
         private static int GetSquadsCount(IAreaMap map)
         {
             var square = map.Width * map.Height;
-            return (int) Math.Round(square / 100d);
+            return (int) Math.Round(square * SquadsCountMultiplier);
         }
     }
 }

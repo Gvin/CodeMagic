@@ -7,7 +7,6 @@ using CodeMagic.Game.Items.ItemsGeneration.Configuration;
 using CodeMagic.Game.Items.ItemsGeneration.Implementations;
 using CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon;
-using CodeMagic.Game.Items.Usable.Food;
 
 namespace CodeMagic.Game.Items.ItemsGeneration
 {
@@ -41,6 +40,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration
         private readonly SpellBookGenerator spellBookGenerator;
         private readonly UsableItemsGenerator usableItemsGenerator;
         private readonly ResourceItemsGenerator resourceItemsGenerator;
+        private readonly FoodItemsGenerator foodItemsGenerator;
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage, IAncientSpellsProvider spellsProvider)
         {
@@ -98,6 +98,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration
             spellBookGenerator = new SpellBookGenerator(configuration.SpellBooksConfiguration, bonusesGenerator, imagesStorage);
             usableItemsGenerator = new UsableItemsGenerator(imagesStorage, spellsProvider);
             resourceItemsGenerator = new ResourceItemsGenerator();
+            foodItemsGenerator = new FoodItemsGenerator(imagesStorage);
         }
 
         public WeaponItem GenerateWeapon(ItemRareness rareness)
@@ -149,7 +150,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration
 
         public IItem GenerateFood()
         {
-            return new Apple();
+            return foodItemsGenerator.GenerateFood();
         }
 
         private static bool GetIfRarenessExceedMax(ItemRareness rareness)
