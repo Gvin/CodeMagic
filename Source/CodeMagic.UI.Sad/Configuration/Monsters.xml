@@ -21,6 +21,7 @@
       <protection>
         <element type="Piercing">30</element>
         <element type="Blunt">-30</element>
+        <element type="Electricity">30</element>
       </protection>
       <damage>
         <value element="Blunt" min="1" max="4"/>
@@ -144,6 +145,7 @@
         <element type="Blunt">30</element>
         <element type="Acid">100</element>
         <element type="Fire">-30</element>
+        <element type="Electricity">-30</element>
         <element type="Frost">-100</element>
       </protection>
     </stats>
@@ -214,6 +216,7 @@
         <element type="Blunt">30</element>
         <element type="Fire">15</element>
         <element type="Frost">-15</element>
+        <element type="Electricity">-30</element>
       </protection>
       <damage>
         <value element="Slashing" min="5" max="10"/>

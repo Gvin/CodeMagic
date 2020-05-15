@@ -437,13 +437,13 @@
       </images>
 
       <weight>
-        <value material="Wood">1200</value>
-        <value material="Iron">1600</value>
-        <value material="Steel">1600</value>
-        <value material="Silver">2200</value>
-        <value material="ElvesMetal">1000</value>
-        <value material="DwarfsMetal">3200</value>
-        <value material="Mythril">500</value>
+        <value material="Wood">1500</value>
+        <value material="Iron">2000</value>
+        <value material="Steel">2000</value>
+        <value material="Silver">2600</value>
+        <value material="ElvesMetal">1500</value>
+        <value material="DwarfsMetal">4000</value>
+        <value material="Mythril">700</value>
       </weight>
 
       <rareness-configuration>
