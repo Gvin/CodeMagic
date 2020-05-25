@@ -14,7 +14,7 @@ namespace CodeMagic.Game.PlayerActions
 
             var cell = CurrentGame.Map.TryGetCell(playerLookPosition);
             var usableObject = cell?.Objects.OfType<IUsableObject>().FirstOrDefault();
-            usableObject?.Use((CurrentGame.GameCore<Player>)CurrentGame.Game, playerLookPosition);
+            usableObject?.Use((GameCore<Player>)CurrentGame.Game, playerLookPosition);
 
             newPosition = CurrentGame.PlayerPosition;
             return true;

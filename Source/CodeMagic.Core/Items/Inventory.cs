@@ -17,6 +17,14 @@ namespace CodeMagic.Core.Items
         public Inventory(SaveData data)
         {
             stacks = data.GetObjectsCollection<InventoryStack>(SaveKeyStacks).ToList();
+
+            foreach (var inventoryStack in stacks)
+            {
+                foreach (var item in inventoryStack.Items.OfType<IDecayItem>())
+                {
+                    item.Decayed += Item_Decayed;
+                }
+            }
         }
 
         public Inventory()
@@ -46,15 +54,15 @@ namespace CodeMagic.Core.Items
             }
         }
 
-        public void Clear()
-        {
-            stacks.Clear();
-        }
-
         public void AddItem(IItem item)
         {
             lock (stacks)
             {
+                if (item is IDecayItem decayItem)
+                {
+                    decayItem.Decayed += Item_Decayed;
+                }
+
                 if (!item.Stackable)
                 {
                     stacks.Add(new InventoryStack(item));
@@ -75,24 +83,20 @@ namespace CodeMagic.Core.Items
             }
         }
 
-        public void RemoveItem(string itemKey)
+        private void Item_Decayed(object sender, EventArgs args)
         {
-            lock (stacks)
+            var item = (IItem) sender;
+            RemoveItem(item);
+        }
+
+        public void Update()
+        {
+            foreach (var stack in stacks.ToArray())
             {
-                var existingStack = stacks.FirstOrDefault(stack => string.Equals(stack.TopItem.Key, itemKey));
-                if (existingStack == null)
+                foreach (var item in stack.Items.OfType<IDecayItem>().ToArray())
                 {
-                    throw new InvalidOperationException($"Item with key {itemKey} not found in inventory.");
+                    item.Update();
                 }
-
-                var item = existingStack.TopItem;
-                existingStack.Remove(item);
-                if (existingStack.Count == 0)
-                {
-                    stacks.Remove(existingStack);
-                }
-
-                ItemRemoved?.Invoke(this, new ItemEventArgs(item));
             }
         }
 
@@ -106,6 +110,11 @@ namespace CodeMagic.Core.Items
                     throw new InvalidOperationException($"Item {item.Key} not found in inventory.");
                 }
 
+                if (item is IDecayItem decayItem)
+                {
+                    decayItem.Decayed -= Item_Decayed;
+                }
+
                 existingStack.Remove(item);
                 if (existingStack.Count == 0)
                 {
@@ -116,11 +125,6 @@ namespace CodeMagic.Core.Items
             }
         }
 
-        public int GetItemsCount(string itemKey)
-        {
-            return stacks.Where(stack => string.Equals(stack.TopItem.Key, itemKey)).Sum(stack => stack.Count);
-        }
-
         public int ItemsCount => stacks.Sum(stack => stack.Count);
 
         public InventoryStack[] Stacks => stacks.ToArray();
@@ -128,16 +132,6 @@ namespace CodeMagic.Core.Items
         public int GetWeight()
         {
             return stacks.Sum(stack => stack.Weight);
-        }
-
-        public int GetItemsCount(IItem item)
-        {
-            return stacks.Where(stack => string.Equals(stack.TopItem.Key, item.Key)).Sum(stack => stack.Count);
-        }
-
-        public bool GetIfItemExists(IItem item)
-        {
-            return stacks.Any(stack => string.Equals(stack.TopItem.Key, item.Key));
         }
 
         public IItem GetItem(string itemKey)

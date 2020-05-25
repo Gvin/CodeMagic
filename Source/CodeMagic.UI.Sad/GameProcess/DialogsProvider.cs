@@ -11,7 +11,7 @@ namespace CodeMagic.UI.Sad.GameProcess
     {
         public void OpenInventoryDialog(string inventoryName, Inventory inventory)
         {
-            new CustomInventoryView((CurrentGame.GameCore<Player>) CurrentGame.Game, inventoryName, inventory).Show();
+            new CustomInventoryView((GameCore<Player>) CurrentGame.Game, inventoryName, inventory).Show();
         }
 
         public void OpenWaitDialog(string message, Action waitAction)

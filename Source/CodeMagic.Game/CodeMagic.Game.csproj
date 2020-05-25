@@ -94,6 +94,7 @@
     <Compile Include="Items\ArmorItem.cs" />
     <Compile Include="Items\EquipableItem.cs" />
     <Compile Include="Items\Equipment.cs" />
+    <Compile Include="Items\IArmorItem.cs" />
     <Compile Include="Items\IEquipableItem.cs" />
     <Compile Include="Items\IFuelItem.cs" />
     <Compile Include="Items\IFurnaceItem.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Items\Usable\ScrollBase.cs" />
     <Compile Include="Items\Usable\Scroll.cs" />
     <Compile Include="Items\WeaponItem.cs" />
+    <Compile Include="Items\DurableItem.cs" />
     <Compile Include="IWorldImageProvider.cs" />
     <Compile Include="JournalMessages\AttackDodgedMessage.cs" />
     <Compile Include="JournalMessages\AttackMissMessage.cs" />

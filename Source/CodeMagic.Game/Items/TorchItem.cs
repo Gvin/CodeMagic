@@ -34,7 +34,8 @@ namespace CodeMagic.Game.Items
                 {Element.Blunt, 3}
             },
             LightPower = LightLevel.Dim1,
-            Description = new []{ "Rude torch made from wood and clothes." }
+            Description = new []{ "Rude torch made from wood and clothes." },
+            MaxDurability = 20
         })
         {
         }

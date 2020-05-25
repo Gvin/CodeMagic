@@ -52,7 +52,7 @@ namespace CodeMagic.Game.Items
                 SpellBook = (SpellBook) inventory.GetItemById(spellBookId);
             }
 
-            Armor = new Dictionary<ArmorType, ArmorItem>
+            Armor = new Dictionary<ArmorType, IArmorItem>
             {
                 {ArmorType.Helmet, null},
                 {ArmorType.Chest, null},
@@ -62,25 +62,25 @@ namespace CodeMagic.Game.Items
             var helmetId = data.GetStringValue(SaveKeyArmorHelmet);
             if (helmetId != null)
             {
-                Armor[ArmorType.Helmet] = (ArmorItem) inventory.GetItemById(helmetId);
+                Armor[ArmorType.Helmet] = (IArmorItem) inventory.GetItemById(helmetId);
             }
 
             var chestId = data.GetStringValue(SaveKeyArmorChest);
             if (chestId != null)
             {
-                Armor[ArmorType.Chest] = (ArmorItem)inventory.GetItemById(chestId);
+                Armor[ArmorType.Chest] = (IArmorItem)inventory.GetItemById(chestId);
             }
 
             var leggingsId = data.GetStringValue(SaveKeyArmorLeggings);
             if (leggingsId != null)
             {
-                Armor[ArmorType.Leggings] = (ArmorItem)inventory.GetItemById(leggingsId);
+                Armor[ArmorType.Leggings] = (IArmorItem)inventory.GetItemById(leggingsId);
             }
         }
 
         public Equipment()
         {
-            Armor = new Dictionary<ArmorType, ArmorItem>
+            Armor = new Dictionary<ArmorType, IArmorItem>
             {
                 {ArmorType.Helmet, null},
                 {ArmorType.Chest, null},
@@ -101,7 +101,7 @@ namespace CodeMagic.Game.Items
             });
         }
 
-        public Dictionary<ArmorType, ArmorItem> Armor { get; }
+        public Dictionary<ArmorType, IArmorItem> Armor { get; }
 
         public IWeaponItem RightWeapon => rightWeapon ?? Fists;
 
@@ -255,7 +255,7 @@ namespace CodeMagic.Game.Items
             if (rightWeapon is ILightSource rightWeaponLight)
                 result.Add(rightWeaponLight);
 
-            result.AddRange(Armor.Values);
+            result.AddRange(Armor.Values.OfType<ILightSource>());
             return result.Where(item => item != null).ToArray();
         }
     }

@@ -9,7 +9,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
 {
-    public class ArmorItem : EquipableItem, IInventoryImageProvider, IDescriptionProvider, IWorldImageProvider
+    public class ArmorItem : DurableItem, IArmorItem, IInventoryImageProvider, IDescriptionProvider, IWorldImageProvider
     {
         private const string SaveKeyInventoryImage = "InventoryImage";
         private const string SaveKeyWorldImage = "WorldImage";
@@ -81,6 +81,10 @@ namespace CodeMagic.Game.Items
 
             result.Add(StyledLine.Empty);
 
+            result.Add(TextHelper.GetDurabilityLine(Durability, MaxDurability));
+
+            result.Add(StyledLine.Empty);
+
             AddProtectionDescription(result, equipedArmor);
 
             result.Add(StyledLine.Empty);
@@ -94,7 +98,7 @@ namespace CodeMagic.Game.Items
             return result.ToArray();
         }
 
-        private void AddProtectionDescription(List<StyledLine> descriptionResult, ArmorItem equipedArmor)
+        private void AddProtectionDescription(List<StyledLine> descriptionResult, IArmorItem equipedArmor)
         {
             var equiped = Equals(equipedArmor);
             foreach (Element element in Enum.GetValues(typeof(Element)))
@@ -138,7 +142,7 @@ namespace CodeMagic.Game.Items
         Leggings = 2
     }
 
-    public class ArmorItemConfiguration : EquipableItemConfiguration
+    public class ArmorItemConfiguration : DurableItemConfiguration
     {
         public ArmorItemConfiguration()
         {

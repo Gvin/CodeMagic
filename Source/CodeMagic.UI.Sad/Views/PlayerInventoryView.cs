@@ -21,7 +21,7 @@ namespace CodeMagic.UI.Sad.Views
     {
         private const string Title = "Player Inventory";
 
-        private readonly CurrentGame.GameCore<Player> game;
+        private readonly GameCore<Player> game;
 
         private StandardButton useItemButton;
 
@@ -34,7 +34,7 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton dropAllItemsButton;
         private StandardButton checkScrollButton;
 
-        public PlayerInventoryView(CurrentGame.GameCore<Player> game) 
+        public PlayerInventoryView(GameCore<Player> game) 
             : base(GetTitleWithWeight(game.Player), game.Player)
         {
             this.game = game;

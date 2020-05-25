@@ -11,7 +11,10 @@ namespace CodeMagic.Configuration.Xml.Types.Items
         [XmlAttribute("material")]
         public ItemMaterial Material { get; set; }
 
-        [XmlText]
+        [XmlAttribute("weight")]
         public int Weight { get; set; }
+
+        [XmlAttribute("durability")]
+        public int Durability { get; set; }
     }
 }

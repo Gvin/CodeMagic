@@ -6,6 +6,6 @@ namespace CodeMagic.Game.Items
 {
     public interface IUsableItem : IItem
     {
-        bool Use(CurrentGame.GameCore<Player> game);
+        bool Use(GameCore<Player> game);
     }
 }

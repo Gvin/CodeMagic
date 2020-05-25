@@ -52,7 +52,7 @@ namespace CodeMagic.UI.Sad.Saving
             }
         }
 
-        public CurrentGame.GameCore<Player> LoadGame()
+        public GameCore<Player> LoadGame()
         {
             if (!File.Exists(SaveFilePath))
                 return null;
@@ -68,7 +68,7 @@ namespace CodeMagic.UI.Sad.Saving
                 if (!string.Equals(currentVersion, gameSaveData.Version))
                     return null;
 
-                return new CurrentGame.GameCore<Player>(gameSaveData.Data);
+                return new GameCore<Player>(gameSaveData.Data);
             }
             catch (Exception)
             {

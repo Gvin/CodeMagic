@@ -19,9 +19,9 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton exitToMenuButton;
         private StandardButton exitButton;
 
-        private readonly CurrentGame.GameCore<Player> currentGame;
+        private readonly GameCore<Player> currentGame;
 
-        public InGameMenuView(CurrentGame.GameCore<Player> currentGame) 
+        public InGameMenuView(GameCore<Player> currentGame) 
             : base(Program.Width, Program.Height)
         {
             this.currentGame = currentGame;

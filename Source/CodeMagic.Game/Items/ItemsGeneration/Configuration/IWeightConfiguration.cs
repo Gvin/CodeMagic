@@ -5,5 +5,7 @@
         ItemMaterial Material { get; }
 
         int Weight { get; }
+
+        int Durability { get; }
     }
 }

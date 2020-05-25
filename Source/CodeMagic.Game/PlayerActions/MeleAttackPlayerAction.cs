@@ -3,6 +3,7 @@ using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Items;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.Statuses;
@@ -20,7 +21,7 @@ namespace CodeMagic.Game.PlayerActions
 
         public bool Perform(out Point newPosition)
         {
-            var game = (CurrentGame.GameCore<Player>)CurrentGame.Game;
+            var game = (GameCore<Player>)CurrentGame.Game;
             newPosition = game.PlayerPosition;
 
             if (game.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
@@ -46,7 +47,9 @@ namespace CodeMagic.Game.PlayerActions
             if (target == null)
                 return true;
 
-            var accuracy = useRightHand ? game.Player.AccuracyRight : game.Player.AccuracyLeft;
+            var weapon = useRightHand ? game.Player.Equipment.RightWeapon : game.Player.Equipment.LeftWeapon;
+
+            var accuracy = weapon.Accuracy;
             accuracy += game.Player.AccuracyBonus;
             if (!RandomHelper.CheckChance(accuracy))
             {
@@ -60,7 +63,7 @@ namespace CodeMagic.Game.PlayerActions
                 return true;
             }
 
-            var damage = GenerateDamage(game.Player);
+            var damage = GenerateDamage(game.Player, weapon);
             foreach (var damageValue in damage)
             {
                 target.Damage(targetPoint, damageValue.Value, damageValue.Key);
@@ -70,9 +73,9 @@ namespace CodeMagic.Game.PlayerActions
             return true;
         }
 
-        private Dictionary<Element, int> GenerateDamage(Player player)
+        private Dictionary<Element, int> GenerateDamage(Player player, IWeaponItem weapon)
         {
-            var weaponDamage = GenerateWeaponDamage(player);
+            var weaponDamage = weapon.GenerateDamage();
 
             foreach (var pair in weaponDamage.ToArray())
             {
@@ -80,16 +83,6 @@ namespace CodeMagic.Game.PlayerActions
             }
 
             return weaponDamage;
-        }
-
-        private Dictionary<Element, int> GenerateWeaponDamage(Player player)
-        {
-            if (useRightHand)
-            {
-                return player.Equipment.RightWeapon.GenerateDamage();
-            }
-
-            return player.Equipment.LeftWeapon.GenerateDamage();
         }
 
         private IDestroyableObject GetAttackTarget(IDestroyableObject[] possibleTargets)

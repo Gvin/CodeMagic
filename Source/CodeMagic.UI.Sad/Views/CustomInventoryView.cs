@@ -25,7 +25,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button pickUpOneItemButton;
         private Button pickUpAllButton;
 
-        public CustomInventoryView(CurrentGame.GameCore<Player> game, string inventoryName, Inventory inventory) 
+        public CustomInventoryView(GameCore<Player> game, string inventoryName, Inventory inventory) 
             : base(inventoryName, game.Player)
         {
             this.game = game;

@@ -225,17 +225,30 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int AccuracyRight => CalculateHitChance(Equipment.RightWeapon.Accuracy);
 
+        protected override void ApplyRealDamage(int damage, Element element, Point position)
+        {
+            base.ApplyRealDamage(damage, element, position);
+
+            var targetArmorType = RandomHelper.GetRandomEnumValue<ArmorType>();
+            if (Equipment.Armor[targetArmorType] is DurableItem targetArmor)
+            {
+                targetArmor.Durability--;
+            }
+        }
+
         public override void Update(Point position)
         {
             base.Update(position);
 
+            Inventory.Update();
+
             IncrementHunger();
-            IncrementRegeneration();
+            RegenerateHealth();
             RegenerateMana(position);
             CheckOverweight();
         }
 
-        private void IncrementRegeneration()
+        private void RegenerateHealth()
         {
             if (hungerPercent >= HungerBlocksRegeneration)
             {

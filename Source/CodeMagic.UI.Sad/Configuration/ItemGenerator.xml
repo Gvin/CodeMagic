@@ -65,13 +65,13 @@
       </images>
 
       <weight>
-        <value material="Wood">1200</value>
-        <value material="Iron">1600</value>
-        <value material="Steel">1600</value>
-        <value material="Silver">2200</value>
-        <value material="ElvesMetal">1000</value>
-        <value material="DwarfsMetal">3200</value>
-        <value material="Mythril">500</value>
+        <value material="Wood" weight="1200" durability="20"/>
+        <value material="Iron" weight="1600" durability="40"/>
+        <value material="Steel" weight="1600" durability="60"/>
+        <value material="Silver" weight="2200" durability="40"/>
+        <value material="ElvesMetal" weight="1000" durability="50"/>
+        <value material="DwarfsMetal" weight="3200" durability="100"/>
+        <value material="Mythril" weight="500" durability="200"/>
       </weight>
 
       <rareness-configuration>
@@ -188,13 +188,13 @@
       </images>
 
       <weight>
-        <value material="Wood">300</value>
-        <value material="Iron">500</value>
-        <value material="Steel">500</value>
-        <value material="Silver">750</value>
-        <value material="ElvesMetal">250</value>
-        <value material="DwarfsMetal">1000</value>
-        <value material="Mythril">150</value>
+        <value material="Wood" weight="300" durability="15"/>
+        <value material="Iron" weight="500" durability="30"/>
+        <value material="Steel" weight="500" durability="45"/>
+        <value material="Silver" weight="750" durability="30"/>
+        <value material="ElvesMetal" weight="250" durability="35"/>
+        <value material="DwarfsMetal" weight="1000" durability="60"/>
+        <value material="Mythril" weight="150" durability="120"/>
       </weight>
 
       <rareness-configuration>
@@ -316,13 +316,13 @@
       </images>
 
       <weight>
-        <value material="Wood">6500</value>
-        <value material="Iron">8000</value>
-        <value material="Steel">8000</value>
-        <value material="Silver">12000</value>
-        <value material="ElvesMetal">6000</value>
-        <value material="DwarfsMetal">16000</value>
-        <value material="Mythril">2500</value>
+        <value material="Wood" weight="6500" durability="30"/>
+        <value material="Iron" weight="8000" durability="80"/>
+        <value material="Steel" weight="8000" durability="120"/>
+        <value material="Silver" weight="12000" durability="80"/>
+        <value material="ElvesMetal" weight="6000" durability="100"/>
+        <value material="DwarfsMetal" weight="16000" durability="200"/>
+        <value material="Mythril" weight="2500" durability="350"/>
       </weight>
 
       <rareness-configuration>
@@ -437,13 +437,13 @@
       </images>
 
       <weight>
-        <value material="Wood">1500</value>
-        <value material="Iron">2000</value>
-        <value material="Steel">2000</value>
-        <value material="Silver">2600</value>
-        <value material="ElvesMetal">1500</value>
-        <value material="DwarfsMetal">4000</value>
-        <value material="Mythril">700</value>
+        <value material="Wood" weight="1500" durability="20"/>
+        <value material="Iron" weight="2000" durability="40"/>
+        <value material="Steel" weight="2000" durability="60"/>
+        <value material="Silver" weight="2600" durability="40"/>
+        <value material="ElvesMetal" weight="1500" durability="50"/>
+        <value material="DwarfsMetal" weight="4000" durability="100"/>
+        <value material="Mythril" weight="700" durability="200"/>
       </weight>
 
       <rareness-configuration>
@@ -539,13 +539,13 @@
       </images>
 
       <weight>
-        <value material="Wood">2000</value>
-        <value material="Iron">2500</value>
-        <value material="Steel">2500</value>
-        <value material="Silver">3200</value>
-        <value material="ElvesMetal">1800</value>
-        <value material="DwarfsMetal">5000</value>
-        <value material="Mythril">700</value>
+        <value material="Wood" weight="2000" durability="15"/>
+        <value material="Iron" weight="2500" durability="30"/>
+        <value material="Steel" weight="2500" durability="45"/>
+        <value material="Silver" weight="3200" durability="30"/>
+        <value material="ElvesMetal" weight="1800" durability="35"/>
+        <value material="DwarfsMetal" weight="5000" durability="60"/>
+        <value material="Mythril" weight="700" durability="120"/>
       </weight>
 
       <rareness-configuration>
@@ -812,7 +812,7 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Leather">4000</value>
+          <value material="Leather" weight="4000" durability="50"/>
         </weight>
       </item>
       <item class="Mail" name="Mail">
@@ -946,12 +946,12 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Iron">7000</value>
-          <value material="Steel">7000</value>
-          <value material="Silver">10500</value>
-          <value material="ElvesMetal">5000</value>
-          <value material="DwarfsMetal">14000</value>
-          <value material="Mythril">2100</value>
+          <value material="Iron" weight="7000" durability="50"/>
+          <value material="Steel" weight="7000" durability="60"/>
+          <value material="Silver" weight="10500" durability="40"/>
+          <value material="ElvesMetal" wight="5000" durability="55"/>
+          <value material="DwarfsMetal" weight="14000" durability="70"/>
+          <value material="Mythril" weight="2100" durability="90"/>
         </weight>
       </item>
       <item class="ScaleMail" name="Scale Mail">
@@ -1101,12 +1101,12 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Iron">8000</value>
-          <value material="Steel">8000</value>
-          <value material="Silver">12000</value>
-          <value material="ElvesMetal">6000</value>
-          <value material="DwarfsMetal">16000</value>
-          <value material="Mythril">2400</value>
+          <value material="Iron" weight="8000" durability="60"/>
+          <value material="Steel" weight="8000" durability="70"/>
+          <value material="Silver" weight="12000" durability="60"/>
+          <value material="ElvesMetal" weight="6000" durability="70"/>
+          <value material="DwarfsMetal" weight="16000" durability="80"/>
+          <value material="Mythril" weight="2400" durability="100"/>
         </weight>
       </item>
       <item class="Plate" name="Plate">
@@ -1259,12 +1259,12 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Iron">12000</value>
-          <value material="Steel">12000</value>
-          <value material="Silver">18000</value>
-          <value material="ElvesMetal">10000</value>
-          <value material="DwarfsMetal">24000</value>
-          <value material="Mythril">3600</value>
+          <value material="Iron" weight="12000" durability="75"/>
+          <value material="Steel" weight="12000" durability="90"/>
+          <value material="Silver" weight="18000" durability="70"/>
+          <value material="ElvesMetal" weight="10000" durability="80"/>
+          <value material="DwarfsMetal" weight="24000" durability="100"/>
+          <value material="Mythril" weight="3600" durability="150"/>
         </weight>
       </item>
     </chests>
@@ -1393,7 +1393,7 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Leather">1000</value>
+          <value material="Leather" weight="1000" durability="30">1000</value>
         </weight>
       </item>
       <item class="Mail" name="Mail">
@@ -1526,12 +1526,12 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Iron">2000</value>
-          <value material="Steel">2000</value>
-          <value material="Silver">3000</value>
-          <value material="ElvesMetal">1500</value>
-          <value material="DwarfsMetal">4000</value>
-          <value material="Mythril">600</value>
+          <value material="Iron" weight="2000" durability="30"/>
+          <value material="Steel" weight="2000" durability="40"/>
+          <value material="Silver" weight="3000" durability="25"/>
+          <value material="ElvesMetal" weight="1500" durability="45"/>
+          <value material="DwarfsMetal" weight="4000" durability="50"/>
+          <value material="Mythril" weight="600" durability="70"/>
         </weight>
       </item>
       <item class="ScaleMail" name="Scale Mail">
@@ -1680,12 +1680,12 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Iron">2000</value>
-          <value material="Steel">2000</value>
-          <value material="Silver">3000</value>
-          <value material="ElvesMetal">1500</value>
-          <value material="DwarfsMetal">4000</value>
-          <value material="Mythril">600</value>
+          <value material="Iron" weight="2000" durability="40"/>
+          <value material="Steel" weight="2000" durability="50"/>
+          <value material="Silver" weight="3000" durability="40"/>
+          <value material="ElvesMetal" weight="1500" durability="50"/>
+          <value material="DwarfsMetal" weight="4000" durability="60"/>
+          <value material="Mythril" weight="600" durability="80"/>
         </weight>
       </item>
       <item class="Plate" name="Plate">
@@ -1838,12 +1838,12 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Iron">4000</value>
-          <value material="Steel">4000</value>
-          <value material="Silver">6000</value>
-          <value material="ElvesMetal">3000</value>
-          <value material="DwarfsMetal">8000</value>
-          <value material="Mythril">1200</value>
+          <value material="Iron" weight="4000" durability="55">4000</value>
+          <value material="Steel" weight="4000" durability="70">4000</value>
+          <value material="Silver" weight="6000" durability="50">6000</value>
+          <value material="ElvesMetal" weight="3000" durability="60">3000</value>
+          <value material="DwarfsMetal" weight="8000" durability="85">8000</value>
+          <value material="Mythril" weight="1200" durability="110">1200</value>
         </weight>
       </item>
     </helmets>
@@ -1975,7 +1975,7 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Leather">2000</value>
+          <value material="Leather" weight="2000" durability="50"/>
         </weight>
       </item>
       <item class="Mail" name="Mail">
@@ -2107,12 +2107,12 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Iron">5000</value>
-          <value material="Steel">5000</value>
-          <value material="Silver">1500</value>
-          <value material="ElvesMetal">3500</value>
-          <value material="DwarfsMetal">10000</value>
-          <value material="Mythril">1500</value>
+          <value material="Iron" weight="5000" durability="50"/>
+          <value material="Steel" weight="5000" durability="60"/>
+          <value material="Silver" weight="7000" durability="40"/>
+          <value material="ElvesMetal" weight="3500" durability="55"/>
+          <value material="DwarfsMetal" weight="10000" durability="70"/>
+          <value material="Mythril" weight="1500" durability="90"/>
         </weight>
       </item>
       <item class="ScaleMail" name="Scale Mail">
@@ -2260,12 +2260,12 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Iron">7000</value>
-          <value material="Steel">7000</value>
-          <value material="Silver">10500</value>
-          <value material="ElvesMetal">5500</value>
-          <value material="DwarfsMetal">14000</value>
-          <value material="Mythril">2100</value>
+          <value material="Iron" weight="7000" durability="60"/>
+          <value material="Steel" weight="7000" durability="70"/>
+          <value material="Silver" weight="10500" durability="60"/>
+          <value material="ElvesMetal" weight="5500" durability="70"/>
+          <value material="DwarfsMetal" weight="14000" durability="80"/>
+          <value material="Mythril" weight="2100" durability="100"/>
         </weight>
       </item>
       <item class="Plate" name="Plate">
@@ -2415,12 +2415,12 @@
           </rareness>
         </rareness-configuration>
         <weight>
-          <value material="Iron">9000</value>
-          <value material="Steel">9000</value>
-          <value material="Silver">13500</value>
-          <value material="ElvesMetal">7200</value>
-          <value material="DwarfsMetal">18000</value>
-          <value material="Mythril">2700</value>
+          <value material="Iron" weight="9000" durability="75"/>
+          <value material="Steel" weight="9000" durability="90"/>
+          <value material="Silver" weight="13500" durability="70"/>
+          <value material="ElvesMetal" weight="7200" durability="80"/>
+          <value material="DwarfsMetal" weight="18000" durability="100"/>
+          <value material="Mythril" weight="2700" durability="150"/>
         </weight>
       </item>
     </leggings>

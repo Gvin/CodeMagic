@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
@@ -8,7 +9,7 @@ using CodeMagic.Game.Objects.Creatures.Loot;
 
 namespace CodeMagic.Game.Objects.Furniture
 {
-    public class ContainerObject : FurnitureObject, IUsableObject
+    public class ContainerObject : FurnitureObject, IUsableObject, IDynamicObject
     {
         private const string SaveKeyInventory = "Inventory";
 
@@ -36,7 +37,7 @@ namespace CodeMagic.Game.Objects.Furniture
             return data;
         }
 
-        public void Use(CurrentGame.GameCore<Player> game, Point position)
+        public void Use(GameCore<Player> game, Point position)
         {
             game.Journal.Write(new ContainerOpenMessage(Name));
             DialogsManager.Provider.OpenInventoryDialog(Name, inventory);
@@ -54,6 +55,15 @@ namespace CodeMagic.Game.Objects.Furniture
                 }
             }
         }
+
+        public void Update(Point position)
+        {
+            inventory.Update();
+        }
+
+        public bool Updated { get; set; }
+
+        public UpdateOrder UpdateOrder => UpdateOrder.Late;
     }
 
     public class ContainerObjectConfiguration : FurnitureObjectConfiguration

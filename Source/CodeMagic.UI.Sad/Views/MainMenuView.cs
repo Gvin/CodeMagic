@@ -103,7 +103,7 @@ namespace CodeMagic.UI.Sad.Views
 
             Close();
 
-            var game = (CurrentGame.GameCore<Player>) CurrentGame.Game;
+            var game = (GameCore<Player>) CurrentGame.Game;
             var gameView = new GameView(game);
             gameView.Show();
         }

@@ -49,7 +49,7 @@ namespace CodeMagic.Game.Items.Usable.Food
             return data;
         }
 
-        public bool Use(CurrentGame.GameCore<Player> game)
+        public bool Use(GameCore<Player> game)
         {
             game.Player.HungerPercent -= hungerDecrease;
             game.Journal.Write(new HungerDecreasedMessage(hungerDecrease));

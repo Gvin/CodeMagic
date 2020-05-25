@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon;
 using CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses;
 using CodeMagic.UI.Images;
@@ -11,6 +12,9 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon
 {
     internal class WeaponGenerator : IWeaponGenerator
     {
+        private const int MaxDurabilityPercent = 100;
+        private const int MinDurabilityPercent = 30;
+
         private readonly IImagesStorage imagesStorage;
         protected readonly string BaseName;
         private readonly string worldImageName;
@@ -43,10 +47,14 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon
             var maxDamage = GenerateMaxDamage(rarenessConfiguration);
             var minDamage = maxDamage.ToDictionary(pair => pair.Key, pair => pair.Value - rarenessConfiguration.MinMaxDamageDifference);
             var hitChance = RandomHelper.GetRandomValue(rarenessConfiguration.MinHitChance, rarenessConfiguration.MaxHitChance);
-            var weight = GetWeight(material);
+            var weightConfiguration = GetWeightConfiguration(material);
             var name = GenerateName(material);
             var description = GenerateDescription(rareness, material);
             var bonusesCount = RandomHelper.GetRandomValue(rarenessConfiguration.MinBonuses, rarenessConfiguration.MaxBonuses);
+
+            var durabilityPercent = RandomHelper.GetRandomValue(MinDurabilityPercent, MaxDurabilityPercent);
+            var maxDurability = weightConfiguration.Durability;
+            var durability = Math.Min(maxDurability, (int) Math.Round(weightConfiguration.Durability * (durabilityPercent / 100d)));
 
             var itemConfig = new WeaponItemConfiguration
             {
@@ -54,12 +62,14 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon
                 Key = Guid.NewGuid().ToString(),
                 Description = description,
                 Rareness = rareness,
-                Weight = weight,
+                Weight = weightConfiguration.Weight,
                 MaxDamage = maxDamage,
                 MinDamage = minDamage,
                 HitChance = hitChance,
                 InventoryImage = inventoryImage,
-                WorldImage = worldImage
+                WorldImage = worldImage,
+                MaxDurability = maxDurability,
+                Durability = durability
             };
             bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
 
@@ -78,13 +88,13 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon
                 pair => RandomHelper.GetRandomValue(pair.MinValue, pair.MaxValue));
         }
 
-        private int GetWeight(ItemMaterial material)
+        private IWeightConfiguration GetWeightConfiguration(ItemMaterial material)
         {
             var result = configuration.Weight.FirstOrDefault(config => config.Material == material);
             if (result == null)
                 throw new ApplicationException($"No {BaseName} weight configuration for material: {material}");
 
-            return result.Weight;
+            return result;
         }
 
         protected SymbolsImage GetRandomImage(string[] names)

@@ -42,7 +42,7 @@ namespace CodeMagic.Game.Items.Usable
             return data;
         }
 
-        public virtual bool Use(CurrentGame.GameCore<Player> game)
+        public virtual bool Use(GameCore<Player> game)
         {
             var codeSpell = new CodeSpell(game.Player, SpellName, code, Mana);
             game.Map.AddObject(game.PlayerPosition, codeSpell);

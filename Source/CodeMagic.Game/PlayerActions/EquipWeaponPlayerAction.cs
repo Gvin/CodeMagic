@@ -20,7 +20,7 @@ namespace CodeMagic.Game.PlayerActions
 
         public bool Perform(out Point newPosition)
         {
-            ((CurrentGame.GameCore<Player>)CurrentGame.Game).Player.Equipment.EquipWeapon(weapon, isRight);
+            ((GameCore<Player>)CurrentGame.Game).Player.Equipment.EquipWeapon(weapon, isRight);
             CurrentGame.Journal.Write(new WeaponEquipedMessage(weapon, isRight));
 
             newPosition = CurrentGame.PlayerPosition;

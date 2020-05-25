@@ -10,7 +10,7 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
 {
-    public class WeaponItem : EquipableItem, IWeaponItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider
+    public class WeaponItem : DurableItem, IWeaponItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider
     {
         private const string SaveKeyInventoryImage = "InventoryImage";
         private const string SaveKeyWorldImage = "WorldImage";
@@ -67,6 +67,8 @@ namespace CodeMagic.Game.Items
 
         public Dictionary<Element, int> GenerateDamage()
         {
+            Durability--;
+
             return MaxDamage.ToDictionary(pair => pair.Key,
                 pair => RandomHelper.GetRandomValue(MinDamage[pair.Key], pair.Value));
         }
@@ -97,6 +99,10 @@ namespace CodeMagic.Game.Items
             {
                 result.Add(TextHelper.GetCompareWeightLine(Weight, player.Equipment.RightWeapon.Weight));
             }
+
+            result.Add(StyledLine.Empty);
+
+            result.Add(TextHelper.GetDurabilityLine(Durability, MaxDurability));
 
             result.Add(StyledLine.Empty);
 
@@ -208,7 +214,7 @@ namespace CodeMagic.Game.Items
         }
     }
 
-    public class WeaponItemConfiguration : EquipableItemConfiguration
+    public class WeaponItemConfiguration : DurableItemConfiguration
     {
         public SymbolsImage InventoryImage { get; set; }
 

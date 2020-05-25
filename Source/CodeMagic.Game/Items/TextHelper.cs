@@ -28,6 +28,10 @@ namespace CodeMagic.Game.Items
         public static readonly Color ManaRegenerationColor = Color.DodgerBlue;
         public static readonly Color XpColor = Color.DarkGoldenrod;
 
+        public static readonly Color HighDurabilityColor = Color.LimeGreen;
+        public static readonly Color MediumDurabilityColor = Color.Yellow;
+        public static readonly Color LowDurabilityColor = Color.Red;
+
         public static string GetStatName(PlayerStats stat)
         {
             switch (stat)
@@ -43,6 +47,29 @@ namespace CodeMagic.Game.Items
                 default:
                     throw new ArgumentOutOfRangeException(nameof(stat), stat, null);
             }
+        }
+
+        public static Color GetDurabilityColor(int durability, int maxDurability)
+        {
+            var percent = durability / (double)maxDurability * 100;
+            if (percent < 20d)
+            {
+                return LowDurabilityColor;
+            }
+
+            if (percent < 80d)
+            {
+                return MediumDurabilityColor;
+            }
+
+            return HighDurabilityColor;
+        }
+
+        public static StyledLine GetDurabilityLine(int durability, int maxDurability)
+        {
+
+            var durabilityColor = GetDurabilityColor(durability, maxDurability);
+            return new StyledLine{"Durability: ", new StyledString($"{durability} / {maxDurability}", durabilityColor)};
         }
 
         public static StyledLine GetWeightLine(int weight)

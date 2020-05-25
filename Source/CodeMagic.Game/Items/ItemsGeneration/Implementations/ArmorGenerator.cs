@@ -12,6 +12,9 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
 {
     public class ArmorGenerator
     {
+        private const int MaxDurabilityPercent = 100;
+        private const int MinDurabilityPercent = 30;
+
         private const string WorldImageNameChest = "ItemsOnGround_Armor_Chest";
         private const string WorldImageNameLeggings = "ItemsOnGround_Armor_Leggings";
         private const string WorldImageNameHelmet = "ItemsOnGround_Armor_Helmet";
@@ -38,7 +41,12 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             var protection = GenerateProtection(rarenessConfig.Protection);
             var name = GenerateName(material, config.TypeName, armorType);
             var description = GenerateDescription(rareness, material);
-            var weight = GetWeight(config, material);
+
+            var weightConfig = GetWeightConfiguration(config, material);
+
+            var durabilityPercent = RandomHelper.GetRandomValue(MinDurabilityPercent, MaxDurabilityPercent);
+            var maxDurability = weightConfig.Durability;
+            var durability = Math.Min(maxDurability, (int)Math.Round(weightConfig.Durability * (durabilityPercent / 100d)));
 
             var bonusesCount = RandomHelper.GetRandomValue(rarenessConfig.MinBonuses, rarenessConfig.MaxBonuses);
             var itemConfig = new ArmorItemConfiguration
@@ -51,7 +59,9 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
                 WorldImage = worldImage,
                 Protection = protection,
                 Rareness = rareness,
-                Weight = weight
+                Weight = weightConfig.Weight,
+                MaxDurability = maxDurability,
+                Durability = durability
             };
             bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
 
@@ -95,12 +105,12 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             }
         }
 
-        private int GetWeight(IArmorPieceConfiguration config, ItemMaterial material)
+        private IWeightConfiguration GetWeightConfiguration(IArmorPieceConfiguration config, ItemMaterial material)
         {
             var result = config.Weight.FirstOrDefault(w => w.Material == material);
             if (result == null)
                 throw new ApplicationException($"Weight configuration not found for armor material {material}");
-            return result.Weight;
+            return result;
         }
 
         private string[] GenerateDescription(ItemRareness rareness, ItemMaterial material)

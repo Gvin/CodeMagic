@@ -5,6 +5,6 @@ namespace CodeMagic.Game.Objects
 {
     public interface IUsableObject
     {
-        void Use(CurrentGame.GameCore<Player> game, Point position);
+        void Use(GameCore<Player> game, Point position);
     }
 }

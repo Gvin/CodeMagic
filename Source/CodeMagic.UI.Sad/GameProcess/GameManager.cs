@@ -27,9 +27,9 @@ namespace CodeMagic.UI.Sad.GameProcess
             DungeonMapGenerator.Initialize(ImagesStorage.Current, Properties.Settings.Default.DebugWriteMapToFile);
         }
 
-        public CurrentGame.GameCore<Player> StartGame()
+        public GameCore<Player> StartGame()
         {
-            if (CurrentGame.Game is CurrentGame.GameCore<Player> oldGame)
+            if (CurrentGame.Game is GameCore<Player> oldGame)
             {
                 oldGame.TurnEnded -= game_TurnEnded;
             }
@@ -40,7 +40,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             var startMap = DungeonMapGenerator.Current.GenerateNewMap(1, out var playerPosition);
             CurrentGame.Initialize(startMap, player, playerPosition);
-            var game = (CurrentGame.GameCore<Player>) CurrentGame.Game;
+            var game = (GameCore<Player>) CurrentGame.Game;
             startMap.Refresh();
 
             player.Inventory.ItemAdded += (sender, args) =>
@@ -98,7 +98,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             if (CurrentGame.Player.Health <= 0)
             {
                 saveGameTask?.Wait();
-                ((CurrentGame.GameCore<Player>)CurrentGame.Game).TurnEnded -= game_TurnEnded;
+                ((GameCore<Player>)CurrentGame.Game).TurnEnded -= game_TurnEnded;
                 CurrentGame.Load(null);
                 new SaveManager().DeleteSave();
             }
@@ -144,6 +144,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             return new WeaponItem(new WeaponItemConfiguration
             {
                 Name = "Ban Hammer",
+                MaxDurability = 100000000,
                 Description = new []
                 {
                     "Powerful weapon designed to give his owner",

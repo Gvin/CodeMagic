@@ -137,7 +137,7 @@ namespace CodeMagic.Game.Items.Usable
             }
         }
 
-        public bool Use(CurrentGame.GameCore<Player> game)
+        public bool Use(GameCore<Player> game)
         {
             switch (type)
             {
@@ -174,32 +174,32 @@ namespace CodeMagic.Game.Items.Usable
             return false;
         }
 
-        private void UseHungerPotion(CurrentGame.GameCore<Player> game)
+        private void UseHungerPotion(GameCore<Player> game)
         {
             var increase = GetHungerPotionEffect(size);
             game.Player.HungerPercent += increase;
             game.Journal.Write(new HungerIncreasedMessage(increase));
         }
 
-        private void UseFrostPotion(CurrentGame.GameCore<Player> game)
+        private void UseFrostPotion(GameCore<Player> game)
         {
             var timeToLive = GetFrostPotionEffect(size);
             game.Player.Statuses.Add(new FrozenObjectStatus(timeToLive));
         }
 
-        private void UseBlindPotion(CurrentGame.GameCore<Player> game)
+        private void UseBlindPotion(GameCore<Player> game)
         {
             var timeToLive = GetBlindPotionEffect(size);
             game.Player.Statuses.Add(new BlindObjectStatus(timeToLive));
         }
 
-        private void UseParalyzePotion(CurrentGame.GameCore<Player> game)
+        private void UseParalyzePotion(GameCore<Player> game)
         {
             var timeToLive = GetParalyzePotionEffect(size);
             game.Player.Statuses.Add(new ParalyzedObjectStatus(timeToLive));
         }
 
-        private void UseRestorationPotion(CurrentGame.GameCore<Player> game)
+        private void UseRestorationPotion(GameCore<Player> game)
         {
             var (restoreHealthValue, restoreManaValue) = GetRestorationPotionEffect(size);
             game.Player.Mana += restoreManaValue;
@@ -208,14 +208,14 @@ namespace CodeMagic.Game.Items.Usable
             game.Journal.Write(new HealedMessage(game.Player, restoreHealthValue));
         }
 
-        private void UseManaPotion(CurrentGame.GameCore<Player> game)
+        private void UseManaPotion(GameCore<Player> game)
         {
             var manaValue = GetManaPotionEffect(size);
             game.Player.Mana += manaValue;
             game.Journal.Write(new ManaRestoredMessage(game.Player, manaValue));
         }
 
-        private void UseHealthPotion(CurrentGame.GameCore<Player> game)
+        private void UseHealthPotion(GameCore<Player> game)
         {
             var healValue = GetHealPotionEffect(size);
             game.Player.Health += healValue;

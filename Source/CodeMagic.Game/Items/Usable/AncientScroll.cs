@@ -71,7 +71,7 @@ namespace CodeMagic.Game.Items.Usable
             return ImageInventory3;
         }
 
-        public override bool Use(CurrentGame.GameCore<Player> game)
+        public override bool Use(GameCore<Player> game)
         {
             var chanceToRead = GetChanceToRead(game.Player);
             if (RandomHelper.CheckChance(chanceToRead))

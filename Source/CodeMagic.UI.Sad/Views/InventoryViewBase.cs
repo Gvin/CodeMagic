@@ -210,10 +210,17 @@ namespace CodeMagic.UI.Sad.Views
 
             var text = GetNameText(selected, backColor);
 
-            var afterNameText = GetAfterNameText(backColor);
-            var formattedText = FormatText(text, afterNameText, backColor, maxWidth - 1);
+            var afterNameText = new List<ColoredString>();
+            if (Stack.TopItem is DurableItem durableItem)
+            {
+                var durabilityColor = TextHelper.GetDurabilityColor(durableItem.Durability, durableItem.MaxDurability);
+                afterNameText.Add(new ColoredString(
+                    new ColoredGlyph(Glyphs.GetGlyph('•'), durabilityColor.ToXna(), backColor)));
+            }
+            afterNameText.AddRange(GetAfterNameText(backColor));
+            var formattedText = FormatText(text, afterNameText.ToArray(), backColor, maxWidth - 1);
             surface.Print(1, y, formattedText);
-            surface.PrintStyledText(1 + formattedText.Count, y, afterNameText);
+            surface.PrintStyledText(1 + formattedText.Count, y, afterNameText.ToArray());
             surface.Print(maxWidth - 6, y, new ColoredString(GetWeightText(), WeightColor, backColor));
         }
 

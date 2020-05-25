@@ -72,6 +72,7 @@
     <Compile Include="Injection\IInjectable.cs" />
     <Compile Include="Injection\InjectorImpl.cs" />
     <Compile Include="Injection\Injector.cs" />
+    <Compile Include="Items\IDecayableItem.cs" />
     <Compile Include="Objects\Creatures\INonPlayableCreatureObject.cs" />
     <Compile Include="Objects\IFuelObject.cs" />
     <Compile Include="Objects\IFireSpreadingObject.cs" />
