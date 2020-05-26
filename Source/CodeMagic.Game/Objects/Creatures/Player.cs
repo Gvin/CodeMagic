@@ -59,6 +59,8 @@ namespace CodeMagic.Game.Objects.Creatures
         private double hungerPercent;
         private readonly Dictionary<PlayerStats, int> stats;
 
+        private readonly object experienceLock = new object();
+
         public event EventHandler Died;
         public event EventHandler LeveledUp;
 
@@ -129,16 +131,19 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public void AddExperience(int exp)
         {
-            Experience += exp;
-            CurrentGame.Journal.Write(new ExperienceGainedMessage(exp));
-
-            var xpToLevelUp = GetXpToLevelUp();
-            if (Experience >= xpToLevelUp)
+            lock (experienceLock)
             {
-                Level++;
-                Experience -= xpToLevelUp;
-                CurrentGame.Journal.Write(new LevelUpMessage(Level));
-                LeveledUp?.Invoke(this, EventArgs.Empty);
+                Experience += exp;
+                CurrentGame.Journal.Write(new ExperienceGainedMessage(exp));
+
+                var xpToLevelUp = GetXpToLevelUp();
+                if (Experience >= xpToLevelUp)
+                {
+                    Level++;
+                    Experience -= xpToLevelUp;
+                    CurrentGame.Journal.Write(new LevelUpMessage(Level));
+                    LeveledUp?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -219,7 +224,7 @@ namespace CodeMagic.Game.Objects.Creatures
             set => mana = Math.Max(0, Math.Min(MaxMana, value));
         }
 
-        public int MaxMana => 100 + 20 * GetStat(PlayerStats.Intelligence) + Equipment.GetBonus(EquipableBonusType.Mana);
+        public int MaxMana => 1000 + 20 * GetStat(PlayerStats.Intelligence) + Equipment.GetBonus(EquipableBonusType.Mana);
 
         public int AccuracyLeft => CalculateHitChance(Equipment.RightWeapon.Accuracy);
 
