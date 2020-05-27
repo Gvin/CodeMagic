@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.UI.Sad.Common;
@@ -79,6 +80,7 @@ namespace CodeMagic.UI.Sad.Controls
 
         private void DrawMessages(JournalMessageData[] messages)
         {
+            const int dX = 3;
             var shiftY = 1 - scroll.Value;
             for (int index = 0; index < messages.Length; index++)
             {
@@ -87,14 +89,42 @@ namespace CodeMagic.UI.Sad.Controls
                     continue;
 
                 var message = messages[index];
-                DrawJournalMessage(3, yPos, message);
+                var spreadMessage = SpreadMessage(message, Width - 2 - dX);
+                foreach (var coloredGlyph in spreadMessage)
+                {
+                    Surface.Print(dX, yPos, new ColoredString(coloredGlyph));
+                    yPos++;
+                }
+
+                shiftY += spreadMessage.Length - 1;
             }
         }
 
-        private void DrawJournalMessage(int x, int y, JournalMessageData message)
+        private ColoredGlyph[][] SpreadMessage(JournalMessageData message, int width)
         {
             var formattedMessage = messageFormatter.FormatMessage(message);
-            Surface.PrintStyledText(x, y, formattedMessage);
+            var glyphs = formattedMessage.SelectMany(part => part.ToArray()).ToArray();
+
+            var result = new List<ColoredGlyph[]>();
+            var accumulator = new List<ColoredGlyph>();
+            foreach (var glyph in glyphs)
+            {
+                if (accumulator.Count < width)
+                {
+                    accumulator.Add(glyph);
+                    continue;
+                }
+
+                var lastSpaceIndex = accumulator.FindLastIndex(elem => elem.GlyphCharacter == ' ');
+                var newAccumulator = accumulator.Skip(lastSpaceIndex + 1).ToList();
+
+                result.Add(accumulator.Take(lastSpaceIndex + 1).ToArray());
+                accumulator = newAccumulator;
+                accumulator.Add(glyph);
+            }
+            result.Add(accumulator.ToArray());
+
+            return result.ToArray();
         }
 
         private void DrawFrame()
