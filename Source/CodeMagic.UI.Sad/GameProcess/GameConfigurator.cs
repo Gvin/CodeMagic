@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using CodeMagic.Configuration.Xml;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Injection;
 using CodeMagic.Core.Injection.Configuration;
+using CodeMagic.Core.Logging;
 using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Game;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.Drawing.ObjectEffects;
+using CodeMagic.UI.Sad.Logger;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
@@ -19,6 +22,10 @@ namespace CodeMagic.UI.Sad.GameProcess
     {
         public static void Configure()
         {
+            LogManager.Initialize(new LogProvider());
+
+            LogManager.GetLog(nameof(GameConfigurator)).Info($"Starting game. Version {Assembly.GetExecutingAssembly().GetName().Version}");
+
             var config = LoadConfiguration();
             ConfigurationManager.InitializeConfiguration(config);
 

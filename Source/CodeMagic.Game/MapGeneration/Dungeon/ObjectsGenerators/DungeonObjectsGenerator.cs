@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Logging;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
 {
     internal partial class DungeonObjectsGenerator : IObjectsGenerator
     {
+        private static readonly ILog Log = LogManager.GetLog<DungeonObjectsGenerator>();
+
         private readonly ObjectsPattern[] patterns;
 
         public DungeonObjectsGenerator(IImagesStorage storage)
@@ -43,6 +47,8 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
 
         public void GenerateObjects(IAreaMap map, Point playerPosition)
         {
+            var stopwatch = Stopwatch.StartNew();
+
             foreach (var pattern in patterns)
             {
                 var count = (int)Math.Floor(map.Width * map.Height * pattern.MaxCountMultiplier);
@@ -51,6 +57,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
                     AddPattern(map, playerPosition, pattern);
                 }
             }
+
+            stopwatch.Stop();
+            Log.Debug($"GenerateObjects took {stopwatch.ElapsedMilliseconds} milliseconds.");
         }
 
         private void AddPattern(IAreaMap map, Point playerPosition, ObjectsPattern pattern)

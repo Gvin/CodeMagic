@@ -67,12 +67,15 @@
     <Compile Include="Game\IGameCore.cs" />
     <Compile Include="Game\IDungeonMapGenerator.cs" />
     <Compile Include="Game\Journaling\IJournal.cs" />
+    <Compile Include="Logging\ILog.cs" />
     <Compile Include="Injection\Configuration\InjectorConfiguration.cs" />
     <Compile Include="Injection\Configuration\InjectorMappingType.cs" />
     <Compile Include="Injection\IInjectable.cs" />
     <Compile Include="Injection\InjectorImpl.cs" />
     <Compile Include="Injection\Injector.cs" />
     <Compile Include="Items\IDecayableItem.cs" />
+    <Compile Include="Logging\ILogProvider.cs" />
+    <Compile Include="Logging\LogManager.cs" />
     <Compile Include="Objects\Creatures\INonPlayableCreatureObject.cs" />
     <Compile Include="Objects\IFuelObject.cs" />
     <Compile Include="Objects\IFireSpreadingObject.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Logging;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.Saving;
@@ -17,19 +18,28 @@ namespace CodeMagic.UI.Sad
         [STAThread]
         static void Main()
         {
-            GameConfigurator.Configure();
-            FontProvider.InitializeFont(new WinFormsScreenSizeProvider(), Width, Height);
+            try
+            {
+                GameConfigurator.Configure();
+                FontProvider.InitializeFont(new WinFormsScreenSizeProvider(), Width, Height);
 
-            // Setup the engine and create the main window.
-            var gameWidth = (int) Math.Floor(Width * FontProvider.FontHorizontalMultiplier);
-            var gameHeight = (int) Math.Floor(Height * FontProvider.FontVerticalMultiplier);
-            SadConsole.Game.Create(gameWidth, gameHeight);
+                // Setup the engine and create the main window.
+                var gameWidth = (int)Math.Floor(Width * FontProvider.FontHorizontalMultiplier);
+                var gameHeight = (int)Math.Floor(Height * FontProvider.FontVerticalMultiplier);
+                SadConsole.Game.Create(gameWidth, gameHeight);
 
-            // Hook the start event so we can add consoles to the system.
-            SadConsole.Game.OnInitialize = Init;
-            // Start the game.
-            SadConsole.Game.Instance.Run();
-            SadConsole.Game.Instance.Dispose();
+                // Hook the start event so we can add consoles to the system.
+                SadConsole.Game.OnInitialize = Init;
+                // Start the game.
+                SadConsole.Game.Instance.Run();
+                SadConsole.Game.Instance.Dispose();
+            }
+            catch (Exception e)
+            {
+                LogManager.GetLog(nameof(Program)).Fatal(e);
+                throw;
+            }
+            
         }
 
         private static void Init()

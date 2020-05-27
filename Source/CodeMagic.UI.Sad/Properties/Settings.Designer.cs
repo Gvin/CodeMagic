@@ -112,5 +112,17 @@ namespace CodeMagic.UI.Sad.Properties {
                 return ((int)(this["SavingInterval"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Debug")]
+        public string LogLevel {
+            get {
+                return ((string)(this["LogLevel"]));
+            }
+            set {
+                this["LogLevel"] = value;
+            }
+        }
     }
 }

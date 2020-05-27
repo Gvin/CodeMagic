@@ -44,6 +44,12 @@
     <Reference Include="SadConsole, Version=8.7.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SadConsole.8.7.1\lib\netstandard2.0\SadConsole.dll</HintPath>
     </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.9.0\lib\net46\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.4.1.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -81,6 +87,8 @@
     <Compile Include="GameProcess\EditSpellHelper.cs" />
     <Compile Include="GameProcess\GameConfigurator.cs" />
     <Compile Include="GameProcess\GameManager.cs" />
+    <Compile Include="Logger\LogProvider.cs" />
+    <Compile Include="Logger\SerilogLog.cs" />
     <Compile Include="Saving\SaveManager.cs" />
     <Compile Include="SpellsLibrary\SpellsLibraryManager.cs" />
     <Compile Include="Views\CheatsView.cs" />

@@ -29,5 +29,8 @@
     <Setting Name="SavingInterval" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">10</Value>
     </Setting>
+    <Setting Name="LogLevel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Debug</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -4,6 +4,7 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Core.Game.PlayerActions;
+using CodeMagic.Core.Logging;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
 using CodeMagic.Core.Statuses;
@@ -12,6 +13,7 @@ namespace CodeMagic.Core.Game
 {
     public static class CurrentGame
     {
+        private static readonly ILog Log = LogManager.GetLog("CurrentGame");
         private static readonly object GameLockObject = new object();
         private static IGameCore game;
 
@@ -28,6 +30,7 @@ namespace CodeMagic.Core.Game
             {
                 lock (GameLockObject)
                 {
+                    Log.Debug("Setting game instance");
                     game = value;
                 }
             }
@@ -55,6 +58,8 @@ namespace CodeMagic.Core.Game
 
     public class GameCore<TPlayer> : IGameCore where TPlayer : class, IPlayer
     {
+        private readonly ILog log = LogManager.GetLog<GameCore<TPlayer>>();
+
         private const string SaveKeyMap = "Map";
         private const string SaveKeyPlayer = "Player";
         private const string SaveKeyPlayerPosition = "PlayerPosition";
@@ -104,6 +109,7 @@ namespace CodeMagic.Core.Game
 
         public void ChangeMap(IAreaMap newMap, Point playerPosition)
         {
+            log.Debug("Changing map");
             Map = newMap;
             Map.AddObject(playerPosition, Player);
             PlayerPosition = playerPosition;
@@ -111,6 +117,8 @@ namespace CodeMagic.Core.Game
 
         public void PerformPlayerAction(IPlayerAction action)
         {
+            log.Debug($"Performing player action: {action.GetType().Name}");
+
             Map.PreUpdate();
 
             var endsTurn = action.Perform(out var newPosition);

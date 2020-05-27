@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Logging;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Controls;
 using SadConsole.Input;
@@ -10,6 +11,8 @@ namespace CodeMagic.UI.Sad.Views
 {
     public class CheatsView : View
     {
+        private static readonly ILog Log = LogManager.GetLog<CheatsView>();
+
         public CheatsView()
         {
             InitializeControls();
@@ -34,6 +37,7 @@ namespace CodeMagic.UI.Sad.Views
             };
             levelUp.Click += (sender, args) =>
             {
+                Log.Info("Used Cheat \"Level Up\"");
                 Close();
                 var exp = ((Player) CurrentGame.Player).GetXpToLevelUp() - CurrentGame.Player.Experience;
                 CurrentGame.Player.AddExperience(exp);
@@ -47,6 +51,7 @@ namespace CodeMagic.UI.Sad.Views
             };
             heal.Click += (sender, args) =>
             {
+                Log.Info("Used Cheat \"Heal\"");
                 Close();
                 CurrentGame.Player.Health = CurrentGame.Player.MaxHealth;
             };
@@ -59,6 +64,7 @@ namespace CodeMagic.UI.Sad.Views
             };
             restoreMana.Click += (sender, args) =>
             {
+                Log.Info("Used Cheat \"Restore Mana\"");
                 Close();
                 CurrentGame.Player.Mana = CurrentGame.Player.MaxMana;
             };
@@ -71,6 +77,7 @@ namespace CodeMagic.UI.Sad.Views
             };
             restoreStats.Click += (sender, args) =>
             {
+                Log.Info("Used Cheat \"Restore Stats\"");
                 Close();
                 CurrentGame.Player.Health = CurrentGame.Player.MaxHealth;
                 CurrentGame.Player.Mana = CurrentGame.Player.MaxMana;

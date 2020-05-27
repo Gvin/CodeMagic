@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Logging;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
 using Newtonsoft.Json;
@@ -12,6 +13,8 @@ namespace CodeMagic.UI.Sad.Saving
 {
     public class SaveManager
     {
+        private static readonly ILog Log = LogManager.GetLog<SaveManager>();
+
         private const string SaveFilePath = ".\\save.json";
 
         static SaveManager()
@@ -27,6 +30,9 @@ namespace CodeMagic.UI.Sad.Saving
         public void SaveGame()
         {
             var turn = CurrentGame.Game.CurrentTurn;
+
+            Log.Debug($"Saving started on turn {turn}");
+
             SaveData data;
             using (PerformanceMeter.Start($"Saving_GetSaveData[{turn}]"))
             {
@@ -50,10 +56,14 @@ namespace CodeMagic.UI.Sad.Saving
             {
                 WriteSaveFile(json);
             }
+
+            Log.Debug("Saving finished");
         }
 
         public GameCore<Player> LoadGame()
         {
+            Log.Debug("Trying to load game");
+
             if (!File.Exists(SaveFilePath))
                 return null;
 
@@ -66,22 +76,31 @@ namespace CodeMagic.UI.Sad.Saving
 
                 var currentVersion = GetGameVersion();
                 if (!string.Equals(currentVersion, gameSaveData.Version))
+                {
+                    Log.Warning($"Throwing away existing save because of versions mismatch. Game version: {currentVersion}. Save version: {gameSaveData.Version}.");
                     return null;
+                }
 
                 return new GameCore<Player>(gameSaveData.Data);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Warning("Error while loading save file", ex);
 #if DEBUG
                 throw;
 #else
                 return null;
 #endif
             }
+            finally
+            {
+                Log.Debug("Loading finished");
+            }
         }
 
         public void DeleteSave()
         {
+            Log.Debug("Deleting game save");
             File.Delete(SaveFilePath);
         }
 

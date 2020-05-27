@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Logging;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Monsters;
@@ -13,12 +15,16 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
 {
     internal class DungeonMonstersGenerator : IMonstersGenerator
     {
+        private static readonly ILog Log = LogManager.GetLog<DungeonMonstersGenerator>();
+
         private const int SquadForceMultiplier = 2;
         private const double SquadForceVariation = 0.2d;
         private const double SquadsCountMultiplier = 0.01d;
 
         public void GenerateMonsters(IAreaMap map, Point playerPosition)
         {
+            var stopwatch = Stopwatch.StartNew();
+
             var squadsCount = GetSquadsCount(map);
 
             var possibleMonsters = ConfigurationManager.Current.Monsters.Monsters
@@ -39,6 +45,9 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
                 var group = RandomHelper.GetRandomElement(possibleGroups);
                 PlaceSquad(map, possibleMonsters, group, occupiedCells);
             }
+
+            stopwatch.Stop();
+            Log.Debug($"GenerateMonsters took {stopwatch.ElapsedMilliseconds} milliseconds.");
         }
 
         private static void PlaceSquad(IAreaMap map, IMonsterConfiguration[] monsters, string group,
@@ -135,7 +144,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
 
         private static Point FindEmptyRoom(IAreaMap map, bool[,] occupiedCells)
         {
-            for (int counter = 0; counter < 200; counter++)
+            for (int counter = 0; counter < 500; counter++)
             {
                 var pointX = RandomHelper.GetRandomValue(0, map.Width - 1);
                 var pointY = RandomHelper.GetRandomValue(0, map.Height - 1);

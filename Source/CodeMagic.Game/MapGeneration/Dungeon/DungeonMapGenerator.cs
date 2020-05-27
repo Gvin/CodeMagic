@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Logging;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.Game.MapGeneration.Dungeon.MapGenerators;
 using CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories;
@@ -14,6 +16,8 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 {
     public class DungeonMapGenerator : IDungeonMapGenerator
     {
+        private static readonly ILog Log = LogManager.GetLog<DungeonMapGenerator>();
+
         public static DungeonMapGenerator Current { get; private set; }
 
         public static void Initialize(IImagesStorage imagesStorage, bool writeMapFile)
@@ -41,22 +45,37 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 
         public IAreaMap GenerateNewMap(int level, out Point playerPosition)
         {
-            const int maxAttempts = 500;
-            var attempts = 0;
-            while (attempts < maxAttempts)
+            Log.Debug($"Generating map for level {level}.");
+            var stopwatch = Stopwatch.StartNew();
+
+            try
             {
-                attempts++;
+                return PerformMapGeneration(level, out playerPosition);
+            }
+            finally
+            {
+                stopwatch.Stop();
+                Log.Debug($"Map generation took {stopwatch.ElapsedMilliseconds} milliseconds total.");
+            }
+        }
+
+        private IAreaMap PerformMapGeneration(int level, out Point playerPosition)
+        {
+            for (var attempt = 0; attempt < 500; attempt++)
+            {
                 try
                 {
                     var size = GenerateMapSize();
-                    return GenerateMap(level, size, out playerPosition);
+                    var map = GenerateMap(level, size, out playerPosition);
+                    Log.Info($"Map was generated for {attempt + 1} attempts.");
+                    return map;
                 }
-                catch (MapGenerationException)
+                catch (MapGenerationException ex)
                 {
-                    // Do nothing
+                    Log.Debug("Error when generating map.", ex);
                 }
             }
-            
+
             throw new ApplicationException("Unable to generate map.");
         }
 
