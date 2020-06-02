@@ -5,12 +5,7 @@
     <name>Skeleton</name>
     <logic-pattern>SimplePatrollingChaser</logic-pattern>
     <experience min="2" max="5"/>
-    <images>
-      <north>Creature_Skeleton_Up</north>
-      <south>Creature_Skeleton_Down</south>
-      <west>Creature_Skeleton_Left</west>
-      <east>Creature_Skeleton_Right</east>
-    </images>
+    <image>Monster_SkeletonWeak</image>
     <stats>
       <health min="5" max="10"/>
       <speed>1</speed>
@@ -63,12 +58,7 @@
     <spawn-configuration group="goblin" min-level="2" force="3"/>
     <logic-pattern>SimpleWonderingChaser</logic-pattern>
     <experience min="5" max="7"/>
-    <images>
-      <north>Creature_Goblin_Up</north>
-      <south>Creature_Goblin_Down</south>
-      <west>Creature_Goblin_Left</west>
-      <east>Creature_Goblin_Right</east>
-    </images>
+    <image>Monster_GoblinWeak</image>
     <stats>
       <health min="15" max="25"/>
       <speed>1</speed>
@@ -125,12 +115,7 @@
     <spawn-configuration group="slime" min-level="3" force="10"/>
     <logic-pattern>SimpleWonderingChaser</logic-pattern>
     <experience min="10" max="15"/>
-    <images>
-      <north>Creature_Slime_Green</north>
-      <south>Creature_Slime_Green</south>
-      <west>Creature_Slime_Green</west>
-      <east>Creature_Slime_Green</east>
-    </images>
+    <image>Monster_Slime_Green</image>
     <stats>
       <health min="50" max="70"/>
       <speed>0.5</speed>
@@ -200,12 +185,7 @@
     <name>Black Knight</name>
     <logic-pattern>SimplePatrollingChaser</logic-pattern>
     <experience min="15" max="25"/>
-    <images>
-      <north>Creature_BlackKnight_Up</north>
-      <south>Creature_BlackKnight_Down</south>
-      <west>Creature_BlackKnight_Left</west>
-      <east>Creature_BlackKnight_Right</east>
-    </images>
+    <image>Monster_BlackKnight</image>
     <stats>
       <health min="50" max="70"/>
       <speed>1</speed>

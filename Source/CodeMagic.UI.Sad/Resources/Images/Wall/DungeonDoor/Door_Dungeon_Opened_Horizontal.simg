@@ -1,64 +1,222 @@
 <?xml version="1.0"?>
-<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="7" height="7">
   <row>
-    <pixel glyph="222">
+    <pixel glyph="219">
       <color>
-        <R>128</R>
-        <G>64</G>
-        <B>64</B>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
       </color>
-      <background-color>
-        <R>121</R>
-        <G>140</G>
-        <B>170</B>
-      </background-color>
     </pixel>
     <pixel />
-    <pixel glyph="222">
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="179">
       <color>
-        <R>121</R>
-        <G>140</G>
-        <B>170</B>
+        <R>192</R>
+        <G>192</G>
+        <B>192</B>
+      </color>
+      <background-color>
+        <R>112</R>
+        <G>56</G>
+        <B>56</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="219">
+      <color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
       </color>
     </pixel>
   </row>
   <row>
-    <pixel glyph="222">
+    <pixel glyph="219">
       <color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="198">
+      <color>
+        <R>192</R>
+        <G>192</G>
+        <B>192</B>
+      </color>
+      <background-color>
         <R>128</R>
         <G>64</G>
         <B>64</B>
-      </color>
-      <background-color>
-        <R>121</R>
-        <G>140</G>
-        <B>170</B>
       </background-color>
     </pixel>
-    <pixel />
-    <pixel glyph="222">
+    <pixel glyph="219">
       <color>
-        <R>121</R>
-        <G>140</G>
-        <B>170</B>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
       </color>
     </pixel>
   </row>
   <row>
-    <pixel glyph="222">
+    <pixel glyph="219">
       <color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="250">
+      <color>
+        <R>192</R>
+        <G>192</G>
+        <B>192</B>
+      </color>
+      <background-color>
+        <R>112</R>
+        <G>56</G>
+        <B>56</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="219">
+      <color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </color>
+    </pixel>
+  </row>
+  <row>
+    <pixel glyph="219">
+      <color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="250">
+      <color>
+        <R>192</R>
+        <G>192</G>
+        <B>192</B>
+      </color>
+      <background-color>
         <R>128</R>
         <G>64</G>
         <B>64</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="219">
+      <color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
       </color>
-      <background-color>
+    </pixel>
+  </row>
+  <row>
+    <pixel glyph="219">
+      <color>
         <R>84</R>
         <G>91</G>
         <B>118</B>
-      </background-color>
+      </color>
     </pixel>
     <pixel />
-    <pixel glyph="222">
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="250">
+      <color>
+        <R>192</R>
+        <G>192</G>
+        <B>192</B>
+      </color>
+      <background-color>
+        <R>112</R>
+        <G>56</G>
+        <B>56</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="219">
+      <color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </color>
+    </pixel>
+  </row>
+  <row>
+    <pixel glyph="219">
+      <color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="198">
+      <color>
+        <R>192</R>
+        <G>192</G>
+        <B>192</B>
+      </color>
+      <background-color>
+        <R>128</R>
+        <G>64</G>
+        <B>64</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="219">
+      <color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </color>
+    </pixel>
+  </row>
+  <row>
+    <pixel glyph="219">
+      <color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="179">
+      <color>
+        <R>192</R>
+        <G>192</G>
+        <B>192</B>
+      </color>
+      <background-color>
+        <R>112</R>
+        <G>56</G>
+        <B>56</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="219">
       <color>
         <R>84</R>
         <G>91</G>

@@ -8,6 +8,7 @@ using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
+using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -39,7 +40,7 @@ namespace CodeMagic.UI.Sad.Views
         private DateTime lastKeyProcessed;
 
         public GameView(GameCore<Player> game) 
-            : base(Program.Width, Program.Height)
+            : base(FontTarget.Game)
         {
             lastKeyProcessed = DateTime.Now;
 
@@ -113,7 +114,7 @@ namespace CodeMagic.UI.Sad.Views
             openInventoryButton = new StandardButton(30)
             {
                 Position = new Point(Width - 39, 16),
-                Text = "[I] Inventory"
+                Text = "[I] Inventory".ToUpper()
             };
             openInventoryButton.Click += openInventoryButton_Click;
             Add(openInventoryButton);
@@ -121,7 +122,7 @@ namespace CodeMagic.UI.Sad.Views
             openSpellBookButton = new StandardButton(30)
             {
                 Position = new Point(Width - 39, 19),
-                Text = "[C] Spell Book"
+                Text = "[C] Spell Book".ToUpper()
             };
             openSpellBookButton.Click += openSpellBookButton_Click;
             openSpellBookButton.IsEnabled = true;
@@ -130,7 +131,7 @@ namespace CodeMagic.UI.Sad.Views
             showItemsOnFloorButton = new StandardButton(30)
             {
                 Position = new Point(Width - 39, 22),
-                Text = "[G] Check Floor"
+                Text = "[G] Check Floor".ToUpper()
             };
             showItemsOnFloorButton.Click += showItemsOnFloorButton_Click;
             Add(showItemsOnFloorButton);
@@ -138,7 +139,7 @@ namespace CodeMagic.UI.Sad.Views
             openPlayerStatsButton = new StandardButton(30)
             {
                 Position = new Point(Width - 39, 25),
-                Text = "[V] Player Status"
+                Text = "[V] Player Status".ToUpper()
             };
             openPlayerStatsButton.Click += (sender, args) => OpenPlayerStats();
             Add(openPlayerStatsButton);

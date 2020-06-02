@@ -19,7 +19,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button prevFontSizeButton;
         private Button nextFontSizeButton;
 
-        public SettingsView() : base(Program.Width, Program.Height)
+        public SettingsView()
         {
             InitializeControls();
         }
@@ -64,8 +64,8 @@ namespace CodeMagic.UI.Sad.Views
         private void SwitchFontSize(bool forward)
         {
             var diff = forward ? 1 : -1;
-            var size = FontProvider.GetConfiguredFontSize();
-            var sizes = Enum.GetValues(typeof(FontSize)).Cast<FontSize>().ToList();
+            var size = FontProvider.GetConfiguredFontSizeMultiplier();
+            var sizes = Enum.GetValues(typeof(FontSizeMultiplier)).Cast<FontSizeMultiplier>().ToList();
 
             var currentIndex = sizes.IndexOf(size);
             var nextIndex = currentIndex + diff;
@@ -76,17 +76,13 @@ namespace CodeMagic.UI.Sad.Views
             Properties.Settings.Default.Save();
         }
 
-        private string GetFontSizeName(FontSize fontSize)
+        private string GetFontSizeName(FontSizeMultiplier fontSize)
         {
             switch (fontSize)
             {
-                case FontSize.X1:
+                case FontSizeMultiplier.X1:
                     return "x1";
-                case FontSize.X05:
-                    return "x0.5";
-                case FontSize.X075:
-                    return "x0.75";
-                case FontSize.X2:
+                case FontSizeMultiplier.X2:
                     return "x2";
                 default:
                     throw new ArgumentException($"Unknown font size: {fontSize}");
@@ -95,7 +91,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private string GetCurrentFontSizeName()
         {
-            var size = FontProvider.GetConfiguredFontSize();
+            var size = FontProvider.GetConfiguredFontSizeMultiplier();
             return GetFontSizeName(size);
         }
 

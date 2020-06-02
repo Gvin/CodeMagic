@@ -39,11 +39,36 @@ namespace CodeMagic.UI.Sad.Drawing
 
             foreach (var objectImage in objectsImages.Skip(1))
             {
-                image = SymbolsImage.Combine(image, objectImage);
+                image = CombineImages(image, objectImage);
             }
 
             image = LightLevelManager.ApplyLightLevel(image, cell.LightLevel);
             return ApplyObjectEffects(cell, image);
+        }
+
+        private static SymbolsImage CombineImages(SymbolsImage bottom, SymbolsImage top)
+        {
+            var result = new SymbolsImage(Math.Max(bottom.Width, top.Width), Math.Max(bottom.Height, top.Height));
+            for (var x = 0; x < bottom.Width; x++)
+            for (var y = 0; y < bottom.Height; y++)
+            {
+                var pixel = result[x, y];
+                var bottomPixel = GetPixel(bottom, x, y);
+                var topPixel = GetPixel(top, x, y);
+
+                pixel.Symbol = topPixel?.Symbol ?? bottomPixel?.Symbol;
+                pixel.Color = topPixel?.Symbol != null ? topPixel.Color : bottomPixel?.Color;
+                pixel.BackgroundColor = topPixel?.BackgroundColor ?? bottomPixel?.BackgroundColor;
+            }
+
+            return result;
+        }
+
+        private static SymbolsImage.Pixel GetPixel(SymbolsImage image, int x, int y)
+        {
+            if (x >= 0 && x < image.Width && y >= 0 && y < image.Height)
+                return image[x, y];
+            return null;
         }
 
         private static SymbolsImage ApplyObjectEffects(IAreaMapCell cell, SymbolsImage image)

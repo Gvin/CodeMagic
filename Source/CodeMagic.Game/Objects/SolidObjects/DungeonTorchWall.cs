@@ -22,13 +22,13 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         public DungeonTorchWall(SaveData data) : base(data)
         {
-            animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
+            animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(300), AnimationFrameStrategy.Random);
         }
 
         public DungeonTorchWall()
             : base("Dungeon Wall")
         {
-            animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500), AnimationFrameStrategy.Random);
+            animationsManager = new AnimationsBatchManager(TimeSpan.FromMilliseconds(300), AnimationFrameStrategy.Random);
         }
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)

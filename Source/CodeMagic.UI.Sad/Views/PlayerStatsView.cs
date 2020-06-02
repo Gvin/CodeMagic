@@ -22,8 +22,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private Button closeButton;
 
-        public PlayerStatsView(Player player) 
-            : base(Program.Width, Program.Height)
+        public PlayerStatsView(Player player)
         {
             this.player = player;
             

@@ -62,7 +62,6 @@
     <Compile Include="Configuration\Liquids\ILiquidsConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonsterConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonsterDamageConfiguration.cs" />
-    <Compile Include="Configuration\Monsters\IMonsterImagesConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonsterProtectionConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonstersConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonsterStatsConfiguration.cs" />

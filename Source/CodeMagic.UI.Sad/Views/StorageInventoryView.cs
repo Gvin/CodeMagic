@@ -31,7 +31,6 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton moveItemDownButton;
 
         public StorageInventoryView(GameCore<Player> game, string inventoryName, Inventory storage, int? maxWeight, IItem inventoryItem)
-            : base(Program.Width, Program.Height)
         {
             this.game = game;
             this.inventoryName = inventoryName;

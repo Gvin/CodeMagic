@@ -133,6 +133,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Fonts\Font_X050.font">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Fonts\Font_X075.font">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -187,6 +190,9 @@
     <Content Include="Configuration\Treasure.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Resources\Fonts\Font_X050.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Fonts\Font_X075.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

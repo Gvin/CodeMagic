@@ -6,6 +6,7 @@ using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
+using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -24,8 +25,7 @@ namespace CodeMagic.UI.Sad.Views
         private ItemDetailsControl itemDetails;
         private Button closeButton;
 
-        protected InventoryViewBase(string inventoryName, Player player) 
-            : base(Program.Width, Program.Height)
+        protected InventoryViewBase(string inventoryName, Player player)
         {
             this.inventoryName = inventoryName;
 

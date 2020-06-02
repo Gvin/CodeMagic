@@ -15,7 +15,7 @@ namespace CodeMagic.Game.Configuration.Monsters
 
         string LogicPattern { get; }
 
-        IMonsterImagesConfiguration Images { get; }
+        string Image { get; }
 
         ObjectSize Size { get; }
 

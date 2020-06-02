@@ -1,52 +1,26 @@
 <?xml version="1.0"?>
-<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="7" height="7">
   <row>
-    <pixel glyph="198">
-      <color>
-        <R>128</R>
-        <G>64</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel glyph="205">
-      <color>
-        <R>128</R>
-        <G>64</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel glyph="181">
-      <color>
-        <R>128</R>
-        <G>64</G>
-        <B>0</B>
-      </color>
-    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
   </row>
   <row>
-    <pixel glyph="198">
-      <color>
-        <R>128</R>
-        <G>64</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel glyph="205">
-      <color>
-        <R>128</R>
-        <G>64</G>
-        <B>0</B>
-      </color>
-    </pixel>
-    <pixel glyph="181">
-      <color>
-        <R>128</R>
-        <G>64</G>
-        <B>0</B>
-      </color>
-    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
   </row>
   <row>
+    <pixel />
+    <pixel />
     <pixel glyph="198">
       <color>
         <R>128</R>
@@ -68,5 +42,79 @@
         <B>0</B>
       </color>
     </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel glyph="198">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="205">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="181">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel glyph="198">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="205">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="181">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
   </row>
 </symbols-image>

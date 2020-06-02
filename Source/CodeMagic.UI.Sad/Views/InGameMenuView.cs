@@ -21,8 +21,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private readonly GameCore<Player> currentGame;
 
-        public InGameMenuView(GameCore<Player> currentGame) 
-            : base(Program.Width, Program.Height)
+        public InGameMenuView(GameCore<Player> currentGame)
         {
             this.currentGame = currentGame;
 

@@ -17,8 +17,7 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton exitButton;
         private StandardButton settingsButton;
 
-        public MainMenuView() 
-            : base(Program.Width, Program.Height)
+        public MainMenuView()
         {
             InitializeControls();
         }

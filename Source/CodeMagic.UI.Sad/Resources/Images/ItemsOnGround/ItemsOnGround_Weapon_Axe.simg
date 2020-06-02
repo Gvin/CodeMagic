@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
-<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="7" height="7">
   <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -8,15 +12,65 @@
   <row>
     <pixel />
     <pixel />
-    <pixel glyph="80">
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel glyph="169">
       <color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
   </row>
   <row>
+    <pixel />
+    <pixel glyph="252">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
     <pixel />
     <pixel />
     <pixel />
