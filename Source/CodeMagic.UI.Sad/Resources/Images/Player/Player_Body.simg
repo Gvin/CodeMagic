@@ -24,9 +24,9 @@
     <pixel />
     <pixel glyph="2">
       <color>
-        <R>237</R>
-        <G>226</G>
-        <B>211</B>
+        <R>223</R>
+        <G>203</G>
+        <B>176</B>
       </color>
     </pixel>
     <pixel />
@@ -38,9 +38,9 @@
     <pixel />
     <pixel glyph="171">
       <color>
-        <R>237</R>
-        <G>226</G>
-        <B>211</B>
+        <R>223</R>
+        <G>203</G>
+        <B>176</B>
       </color>
     </pixel>
     <pixel glyph="219">
@@ -49,12 +49,17 @@
         <G>0</G>
         <B>255</B>
       </color>
+      <background-color>
+        <R>128</R>
+        <G>0</G>
+        <B>255</B>
+      </background-color>
     </pixel>
     <pixel glyph="172">
       <color>
-        <R>237</R>
-        <G>226</G>
-        <B>211</B>
+        <R>223</R>
+        <G>203</G>
+        <B>176</B>
       </color>
     </pixel>
     <pixel />
@@ -70,6 +75,11 @@
         <G>0</G>
         <B>255</B>
       </color>
+      <background-color>
+        <R>128</R>
+        <G>0</G>
+        <B>255</B>
+      </background-color>
     </pixel>
     <pixel />
     <pixel />
@@ -81,9 +91,9 @@
     <pixel />
     <pixel glyph="186">
       <color>
-        <R>237</R>
-        <G>226</G>
-        <B>211</B>
+        <R>223</R>
+        <G>203</G>
+        <B>176</B>
       </color>
     </pixel>
     <pixel />

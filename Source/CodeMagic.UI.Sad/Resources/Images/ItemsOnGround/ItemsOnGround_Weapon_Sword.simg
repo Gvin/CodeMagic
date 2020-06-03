@@ -33,6 +33,7 @@
     <pixel />
     <pixel />
     <pixel />
+    <pixel />
     <pixel glyph="179">
       <color>
         <R>255</R>
@@ -40,9 +41,9 @@
         <B>0</B>
       </color>
     </pixel>
-    <pixel />
   </row>
   <row>
+    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -55,7 +56,6 @@
         <B>0</B>
       </color>
     </pixel>
-    <pixel />
   </row>
   <row>
     <pixel />

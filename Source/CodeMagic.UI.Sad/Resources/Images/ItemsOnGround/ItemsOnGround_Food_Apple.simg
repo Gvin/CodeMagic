@@ -7,6 +7,24 @@
     <pixel />
     <pixel />
     <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
     <pixel glyph="7">
       <color>
         <R>170</R>
@@ -14,24 +32,6 @@
         <B>0</B>
       </color>
     </pixel>
-  </row>
-  <row>
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-  </row>
-  <row>
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
   </row>
   <row>
     <pixel />

@@ -40,6 +40,11 @@
         <G>0</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel glyph="166">
       <color>
@@ -73,6 +78,11 @@
         <G>0</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel glyph="173">
       <color>
@@ -87,6 +97,11 @@
         <G>0</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel />
   </row>
@@ -100,6 +115,11 @@
         <G>0</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>0</R>
+        <G>0</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel />
     <pixel glyph="31">

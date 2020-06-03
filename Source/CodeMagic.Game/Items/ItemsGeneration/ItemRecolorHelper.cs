@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.UI.Images;
 
@@ -43,6 +44,12 @@ namespace CodeMagic.Game.Items.ItemsGeneration
         {
             var palette = RandomHelper.GetRandomElement(SpellBookColors);
             mainColor = palette.Color1;
+            return RecolorImage(sourceImage, palette);
+        }
+
+        public static SymbolsImage RecolorSpellBookGroundImage(SymbolsImage sourceImage, Color mainColor)
+        {
+            var palette = SpellBookColors.First(pal => pal.Color1 == mainColor);
             return RecolorImage(sourceImage, palette);
         }
 

@@ -248,6 +248,9 @@
     <Compile Include="Objects\LiquidObjects\ILiquid.cs" />
     <Compile Include="Objects\LiquidObjects\OilLiquid.cs" />
     <Compile Include="Objects\LiquidObjects\WaterLiquid.cs" />
+    <Compile Include="Objects\ObjectEffects\DamageEffect.cs" />
+    <Compile Include="Objects\ObjectEffects\ObjectEffect.cs" />
+    <Compile Include="Objects\ObjectEffects\SpellCastEffect.cs" />
     <Compile Include="Objects\SolidObjects\CaveWall.cs" />
     <Compile Include="Objects\SolidObjects\DoorBase.cs" />
     <Compile Include="Objects\SolidObjects\DungeonDoor.cs" />

@@ -29,6 +29,7 @@
   </row>
   <row>
     <pixel />
+    <pixel />
     <pixel glyph="169">
       <color>
         <R>255</R>
@@ -40,9 +41,9 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
   </row>
   <row>
+    <pixel />
     <pixel />
     <pixel glyph="252">
       <color>
@@ -51,7 +52,6 @@
         <B>0</B>
       </color>
     </pixel>
-    <pixel />
     <pixel />
     <pixel />
     <pixel />

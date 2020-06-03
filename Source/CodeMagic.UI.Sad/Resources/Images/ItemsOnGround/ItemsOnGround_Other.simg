@@ -20,7 +20,13 @@
   </row>
   <row>
     <pixel />
-    <pixel />
+    <pixel glyph="246">
+      <color>
+        <R>128</R>
+        <G>0</G>
+        <B>255</B>
+      </color>
+    </pixel>
     <pixel />
     <pixel />
     <pixel />
@@ -30,13 +36,7 @@
   <row>
     <pixel />
     <pixel />
-    <pixel glyph="246">
-      <color>
-        <R>128</R>
-        <G>0</G>
-        <B>255</B>
-      </color>
-    </pixel>
+    <pixel />
     <pixel />
     <pixel />
     <pixel />

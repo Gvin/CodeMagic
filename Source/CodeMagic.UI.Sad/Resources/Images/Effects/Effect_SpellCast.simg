@@ -28,13 +28,7 @@
     <pixel />
   </row>
   <row>
-    <pixel glyph="42">
-      <color>
-        <R>255</R>
-        <G>128</G>
-        <B>0</B>
-      </color>
-    </pixel>
+    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -43,17 +37,23 @@
     <pixel />
   </row>
   <row>
-    <pixel glyph="179">
+    <pixel />
+    <pixel />
+    <pixel glyph="15">
       <color>
-        <R>128</R>
-        <G>64</G>
-        <B>0</B>
+        <R>255</R>
+        <G>0</G>
+        <B>255</B>
       </color>
     </pixel>
     <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
+    <pixel glyph="15">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>255</B>
+      </color>
+    </pixel>
     <pixel />
     <pixel />
   </row>

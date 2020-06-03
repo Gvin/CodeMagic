@@ -73,9 +73,6 @@
     <Compile Include="Controls\StandardButton.cs" />
     <Compile Include="Drawing\CellImageHelper.cs" />
     <Compile Include="Drawing\FontProvider.cs" />
-    <Compile Include="Drawing\ObjectEffects\DamageEffect.cs" />
-    <Compile Include="Drawing\ObjectEffects\ObjectEffect.cs" />
-    <Compile Include="Drawing\ObjectEffects\SpellCastEffect.cs" />
     <Compile Include="Drawing\ScreenSizeProvider.cs" />
     <Compile Include="Drawing\ImageProviding\InventoryImagesFactory.cs" />
     <Compile Include="Drawing\ImageProviding\WorldImagesFactory.cs" />

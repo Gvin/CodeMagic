@@ -2,9 +2,9 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Objects.ObjectEffects;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Drawing.ImageProviding;
-using CodeMagic.UI.Sad.Drawing.ObjectEffects;
 
 namespace CodeMagic.UI.Sad.Drawing
 {
@@ -85,7 +85,7 @@ namespace CodeMagic.UI.Sad.Drawing
             if (latestEffect == null)
                 return image;
 
-            var effectImage = latestEffect.GetEffectImage(image.Width, image.Height);
+            var effectImage = latestEffect.GetEffectImage(image.Width, image.Height, ImagesStorage.Current);
 
             return SymbolsImage.Combine(image, effectImage);
         }

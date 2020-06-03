@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Injection;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Core.Saving;
 using CodeMagic.Core.Statuses;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.ObjectEffects;
 using CodeMagic.Game.Statuses;
 
 namespace CodeMagic.Game.Objects
@@ -120,7 +120,7 @@ namespace CodeMagic.Game.Objects
 
             ApplyRealDamage(realDamage, element, position);
 
-            ObjectEffects.Add(Injector.Current.Create<IDamageEffect>(realDamage, element));
+            ObjectEffects.Add(new DamageEffect(realDamage, element));
         }
 
         protected virtual void ApplyRealDamage(int damage, Element element, Point position)

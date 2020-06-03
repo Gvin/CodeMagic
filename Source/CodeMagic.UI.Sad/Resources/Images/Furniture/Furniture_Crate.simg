@@ -25,6 +25,11 @@
         <G>40</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>81</R>
+        <G>40</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -32,6 +37,11 @@
         <G>40</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>81</R>
+        <G>40</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel glyph="169">
       <color>
@@ -62,6 +72,11 @@
         <G>40</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>81</R>
+        <G>40</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -69,6 +84,11 @@
         <G>40</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>81</R>
+        <G>40</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel glyph="169">
       <color>
@@ -88,6 +108,11 @@
         <G>30</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>60</R>
+        <G>30</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel />
   </row>
@@ -135,6 +160,11 @@
         <G>30</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>60</R>
+        <G>30</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -142,6 +172,11 @@
         <G>30</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>60</R>
+        <G>30</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel />
   </row>
@@ -189,6 +224,11 @@
         <G>30</G>
         <B>0</B>
       </color>
+      <background-color>
+        <R>60</R>
+        <G>30</G>
+        <B>0</B>
+      </background-color>
     </pixel>
     <pixel glyph="169">
       <color>

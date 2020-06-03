@@ -28,6 +28,11 @@
     <pixel />
   </row>
   <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
     <pixel glyph="219">
       <color>
         <R>255</R>
@@ -35,11 +40,6 @@
         <B>202</B>
       </color>
     </pixel>
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
     <pixel />
   </row>
   <row>

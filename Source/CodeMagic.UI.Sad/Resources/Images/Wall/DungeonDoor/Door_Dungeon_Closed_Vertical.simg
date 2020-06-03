@@ -7,6 +7,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -14,6 +19,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -21,6 +31,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -28,6 +43,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -35,6 +55,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -42,6 +67,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -49,6 +79,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
   </row>
   <row>
@@ -156,6 +191,11 @@
         <G>64</G>
         <B>64</B>
       </color>
+      <background-color>
+        <R>128</R>
+        <G>64</G>
+        <B>64</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -163,6 +203,11 @@
         <G>56</G>
         <B>56</B>
       </color>
+      <background-color>
+        <R>112</R>
+        <G>56</G>
+        <B>56</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -170,6 +215,11 @@
         <G>64</G>
         <B>64</B>
       </color>
+      <background-color>
+        <R>128</R>
+        <G>64</G>
+        <B>64</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -177,6 +227,11 @@
         <G>56</G>
         <B>56</B>
       </color>
+      <background-color>
+        <R>112</R>
+        <G>56</G>
+        <B>56</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -184,6 +239,11 @@
         <G>64</G>
         <B>64</B>
       </color>
+      <background-color>
+        <R>128</R>
+        <G>64</G>
+        <B>64</B>
+      </background-color>
     </pixel>
     <pixel glyph="250">
       <color>
@@ -217,6 +277,11 @@
         <G>64</G>
         <B>64</B>
       </color>
+      <background-color>
+        <R>128</R>
+        <G>64</G>
+        <B>64</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -224,6 +289,11 @@
         <G>56</G>
         <B>56</B>
       </color>
+      <background-color>
+        <R>112</R>
+        <G>56</G>
+        <B>56</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -231,6 +301,11 @@
         <G>64</G>
         <B>64</B>
       </color>
+      <background-color>
+        <R>128</R>
+        <G>64</G>
+        <B>64</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -238,6 +313,11 @@
         <G>56</G>
         <B>56</B>
       </color>
+      <background-color>
+        <R>112</R>
+        <G>56</G>
+        <B>56</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -245,6 +325,11 @@
         <G>64</G>
         <B>64</B>
       </color>
+      <background-color>
+        <R>128</R>
+        <G>64</G>
+        <B>64</B>
+      </background-color>
     </pixel>
     <pixel glyph="250">
       <color>
@@ -278,6 +363,11 @@
         <G>64</G>
         <B>64</B>
       </color>
+      <background-color>
+        <R>128</R>
+        <G>64</G>
+        <B>64</B>
+      </background-color>
     </pixel>
     <pixel glyph="195">
       <color>
@@ -309,6 +399,11 @@
         <G>56</G>
         <B>56</B>
       </color>
+      <background-color>
+        <R>112</R>
+        <G>56</G>
+        <B>56</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -316,6 +411,11 @@
         <G>64</G>
         <B>64</B>
       </color>
+      <background-color>
+        <R>128</R>
+        <G>64</G>
+        <B>64</B>
+      </background-color>
     </pixel>
     <pixel glyph="250">
       <color>
@@ -423,6 +523,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -430,6 +535,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -437,6 +547,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -444,6 +559,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -451,6 +571,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -458,6 +583,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
     <pixel glyph="219">
       <color>
@@ -465,6 +595,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
   </row>
 </symbols-image>

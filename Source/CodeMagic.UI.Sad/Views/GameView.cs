@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows.Forms;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
@@ -10,12 +11,13 @@ using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Input;
 using SadConsole.Themes;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
+using Orientation = SadConsole.Orientation;
 using Point = Microsoft.Xna.Framework.Point;
+using ScrollBar = SadConsole.Controls.ScrollBar;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -78,7 +80,7 @@ namespace CodeMagic.UI.Sad.Views
             Add(cheatsButton);
 #endif
 
-            playerStats = new PlayerStatsControl(40, 40, game)
+            playerStats = new PlayerStatsControl(40, 65, game)
             {
                 Position = new Point(Width - 40, 0)
             };
@@ -294,6 +296,14 @@ namespace CodeMagic.UI.Sad.Views
         {
             openSpellBookButton.IsEnabled = game.Player.Equipment.SpellBook != null;
             showItemsOnFloorButton.IsEnabled = game.Map.GetCell(game.PlayerPosition).Objects.OfType<IItem>().Any();
+        }
+
+        protected override void OnClosed(DialogResult? result)
+        {
+            base.OnClosed(result);
+
+            game.Player.Died -= Player_Died;
+            game.Player.LeveledUp -= Player_LeveledUp;
         }
     }
 }

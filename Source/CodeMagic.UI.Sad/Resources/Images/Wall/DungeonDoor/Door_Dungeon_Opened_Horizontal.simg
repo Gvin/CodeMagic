@@ -7,6 +7,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel />
     <pixel />
@@ -30,6 +35,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
   </row>
   <row>
@@ -39,6 +49,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel />
     <pixel />
@@ -62,6 +77,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
   </row>
   <row>
@@ -71,6 +91,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel />
     <pixel />
@@ -94,6 +119,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
   </row>
   <row>
@@ -103,6 +133,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
     <pixel />
     <pixel />
@@ -126,6 +161,11 @@
         <G>130</G>
         <B>162</B>
       </color>
+      <background-color>
+        <R>108</R>
+        <G>130</G>
+        <B>162</B>
+      </background-color>
     </pixel>
   </row>
   <row>
@@ -135,6 +175,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
     <pixel />
     <pixel />
@@ -158,6 +203,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
   </row>
   <row>
@@ -167,6 +217,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
     <pixel />
     <pixel />
@@ -190,6 +245,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
   </row>
   <row>
@@ -199,6 +259,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
     <pixel />
     <pixel />
@@ -222,6 +287,11 @@
         <G>91</G>
         <B>118</B>
       </color>
+      <background-color>
+        <R>84</R>
+        <G>91</G>
+        <B>118</B>
+      </background-color>
     </pixel>
   </row>
 </symbols-image>
