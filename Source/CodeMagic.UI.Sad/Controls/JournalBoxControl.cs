@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.UI.Sad.Common;
@@ -90,9 +89,9 @@ namespace CodeMagic.UI.Sad.Controls
 
                 var message = messages[index];
                 var spreadMessage = SpreadMessage(message, Width - 2 - dX);
-                foreach (var coloredGlyph in spreadMessage)
+                foreach (var coloredString in spreadMessage)
                 {
-                    Surface.Print(dX, yPos, new ColoredString(coloredGlyph));
+                    Surface.Print(dX, yPos, coloredString);
                     yPos++;
                 }
 
@@ -100,31 +99,10 @@ namespace CodeMagic.UI.Sad.Controls
             }
         }
 
-        private ColoredGlyph[][] SpreadMessage(JournalMessageData message, int width)
+        private ColoredString[] SpreadMessage(JournalMessageData message, int width)
         {
             var formattedMessage = messageFormatter.FormatMessage(message);
-            var glyphs = formattedMessage.SelectMany(part => part.ToArray()).ToArray();
-
-            var result = new List<ColoredGlyph[]>();
-            var accumulator = new List<ColoredGlyph>();
-            foreach (var glyph in glyphs)
-            {
-                if (accumulator.Count < width)
-                {
-                    accumulator.Add(glyph);
-                    continue;
-                }
-
-                var lastSpaceIndex = accumulator.FindLastIndex(elem => elem.GlyphCharacter == ' ');
-                var newAccumulator = accumulator.Skip(lastSpaceIndex + 1).ToList();
-
-                result.Add(accumulator.Take(lastSpaceIndex + 1).ToArray());
-                accumulator = newAccumulator;
-                accumulator.Add(glyph);
-            }
-            result.Add(accumulator.ToArray());
-
-            return result.ToArray();
+            return TextFormatHelper.SplitText(formattedMessage, width);
         }
 
         private void DrawFrame()

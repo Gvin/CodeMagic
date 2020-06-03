@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using CodeMagic.Core.Items;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
@@ -107,25 +106,15 @@ namespace CodeMagic.UI.Sad.Controls
         private void DrawDescription(int initialY, IDescriptionProvider descriptionProvider)
         {
             const int initialX = 1;
-            var lines = descriptionProvider.GetDescription(player);
-            for (int yShift = 0; yShift < lines.Length; yShift++)
+            var descriptionLines = TextFormatHelper.SplitText(descriptionProvider.GetDescription(player),
+                Width - initialX - 1, BackColor);
+
+            for (int yShift = 0; yShift < descriptionLines.Length; yShift++)
             {
-                var line = lines[yShift].Select(part =>
-                    new ColoredString(ConvertString(part.String), part.TextColor.ToXna(), BackColor)).ToArray();
+                var line = descriptionLines[yShift];
                 var y = initialY + yShift;
-                Surface.PrintStyledText(initialX, y, line);
+                Surface.Print(initialX, y, line);
             }
-        }
-
-        private string ConvertString(string initial)
-        {
-            var result = string.Empty;
-            foreach (var symbol in initial)
-            {
-                result += (char) Glyphs.GetGlyph(symbol);
-            }
-
-            return result;
         }
     }
 }
