@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Game;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.JournalMessages;
@@ -34,7 +35,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                 oldGame.TurnEnded -= game_TurnEnded;
             }
 
-            ItemsGeneratorManager.Generator.Reset();
+            GameData.Initialize(new GameData());
 
             var player = CreatePlayer();
 
@@ -64,7 +65,9 @@ namespace CodeMagic.UI.Sad.GameProcess
 
         public void LoadGame()
         {
-            var game = new SaveManager().LoadGame();
+            var (game, data) = new SaveManager().LoadGame();
+
+            GameData.Initialize(data);
             CurrentGame.Load(game);
 
             if (game == null)

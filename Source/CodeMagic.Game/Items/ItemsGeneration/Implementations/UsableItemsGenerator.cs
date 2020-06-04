@@ -31,14 +31,6 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             throw new ArgumentException($"Unknown usable item type: {type}");
         }
 
-        public void Reset()
-        {
-            foreach (var generator in generators.Values)
-            {
-                generator.Reset();
-            }
-        }
-
         private UsableItemType GetRandomItemType()
         {
             var types = Enum.GetValues(typeof(UsableItemType)).OfType<UsableItemType>().ToArray();

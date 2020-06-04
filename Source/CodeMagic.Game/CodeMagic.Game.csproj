@@ -87,6 +87,7 @@
     <Compile Include="CreaturesLogic\TargetStrategies\ITargetStrategy.cs" />
     <Compile Include="CreaturesLogic\TargetStrategies\PlayerTargetStrategy.cs" />
     <Compile Include="DialogsManager.cs" />
+    <Compile Include="GameData.cs" />
     <Compile Include="IInventoryImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
     <Compile Include="Items\ArmorClass.cs" />

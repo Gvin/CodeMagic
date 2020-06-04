@@ -306,7 +306,7 @@ namespace CodeMagic.Game.Objects.Creatures
             }
         }
 
-        public void CheckOverweight()
+        private void CheckOverweight()
         {
             var weight = Inventory.GetWeight();
             if (weight > MaxCarryWeight)
