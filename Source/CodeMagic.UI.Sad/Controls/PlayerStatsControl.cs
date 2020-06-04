@@ -37,7 +37,7 @@ namespace CodeMagic.UI.Sad.Controls
         {
             Surface.Clear(new Rectangle(2, 1, 17, 5));
 
-            Surface.Print(2, 1, "Player Status:".ToUpper());
+            Surface.Print(2, 1, "Player Status:");
             Surface.Fill(1, 2, Width - 2, FrameColor, BackgroundColor, Glyphs.GetGlyph('─'));
             Surface.Print(Width - 1, 2,
                 new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, BackgroundColor));
@@ -49,13 +49,13 @@ namespace CodeMagic.UI.Sad.Controls
             Surface.Print(0, 0, new ColoredGlyph(Glyphs.GetGlyph('╤'), FrameColor, BackgroundColor));
 
             Surface.PrintStyledText(2, 3, 
-                new ColoredString("HP: ".ToUpper()), 
+                new ColoredString("HP: "), 
                 new ColoredString($"{game.Player.Health} / {game.Player.MaxHealth}", Color.Red, BackgroundColor));
             Surface.PrintStyledText(2, 4, 
-                new ColoredString("Mana: ".ToUpper()),
+                new ColoredString("Mana: "),
                 new ColoredString($"{game.Player.Mana} / {game.Player.MaxMana}", Color.Blue, BackgroundColor));
             Surface.PrintStyledText(2, 5, 
-                new ColoredString("Hunger: ".ToUpper()), 
+                new ColoredString("Hunger: "), 
                 new ColoredString($"{game.Player.HungerPercent}%", Color.Green, BackgroundColor));
         }
 
@@ -65,7 +65,7 @@ namespace CodeMagic.UI.Sad.Controls
 
             var cell = game.Map.GetCell(game.PlayerPosition);
 
-            Surface.Print(2, yPos, "Area Mana:".ToUpper());
+            Surface.Print(2, yPos, "Area Mana:");
 
             const int manaBarLength = 30;
             var manaLevelPercent = (float) cell.MagicEnergyLevel() / cell.MaxMagicEnergyLevel();

@@ -29,7 +29,7 @@ namespace CodeMagic.UI.Sad.Drawing
             if (message is ISelfDescribingJournalMessage selfDescribingMessage)
             {
                 return selfDescribingMessage.GetDescription().Parts.Select(styledString =>
-                        new ColoredString(styledString.String.ToUpper().ConvertGlyphs(),
+                        new ColoredString(styledString.String.ConvertGlyphs(),
                             new Cell(styledString.TextColor.ToXna(), BackgroundColor)))
                     .ToArray();
             }

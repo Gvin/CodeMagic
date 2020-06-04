@@ -116,7 +116,7 @@ namespace CodeMagic.UI.Sad.Views
             openInventoryButton = new StandardButton(30)
             {
                 Position = new Point(Width - 39, 16),
-                Text = "[I] Inventory".ToUpper()
+                Text = "[I] Inventory"
             };
             openInventoryButton.Click += openInventoryButton_Click;
             Add(openInventoryButton);
@@ -124,7 +124,7 @@ namespace CodeMagic.UI.Sad.Views
             openSpellBookButton = new StandardButton(30)
             {
                 Position = new Point(Width - 39, 19),
-                Text = "[C] Spell Book".ToUpper()
+                Text = "[C] Spell Book"
             };
             openSpellBookButton.Click += openSpellBookButton_Click;
             openSpellBookButton.IsEnabled = true;
@@ -133,7 +133,7 @@ namespace CodeMagic.UI.Sad.Views
             showItemsOnFloorButton = new StandardButton(30)
             {
                 Position = new Point(Width - 39, 22),
-                Text = "[G] Check Floor".ToUpper()
+                Text = "[G] Check Floor"
             };
             showItemsOnFloorButton.Click += showItemsOnFloorButton_Click;
             Add(showItemsOnFloorButton);
@@ -141,7 +141,7 @@ namespace CodeMagic.UI.Sad.Views
             openPlayerStatsButton = new StandardButton(30)
             {
                 Position = new Point(Width - 39, 25),
-                Text = "[V] Player Status".ToUpper()
+                Text = "[V] Player Status"
             };
             openPlayerStatsButton.Click += (sender, args) => OpenPlayerStats();
             Add(openPlayerStatsButton);
