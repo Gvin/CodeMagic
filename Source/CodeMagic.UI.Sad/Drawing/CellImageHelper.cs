@@ -48,27 +48,7 @@ namespace CodeMagic.UI.Sad.Drawing
 
         private static SymbolsImage CombineImages(SymbolsImage bottom, SymbolsImage top)
         {
-            var result = new SymbolsImage(Math.Max(bottom.Width, top.Width), Math.Max(bottom.Height, top.Height));
-            for (var x = 0; x < bottom.Width; x++)
-            for (var y = 0; y < bottom.Height; y++)
-            {
-                var pixel = result[x, y];
-                var bottomPixel = GetPixel(bottom, x, y);
-                var topPixel = GetPixel(top, x, y);
-
-                pixel.Symbol = topPixel?.Symbol ?? bottomPixel?.Symbol;
-                pixel.Color = topPixel?.Symbol != null ? topPixel.Color : bottomPixel?.Color;
-                pixel.BackgroundColor = topPixel?.BackgroundColor ?? bottomPixel?.BackgroundColor;
-            }
-
-            return result;
-        }
-
-        private static SymbolsImage.Pixel GetPixel(SymbolsImage image, int x, int y)
-        {
-            if (x >= 0 && x < image.Width && y >= 0 && y < image.Height)
-                return image[x, y];
-            return null;
+            return SymbolsImage.Combine(bottom, top);
         }
 
         private static SymbolsImage ApplyObjectEffects(IAreaMapCell cell, SymbolsImage image)
