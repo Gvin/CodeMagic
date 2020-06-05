@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
@@ -34,17 +33,17 @@ namespace CodeMagic.Game.Objects.Creatures
         private const string SaveKeyKnownPotions = "KnownPotions";
         private const string SaveKeyRegeneration = "Regeneration";
 
-        private const string ImageUp = "Player_Up";
-        private const string ImageDown = "Player_Down";
-        private const string ImageLeft = "Player_Left";
-        private const string ImageRight = "Player_Right";
+        private const string ImageUp = "Creature_Up";
+        private const string ImageDown = "Creature_Down";
+        private const string ImageLeft = "Creature_Left";
+        private const string ImageRight = "Creature_Right";
+
         private const string ImageUpUsable = "Player_Up_Usable";
         private const string ImageDownUsable = "Player_Down_Usable";
         private const string ImageLeftUsable = "Player_Left_Usable";
         private const string ImageRightUsable = "Player_Right_Usable";
-        private const string ImageBodyHorizontal = "Player_Body_Horizontal";
-        private const string ImageBodyVertical = "Player_Body_Vertical";
-        private const string ImageHead = "Player_Head";
+
+        private const string ImageBody = "Player_Body";
 
         private const int DefaultStatValue = 1;
 
@@ -307,7 +306,7 @@ namespace CodeMagic.Game.Objects.Creatures
             }
         }
 
-        public void CheckOverweight()
+        private void CheckOverweight()
         {
             var weight = Inventory.GetWeight();
             if (weight > MaxCarryWeight)
@@ -338,17 +337,9 @@ namespace CodeMagic.Game.Objects.Creatures
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             var body = GetBodyImage(storage);
-            body = SymbolsImage.Recolor(body, new Dictionary<Color, Color>
-            {
-                {Color.FromArgb(255, 0, 0), Color.FromArgb(128, 0, 128)}
-            });
-
-            var head = storage.GetImage(ImageHead);
-
-            var result = SymbolsImage.Combine(body, head);
             var directionImage = GetDirectionImage(storage);
 
-            return SymbolsImage.Combine(directionImage, result);
+            return SymbolsImage.Combine(directionImage, body);
         }
 
         private SymbolsImage GetDirectionImage(IImagesStorage storage)
@@ -373,17 +364,7 @@ namespace CodeMagic.Game.Objects.Creatures
 
         private SymbolsImage GetBodyImage(IImagesStorage storage)
         {
-            switch (Direction)
-            {
-                case Direction.North:
-                case Direction.South:
-                    return storage.GetImage(ImageBodyHorizontal);
-                case Direction.West:
-                case Direction.East:
-                    return storage.GetImage(ImageBodyVertical);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return storage.GetImage(ImageBody);
         }
     }
 }

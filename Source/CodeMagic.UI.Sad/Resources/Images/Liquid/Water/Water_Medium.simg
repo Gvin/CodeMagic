@@ -1,34 +1,55 @@
 <?xml version="1.0"?>
-<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="7" height="7">
   <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
     <pixel glyph="46">
       <color>
         <R>0</R>
         <G>128</G>
-        <B>128</B>
+        <B>192</B>
       </color>
     </pixel>
     <pixel glyph="176">
       <color>
         <R>0</R>
         <G>128</G>
-        <B>128</B>
+        <B>192</B>
       </color>
     </pixel>
-    <pixel glyph="44">
+    <pixel />
+    <pixel glyph="250">
       <color>
         <R>0</R>
         <G>128</G>
-        <B>128</B>
+        <B>192</B>
       </color>
     </pixel>
+    <pixel />
   </row>
   <row>
+    <pixel />
+    <pixel glyph="249">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+    </pixel>
     <pixel glyph="176">
       <color>
         <R>0</R>
         <G>128</G>
-        <B>128</B>
+        <B>192</B>
       </color>
     </pixel>
     <pixel glyph="176">
@@ -47,31 +68,150 @@
       <color>
         <R>0</R>
         <G>128</G>
-        <B>128</B>
+        <B>192</B>
       </color>
     </pixel>
-  </row>
-  <row>
-    <pixel glyph="39">
+    <pixel glyph="34">
       <color>
         <R>0</R>
         <G>128</G>
-        <B>128</B>
+        <B>192</B>
+      </color>
+    </pixel>
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
       </color>
     </pixel>
     <pixel glyph="176">
       <color>
         <R>0</R>
         <G>128</G>
-        <B>128</B>
+        <B>192</B>
       </color>
-    </pixel>
-    <pixel glyph="96">
-      <color>
+      <background-color>
         <R>0</R>
         <G>128</G>
         <B>128</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+      <background-color>
+        <R>0</R>
+        <G>128</G>
+        <B>128</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+      <background-color>
+        <R>0</R>
+        <G>128</G>
+        <B>128</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
       </color>
     </pixel>
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel glyph="250">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+      <background-color>
+        <R>0</R>
+        <G>128</G>
+        <B>128</B>
+      </background-color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+    </pixel>
+    <pixel glyph="250">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+    </pixel>
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel glyph="249">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+    </pixel>
+    <pixel glyph="176">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+    </pixel>
+    <pixel glyph="44">
+      <color>
+        <R>0</R>
+        <G>128</G>
+        <B>192</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
   </row>
 </symbols-image>

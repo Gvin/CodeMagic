@@ -2,9 +2,9 @@
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Objects;
+using CodeMagic.Game.Objects.ObjectEffects;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Drawing.ImageProviding;
-using CodeMagic.UI.Sad.Drawing.ObjectEffects;
 
 namespace CodeMagic.UI.Sad.Drawing
 {
@@ -39,11 +39,16 @@ namespace CodeMagic.UI.Sad.Drawing
 
             foreach (var objectImage in objectsImages.Skip(1))
             {
-                image = SymbolsImage.Combine(image, objectImage);
+                image = CombineImages(image, objectImage);
             }
 
             image = LightLevelManager.ApplyLightLevel(image, cell.LightLevel);
             return ApplyObjectEffects(cell, image);
+        }
+
+        private static SymbolsImage CombineImages(SymbolsImage bottom, SymbolsImage top)
+        {
+            return SymbolsImage.Combine(bottom, top);
         }
 
         private static SymbolsImage ApplyObjectEffects(IAreaMapCell cell, SymbolsImage image)
@@ -60,7 +65,7 @@ namespace CodeMagic.UI.Sad.Drawing
             if (latestEffect == null)
                 return image;
 
-            var effectImage = latestEffect.GetEffectImage(image.Width, image.Height);
+            var effectImage = latestEffect.GetEffectImage(image.Width, image.Height, ImagesStorage.Current);
 
             return SymbolsImage.Combine(image, effectImage);
         }

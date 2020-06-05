@@ -23,17 +23,17 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             var patternsList = new List<ObjectsPattern>
             {
                 // Table with 2 chairs
-                CreateTableWithChairs(storage),
+                CreateTableWithChairs(),
                 // Single Shelf
-                CreateShelfDown(storage),
-                CreateShelfUp(storage),
-                CreateShelfLeft(storage),
-                CreateShelfRight(storage),
+                CreateShelfDown(),
+                CreateShelfUp(),
+                CreateShelfLeft(),
+                CreateShelfRight(),
                 // Crate
-                CreateCrate(storage),
+                CreateCrate(),
                 // Chest
-                CreateChest(storage),
-                CreateGoldenChest(storage),
+                CreateChest(),
+                CreateGoldenChest(),
                 // Water
                 CreateWaterPool(),
                 // Spiked Floor

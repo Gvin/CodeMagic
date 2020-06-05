@@ -68,7 +68,6 @@
     <Compile Include="Types\Liquids\XmlLiquidsConfiguration.cs" />
     <Compile Include="Types\Monsters\XmlMonsterConfiguration.cs" />
     <Compile Include="Types\Monsters\XmlMonsterDamageConfiguration.cs" />
-    <Compile Include="Types\Monsters\XmlMonsterImagesConfiguration.cs" />
     <Compile Include="Types\Monsters\XmlMonsterProtectionConfiguration.cs" />
     <Compile Include="Types\Monsters\XmlMonstersConfiguration.cs" />
     <Compile Include="Types\Monsters\XmlMonsterStatsConfiguration.cs" />

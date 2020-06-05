@@ -6,6 +6,7 @@ using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Logging;
 using CodeMagic.Core.Saving;
+using CodeMagic.Game;
 using CodeMagic.Game.Objects.Creatures;
 using Newtonsoft.Json;
 
@@ -33,17 +34,21 @@ namespace CodeMagic.UI.Sad.Saving
 
             Log.Debug($"Saving started on turn {turn}");
 
-            SaveData data;
+            SaveData gameData;
+            SaveData dataData;
             using (PerformanceMeter.Start($"Saving_GetSaveData[{turn}]"))
             {
-                var dataBuilder = CurrentGame.Game.GetSaveData();
-                data = dataBuilder.ConvertRawData(new JsonDataSerializer());
+                var gameDataBuilder = CurrentGame.Game.GetSaveData();
+                gameData = gameDataBuilder.ConvertRawData(new JsonDataSerializer());
+                var dataDataBuilder = GameData.Current.GetSaveData();
+                dataData = dataDataBuilder.ConvertRawData(new JsonDataSerializer());
             }
 
             var gameSaveData = new GameSaveData
             {
                 Version = GetGameVersion(),
-                Data = data
+                Game = gameData,
+                Data = dataData
             };
 
             string json;
@@ -60,28 +65,30 @@ namespace CodeMagic.UI.Sad.Saving
             Log.Debug("Saving finished");
         }
 
-        public GameCore<Player> LoadGame()
+        public (GameCore<Player>, GameData) LoadGame()
         {
             Log.Debug("Trying to load game");
 
             if (!File.Exists(SaveFilePath))
-                return null;
+                return (null, null);
 
             var stringData = ReadSaveFile();
             try
             {
                 var gameSaveData = JsonConvert.DeserializeObject(stringData, typeof(GameSaveData)) as GameSaveData;
                 if (gameSaveData == null)
-                    return null;
+                    return (null, null);
 
                 var currentVersion = GetGameVersion();
                 if (!string.Equals(currentVersion, gameSaveData.Version))
                 {
                     Log.Warning($"Throwing away existing save because of versions mismatch. Game version: {currentVersion}. Save version: {gameSaveData.Version}.");
-                    return null;
+                    return (null, null);
                 }
 
-                return new GameCore<Player>(gameSaveData.Data);
+                var game = new GameCore<Player>(gameSaveData.Game);
+                var data = new GameData(gameSaveData.Data);
+                return (game, data);
             }
             catch (Exception ex)
             {
@@ -89,7 +96,7 @@ namespace CodeMagic.UI.Sad.Saving
 #if DEBUG
                 throw;
 #else
-                return null;
+                return (null, null);
 #endif
             }
             finally
@@ -140,6 +147,8 @@ namespace CodeMagic.UI.Sad.Saving
     public class GameSaveData
     {
         public string Version { get; set; }
+
+        public SaveData Game { get; set; }
 
         public SaveData Data { get; set; }
     }

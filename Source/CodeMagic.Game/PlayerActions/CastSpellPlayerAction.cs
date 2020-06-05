@@ -1,8 +1,7 @@
 ﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
-using CodeMagic.Core.Injection;
-using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.ObjectEffects;
 using CodeMagic.Game.Spells;
 
 namespace CodeMagic.Game.PlayerActions
@@ -31,7 +30,7 @@ namespace CodeMagic.Game.PlayerActions
             var codeSpell = spell.CreateCodeSpell(CurrentGame.Player);
             CurrentGame.Journal.Write(new SpellCastMessage(CurrentGame.Player, spell.Name));
             CurrentGame.Map.AddObject(CurrentGame.Game.PlayerPosition, codeSpell);
-            CurrentGame.Player.ObjectEffects.Add(Injector.Current.Create<ISpellCastEffect>());
+            CurrentGame.Player.ObjectEffects.Add(new SpellCastEffect());
             return true;
         }
     }

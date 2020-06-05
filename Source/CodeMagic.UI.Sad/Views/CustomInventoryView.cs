@@ -54,7 +54,7 @@ namespace CodeMagic.UI.Sad.Views
 
             pickUpOneItemButton = new Button(20, 3)
             {
-                Position = new Point(Width - 57, 40),
+                Position = new Point(Width - 52, 40),
                 Text = "[O] Pick Up One",
                 CanFocus = false,
                 Theme = buttonsTheme
@@ -64,7 +64,7 @@ namespace CodeMagic.UI.Sad.Views
 
             pickUpStackButton = new Button(20, 3)
             {
-                Position = new Point(Width - 57, 43),
+                Position = new Point(Width - 52, 43),
                 Text = "[P] Pick Up",
                 Theme = buttonsTheme,
                 CanFocus = false
@@ -74,7 +74,7 @@ namespace CodeMagic.UI.Sad.Views
 
             pickUpAllButton = new Button(20, 3)
             {
-                Position = new Point(Width - 57, 46),
+                Position = new Point(Width - 52, 46),
                 Text = "[A] Pick Up All",
                 Theme = buttonsTheme,
                 CanFocus = false

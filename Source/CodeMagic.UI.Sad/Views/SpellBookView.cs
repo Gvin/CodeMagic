@@ -42,8 +42,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button saveToLibraryButton;
         private Button loadFromLibraryButton;
 
-        public SpellBookView(GameCore<Player> game) 
-            : base(Program.Width, Program.Height)
+        public SpellBookView(GameCore<Player> game)
         {
             this.game = game;
 

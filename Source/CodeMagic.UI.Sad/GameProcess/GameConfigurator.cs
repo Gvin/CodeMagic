@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using CodeMagic.Configuration.Xml;
 using CodeMagic.Core.Common;
-using CodeMagic.Core.Game;
-using CodeMagic.Core.Injection;
-using CodeMagic.Core.Injection.Configuration;
 using CodeMagic.Core.Logging;
-using CodeMagic.Core.Objects.ObjectEffects;
 using CodeMagic.Game;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.UI.Sad.Drawing;
-using CodeMagic.UI.Sad.Drawing.ObjectEffects;
 using CodeMagic.UI.Sad.Logger;
 
 namespace CodeMagic.UI.Sad.GameProcess
@@ -38,16 +31,9 @@ namespace CodeMagic.UI.Sad.GameProcess
                 ImagesStorage.Current, 
                 new AncientSpellsProvider()));
 
-            InitializeInjector();
-
 #if DEBUG
             PerformanceMeter.Initialize(@".\Performance.log");
 #endif
-        }
-
-        private static void InitializeInjector()
-        {
-            Injector.Initialize(new InjectorConfiguration());
         }
 
         private static ConfigurationProvider LoadConfiguration()
@@ -68,27 +54,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                     monstersConfig,
                     levelsConfig,
                     treasureConfig);
-            }
-        }
-
-        private class InjectorConfiguration : IInjectorConfiguration
-        {
-            public Dictionary<Type, InjectorMappingType> GetMapping()
-            {
-                return new Dictionary<Type, InjectorMappingType>
-                {
-                    // Misc
-                    {
-                        typeof(IDamageEffect),
-                        new InjectorMappingType
-                            {FactoryMethod = args => new DamageEffect((int) args[0], (Element) args[1])}
-                    },
-                    {
-                        typeof(ISpellCastEffect),
-                        new InjectorMappingType
-                            {FactoryMethod = args => new SpellCastEffect()}
-                    }
-                };
             }
         }
     }

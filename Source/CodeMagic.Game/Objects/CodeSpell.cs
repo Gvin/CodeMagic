@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Logging;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Core.Saving;
@@ -14,6 +15,8 @@ namespace CodeMagic.Game.Objects
 {
     public class CodeSpell : MapObjectBase, ILightObject, IDynamicObject, IWorldImageProvider
     {
+        private static readonly ILog Log = LogManager.GetLog<CodeSpell>();
+
         private const string SaveKeyMana = "Mana";
         private const string SaveKeyLightPower = "LightPower";
         private const string SaveKeyLifeTime = "LifeTime";
@@ -112,6 +115,7 @@ namespace CodeMagic.Game.Objects
             }
             catch (SpellException ex)
             {
+                Log.Debug("Spell error", ex);
                 CurrentGame.Journal.Write(new SpellErrorMessage(Name, ex.Message));
                 CurrentGame.Map.RemoveObject(currentPosition, this);
             }

@@ -33,8 +33,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private readonly SpellsLibraryManager libraryManager;
 
-        protected SpellsLibraryViewBase() 
-            : base(Program.Width, Program.Height)
+        protected SpellsLibraryViewBase()
         {
             libraryManager = new SpellsLibraryManager();
 

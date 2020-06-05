@@ -21,8 +21,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private readonly string spellFilePath;
 
-        public EditSpellView(string spellFilePath) 
-            : base(Program.Width, Program.Height)
+        public EditSpellView(string spellFilePath)
         {
             this.spellFilePath = spellFilePath;
 

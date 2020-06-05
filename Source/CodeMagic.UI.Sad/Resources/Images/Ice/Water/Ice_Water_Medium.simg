@@ -1,6 +1,17 @@
 <?xml version="1.0"?>
-<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="3" height="3">
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="7" height="7">
   <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
     <pixel />
     <pixel>
       <background-color>
@@ -10,8 +21,45 @@
       </background-color>
     </pixel>
     <pixel />
+    <pixel />
+    <pixel />
   </row>
   <row>
+    <pixel />
+    <pixel />
+    <pixel>
+      <background-color>
+        <R>125</R>
+        <G>190</G>
+        <B>255</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>125</R>
+        <G>190</G>
+        <B>255</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>125</R>
+        <G>190</G>
+        <B>255</B>
+      </background-color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel>
+      <background-color>
+        <R>125</R>
+        <G>190</G>
+        <B>255</B>
+      </background-color>
+    </pixel>
     <pixel>
       <background-color>
         <R>125</R>
@@ -38,8 +86,17 @@
         <B>255</B>
       </background-color>
     </pixel>
+    <pixel>
+      <background-color>
+        <R>125</R>
+        <G>190</G>
+        <B>255</B>
+      </background-color>
+    </pixel>
+    <pixel />
   </row>
   <row>
+    <pixel />
     <pixel />
     <pixel>
       <background-color>
@@ -48,6 +105,45 @@
         <B>255</B>
       </background-color>
     </pixel>
+    <pixel>
+      <background-color>
+        <R>125</R>
+        <G>190</G>
+        <B>255</B>
+      </background-color>
+    </pixel>
+    <pixel>
+      <background-color>
+        <R>125</R>
+        <G>190</G>
+        <B>255</B>
+      </background-color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel>
+      <background-color>
+        <R>125</R>
+        <G>190</G>
+        <B>255</B>
+      </background-color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
     <pixel />
   </row>
 </symbols-image>

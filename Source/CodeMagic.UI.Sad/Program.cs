@@ -8,24 +8,21 @@ using CodeMagic.UI.Sad.Views;
 
 namespace CodeMagic.UI.Sad
 {
-    static class Program
+    internal static class Program
     {
-        public const int Width = 100;
-        public const int Height = 50;
-
-        public const int MapCellImageSize = 3;
+        public const int MapCellImageSize = 7;
 
         [STAThread]
-        static void Main()
+        internal static void Main()
         {
             try
             {
                 GameConfigurator.Configure();
-                FontProvider.InitializeFont(new WinFormsScreenSizeProvider(), Width, Height);
+                FontProvider.InitializeFont();
 
                 // Setup the engine and create the main window.
-                var gameWidth = (int)Math.Floor(Width * FontProvider.FontHorizontalMultiplier);
-                var gameHeight = (int)Math.Floor(Height * FontProvider.FontVerticalMultiplier);
+                var gameWidth = FontProvider.GetScreenWidth(FontTarget.Game);
+                var gameHeight = FontProvider.GetScreenHeight(FontTarget.Game) / 2;
                 SadConsole.Game.Create(gameWidth, gameHeight);
 
                 // Hook the start event so we can add consoles to the system.

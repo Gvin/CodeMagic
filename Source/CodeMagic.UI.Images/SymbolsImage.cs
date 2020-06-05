@@ -30,7 +30,7 @@ namespace CodeMagic.UI.Images
 
         public int Height { get; }
 
-        public void SetPixel(int x, int y, char? symbol, Color? color, Color? backgroundColor = null)
+        public void SetPixel(int x, int y, int? symbol, Color? color, Color? backgroundColor = null)
         {
             var pixel = this[x, y];
             pixel.Symbol = symbol;

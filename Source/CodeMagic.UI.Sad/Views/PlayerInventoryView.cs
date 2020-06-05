@@ -52,7 +52,7 @@ namespace CodeMagic.UI.Sad.Views
         {
             checkScrollButton = new StandardButton(20)
             {
-                Position = new Point(Width - 35, 40),
+                Position = new Point(Width - 30, 40),
                 Text = "[C] Check Scroll"
             };
             checkScrollButton.Click += (sender, args) => CheckSelectedScrollCode();
@@ -60,7 +60,7 @@ namespace CodeMagic.UI.Sad.Views
 
             useItemButton = new StandardButton(20)
             {
-                Position = new Point(Width - 57, 40),
+                Position = new Point(Width - 52, 40),
                 Text = "[U] Use"
             };
             useItemButton.Click += (sender, args) => UseSelectedItem();
@@ -68,7 +68,7 @@ namespace CodeMagic.UI.Sad.Views
 
             equipItemButton = new StandardButton(20)
             {
-                Position = new Point(Width - 57, 40),
+                Position = new Point(Width - 52, 40),
                 Text = "[E] Equip"
             };
             equipItemButton.Click += (sender, args) => EquipSelectedItem();
@@ -76,7 +76,7 @@ namespace CodeMagic.UI.Sad.Views
 
             equipLeftWeaponButton = new StandardButton(20)
             {
-                Position = new Point(Width - 57, 40),
+                Position = new Point(Width - 52, 40),
                 Text = "[Z] Equip Left"
             };
             equipLeftWeaponButton.Click += (sender, args) => EquipSelectedWeapon(false);
@@ -84,7 +84,7 @@ namespace CodeMagic.UI.Sad.Views
 
             equipRightWeaponButton = new StandardButton(20)
             {
-                Position = new Point(Width - 36, 40),
+                Position = new Point(Width - 31, 40),
                 Text = "[X] Equip Right"
             };
             equipRightWeaponButton.Click += (sender, args) => EquipSelectedWeapon(true);
@@ -92,7 +92,7 @@ namespace CodeMagic.UI.Sad.Views
 
             takeOffItemButton = new StandardButton(20)
             {
-                Position = new Point(Width - 57, 40),
+                Position = new Point(Width - 52, 40),
                 Text = "[T] Take Off"
             };
             takeOffItemButton.Click += (sender, args) => TakeOffSelectedItem();
@@ -100,7 +100,7 @@ namespace CodeMagic.UI.Sad.Views
 
             dropItemButton = new StandardButton(20)
             {
-                Position = new Point(Width - 57, 43),
+                Position = new Point(Width - 52, 43),
                 Text = "[D] Drop"
             };
             dropItemButton.Click += (sender, args) => DropSelectedItem();
@@ -108,7 +108,7 @@ namespace CodeMagic.UI.Sad.Views
 
             dropAllItemsButton = new StandardButton(20)
             {
-                Position = new Point(Width - 57, 46),
+                Position = new Point(Width - 52, 46),
                 Text = "[A] Drop All"
             };
             dropAllItemsButton.Click += (sender, args) => DropAllItemsInStack();
@@ -222,6 +222,8 @@ namespace CodeMagic.UI.Sad.Views
             {
                 takeOffItemButton.IsVisible = false;
                 equipItemButton.IsVisible = false;
+                equipLeftWeaponButton.IsVisible = false;
+                equipRightWeaponButton.IsVisible = false;
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using CodeMagic.Core.Logging;
 using CodeMagic.Game;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Common;
@@ -11,19 +12,21 @@ using SadConsole.Input;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class View : ControlsConsole
+    public abstract class View : ControlsConsole
     {
+        private static readonly ILog Log = LogManager.GetLog<View>();
+
         protected static readonly Color FrameColor = Color.Gray;
 
         public event EventHandler<ViewClosedEventArgs> Closed;
 
-        public View()
-            : this(Program.Width, Program.Height)
+        protected View()
+            : this(FontTarget.Interface)
         {
         }
 
-        public View(int width, int height) 
-            : base(width, height, FontProvider.CurrentFont)
+        protected View(FontTarget font)
+            : base(FontProvider.GetScreenWidth(font), FontProvider.GetScreenHeight(font), FontProvider.GetFont(font))
         {
             DefaultForeground = Color.White;
             DefaultBackground = Color.Black;
@@ -32,9 +35,13 @@ namespace CodeMagic.UI.Sad.Views
 
         public void Show()
         {
+            Log.Debug($"Opening view of type {GetType().Name}");
+
             ViewsManager.Current.AddView(this);
             Global.CurrentScreen = this;
             OnShown();
+
+            Log.Debug($"Opened view of type {GetType().Name}");
         }
 
         protected virtual void OnShown()
@@ -44,11 +51,15 @@ namespace CodeMagic.UI.Sad.Views
 
         public void Close(DialogResult? result = null)
         {
+            Log.Debug($"Closing view of type {GetType().Name}");
+
             ViewsManager.Current.RemoveView(this);
             Global.CurrentScreen = ViewsManager.Current.CurrentView;
 
             OnClosed(result);
             Closed?.Invoke(this, new ViewClosedEventArgs(result));
+
+            Log.Debug($"Closed view of type {GetType().Name}");
         }
 
         protected virtual void OnClosed(DialogResult? result)

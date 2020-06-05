@@ -9,13 +9,12 @@ using CodeMagic.Game.Objects.Floor;
 using CodeMagic.Game.Objects.Furniture;
 using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.Game.Objects.SolidObjects;
-using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
 {
     internal partial class DungeonObjectsGenerator
     {
-        private static ObjectsPattern CreateTableWithChairs(IImagesStorage storage)
+        private static ObjectsPattern CreateTableWithChairs()
         {
             var pattern = new ObjectsPattern(5, 3, 0.0007);
             pattern.Add(1, 1, (level) => new FurnitureObject(new FurnitureObjectConfiguration
@@ -26,7 +25,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
                 MinWoodCount = 0,
                 Size = ObjectSize.Medium,
                 ZIndex = ZIndex.BigDecoration,
-                WorldImage = storage.GetImage("Furniture_Chair_Right")
+                WorldImage = "Furniture_Chair_Right"
             }));
             pattern.Add(2, 1, (level) => new FurnitureObject(new FurnitureObjectConfiguration
             {
@@ -37,7 +36,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
                 Size = ObjectSize.Big,
                 ZIndex = ZIndex.BigDecoration,
                 BlocksMovement = true,
-                WorldImage = storage.GetImage("Furniture_Table")
+                WorldImage = "Furniture_Table"
             }));
             pattern.Add(3, 1, (level) => new FurnitureObject(new FurnitureObjectConfiguration
             {
@@ -47,7 +46,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
                 MinWoodCount = 0,
                 Size = ObjectSize.Medium,
                 ZIndex = ZIndex.BigDecoration,
-                WorldImage = storage.GetImage("Furniture_Chair_Left")
+                WorldImage = "Furniture_Chair_Left"
             }));
             
             pattern.AddRequirement(0, 0, RequirementIsEmpty);
@@ -65,10 +64,10 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             return pattern;
         }
 
-        private static ObjectsPattern CreateShelfDown(IImagesStorage storage)
+        private static ObjectsPattern CreateShelfDown()
         {
             var pattern = new ObjectsPattern(3, 3, 0.003);
-            pattern.Add(1, 1, (level) => CreateShelf(level, storage.GetImage("Furniture_Shelf_Down")));
+            pattern.Add(1, 1, (level) => CreateShelf(level, "Furniture_Shelf_Down"));
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
             pattern.AddRequirement(0, 2, RequirementIsEmpty);
             pattern.AddRequirement(1, 2, RequirementIsEmpty);
@@ -84,10 +83,10 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             return pattern;
         }
 
-        private static ObjectsPattern CreateShelfUp(IImagesStorage storage)
+        private static ObjectsPattern CreateShelfUp()
         {
             var pattern = new ObjectsPattern(3, 3, 0.003);
-            pattern.Add(1, 1, (level) => CreateShelf(level, storage.GetImage("Furniture_Shelf_Up")));
+            pattern.Add(1, 1, (level) => CreateShelf(level, "Furniture_Shelf_Up"));
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
             pattern.AddRequirement(0, 0, RequirementIsEmpty);
             pattern.AddRequirement(1, 0, RequirementIsEmpty);
@@ -103,10 +102,10 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             return pattern;
         }
 
-        private static ObjectsPattern CreateShelfLeft(IImagesStorage storage)
+        private static ObjectsPattern CreateShelfLeft()
         {
             var pattern = new ObjectsPattern(3, 3, 0.003);
-            pattern.Add(1, 1, (level) => CreateShelf(level, storage.GetImage("Furniture_Shelf_Left")));
+            pattern.Add(1, 1, (level) => CreateShelf(level, "Furniture_Shelf_Left"));
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
             pattern.AddRequirement(0, 0, RequirementIsEmpty);
             pattern.AddRequirement(0, 1, RequirementIsEmpty);
@@ -122,10 +121,10 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             return pattern;
         }
 
-        private static ObjectsPattern CreateShelfRight(IImagesStorage storage)
+        private static ObjectsPattern CreateShelfRight()
         {
             var pattern = new ObjectsPattern(3, 3, 0.003);
-            pattern.Add(1, 1, (level) => CreateShelf(level, storage.GetImage("Furniture_Shelf_Right")));
+            pattern.Add(1, 1, (level) => CreateShelf(level, "Furniture_Shelf_Right"));
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
 
             pattern.AddRequirement(2, 0, RequirementIsEmpty);
@@ -142,7 +141,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             return pattern;
         }
 
-        private static ObjectsPattern CreateCrate(IImagesStorage storage)
+        private static ObjectsPattern CreateCrate()
         {
             var pattern = new ObjectsPattern(3, 3, 0.003);
 
@@ -156,7 +155,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
                 MinWoodCount = 1,
                 MaxWoodCount = 4,
                 ContainerType = "crate",
-                WorldImage = storage.GetImage("Furniture_Crate")
+                WorldImage = "Furniture_Crate"
             }, level));
 
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
@@ -175,7 +174,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             return pattern;
         }
 
-        private static ObjectsPattern CreateChest(IImagesStorage storage)
+        private static ObjectsPattern CreateChest()
         {
             var pattern = new ObjectsPattern(3, 3, 0.0025);
 
@@ -189,7 +188,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
                 MinWoodCount = 1,
                 MaxWoodCount = 4,
                 ContainerType = "chest",
-                WorldImage = storage.GetImage("Furniture_Chest")
+                WorldImage = "Furniture_Chest"
             }, level));
 
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
@@ -208,7 +207,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             return pattern;
         }
 
-        private static ObjectsPattern CreateGoldenChest(IImagesStorage storage)
+        private static ObjectsPattern CreateGoldenChest()
         {
             var pattern = new ObjectsPattern(3, 3, 0.001);
 
@@ -223,7 +222,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
                 MaxWoodCount = 4,
                 ContainerType = "chest",
                 LootLevelIncrement = 2,
-                WorldImage = storage.GetImage("Furniture_Chest_Golden")
+                WorldImage = "Furniture_Chest_Golden"
             }, level));
 
             pattern.AddRequirement(1, 1, RequirementIsEmpty);
@@ -299,7 +298,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             return cell.Objects.All(obj => obj is FloorObject);
         }
 
-        private static IMapObject CreateShelf(int level, SymbolsImage image)
+        private static IMapObject CreateShelf(int level, string image)
         {
             return new ContainerObject(new ContainerObjectConfiguration
             {

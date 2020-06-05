@@ -54,7 +54,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
         private SymbolsImage GetWorldImage(Color mainImageColor)
         {
             var imageInit = imagesStorage.GetImage(WorldImageName);
-            return ItemRecolorHelper.RecolorImage(imageInit, mainImageColor);
+            return ItemRecolorHelper.RecolorSpellBookGroundImage(imageInit, mainImageColor);
         }
 
         private SymbolsImage GenerateImage(out Color mainColor)

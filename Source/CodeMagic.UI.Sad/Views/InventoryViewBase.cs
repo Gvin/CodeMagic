@@ -6,6 +6,7 @@ using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
+using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -24,8 +25,7 @@ namespace CodeMagic.UI.Sad.Views
         private ItemDetailsControl itemDetails;
         private Button closeButton;
 
-        protected InventoryViewBase(string inventoryName, Player player) 
-            : base(Program.Width, Program.Height)
+        protected InventoryViewBase(string inventoryName, Player player)
         {
             this.inventoryName = inventoryName;
 
@@ -53,9 +53,9 @@ namespace CodeMagic.UI.Sad.Views
             closeButton.Click += closeButton_Click;
             Add(closeButton);
 
-            itemDetails = new ItemDetailsControl(57, Height - 10, player)
+            itemDetails = new ItemDetailsControl(52, Height - 10, player)
             {
-                Position = new Point(Width - 58, 3)
+                Position = new Point(Width - 53, 3)
             };
             Add(itemDetails);
 
@@ -68,12 +68,12 @@ namespace CodeMagic.UI.Sad.Views
             };
             var itemListScroll = new ScrollBar(Orientation.Vertical, Height - 4)
             {
-                Position = new Point(Width - 60, 3),
+                Position = new Point(Width - 55, 3),
                 Theme = scrollBarTheme,
                 CanFocus = false
             };
             Add(itemListScroll);
-            itemsList = new CustomListBox<InventoryStackItem>(Width - 61, Height - 4, itemListScroll)
+            itemsList = new CustomListBox<InventoryStackItem>(Width - 56, Height - 4, itemListScroll)
             {
                 Position = new Point(1, 3)
             };
@@ -160,11 +160,11 @@ namespace CodeMagic.UI.Sad.Views
             Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
             Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
-            Print(Width - 59, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
-            Print(Width - 59, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
-            DrawVerticalLine(Width - 59, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
+            Print(Width - 54, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
+            Print(Width - 54, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
+            DrawVerticalLine(Width - 54, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
 
-            Print(Width - 59, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
+            Print(Width - 54, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
             Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
         }
 
@@ -239,7 +239,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private ColoredString FormatText(ColoredString[] initialText, ColoredString[] afterNameText, Color backColor, int maxWidth)
         {
-            var leftWidth = maxWidth - afterNameText.Sum(part => part.Count) - 9;
+            var leftWidth = maxWidth - afterNameText.Sum(part => part.Count) - 6;
             var glyphs = initialText.SelectMany(part => part.ToArray()).ToArray();
             var maxTextWidth = Math.Min(leftWidth, glyphs.Length);
             var textPart = glyphs.Take(maxTextWidth).ToArray();

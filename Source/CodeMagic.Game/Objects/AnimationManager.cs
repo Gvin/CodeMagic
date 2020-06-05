@@ -46,7 +46,7 @@ namespace CodeMagic.Game.Objects
             {
                 case AnimationFrameStrategy.OneByOneStartFromRandom:
                 case AnimationFrameStrategy.OneByOneStartFromZero:
-                    if (currentFrameIndex >= frames.Length - 2)
+                    if (currentFrameIndex >= frames.Length - 1)
                     {
                         return 0;
                     }

@@ -24,7 +24,7 @@ namespace CodeMagic.Game.Items.Usable
         private const int MinDamageZoneLength = 3;
         private const int MaxDamageZoneLength = 10;
 
-        private const string ImageWorld = "ItemsOnGround_Other";
+        private const string ImageWorld = "ItemsOnGround_Scroll";
 
         private const string ImageInventory1 = "Item_Scroll_Old_V1";
         private const string ImageInventory2 = "Item_Scroll_Old_V2";

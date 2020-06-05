@@ -62,7 +62,6 @@
     <Compile Include="Configuration\Liquids\ILiquidsConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonsterConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonsterDamageConfiguration.cs" />
-    <Compile Include="Configuration\Monsters\IMonsterImagesConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonsterProtectionConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonstersConfiguration.cs" />
     <Compile Include="Configuration\Monsters\IMonsterStatsConfiguration.cs" />
@@ -88,6 +87,7 @@
     <Compile Include="CreaturesLogic\TargetStrategies\ITargetStrategy.cs" />
     <Compile Include="CreaturesLogic\TargetStrategies\PlayerTargetStrategy.cs" />
     <Compile Include="DialogsManager.cs" />
+    <Compile Include="GameData.cs" />
     <Compile Include="IInventoryImageProvider.cs" />
     <Compile Include="IImagesStorage.cs" />
     <Compile Include="Items\ArmorClass.cs" />
@@ -249,6 +249,9 @@
     <Compile Include="Objects\LiquidObjects\ILiquid.cs" />
     <Compile Include="Objects\LiquidObjects\OilLiquid.cs" />
     <Compile Include="Objects\LiquidObjects\WaterLiquid.cs" />
+    <Compile Include="Objects\ObjectEffects\DamageEffect.cs" />
+    <Compile Include="Objects\ObjectEffects\ObjectEffect.cs" />
+    <Compile Include="Objects\ObjectEffects\SpellCastEffect.cs" />
     <Compile Include="Objects\SolidObjects\CaveWall.cs" />
     <Compile Include="Objects\SolidObjects\DoorBase.cs" />
     <Compile Include="Objects\SolidObjects\DungeonDoor.cs" />

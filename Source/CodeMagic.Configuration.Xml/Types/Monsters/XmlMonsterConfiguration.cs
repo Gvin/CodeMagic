@@ -31,11 +31,8 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
         [XmlElement("experience")]
         public XmlMonsterExperienceConfiguration ExperienceData { get; set; }
 
-        [XmlIgnore]
-        public IMonsterImagesConfiguration Images => ImagesData;
-
-        [XmlElement("images")]
-        public XmlMonsterImagesConfiguration ImagesData { get; set; }
+        [XmlElement("image")]
+        public string Image { get; set; }
 
         [XmlElement("size")]
         public ObjectSize Size { get; set; }

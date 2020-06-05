@@ -13,8 +13,7 @@ namespace CodeMagic.UI.Sad.Views
         private Button backToMenuButton;
         private Button exitGameButton;
 
-        public PlayerDeathView() 
-            : base(Program.Width, Program.Height)
+        public PlayerDeathView()
         {
             InitializeControls();
         }

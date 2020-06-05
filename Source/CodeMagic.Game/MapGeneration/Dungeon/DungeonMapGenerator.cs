@@ -14,7 +14,7 @@ using Point = CodeMagic.Core.Game.Point;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon
 {
-    public class DungeonMapGenerator : IDungeonMapGenerator
+    public class DungeonMapGenerator
     {
         private static readonly ILog Log = LogManager.GetLog<DungeonMapGenerator>();
 

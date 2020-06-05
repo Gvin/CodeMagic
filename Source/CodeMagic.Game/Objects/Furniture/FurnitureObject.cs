@@ -17,14 +17,14 @@ namespace CodeMagic.Game.Objects.Furniture
         private const string SaveKeyMinWoodCount = "MinWoodCount";
         private const string SaveKeyBlocksMovement = "BlocksMovement";
 
-        private readonly SymbolsImage worldImage;
+        private readonly string worldImage;
         private readonly int maxWoodCount;
         private readonly int minWoodCount;
 
         public FurnitureObject(SaveData data) 
             : base(data)
         {
-            worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage).GetImage();
+            worldImage = data.GetStringValue(SaveKeyWorldImage);
             ZIndex = (ZIndex) data.GetIntValue(SaveKeyZIndex);
             Size = (ObjectSize) data.GetIntValue(SaveKeySize);
             maxWoodCount = data.GetIntValue(SaveKeyMaxWoodCount);
@@ -47,7 +47,7 @@ namespace CodeMagic.Game.Objects.Furniture
         protected override Dictionary<string, object> GetSaveDataContent()
         {
             var data = base.GetSaveDataContent();
-            data.Add(SaveKeyWorldImage, worldImage == null ? null : new SymbolsImageSaveable(worldImage));
+            data.Add(SaveKeyWorldImage, worldImage);
             data.Add(SaveKeyZIndex, (int)ZIndex);
             data.Add(SaveKeySize, (int)Size);
             data.Add(SaveKeyMaxWoodCount, maxWoodCount);
@@ -66,7 +66,7 @@ namespace CodeMagic.Game.Objects.Furniture
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
-            return worldImage;
+            return storage.GetImage(worldImage);
         }
 
         public override void OnDeath(Point position)
@@ -91,7 +91,7 @@ namespace CodeMagic.Game.Objects.Furniture
             BlocksMovement = false;
         }
 
-        public SymbolsImage WorldImage { get; set; }
+        public string WorldImage { get; set; }
 
         public string Name { get; set; }
 

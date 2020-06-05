@@ -45,8 +45,10 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
-            var worldImageName = GetWorldImageName();
-            return storage.GetImage(worldImageName);
+            var body = storage.GetImage(configuration.Image);
+            var directionImageName = GetWorldImageName();
+            var directionImage = storage.GetImage(directionImageName);
+            return SymbolsImage.Combine(body, directionImage);
         }
 
         private string GetWorldImageName()
@@ -54,13 +56,13 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
             switch (Direction)
             {
                 case Direction.North:
-                    return configuration.Images.North;
+                    return "Creature_Up";
                 case Direction.South:
-                    return configuration.Images.South;
+                    return "Creature_Down";
                 case Direction.West:
-                    return configuration.Images.West;
+                    return "Creature_Left";
                 case Direction.East:
-                    return configuration.Images.East;
+                    return "Creature_Right";
                 default:
                     throw new ArgumentException($"Unknown creature direction: {Direction}");
             }
@@ -86,7 +88,7 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
             DamageMarkType = config.DamageMarkType;
             CatchFireChanceMultiplier = config.Stats.CatchFireChanceMultiplier;
             SelfExtinguishChance = config.Stats.SelfExtinguishChanceMultiplier;
-            Images = config.Images;
+            Image = config.Image;
             LootConfiguration = config.Loot;
             VisibilityRange = config.Stats.VisibilityRange;
             Speed = config.Stats.Speed;
@@ -97,6 +99,6 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
             }
         }
 
-        public IMonsterImagesConfiguration Images { get; set; }
+        public string Image { get; set; }
     }
 }

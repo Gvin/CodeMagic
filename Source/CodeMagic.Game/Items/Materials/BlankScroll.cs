@@ -9,7 +9,7 @@ namespace CodeMagic.Game.Items.Materials
     {
         public const string ItemKey = "scroll_blank";
 
-        private const string WorldImageName = "ItemsOnGround_Other";
+        private const string WorldImageName = "ItemsOnGround_Scroll";
         private const string InventoryImageName = "Item_Scroll_Empty";
 
         public BlankScroll(SaveData data) 

@@ -16,8 +16,8 @@ namespace CodeMagic.UI.Sad.Controls
         private static readonly Color DefaultForegroundColor = Color.White;
         private static readonly Color DefaultBackgroundColor = Color.Black;
 
-        private const int ControlWidth = 30;
-        private const int ControlHeight = 30;
+        private const int ControlWidth = 63;
+        private const int ControlHeight = 63;
 
         private readonly IGameCore game;
 
