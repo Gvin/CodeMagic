@@ -143,7 +143,7 @@ namespace CodeMagic.Game.Items
             return worldImage;
         }
 
-        public SymbolsImage GetEquippedImage(IImagesStorage imagesStorage)
+        public SymbolsImage GetEquippedImage(Player player, IImagesStorage imagesStorage)
         {
             return equippedImage;
         }

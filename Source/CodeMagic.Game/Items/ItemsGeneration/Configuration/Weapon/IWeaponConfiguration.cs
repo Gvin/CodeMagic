@@ -4,6 +4,10 @@
     {
         IWeaponImagesConfiguration Images { get; }
 
+        string EquippedImageRight { get; }
+
+        string EquippedImageLeft { get; }
+
         IWeightConfiguration[] Weight { get; }
 
         IWeaponRarenessConfiguration[] RarenessConfiguration { get; }

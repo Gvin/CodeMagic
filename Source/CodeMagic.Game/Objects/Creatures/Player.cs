@@ -373,7 +373,7 @@ namespace CodeMagic.Game.Objects.Creatures
             var equippedImages = Equipment.GetEquippedItems()
                 .OfType<IEquippedImageProvider>()
                 .OrderBy(item => item.EquippedImageOrder)
-                .Select(item => item.GetEquippedImage(storage))
+                .Select(item => item.GetEquippedImage(this, storage))
                 .Where(image => image != null);
 
             foreach (var image in equippedImages)

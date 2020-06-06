@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Game;
+using CodeMagic.Core.Logging;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.Saving;
@@ -12,16 +13,20 @@ namespace CodeMagic.Game.Items
 {
     public class WeaponItem : DurableItem, IWeaponItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider, IEquippedImageProvider
     {
+        private static readonly ILog Log = LogManager.GetLog<WeaponItem>();
+
         private const string SaveKeyInventoryImage = "InventoryImage";
         private const string SaveKeyWorldImage = "WorldImage";
-        private const string SaveKeyEquippedImage = "EquippedImage";
+        private const string SaveKeyEquippedImageRight = "EquippedImageRight";
+        private const string SaveKeyEquippedImageLeft = "EquippedImageLeft";
         private const string SaveKeyAccuracy = "Accuracy";
         private const string SaveKeyMinDamage = "MinDamage";
         private const string SaveKeyMaxDamage = "MaxDamage";
 
         private readonly SymbolsImage inventoryImage;
         private readonly SymbolsImage worldImage;
-        private readonly SymbolsImage equippedImage;
+        private readonly SymbolsImage equippedImageRight;
+        private readonly SymbolsImage equippedImageLeft;
 
         public WeaponItem(SaveData data) : base(data)
         {
@@ -34,7 +39,8 @@ namespace CodeMagic.Game.Items
 
             inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage)?.GetImage();
             worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage)?.GetImage();
-            equippedImage = data.GetObject<SymbolsImageSaveable>(SaveKeyEquippedImage)?.GetImage();
+            equippedImageRight = data.GetObject<SymbolsImageSaveable>(SaveKeyEquippedImageRight)?.GetImage();
+            equippedImageLeft = data.GetObject<SymbolsImageSaveable>(SaveKeyEquippedImageLeft)?.GetImage();
         }
 
         public WeaponItem(WeaponItemConfiguration configuration) 
@@ -47,15 +53,19 @@ namespace CodeMagic.Game.Items
 
             inventoryImage = configuration.InventoryImage;
             worldImage = configuration.WorldImage;
-            equippedImage = configuration.EquippedImage;
+            equippedImageRight = configuration.EquippedImageRight;
+            equippedImageLeft = configuration.EquippedImageLeft;
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
         {
             var data = base.GetSaveDataContent();
+
             data.Add(SaveKeyInventoryImage, inventoryImage != null ? new SymbolsImageSaveable(inventoryImage) : null);
             data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
-            data.Add(SaveKeyEquippedImage, equippedImage != null ? new SymbolsImageSaveable(equippedImage) : null);
+            data.Add(SaveKeyEquippedImageRight, equippedImageRight != null ? new SymbolsImageSaveable(equippedImageRight) : null);
+            data.Add(SaveKeyEquippedImageLeft, equippedImageLeft != null ? new SymbolsImageSaveable(equippedImageLeft) : null);
+
             data.Add(SaveKeyAccuracy, Accuracy);
             data.Add(SaveKeyMinDamage,
                 new DictionarySaveable(MinDamage.ToDictionary(pair => (object) (int) pair.Key,
@@ -220,9 +230,29 @@ namespace CodeMagic.Game.Items
             return inventoryImage;
         }
 
-        public SymbolsImage GetEquippedImage(IImagesStorage imagesStorage)
+        public SymbolsImage GetEquippedImage(Player player, IImagesStorage imagesStorage)
         {
-            return equippedImage;
+            if (Equals(player.Equipment.RightWeapon))
+                return GetRightEquippedImage(imagesStorage);
+            if (Equals(player.Equipment.LeftWeapon))
+                return GetLeftEquippedImage(imagesStorage);
+
+            Log.Warning($"Trying to render item \"{Name}\" that not equipped on both left and right hand.");
+#if DEBUG
+            throw new ApplicationException($"Trying to render item \"{Name}\" that not equipped on both left and right hand.");
+#else
+            return null;
+#endif
+        }
+
+        protected virtual SymbolsImage GetRightEquippedImage(IImagesStorage storage)
+        {
+            return equippedImageRight;
+        }
+
+        protected virtual SymbolsImage GetLeftEquippedImage(IImagesStorage storage)
+        {
+            return equippedImageLeft;
         }
     }
 
@@ -232,7 +262,9 @@ namespace CodeMagic.Game.Items
 
         public SymbolsImage WorldImage { get; set; }
 
-        public SymbolsImage EquippedImage { get; set; }
+        public SymbolsImage EquippedImageRight { get; set; }
+
+        public SymbolsImage EquippedImageLeft { get; set; }
 
         public Dictionary<Element, int> MaxDamage { get; set; }
 

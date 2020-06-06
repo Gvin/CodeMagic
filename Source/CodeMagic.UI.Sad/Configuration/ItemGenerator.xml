@@ -64,6 +64,9 @@
         </sprite>
       </images>
 
+      <equipped-image-right>ItemOnPlayer_Weapon_Right_Sword</equipped-image-right>
+      <equipped-image-left>ItemOnPlayer_Weapon_Left_Sword</equipped-image-left>
+
       <weight>
         <value material="Wood" weight="1200" durability="20"/>
         <value material="Iron" weight="1600" durability="40"/>
@@ -186,6 +189,9 @@
           <image>Dagger_Blade_V5</image>
         </sprite>
       </images>
+
+      <equipped-image-right>ItemOnPlayer_Weapon_Right_Dagger</equipped-image-right>
+      <equipped-image-left>ItemOnPlayer_Weapon_Left_Dagger</equipped-image-left>
 
       <weight>
         <value material="Wood" weight="300" durability="15"/>
@@ -315,6 +321,9 @@
         </sprite>
       </images>
 
+      <equipped-image-right>ItemOnPlayer_Weapon_Right_Mace</equipped-image-right>
+      <equipped-image-left>ItemOnPlayer_Weapon_Left_Mace</equipped-image-left>
+
       <weight>
         <value material="Wood" weight="6500" durability="30"/>
         <value material="Iron" weight="8000" durability="80"/>
@@ -436,6 +445,9 @@
         </sprite>
       </images>
 
+      <equipped-image-right>ItemOnPlayer_Weapon_Right_Axe</equipped-image-right>
+      <equipped-image-left>ItemOnPlayer_Weapon_Left_Axe</equipped-image-left>
+
       <weight>
         <value material="Wood" weight="1500" durability="20"/>
         <value material="Iron" weight="2000" durability="40"/>
@@ -537,6 +549,9 @@
           <image>Staff_Head_V5</image>
         </sprite>
       </images>
+
+      <equipped-image-right>ItemOnPlayer_Weapon_Right_Staff</equipped-image-right>
+      <equipped-image-left>ItemOnPlayer_Weapon_Left_Staff</equipped-image-left>
 
       <weight>
         <value material="Wood" weight="2000" durability="15"/>

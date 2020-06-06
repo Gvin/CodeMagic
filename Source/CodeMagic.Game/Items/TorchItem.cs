@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Saving;
+using CodeMagic.Game.Objects;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
@@ -11,9 +14,15 @@ namespace CodeMagic.Game.Items
     {
         private const string InventoryImage = "Weapon_Torch";
         private const string WorldImage = "ItemsOnGround_Torch";
+        private const string EquippedImageRight = "ItemOnPlayer_Weapon_Right_Torch";
+        private const string EquippedImageLeft = "ItemOnPlayer_Weapon_Left_Torch";
+
+        private readonly AnimationsBatchManager animation;
 
         public TorchItem(SaveData data) : base(data)
         {
+            animation = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500),
+                AnimationFrameStrategy.OneByOneStartFromRandom);
         }
 
         public TorchItem() : base(new WeaponItemConfiguration
@@ -38,6 +47,8 @@ namespace CodeMagic.Game.Items
             MaxDurability = 20
         })
         {
+            animation = new AnimationsBatchManager(TimeSpan.FromMilliseconds(500),
+                AnimationFrameStrategy.OneByOneStartFromRandom);
         }
 
         public override SymbolsImage GetInventoryImage(IImagesStorage storage)
@@ -48,6 +59,16 @@ namespace CodeMagic.Game.Items
         public override SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             return storage.GetImage(WorldImage);
+        }
+
+        protected override SymbolsImage GetRightEquippedImage(IImagesStorage storage)
+        {
+            return animation.GetImage(storage, EquippedImageRight);
+        }
+
+        protected override SymbolsImage GetLeftEquippedImage(IImagesStorage storage)
+        {
+            return animation.GetImage(storage, EquippedImageLeft);
         }
     }
 }

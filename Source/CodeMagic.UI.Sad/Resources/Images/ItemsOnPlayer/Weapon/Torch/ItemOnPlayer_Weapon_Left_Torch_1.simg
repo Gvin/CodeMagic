@@ -22,13 +22,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel glyph="2">
-      <color>
-        <R>223</R>
-        <G>203</G>
-        <B>176</B>
-      </color>
-    </pixel>
+    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -36,64 +30,9 @@
   <row>
     <pixel />
     <pixel />
-    <pixel glyph="171">
-      <color>
-        <R>223</R>
-        <G>203</G>
-        <B>176</B>
-      </color>
-    </pixel>
-    <pixel glyph="219">
-      <color>
-        <R>128</R>
-        <G>0</G>
-        <B>255</B>
-      </color>
-      <background-color>
-        <R>128</R>
-        <G>0</G>
-        <B>255</B>
-      </background-color>
-    </pixel>
-    <pixel glyph="172">
-      <color>
-        <R>223</R>
-        <G>203</G>
-        <B>176</B>
-      </color>
-    </pixel>
     <pixel />
     <pixel />
-  </row>
-  <row>
     <pixel />
-    <pixel />
-    <pixel glyph="179">
-      <color>
-        <R>223</R>
-        <G>203</G>
-        <B>176</B>
-      </color>
-    </pixel>
-    <pixel glyph="219">
-      <color>
-        <R>128</R>
-        <G>0</G>
-        <B>255</B>
-      </color>
-      <background-color>
-        <R>128</R>
-        <G>0</G>
-        <B>255</B>
-      </background-color>
-    </pixel>
-    <pixel glyph="179">
-      <color>
-        <R>223</R>
-        <G>203</G>
-        <B>176</B>
-      </color>
-    </pixel>
     <pixel />
     <pixel />
   </row>
@@ -101,13 +40,34 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel glyph="186">
+    <pixel />
+    <pixel glyph="173">
       <color>
-        <R>64</R>
-        <G>0</G>
-        <B>128</B>
+        <R>223</R>
+        <G>203</G>
+        <B>176</B>
       </color>
     </pixel>
+    <pixel glyph="196">
+      <color>
+        <R>128</R>
+        <G>64</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="28">
+      <color>
+        <R>255</R>
+        <G>168</G>
+        <B>81</B>
+      </color>
+    </pixel>
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
     <pixel />
     <pixel />
     <pixel />

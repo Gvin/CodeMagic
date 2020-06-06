@@ -15,6 +15,12 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
         [XmlElement("images")]
         public XmlWeaponImagesConfiguration ImagesData { get; set; }
 
+        [XmlElement("equipped-image-right")]
+        public string EquippedImageRight { get; set; }
+
+        [XmlElement("equipped-image-left")]
+        public string EquippedImageLeft { get; set; }
+
         [XmlIgnore]
         public IWeightConfiguration[] Weight => WeightData.ToArray<IWeightConfiguration>();
 

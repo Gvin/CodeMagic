@@ -159,6 +159,8 @@ namespace CodeMagic.UI.Sad.GameProcess
                 LightPower = LightLevel.Medium,
                 InventoryImage = ImagesStorage.Current.GetImage("Weapon_BanHammer"),
                 WorldImage = ImagesStorage.Current.GetImage("ItemsOnGround_Weapon_Mace"),
+                EquippedImageRight = ImagesStorage.Current.GetImage("ItemOnPlayer_Weapon_Right_Mace"),
+                EquippedImageLeft = ImagesStorage.Current.GetImage("ItemOnPlayer_Weapon_Left_Mace"),
                 Rareness = ItemRareness.Epic,
                 MinDamage = new Dictionary<Element, int>
                 {
