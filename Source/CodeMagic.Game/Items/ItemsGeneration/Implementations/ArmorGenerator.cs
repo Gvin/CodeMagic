@@ -38,6 +38,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             var material = RandomHelper.GetRandomElement(rarenessConfig.Materials);
             var inventoryImage = GetArmorImage(config, material);
             var worldImage = GetWorldImage(material, armorType);
+            var equippedImage = GetEquippedImage(material, config);
             var protection = GenerateProtection(rarenessConfig.Protection);
             var name = GenerateName(material, config.TypeName, armorType);
             var description = GenerateDescription(rareness, material);
@@ -57,6 +58,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
                 Description = description,
                 InventoryImage = inventoryImage,
                 WorldImage = worldImage,
+                EquippedImage = equippedImage,
                 Protection = protection,
                 Rareness = rareness,
                 Weight = weightConfig.Weight,
@@ -66,6 +68,15 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
 
             return new ArmorItem(itemConfig);
+        }
+
+        private SymbolsImage GetEquippedImage(ItemMaterial material, IArmorPieceConfiguration config)
+        {
+            if (string.IsNullOrEmpty(config.EquippedImage))
+                return null;
+
+            var image = imagesStorage.GetImage(config.EquippedImage);
+            return ItemRecolorHelper.RecolorItemImage(image, material);
         }
 
         private SymbolsImage GetWorldImage(ItemMaterial material, ArmorType type)

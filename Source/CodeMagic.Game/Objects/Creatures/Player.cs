@@ -337,9 +337,13 @@ namespace CodeMagic.Game.Objects.Creatures
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
             var body = GetBodyImage(storage);
+
+            var equipmentImage = GetEquipmentImage(storage, body.Width, body.Height);
+            body = SymbolsImage.Combine(body, equipmentImage);
+
             var directionImage = GetDirectionImage(storage);
 
-            return SymbolsImage.Combine(directionImage, body);
+            return SymbolsImage.Combine(body, directionImage);
         }
 
         private SymbolsImage GetDirectionImage(IImagesStorage storage)
@@ -360,6 +364,24 @@ namespace CodeMagic.Game.Objects.Creatures
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private SymbolsImage GetEquipmentImage(IImagesStorage storage, int width, int height)
+        {
+            var result = new SymbolsImage(width, height);
+
+            var equippedImages = Equipment.GetEquippedItems()
+                .OfType<IEquippedImageProvider>()
+                .OrderBy(item => item.EquippedImageOrder)
+                .Select(item => item.GetEquippedImage(storage))
+                .Where(image => image != null);
+
+            foreach (var image in equippedImages)
+            {
+                result = SymbolsImage.Combine(result, image);
+            }
+
+            return result;
         }
 
         private SymbolsImage GetBodyImage(IImagesStorage storage)

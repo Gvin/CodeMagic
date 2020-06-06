@@ -693,6 +693,7 @@
           <image>Armor_Leather_Chest_V2</image>
           <image>Armor_Leather_Chest_V3</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Chest_Leather</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -821,6 +822,7 @@
           <image>Armor_Mail_Chest_V2</image>
           <image>Armor_Mail_Chest_V3</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Chest_Mail</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -960,6 +962,7 @@
           <image>Armor_ScaleMail_Chest_V2</image>
           <image>Armor_ScaleMail_Chest_V3</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Chest_ScaleMail</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -1118,6 +1121,7 @@
           <image>Armor_Plate_Chest_V5</image>
           <image>Armor_Plate_Chest_V6</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Chest_Plate</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -1274,6 +1278,7 @@
         <images>
           <image>Armor_Leather_Helmet_V1</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Helmet</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -1401,6 +1406,7 @@
           <image>Armor_Mail_Helmet_V1</image>
           <image>Armor_Mail_Helmet_V2</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Helmet</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -1539,6 +1545,7 @@
           <image>Armor_ScaleMail_Helmet_V1</image>
           <image>Armor_ScaleMail_Helmet_V2</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Helmet</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -1697,6 +1704,7 @@
           <image>Armor_Plate_Helmet_V5</image>
           <image>Armor_Plate_Helmet_V6</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Helmet</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -1856,6 +1864,7 @@
           <image>Armor_Leather_Leggings_V3</image>
           <image>Armor_Leather_Leggings_V4</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Leggings_Leather</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -1982,6 +1991,7 @@
         <images>
           <image>Armor_Mail_Leggings_V1</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Leggings_Mail</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -2119,6 +2129,7 @@
         <images>
           <image>Armor_ScaleMail_Leggings_V1</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Leggings_ScaleMail</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>
@@ -2274,6 +2285,7 @@
           <image>Armor_Plate_Leggings_V2</image>
           <image>Armor_Plate_Leggings_V3</image>
         </images>
+        <equipped-image>ItemOnPlayer_Armor_Leggings_Plate</equipped-image>
         <rareness-configuration>
           <rareness value="Trash">
             <protection>

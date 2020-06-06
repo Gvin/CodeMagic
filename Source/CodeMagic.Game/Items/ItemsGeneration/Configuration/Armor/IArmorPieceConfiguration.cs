@@ -8,6 +8,8 @@
 
         string[] Images { get; }
 
+        string EquippedImage { get; }
+
         IArmorRarenessConfiguration[] RarenessConfigurations { get; }
 
         IWeightConfiguration[] Weight { get; }

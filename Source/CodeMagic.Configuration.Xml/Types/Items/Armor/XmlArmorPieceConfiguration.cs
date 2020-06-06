@@ -20,6 +20,9 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Armor
         [XmlArrayItem("image")]
         public string[] Images { get; set; }
 
+        [XmlElement("equipped-image")]
+        public string EquippedImage { get; set; }
+
         [XmlIgnore]
         public IArmorRarenessConfiguration[] RarenessConfigurations => RarenessConfigurationsData.ToArray<IArmorRarenessConfiguration>();
 

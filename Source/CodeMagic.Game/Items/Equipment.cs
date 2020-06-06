@@ -101,6 +101,20 @@ namespace CodeMagic.Game.Items
             });
         }
 
+        public IEquipableItem[] GetEquippedItems()
+        {
+            var result = new List<IEquipableItem>
+            {
+                SpellBook,
+                leftWeapon,
+                rightWeapon
+            };
+
+            result.AddRange(Armor.Values);
+
+            return result.Where(item => item != null).ToArray();
+        }
+
         public Dictionary<ArmorType, IArmorItem> Armor { get; }
 
         public IWeaponItem RightWeapon => rightWeapon ?? Fists;
@@ -225,38 +239,17 @@ namespace CodeMagic.Game.Items
 
         public int GetBonus(EquipableBonusType bonusType)
         {
-            var result = rightWeapon?.GetBonus(bonusType) ?? 0;
-            result += leftWeapon?.GetBonus(bonusType) ?? 0;
-            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.GetBonus(bonusType));
-            result += SpellBook?.GetBonus(bonusType) ?? 0;
-
-            return result;
+            return GetEquippedItems().Sum(item => item.GetBonus(bonusType));
         }
 
         public int GetStatsBonus(PlayerStats statType)
         {
-            var result = rightWeapon?.GetStatBonus(statType) ?? 0;
-            result += leftWeapon?.GetStatBonus(statType) ?? 0;
-            result += Armor.Where(pair => pair.Value != null).Sum(pair => pair.Value.GetStatBonus(statType));
-            result += SpellBook?.GetStatBonus(statType) ?? 0;
-
-            return result;
+            return GetEquippedItems().Sum(item => item.GetStatBonus(statType));
         }
 
         public ILightSource[] GetLightSources()
         {
-            var result = new List<ILightSource>
-            {
-                SpellBook
-            };
-
-            if (leftWeapon is ILightSource leftWeaponLight)
-                result.Add(leftWeaponLight);
-            if (rightWeapon is ILightSource rightWeaponLight)
-                result.Add(rightWeaponLight);
-
-            result.AddRange(Armor.Values.OfType<ILightSource>());
-            return result.Where(item => item != null).ToArray();
+            return GetEquippedItems().OfType<ILightSource>().ToArray();
         }
     }
 }

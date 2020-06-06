@@ -10,16 +10,18 @@ using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
 {
-    public class WeaponItem : DurableItem, IWeaponItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider
+    public class WeaponItem : DurableItem, IWeaponItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider, IEquippedImageProvider
     {
         private const string SaveKeyInventoryImage = "InventoryImage";
         private const string SaveKeyWorldImage = "WorldImage";
+        private const string SaveKeyEquippedImage = "EquippedImage";
         private const string SaveKeyAccuracy = "Accuracy";
         private const string SaveKeyMinDamage = "MinDamage";
         private const string SaveKeyMaxDamage = "MaxDamage";
 
         private readonly SymbolsImage inventoryImage;
         private readonly SymbolsImage worldImage;
+        private readonly SymbolsImage equippedImage;
 
         public WeaponItem(SaveData data) : base(data)
         {
@@ -32,6 +34,7 @@ namespace CodeMagic.Game.Items
 
             inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage)?.GetImage();
             worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage)?.GetImage();
+            equippedImage = data.GetObject<SymbolsImageSaveable>(SaveKeyEquippedImage)?.GetImage();
         }
 
         public WeaponItem(WeaponItemConfiguration configuration) 
@@ -44,6 +47,7 @@ namespace CodeMagic.Game.Items
 
             inventoryImage = configuration.InventoryImage;
             worldImage = configuration.WorldImage;
+            equippedImage = configuration.EquippedImage;
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
@@ -51,6 +55,7 @@ namespace CodeMagic.Game.Items
             var data = base.GetSaveDataContent();
             data.Add(SaveKeyInventoryImage, inventoryImage != null ? new SymbolsImageSaveable(inventoryImage) : null);
             data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
+            data.Add(SaveKeyEquippedImage, equippedImage != null ? new SymbolsImageSaveable(equippedImage) : null);
             data.Add(SaveKeyAccuracy, Accuracy);
             data.Add(SaveKeyMinDamage,
                 new DictionarySaveable(MinDamage.ToDictionary(pair => (object) (int) pair.Key,
@@ -60,6 +65,8 @@ namespace CodeMagic.Game.Items
                     pair => (object)pair.Value)));
             return data;
         }
+
+        public int EquippedImageOrder => 999;
 
         public Dictionary<Element, int> MaxDamage { get; }
 
@@ -212,6 +219,11 @@ namespace CodeMagic.Game.Items
         {
             return inventoryImage;
         }
+
+        public SymbolsImage GetEquippedImage(IImagesStorage imagesStorage)
+        {
+            return equippedImage;
+        }
     }
 
     public class WeaponItemConfiguration : DurableItemConfiguration
@@ -219,6 +231,8 @@ namespace CodeMagic.Game.Items
         public SymbolsImage InventoryImage { get; set; }
 
         public SymbolsImage WorldImage { get; set; }
+
+        public SymbolsImage EquippedImage { get; set; }
 
         public Dictionary<Element, int> MaxDamage { get; set; }
 
