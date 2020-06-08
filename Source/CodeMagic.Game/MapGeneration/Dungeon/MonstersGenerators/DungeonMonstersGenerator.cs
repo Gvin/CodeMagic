@@ -144,7 +144,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
 
         private static Point FindEmptyRoom(IAreaMap map, bool[,] occupiedCells)
         {
-            for (int counter = 0; counter < 500; counter++)
+            for (int counter = 0; counter < 5000; counter++)
             {
                 var pointX = RandomHelper.GetRandomValue(0, map.Width - 1);
                 var pointY = RandomHelper.GetRandomValue(0, map.Height - 1);
