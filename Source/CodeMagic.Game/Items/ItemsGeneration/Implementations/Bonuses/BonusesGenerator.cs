@@ -22,7 +22,8 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses
             {ProtectionBonusApplier.BonusType, new ProtectionBonusApplier()},
             {WeightBonusApplier.BonusType, new WeightBonusApplier()},
             {LightBonusApplier.BonusType, new LightBonusApplier()},
-            {PlayerStatBonusApplier.BonusType, new PlayerStatBonusApplier()}
+            {PlayerStatBonusApplier.BonusType, new PlayerStatBonusApplier()},
+            {DurabilityBonusApplier.BonusType, new DurabilityBonusApplier()}
         };
 
         private readonly IBonusesConfiguration configuration;

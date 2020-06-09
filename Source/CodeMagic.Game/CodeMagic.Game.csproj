@@ -101,6 +101,7 @@
     <Compile Include="Items\IFurnaceItem.cs" />
     <Compile Include="Items\ItemsGeneration\Configuration\Weapon\IWeaponConfiguration.cs" />
     <Compile Include="Items\ItemsGeneration\Configuration\Weapon\IWeaponImagesConfiguration.cs" />
+    <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\DurabilityBonusApplier.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\Bonuses\Instances\PlayerStatBonusApplier.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\FoodItemsGenerator.cs" />
     <Compile Include="Items\ItemsGeneration\Implementations\ResourceItemsGenerator.cs" />

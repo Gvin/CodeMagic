@@ -239,7 +239,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private ColoredString FormatText(ColoredString[] initialText, ColoredString[] afterNameText, Color backColor, int maxWidth)
         {
-            var leftWidth = maxWidth - afterNameText.Sum(part => part.Count) - 6;
+            var leftWidth = maxWidth - afterNameText.Sum(part => part.Count) - 9;
             var glyphs = initialText.SelectMany(part => part.ToArray()).ToArray();
             var maxTextWidth = Math.Min(leftWidth, glyphs.Length);
             var textPart = glyphs.Take(maxTextWidth).ToArray();

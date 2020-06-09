@@ -42,14 +42,10 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             var protection = GenerateProtection(rarenessConfig.Protection);
             var name = GenerateName(material, config.TypeName, armorType);
             var description = GenerateDescription(rareness, material);
-
             var weightConfig = GetWeightConfiguration(config, material);
-
-            var durabilityPercent = RandomHelper.GetRandomValue(MinDurabilityPercent, MaxDurabilityPercent);
             var maxDurability = weightConfig.Durability;
-            var durability = Math.Min(maxDurability, (int)Math.Round(weightConfig.Durability * (durabilityPercent / 100d)));
-
             var bonusesCount = RandomHelper.GetRandomValue(rarenessConfig.MinBonuses, rarenessConfig.MaxBonuses);
+
             var itemConfig = new ArmorItemConfiguration
             {
                 Name = name,
@@ -62,10 +58,13 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
                 Protection = protection,
                 Rareness = rareness,
                 Weight = weightConfig.Weight,
-                MaxDurability = maxDurability,
-                Durability = durability
+                MaxDurability = maxDurability
             };
             bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
+
+            var durabilityPercent = RandomHelper.GetRandomValue(MinDurabilityPercent, MaxDurabilityPercent);
+            var durability = Math.Min(itemConfig.MaxDurability, (int)Math.Round(itemConfig.MaxDurability * (durabilityPercent / 100d)));
+            itemConfig.Durability = durability;
 
             return new ArmorItem(itemConfig);
         }

@@ -2693,7 +2693,34 @@
       </rareness>
     </group>
 
-    <group type="Weapon" inherit-from="Equipable">
+    <group type="Durable" inherit-from="Equipable">
+      <rareness value="Trash">
+        <bonus type="DurabilityBonus">
+          <value key="Min">10</value>
+          <value key="Max">20</value>
+        </bonus>
+      </rareness>
+      <rareness value="Common">
+        <bonus type="DurabilityBonus">
+          <value key="Min">20</value>
+          <value key="Max">30</value>
+        </bonus>
+      </rareness>
+      <rareness value="Uncommon">
+        <bonus type="DurabilityBonus">
+          <value key="Min">30</value>
+          <value key="Max">40</value>
+        </bonus>
+      </rareness>
+      <rareness value="Rare">
+        <bonus type="DurabilityBonus">
+          <value key="Min">40</value>
+          <value key="Max">50</value>
+        </bonus>
+      </rareness>
+    </group>
+
+    <group type="Weapon" inherit-from="Durable">
       <rareness value="Trash">
         <bonus type="DamageBonus">
           <value key="Min">0</value>
@@ -2736,7 +2763,7 @@
       </rareness>
     </group>
 
-    <group type="Armor" inherit-from="Equipable">
+    <group type="Armor" inherit-from="Durable">
       <rareness value="Common">
         <bonus type="ProtectionBonus">
           <value key="Min">3</value>

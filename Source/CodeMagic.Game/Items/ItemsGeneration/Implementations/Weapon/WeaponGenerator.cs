@@ -53,11 +53,8 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon
             var name = GenerateName(material);
             var description = GenerateDescription(rareness, material);
             var bonusesCount = RandomHelper.GetRandomValue(rarenessConfiguration.MinBonuses, rarenessConfiguration.MaxBonuses);
-
-            var durabilityPercent = RandomHelper.GetRandomValue(MinDurabilityPercent, MaxDurabilityPercent);
             var maxDurability = weightConfiguration.Durability;
-            var durability = Math.Min(maxDurability, (int) Math.Round(weightConfiguration.Durability * (durabilityPercent / 100d)));
-
+            
             var itemConfig = new WeaponItemConfiguration
             {
                 Name = name,
@@ -72,10 +69,13 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Weapon
                 WorldImage = worldImage,
                 EquippedImageRight = equippedRightImage,
                 EquippedImageLeft = equippedLeftImage,
-                MaxDurability = maxDurability,
-                Durability = durability
+                MaxDurability = maxDurability
             };
             bonusesGenerator.GenerateBonuses(itemConfig, bonusesCount);
+
+            var durabilityPercent = RandomHelper.GetRandomValue(MinDurabilityPercent, MaxDurabilityPercent);
+            var durability = Math.Min(itemConfig.MaxDurability, (int)Math.Round(itemConfig.MaxDurability * (durabilityPercent / 100d)));
+            itemConfig.Durability = durability;
 
             return new WeaponItem(itemConfig);
         }
