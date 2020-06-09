@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Saving;
@@ -14,15 +15,18 @@ namespace CodeMagic.Game.Statuses
 
         private readonly Dictionary<string, IObjectStatus> statuses;
         private readonly string ownerId;
+        private readonly Func<string, bool> statusFilter;
 
-        public ObjectStatusesCollection(SaveData data)
+        public ObjectStatusesCollection(SaveData data, Func<string, bool> statusFilter)
         {
+            this.statusFilter = statusFilter;
             ownerId = data.GetStringValue(SaveKeyOwnerId);
             statuses = data.GetObjectsCollection<IObjectStatus>(SaveKeyStatuses).ToDictionary(status => status.Type, status => status);
         }
 
-        public ObjectStatusesCollection(string ownerId)
+        public ObjectStatusesCollection(string ownerId, Func<string, bool> statusFilter)
         {
+            this.statusFilter = statusFilter;
             statuses = new Dictionary<string, IObjectStatus>();
             this.ownerId = ownerId;
         }
@@ -38,6 +42,9 @@ namespace CodeMagic.Game.Statuses
 
         public void Add(IObjectStatus status)
         {
+            if (statusFilter(status.Type))
+                return;
+
             if (statuses.ContainsKey(status.Type))
             {
                 statuses[status.Type] = status.Merge(statuses[status.Type]);

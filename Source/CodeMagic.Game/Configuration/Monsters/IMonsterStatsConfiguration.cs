@@ -21,5 +21,7 @@
         IMonsterProtectionConfiguration[] Protection { get; }
 
         IMonsterDamageConfiguration[] Damage { get; }
+
+        string[] StatusesImmunity { get; }
     }
 }

@@ -16,11 +16,13 @@ namespace CodeMagic.Game.Objects
     {
         private const string SaveKeyId = "Id";
         private const string SaveKeyBaseProtection = "BaseProtection";
+        private const string SaveKeyStatusesImmunity = "StatusesImmunity";
         private const string SaveKeyHealth = "Health";
         private const string SaveKeyStatuses = "Statuses";
 
         private int health;
         protected readonly Dictionary<Element, int> BaseProtection;
+        protected readonly List<string> StatusesImmunity;
 
         protected DestroyableObject(SaveData data) 
             : base(data)
@@ -28,7 +30,9 @@ namespace CodeMagic.Game.Objects
             Id = data.GetStringValue(SaveKeyId);
             BaseProtection = data.GetObject<DictionarySaveable>(SaveKeyBaseProtection).Data
                 .ToDictionary(pair => (Element) int.Parse((string) pair.Key), pair => int.Parse((string) pair.Value));
-            Statuses = data.GetObject<ObjectStatusesCollection>(SaveKeyStatuses);
+            StatusesImmunity = data.GetValuesCollection(SaveKeyStatusesImmunity).ToList();
+            var statusesData = data.Objects[SaveKeyStatuses];
+            Statuses = new ObjectStatusesCollection(statusesData, status => StatusesImmunity.Contains(status));
 
             health = data.GetIntValue(SaveKeyHealth);
 
@@ -40,7 +44,8 @@ namespace CodeMagic.Game.Objects
         {
             Id = Guid.NewGuid().ToString();
             BaseProtection = new Dictionary<Element, int>();
-            Statuses = new ObjectStatusesCollection(Id);
+            StatusesImmunity = new List<string>();
+            Statuses = new ObjectStatusesCollection(Id, status => StatusesImmunity.Contains(status));
 
             health = startHealth;
 
@@ -53,6 +58,7 @@ namespace CodeMagic.Game.Objects
             data.Add(SaveKeyId, Id);
             data.Add(SaveKeyHealth, health);
             data.Add(SaveKeyStatuses, Statuses);
+            data.Add(SaveKeyStatusesImmunity, StatusesImmunity);
             data.Add(SaveKeyBaseProtection,
                 new DictionarySaveable(BaseProtection.ToDictionary(
                     pair => (object) (int) pair.Key,

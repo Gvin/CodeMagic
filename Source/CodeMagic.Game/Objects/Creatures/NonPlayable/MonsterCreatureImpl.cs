@@ -97,6 +97,11 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
             {
                 BaseProtection.Add(protectionConfiguration.Element, protectionConfiguration.Value);
             }
+
+            if (config.Stats.StatusesImmunity != null)
+            {
+                StatusesImmunity.AddRange(config.Stats.StatusesImmunity);
+            }
         }
 
         public string Image { get; set; }

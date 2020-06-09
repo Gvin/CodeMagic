@@ -43,6 +43,11 @@ namespace CodeMagic.Game.Objects.Creatures
                     BaseProtection.Add(pair.Key, pair.Value);
                 }
             }
+
+            if (configuration.StatusesImmunity != null)
+            {
+                StatusesImmunity.AddRange(configuration.StatusesImmunity);
+            }
         }
 
         public override int DodgeChance => configuration.DodgeChance;
@@ -114,6 +119,7 @@ namespace CodeMagic.Game.Objects.Creatures
         {
             Damage = new List<MonsterDamageValue>();
             BaseProtection = new Dictionary<Element, int>();
+            StatusesImmunity = new List<string>();
         }
 
         public int Accuracy { get; set; }
@@ -151,6 +157,8 @@ namespace CodeMagic.Game.Objects.Creatures
         public float Speed { get; set; }
 
         public Dictionary<Element, int> BaseProtection { get; set; }
+
+        public List<string> StatusesImmunity { get; set; }
     }
 
     public class MonsterDamageValue

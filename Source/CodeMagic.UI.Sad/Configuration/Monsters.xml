@@ -19,6 +19,12 @@
         <element type="Blunt">-30</element>
         <element type="Electricity">30</element>
       </protection>
+      <statuses-immunity>
+        <status>blind</status>
+        <status>hungry</status>
+        <status>overweight</status>
+        <status>paralyzed</status>
+      </statuses-immunity>
       <damage>
         <value element="Blunt" min="1" max="4"/>
       </damage>
@@ -136,6 +142,12 @@
         <element type="Electricity">-30</element>
         <element type="Frost">-100</element>
       </protection>
+      <statuses-immunity>
+        <status>blind</status>
+        <status>hungry</status>
+        <status>overweight</status>
+        <status>paralyzed</status>
+      </statuses-immunity>
     </stats>
     <size>Huge</size>
     <remains-type>BloodGreenBig</remains-type>

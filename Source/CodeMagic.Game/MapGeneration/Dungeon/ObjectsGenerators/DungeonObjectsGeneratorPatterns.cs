@@ -4,11 +4,13 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
+using CodeMagic.Core.Statuses;
 using CodeMagic.Game.Items.Materials;
 using CodeMagic.Game.Objects.Floor;
 using CodeMagic.Game.Objects.Furniture;
 using CodeMagic.Game.Objects.LiquidObjects;
 using CodeMagic.Game.Objects.SolidObjects;
+using CodeMagic.Game.Statuses;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
 {

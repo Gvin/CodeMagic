@@ -2,8 +2,9 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
+using CodeMagic.Core.Statuses;
 using CodeMagic.Game.Items.Materials;
-using CodeMagic.Game.Saving;
+using CodeMagic.Game.Statuses;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Objects.Furniture
@@ -42,6 +43,8 @@ namespace CodeMagic.Game.Objects.Furniture
             maxWoodCount = configuration.MaxWoodCount;
             minWoodCount = configuration.MinWoodCount;
             BlocksMovement = configuration.BlocksMovement;
+
+            StatusesImmunity.AddRange(configuration.StatusesImmunity);
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
@@ -89,6 +92,15 @@ namespace CodeMagic.Game.Objects.Furniture
             Size = ObjectSize.Big;
             MaxHealth = 1;
             BlocksMovement = false;
+            StatusesImmunity = new List<string>
+            {
+                BlindObjectStatus.StatusType,
+                ParalyzedObjectStatus.StatusType,
+                FrozenObjectStatus.StatusType,
+                HungryObjectStatus.StatusType,
+                OverweightObjectStatus.StatusType,
+                ManaDisturbedObjectStatus.StatusType
+            };
         }
 
         public string WorldImage { get; set; }
@@ -106,5 +118,7 @@ namespace CodeMagic.Game.Objects.Furniture
         public int MinWoodCount { get; set; }
 
         public bool BlocksMovement { get; set; }
+
+        public List<string> StatusesImmunity { get; set; }
     }
 }

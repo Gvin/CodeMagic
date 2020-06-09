@@ -42,6 +42,10 @@ namespace CodeMagic.Configuration.Xml.Types.Monsters
         [XmlArrayItem("element")]
         public XmlMonsterProtectionConfiguration[] ProtectionData { get; set; }
 
+        [XmlArray("statuses-immunity")]
+        [XmlArrayItem("status")]
+        public string[] StatusesImmunity { get; set; }
+
         [XmlIgnore]
         public IMonsterDamageConfiguration[] Damage => DamageData?.ToArray<IMonsterDamageConfiguration>() ?? new IMonsterDamageConfiguration[0];
 
