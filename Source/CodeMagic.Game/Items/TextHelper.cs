@@ -55,7 +55,7 @@ namespace CodeMagic.Game.Items
         public static Color GetDurabilityColor(int durability, int maxDurability)
         {
             var percent = durability / (double)maxDurability * 100;
-            if (percent < 20d)
+            if (percent < 30d)
             {
                 return LowDurabilityColor;
             }
