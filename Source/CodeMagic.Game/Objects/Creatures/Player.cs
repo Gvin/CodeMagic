@@ -11,6 +11,7 @@ using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Usable;
+using CodeMagic.Game.Items.Usable.Potions;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.DecorativeObjects;
 using CodeMagic.Game.Statuses;

@@ -5,6 +5,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Logging;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Items.Usable;
+using CodeMagic.Game.Items.Usable.Potions;
 
 namespace CodeMagic.Game
 {
