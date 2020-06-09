@@ -32,8 +32,9 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
             }
             equipableConfig.Bonuses[bonusType] += bonus;
 
-            name.Postfixes.Add(GetNamePostfix(bonusType));
-            name.AddDescription(GetBonusCode(bonusType), GetBonusText(bonusType));
+            var bonusCode = GetBonusCode(bonusType);
+            name.AddNamePostfix(bonusCode, GetNamePostfix(bonusType));
+            name.AddDescription(bonusCode, GetBonusText(bonusType));
         }
 
         private static string GetBonusCode(EquipableBonusType bonusType)
@@ -51,8 +52,10 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
                     return "It allows you to store more mana.";
                 case EquipableBonusType.ManaRegeneration:
                     return "It makes your body replenish mana faster.";
+                case EquipableBonusType.Stamina:
+                    return "It increases your stamina.";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(bonusType), bonusType, null);
+                    throw new ArgumentOutOfRangeException(nameof(bonusType), bonusType, $"Unknown {nameof(EquipableBonusType)}: {bonusType}");
             }
         }
 
@@ -66,6 +69,8 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
                     return "Mana";
                 case EquipableBonusType.ManaRegeneration:
                     return "Energy";
+                case EquipableBonusType.Stamina:
+                    return "Stamina";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(bonusType), bonusType, null);
             }

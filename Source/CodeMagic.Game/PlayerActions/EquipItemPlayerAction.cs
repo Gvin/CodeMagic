@@ -1,12 +1,11 @@
 ﻿using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class EquipItemPlayerAction : IPlayerAction
+    public class EquipItemPlayerAction : PlayerActionBase
     {
         private readonly IEquipableItem item;
 
@@ -15,8 +14,9 @@ namespace CodeMagic.Game.PlayerActions
             this.item = item;
         }
 
+        protected override int RestoresStamina => 10;
 
-        public bool Perform(out Point newPosition)
+        protected override bool Perform(GameCore<Player> game, out Point newPosition)
         {
             ((GameCore<Player>)CurrentGame.Game).Player.Equipment.EquipItem(item);
             CurrentGame.Journal.Write(new ItemEquipedMessage(item));

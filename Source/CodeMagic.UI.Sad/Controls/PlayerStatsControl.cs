@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeMagic.Core.Game;
 using CodeMagic.Game.Area.EnvironmentData;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
 using SadConsole;
@@ -14,9 +15,9 @@ namespace CodeMagic.UI.Sad.Controls
         private static readonly Color FrameColor = Color.Gray;
         private static readonly Color BackgroundColor = Color.Black;
 
-        private readonly IGameCore game;
+        private readonly GameCore<Player> game;
 
-        public PlayerStatsControl(int width, int height, IGameCore game)
+        public PlayerStatsControl(int width, int height, GameCore<Player> game)
             : base(width, height)
         {
             this.game = game;
@@ -35,7 +36,7 @@ namespace CodeMagic.UI.Sad.Controls
 
         private void Draw()
         {
-            Surface.Clear(new Rectangle(2, 1, 17, 5));
+            Surface.Clear(new Rectangle(2, 1, Width - 3, 6));
 
             Surface.Print(2, 1, "Player Status:");
             Surface.Fill(1, 2, Width - 2, FrameColor, BackgroundColor, Glyphs.GetGlyph('─'));
@@ -54,14 +55,17 @@ namespace CodeMagic.UI.Sad.Controls
             Surface.PrintStyledText(2, 4, 
                 new ColoredString("Mana: "),
                 new ColoredString($"{game.Player.Mana} / {game.Player.MaxMana}", Color.Blue, BackgroundColor));
-            Surface.PrintStyledText(2, 5, 
+            Surface.PrintStyledText(2, 5,
+                new ColoredString("Stamina: "),
+                new ColoredString($"{game.Player.Stamina} / {game.Player.MaxStamina}", Color.Gold, BackgroundColor));
+            Surface.PrintStyledText(2, 6, 
                 new ColoredString("Hunger: "), 
                 new ColoredString($"{game.Player.HungerPercent}%", Color.Green, BackgroundColor));
         }
 
         private void DrawCellManaLevel()
         {
-            const int yPos = 7;
+            const int yPos = 8;
 
             var cell = game.Map.GetCell(game.PlayerPosition);
 

@@ -1,5 +1,4 @@
-﻿using System;
-using CodeMagic.Core.Game;
+﻿using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.Bonuses;
 using CodeMagic.Game.Objects.Creatures;
@@ -32,8 +31,9 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
             }
             equipableConfig.StatBonuses[bonusType] += bonus;
 
-            name.Postfixes.Add(GetNamePostfix(bonusType));
-            name.AddDescription(GetBonusCode(bonusType), GetBonusText(bonusType));
+            var bonusCode = GetBonusCode(bonusType);
+            name.AddNamePostfix(bonusCode, GetNamePostfix(bonusType));
+            name.AddDescription(bonusCode, GetBonusText(bonusType));
         }
 
         private static string GetBonusCode(PlayerStats stat)

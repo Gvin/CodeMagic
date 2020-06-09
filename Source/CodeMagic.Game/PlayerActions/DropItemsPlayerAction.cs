@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class DropItemsPlayerAction : IPlayerAction
+    public class DropItemsPlayerAction : PlayerActionBase
     {
         private readonly IItem[] items;
 
@@ -14,7 +14,9 @@ namespace CodeMagic.Game.PlayerActions
             this.items = items.ToArray();
         }
 
-        public bool Perform(out Point newPosition)
+        protected override int RestoresStamina => 10;
+
+        protected override bool Perform(GameCore<Player> game, out Point newPosition)
         {
             newPosition = CurrentGame.PlayerPosition;
 

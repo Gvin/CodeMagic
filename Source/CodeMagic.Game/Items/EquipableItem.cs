@@ -101,6 +101,7 @@ namespace CodeMagic.Game.Items
     {
         Health,
         Mana,
-        ManaRegeneration
+        ManaRegeneration,
+        Stamina
     }
 }

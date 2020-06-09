@@ -25,6 +25,7 @@ namespace CodeMagic.Game.Items
 
         public static readonly Color HealthColor = Color.Green;
         public static readonly Color ManaColor = Color.Blue;
+        public static readonly Color StaminaColor = Color.Gold;
         public static readonly Color ManaRegenerationColor = Color.DodgerBlue;
         public static readonly Color XpColor = Color.DarkGoldenrod;
 
@@ -38,6 +39,8 @@ namespace CodeMagic.Game.Items
             {
                 case PlayerStats.Strength:
                     return "Strength";
+                case PlayerStats.Endurance:
+                    return "Endurance";
                 case PlayerStats.Agility:
                     return "Agility";
                 case PlayerStats.Intelligence:
@@ -215,6 +218,8 @@ namespace CodeMagic.Game.Items
                     return new StyledString("Health", HealthColor);
                 case EquipableBonusType.Mana:
                     return new StyledString("Mana", ManaColor);
+                case EquipableBonusType.Stamina:
+                    return new StyledString("Stamina", StaminaColor);
                 case EquipableBonusType.ManaRegeneration:
                     return new StyledString("Mana Regeneration", ManaRegenerationColor);
                 default:

@@ -38,8 +38,9 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
                 weaponConfig.MinDamage.Add(element, minValue);
             }
 
-            name.Prefixes.Add(GetElementPrefix(element));
-            name.AddDescription(GetBonusCode(element), GetBonusDescription(element));
+            var bonusCode = GetBonusCode(element);
+            name.AddNamePrefix(bonusCode, GetElementPrefix(element));
+            name.AddDescription(bonusCode, GetBonusDescription(element));
         }
 
         private static string GetBonusCode(Element element)

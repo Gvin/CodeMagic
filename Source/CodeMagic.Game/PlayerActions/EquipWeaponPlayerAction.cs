@@ -1,12 +1,11 @@
 ﻿using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class EquipWeaponPlayerAction : IPlayerAction
+    public class EquipWeaponPlayerAction : PlayerActionBase
     {
         private readonly WeaponItem weapon;
         private readonly bool isRight;
@@ -17,10 +16,11 @@ namespace CodeMagic.Game.PlayerActions
             this.isRight = isRight;
         }
 
+        protected override int RestoresStamina => 10;
 
-        public bool Perform(out Point newPosition)
+        protected override bool Perform(GameCore<Player> game, out Point newPosition)
         {
-            ((GameCore<Player>)CurrentGame.Game).Player.Equipment.EquipWeapon(weapon, isRight);
+            game.Player.Equipment.EquipWeapon(weapon, isRight);
             CurrentGame.Journal.Write(new WeaponEquipedMessage(weapon, isRight));
 
             newPosition = CurrentGame.PlayerPosition;

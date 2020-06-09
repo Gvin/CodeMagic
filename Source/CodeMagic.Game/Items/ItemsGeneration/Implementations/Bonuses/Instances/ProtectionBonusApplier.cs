@@ -30,8 +30,9 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
                 armorConfig.Protection.Add(element, protection);
             }
 
-            name.Postfixes.Add(string.Format(NamePostfixTemplate, TextHelper.GetElementName(element)));
-            name.AddDescription(GetBonusCode(element), GetBonusDescription(element));
+            var bonusCode = GetBonusCode(element);
+            name.AddNamePostfix(bonusCode, string.Format(NamePostfixTemplate, TextHelper.GetElementName(element)));
+            name.AddDescription(bonusCode, GetBonusDescription(element));
         }
 
         private static string GetBonusCode(Element element)

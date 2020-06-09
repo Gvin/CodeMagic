@@ -71,14 +71,14 @@ namespace CodeMagic.UI.Sad.Views
                 PrintStyledText(dX + maxLength + 1, y, bonusText);
             }
 
-            var charsY = dY + 3 + stats.Length;
-            PrintStyledText(dX, charsY + 0, new StyledLine { "Max Health           ", new StyledString(player.MaxHealth.ToString(), TextHelper.HealthColor) });
-            PrintStyledText(dX, charsY + 1, new StyledLine { "Max Mana             ", new StyledString(player.MaxMana.ToString(), TextHelper.ManaColor) });
-            PrintStyledText(dX, charsY + 2, new StyledLine { "Mana Regeneration    ", new StyledString(player.ManaRegeneration.ToString(), TextHelper.ManaRegenerationColor) });
-            PrintStyledText(dX, charsY + 3, new StyledLine { "Dodge Chance         ", $"{player.DodgeChance}%"});
+            var xPos = dX + maxLength + 5;
+            PrintStyledText(xPos, dY + 2, new StyledLine { "Max Health           ", new StyledString(player.MaxHealth.ToString(), TextHelper.HealthColor) });
+            PrintStyledText(xPos, dY + 3, new StyledLine { "Max Mana             ", new StyledString(player.MaxMana.ToString(), TextHelper.ManaColor) });
+            PrintStyledText(xPos, dY + 4, new StyledLine { "Mana Regeneration    ", new StyledString(player.ManaRegeneration.ToString(), TextHelper.ManaRegenerationColor) });
+            PrintStyledText(xPos, dY + 5, new StyledLine { "Dodge Chance         ", $"{player.DodgeChance}%"});
 
-            PrintStyledText(dX, charsY + 5, new StyledLine {$"Level: {player.Level}"});
-            PrintStyledText(dX, charsY + 6, new StyledLine {"XP:    ", new StyledString($"{player.Experience} / {player.GetXpToLevelUp()}", TextHelper.XpColor)});
+            PrintStyledText(dX, dY + 4 + stats.Length, new StyledLine {$"Level: {player.Level}"});
+            PrintStyledText(dX, dY + 5 + stats.Length, new StyledLine {"XP:    ", new StyledString($"{player.Experience} / {player.GetXpToLevelUp()}", TextHelper.XpColor)});
         }
 
         private void PrintWeapon(int dX, int dY)

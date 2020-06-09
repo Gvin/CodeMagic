@@ -13,6 +13,8 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
         private const string NamePrefix = "Shining";
         private const string KeyPower = "Power";
 
+        private const string BonusCode = "light_bonus";
+
         public void Apply(IBonusConfiguration config, ItemConfiguration itemConfiguration, NameBuilder name)
         {
             var possiblePower = GetPossibleLightPower(config);
@@ -21,8 +23,8 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses.Instances
             var equipableConfig = (EquipableItemConfiguration) itemConfiguration;
             equipableConfig.LightPower = power;
 
-            name.Prefixes.Add(NamePrefix);
-            name.AddDescription("light_bonus", "It emits some light.");
+            name.AddNamePrefix(BonusCode, NamePrefix);
+            name.AddDescription(BonusCode, "It emits some light.");
         }
 
         private LightLevel[] GetPossibleLightPower(IBonusConfiguration config)

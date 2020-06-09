@@ -5,47 +5,66 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
 {
     internal class NameBuilder
     {
+        private readonly string initialName;
         private readonly string[] initialDescription;
+        private readonly Dictionary<string, string> namePostfixes;
+        private readonly Dictionary<string, string> nameParts;
+        private readonly Dictionary<string, string> namePrefixes;
+        private readonly Dictionary<string, string> additionalDescription;
 
         public NameBuilder(string initialName, string[] initialDescription)
         {
-            Prefixes = new List<string>();
-            Center = new List<string> { initialName };
-            Postfixes = new List<string>();
+            this.initialName = initialName;
+            namePrefixes = new Dictionary<string, string>();
+            nameParts = new Dictionary<string, string>();
+            namePostfixes = new Dictionary<string, string>();
+
             this.initialDescription = initialDescription ?? new string[0];
-            AdditionalDescription = new Dictionary<string, string>();
+            additionalDescription = new Dictionary<string, string>();
         }
 
-        private Dictionary<string, string> AdditionalDescription { get; }
+        public void AddNamePrefix(string key, string value)
+        {
+            TryAddValue(namePrefixes, key, value);
+        }
+
+        public void AddNamePostfix(string key, string value)
+        {
+            TryAddValue(namePostfixes, key, value);
+        }
+
+        public void AddNamePart(string key, string value)
+        {
+            TryAddValue(nameParts, key, value);
+        }
 
         public void AddDescription(string key, string value)
         {
-            if (AdditionalDescription.ContainsKey(key))
-                return;
-
-            AdditionalDescription.Add(key, value);
+            TryAddValue(additionalDescription, key, value);
         }
 
-        public List<string> Prefixes { get; }
+        private void TryAddValue(Dictionary<string, string> dictionary, string key, string value)
+        {
+            if (dictionary.ContainsKey(key))
+                return;
 
-        public List<string> Center { get; }
-
-        public List<string> Postfixes { get; }
+            dictionary.Add(key, value);
+        }
 
         public string[] GetDescription()
         {
             var result = new List<string>(initialDescription);
-            result.AddRange(AdditionalDescription.Values);
+            result.AddRange(additionalDescription.Values);
             return result.ToArray();
         }
 
         public override string ToString()
         {
-            var leftPart = string.Join(" ", Prefixes.Distinct());
-            var center = string.Join(" ", Center.Distinct());
+            var leftPart = string.Join(" ", namePrefixes.Values.Distinct());
+            var center = BuildName();
             var rightPart = BuildRightPart();
 
-            if (Prefixes.Any())
+            if (namePrefixes.Any())
             {
                 center = $" {center}";
             }
@@ -53,10 +72,22 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations
             return leftPart + center + rightPart;
         }
 
+        private string BuildName()
+        {
+            var result = initialName;
+            if (nameParts.Any())
+            {
+                var partsString = string.Join(" ", nameParts.Values.Distinct());
+                result += $" {partsString}";
+            }
+
+            return result;
+        }
+
         private string BuildRightPart()
         {
             var result = string.Empty;
-            var clearPostfixes = Postfixes.Distinct().ToArray();
+            var clearPostfixes = namePostfixes.Values.Distinct().ToArray();
 
             for (int index = 0; index < clearPostfixes.Length; index++)
             {

@@ -10,8 +10,9 @@ using CodeMagic.Game.Statuses;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class MeleAttackPlayerAction : IPlayerAction
+    public class MeleAttackPlayerAction : PlayerActionBase
     {
+        private const int StaminaToAttack = 10;
         private readonly bool useRightHand;
 
         public MeleAttackPlayerAction(bool useRightHand)
@@ -19,9 +20,10 @@ namespace CodeMagic.Game.PlayerActions
             this.useRightHand = useRightHand;
         }
 
-        public bool Perform(out Point newPosition)
+        protected override int RestoresStamina => 0;
+
+        protected override bool Perform(GameCore<Player> game, out Point newPosition)
         {
-            var game = (GameCore<Player>)CurrentGame.Game;
             newPosition = game.PlayerPosition;
 
             if (game.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
@@ -46,6 +48,14 @@ namespace CodeMagic.Game.PlayerActions
             var target = GetAttackTarget(possibleTargets);
             if (target == null)
                 return true;
+
+            if (game.Player.Stamina < StaminaToAttack)
+            {
+                game.Journal.Write(new NotEnoughStaminaMessage());
+                return true;
+            }
+
+            game.Player.Stamina -= StaminaToAttack;
 
             var weapon = useRightHand ? game.Player.Equipment.RightWeapon : game.Player.Equipment.LeftWeapon;
 

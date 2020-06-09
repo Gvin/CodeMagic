@@ -1,12 +1,12 @@
 ﻿using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.Objects.ObjectEffects;
 using CodeMagic.Game.Spells;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class CastSpellPlayerAction : IPlayerAction
+    public class CastSpellPlayerAction : PlayerActionBase
     {
         private readonly BookSpell spell;
 
@@ -15,7 +15,9 @@ namespace CodeMagic.Game.PlayerActions
             this.spell = spell;
         }
 
-        public bool Perform(out Point newPosition)
+        protected override int RestoresStamina => 5;
+
+        protected override bool Perform(GameCore<Player> game, out Point newPosition)
         {
             newPosition = CurrentGame.Game.PlayerPosition;
 

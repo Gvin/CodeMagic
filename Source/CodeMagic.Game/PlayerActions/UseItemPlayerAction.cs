@@ -6,7 +6,7 @@ using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class UseItemPlayerAction : IPlayerAction
+    public class UseItemPlayerAction : PlayerActionBase
     {
         private readonly IUsableItem item;
 
@@ -15,17 +15,19 @@ namespace CodeMagic.Game.PlayerActions
             this.item = item;
         }
 
-        public bool Perform(out Point newPosition)
+        protected override int RestoresStamina => 20;
+
+        protected override bool Perform(GameCore<Player> game, out Point newPosition)
         {
-            CurrentGame.Journal.Write(new UsedItemMessage(item));
-            var keepItem = item.Use((GameCore<Player>)CurrentGame.Game);
+            game.Journal.Write(new UsedItemMessage(item));
+            var keepItem = item.Use(game);
 
             if (!keepItem)
             {
-                CurrentGame.Player.Inventory.RemoveItem(item);
+                game.Player.Inventory.RemoveItem(item);
             }
 
-            newPosition = CurrentGame.PlayerPosition;
+            newPosition = game.PlayerPosition;
             return true;
         }
     }

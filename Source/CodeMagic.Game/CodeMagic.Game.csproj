@@ -189,6 +189,7 @@
     <Compile Include="JournalMessages\LevelUpMessage.cs" />
     <Compile Include="JournalMessages\NotEnoughManaToCastMessage.cs" />
     <Compile Include="JournalMessages\NotEnoughManaToScrollMessage.cs" />
+    <Compile Include="JournalMessages\NotEnoughStaminaMessage.cs" />
     <Compile Include="JournalMessages\NotHungryMessage.cs" />
     <Compile Include="JournalMessages\NotReadyForHarvestMessage.cs" />
     <Compile Include="JournalMessages\OverweightBlocksMovementMessage.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="PlayerActions\EquipWeaponPlayerAction.cs" />
     <Compile Include="PlayerActions\MeleAttackPlayerAction.cs" />
     <Compile Include="PlayerActions\MovePlayerAction.cs" />
+    <Compile Include="PlayerActions\PlayerActionBase.cs" />
     <Compile Include="PlayerActions\UnequipItemPlayerAction.cs" />
     <Compile Include="PlayerActions\UseItemPlayerAction.cs" />
     <Compile Include="PlayerActions\UseObjectPlayerAction.cs" />

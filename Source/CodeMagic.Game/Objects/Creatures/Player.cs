@@ -27,6 +27,7 @@ namespace CodeMagic.Game.Objects.Creatures
         private const string SaveKeyEquipment = "Equipment";
         private const string SaveKeyStats = "Stats";
         private const string SaveKeyMana = "Mana";
+        private const string SaveKeyStamina = "Stamina";
         private const string SaveKeyHunger = "Hunger";
         private const string SaveKeyExperience = "Experience";
         private const string SaveKeyLevel = "Level";
@@ -57,6 +58,7 @@ namespace CodeMagic.Game.Objects.Creatures
         private const double HungerBlocksManaRestore = 70d;
 
         private int mana;
+        private int stamina;
         private double regeneration;
         private double hungerPercent;
         private readonly Dictionary<PlayerStats, int> stats;
@@ -79,6 +81,8 @@ namespace CodeMagic.Game.Objects.Creatures
                 pair => int.Parse((string) pair.Value));
 
             Mana = data.GetIntValue(SaveKeyMana);
+            Stamina = data.GetIntValue(SaveKeyStamina);
+
             hungerPercent = double.Parse(data.GetStringValue(SaveKeyHunger));
             regeneration = double.Parse(data.GetStringValue(SaveKeyRegeneration));
             Experience = data.GetIntValue(SaveKeyExperience);
@@ -104,6 +108,7 @@ namespace CodeMagic.Game.Objects.Creatures
             }
 
             Mana = MaxMana;
+            Stamina = MaxStamina;
             hungerPercent = 0d;
             regeneration = 0d;
             Experience = 0;
@@ -117,6 +122,7 @@ namespace CodeMagic.Game.Objects.Creatures
             data.Add(SaveKeyInventory, Inventory);
             data.Add(SaveKeyStats, new DictionarySaveable(stats.ToDictionary(pair => (object)(int)pair.Key, pair => (object)pair.Value)));
             data.Add(SaveKeyMana, Mana);
+            data.Add(SaveKeyStamina, Stamina);
             data.Add(SaveKeyHunger, hungerPercent);
             data.Add(SaveKeyRegeneration, regeneration);
             data.Add(SaveKeyExperience, Experience);
@@ -161,9 +167,9 @@ namespace CodeMagic.Game.Objects.Creatures
             return (int)Math.Pow(Level, config.PlayerLevels.XpLevelPower) * config.PlayerLevels.XpMultiplier;
         }
 
-        private static int GetMaxHealth(int strength)
+        private static int GetMaxHealth(int endurance)
         {
-            return 10 + strength * 10;
+            return 10 + endurance * 10;
         }
 
         private int GetStat(PlayerStats stat)
@@ -219,7 +225,16 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int ManaRegeneration => 2 + GetStat(PlayerStats.Wisdom) + Equipment.GetBonus(EquipableBonusType.ManaRegeneration);
 
-        public override int MaxHealth => GetMaxHealth(GetStat(PlayerStats.Strength)) + Equipment.GetBonus(EquipableBonusType.Health);
+        public override int MaxHealth => GetMaxHealth(GetStat(PlayerStats.Endurance)) + Equipment.GetBonus(EquipableBonusType.Health);
+
+        public int Stamina
+        {
+            get => stamina;
+            set => stamina = Math.Max(0, Math.Min(MaxStamina, value));
+        }
+
+        public int MaxStamina =>
+            80 + 20 * GetStat(PlayerStats.Endurance) + Equipment.GetBonus(EquipableBonusType.Stamina);
 
         public int Mana
         {

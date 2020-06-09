@@ -1,14 +1,13 @@
 ﻿using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
-using CodeMagic.Core.Statuses;
 using CodeMagic.Game.JournalMessages;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.Statuses;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class MovePlayerAction : IPlayerAction
+    public class MovePlayerAction : PlayerActionBase
     {
         private readonly Direction direction;
 
@@ -17,29 +16,31 @@ namespace CodeMagic.Game.PlayerActions
             this.direction = direction;
         }
 
-        public bool Perform(out Point newPosition)
+        protected override int RestoresStamina => 10;
+
+        protected override bool Perform(GameCore<Player> game, out Point newPosition)
         {
             if (CurrentGame.Player.Statuses.Contains(ParalyzedObjectStatus.StatusType))
             {
                 newPosition = CurrentGame.PlayerPosition;
-                CurrentGame.Journal.Write(new ParalyzedMessage());
+                game.Journal.Write(new ParalyzedMessage());
                 return true;
             }
 
             if (CurrentGame.Player.Statuses.Contains(OverweightObjectStatus.StatusType))
             {
-                newPosition = CurrentGame.PlayerPosition;
-                CurrentGame.Journal.Write(new OverweightBlocksMovementMessage());
+                newPosition = game.PlayerPosition;
+                game.Journal.Write(new OverweightBlocksMovementMessage());
                 return true;
             }
 
             if (CurrentGame.Player.Direction != direction)
             {
-                CurrentGame.Player.Direction = direction;
-                newPosition = CurrentGame.PlayerPosition;
+                game.Player.Direction = direction;
+                newPosition = game.PlayerPosition;
                 return false;
             }
-            var moveResult = MovementHelper.MoveCreature(CurrentGame.Player, CurrentGame.PlayerPosition, direction, true, true, false);
+            var moveResult = MovementHelper.MoveCreature(game.Player, game.PlayerPosition, direction, true, true, false);
             newPosition = moveResult.NewPosition;
             return moveResult.Success;
         }

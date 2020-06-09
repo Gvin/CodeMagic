@@ -1,22 +1,23 @@
 ﻿using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Game.Objects;
 using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class UseObjectPlayerAction : IPlayerAction
+    public class UseObjectPlayerAction : PlayerActionBase
     {
-        public bool Perform(out Point newPosition)
+        protected override int RestoresStamina => 10;
+
+        protected override bool Perform(GameCore<Player> game, out Point newPosition)
         {
-            var playerLookPosition = Point.GetPointInDirection(CurrentGame.PlayerPosition, CurrentGame.Player.Direction);
+            var playerLookPosition = Point.GetPointInDirection(game.PlayerPosition, game.Player.Direction);
 
-            var cell = CurrentGame.Map.TryGetCell(playerLookPosition);
+            var cell = game.Map.TryGetCell(playerLookPosition);
             var usableObject = cell?.Objects.OfType<IUsableObject>().FirstOrDefault();
-            usableObject?.Use((GameCore<Player>)CurrentGame.Game, playerLookPosition);
+            usableObject?.Use(game, playerLookPosition);
 
-            newPosition = CurrentGame.PlayerPosition;
+            newPosition = game.PlayerPosition;
             return true;
         }
     }

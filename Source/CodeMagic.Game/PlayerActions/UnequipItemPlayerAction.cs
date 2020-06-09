@@ -6,7 +6,7 @@ using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class UnequipItemPlayerAction : IPlayerAction
+    public class UnequipItemPlayerAction : PlayerActionBase
     {
         private readonly IEquipableItem item;
 
@@ -15,9 +15,11 @@ namespace CodeMagic.Game.PlayerActions
             this.item = item;
         }
 
-        public bool Perform(out Point newPosition)
+        protected override int RestoresStamina => 10;
+
+        protected override bool Perform(GameCore<Player> game, out Point newPosition)
         {
-            ((GameCore<Player>)CurrentGame.Game).Player.Equipment.UnequipItem(item);
+            game.Player.Equipment.UnequipItem(item);
             CurrentGame.Journal.Write(new ItemUnequipedMessage(item));
 
             newPosition = CurrentGame.PlayerPosition;

@@ -22,6 +22,7 @@ namespace CodeMagic.Game.JournalMessages
         protected static readonly Color TextColor = Color.White;
         protected static readonly Color SpellNameColor = Color.BlueViolet;
         protected static readonly Color ManaColor = Color.Blue;
+        protected static readonly Color StaminaColor = Color.Gold;
         protected static readonly Color ErrorColor = Color.Red;
         protected static readonly Color SpellLogMessageColor = Color.Gray;
         protected static readonly Color HealValueColor = Color.Green;
