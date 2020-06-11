@@ -10,27 +10,18 @@ namespace CodeMagic.UI.Sad.Controls
     {
         private static readonly Color DefaultBackground = Color.Black;
 
-        private static readonly ButtonTheme NormalButtonTheme = new ButtonLinesTheme
+        static StandardButton()
         {
-            Colors = new Colors
+            var theme = new ButtonLinesTheme
             {
-                Appearance_ControlNormal = new Cell(Color.White, DefaultBackground),
-                Appearance_ControlDisabled = new Cell(Color.Gray, DefaultBackground)
-            },
-        };
-
-        private static readonly ButtonTheme DisabledButtonTheme = new ButtonLinesTheme
-        {
-            Colors = new Colors
-            {
-                Appearance_ControlNormal = new Cell(Color.Gray, DefaultBackground),
-                Appearance_ControlDisabled = new Cell(Color.Gray, DefaultBackground)
-            },
-        };
+                Disabled = new Cell(Color.Gray, DefaultBackground),
+                Normal = new Cell(Color.White, DefaultBackground)
+            };
+            Library.Default.SetControlTheme(typeof(StandardButton), theme);
+        }
 
         public StandardButton(int width, int height = 3) : base(width, height)
         {
-            Theme = NormalButtonTheme;
             CanFocus = false;
         }
 
@@ -38,10 +29,22 @@ namespace CodeMagic.UI.Sad.Controls
         {
             base.Update(time);
 
-            var theme = IsEnabled ? NormalButtonTheme : DisabledButtonTheme;
-            if (!ReferenceEquals(theme, Theme))
+            if (IsEnabled)
             {
-                Theme = theme;
+                ThemeColors = new Colors
+                {
+                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground),
+                    Appearance_ControlDisabled = new Cell(Color.Gray, DefaultBackground)
+                };
+            }
+            else
+            {
+                ThemeColors = new Colors
+                {
+                    Appearance_ControlNormal = new Cell(Color.Gray, DefaultBackground),
+                    Appearance_ControlDisabled = new Cell(Color.Gray, DefaultBackground),
+                    Appearance_ControlOver = new Cell(Color.Gray, DefaultBackground)
+                };
             }
         }
     }

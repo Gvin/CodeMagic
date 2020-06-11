@@ -15,10 +15,14 @@ namespace CodeMagic.UI.Sad.Controls
         private readonly ScrollBar scroll;
         private readonly List<ItemWrapper> items;
 
+        static CustomListBox()
+        {
+            Library.Default.SetControlTheme(typeof(CustomListBox<TItem>), new DrawingSurfaceTheme());
+        }
+
         public CustomListBox(int width, int height, ScrollBar scroll) 
             : base(width, height)
         {
-            Theme = new DrawingSurfaceTheme();
             CanFocus = false;
 
             this.scroll = scroll;

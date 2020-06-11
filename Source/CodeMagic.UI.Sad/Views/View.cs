@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Forms;
 using CodeMagic.Core.Logging;
 using CodeMagic.Game;
-using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using SadConsole;
+using SadConsole.Controls;
 using SadConsole.Input;
+using SadConsole.Themes;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -30,7 +30,22 @@ namespace CodeMagic.UI.Sad.Views
         {
             DefaultForeground = Color.White;
             DefaultBackground = Color.Black;
-            DrawFrame();
+
+            ThemeColors = new Colors
+            {
+                Appearance_ControlNormal = new Cell(Color.White, Color.Black),
+                Appearance_ControlDisabled = new Cell(Color.White, Color.Black)
+            };
+
+            var surface = new DrawingSurface(Width, Height)
+            {
+                Position = new Point(0, 0),
+                OnDraw = s => DrawView(s.Surface),
+                CanFocus = false,
+                UseMouse = false,
+                UseKeyboard = false
+            };
+            Add(surface);
         }
 
         public void Show()
@@ -49,7 +64,7 @@ namespace CodeMagic.UI.Sad.Views
             // Do nothing
         }
 
-        public void Close(DialogResult? result = null)
+        public void Close(DialogResult result = DialogResult.None)
         {
             Log.Debug($"Closing view of type {GetType().Name}");
 
@@ -62,67 +77,9 @@ namespace CodeMagic.UI.Sad.Views
             Log.Debug($"Closed view of type {GetType().Name}");
         }
 
-        protected virtual void OnClosed(DialogResult? result)
+        protected virtual void OnClosed(DialogResult result)
         {
             // Do nothing
-        }
-
-        protected void DrawVerticalLine(int x, int y, int length, ColoredGlyph coloredGlyph)
-        {
-            for (var dY = 0; dY < length; dY++)
-            {
-                Print(x, y + dY, coloredGlyph);
-            }
-        }
-
-        protected void DrawImage( int x, int y, SymbolsImage image, Color defaultForeColor, Color defaultBackColor)
-        {
-            for (int posY = 0; posY < image.Height; posY++)
-            {
-                for (int posX = 0; posX < image.Width; posX++)
-                {
-                    var pixel = image[posX, posY];
-                    var backColor = pixel.BackgroundColor?.ToXna() ?? defaultBackColor;
-
-                    var printX = x + posX;
-                    var printY = y + posY;
-
-                    if (pixel.Symbol.HasValue)
-                    {
-                        var foreColor = pixel.Color?.ToXna() ?? defaultForeColor;
-                        Print(printX, printY,
-                            new ColoredGlyph(pixel.Symbol.Value, foreColor, backColor));
-                    }
-                    else
-                    {
-                        Print(printX, printY, new ColoredGlyph(' ', defaultForeColor, backColor));
-                    }
-                }
-            }
-        }
-
-        public void PrintStyledText(int x, int y, params ColoredString[] text)
-        {
-            var glyphs = text.SelectMany(part => part.ToArray()).ToArray();
-            var coloredString = new ColoredString(glyphs);
-            Print(x, y, coloredString);
-        }
-
-        public void PrintStyledText(int x, int y, StyledLine text)
-        {
-            PrintStyledText(x, y, text.Select(part =>
-                new ColoredString(ConvertString(part.String), part.TextColor.ToXna(), DefaultBackground)).ToArray());
-        }
-
-        private string ConvertString(string initial)
-        {
-            var result = string.Empty;
-            foreach (var symbol in initial)
-            {
-                result += (char)Glyphs.GetGlyph(symbol);
-            }
-
-            return result;
         }
 
         public override bool ProcessKeyboard(Keyboard info)
@@ -152,34 +109,45 @@ namespace CodeMagic.UI.Sad.Views
             return false;
         }
 
-        private void DrawFrame()
+        private void DrawFrame(CellSurface surface)
         {
-            Fill(DefaultForeground, DefaultBackground, null);
+            surface.Fill(DefaultForeground, DefaultBackground, null);
 
-            Fill(1, 0, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
-            Fill(1, Height - 1, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
+            surface.Fill(1, 0, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
+            surface.Fill(1, Height - 1, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
+            surface.Print(0, 0, new ColoredGlyph(Glyphs.GetGlyph('╔'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, 0, new ColoredGlyph(Glyphs.GetGlyph('╗'), FrameColor, DefaultBackground));
 
-            Print(0, 0, new ColoredGlyph(Glyphs.GetGlyph('╔'), FrameColor, DefaultBackground));
-            Print(Width - 1, 0, new ColoredGlyph(Glyphs.GetGlyph('╗'), FrameColor, DefaultBackground));
-
-            Print(0, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╚'), FrameColor, DefaultBackground));
-            Print(Width - 1, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╝'), FrameColor, DefaultBackground));
+            surface.Print(0, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╚'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╝'), FrameColor, DefaultBackground));
 
             for (var y = 1; y < Height - 1; y++)
             {
-                Print(0, y, new ColoredGlyph(Glyphs.GetGlyph('║'), FrameColor, DefaultBackground));
-                Print(Width - 1, y, new ColoredGlyph(Glyphs.GetGlyph('║'), FrameColor, DefaultBackground));
+                surface.Print(0, y, new ColoredGlyph(Glyphs.GetGlyph('║'), FrameColor, DefaultBackground));
+                surface.Print(Width - 1, y, new ColoredGlyph(Glyphs.GetGlyph('║'), FrameColor, DefaultBackground));
             }
+        }
+
+        protected virtual void DrawView(CellSurface surface)
+        {
+            DrawFrame(surface);
         }
     }
 
     public class ViewClosedEventArgs : EventArgs
     {
-        public ViewClosedEventArgs(DialogResult? result = null)
+        public ViewClosedEventArgs(DialogResult result = DialogResult.Ok)
         {
             Result = result;
         }
 
-        public DialogResult? Result { get; set; }
+        public DialogResult Result { get; }
+    }
+
+    public enum DialogResult
+    {
+        None,
+        Cancel,
+        Ok
     }
 }

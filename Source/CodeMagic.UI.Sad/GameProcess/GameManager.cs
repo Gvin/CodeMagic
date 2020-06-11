@@ -25,7 +25,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 
         private GameManager()
         {
-            DungeonMapGenerator.Initialize(ImagesStorage.Current, Properties.Settings.Default.DebugWriteMapToFile);
+            DungeonMapGenerator.Initialize(ImagesStorage.Current, Settings.Current.DebugWriteMapToFile);
         }
 
         public GameCore<Player> StartGame()
@@ -91,7 +91,7 @@ namespace CodeMagic.UI.Sad.GameProcess
         {
             turnsSinceLastSaving++;
 
-            if (turnsSinceLastSaving >= Properties.Settings.Default.SavingInterval)
+            if (turnsSinceLastSaving >= Settings.Current.SavingInterval)
             {
                 saveGameTask?.Wait();
                 saveGameTask = new SaveManager().SaveGameAsync();

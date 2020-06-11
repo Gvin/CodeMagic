@@ -10,6 +10,8 @@ namespace CodeMagic.UI.Sad
 {
     internal static class Program
     {
+        private static ILog log;
+
         public const int MapCellImageSize = 7;
 
         [STAThread]
@@ -18,7 +20,7 @@ namespace CodeMagic.UI.Sad
             try
             {
                 GameConfigurator.Configure();
-                FontProvider.InitializeFont();
+                log = LogManager.GetLog(nameof(Program));
 
                 // Setup the engine and create the main window.
                 var gameWidth = FontProvider.GetScreenWidth(FontTarget.Game);
@@ -30,21 +32,21 @@ namespace CodeMagic.UI.Sad
                 // Start the game.
                 SadConsole.Game.Instance.Run();
                 SadConsole.Game.Instance.Dispose();
+
+                log.Info("Closing game");
             }
             catch (Exception e)
             {
-                LogManager.GetLog(nameof(Program)).Fatal(e);
+                log.Fatal(e);
                 throw;
             }
-            
         }
 
         private static void Init()
         {
             SadConsole.Game.Instance.Window.Title = "C0de Mag1c";
             SadConsole.Game.Instance.Window.AllowUserResizing = false;
-            SadConsole.Game.Instance.Window.AllowAltF4 = false;
-            SadConsole.Game.Instance.Exiting += Instance_Exiting;
+            SadConsole.Game.Instance.Window.AllowAltF4 = true;
 
             TryLoadGame();
 
@@ -57,12 +59,14 @@ namespace CodeMagic.UI.Sad
             GameManager.Current.LoadGame();
         }
 
-        private static void Instance_Exiting(object sender, EventArgs e)
+        public static void Exit()
         {
             if (CurrentGame.Game != null)
             {
                 new SaveManager().SaveGame();
             }
+
+            SadConsole.Game.Instance.Exit();
         }
     }
 }

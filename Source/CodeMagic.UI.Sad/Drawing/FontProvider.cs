@@ -32,32 +32,10 @@ namespace CodeMagic.UI.Sad.Drawing
             return (int) Math.Floor(heightInPx / (double) GetFontSizePixels(fontTarget));
         }
 
-        public static void InitializeFont()
-        {
-            if (string.IsNullOrEmpty(Properties.Settings.Default.FontSize))
-            {
-                Properties.Settings.Default.FontSize = FontSizeMultiplier.X1.ToString();
-                Properties.Settings.Default.Save();
-            }
-        }
-
         private static int GetFontSizePixels(FontTarget target)
         {
             var fontSize = GetFontSize(target);
             return GetFontPixels(fontSize);
-        }
-
-        public static FontSizeMultiplier GetConfiguredFontSizeMultiplier()
-        {
-            var parsed = Enum.TryParse(Properties.Settings.Default.FontSize, true, out FontSizeMultiplier result);
-            if (!parsed)
-            {
-                result = FontSizeMultiplier.X1;
-                Properties.Settings.Default.FontSize = result.ToString();
-                Properties.Settings.Default.Save();
-            }
-
-            return result;
         }
 
         public static Font GetFont(FontTarget target)
@@ -68,8 +46,7 @@ namespace CodeMagic.UI.Sad.Drawing
 
         private static FontSize GetFontSize(FontTarget target)
         {
-            var multiplier = GetConfiguredFontSizeMultiplier();
-            switch (multiplier)
+            switch (Settings.Current.FontSize)
             {
                 case FontSizeMultiplier.X1:
                     switch (target)
@@ -92,7 +69,7 @@ namespace CodeMagic.UI.Sad.Drawing
                             throw new ApplicationException($"Unrecognized font size: {target}");
                     }
                 default:
-                    throw new ApplicationException($"Unrecognized font size multiplier: {multiplier}");
+                    throw new ApplicationException($"Unrecognized font size multiplier: {Settings.Current.FontSize}");
             }
         }
 

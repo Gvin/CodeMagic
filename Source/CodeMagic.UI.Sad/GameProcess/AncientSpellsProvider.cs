@@ -1,5 +1,7 @@
-﻿using CodeMagic.Game.Items.ItemsGeneration;
+﻿using System.IO;
+using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.Spells;
+using Path = System.IO.Path;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
@@ -16,13 +18,13 @@ namespace CodeMagic.UI.Sad.GameProcess
                 {
                     Name = "Thor's Hands",
                     ManaCost = 300,
-                    Code = Properties.Resources.AncientSpell_ThorsHands
+                    Code = LoadSpellCode("AncientSpell_ThorsHands")
                 },
                 new BookSpell
                 {
                     Name = "Lighter",
                     ManaCost = 1000,
-                    Code = Properties.Resources.AncientSpell_Lighter
+                    Code = LoadSpellCode("AncientSpell_Lighter")
                 }
             };
 
@@ -32,15 +34,21 @@ namespace CodeMagic.UI.Sad.GameProcess
                 {
                     Name = "Shield",
                     ManaCost = 1000,
-                    Code = Properties.Resources.AncientSpell_Shield
+                    Code = LoadSpellCode("AncientSpell_Shield")
                 },
                 new BookSpell
                 {
                     Name = "Fireball",
                     ManaCost = 500,
-                    Code = Properties.Resources.AncientSpell_Fireball
+                    Code = LoadSpellCode("AncientSpell_Fireball")
                 }
             };
+        }
+
+        private string LoadSpellCode(string spellName)
+        {
+            var path = Path.Combine(@"./Resources/AncientSpells/", $"{spellName}.js");
+            return File.ReadAllText(path);
         }
 
         public BookSpell[] GetUncommonSpells()

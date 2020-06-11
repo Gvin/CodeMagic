@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Forms;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
@@ -64,7 +63,7 @@ namespace CodeMagic.UI.Sad.Views
         private void SwitchFontSize(bool forward)
         {
             var diff = forward ? 1 : -1;
-            var size = FontProvider.GetConfiguredFontSizeMultiplier();
+            var size = Settings.Current.FontSize;
             var sizes = Enum.GetValues(typeof(FontSizeMultiplier)).Cast<FontSizeMultiplier>().ToList();
 
             var currentIndex = sizes.IndexOf(size);
@@ -72,8 +71,8 @@ namespace CodeMagic.UI.Sad.Views
             nextIndex = Math.Max(0, nextIndex);
             nextIndex = Math.Min(sizes.Count - 1, nextIndex);
 
-            Properties.Settings.Default.FontSize = sizes[nextIndex].ToString();
-            Properties.Settings.Default.Save();
+            Settings.Current.FontSize = sizes[nextIndex];
+            Settings.Current.Save();
         }
 
         private string GetFontSizeName(FontSizeMultiplier fontSize)
@@ -91,40 +90,41 @@ namespace CodeMagic.UI.Sad.Views
 
         private string GetCurrentFontSizeName()
         {
-            var size = FontProvider.GetConfiguredFontSizeMultiplier();
-            return GetFontSizeName(size);
+            return GetFontSizeName(Settings.Current.FontSize);
         }
 
         private void BrowseForCodeEditor()
         {
-            var browseDialog = new OpenFileDialog
-            {
-                Title = "Browse For Code Editor",
-                CheckFileExists = true,
-                Filter = "Application|*.exe",
-                Multiselect = false,
-                FileName = Properties.Settings.Default.SpellEditorPath
-            };
-
-            if (browseDialog.ShowDialog() == DialogResult.OK)
-            {
-                Properties.Settings.Default.SpellEditorPath = browseDialog.FileName;
-                Properties.Settings.Default.Save();
-            }
+            // TODO: Replace browse dialog
+            throw new NotImplementedException();
+            // var browseDialog = new OpenFileDialog
+            // {
+            //     Title = "Browse For Code Editor",
+            //     CheckFileExists = true,
+            //     Filter = "Application|*.exe",
+            //     Multiselect = false,
+            //     FileName = Properties.Settings.Default.SpellEditorPath
+            // };
+            //
+            // if (browseDialog.ShowDialog() == DialogResult.OK)
+            // {
+            //     Properties.Settings.Default.SpellEditorPath = browseDialog.FileName;
+            //     Properties.Settings.Default.Save();
+            // }
         }
 
-        public override void Update(TimeSpan time)
+        protected override void DrawView(CellSurface surface)
         {
-            base.Update(time);
+            base.DrawView(surface);
 
-            Print(2, 1, "Game Settings");
+            surface.Print(2, 1, "Game Settings");
 
-            Print(2, 4, "Spell Editor Application:");
-            Print(2, 5, new ColoredString(Properties.Settings.Default.SpellEditorPath, new Cell(Color.Gray, DefaultBackground)));
+            surface.Print(2, 4, "Spell Editor Application:");
+            surface.Print(2, 5, new ColoredString(Settings.Current.SpellEditorPath, new Cell(Color.Gray, DefaultBackground)));
 
-            Print(2, 10, "Font Size:");
-            Clear(15, 10, 10);
-            Print(15, 10, new ColoredString(GetCurrentFontSizeName(), Color.Gray, DefaultBackground));
+            surface.Print(2, 10, "Font Size:");
+            surface.Clear(15, 10, 10);
+            surface.Print(15, 10, new ColoredString(GetCurrentFontSizeName(), Color.Gray, DefaultBackground));
         }
 
         protected override bool ProcessKeyPressed(AsciiKey key)

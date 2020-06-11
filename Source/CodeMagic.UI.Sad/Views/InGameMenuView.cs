@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using CodeMagic.Core.Game;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Controls;
@@ -102,8 +101,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void exitButton_Click(object sender, EventArgs args)
         {
-            new SaveManager().SaveGame();
-            SadConsole.Game.Instance.Exit();
+            Program.Exit();
         }
 
         private void startGameButton_Click(object sender, EventArgs args)

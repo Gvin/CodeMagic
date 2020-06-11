@@ -6,7 +6,6 @@ using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -23,7 +22,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private CustomListBox<InventoryStackItem> itemsList;
         private ItemDetailsControl itemDetails;
-        private Button closeButton;
+        private StandardButton closeButton;
 
         protected InventoryViewBase(string inventoryName, Player player)
         {
@@ -36,19 +35,10 @@ namespace CodeMagic.UI.Sad.Views
 
         private void InitializeControls(Player player)
         {
-            var buttonsTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground)
-                }
-            };
-            closeButton = new Button(15, 3)
+            closeButton = new StandardButton(15, 3)
             {
                 Position = new Point(Width - 17, Height - 4),
-                Text = "[ESC] Close",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[ESC] Close"
             };
             closeButton.Click += closeButton_Click;
             Add(closeButton);
@@ -61,10 +51,7 @@ namespace CodeMagic.UI.Sad.Views
 
             var scrollBarTheme = new ScrollBarTheme
             {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(DefaultForeground, DefaultBackground)
-                }
+                Normal = new Cell(DefaultForeground, DefaultBackground)
             };
             var itemListScroll = new ScrollBar(Orientation.Vertical, Height - 4)
             {
@@ -150,22 +137,22 @@ namespace CodeMagic.UI.Sad.Views
             itemsList.SelectedItemIndex = Math.Min(itemsList.Items.Length - 1, itemsList.SelectedItemIndex + 1);
         }
 
-        public override void Update(TimeSpan time)
+        protected override void DrawView(CellSurface surface)
         {
-            base.Update(time);
+            base.DrawView(surface);
 
-            Print(2, 1, inventoryName);
+            surface.Print(2, 1, inventoryName);
 
-            Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
+            surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
-            Print(Width - 54, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
-            Print(Width - 54, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
-            DrawVerticalLine(Width - 54, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
+            surface.Print(Width - 54, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
+            surface.Print(Width - 54, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
+            surface.DrawVerticalLine(Width - 54, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
 
-            Print(Width - 54, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
-            Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Print(Width - 54, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
         }
 
         protected abstract InventoryStackItem CreateListBoxItem(InventoryStack stack);

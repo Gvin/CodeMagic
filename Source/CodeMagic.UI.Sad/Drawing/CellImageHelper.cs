@@ -18,7 +18,7 @@ namespace CodeMagic.UI.Sad.Drawing
         static CellImageHelper()
         {
             WorldImagesFactory = new WorldImagesFactory(ImagesStorage.Current);
-            LightLevelManager = new LightLevelManager(Properties.Settings.Default.Brightness);
+            LightLevelManager = new LightLevelManager(Settings.Current.Brightness);
         }
 
         public static SymbolsImage GetCellImage(IAreaMapCell cell)

@@ -6,12 +6,10 @@ using CodeMagic.Game;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
-using Microsoft.Xna.Framework;
+using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Input;
-using SadConsole.Themes;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
@@ -20,28 +18,33 @@ namespace CodeMagic.UI.Sad.Views
     {
         private readonly Player player;
 
-        private Button closeButton;
+        private StandardButton closeButton;
 
         public PlayerStatsView(Player player)
         {
             this.player = player;
             
             InitializeControls();
-
-            Print(2, 1, "Player Status");
-
-            Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
-
-            PrintProtection(2, 4);
-            PrintPlayerStats(25, 4);
-            PrintWeapon(2, 20);
         }
 
-        private void PrintPlayerStats(int dX, int dY)
+        protected override void DrawView(CellSurface surface)
         {
-            Print(dX, dY, "Stats:");
+            base.DrawView(surface);
+
+            surface.Print(2, 1, "Player Status");
+
+            surface.Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
+            surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+
+            PrintProtection(2, 4, surface);
+            PrintPlayerStats(25, 4, surface);
+            PrintWeapon(2, 20, surface);
+        }
+
+        private void PrintPlayerStats(int dX, int dY, CellSurface surface)
+        {
+            surface.Print(dX, dY, "Stats:");
 
             var stats = Enum.GetValues(typeof(PlayerStats)).Cast<PlayerStats>().ToArray();
             var maxLength = stats.Select(TextHelper.GetStatName).Select(name => name.Length).Max();
@@ -55,7 +58,7 @@ namespace CodeMagic.UI.Sad.Views
                 var name = TextHelper.GetStatName(stat);
 
                 var y = dY + 2 + index;
-                Print(dX, y, name);
+                surface.Print(dX, y, name);
                 var bonusText = new StyledLine
                 {
                     pureValue.ToString()
@@ -68,62 +71,62 @@ namespace CodeMagic.UI.Sad.Views
                     bonusText.Add($"{bonusSymbol}{bonusValue}", bonusColor);
                     bonusText.Add(")");
                 }
-                PrintStyledText(dX + maxLength + 1, y, bonusText);
+                surface.PrintStyledText(dX + maxLength + 1, y, bonusText.ToColoredString(DefaultBackground));
             }
 
             var xPos = dX + maxLength + 5;
-            PrintStyledText(xPos, dY + 2, new StyledLine { "Max Health           ", new StyledString(player.MaxHealth.ToString(), TextHelper.HealthColor) });
-            PrintStyledText(xPos, dY + 3, new StyledLine { "Max Mana             ", new StyledString(player.MaxMana.ToString(), TextHelper.ManaColor) });
-            PrintStyledText(xPos, dY + 4, new StyledLine { "Mana Regeneration    ", new StyledString(player.ManaRegeneration.ToString(), TextHelper.ManaRegenerationColor) });
-            PrintStyledText(xPos, dY + 5, new StyledLine { "Dodge Chance         ", $"{player.DodgeChance}%"});
+            surface.PrintStyledText(xPos, dY + 2, new StyledLine { "Max Health           ", new StyledString(player.MaxHealth.ToString(), TextHelper.HealthColor) }.ToColoredString(DefaultBackground));
+            surface.PrintStyledText(xPos, dY + 3, new StyledLine { "Max Mana             ", new StyledString(player.MaxMana.ToString(), TextHelper.ManaColor) }.ToColoredString(DefaultBackground));
+            surface.PrintStyledText(xPos, dY + 4, new StyledLine { "Mana Regeneration    ", new StyledString(player.ManaRegeneration.ToString(), TextHelper.ManaRegenerationColor) }.ToColoredString(DefaultBackground));
+            surface.PrintStyledText(xPos, dY + 5, new StyledLine { "Dodge Chance         ", $"{player.DodgeChance}%"}.ToColoredString(DefaultBackground));
 
-            PrintStyledText(dX, dY + 4 + stats.Length, new StyledLine {$"Level: {player.Level}"});
-            PrintStyledText(dX, dY + 5 + stats.Length, new StyledLine {"XP:    ", new StyledString($"{player.Experience} / {player.GetXpToLevelUp()}", TextHelper.XpColor)});
+            surface.PrintStyledText(dX, dY + 4 + stats.Length, new StyledLine {$"Level: {player.Level}"}.ToColoredString(DefaultBackground));
+            surface.PrintStyledText(dX, dY + 5 + stats.Length, new StyledLine {"XP:    ", new StyledString($"{player.Experience} / {player.GetXpToLevelUp()}", TextHelper.XpColor)}.ToColoredString(DefaultBackground));
         }
 
-        private void PrintWeapon(int dX, int dY)
+        private void PrintWeapon(int dX, int dY, CellSurface surface)
         {
-            Fill(1, dY, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
-            Print(0, dY, new ColoredGlyph(Glyphs.GetGlyph('╠'), FrameColor, DefaultBackground));
-            Print(Width - 1, dY, new ColoredGlyph(Glyphs.GetGlyph('╣'), FrameColor, DefaultBackground));
+            surface.Fill(1, dY, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
+            surface.Print(0, dY, new ColoredGlyph(Glyphs.GetGlyph('╠'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, dY, new ColoredGlyph(Glyphs.GetGlyph('╣'), FrameColor, DefaultBackground));
 
-            PrintStyledText(dX, dY + 1, new StyledLine
+            surface.PrintStyledText(dX, dY + 1, new StyledLine
             {
                 "Right Hand Weapon: ",
                 new StyledString(player.Equipment.RightWeapon.Name, ItemDrawingHelper.GetItemColor(player.Equipment.RightWeapon))
-            });
+            }.ToColoredString(DefaultBackground));
 
-            Fill(1, dY + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            Print(0, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            Print(Width - 1, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Fill(1, dY + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
+            surface.Print(0, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
             var rightWeaponDetails = GetWeaponDetails(player.Equipment.RightWeapon);
             for (int yShift = 0; yShift < rightWeaponDetails.Length; yShift++)
             {
                 var y = dY + 3 + yShift;
-                PrintStyledText(dX, y, rightWeaponDetails[yShift]);
+                surface.PrintStyledText(dX, y, rightWeaponDetails[yShift].ToColoredString(DefaultBackground));
             }
 
             var leftDy = dY + rightWeaponDetails.Length + 4;
-            Fill(1, leftDy, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
-            Print(0, leftDy, new ColoredGlyph(Glyphs.GetGlyph('╠'), FrameColor, DefaultBackground));
-            Print(Width - 1, leftDy, new ColoredGlyph(Glyphs.GetGlyph('╣'), FrameColor, DefaultBackground));
+            surface.Fill(1, leftDy, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
+            surface.Print(0, leftDy, new ColoredGlyph(Glyphs.GetGlyph('╠'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, leftDy, new ColoredGlyph(Glyphs.GetGlyph('╣'), FrameColor, DefaultBackground));
 
-            PrintStyledText(dX, leftDy + 1, new StyledLine
+            surface.PrintStyledText(dX, leftDy + 1, new StyledLine
             {
                 "Left Hand Weapon:  ",
                 new StyledString(player.Equipment.LeftWeapon.Name, ItemDrawingHelper.GetItemColor(player.Equipment.LeftWeapon))
-            });
+            }.ToColoredString(DefaultBackground));
 
-            Fill(1, leftDy + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            Print(0, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            Print(Width - 1, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Fill(1, leftDy + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
+            surface.Print(0, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
             var leftWeaponDetails = GetWeaponDetails(player.Equipment.LeftWeapon);
             for (int yShift = 0; yShift < leftWeaponDetails.Length; yShift++)
             {
                 var y = leftDy + 3 + yShift;
-                PrintStyledText(dX, y, leftWeaponDetails[yShift]);
+                surface.PrintStyledText(dX, y, leftWeaponDetails[yShift].ToColoredString(DefaultBackground));
             }
         }
 
@@ -163,9 +166,9 @@ namespace CodeMagic.UI.Sad.Views
             return result.ToArray();
         }
 
-        private void PrintProtection(int dX, int dY)
+        private void PrintProtection(int dX, int dY, CellSurface surface)
         {
-            Print(dX, dY, "Protection:");
+            surface.Print(dX, dY, "Protection:");
 
             var elements = Enum.GetValues(typeof(Element)).Cast<Element>().ToArray();
             var maxLength = elements.Select(TextHelper.GetElementName).Select(name => name.Length).Max();
@@ -178,26 +181,17 @@ namespace CodeMagic.UI.Sad.Views
                 var name = TextHelper.GetElementName(element);
 
                 var y = dY + 2 + index;
-                Print(dX, y, name, color);
-                Print(dX + maxLength + 1, y, $"{protection}%");
+                surface.Print(dX, y, name, color);
+                surface.Print(dX + maxLength + 1, y, $"{protection}%");
             }
         }
 
         private void InitializeControls()
         {
-            var buttonsTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground)
-                }
-            };
-            closeButton = new Button(15, 3)
+            closeButton = new StandardButton(15)
             {
                 Position = new Point(Width - 17, Height - 4),
-                Text = "[ESC] Close",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[ESC] Close"
             };
             closeButton.Click += closeButton_Click;
             Add(closeButton);

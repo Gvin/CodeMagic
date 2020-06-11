@@ -23,6 +23,11 @@ namespace CodeMagic.UI.Sad.Controls
         private readonly int maxMessagesCount;
         private readonly JournalMessageFormatter messageFormatter;
 
+        static JournalBoxControl()
+        {
+            Library.Default.SetControlTheme(typeof(JournalBoxControl), new DrawingSurfaceTheme());
+        }
+
         public JournalBoxControl(int width, int height, ScrollBar scroll, Journal journal) 
             : base(width, height)
         {
@@ -31,7 +36,6 @@ namespace CodeMagic.UI.Sad.Controls
             maxMessagesCount = height - 2;
 
             CanFocus = false;
-            Theme = new DrawingSurfaceTheme();
 
             messageFormatter = new JournalMessageFormatter();
         }

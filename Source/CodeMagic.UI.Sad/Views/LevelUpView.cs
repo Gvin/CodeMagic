@@ -6,7 +6,6 @@ using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
 using SadConsole;
-using SadConsole.Controls;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -26,8 +25,7 @@ namespace CodeMagic.UI.Sad.Views
 
             stats = Enum.GetValues(typeof(PlayerStats)).Cast<PlayerStats>().ToArray();
             maxStatNameLength = stats.Select(TextHelper.GetStatName).Select(name => name.Length).Max() + 1;
-
-            PrintLevelUpText();
+            
             InitializeControls();
         }
 
@@ -47,25 +45,57 @@ namespace CodeMagic.UI.Sad.Views
                 }
             };
             Add(okButton);
+
+            DoForAllStats((y, stat) =>
+            {
+                AddStatSelector(6, y, stat);
+            });
         }
 
-        private void PrintLevelUpText()
+        protected override void DrawView(CellSurface surface)
         {
+            base.DrawView(surface);
+
             const int dX = 5;
-            
-            Print(5, 2, $"You has reached level {player.Level}!");
-            Print(5, 3, "Please select stat you want to increase:");
+
+            surface.Print(dX, 2, $"You has reached level {player.Level}!");
+            surface.Print(dX, 3, "Please select stat you want to increase:");
+
+            DoForAllStats((y, stat) =>
+            {
+                var name = TextHelper.GetStatName(stat);
+                name = $"{name}:";
+                while (name.Length < maxStatNameLength)
+                {
+                    name += " ";
+                }
+
+                surface.Print(dX, y, name);
+                surface.Print(dX + maxStatNameLength + 2, y, player.GetPureStat(stat).ToString());
+            });
 
             const int dY = 6;
             for (var index = 0; index < stats.Length; index++)
             {
                 var stat = stats[index];
                 var y = dY + index * 4;
-                AddStatSelector(dX, y, stat, maxStatNameLength);
+                PrintStatStatus(5, y, stat, surface);
             }
         }
 
-        private void PrintStatStatus(int x, int y, PlayerStats stat)
+        private void DoForAllStats(Action<int, PlayerStats> action)
+        {
+            const int dY = 6;
+            for (var index = 0; index < stats.Length; index++)
+            {
+                var stat = stats[index];
+                var y = dY + index * 4;
+
+                action(y, stat);
+            }
+        }
+
+        private void PrintStatStatus(int x, int y, PlayerStats stat, CellSurface surface)
         {
             int symbol = ' ';
             if (selectedStat.HasValue && selectedStat.Value == stat)
@@ -73,25 +103,15 @@ namespace CodeMagic.UI.Sad.Views
                 symbol = Glyphs.GetGlyph('▲');
                 
             }
-            Print(x + maxStatNameLength + 5, y, new ColoredGlyph(symbol, TextHelper.PositiveValueColor.ToXna(), DefaultBackground));
+            surface.Print(x + maxStatNameLength + 5, y, new ColoredGlyph(symbol, TextHelper.PositiveValueColor.ToXna(), DefaultBackground));
         }
 
-        private void AddStatSelector(int x, int y, PlayerStats stat, int nameWidth)
+        private void AddStatSelector(int x, int y, PlayerStats stat)
         {
-            var name = TextHelper.GetStatName(stat);
-            name = $"{name}:";
-            while (name.Length < nameWidth)
-            {
-                name += " ";
-            }
-
-            Print(x, y, name);
-            Print(x + nameWidth + 2, y, player.GetPureStat(stat).ToString());
-
             var button = new StandardButton(3)
             {
                 Text = "+",
-                Position = new Point(x + nameWidth + 7, y - 1)
+                Position = new Point(x + maxStatNameLength + 7, y - 1)
             };
             button.Click += (sender, args) =>
             {
@@ -105,19 +125,6 @@ namespace CodeMagic.UI.Sad.Views
             base.Update(time);
 
             okButton.IsEnabled = selectedStat.HasValue;
-        }
-
-        public override void Draw(TimeSpan update)
-        {
-            base.Draw(update);
-
-            const int dY = 6;
-            for (var index = 0; index < stats.Length; index++)
-            {
-                var stat = stats[index];
-                var y = dY + index * 4;
-                PrintStatStatus(5, y, stat);
-            }
         }
     }
 }

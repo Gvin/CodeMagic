@@ -1,97 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9ACDC6A3-A058-4567-B013-FA45090616B6}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeMagic.Configuration.Xml</RootNamespace>
-    <AssemblyName>CodeMagic.Configuration.Xml</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Version>1.5.0</Version>
+    <Authors>Gvin</Authors>
+    <PackageProjectUrl>https://github.com/Gvin/CodeMagic</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Gvin/CodeMagic</RepositoryUrl>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj" />
+    <ProjectReference Include="..\CodeMagic.Game\CodeMagic.Game.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ConfigurationProvider.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\Items\Armor\XmlArmorConfiguration.cs" />
-    <Compile Include="Types\Items\Armor\XmlArmorPieceConfiguration.cs" />
-    <Compile Include="Types\Items\Armor\XmlArmorRarenessConfiguration.cs" />
-    <Compile Include="Types\Items\Bonuses\XmlBonusConfiguration.cs" />
-    <Compile Include="Types\Items\Bonuses\XmlBonusesConfiguration.cs" />
-    <Compile Include="Types\Items\Bonuses\XmlBonusRarenessConfiguration.cs" />
-    <Compile Include="Types\Items\Bonuses\XmlItemGroupBonusesConfiguration.cs" />
-    <Compile Include="Types\Items\SpellBook\XmlSpellBookRarenessConfiguration.cs" />
-    <Compile Include="Types\Items\SpellBook\XmlSpellBooksConfiguration.cs" />
-    <Compile Include="Types\Items\Weapon\XmlWeaponConfiguration.cs" />
-    <Compile Include="Types\Items\Weapon\XmlWeaponImagesConfiguration.cs" />
-    <Compile Include="Types\Items\XmlElementConfiguration.cs" />
-    <Compile Include="Types\Items\Description\XmlMaterialDescriptionConfiguration.cs" />
-    <Compile Include="Types\Items\Description\XmlRarenessDescriptionConfiguration.cs" />
-    <Compile Include="Types\Items\Description\XmlDescriptionConfiguration.cs" />
-    <Compile Include="Types\Items\XmlItemGeneratorConfiguration.cs" />
-    <Compile Include="Types\Items\Weapon\XmlWeaponsConfiguration.cs" />
-    <Compile Include="Types\Items\Weapon\XmlWeaponRarenessConfiguration.cs" />
-    <Compile Include="Types\Items\XmlWeightConfiguration.cs" />
-    <Compile Include="Types\Levels\XmlLevelsConfiguration.cs" />
-    <Compile Include="Types\Levels\XmlPlayerLevelsConfiguration.cs" />
-    <Compile Include="Types\Liquids\XmlLiquidConfigurationType.cs" />
-    <Compile Include="Types\Liquids\XmlLiquidsConfiguration.cs" />
-    <Compile Include="Types\Monsters\XmlMonsterConfiguration.cs" />
-    <Compile Include="Types\Monsters\XmlMonsterDamageConfiguration.cs" />
-    <Compile Include="Types\Monsters\XmlMonsterProtectionConfiguration.cs" />
-    <Compile Include="Types\Monsters\XmlMonstersConfiguration.cs" />
-    <Compile Include="Types\Monsters\XmlMonsterStatsConfiguration.cs" />
-    <Compile Include="Types\Physics\XmlMagicEnergyConfiguration.cs" />
-    <Compile Include="Types\Physics\XmlPhysicsConfigurationType.cs" />
-    <Compile Include="Types\Spells\XmlSpellsConfigurationType.cs" />
-    <Compile Include="Types\Physics\XmlPressureConfigurationType.cs" />
-    <Compile Include="Types\Physics\XmlPressureDamageConfigurationType.cs" />
-    <Compile Include="Types\Spells\XmlSpellConfigurationType.cs" />
-    <Compile Include="Types\Physics\XmlTemperatureConfigurationType.cs" />
-    <Compile Include="Types\Physics\XmlTemperatureDamageConfigurationType.cs" />
-    <Compile Include="Types\Treasure\XmlTreasureConfiguration.cs" />
-    <Compile Include="Types\XmlLootConfiguration.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj">
-      <Project>{5755a604-1bd8-4863-b0c7-4a15e5e1a6aa}</Project>
-      <Name>CodeMagic.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeMagic.Game\CodeMagic.Game.csproj">
-      <Project>{204099af-db91-405b-bff4-936c56a85d30}</Project>
-      <Name>CodeMagic.Game</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

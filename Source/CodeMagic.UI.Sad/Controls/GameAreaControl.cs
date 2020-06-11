@@ -16,7 +16,7 @@ using SadConsole.Themes;
 
 namespace CodeMagic.UI.Sad.Controls
 {
-    public class GameAreaControl : ControlBase
+    public class GameAreaControl : CustomControl
     {
         private static readonly Color DefaultForegroundColor = Color.White;
         private static readonly Color DefaultBackgroundColor = Color.Black;
@@ -29,12 +29,17 @@ namespace CodeMagic.UI.Sad.Controls
 
         private readonly GameCore<Player> game;
 
+        static GameAreaControl()
+        {
+            Library.Default.SetControlTheme(typeof(GameAreaControl), new DrawingSurfaceTheme());
+        }
+
         public GameAreaControl(GameCore<Player> game) 
             : base(ControlWidth, ControlHeight)
         {
+            
             this.game = game;
 
-            Theme = new DrawingSurfaceTheme();
             CanFocus = false;
         }
 
@@ -145,11 +150,11 @@ namespace CodeMagic.UI.Sad.Controls
 
         private void DrawDebugData(int realX, int realY, IAreaMapCell cell)
         {
-            if (Properties.Settings.Default.DebugDrawTemperature)
+            if (Settings.Current.DebugDrawTemperature)
                 DrawTemperature(realX, realY, cell);
-            if (Properties.Settings.Default.DebugDrawLightLevel)
+            if (Settings.Current.DebugDrawLightLevel)
                 DrawLightLevel(realX, realY + 1, cell);
-            if (Properties.Settings.Default.DebugDrawMagicEnergy)
+            if (Settings.Current.DebugDrawMagicEnergy)
                 DrawMagicEnergy(realX, realY + 1, cell);
         }
 

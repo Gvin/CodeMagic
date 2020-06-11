@@ -12,10 +12,14 @@ namespace CodeMagic.UI.Sad.Controls
     {
         private static readonly Color FrameColor = Color.Gray;
 
+        static SpellDetailsControl()
+        {
+            Library.Default.SetControlTheme(typeof(SpellDetailsControl), new DrawingSurfaceTheme());
+        }
+
         public SpellDetailsControl(int width, int height) 
             : base(width, height)
         {
-            Theme = new DrawingSurfaceTheme();
             CanFocus = false;
         }
 
