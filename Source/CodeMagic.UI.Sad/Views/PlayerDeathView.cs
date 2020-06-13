@@ -6,7 +6,7 @@ using SadConsole;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class PlayerDeathView : View
+    public class PlayerDeathView : GameViewBase
     {
         private StandardButton startNewGameButton;
         private StandardButton backToMenuButton;

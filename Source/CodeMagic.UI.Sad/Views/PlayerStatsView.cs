@@ -14,7 +14,7 @@ using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class PlayerStatsView : View
+    public class PlayerStatsView : GameViewBase
     {
         private readonly Player player;
 

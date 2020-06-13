@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
@@ -8,7 +9,7 @@ using TextBox = SadConsole.Controls.TextBox;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class EditSpellView : View
+    public class EditSpellView : GameViewBase
     {
         private StandardButton okButton;
         private StandardButton cancelButton;

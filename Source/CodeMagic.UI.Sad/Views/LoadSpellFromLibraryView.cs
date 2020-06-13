@@ -1,4 +1,5 @@
 ﻿using CodeMagic.Game.Spells;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
 using SadConsole.Input;

@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.645
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.UI.Images", "..\Source\CodeMagic.UI.Images\CodeMagic.UI.Images.csproj", "{C5A8EE43-BC81-4E88-B990-D2AE962C3205}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeMagic.UI.Images", "..\Source\CodeMagic.UI.Images\CodeMagic.UI.Images.csproj", "{C5A8EE43-BC81-4E88-B990-D2AE962C3205}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymbolsImageEditor", "SymbolsImageEditor\SymbolsImageEditor.csproj", "{2D8D2AD1-BFF9-4C4D-AC0A-F232D5A6C51B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeMagic.UI.Sad.Common", "..\Source\CodeMagic.UI.Sad.Common\CodeMagic.UI.Sad.Common.csproj", "{30048299-507D-4591-B6CA-18D247AE5CF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.UI.Sad.Common", "..\Source\CodeMagic.UI.Sad.Common\CodeMagic.UI.Sad.Common.csproj", "{30048299-507D-4591-B6CA-18D247AE5CF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymbolsImageEditor", "SymbolsImageEditor\SymbolsImageEditor.csproj", "{1214322A-C529-4B35-A1BE-0C3C2F4EED4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{C5A8EE43-BC81-4E88-B990-D2AE962C3205}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5A8EE43-BC81-4E88-B990-D2AE962C3205}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5A8EE43-BC81-4E88-B990-D2AE962C3205}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D8D2AD1-BFF9-4C4D-AC0A-F232D5A6C51B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D8D2AD1-BFF9-4C4D-AC0A-F232D5A6C51B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D8D2AD1-BFF9-4C4D-AC0A-F232D5A6C51B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D8D2AD1-BFF9-4C4D-AC0A-F232D5A6C51B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{30048299-507D-4591-B6CA-18D247AE5CF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{30048299-507D-4591-B6CA-18D247AE5CF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30048299-507D-4591-B6CA-18D247AE5CF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30048299-507D-4591-B6CA-18D247AE5CF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1214322A-C529-4B35-A1BE-0C3C2F4EED4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1214322A-C529-4B35-A1BE-0C3C2F4EED4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1214322A-C529-4B35-A1BE-0C3C2F4EED4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1214322A-C529-4B35-A1BE-0C3C2F4EED4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

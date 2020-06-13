@@ -4,7 +4,7 @@ using SadConsole;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class WaitMessageView : View
+    public class WaitMessageView : GameViewBase
     {
         private readonly Action waitAction;
         private readonly string message;

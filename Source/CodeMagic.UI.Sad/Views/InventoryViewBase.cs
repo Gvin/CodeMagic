@@ -16,7 +16,7 @@ using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public abstract class InventoryViewBase : View
+    public abstract class InventoryViewBase : GameViewBase
     {
         private readonly string inventoryName;
 

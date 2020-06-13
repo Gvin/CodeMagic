@@ -23,7 +23,7 @@ using ScrollBar = SadConsole.Controls.ScrollBar;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class SpellBookView : View
+    public class SpellBookView : GameViewBase
     {
         private const string DefaultSpellName = "New Spell";
 

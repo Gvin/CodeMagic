@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.UI.Sad.Common;
 
 namespace CodeMagic.UI.Sad.Views
 {

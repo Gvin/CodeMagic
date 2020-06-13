@@ -16,7 +16,7 @@ using TextBox = SadConsole.Controls.TextBox;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public abstract class SpellsLibraryViewBase : View
+    public abstract class SpellsLibraryViewBase : GameViewBase
     {
         private const string DefaultSpellName = "New Spell";
 

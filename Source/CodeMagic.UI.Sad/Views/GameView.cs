@@ -20,7 +20,7 @@ using ScrollBar = SadConsole.Controls.ScrollBar;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class GameView : View
+    public class GameView : GameViewBase
     {
         private static readonly TimeSpan KeyProcessFrequency = TimeSpan.FromMilliseconds(Settings.Current.MinActionsInterval);
 

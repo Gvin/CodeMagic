@@ -1,13 +1,14 @@
 ﻿using System;
 using CodeMagic.Core.Game;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class MainMenuView : View
+    public class MainMenuView : GameViewBase
     {
         private GameLogoControl gameLabel;
         private StandardButton startGameButton;

@@ -10,7 +10,7 @@ using Button = SadConsole.Controls.Button;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class SettingsView : View
+    public class SettingsView : GameViewBase
     {
         private StandardButton browseForLauncherButton;
         private StandardButton closeButton;

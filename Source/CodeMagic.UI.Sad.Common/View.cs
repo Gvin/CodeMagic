@@ -1,33 +1,26 @@
 ﻿using System;
-using System.Linq;
-using CodeMagic.Core.Logging;
-using CodeMagic.Game;
-using CodeMagic.UI.Sad.Common;
-using CodeMagic.UI.Sad.Drawing;
+using CodeMagic.UI.Sad.Views;
 using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Controls;
 using SadConsole.Input;
 using SadConsole.Themes;
 
-namespace CodeMagic.UI.Sad.Views
+namespace CodeMagic.UI.Sad.Common
 {
     public abstract class View : ControlsConsole
     {
-        private static readonly ILog Log = LogManager.GetLog<View>();
+        protected readonly ILog Log;
 
         protected static readonly Color FrameColor = Color.Gray;
 
         public event EventHandler<ViewClosedEventArgs> Closed;
 
-        protected View()
-            : this(FontTarget.Interface)
+        protected View(ILog log, int width, int height, Font font)
+            : base(width, height, font)
         {
-        }
+            Log = log;
 
-        protected View(FontTarget font)
-            : base(FontProvider.GetScreenWidth(font), FontProvider.GetScreenHeight(font), FontProvider.GetFont(font))
-        {
             DefaultForeground = Color.White;
             DefaultBackground = Color.Black;
 

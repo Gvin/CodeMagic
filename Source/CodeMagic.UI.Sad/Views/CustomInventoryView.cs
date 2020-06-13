@@ -5,6 +5,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;

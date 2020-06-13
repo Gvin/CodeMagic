@@ -3,14 +3,13 @@ using CodeMagic.Core.Game;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
-using CodeMagic.UI.Sad.Saving;
 using Microsoft.Xna.Framework.Input;
 using SadConsole.Input;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class InGameMenuView : View
+    public class InGameMenuView : GameViewBase
     {
         private GameLogoControl gameLabel;
         private StandardButton continueGameButton;
@@ -20,7 +19,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private readonly GameCore<Player> currentGame;
 
-        public InGameMenuView(GameCore<Player> currentGame)
+        public InGameMenuView(GameCore<Player> currentGame) : base()
         {
             this.currentGame = currentGame;
 

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
-using CodeMagic.UI.Images;
-using CodeMagic.UI.Sad.Common;
 using SadConsole;
 
 namespace SymbolsImageEditor
@@ -18,7 +14,7 @@ namespace SymbolsImageEditor
         static void Main(string[] args)
         {
             // Setup the engine and create the main window.
-            Game.Create(Width * 2, Height);
+            Game.Create((int)Math.Floor(Width * 1.75f), Height);
 
             // Hook the start event so we can add consoles to the system.
             Game.OnInitialize = Init;
@@ -35,8 +31,8 @@ namespace SymbolsImageEditor
 
         private static void Init()
         {
-
-            Global.CurrentScreen = new EditorWindow();
+            var window = new EditorWindow();
+            window.Show();
         }
     }
 }

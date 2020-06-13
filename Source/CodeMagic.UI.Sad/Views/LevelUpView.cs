@@ -9,7 +9,7 @@ using SadConsole;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class LevelUpView : View
+    public class LevelUpView : GameViewBase
     {
         private readonly Player player;
         private PlayerStats? selectedStat;
