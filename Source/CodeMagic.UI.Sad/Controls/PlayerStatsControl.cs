@@ -17,11 +17,15 @@ namespace CodeMagic.UI.Sad.Controls
 
         private readonly GameCore<Player> game;
 
+        static PlayerStatsControl()
+        {
+            Library.Default.SetControlTheme(typeof(PlayerStatsControl), new DrawingSurfaceTheme());
+        }
+
         public PlayerStatsControl(int width, int height, GameCore<Player> game)
             : base(width, height)
         {
             this.game = game;
-            Theme = new DrawingSurfaceTheme();
             CanFocus = false;
         }
 

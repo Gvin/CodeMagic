@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Forms;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
@@ -21,9 +20,9 @@ using ScrollBar = SadConsole.Controls.ScrollBar;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class GameView : View
+    public class GameView : GameViewBase
     {
-        private static readonly TimeSpan KeyProcessFrequency = TimeSpan.FromMilliseconds(Properties.Settings.Default.MinActionsInterval);
+        private static readonly TimeSpan KeyProcessFrequency = TimeSpan.FromMilliseconds(Settings.Current.MinActionsInterval);
 
         private readonly GameCore<Player> game;
 
@@ -98,10 +97,7 @@ namespace CodeMagic.UI.Sad.Views
                 CanFocus = false,
                 Theme = new ScrollBarTheme
                 {
-                    Colors = new Colors
-                    {
-                        Appearance_ControlNormal = new Cell(Color.White, Color.Black)
-                    }
+                    Normal = new Cell(Color.White, Color.Black)
                 }
             };
             Add(journalScroll);
@@ -281,13 +277,18 @@ namespace CodeMagic.UI.Sad.Views
             spellBookView.Show();
         }
 
+        protected override void DrawView(CellSurface surface)
+        {
+            base.DrawView(surface);
+
+            surface.Print(0, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
+            surface.Print(1, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('─'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+        }
+
         public override void Update(TimeSpan time)
         {
             base.Update(time);
-
-            Print(0, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            Print(1, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('─'), FrameColor, DefaultBackground));
-            Print(Width - 1, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
             UpdateButtonsState();
         }
@@ -298,7 +299,7 @@ namespace CodeMagic.UI.Sad.Views
             showItemsOnFloorButton.IsEnabled = game.Map.GetCell(game.PlayerPosition).Objects.OfType<IItem>().Any();
         }
 
-        protected override void OnClosed(DialogResult? result)
+        protected override void OnClosed(DialogResult result)
         {
             base.OnClosed(result);
 

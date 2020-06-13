@@ -5,12 +5,12 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
+using CodeMagic.UI.Sad.Common;
+using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Input;
-using SadConsole.Themes;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
@@ -21,9 +21,9 @@ namespace CodeMagic.UI.Sad.Views
         private readonly Inventory inventory;
         private bool actionPerformed;
 
-        private Button pickUpStackButton;
-        private Button pickUpOneItemButton;
-        private Button pickUpAllButton;
+        private StandardButton pickUpStackButton;
+        private StandardButton pickUpOneItemButton;
+        private StandardButton pickUpAllButton;
 
         public CustomInventoryView(GameCore<Player> game, string inventoryName, Inventory inventory) 
             : base(inventoryName, game.Player)
@@ -44,40 +44,26 @@ namespace CodeMagic.UI.Sad.Views
 
         private void InitializeControls()
         {
-            var buttonsTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground)
-                }
-            };
-
-            pickUpOneItemButton = new Button(20, 3)
+            pickUpOneItemButton = new StandardButton(20)
             {
                 Position = new Point(Width - 52, 40),
-                Text = "[O] Pick Up One",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[O] Pick Up One"
             };
             pickUpOneItemButton.Click += pickUpOneItemButton_Click;
             Add(pickUpOneItemButton);
 
-            pickUpStackButton = new Button(20, 3)
+            pickUpStackButton = new StandardButton(20)
             {
                 Position = new Point(Width - 52, 43),
-                Text = "[P] Pick Up",
-                Theme = buttonsTheme,
-                CanFocus = false
+                Text = "[P] Pick Up"
             };
             pickUpStackButton.Click += pickUpStackButton_Click;
             Add(pickUpStackButton);
 
-            pickUpAllButton = new Button(20, 3)
+            pickUpAllButton = new StandardButton(20)
             {
                 Position = new Point(Width - 52, 46),
-                Text = "[A] Pick Up All",
-                Theme = buttonsTheme,
-                CanFocus = false
+                Text = "[A] Pick Up All"
             };
             pickUpAllButton.Click += pickUpAllButton_Click;
             Add(pickUpAllButton);
@@ -192,7 +178,7 @@ namespace CodeMagic.UI.Sad.Views
             return new CustomInventoryItem(stack);
         }
 
-        protected override void OnClosed(System.Windows.Forms.DialogResult? result)
+        protected override void OnClosed(DialogResult result)
         {
             base.OnClosed(result);
 

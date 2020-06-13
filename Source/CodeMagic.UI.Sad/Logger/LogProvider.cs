@@ -1,6 +1,5 @@
 ﻿using System;
 using CodeMagic.Core.Logging;
-using CodeMagic.UI.Sad.Properties;
 using Serilog;
 using Serilog.Events;
 
@@ -26,7 +25,7 @@ namespace CodeMagic.UI.Sad.Logger
 
         private static LogEventLevel GetLogLevel()
         {
-            var stringValue = Settings.Default.LogLevel;
+            var stringValue = Settings.Current.LogLevel;
             if (Enum.TryParse(stringValue, true, out LogEventLevel level))
             {
                 return level;

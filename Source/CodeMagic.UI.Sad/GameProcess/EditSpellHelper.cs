@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using CodeMagic.UI.Sad.Properties;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
@@ -11,7 +10,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 
         public static void LaunchSpellFileEditor(string filePath)
         {
-            var editorPath = Settings.Default.SpellEditorPath;
+            var editorPath = Settings.Current.SpellEditorPath;
             Process.Start(editorPath, filePath);
         }
 

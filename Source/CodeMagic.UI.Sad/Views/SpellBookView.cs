@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Game.Items;
@@ -17,7 +16,6 @@ using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
 using SadConsole.Themes;
-using Button = SadConsole.Controls.Button;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using Orientation = SadConsole.Orientation;
 using Point = Microsoft.Xna.Framework.Point;
@@ -25,22 +23,22 @@ using ScrollBar = SadConsole.Controls.ScrollBar;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class SpellBookView : View
+    public class SpellBookView : GameViewBase
     {
         private const string DefaultSpellName = "New Spell";
 
         private readonly GameCore<Player> game;
 
-        private Button closeButton;
+        private StandardButton closeButton;
         private CustomListBox<SpellListBoxItem> spellsListBox;
         private SpellDetailsControl spellDetails;
 
-        private Button editSpellButton;
-        private Button castSpellButton;
-        private Button removeSpellButton;
-        private Button scribeSpellButton;
-        private Button saveToLibraryButton;
-        private Button loadFromLibraryButton;
+        private StandardButton editSpellButton;
+        private StandardButton castSpellButton;
+        private StandardButton removeSpellButton;
+        private StandardButton scribeSpellButton;
+        private StandardButton saveToLibraryButton;
+        private StandardButton loadFromLibraryButton;
 
         public SpellBookView(GameCore<Player> game)
         {
@@ -51,79 +49,58 @@ namespace CodeMagic.UI.Sad.Views
 
         private void InitializeControls()
         {
-            var buttonsTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground)
-                }
-            };
-            closeButton = new Button(15, 3)
+            closeButton = new StandardButton(15)
             {
                 Position = new Point(Width - 17, Height - 4),
-                Text = "[ESC] Close",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[ESC] Close"
             };
             closeButton.Click += closeButton_Click;
             Add(closeButton);
 
-            editSpellButton = new Button(25, 3)
+            editSpellButton = new StandardButton(25)
             {
                 Position = new Point(Width - 57, 13),
-                Text = "[E] Edit Spell",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[E] Edit Spell"
             };
             editSpellButton.Click += editSpellButton_Click;
             Add(editSpellButton);
 
-            castSpellButton = new Button(25, 3)
+            castSpellButton = new StandardButton(25)
             {
                 Position = new Point(Width - 57, 16),
-                Text = "[C] Cast Spell",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[C] Cast Spell"
             };
             castSpellButton.Click += castSpellButton_Click;
             Add(castSpellButton);
 
-            removeSpellButton = new Button(25, 3)
+            removeSpellButton = new StandardButton(25)
             {
                 Position = new Point(Width - 57, 19),
-                Text = "[R] Remove Spell",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[R] Remove Spell"
             };
             removeSpellButton.Click += removeSpellButton_Click;
             Add(removeSpellButton);
 
-            scribeSpellButton = new Button(25, 3)
+            scribeSpellButton = new StandardButton(25)
             {
                 Position = new Point(Width - 57, 22),
-                Text = "[G] Write Scroll",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[G] Write Scroll"
             };
             scribeSpellButton.Click += scribeSpellButton_Click;
             Add(scribeSpellButton);
 
-            saveToLibraryButton = new Button(25, 3)
+            saveToLibraryButton = new StandardButton(25)
             {
                 Position = new Point(Width - 30, 16),
-                Text = "[T] Save to Library",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[T] Save to Library"
             };
             saveToLibraryButton.Click += (sender, args) => SaveSpellToLibrary();
             Add(saveToLibraryButton);
 
-            loadFromLibraryButton = new Button(25, 3)
+            loadFromLibraryButton = new StandardButton(25)
             {
                 Position = new Point(Width - 30, 13),
-                Text = "[L] Load from Library",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[L] Load from Library"
             };
             loadFromLibraryButton.Click += (sender, args) => LoadSpellFromLibrary();
             Add(loadFromLibraryButton);
@@ -136,10 +113,7 @@ namespace CodeMagic.UI.Sad.Views
 
             var scrollBarTheme = new ScrollBarTheme
             {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(DefaultForeground, DefaultBackground)
-                }
+                Normal = new Cell(DefaultForeground, DefaultBackground)
             };
             var scrollBar = new ScrollBar(Orientation.Vertical, Height - 4)
             {
@@ -173,7 +147,7 @@ namespace CodeMagic.UI.Sad.Views
             var view = new LoadSpellFromLibraryView();
             view.Closed += (sender, args) =>
             {
-                if (args.Result.HasValue && args.Result == DialogResult.OK && view.SelectedSpell != null)
+                if (args.Result == DialogResult.Ok && view.SelectedSpell != null)
                 {
                     Book.Spells[spellsListBox.SelectedItem.BookIndex] = view.SelectedSpell;
                     RefreshSpells();
@@ -253,7 +227,7 @@ namespace CodeMagic.UI.Sad.Views
             };
             editSpellView.Closed += (sender, args) =>
             {
-                if (args.Result.HasValue && args.Result.Value == DialogResult.Cancel)
+                if (args.Result == DialogResult.Cancel)
                     return;
 
                 var code = EditSpellHelper.ReadSpellCodeFromFile(spellFilePath);
@@ -333,25 +307,25 @@ namespace CodeMagic.UI.Sad.Views
 
         private SpellBook Book => game.Player.Equipment.SpellBook;
 
-        public override void Update(TimeSpan time)
+        protected override void DrawView(CellSurface surface)
         {
-            base.Update(time);
+            base.DrawView(surface);
 
-            Print(2, 1, "Spell Book:");
-            Print(14, 1, new ColoredString(Book.Name, ItemDrawingHelper.GetItemColor(Book).ToXna(), DefaultBackground));
+            surface.Print(2, 1, "Spell Book:");
+            surface.Print(14, 1, new ColoredString(Book.Name, ItemDrawingHelper.GetItemColor(Book).ToXna(), DefaultBackground));
 
-            Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
+            surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
-            Print(Width - 59, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
-            Print(Width - 59, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
-            DrawVerticalLine(Width - 59, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
+            surface.Print(Width - 59, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
+            surface.Print(Width - 59, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
+            surface.DrawVerticalLine(Width - 59, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
 
             if (spellDetails.IsVisible)
             {
-                Print(Width - 59, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
-                Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+                surface.Print(Width - 59, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
+                surface.Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
             }
         }
 

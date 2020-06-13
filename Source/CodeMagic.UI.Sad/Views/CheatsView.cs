@@ -4,16 +4,16 @@ using CodeMagic.Core.Logging;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Controls;
 using SadConsole.Input;
+using ILog = CodeMagic.UI.Sad.Common.ILog;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class CheatsView : View
+    public class CheatsView : GameViewBase
     {
-        private static readonly ILog Log = LogManager.GetLog<CheatsView>();
-
         public CheatsView()
+            : base((ILog) LogManager.GetLog<CheatsView>())
         {
             InitializeControls();
         }

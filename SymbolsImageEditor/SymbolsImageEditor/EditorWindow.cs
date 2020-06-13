@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Forms;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Common;
 using SadConsole;
@@ -9,20 +8,19 @@ using SadConsole.Input;
 using SadConsole.Themes;
 using Button = SadConsole.Controls.Button;
 using Color = Microsoft.Xna.Framework.Color;
+using Keyboard = SadConsole.Input.Keyboard;
 using Point = Microsoft.Xna.Framework.Point;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using ListBox = SadConsole.Controls.ListBox;
 
 namespace SymbolsImageEditor
 {
-    public class EditorWindow : ControlsConsole
+    public class EditorWindow : View
     {
         private const string SymbolsImageFileFilter = "Symbols Image|*.simg|All|*.*";
         private const string SymbolsImageFileExtension = ".simg";
         private const int DefaultImageWidth = 3;
         private const int DefaultImageHeight = 3;
-
-        private ColorDialog colorPicker;
 
         private readonly Brush brush;
         private SymbolsImage image;
@@ -34,8 +32,10 @@ namespace SymbolsImageEditor
         private int newImageWidth;
         private int newImageHeight;
 
+        private readonly OpenImageDialog openDialog;
+
         public EditorWindow()
-            : base(Program.Width, Program.Height, Program.Font)
+            : base(new NullLog(), Program.Width, Program.Height, Program.Font)
         {
             newImageWidth = DefaultImageWidth;
             newImageHeight = DefaultImageHeight;
@@ -48,11 +48,24 @@ namespace SymbolsImageEditor
             DefaultBackground = Color.Black;
             DefaultForeground = Color.White;
 
-            Fill(Color.White, Color.Black, null);
-
-            colorPicker = new ColorDialog();
+            openDialog = new OpenImageDialog();
 
             InitializeControls();
+        }
+
+        protected override void DrawView(CellSurface surface)
+        {
+            base.DrawView(surface);
+
+            surface.Fill(Color.White, Color.Black, null);
+
+            DrawBrush(surface);
+
+            surface.Print(1, 20, "New image width:");
+            surface.Print(20, 20, newImageWidth.ToString());
+
+            surface.Print(1, 22, "New image height:");
+            surface.Print(20, 22, newImageHeight.ToString());
         }
 
         private void InitializeControls()
@@ -193,11 +206,18 @@ namespace SymbolsImageEditor
 
         private void setBackgroundColor_Click(object sender, EventArgs e)
         {
-            colorPicker.Color = backgroundColor;
-            if (colorPicker.ShowDialog() == DialogResult.OK)
-            {
-                backgroundColor = colorPicker.Color;
-            }
+            // colorPicker.Rgba = new RGBA
+            // {
+            //     Alpha = 255,
+            //     Blue = backgroundColor.B,
+            //     Green = backgroundColor.G,
+            //     Red = backgroundColor.R
+            // };
+            // if (colorPicker.Run() == (int) ResponseType.Accept)
+            // {
+            //     backgroundColor = System.Drawing.Color.FromArgb((int)colorPicker.Rgba.Red, (int)colorPicker.Rgba.Green,
+            //         (int)colorPicker.Rgba.Blue);
+            // }
         }
 
         private void DrawImage(DrawingSurface control)
@@ -211,18 +231,20 @@ namespace SymbolsImageEditor
 
         private void saveImageButton_Click(object sender, EventArgs args)
         {
-            var saveDialog = new SaveFileDialog
-            {
-                Filter = SymbolsImageFileFilter,
-                DefaultExt = SymbolsImageFileExtension
-            };
-            if (saveDialog.ShowDialog() == DialogResult.OK)
-            {
-                using (var fileStream = File.Create(saveDialog.FileName))
-                {
-                    SymbolsImage.SaveToFile(image, fileStream);
-                }
-            }
+            // var filter = new FileFilter {Name = "Symbol Images"};
+            // filter.AddPattern(".simg");
+            // var saveDialog = new FileChooserDialog(Game.Instance.Window.Handle)
+            // {
+            //     Action = FileChooserAction.Save,
+            //     Filter = filter
+            // };
+            // if (saveDialog.Run() == (int)ResponseType.Accept)
+            // {
+            //     using (var fileStream = File.Create(saveDialog.Filename))
+            //     {
+            //         SymbolsImage.SaveToFile(image, fileStream);
+            //     }
+            // }
         }
 
         private void InitializeImageControl()
@@ -236,10 +258,7 @@ namespace SymbolsImageEditor
                 Position = new Point(30, 1),
                 Theme = new DrawingSurfaceTheme
                 {
-                    Colors = new Colors
-                    {
-                        Appearance_ControlNormal = new Cell(Color.White, Color.Black)
-                    }
+                    Normal = new Cell(Color.White, Color.Black)
                 },
                 OnDraw = DrawImage
             };
@@ -278,46 +297,54 @@ namespace SymbolsImageEditor
 
         private void loadImageButton_Click(object sender, EventArgs args)
         {
-            var browseDialog = new OpenFileDialog
+            openDialog.ShowModal(result =>
             {
-                CheckFileExists = true,
-                DefaultExt = SymbolsImageFileExtension,
-                Multiselect = false,
-                Filter = SymbolsImageFileFilter
-            };
-            if (browseDialog.ShowDialog() == DialogResult.OK)
-            {
-                using (var fileStream = File.OpenRead(browseDialog.FileName))
+                if (result == DialogResult.Ok)
                 {
-                    image = SymbolsImage.LoadFromFile(fileStream);
-                }
+                    using (var fileStream = File.OpenRead(openDialog.Path))
+                    {
+                        image = SymbolsImage.LoadFromFile(fileStream);
+                    }
 
-                InitializeImageControl();
-            }
+                    InitializeImageControl();
+                }
+            });
         }
 
         private void foreColorButton_Click(object sender, EventArgs args)
         {
-            if (brush.ForeColor.HasValue)
-            {
-                colorPicker.Color = brush.ForeColor.Value;
-            }
-            if (colorPicker.ShowDialog() == DialogResult.OK)
-            {
-                brush.ForeColor = colorPicker.Color;
-            }
+            // if (brush.ForeColor.HasValue)
+            // {
+            //     colorPicker.Rgba = new RGBA()
+            //     {
+            //         Red = brush.ForeColor.Value.R, Green = brush.ForeColor.Value.G, Blue = brush.ForeColor.Value.B,
+            //         Alpha = 255
+            //     };
+            // }
+            // if (colorPicker.Run() == (int)ResponseType.Accept)
+            // {
+            //     brush.ForeColor = System.Drawing.Color.FromArgb((int) colorPicker.Rgba.Red,
+            //         (int) colorPicker.Rgba.Green, (int) colorPicker.Rgba.Blue);
+            // }
         }
 
         private void backColorButton_Click(object sender, EventArgs args)
         {
-            if (brush.BackColor.HasValue)
-            {
-                colorPicker.Color = brush.BackColor.Value;
-            }
-            if (colorPicker.ShowDialog() == DialogResult.OK)
-            {
-                brush.BackColor = colorPicker.Color;
-            }
+            // if (brush.BackColor.HasValue)
+            // {
+            //     colorPicker.Rgba = new RGBA()
+            //     {
+            //         Red = brush.BackColor.Value.R,
+            //         Green = brush.BackColor.Value.G,
+            //         Blue = brush.BackColor.Value.B,
+            //         Alpha = 255
+            //     };
+            // }
+            // if (colorPicker.Run() == (int)ResponseType.Accept)
+            // {
+            //     brush.BackColor = System.Drawing.Color.FromArgb((int)colorPicker.Rgba.Red,
+            //         (int)colorPicker.Rgba.Green, (int)colorPicker.Rgba.Blue);
+            // }
         }
 
         private void clearForeColorButton_Click(object sender, EventArgs args)
@@ -362,59 +389,47 @@ namespace SymbolsImageEditor
             return base.ProcessKeyboard(keyboard);
         }
 
-        public override void Update(TimeSpan time)
-        {
-            base.Update(time);
-
-            DrawBrush();
-
-            Print(1, 20, "New image width:");
-            Print(20, 20, newImageWidth.ToString());
-
-            Print(1, 22, "New image height:");
-            Print(20, 22, newImageHeight.ToString());
-        }
-
-        private void DrawBrush()
+        private void DrawBrush(CellSurface surface)
         {
             const int dX = 4;
+            const int dY = 2;
 
-            Print(1, 0, "Brush:");
-            Print(dX, 1, "Symbol: ");
+            surface.Print(1, dY, "Brush:");
+            surface.Print(dX, dY + 1, "Symbol: ");
             if (brush.Symbol.HasValue)
             {
-                Fill(dX + 8, 1, 5, Color.White, Color.Black, ' ');
-                Print(dX + 8, 1, new ColoredGlyph(brush.Symbol.Value));
-                Print(dX + 10, 1, brush.Symbol.ToString());
+                surface.Fill(dX + 8, dY + 1, 5, Color.White, Color.Black, ' ');
+                surface.Print(dX + 8, dY + 1, new ColoredGlyph(brush.Symbol.Value));
+                surface.Print(dX + 10, dY + 1, brush.Symbol.ToString());
             }
             else
             {
-                Fill(dX + 8, 1, 5, Color.White, Color.Black, ' ');
-                Print(dX + 8, 1, "null");
+                surface.Fill(dX + 8, dY + 1, 5, Color.White, Color.Black, ' ');
+                surface.Print(dX + 8, dY + 1, "null");
             }
 
-            Print(dX, 2, "Fore: ");
+            surface.Print(dX, dY + 2, "Fore: ");
             if (brush.ForeColor.HasValue)
             {
-                Fill(dX + 6, 2, 5, Color.White, Color.Black, ' ');
-                Print(dX + 6, 2, new ColoredGlyph(' ', Color.White, brush.ForeColor.Value.ToXna()));
+                surface.Fill(dX + 6, dY + 2, 5, Color.White, Color.Black, ' ');
+                surface.Print(dX + 6, dY + 2, new ColoredGlyph(' ', Color.White, brush.ForeColor.Value.ToXna()));
             }
             else
             {
-                Fill(dX + 6, 2, 5, Color.White, Color.Black, ' ');
-                Print(dX + 6, 2, "null");
+                surface.Fill(dX + 6, dY + 2, 5, Color.White, Color.Black, ' ');
+                surface.Print(dX + 6, dY + 2, "null");
             }
 
-            Print(dX, 3, "Back: ");
+            surface.Print(dX, dY + 3, "Back: ");
             if (brush.BackColor.HasValue)
             {
-                Fill(dX + 6, 3, 5, Color.White, Color.Black, ' ');
-                Print(dX + 6, 3, new ColoredGlyph(' ', Color.White, brush.BackColor.Value.ToXna()));
+                surface.Fill(dX + 6, dY + 3, 5, Color.White, Color.Black, ' ');
+                surface.Print(dX + 6, dY + 3, new ColoredGlyph(' ', Color.White, brush.BackColor.Value.ToXna()));
             }
             else
             {
-                Fill(dX + 6, 3, 5, Color.White, Color.Black, ' ');
-                Print(dX + 6, 3, "null");
+                surface.Fill(dX + 6, dY + 3, 5, Color.White, Color.Black, ' ');
+                surface.Print(dX + 6, dY + 3, "null");
             }
         }
     }

@@ -1,18 +1,16 @@
-﻿using System.Windows.Forms;
-using CodeMagic.Game.Spells;
+﻿using CodeMagic.Game.Spells;
+using CodeMagic.UI.Sad.Common;
+using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
-using SadConsole;
 using SadConsole.Input;
-using SadConsole.Themes;
-using Button = SadConsole.Controls.Button;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace CodeMagic.UI.Sad.Views
 {
     public class LoadSpellFromLibraryView : SpellsLibraryViewBase
     {
-        private Button closeButton;
-        private Button okButton;
+        private StandardButton closeButton;
+        private StandardButton okButton;
 
         public LoadSpellFromLibraryView()
         {
@@ -23,32 +21,20 @@ namespace CodeMagic.UI.Sad.Views
 
         private void InitializeControls()
         {
-            var buttonsTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground)
-                }
-            };
-
-            closeButton = new Button(15, 3)
+            closeButton = new StandardButton(15)
             {
                 Position = new Point(Width - 17, Height - 4),
-                Text = "[ESC] Cancel",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[ESC] Cancel"
             };
             closeButton.Click += (sender, args) => Close(DialogResult.Cancel);
             Add(closeButton);
 
-            okButton = new Button(15, 3)
+            okButton = new StandardButton(15)
             {
                 Position = new Point(Width - 37, Height - 4),
-                Text = "[ENTER] OK",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[ENTER] OK"
             };
-            okButton.Click += (sender, args) => Close(DialogResult.OK);
+            okButton.Click += (sender, args) => Close(DialogResult.Ok);
             Add(okButton);
         }
 
@@ -57,7 +43,7 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Enter:
-                    Close(DialogResult.OK);
+                    Close(DialogResult.Ok);
                     return true;
             }
 

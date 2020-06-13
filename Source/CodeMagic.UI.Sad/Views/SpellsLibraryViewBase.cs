@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Forms;
 using CodeMagic.Game.Spells;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
@@ -10,7 +9,6 @@ using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
 using SadConsole.Themes;
-using Button = SadConsole.Controls.Button;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using Orientation = SadConsole.Orientation;
 using ScrollBar = SadConsole.Controls.ScrollBar;
@@ -18,7 +16,7 @@ using TextBox = SadConsole.Controls.TextBox;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public abstract class SpellsLibraryViewBase : View
+    public abstract class SpellsLibraryViewBase : GameViewBase
     {
         private const string DefaultSpellName = "New Spell";
 
@@ -26,8 +24,8 @@ namespace CodeMagic.UI.Sad.Views
         private SpellDetailsControl spellDetails;
         private TextBox filterTextBox;
 
-        private Button removeSpellButton;
-        private Button editSpellButton;
+        private StandardButton removeSpellButton;
+        private StandardButton editSpellButton;
 
         private string oldFilter;
 
@@ -44,30 +42,18 @@ namespace CodeMagic.UI.Sad.Views
 
         private void InitializeControls()
         {
-            var buttonsTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground)
-                }
-            };
-
-            removeSpellButton = new Button(25, 3)
+            removeSpellButton = new StandardButton(25)
             {
                 Position = new Point(Width - 57, 16),
-                Text = "[R] Remove from Library",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[R] Remove from Library"
             };
             removeSpellButton.Click += (sender, args) => RemoveSpellFromLibrary();
             Add(removeSpellButton);
 
-            editSpellButton = new Button(25, 3)
+            editSpellButton = new StandardButton(25)
             {
                 Position = new Point(Width - 57, 13),
-                Text = "[E] Edit Spell",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[E] Edit Spell"
             };
             editSpellButton.Click += (sender, args) => EditSelectedSpell();
             Add(editSpellButton);
@@ -80,10 +66,7 @@ namespace CodeMagic.UI.Sad.Views
 
             var scrollBarTheme = new ScrollBarTheme
             {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(DefaultForeground, DefaultBackground)
-                }
+                Normal = new Cell(DefaultForeground, DefaultBackground)
             };
             var scrollBar = new ScrollBar(Orientation.Vertical, Height - 6)
             {
@@ -100,11 +83,8 @@ namespace CodeMagic.UI.Sad.Views
 
             var textBoxTheme = new TextBoxTheme
             {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255)),
-                    Appearance_ControlFocused = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255))
-                }
+                Normal = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255)),
+                Focused = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255))
             };
             filterTextBox = new TextBox(Width - 69)
             {
@@ -134,7 +114,7 @@ namespace CodeMagic.UI.Sad.Views
             };
             editSpellView.Closed += (sender, args) =>
             {
-                if (args.Result.HasValue && args.Result.Value == DialogResult.Cancel)
+                if (args.Result == DialogResult.Cancel)
                     return;
 
                 var code = EditSpellHelper.ReadSpellCodeFromFile(spellFilePath);
@@ -163,27 +143,32 @@ namespace CodeMagic.UI.Sad.Views
             spellsList.SelectedItemIndex = 0;
         }
 
-        public override void Update(TimeSpan time)
+        protected override void DrawView(CellSurface surface)
         {
-            base.Update(time);
+            base.DrawView(surface);
 
-            Print(2, 3, "Filter:");
+            surface.Print(2, 3, "Filter:");
 
-            Print(2, 1, "Spells Library");
+            surface.Print(2, 1, "Spells Library");
 
-            Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
+            surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
-            Print(Width - 59, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
-            Print(Width - 59, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
-            DrawVerticalLine(Width - 59, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
+            surface.Print(Width - 59, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
+            surface.Print(Width - 59, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
+            surface.DrawVerticalLine(Width - 59, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
 
             if (spellDetails.IsVisible)
             {
-                Print(Width - 59, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
-                Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+                surface.Print(Width - 59, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
+                surface.Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
             }
+        }
+
+        public override void Update(TimeSpan time)
+        {
+            base.Update(time);
 
             var newFilter = filterTextBox.EditingText ?? filterTextBox.Text;
             if (!string.Equals(newFilter, oldFilter))

@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Threading.Tasks;
 using CodeMagic.Core.Game;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class MainMenuView : View
+    public class MainMenuView : GameViewBase
     {
         private GameLogoControl gameLabel;
         private StandardButton startGameButton;
@@ -92,7 +92,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void exitButton_Click(object sender, EventArgs args)
         {
-            SadConsole.Game.Instance.Exit();
+            Program.Exit();
         }
 
         private void continueGameButton_Click(object sender, EventArgs args)

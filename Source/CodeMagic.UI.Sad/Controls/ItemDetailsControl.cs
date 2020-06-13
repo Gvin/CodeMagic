@@ -21,11 +21,15 @@ namespace CodeMagic.UI.Sad.Controls
         private readonly InventoryImagesFactory imagesFactory;
         private readonly Player player;
 
+        static ItemDetailsControl()
+        {
+            Library.Default.SetControlTheme(typeof(ItemDetailsControl), new DrawingSurfaceTheme());
+        }
+
         public ItemDetailsControl(int width, int height, Player player) 
             : base(width, height)
         {
             this.player = player;
-            Theme = new DrawingSurfaceTheme();
             CanFocus = false;
 
             imagesFactory = new InventoryImagesFactory(ImagesStorage.Current);

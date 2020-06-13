@@ -11,10 +11,14 @@ namespace CodeMagic.UI.Sad.Controls
     {
         private static readonly Color DefaultBackground = Color.Black;
 
+        static GameLogoControl()
+        {
+            Library.Default.SetControlTheme(typeof(GameLogoControl), new DrawingSurfaceTheme());
+        }
+
         public GameLogoControl() 
             : base(16, 2)
         {
-            Theme = new DrawingSurfaceTheme();
         }
 
         public override void Update(TimeSpan time)

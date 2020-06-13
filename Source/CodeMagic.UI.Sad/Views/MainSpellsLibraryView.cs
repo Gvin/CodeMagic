@@ -1,13 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using SadConsole;
-using SadConsole.Controls;
-using SadConsole.Themes;
+﻿using CodeMagic.UI.Sad.Controls;
+using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Sad.Views
 {
     public class MainSpellsLibraryView : SpellsLibraryViewBase
     {
-        private Button closeButton;
+        private StandardButton closeButton;
 
         public MainSpellsLibraryView()
         {
@@ -16,20 +14,10 @@ namespace CodeMagic.UI.Sad.Views
 
         private void InitializeControls()
         {
-            var buttonsTheme = new ButtonLinesTheme
-            {
-                Colors = new Colors
-                {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground)
-                }
-            };
-
-            closeButton = new Button(15, 3)
+            closeButton = new StandardButton(15)
             {
                 Position = new Point(Width - 17, Height - 4),
-                Text = "[ESC] Close",
-                CanFocus = false,
-                Theme = buttonsTheme
+                Text = "[ESC] Close"
             };
             closeButton.Click += (sender, args) => Close();
             Add(closeButton);
