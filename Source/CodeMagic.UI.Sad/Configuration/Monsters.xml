@@ -222,7 +222,7 @@
       <accuracy>60</accuracy>
       <dodge-chance>15</dodge-chance>
       <damage>
-        <value element="Slashing" min="3" max="6"/>
+        <value element="Piercing" min="3" max="6"/>
       </damage>
     </stats>
     <size>Medium</size>
@@ -279,7 +279,7 @@
       <accuracy>65</accuracy>
       <dodge-chance>15</dodge-chance>
       <damage>
-        <value element="Slashing" min="5" max="8"/>
+        <value element="Piercing" min="5" max="8"/>
       </damage>
       <protection>
         <element type="Piercing">15</element>
@@ -346,7 +346,7 @@
       <accuracy>65</accuracy>
       <dodge-chance>15</dodge-chance>
       <damage>
-        <value element="Slashing" min="5" max="8"/>
+        <value element="Piercing" min="5" max="8"/>
       </damage>
       <protection>
         <element type="Piercing">25</element>
