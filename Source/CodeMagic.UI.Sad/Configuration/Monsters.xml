@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <monsters-configuration>
+  <!-- Skeleton -->
   <monster id="skeleton_weak">
     <spawn-configuration group="skeleton" min-level="1" force="1"/>
     <name>Skeleton</name>
@@ -59,6 +60,153 @@
       </armor>
     </loot>
   </monster>
+  <monster id="skeleton_armored">
+    <spawn-configuration group="skeleton" min-level="2" force="3"/>
+    <name>Armored Skeleton</name>
+    <logic-pattern>SimplePatrollingChaser</logic-pattern>
+    <experience min="4" max="8"/>
+    <image>Monster_SkeletonArmored</image>
+    <stats>
+      <health min="10" max="15"/>
+      <speed>1</speed>
+      <catch-fire-chance-multiplier>1</catch-fire-chance-multiplier>
+      <self-extinguish-chance>30</self-extinguish-chance>
+      <visibility-range>2</visibility-range>
+      <accuracy>50</accuracy>
+      <dodge-chance>10</dodge-chance>
+      <protection>
+        <element type="Slashing">30</element>
+        <element type="Piercing">40</element>
+        <element type="Blunt">20</element>
+        <element type="Electricity">30</element>
+      </protection>
+      <statuses-immunity>
+        <status>blind</status>
+        <status>hungry</status>
+        <status>overweight</status>
+        <status>paralyzed</status>
+      </statuses-immunity>
+      <damage>
+        <value element="Slashing" min="5" max="8"/>
+      </damage>
+    </stats>
+    <size>Medium</size>
+    <remains-type>BonesWhiteMedium</remains-type>
+    <damage-mark-type>BonesWhiteSmall</damage-mark-type>
+    <loot>
+      <weapon>
+        <count-configuration>
+          <value chance="50">0</value>
+          <value chance="50">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="10">Trash</value>
+          <value chance="70">Common</value>
+          <value chance="20">Uncommon</value>
+        </rareness-configuration>
+      </weapon>
+      <armor>
+        <count-configuration>
+          <value chance="60">0</value>
+          <value chance="40">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="10">Trash</value>
+          <value chance="70">Common</value>
+          <value chance="20">Uncommon</value>
+        </rareness-configuration>
+        <class-configuration>
+          <value chance="60">Mail</value>
+          <value chance="30">ScaleMail</value>
+          <value chance="10">Plate</value>
+        </class-configuration>
+      </armor>
+      <usable>
+        <count-configuration>
+          <value chance="70">0</value>
+          <value chance="30">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="70">Common</value>
+          <value chance="30">Uncommon</value>
+        </rareness-configuration>
+      </usable>
+    </loot>
+  </monster>
+  <monster id="skeleton_knight">
+    <spawn-configuration group="skeleton" min-level="4" force="5"/>
+    <name>Skeleton Knight</name>
+    <logic-pattern>SimplePatrollingChaser</logic-pattern>
+    <experience min="8" max="15"/>
+    <image>Monster_SkeletonKnight</image>
+    <stats>
+      <health min="15" max="25"/>
+      <speed>1</speed>
+      <catch-fire-chance-multiplier>1</catch-fire-chance-multiplier>
+      <self-extinguish-chance>30</self-extinguish-chance>
+      <visibility-range>2</visibility-range>
+      <accuracy>50</accuracy>
+      <dodge-chance>10</dodge-chance>
+      <protection>
+        <element type="Slashing">50</element>
+        <element type="Piercing">50</element>
+        <element type="Blunt">30</element>
+        <element type="Electricity">30</element>
+      </protection>
+      <statuses-immunity>
+        <status>blind</status>
+        <status>hungry</status>
+        <status>overweight</status>
+        <status>paralyzed</status>
+      </statuses-immunity>
+      <damage>
+        <value element="Slashing" min="8" max="15"/>
+      </damage>
+    </stats>
+    <size>Medium</size>
+    <remains-type>BonesWhiteMedium</remains-type>
+    <damage-mark-type>BonesWhiteSmall</damage-mark-type>
+    <loot>
+      <weapon>
+        <count-configuration>
+          <value chance="50">0</value>
+          <value chance="50">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="5">Trash</value>
+          <value chance="65">Common</value>
+          <value chance="30">Uncommon</value>
+        </rareness-configuration>
+      </weapon>
+      <armor>
+        <count-configuration>
+          <value chance="60">0</value>
+          <value chance="40">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="5">Trash</value>
+          <value chance="65">Common</value>
+          <value chance="30">Uncommon</value>
+        </rareness-configuration>
+        <class-configuration>
+          <value chance="50">Mail</value>
+          <value chance="30">ScaleMail</value>
+          <value chance="20">Plate</value>
+        </class-configuration>
+      </armor>
+      <usable>
+        <count-configuration>
+          <value chance="70">0</value>
+          <value chance="30">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="60">Common</value>
+          <value chance="40">Uncommon</value>
+        </rareness-configuration>
+      </usable>
+    </loot>
+  </monster>
+  <!-- Goblin -->
   <monster id="goblin_weak">
     <name>Goblin</name>
     <spawn-configuration group="goblin" min-level="2" force="3"/>
@@ -116,6 +264,141 @@
       </usable>
     </loot>
   </monster>
+  <monster id="hobgoblin">
+    <name>Hobgoblin</name>
+    <spawn-configuration group="goblin" min-level="3" force="5"/>
+    <logic-pattern>SimpleWonderingChaser</logic-pattern>
+    <experience min="8" max="10"/>
+    <image>Monster_Hobgoblin</image>
+    <stats>
+      <health min="25" max="35"/>
+      <speed>1</speed>
+      <catch-fire-chance-multiplier>2</catch-fire-chance-multiplier>
+      <self-extinguish-chance>15</self-extinguish-chance>
+      <visibility-range>3</visibility-range>
+      <accuracy>65</accuracy>
+      <dodge-chance>15</dodge-chance>
+      <damage>
+        <value element="Slashing" min="5" max="8"/>
+      </damage>
+      <protection>
+        <element type="Piercing">15</element>
+        <element type="Slashing">30</element>
+        <element type="Blunt">15</element>
+        <element type="Fire">30</element>
+        <element type="Frost">30</element>
+      </protection>
+    </stats>
+    <size>Medium</size>
+    <remains-type>BloodGreenMedium</remains-type>
+    <damage-mark-type>BloodGreenSmall</damage-mark-type>
+    <loot>
+      <weapon>
+        <count-configuration>
+          <value chance="50">0</value>
+          <value chance="50">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="10">Trash</value>
+          <value chance="70">Common</value>
+          <value chance="20">Uncommon</value>
+        </rareness-configuration>
+      </weapon>
+      <armor>
+        <count-configuration>
+          <value chance="60">0</value>
+          <value chance="40">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="10">Trash</value>
+          <value chance="70">Common</value>
+          <value chance="20">Uncommon</value>
+        </rareness-configuration>
+        <class-configuration>
+          <value chance="80">Leather</value>
+          <value chance="20">Mail</value>
+        </class-configuration>
+      </armor>
+      <usable>
+        <count-configuration>
+          <value chance="70">0</value>
+          <value chance="30">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="70">Common</value>
+          <value chance="30">Uncommon</value>
+        </rareness-configuration>
+      </usable>
+    </loot>
+  </monster>
+  <monster id="hobgoblin_knight">
+    <name>Hobgoblin Knight</name>
+    <spawn-configuration group="goblin" min-level="5" force="10"/>
+    <logic-pattern>SimpleWonderingChaser</logic-pattern>
+    <experience min="15" max="20"/>
+    <image>Monster_HobgoblinKnight</image>
+    <stats>
+      <health min="35" max="45"/>
+      <speed>1</speed>
+      <catch-fire-chance-multiplier>2</catch-fire-chance-multiplier>
+      <self-extinguish-chance>15</self-extinguish-chance>
+      <visibility-range>3</visibility-range>
+      <accuracy>65</accuracy>
+      <dodge-chance>15</dodge-chance>
+      <damage>
+        <value element="Slashing" min="5" max="8"/>
+      </damage>
+      <protection>
+        <element type="Piercing">25</element>
+        <element type="Slashing">50</element>
+        <element type="Blunt">25</element>
+        <element type="Fire">30</element>
+        <element type="Frost">30</element>
+      </protection>
+    </stats>
+    <size>Medium</size>
+    <remains-type>BloodGreenMedium</remains-type>
+    <damage-mark-type>BloodGreenSmall</damage-mark-type>
+    <loot>
+      <weapon>
+        <count-configuration>
+          <value chance="50">0</value>
+          <value chance="50">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="5">Trash</value>
+          <value chance="65">Common</value>
+          <value chance="30">Uncommon</value>
+        </rareness-configuration>
+      </weapon>
+      <armor>
+        <count-configuration>
+          <value chance="60">0</value>
+          <value chance="40">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="5">Trash</value>
+          <value chance="65">Common</value>
+          <value chance="30">Uncommon</value>
+        </rareness-configuration>
+        <class-configuration>
+          <value chance="80">Leather</value>
+          <value chance="20">Mail</value>
+        </class-configuration>
+      </armor>
+      <usable>
+        <count-configuration>
+          <value chance="70">0</value>
+          <value chance="30">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="60">Common</value>
+          <value chance="40">Uncommon</value>
+        </rareness-configuration>
+      </usable>
+    </loot>
+  </monster>
+  <!-- Slime -->
   <monster id="slime_green">
     <name>Green Slime</name>
     <spawn-configuration group="slime" min-level="3" force="10"/>
@@ -192,6 +475,7 @@
       </usable>
     </loot>
   </monster>
+  <!-- Other -->
   <monster id="knight_black">
     <spawn-configuration group="knight" min-level="4" force="7"/>
     <name>Black Knight</name>
