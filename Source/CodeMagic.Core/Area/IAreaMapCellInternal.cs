@@ -9,7 +9,7 @@ namespace CodeMagic.Core.Area
 
         void Update(Point position, UpdateOrder updateOrder);
 
-        void PostUpdate(Point position);
+        void PostUpdate(IAreaMap map, Point position);
 
         void ResetDynamicObjectsState();
 

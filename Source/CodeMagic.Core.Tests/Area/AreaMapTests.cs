@@ -314,7 +314,7 @@ namespace CodeMagic.Core.Tests.Area
                 cellMock.Verify(cell => cell.Update(It.IsAny<Point>(), UpdateOrder.Early), Times.Once);
                 cellMock.Verify(cell => cell.Update(It.IsAny<Point>(), UpdateOrder.Medium), Times.Once);
                 cellMock.Verify(cell => cell.Update(It.IsAny<Point>(), UpdateOrder.Late), Times.Once);
-                cellMock.Verify(cell => cell.PostUpdate(It.IsAny<Point>()), Times.Once);
+                cellMock.Verify(cell => cell.PostUpdate(map, It.IsAny<Point>()), Times.Once);
                 cellMock.Verify(cell => cell.ResetDynamicObjectsState(), Times.Once);
             }
 

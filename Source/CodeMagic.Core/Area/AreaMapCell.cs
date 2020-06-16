@@ -23,9 +23,9 @@ namespace CodeMagic.Core.Area
             ProcessDynamicObjects(position, updateOrder);
         }
 
-        public void PostUpdate(Point position)
+        public void PostUpdate(IAreaMap map, Point position)
         {
-            ProcessDestroyableObjects(position);
+            ProcessDestroyableObjects(map, position);
         }
 
         public void ResetDynamicObjectsState()
@@ -47,7 +47,7 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void ProcessDestroyableObjects(Point position)
+        private void ProcessDestroyableObjects(IAreaMap map, Point position)
         {
             var destroyableObjects = ObjectsCollection.OfType<IDestroyableObject>().ToArray();
             ProcessStatusesAndEnvironment(destroyableObjects, position);
@@ -55,7 +55,7 @@ namespace CodeMagic.Core.Area
             var deadObjects = destroyableObjects.Where(obj => obj.Health <= 0).ToArray();
             foreach (var deadObject in deadObjects)
             {
-                CurrentGame.Map.RemoveObject(position, deadObject);
+                map.RemoveObject(position, deadObject);
                 deadObject.OnDeath(position);
             }
         }
@@ -90,7 +90,7 @@ namespace CodeMagic.Core.Area
             {
                 if (otherSpreadingObject.Volume >= otherSpreadingObject.MaxVolumeBeforeSpread)
                 {
-                    SpreadObject(otherSpreadingObject, other);
+                    SpreadObject(otherSpreadingObject, this);
                 }
             }
         }

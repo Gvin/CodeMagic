@@ -2,7 +2,7 @@
 
 namespace CodeMagic.Core.Objects
 {
-    public interface IDynamicObject
+    public interface IDynamicObject : IMapObject
     {
         void Update(Point position);
 
