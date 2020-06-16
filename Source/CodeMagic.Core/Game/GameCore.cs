@@ -56,7 +56,7 @@ namespace CodeMagic.Core.Game
         }
     }
 
-    public class GameCore<TPlayer> : IGameCore where TPlayer : class, IPlayer
+    public class GameCore<TPlayer> : IGameCore, ITurnProvider where TPlayer : class, IPlayer
     {
         private readonly ILog log = LogManager.GetLog<GameCore<TPlayer>>();
 
@@ -142,7 +142,7 @@ namespace CodeMagic.Core.Game
         private void ProcessSystemTurn()
         {
             CurrentTurn++;
-            Map.Update();
+            Map.Update(this);
         }
 
         private bool GetIfPlayerIsFrozen()

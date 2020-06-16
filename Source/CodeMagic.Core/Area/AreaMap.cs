@@ -16,11 +16,14 @@ namespace CodeMagic.Core.Area
         private const string SaveKeyCells = "Cells";
 
         private readonly Dictionary<Type, Point> objectPositionCache;
-        private readonly AreaMapCell[][] cells;
+        private readonly IAreaMapCellInternal[][] cells;
         private readonly Dictionary<string, IDestroyableObject> destroyableObjects;
+        private readonly IMapLightLevelProcessor mapLightLevelProcessor;
 
         public AreaMap(SaveData dataBuilder)
         {
+            mapLightLevelProcessor = new MapLightLevelProcessor();
+
             objectPositionCache = new Dictionary<Type, Point>();
             destroyableObjects = new Dictionary<string, IDestroyableObject>();
 
@@ -28,7 +31,7 @@ namespace CodeMagic.Core.Area
             Width = dataBuilder.GetIntValue(SaveKeyWidth);
             Height = dataBuilder.GetIntValue(SaveKeyHeight);
 
-            cells = dataBuilder.GetObject<GridSaveable>(SaveKeyCells).Rows.Select(row => row.Cast<AreaMapCell>().ToArray()).ToArray();
+            cells = dataBuilder.GetObject<GridSaveable>(SaveKeyCells).Rows.Select(row => row.Cast<IAreaMapCellInternal>().ToArray()).ToArray();
 
             for (var y = 0; y < Height; y++)
             {
@@ -43,8 +46,15 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        public AreaMap(int level, Func<IEnvironment> environmentFactory, int width, int height)
+        public AreaMap(
+            int level, 
+            Func<IAreaMapCellInternal> cellFactory, 
+            int width, 
+            int height, 
+            IMapLightLevelProcessor mapLightLevelProcessor = null)
         {
+            this.mapLightLevelProcessor = mapLightLevelProcessor ?? new MapLightLevelProcessor();
+
             objectPositionCache = new Dictionary<Type, Point>();
             destroyableObjects = new Dictionary<string, IDestroyableObject>();
 
@@ -52,13 +62,13 @@ namespace CodeMagic.Core.Area
             Width = width;
             Height = height;
 
-            cells = new AreaMapCell[height][];
+            cells = new IAreaMapCellInternal[height][];
             for (var y = 0; y < height; y++)
             {
-                cells[y] = new AreaMapCell[width];
+                cells[y] = new IAreaMapCellInternal[width];
                 for (var x = 0; x < width; x++)
                 {
-                    cells[y][x] = new AreaMapCell(environmentFactory());
+                    cells[y][x] = cellFactory();
                 }
             }
         }
@@ -169,9 +179,9 @@ namespace CodeMagic.Core.Area
             return null;
         }
 
-        private AreaMapCell GetOriginalCell(int x, int y)
+        private IAreaMapCellInternal GetOriginalCell(int x, int y)
         {
-            return (AreaMapCell) GetCell(x, y);
+            return (IAreaMapCellInternal) GetCell(x, y);
         }
 
         public IAreaMapCell GetCell(Point point)
@@ -210,8 +220,8 @@ namespace CodeMagic.Core.Area
 
         public void Refresh()
         {
-            MapLightLevelHelper.ResetLightLevel(this);
-            MapLightLevelHelper.UpdateLightLevel(this);
+            mapLightLevelProcessor.ResetLightLevel(this);
+            mapLightLevelProcessor.UpdateLightLevel(this);
         }
 
         public void PreUpdate()
@@ -219,29 +229,29 @@ namespace CodeMagic.Core.Area
             PreUpdateCells();
         }
 
-        public void Update()
+        public void Update(ITurnProvider turnProvider)
         {
             objectPositionCache.Clear();
 
-            using (PerformanceMeter.Start($"Map_UpdateCells_Early[{CurrentGame.Game.CurrentTurn}]"))
+            using (PerformanceMeter.Start($"Map_UpdateCells_Early[{turnProvider.CurrentTurn}]"))
             {
                 UpdateCells(UpdateOrder.Early);
             }
 
-            MapLightLevelHelper.ResetLightLevel(this);
-            MapLightLevelHelper.UpdateLightLevel(this);
+            mapLightLevelProcessor.ResetLightLevel(this);
+            mapLightLevelProcessor.UpdateLightLevel(this);
 
-            using (PerformanceMeter.Start($"Map_UpdateCells_Medium[{CurrentGame.Game.CurrentTurn}]"))
+            using (PerformanceMeter.Start($"Map_UpdateCells_Medium[{turnProvider.CurrentTurn}]"))
             {
                 UpdateCells(UpdateOrder.Medium);
             }
 
-            using (PerformanceMeter.Start($"Map_UpdateCells_Late[{CurrentGame.Game.CurrentTurn}]"))
+            using (PerformanceMeter.Start($"Map_UpdateCells_Late[{turnProvider.CurrentTurn}]"))
             {
                 UpdateCells(UpdateOrder.Late);
             }
 
-            using (PerformanceMeter.Start($"Map_PostUpdateCells[{CurrentGame.Game.CurrentTurn}]"))
+            using (PerformanceMeter.Start($"Map_PostUpdateCells[{turnProvider.CurrentTurn}]"))
             {
                 PostUpdateCells();
             }
@@ -249,10 +259,10 @@ namespace CodeMagic.Core.Area
 
         private void UpdateCells(UpdateOrder order)
         {
-            for (var y = 0; y < cells.Length; y++)
+            for (var y = 0; y < Height; y++)
             {
                 var row = cells[y];
-                for (var x = 0; x < row.Length; x++)
+                for (var x = 0; x < Width; x++)
                 {
                     var cell = row[x];
                     cell.Update(new Point(x, y), order);
@@ -262,10 +272,10 @@ namespace CodeMagic.Core.Area
 
         private void PreUpdateCells()
         {
-            for (var y = 0; y < cells.Length; y++)
+            for (var y = 0; y < Height; y++)
             {
                 var row = cells[y];
-                for (var x = 0; x < row.Length; x++)
+                for (var x = 0; x < Width; x++)
                 {
                     var cell = row[x];
                     var cellDestroyableObjects = cell.ObjectsCollection.OfType<IDestroyableObject>();
@@ -285,7 +295,7 @@ namespace CodeMagic.Core.Area
                 for (var x = 0; x < cells[y].Length; x++)
                 {
                     var position = new Point(x, y);
-                    var cell = (AreaMapCell)GetCell(position);
+                    var cell = GetOriginalCell(x, y);
                     cell.PostUpdate(position);
                     cell.ResetDynamicObjectsState();
                     cell.Environment.Update(position, cell);
@@ -294,14 +304,14 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void MergeCellEnvironment(Point position, AreaMapCell cell, CellPairsStorage mergedCells)
+        private void MergeCellEnvironment(Point position, IAreaMapCellInternal cell, CellPairsStorage mergedCells)
         {
             if (cell.BlocksEnvironment)
                 return;
             SpreadEnvironment(position, cell, mergedCells);
         }
 
-        private void SpreadEnvironment(Point position, AreaMapCell cell, CellPairsStorage mergedCells)
+        private void SpreadEnvironment(Point position, IAreaMapCellInternal cell, CellPairsStorage mergedCells)
         {
             TrySpreadEnvironment(position, Direction.North, cell, mergedCells);
             TrySpreadEnvironment(position, Direction.South, cell, mergedCells);
@@ -309,13 +319,13 @@ namespace CodeMagic.Core.Area
             TrySpreadEnvironment(position, Direction.East, cell, mergedCells);
         }
 
-        private void TrySpreadEnvironment(Point position, Direction direction, AreaMapCell cell, CellPairsStorage mergedCells)
+        private void TrySpreadEnvironment(Point position, Direction direction, IAreaMapCellInternal cell, CellPairsStorage mergedCells)
         {
             var nextPosition = Point.GetPointInDirection(position, direction);
             if (!ContainsCell(nextPosition))
                 return;
 
-            var nextCell = (AreaMapCell) GetCell(nextPosition);
+            var nextCell = GetOriginalCell(nextPosition.X, nextPosition.Y);
 
             if (mergedCells.ContainsPair(position, direction))
                 return;

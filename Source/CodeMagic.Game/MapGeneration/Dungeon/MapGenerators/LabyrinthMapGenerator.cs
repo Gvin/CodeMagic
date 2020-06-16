@@ -93,7 +93,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
 
         private IAreaMap ConvertToAreaMap(int level, Room[][] roomsMap, int width, int height)
         {
-            var map = new AreaMap(level, () => new GameEnvironment(), width, height);
+            var map = new AreaMap(level, () => new AreaMapCell(new GameEnvironment()), width, height);
 
             var currentMapY = 1;
             foreach (var row in roomsMap)

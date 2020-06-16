@@ -6,9 +6,16 @@ using CodeMagic.Core.Objects;
 
 namespace CodeMagic.Core.Area
 {
-    internal static class MapLightLevelHelper
+    public interface IMapLightLevelProcessor
     {
-        public static void ResetLightLevel(IAreaMap map)
+        void ResetLightLevel(IAreaMap map);
+
+        void UpdateLightLevel(IAreaMap map);
+    }
+
+    public class MapLightLevelProcessor : IMapLightLevelProcessor
+    {
+        public void ResetLightLevel(IAreaMap map)
         {
             for (int x = 0; x < map.Width; x++)
             {
@@ -21,7 +28,7 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        public static void UpdateLightLevel(IAreaMap map)
+        public void UpdateLightLevel(IAreaMap map)
         {
             for (int x = 0; x < map.Width; x++)
             {
@@ -63,18 +70,18 @@ namespace CodeMagic.Core.Area
             if (cell == null)
                 return;
 
-            if ((int) light < (int) cell.LightLevel)
+            if ((int)light < (int)cell.LightLevel)
                 return;
             cell.LightLevel = light;
 
             if (cell.BlocksEnvironment)
                 return;
 
-            var lightPowerToSpread = (int) light - 1;
+            var lightPowerToSpread = (int)light - 1;
             if (lightPowerToSpread <= (int)LightLevel.Darkness)
                 return;
 
-            var lightToSpread = (LightLevel) lightPowerToSpread;
+            var lightToSpread = (LightLevel)lightPowerToSpread;
             SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.North), lightToSpread);
             SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.South), lightToSpread);
             SpreadLightLevel(map, Point.GetPointInDirection(position, Direction.West), lightToSpread);

@@ -188,7 +188,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MapGenerators
 
         private IAreaMap ConvertMap(int level, int[][] map, int width, int height)
         {
-            var result = new AreaMap(level, () => new GameEnvironment(), width, height);
+            var result = new AreaMap(level, () => new AreaMapCell(new GameEnvironment()), width, height);
 
             for (int y = 0; y < height; y++)
             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
@@ -7,7 +6,7 @@ using CodeMagic.Core.Saving;
 
 namespace CodeMagic.Core.Area
 {
-    public class AreaMapCell : AreaMapCellBase
+    public class AreaMapCell : AreaMapCellBase, IAreaMapCellInternal
     {
         public AreaMapCell(SaveData data)
             : base(data)
@@ -69,12 +68,12 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        public void CheckSpreading(AreaMapCell other)
+        public void CheckSpreading(IAreaMapCellInternal other)
         {
             CheckSpreadingObjects(other);
         }
 
-        private void CheckSpreadingObjects(AreaMapCell other)
+        private void CheckSpreadingObjects(IAreaMapCellInternal other)
         {
             var localSpreadingObjects = ObjectsCollection.OfType<ISpreadingObject>().ToArray();
             var otherSpreadingObjects = other.ObjectsCollection.OfType<ISpreadingObject>().ToArray();
@@ -96,7 +95,7 @@ namespace CodeMagic.Core.Area
             }
         }
 
-        private void SpreadObject(ISpreadingObject liquid, AreaMapCell target)
+        private void SpreadObject(ISpreadingObject liquid, IAreaMapCellInternal target)
         {
             var spreadAmount = Math.Min(liquid.MaxSpreadVolume, liquid.Volume - liquid.MaxVolumeBeforeSpread);
             var separated = liquid.Separate(spreadAmount);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
@@ -16,10 +17,10 @@ namespace CodeMagic.Core.Tests.Area
         public void ConstructorTest()
         {
             // Arrange
-            var environmentMock = new Mock<IEnvironment>();
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new Mock<IAreaMapCellInternal>().Object);
 
             // Act
-            var map = new AreaMap(1, () => environmentMock.Object, 5, 5);
+            var map = new AreaMap(1, mapCellsFactory, 5, 5);
 
             // Assert
             var cell = map.GetCell(2, 2);
@@ -40,10 +41,10 @@ namespace CodeMagic.Core.Tests.Area
             // Arrange
             const int width = 5;
             const int height = 7;
-            var environmentMock = new Mock<IEnvironment>();
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new Mock<IAreaMapCellInternal>().Object);
 
             // Act
-            var map = new AreaMap(1, () => environmentMock.Object, width, height);
+            var map = new AreaMap(1, mapCellsFactory, width, height);
 
             // Assert
             var cell = map.TryGetCell(x, y);
@@ -57,8 +58,8 @@ namespace CodeMagic.Core.Tests.Area
             const int posX = 1;
             const int posY = 2;
             var mapObject = new Mock<IMapObject>();
-            var environmentMock = new Mock<IEnvironment>();
-            var map = new AreaMap(1, () => environmentMock.Object, 5, 5);
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new AreaMapCell(new Mock<IEnvironment>().Object));
+            var map = new AreaMap(1, mapCellsFactory, 5, 5);
 
             // Act
             map.AddObject(posX, posY, mapObject.Object);
@@ -77,8 +78,8 @@ namespace CodeMagic.Core.Tests.Area
             const int posX = 1;
             const int posY = 2;
             var mapObject = new Mock<IMapObject>();
-            var environmentMock = new Mock<IEnvironment>();
-            var map = new AreaMap(1, () => environmentMock.Object, 5, 5);
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new AreaMapCell(new Mock<IEnvironment>().Object));
+            var map = new AreaMap(1, mapCellsFactory, 5, 5);
             var position = new Point(posX, posY);
 
             // Act
@@ -99,9 +100,9 @@ namespace CodeMagic.Core.Tests.Area
             var destroyable = new Mock<IDestroyableObject>();
             destroyable.SetupGet(d => d.Id).Returns(destroyableId);
 
-            var environmentMock = new Mock<IEnvironment>();
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new AreaMapCell(new Mock<IEnvironment>().Object));
 
-            var map = new AreaMap(1, () => environmentMock.Object, 5, 5);
+            var map = new AreaMap(1, mapCellsFactory, 5, 5);
 
             // Act
             map.AddObject(1, 1, destroyable.Object);
@@ -121,9 +122,9 @@ namespace CodeMagic.Core.Tests.Area
             var destroyable = new Mock<IDestroyableObject>();
             destroyable.SetupGet(d => d.Id).Returns(destroyableId);
 
-            var environmentMock = new Mock<IEnvironment>();
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new AreaMapCell(new Mock<IEnvironment>().Object));
 
-            var map = new AreaMap(1, () => environmentMock.Object, 5, 5);
+            var map = new AreaMap(1, mapCellsFactory, 5, 5);
             var position = new Point(posX, posY);
 
             // Act
@@ -144,9 +145,9 @@ namespace CodeMagic.Core.Tests.Area
             var destroyable = new Mock<IDestroyableObject>();
             destroyable.SetupGet(d => d.Id).Returns("destr_id");
 
-            var environmentMock = new Mock<IEnvironment>();
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new AreaMapCell(new Mock<IEnvironment>().Object));
 
-            var map = new AreaMap(1, () => environmentMock.Object, 5, 5);
+            var map = new AreaMap(1, mapCellsFactory, 5, 5);
             var position = new Point(posX, posY);
 
             // Act
@@ -167,9 +168,9 @@ namespace CodeMagic.Core.Tests.Area
             var destroyable = new Mock<IDestroyableObject>();
             destroyable.SetupGet(d => d.Id).Returns("destr_id");
 
-            var environmentMock = new Mock<IEnvironment>();
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new AreaMapCell(new Mock<IEnvironment>().Object));
 
-            var map = new AreaMap(1, () => environmentMock.Object, 5, 5);
+            var map = new AreaMap(1, mapCellsFactory, 5, 5);
 
             // Act
             map.AddObject(posX, posY, destroyable.Object);
@@ -189,10 +190,10 @@ namespace CodeMagic.Core.Tests.Area
         public void GetCellValidTest(int width, int height, int checkX, int checkY)
         {
             // Arrange
-            var environmentMock = new Mock<IEnvironment>();
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new Mock<IAreaMapCellInternal>().Object);
 
             // Arrange
-            var map = new AreaMap(1, () => environmentMock.Object, width, height);
+            var map = new AreaMap(1, mapCellsFactory, width, height);
 
             // Act
             var cell = map.GetCell(checkX, checkY);
@@ -208,9 +209,9 @@ namespace CodeMagic.Core.Tests.Area
         public void GetCellInvalidTest(int width, int height, int checkX, int checkY, string errorArgument)
         {
             // Arrange
-            var environmentMock = new Mock<IEnvironment>();
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new Mock<IAreaMapCellInternal>().Object);
 
-            var map = new AreaMap(1, () => environmentMock.Object, width, height);
+            var map = new AreaMap(1, mapCellsFactory, width, height);
 
             //Act
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() =>
@@ -233,12 +234,93 @@ namespace CodeMagic.Core.Tests.Area
         public bool ContainsCellTest(int width, int height, int checkX, int checkY)
         {
             // Arrange
-            var environmentMock = new Mock<IEnvironment>();
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new Mock<IAreaMapCellInternal>().Object);
 
-            var map = new AreaMap(1, () => environmentMock.Object, width, height);
+            var map = new AreaMap(1, mapCellsFactory, width, height);
 
             // Act
             return map.ContainsCell(checkX, checkY);
+        }
+
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(3)]
+        [TestCase(6)]
+        public void GetMapPartTest(int size)
+        {
+            // Arrange
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new Mock<IAreaMapCellInternal>().Object);
+
+            var map = new AreaMap(1, mapCellsFactory, 30, 30);
+
+            // Act
+            var area = map.GetMapPart(new Point(1, 1), size);
+
+            // Assert
+            var expectedAreaDiameter = size * 2 + 1;
+            Assert.AreEqual(expectedAreaDiameter, area.Length);
+            Assert.IsTrue(area.All(row => row.Length == expectedAreaDiameter));
+        }
+
+        [Test]
+        public void RefreshUpdatesLightLevelTest()
+        {
+            // Arrange
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() => new Mock<IAreaMapCellInternal>().Object);
+            var mapLightLevelProcessorMock = new Mock<IMapLightLevelProcessor>();
+
+            var map = new AreaMap(1, mapCellsFactory, 30, 30, mapLightLevelProcessorMock.Object);
+
+            // Act
+            map.Refresh();
+
+            // Assert
+            Assert.AreEqual(
+                mapLightLevelProcessorMock.Invocations.Select(invocation => invocation.Method.Name),
+                new[]
+                {
+                    nameof (IMapLightLevelProcessor.ResetLightLevel),
+                    nameof (IMapLightLevelProcessor.UpdateLightLevel)
+                }); // Checks call order
+            mapLightLevelProcessorMock.Verify(processor => processor.ResetLightLevel(map), Times.Once);
+            mapLightLevelProcessorMock.Verify(processor => processor.UpdateLightLevel(map), Times.Once);
+            mapLightLevelProcessorMock.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public void UpdateCallsCellUpdateTest()
+        {
+            // Arrange
+            var cells = new List<Mock<IAreaMapCellInternal>>();
+            var mapCellsFactory = new Func<IAreaMapCellInternal>(() =>
+            {
+                var environment = new Mock<IEnvironment>();
+                var cell = new Mock<IAreaMapCellInternal>();
+                cell.SetupGet(c => c.Environment).Returns(environment.Object);
+                cells.Add(cell);
+                return cell.Object;
+            });
+            var mapLightLevelProcessorMock = new Mock<IMapLightLevelProcessor>();
+            var turnProvider = new Mock<ITurnProvider>();
+
+            var map = new AreaMap(1, mapCellsFactory, 30, 20, mapLightLevelProcessorMock.Object);
+
+            // Act
+            map.Update(turnProvider.Object);
+
+            // Assert
+            foreach (var cellMock in cells)
+            {
+                cellMock.Verify(cell => cell.Update(It.IsAny<Point>(), UpdateOrder.Early), Times.Once);
+                cellMock.Verify(cell => cell.Update(It.IsAny<Point>(), UpdateOrder.Medium), Times.Once);
+                cellMock.Verify(cell => cell.Update(It.IsAny<Point>(), UpdateOrder.Late), Times.Once);
+                cellMock.Verify(cell => cell.PostUpdate(It.IsAny<Point>()), Times.Once);
+                cellMock.Verify(cell => cell.ResetDynamicObjectsState(), Times.Once);
+            }
+
+            mapLightLevelProcessorMock.Verify(processor => processor.ResetLightLevel(map), Times.Once);
+            mapLightLevelProcessorMock.Verify(processor => processor.UpdateLightLevel(map), Times.Once);
+            mapLightLevelProcessorMock.VerifyNoOtherCalls();
         }
     }
 }

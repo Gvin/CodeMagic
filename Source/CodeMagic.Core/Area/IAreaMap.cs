@@ -63,7 +63,7 @@ namespace CodeMagic.Core.Area
         /// Updates entire map.
         /// Should be called after player action.
         /// </summary>
-        void Update();
+        void Update(ITurnProvider turnProvider);
 
         IDestroyableObject GetDestroyableObject(string id);
 
