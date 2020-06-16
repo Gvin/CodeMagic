@@ -39,23 +39,17 @@
   <row>
     <pixel />
     <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel glyph="196">
+    <pixel glyph="254">
       <color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
+        <R>225</R>
+        <G>172</G>
+        <B>150</B>
       </color>
     </pixel>
-    <pixel glyph="221">
-      <color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </color>
-    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
   </row>
   <row>
     <pixel />

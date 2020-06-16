@@ -10,7 +10,6 @@ using CodeMagic.Core.Saving;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items;
-using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.Items.Usable.Potions;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.DecorativeObjects;
@@ -46,6 +45,8 @@ namespace CodeMagic.Game.Objects.Creatures
         private const string ImageRightUsable = "Player_Right_Usable";
 
         private const string ImageBody = "Player_Body";
+        private const string ImageBodyLeftWeapon = "Player_Body_LeftWeapon";
+        private const string ImageBodyRightWeapon = "Player_Body_RightWeapon";
 
         private const int DefaultStatValue = 1;
 
@@ -63,8 +64,6 @@ namespace CodeMagic.Game.Objects.Creatures
         private double regeneration;
         private double hungerPercent;
         private readonly Dictionary<PlayerStats, int> stats;
-
-        private readonly object experienceLock = new object();
 
         public event EventHandler Died;
         public event EventHandler LeveledUp;
@@ -140,20 +139,17 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public void AddExperience(int exp)
         {
-            lock (experienceLock)
-            {
-                Experience += exp;
-                CurrentGame.Journal.Write(new ExperienceGainedMessage(exp));
+            Experience += exp;
+            CurrentGame.Journal.Write(new ExperienceGainedMessage(exp));
 
-                var xpToLevelUp = GetXpToLevelUp();
-                if (Experience >= xpToLevelUp)
-                {
-                    Log.Debug($"Leveled Up. EXP: {Experience}, EXP to LVL: {GetXpToLevelUp()}");
-                    Level++;
-                    Experience -= xpToLevelUp;
-                    CurrentGame.Journal.Write(new LevelUpMessage(Level));
-                    LeveledUp?.Invoke(this, EventArgs.Empty);
-                }
+            var xpToLevelUp = GetXpToLevelUp();
+            if (Experience >= xpToLevelUp)
+            {
+                Log.Debug($"Leveled Up. EXP: {Experience}, EXP to LVL: {GetXpToLevelUp()}");
+                Level++;
+                Experience -= xpToLevelUp;
+                CurrentGame.Journal.Write(new LevelUpMessage(Level));
+                LeveledUp?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -402,7 +398,21 @@ namespace CodeMagic.Game.Objects.Creatures
 
         private SymbolsImage GetBodyImage(IImagesStorage storage)
         {
-            return storage.GetImage(ImageBody);
+            var body = storage.GetImage(ImageBody);
+
+            if (Equipment.RightWeaponEquipped)
+            {
+                var rightHandImage = storage.GetImage(ImageBodyRightWeapon);
+                body = SymbolsImage.Combine(body, rightHandImage);
+            }
+
+            if (Equipment.LeftWeaponEquipped)
+            {
+                var leftHandImage = storage.GetImage(ImageBodyLeftWeapon);
+                body = SymbolsImage.Combine(body, leftHandImage);
+            }
+
+            return body;
         }
     }
 }

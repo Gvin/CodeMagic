@@ -101,6 +101,10 @@ namespace CodeMagic.Game.Items
             });
         }
 
+        public bool RightWeaponEquipped => rightWeapon != null;
+
+        public bool LeftWeaponEquipped => leftWeapon != null;
+
         public IEquipableItem[] GetEquippedItems()
         {
             var result = new List<IEquipableItem>

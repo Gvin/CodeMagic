@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CodeMagic.Core.Game
@@ -36,8 +37,16 @@ namespace CodeMagic.Core.Game
             return value <= chancePercent;
         }
 
-        public static T GetRandomElement<T>(T[] array)
+        public static T GetRandomElement<T>(params T[] array)
         {
+            if (array.Length == 0)
+                throw new ArgumentException("Unable to get random element for empty array.");
+            return array[GetRandomValue(0, array.Length - 1)];
+        }
+
+        public static T GetRandomElement<T>(IEnumerable<T> collection)
+        {
+            var array = collection.ToArray();
             if (array.Length == 0)
                 throw new ArgumentException("Unable to get random element for empty array.");
             return array[GetRandomValue(0, array.Length - 1)];

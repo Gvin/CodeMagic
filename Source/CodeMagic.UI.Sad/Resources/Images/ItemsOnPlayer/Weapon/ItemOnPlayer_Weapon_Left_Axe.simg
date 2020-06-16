@@ -41,13 +41,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel glyph="173">
-      <color>
-        <R>223</R>
-        <G>203</G>
-        <B>176</B>
-      </color>
-    </pixel>
+    <pixel />
     <pixel glyph="196">
       <color>
         <R>255</R>
