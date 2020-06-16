@@ -90,8 +90,10 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /y $(ProjectDir)Resources\Images $(TargetDir)Resources\Images /E /I" />
-  </Target>
+  <ItemGroup>
+    <Content Include="Resources\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>
