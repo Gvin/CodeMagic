@@ -24,10 +24,19 @@ namespace CodeMagic.UI.Sad.Views
         private ItemDetailsControl itemDetails;
         private StandardButton closeButton;
 
+        private StandardButton filterAllButton;
+        private StandardButton filterArmorButton;
+        private StandardButton filterWeaponButton;
+        private StandardButton filterUsableButton;
+        private StandardButton filterOtherButton;
+
+        private FilterType filter;
+
         protected InventoryViewBase(string inventoryName, Player player)
         {
             this.inventoryName = inventoryName;
 
+            filter = FilterType.All;
             InitializeControls(player);
         }
 
@@ -49,23 +58,77 @@ namespace CodeMagic.UI.Sad.Views
             };
             Add(itemDetails);
 
+            filterAllButton = new StandardButton(5)
+            {
+                Position = new Point(2, 3),
+                DisabledColor = Color.Blue,
+                Text = "All"
+            };
+            filterAllButton.Click += (sender, args) => ChangeFilter(FilterType.All);
+            Add(filterAllButton);
+
+            filterWeaponButton = new StandardButton(5)
+            {
+                Position = new Point(7, 3),
+                DisabledColor = Color.Blue,
+                Text = "─┼ ".ConvertGlyphs()
+            };
+            filterWeaponButton.Click += (sender, args) => ChangeFilter(FilterType.Weapon);
+            Add(filterWeaponButton);
+            
+            filterArmorButton = new StandardButton(5)
+            {
+                Position = new Point(12, 3),
+                DisabledColor = Color.Blue,
+                Text = "╭█╮".ConvertGlyphs()
+            };
+            filterArmorButton.Click += (sender, args) => ChangeFilter(FilterType.Armor);
+            Add(filterArmorButton);
+
+            filterUsableButton = new StandardButton(5)
+            {
+                Position = new Point(17, 3),
+                DisabledColor = Color.Blue,
+                Text = " ▲ ".ConvertGlyphs()
+            };
+            filterUsableButton.Click += (sender, args) => ChangeFilter(FilterType.Usable);
+            Add(filterUsableButton);
+
+            filterOtherButton = new StandardButton(5)
+            {
+                Position = new Point(22, 3),
+                DisabledColor = Color.Blue,
+                Text = " ? ".ConvertGlyphs()
+            };
+            filterOtherButton.Click += (sender, args) => ChangeFilter(FilterType.Other);
+            Add(filterOtherButton);
+
             var scrollBarTheme = new ScrollBarTheme
             {
                 Normal = new Cell(DefaultForeground, DefaultBackground)
             };
             var itemListScroll = new ScrollBar(Orientation.Vertical, Height - 4)
             {
-                Position = new Point(Width - 55, 3),
+                Position = new Point(Width - 55, 6),
                 Theme = scrollBarTheme,
                 CanFocus = false
             };
             Add(itemListScroll);
             itemsList = new CustomListBox<InventoryStackItem>(Width - 56, Height - 4, itemListScroll)
             {
-                Position = new Point(1, 3)
+                Position = new Point(1, 6)
             };
             itemsList.SelectionChanged += itemsListBox_SelectedItemChanged;
             Add(itemsList);
+
+            RefreshFilterButtonsState();
+        }
+
+        private void ChangeFilter(FilterType newFilter)
+        {
+            filter = newFilter;
+            RefreshFilterButtonsState();
+            RefreshItems(false);
         }
 
         protected abstract IEnumerable<InventoryStack> GetStacks();
@@ -85,12 +148,31 @@ namespace CodeMagic.UI.Sad.Views
             itemDetails.Stack = SelectedStack;
         }
 
+        private bool CheckFilter(IItem item)
+        {
+            switch (filter)
+            {
+                case FilterType.All:
+                    return true;
+                case FilterType.Weapon:
+                    return item is IWeaponItem;
+                case FilterType.Armor:
+                    return item is IEquipableItem && !(item is IWeaponItem);
+                case FilterType.Usable:
+                    return item is IUsableItem;
+                case FilterType.Other:
+                    return !(item is IEquipableItem) && !(item is IUsableItem);
+                default:
+                    throw new ArgumentException($"Unknown filter type: {filter}");
+            }
+        }
+
         protected void RefreshItems(bool keepSelection)
         {
             var selectionIndex = itemsList.SelectedItemIndex;
             itemsList.ClearItems();
 
-            foreach (var inventoryStack in GetStacks())
+            foreach (var inventoryStack in GetStacks().Where(stack => CheckFilter(stack.TopItem)))
             {
                 itemsList.AddItem(CreateListBoxItem(inventoryStack));
             }
@@ -137,6 +219,36 @@ namespace CodeMagic.UI.Sad.Views
             itemsList.SelectedItemIndex = Math.Min(itemsList.Items.Length - 1, itemsList.SelectedItemIndex + 1);
         }
 
+        private void RefreshFilterButtonsState()
+        {
+            filterAllButton.IsEnabled = true;
+            filterWeaponButton.IsEnabled = true;
+            filterArmorButton.IsEnabled = true;
+            filterUsableButton.IsEnabled = true;
+            filterOtherButton.IsEnabled = true;
+
+            switch (filter)
+            {
+                case FilterType.All:
+                    filterAllButton.IsEnabled = false;
+                    break;
+                case FilterType.Weapon:
+                    filterWeaponButton.IsEnabled = false;
+                    break;
+                case FilterType.Armor:
+                    filterArmorButton.IsEnabled = false;
+                    break;
+                case FilterType.Usable:
+                    filterUsableButton.IsEnabled = false;
+                    break;
+                case FilterType.Other:
+                    filterOtherButton.IsEnabled = false;
+                    break;
+                default:
+                    throw new ArgumentException($"Unknown filter: {filter}");
+            }
+        }
+
         protected override void DrawView(CellSurface surface)
         {
             base.DrawView(surface);
@@ -156,6 +268,15 @@ namespace CodeMagic.UI.Sad.Views
         }
 
         protected abstract InventoryStackItem CreateListBoxItem(InventoryStack stack);
+
+        private enum FilterType
+        {
+            All,
+            Weapon,
+            Armor,
+            Usable,
+            Other
+        }
     }
 
     public abstract class InventoryStackItem : ICustomListBoxItem

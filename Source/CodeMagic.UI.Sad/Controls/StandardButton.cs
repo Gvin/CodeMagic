@@ -23,7 +23,13 @@ namespace CodeMagic.UI.Sad.Controls
         public StandardButton(int width, int height = 3) : base(width, height)
         {
             CanFocus = false;
+            EnabledColor = Color.White;
+            DisabledColor = Color.Gray;
         }
+
+        public Color EnabledColor { get; set; }
+
+        public Color DisabledColor { get; set; }
 
         public override void Update(TimeSpan time)
         {
@@ -33,17 +39,17 @@ namespace CodeMagic.UI.Sad.Controls
             {
                 ThemeColors = new Colors
                 {
-                    Appearance_ControlNormal = new Cell(Color.White, DefaultBackground),
-                    Appearance_ControlDisabled = new Cell(Color.Gray, DefaultBackground)
+                    Appearance_ControlNormal = new Cell(EnabledColor, DefaultBackground),
+                    Appearance_ControlDisabled = new Cell(DisabledColor, DefaultBackground)
                 };
             }
             else
             {
                 ThemeColors = new Colors
                 {
-                    Appearance_ControlNormal = new Cell(Color.Gray, DefaultBackground),
-                    Appearance_ControlDisabled = new Cell(Color.Gray, DefaultBackground),
-                    Appearance_ControlOver = new Cell(Color.Gray, DefaultBackground)
+                    Appearance_ControlNormal = new Cell(DisabledColor, DefaultBackground),
+                    Appearance_ControlDisabled = new Cell(DisabledColor, DefaultBackground),
+                    Appearance_ControlOver = new Cell(DisabledColor, DefaultBackground)
                 };
             }
         }
