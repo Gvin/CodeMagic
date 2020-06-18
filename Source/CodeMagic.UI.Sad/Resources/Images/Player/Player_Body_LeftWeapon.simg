@@ -22,13 +22,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel glyph="2">
-      <color>
-        <R>225</R>
-        <G>172</G>
-        <B>150</B>
-      </color>
-    </pixel>
+    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -36,57 +30,17 @@
   <row>
     <pixel />
     <pixel />
-    <pixel glyph="171">
-      <color>
-        <R>225</R>
-        <G>172</G>
-        <B>150</B>
-      </color>
-    </pixel>
-    <pixel glyph="219">
-      <color>
-        <R>128</R>
-        <G>0</G>
-        <B>255</B>
-      </color>
-      <background-color>
-        <R>128</R>
-        <G>0</G>
-        <B>255</B>
-      </background-color>
-    </pixel>
-    <pixel glyph="172">
-      <color>
-        <R>225</R>
-        <G>172</G>
-        <B>150</B>
-      </color>
-    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
     <pixel />
     <pixel />
   </row>
   <row>
     <pixel />
     <pixel />
-    <pixel glyph="179">
-      <color>
-        <R>225</R>
-        <G>172</G>
-        <B>150</B>
-      </color>
-    </pixel>
-    <pixel glyph="219">
-      <color>
-        <R>128</R>
-        <G>0</G>
-        <B>255</B>
-      </color>
-      <background-color>
-        <R>128</R>
-        <G>0</G>
-        <B>255</B>
-      </background-color>
-    </pixel>
+    <pixel />
+    <pixel />
     <pixel glyph="173">
       <color>
         <R>225</R>
@@ -101,13 +55,7 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel glyph="186">
-      <color>
-        <R>64</R>
-        <G>0</G>
-        <B>128</B>
-      </color>
-    </pixel>
+    <pixel />
     <pixel />
     <pixel />
     <pixel />

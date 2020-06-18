@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Objects.ObjectEffects;
@@ -105,6 +106,11 @@ namespace CodeMagic.Game.Objects
         public abstract int MaxHealth { get; }
 
         protected virtual double CatchFireChanceMultiplier => 1;
+
+        public virtual void MeleDamage(Point position, Direction attackDirection, int damage, Element element)
+        {
+            Damage(position, damage, element);
+        }
 
         public virtual void Damage(Point position, int damage, Element element)
         {

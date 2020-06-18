@@ -74,7 +74,7 @@ namespace CodeMagic.UI.Sad.Views
                 surface.PrintStyledText(dX + maxLength + 1, y, bonusText.ToColoredString(DefaultBackground));
             }
 
-            var xPos = dX + maxLength + 5;
+            var xPos = dX + maxLength + 10;
             surface.PrintStyledText(xPos, dY + 2, new StyledLine { "Max Health           ", new StyledString(player.MaxHealth.ToString(), TextHelper.HealthColor) }.ToColoredString(DefaultBackground));
             surface.PrintStyledText(xPos, dY + 3, new StyledLine { "Max Mana             ", new StyledString(player.MaxMana.ToString(), TextHelper.ManaColor) }.ToColoredString(DefaultBackground));
             surface.PrintStyledText(xPos, dY + 4, new StyledLine { "Mana Regeneration    ", new StyledString(player.ManaRegeneration.ToString(), TextHelper.ManaRegenerationColor) }.ToColoredString(DefaultBackground));
@@ -92,15 +92,15 @@ namespace CodeMagic.UI.Sad.Views
 
             surface.PrintStyledText(dX, dY + 1, new StyledLine
             {
-                "Right Hand Weapon: ",
-                new StyledString(player.Equipment.RightWeapon.Name, ItemDrawingHelper.GetItemColor(player.Equipment.RightWeapon))
+                "Right Hand: ",
+                new StyledString(player.Equipment.RightHandItem.Name, ItemDrawingHelper.GetItemColor(player.Equipment.RightHandItem))
             }.ToColoredString(DefaultBackground));
 
             surface.Fill(1, dY + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
             surface.Print(0, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
             surface.Print(Width - 1, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
-            var rightWeaponDetails = GetWeaponDetails(player.Equipment.RightWeapon);
+            var rightWeaponDetails = GetHoldableDetails(player.Equipment.RightHandItem);
             for (int yShift = 0; yShift < rightWeaponDetails.Length; yShift++)
             {
                 var y = dY + 3 + yShift;
@@ -114,20 +114,29 @@ namespace CodeMagic.UI.Sad.Views
 
             surface.PrintStyledText(dX, leftDy + 1, new StyledLine
             {
-                "Left Hand Weapon:  ",
-                new StyledString(player.Equipment.LeftWeapon.Name, ItemDrawingHelper.GetItemColor(player.Equipment.LeftWeapon))
+                "Left Hand:  ",
+                new StyledString(player.Equipment.LeftHandItem.Name, ItemDrawingHelper.GetItemColor(player.Equipment.LeftHandItem))
             }.ToColoredString(DefaultBackground));
 
             surface.Fill(1, leftDy + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
             surface.Print(0, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
             surface.Print(Width - 1, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
-            var leftWeaponDetails = GetWeaponDetails(player.Equipment.LeftWeapon);
+            var leftWeaponDetails = GetHoldableDetails(player.Equipment.LeftHandItem);
             for (int yShift = 0; yShift < leftWeaponDetails.Length; yShift++)
             {
                 var y = leftDy + 3 + yShift;
                 surface.PrintStyledText(dX, y, leftWeaponDetails[yShift].ToColoredString(DefaultBackground));
             }
+        }
+
+        private StyledLine[] GetHoldableDetails(IHoldableItem item)
+        {
+            if (item is IWeaponItem weapon)
+            {
+                return GetWeaponDetails(weapon);
+            }
+            return new StyledLine[0];
         }
 
         private StyledLine[] GetWeaponDetails(IWeaponItem weapon)

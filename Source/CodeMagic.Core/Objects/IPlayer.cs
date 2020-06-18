@@ -10,10 +10,6 @@ namespace CodeMagic.Core.Objects
 
         int MaxMana { get; }
 
-        int AccuracyLeft { get; }
-
-        int AccuracyRight { get; }
-
         int HungerPercent { get; set; }
 
         int MaxCarryWeight { get; }

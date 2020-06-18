@@ -98,7 +98,7 @@ namespace CodeMagic.Game.Objects.Creatures
             }
         }
 
-        public virtual void Attack(Point position, IDestroyableObject target)
+        public virtual void Attack(Point position, Point targetPosition, IDestroyableObject target)
         {
         }
 

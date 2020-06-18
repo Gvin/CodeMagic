@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.JournalMessages;
@@ -57,7 +56,13 @@ namespace CodeMagic.Game.PlayerActions
 
             game.Player.Stamina -= StaminaToAttack;
 
-            var weapon = useRightHand ? game.Player.Equipment.RightWeapon : game.Player.Equipment.LeftWeapon;
+            var holdableItem = useRightHand ? game.Player.Equipment.RightHandItem : game.Player.Equipment.LeftHandItem;
+            var weapon = holdableItem as IWeaponItem;
+            if (weapon == null)
+            {
+                game.Journal.Write(new CantAttackWithItemMessage(holdableItem));
+                return false;
+            }
 
             var accuracy = weapon.Accuracy;
             accuracy += game.Player.AccuracyBonus;

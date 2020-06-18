@@ -11,8 +11,8 @@ namespace CodeMagic.Game.Items
 {
     public class Equipment : ISaveable
     {
-        private const string SaveKeyRightWeapon = "RightWeapon";
-        private const string SaveKeyLeftWeapon = "LeftWeapon";
+        private const string SaveKeyRightHandItem = "RightHandItem";
+        private const string SaveKeyLeftHandItem = "LeftHandItem";
         private const string SaveKeyArmorHelmet = "ArmorHelmet";
         private const string SaveKeyArmorChest = "ArmorChest";
         private const string SaveKeyArmorLeggings = "ArmorLeggings";
@@ -29,21 +29,21 @@ namespace CodeMagic.Game.Items
             Weight = 0
         });
 
-        private IWeaponItem rightWeapon;
-        private IWeaponItem leftWeapon;
+        private IHoldableItem rightHandItem;
+        private IHoldableItem leftHandItem;
 
         public Equipment(SaveData data, Inventory inventory)
         {
-            var rightWeaponId = data.GetStringValue(SaveKeyRightWeapon);
+            var rightWeaponId = data.GetStringValue(SaveKeyRightHandItem);
             if (rightWeaponId != null)
             {
-                rightWeapon = (IWeaponItem) inventory.GetItemById(rightWeaponId);
+                rightHandItem = (IHoldableItem) inventory.GetItemById(rightWeaponId);
             }
 
-            var leftWeaponId = data.GetStringValue(SaveKeyLeftWeapon);
+            var leftWeaponId = data.GetStringValue(SaveKeyLeftHandItem);
             if (leftWeaponId != null)
             {
-                leftWeapon = (IWeaponItem) inventory.GetItemById(leftWeaponId);
+                leftHandItem = (IHoldableItem) inventory.GetItemById(leftWeaponId);
             }
 
             var spellBookId = data.GetStringValue(SaveKeySpellBook);
@@ -92,8 +92,8 @@ namespace CodeMagic.Game.Items
         {
             return new SaveDataBuilder(GetType(), new Dictionary<string, object>
             {
-                {SaveKeyRightWeapon, rightWeapon?.Id},
-                {SaveKeyLeftWeapon, leftWeapon?.Id},
+                {SaveKeyRightHandItem, rightHandItem?.Id},
+                {SaveKeyLeftHandItem, leftHandItem?.Id},
                 {SaveKeySpellBook, SpellBook?.Id},
                 {SaveKeyArmorHelmet, Armor[ArmorType.Helmet]?.Id},
                 {SaveKeyArmorChest, Armor[ArmorType.Chest]?.Id},
@@ -101,17 +101,19 @@ namespace CodeMagic.Game.Items
             });
         }
 
-        public bool RightWeaponEquipped => rightWeapon != null;
+        public bool RightHandItemEquipped => rightHandItem != null;
 
-        public bool LeftWeaponEquipped => leftWeapon != null;
+        public bool LeftHandItemEquipped => leftHandItem != null;
+
+        public int HitChanceBonus => GetEquippedItems().OfType<ShieldItem>().Sum(shield => shield.HitChancePenalty);
 
         public IEquipableItem[] GetEquippedItems()
         {
             var result = new List<IEquipableItem>
             {
                 SpellBook,
-                leftWeapon,
-                rightWeapon
+                leftHandItem,
+                rightHandItem
             };
 
             result.AddRange(Armor.Values);
@@ -121,21 +123,21 @@ namespace CodeMagic.Game.Items
 
         public Dictionary<ArmorType, IArmorItem> Armor { get; }
 
-        public IWeaponItem RightWeapon => rightWeapon ?? Fists;
+        public IHoldableItem RightHandItem => rightHandItem ?? Fists;
 
-        public IWeaponItem LeftWeapon => leftWeapon ?? Fists;
+        public IHoldableItem LeftHandItem => leftHandItem ?? Fists;
 
-        public bool IsDoubleWielded => rightWeapon == null || leftWeapon == null;
+        public bool IsDoubleWielded => rightHandItem == null || leftHandItem == null;
 
-        public void EquipWeapon(IWeaponItem weapon, bool isRight)
+        public void EquipHoldable(IHoldableItem holdable, bool isRight)
         {
             if (isRight)
             {
-                rightWeapon = weapon;
+                rightHandItem = holdable;
             }
             else
             {
-                leftWeapon = weapon;
+                leftHandItem = holdable;
             }
         }
 
@@ -143,9 +145,9 @@ namespace CodeMagic.Game.Items
         {
             switch (item)
             {
-                case WeaponItem _:
-                    throw new ArgumentException($"Weapon items should be equiped with {nameof(EquipWeapon)}");
-                case ArmorItem armorItem:
+                case IHoldableItem _:
+                    throw new ArgumentException($"Weapon items should be equiped with {nameof(EquipHoldable)}");
+                case IArmorItem armorItem:
                     EquipArmor(armorItem);
                     break;
                 case SpellBook spellBookItem:
@@ -160,10 +162,10 @@ namespace CodeMagic.Game.Items
         {
             switch (item)
             {
-                case WeaponItem weaponItem:
-                    UnequipWeapon(weaponItem);
+                case IHoldableItem holdableItem:
+                    UnequipHoldable(holdableItem);
                     break;
-                case ArmorItem armorItem:
+                case IArmorItem armorItem:
                     UnequipArmor(armorItem.ArmorType);
                     break;
                 case SpellBook _:
@@ -183,19 +185,19 @@ namespace CodeMagic.Game.Items
             }
         }
 
-        private void UnequipWeapon(WeaponItem weapon)
+        private void UnequipHoldable(IHoldableItem holdable)
         {
-            if (rightWeapon != null && rightWeapon.Equals(weapon))
+            if (rightHandItem != null && rightHandItem.Equals(holdable))
             {
-                rightWeapon = null;
+                rightHandItem = null;
             }
-            else if (leftWeapon != null && leftWeapon.Equals(weapon))
+            else if (leftHandItem != null && leftHandItem.Equals(holdable))
             {
-                leftWeapon = null;
+                leftHandItem = null;
             }
             else
             {
-                throw new ArgumentException($"Weapon {weapon.Key} is not equiped");
+                throw new ArgumentException($"Weapon {holdable.Key} is not equiped");
             }
         }
 
@@ -207,7 +209,7 @@ namespace CodeMagic.Game.Items
             }
         }
 
-        private void EquipArmor(ArmorItem newArmor)
+        private void EquipArmor(IArmorItem newArmor)
         {
             UnequipArmor(newArmor.ArmorType);
             Armor[newArmor.ArmorType] = newArmor;
@@ -223,9 +225,9 @@ namespace CodeMagic.Game.Items
         {
             switch (item)
             {
-                case WeaponItem weaponItem:
-                    return (rightWeapon != null && rightWeapon.Equals(weaponItem)) || (leftWeapon != null && leftWeapon.Equals(weaponItem));
-                case ArmorItem armorItem:
+                case IHoldableItem holdableItem:
+                    return (rightHandItem != null && rightHandItem.Equals(holdableItem)) || (leftHandItem != null && leftHandItem.Equals(holdableItem));
+                case IArmorItem armorItem:
                     return Armor[armorItem.ArmorType] != null && Armor[armorItem.ArmorType].Equals(item);
                 case SpellBook spellBookItem:
                     return SpellBook != null && SpellBook.Equals(spellBookItem);

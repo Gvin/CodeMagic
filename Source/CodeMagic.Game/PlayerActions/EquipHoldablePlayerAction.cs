@@ -5,14 +5,14 @@ using CodeMagic.Game.Objects.Creatures;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class EquipWeaponPlayerAction : PlayerActionBase
+    public class EquipHoldablePlayerAction : PlayerActionBase
     {
-        private readonly WeaponItem weapon;
+        private readonly IHoldableItem holdable;
         private readonly bool isRight;
 
-        public EquipWeaponPlayerAction(WeaponItem weapon, bool isRight)
+        public EquipHoldablePlayerAction(IHoldableItem holdable, bool isRight)
         {
-            this.weapon = weapon;
+            this.holdable = holdable;
             this.isRight = isRight;
         }
 
@@ -20,8 +20,8 @@ namespace CodeMagic.Game.PlayerActions
 
         protected override bool Perform(GameCore<Player> game, out Point newPosition)
         {
-            game.Player.Equipment.EquipWeapon(weapon, isRight);
-            CurrentGame.Journal.Write(new WeaponEquipedMessage(weapon, isRight));
+            game.Player.Equipment.EquipHoldable(holdable, isRight);
+            CurrentGame.Journal.Write(new HoldableEquippedMessage(holdable, isRight));
 
             newPosition = CurrentGame.PlayerPosition;
             return true;

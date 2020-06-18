@@ -10,10 +10,10 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
     public class XmlWeaponConfiguration : IWeaponConfiguration
     {
         [XmlIgnore]
-        public IWeaponImagesConfiguration Images => ImagesData;
+        public ILayersImagesConfiguration Images => ImagesData;
 
         [XmlElement("images")]
-        public XmlWeaponImagesConfiguration ImagesData { get; set; }
+        public XmlLayersImagesConfiguration ImagesData { get; set; }
 
         [XmlElement("equipped-image-right")]
         public string EquippedImageRight { get; set; }
@@ -29,7 +29,8 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Weapon
         public XmlWeightConfiguration[] WeightData { get; set; }
 
         [XmlIgnore]
-        public IWeaponRarenessConfiguration[] RarenessConfiguration => RarenessConfigurationData.ToArray<IWeaponRarenessConfiguration>();
+        public IWeaponRarenessConfiguration[] RarenessConfiguration => 
+            RarenessConfigurationData.ToArray<IWeaponRarenessConfiguration>();
 
         [XmlArray("rareness-configuration")]
         [XmlArrayItem("rareness")]

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
@@ -64,9 +65,9 @@ namespace CodeMagic.Game.Objects.Creatures
 
         protected sealed override float NormalSpeed => configuration.Speed / 1;
 
-        public override void Attack(Point position, IDestroyableObject target)
+        public override void Attack(Point position, Point targetPosition, IDestroyableObject target)
         {
-            base.Attack(position, target);
+            base.Attack(position, targetPosition, target);
 
             var currentHitChance = CalculateHitChance(hitChance);
             if (!RandomHelper.CheckChance(currentHitChance))
@@ -81,10 +82,14 @@ namespace CodeMagic.Game.Objects.Creatures
                 return;
             }
 
+            var attackDirection = Point.GetAdjustedPointRelativeDirection(targetPosition, position);
+            if (!attackDirection.HasValue)
+                throw new ApplicationException("Can only attack adjusted target");
+
             foreach (var damageValue in damage)
             {
                 var value = RandomHelper.GetRandomValue(damageValue.MinValue, damageValue.MaxValue);
-                target.Damage(position, value, damageValue.Element);
+                target.MeleDamage(targetPosition, attackDirection.Value, value, damageValue.Element);
                 CurrentGame.Journal.Write(new DealDamageMessage(this, target, value, damageValue.Element), this);
             }
         }

@@ -209,7 +209,7 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int DamageBonus => 2 * (GetStat(PlayerStats.Strength) - DefaultStatValue);
 
-        public int AccuracyBonus => 1 * (GetStat(PlayerStats.Agility) - DefaultStatValue);
+        public int AccuracyBonus => 1 * (GetStat(PlayerStats.Agility) - DefaultStatValue) + Equipment.HitChanceBonus;
 
         public int ScrollReadingBonus => 2 * (GetStat(PlayerStats.Wisdom) - DefaultStatValue);
 
@@ -241,9 +241,30 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int MaxMana => 80 + 20 * GetStat(PlayerStats.Intelligence) + Equipment.GetBonus(EquipableBonusType.Mana);
 
-        public int AccuracyLeft => CalculateHitChance(Equipment.RightWeapon.Accuracy);
+        public override void MeleDamage(Point position, Direction attackDirection, int damage, Element element)
+        {
+            var remainingDamage = damage;
+            if (Direction == attackDirection)
+            {
+                var shields = Equipment.GetEquippedItems().OfType<ShieldItem>().ToArray();
+                foreach (var shield in shields)
+                {
+                    if (RandomHelper.CheckChance(shield.ProtectChance))
+                    {
+                        var damageBlocked = Math.Min(shield.BlocksDamage, remainingDamage);
+                        if (damageBlocked > 0)
+                        {
+                            CurrentGame.Journal.Write(new ShieldBlockedDamageMessage(this, damageBlocked, element));
+                        }
 
-        public int AccuracyRight => CalculateHitChance(Equipment.RightWeapon.Accuracy);
+                        remainingDamage -= damageBlocked;
+                        shield.Durability--;
+                    }
+                }
+            }
+
+            base.MeleDamage(position, attackDirection, remainingDamage, element);
+        }
 
         protected override void ApplyRealDamage(int damage, Element element, Point position)
         {
@@ -400,13 +421,13 @@ namespace CodeMagic.Game.Objects.Creatures
         {
             var body = storage.GetImage(ImageBody);
 
-            if (Equipment.RightWeaponEquipped)
+            if (Equipment.RightHandItemEquipped)
             {
                 var rightHandImage = storage.GetImage(ImageBodyRightWeapon);
                 body = SymbolsImage.Combine(body, rightHandImage);
             }
 
-            if (Equipment.LeftWeaponEquipped)
+            if (Equipment.LeftHandItemEquipped)
             {
                 var leftHandImage = storage.GetImage(ImageBodyLeftWeapon);
                 body = SymbolsImage.Combine(body, leftHandImage);

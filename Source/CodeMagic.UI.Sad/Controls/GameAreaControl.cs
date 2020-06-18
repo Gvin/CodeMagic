@@ -121,7 +121,7 @@ namespace CodeMagic.UI.Sad.Controls
 
             if (item is WeaponItem weapon)
             {
-                if (game.Player.Equipment.RightWeapon.Equals(weapon))
+                if (game.Player.Equipment.RightHandItem.Equals(weapon))
                 {
                     return "DamagedEquipment_Weapon_Right";
                 }

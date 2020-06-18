@@ -115,7 +115,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             var weapon = new TorchItem();
             player.Inventory.AddItem(weapon);
-            player.Equipment.EquipWeapon(weapon, true);
+            player.Equipment.EquipHoldable(weapon, true);
 
             var spellBook = itemsGenerator.GenerateSpellBook(ItemRareness.Trash);
             player.Inventory.AddItem(spellBook);
@@ -126,6 +126,13 @@ namespace CodeMagic.UI.Sad.GameProcess
 
 #if DEBUG
             player.Inventory.AddItem(CreateBanHammer());
+
+            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
+            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
+            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
+            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
+            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
+            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
 #endif
 
             return player;

@@ -268,7 +268,7 @@ namespace CodeMagic.Game.Items
                     bonusName,
                     " Bonus: "
                 };
-                if (equalItems)
+                if (equalItems || equiped == null)
                 {
                     bonusDescription.Add(GetValueString(value));
                 }
