@@ -33,7 +33,13 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
+    <pixel glyph="220">
+      <color>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
+      </color>
+    </pixel>
     <pixel />
   </row>
   <row>
@@ -62,17 +68,12 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel glyph="219">
+    <pixel glyph="223">
       <color>
         <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
     </pixel>
     <pixel />
   </row>
