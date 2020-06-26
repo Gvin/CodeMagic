@@ -2,14 +2,14 @@
 
 namespace CodeMagic.Game.JournalMessages
 {
-    public class WeaponEquipedMessage : SelfDescribingJournalMessage
+    public class HoldableEquippedMessage : SelfDescribingJournalMessage
     {
-        private readonly WeaponItem weapon;
+        private readonly IHoldableItem holdable;
         private readonly bool isRightHand;
 
-        public WeaponEquipedMessage(WeaponItem weapon, bool isRightHand)
+        public HoldableEquippedMessage(IHoldableItem holdable, bool isRightHand)
         {
-            this.weapon = weapon;
+            this.holdable = holdable;
             this.isRightHand = isRightHand;
         }
 
@@ -18,7 +18,7 @@ namespace CodeMagic.Game.JournalMessages
             return new StyledLine
             {
                 $"{PlayerName} equiped [",
-                GetItemNameText(weapon),
+                GetItemNameText(holdable),
                 $"] to your {GetHandName(isRightHand)} hand"
             };
         }

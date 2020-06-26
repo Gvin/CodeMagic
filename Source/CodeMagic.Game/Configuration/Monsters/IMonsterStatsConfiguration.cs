@@ -23,5 +23,9 @@
         IMonsterDamageConfiguration[] Damage { get; }
 
         string[] StatusesImmunity { get; }
+
+        int ShieldBlockChance { get; }
+
+        int ShieldBlocksDamage { get; }
     }
 }

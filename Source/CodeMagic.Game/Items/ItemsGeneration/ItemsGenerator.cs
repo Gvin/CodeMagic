@@ -14,6 +14,8 @@ namespace CodeMagic.Game.Items.ItemsGeneration
     {
         WeaponItem GenerateWeapon(ItemRareness rareness);
 
+        ShieldItem GenerateShield(ItemRareness rareness);
+
         ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass armorClass);
 
         SpellBook GenerateSpellBook(ItemRareness rareness);
@@ -39,6 +41,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration
         private readonly UsableItemsGenerator usableItemsGenerator;
         private readonly ResourceItemsGenerator resourceItemsGenerator;
         private readonly FoodItemsGenerator foodItemsGenerator;
+        private readonly ShieldGenerator shieldGenerator;
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage, IAncientSpellsProvider spellsProvider)
         {
@@ -93,6 +96,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration
                 }
             };
             armorGenerator = new ArmorGenerator(configuration.ArmorConfiguration, bonusesGenerator, imagesStorage);
+            shieldGenerator = new ShieldGenerator(configuration.ShieldsConfiguration, bonusesGenerator, imagesStorage);
             spellBookGenerator = new SpellBookGenerator(configuration.SpellBooksConfiguration, bonusesGenerator, imagesStorage);
             usableItemsGenerator = new UsableItemsGenerator(imagesStorage, spellsProvider);
             resourceItemsGenerator = new ResourceItemsGenerator();
@@ -107,6 +111,14 @@ namespace CodeMagic.Game.Items.ItemsGeneration
             var weaponType = GetRandomWeaponType();
             var generator = weaponGenerators[weaponType];
             return generator.GenerateWeapon(rareness);
+        }
+
+        public ShieldItem GenerateShield(ItemRareness rareness)
+        {
+            if (GetIfRarenessExceedMax(rareness))
+                throw new ArgumentException("Item generator cannot generate epic items.");
+
+            return shieldGenerator.GenerateShield(rareness);
         }
 
         public ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass armorClass)

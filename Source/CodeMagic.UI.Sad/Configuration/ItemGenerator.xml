@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <item-generator-configuration>
+  <!-- Weight coefficients (to iron): -->
+  <!-- Wood: x0.7-->
+  <!-- Iron/Steel: x1-->
+  <!-- Silver: x1.3-->
+  <!-- ElvesMetal: x0.7-->
+  <!-- Dwarfs Metal: x2-->
+  <!-- Mythril: x0.3-->
+
   <weapon>
     <swords>
       <images>
@@ -639,7 +647,6 @@
       </rareness-configuration>
     </staffs>
 
-
     <description>
       <material-description>
         <material value="Wood">
@@ -656,7 +663,7 @@
           <text>It will not break easily.</text>
         </material>
         <material value="Silver">
-          <text>It is made from silver. Why is it so?</text>
+          <text>It is made from silver. Shiny but heavy.</text>
           <text>Not so hard as steel. But it is still metal.</text>
           <text>It shines a bit in light.</text>
         </material>
@@ -671,7 +678,7 @@
           <text>The material is super hard and super heavy.</text>
         </material>
         <material value="Mythril">
-          <text>It is made from strange violet metal.</text>
+          <text>It is made from unknown metal.</text>
           <text>It's material is extraordinary light.</text>
           <text>I can barely feel it's weight.</text>
         </material>
@@ -2467,7 +2474,7 @@
           <text>It will not break easily.</text>
         </material>
         <material value="Silver">
-          <text>It is made from silver. Why is it so?</text>
+          <text>It is made from silver. Shiny but heavy.</text>
           <text>Not so hard as steel. But it is still metal.</text>
           <text>It shines a bit in light.</text>
         </material>
@@ -2482,7 +2489,7 @@
           <text>The material is super hard and super heavy.</text>
         </material>
         <material value="Mythril">
-          <text>It is made from strange violet metal.</text>
+          <text>It is made from unknown metal.</text>
           <text>It's material is extraordinary light.</text>
           <text>I can barely feel it's weight.</text>
         </material>
@@ -2513,6 +2520,310 @@
       </rareness-description>
     </description>
   </armor>
+
+  <shields>
+    <small>
+      <name>Buckler</name>
+      <world-image>ItemsOnGround_Shield_Small</world-image>
+      <images>
+        <sprite index="0">
+          <image>Item_Shield_Small_Base</image>
+        </sprite>
+        <sprite index="1">
+          <image>Item_Shield_Small_Damage_V1</image>
+          <image>Item_Shield_Small_Damage_V2</image>
+        </sprite>
+        <sprite index="2">
+          <image>Item_Shield_Small_Image_V1</image>
+          <image>Item_Shield_Small_Image_V2</image>
+          <image>Item_Shield_Small_Image_V3</image>
+          <image>Item_Shield_Small_Image_V4</image>
+        </sprite>
+      </images>
+
+      <equipped-image-right>ItemOnPlayer_Shield_Right_Small</equipped-image-right>
+      <equipped-image-left>ItemOnPlayer_Shield_Left_Small</equipped-image-left>
+
+      <weight>
+        <value material="Wood" weight="1200" durability="15"/>
+        <value material="Iron" weight="1700" durability="30"/>
+        <value material="Steel" weight="1700" durability="45"/>
+        <value material="Silver" weight="2200" durability="30"/>
+        <value material="ElvesMetal" weight="1200" durability="35"/>
+        <value material="DwarfsMetal" weight="3400" durability="60"/>
+        <value material="Mythril" weight="500" durability="120"/>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <blocks-damage min="3" max="5"/>
+          <protect-chance min="10" max="20"/>
+          <hit-chance-penalty min="10" max="15"/>
+          <bonuses min="0" max="0"/>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <blocks-damage min="4" max="7"/>
+          <protect-chance min="15" max="25"/>
+          <hit-chance-penalty min="7" max="12"/>
+          <bonuses min="0" max="1"/>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <blocks-damage min="6" max="10"/>
+          <protect-chance min="20" max="30"/>
+          <hit-chance-penalty min="5" max="10"/>
+          <bonuses min="1" max="2"/>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <blocks-damage min="8" max="12"/>
+          <protect-chance min="25" max="30"/>
+          <hit-chance-penalty min="5" max="7"/>
+          <bonuses min="2" max="3"/>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </small>
+
+    <medium>
+      <name>Heater Shield</name>
+      <world-image>ItemsOnGround_Shield_Medium</world-image>
+      <images>
+        <sprite index="0">
+          <image>Item_Shield_Medium_Base</image>
+        </sprite>
+        <sprite index="1">
+          <image>Item_Shield_Medium_Damage_V1</image>
+          <image>Item_Shield_Medium_Damage_V2</image>
+        </sprite>
+        <sprite index="2">
+          <image>Item_Shield_Medium_Image_V1</image>
+          <image>Item_Shield_Medium_Image_V2</image>
+          <image>Item_Shield_Medium_Image_V3</image>
+          <image>Item_Shield_Medium_Image_V4</image>
+        </sprite>
+      </images>
+
+      <equipped-image-right>ItemOnPlayer_Shield_Right_Medium</equipped-image-right>
+      <equipped-image-left>ItemOnPlayer_Shield_Left_Medium</equipped-image-left>
+
+      <weight>
+        <value material="Wood" weight="2800" durability="20"/>
+        <value material="Iron" weight="4000" durability="40"/>
+        <value material="Steel" weight="4000" durability="60"/>
+        <value material="Silver" weight="5200" durability="40"/>
+        <value material="ElvesMetal" weight="2800" durability="50"/>
+        <value material="DwarfsMetal" weight="8000" durability="100"/>
+        <value material="Mythril" weight="1200" durability="200"/>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <blocks-damage min="4" max="6"/>
+          <protect-chance min="20" max="30"/>
+          <hit-chance-penalty min="10" max="15"/>
+          <bonuses min="0" max="0"/>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <blocks-damage min="6" max="9"/>
+          <protect-chance min="25" max="35"/>
+          <hit-chance-penalty min="7" max="12"/>
+          <bonuses min="0" max="1"/>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <blocks-damage min="8" max="12"/>
+          <protect-chance min="30" max="40"/>
+          <hit-chance-penalty min="5" max="10"/>
+          <bonuses min="1" max="2"/>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <blocks-damage min="10" max="15"/>
+          <protect-chance min="35" max="45"/>
+          <hit-chance-penalty min="5" max="7"/>
+          <bonuses min="2" max="3"/>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </medium>
+
+    <big>
+      <name>Scutum Shield</name>
+      <world-image>ItemsOnGround_Shield_Big</world-image>
+      <images>
+        <sprite index="0">
+          <image>Item_Shield_Big_Base</image>
+        </sprite>
+        <sprite index="1">
+          <image>Item_Shield_Big_Damage_V1</image>
+          <image>Item_Shield_Big_Damage_V2</image>
+        </sprite>
+        <sprite index="2">
+          <image>Item_Shield_Big_Image_V1</image>
+          <image>Item_Shield_Big_Image_V2</image>
+          <image>Item_Shield_Big_Image_V3</image>
+          <image>Item_Shield_Big_Image_V4</image>
+          <image>Item_Shield_Big_Image_V5</image>
+          <image>Item_Shield_Big_Image_V6</image>
+        </sprite>
+      </images>
+
+      <equipped-image-right>ItemOnPlayer_Shield_Right_Big</equipped-image-right>
+      <equipped-image-left>ItemOnPlayer_Shield_Left_Big</equipped-image-left>
+
+      <weight>
+        <value material="Wood" weight="4700" durability="30"/>
+        <value material="Iron" weight="6800" durability="80"/>
+        <value material="Steel" weight="6800" durability="120"/>
+        <value material="Silver" weight="8800" durability="80"/>
+        <value material="ElvesMetal" weight="4700" durability="100"/>
+        <value material="DwarfsMetal" weight="13600" durability="200"/>
+        <value material="Mythril" weight="2000" durability="350"/>
+      </weight>
+
+      <rareness-configuration>
+        <rareness value="Trash">
+          <blocks-damage min="6" max="8"/>
+          <protect-chance min="30" max="40"/>
+          <hit-chance-penalty min="10" max="15"/>
+          <bonuses min="0" max="0"/>
+          <materials>
+            <material>Wood</material>
+            <material>Iron</material>
+          </materials>
+        </rareness>
+        <rareness value="Common">
+          <blocks-damage min="8" max="11"/>
+          <protect-chance min="35" max="45"/>
+          <hit-chance-penalty min="7" max="12"/>
+          <bonuses min="0" max="1"/>
+          <materials>
+            <material>Iron</material>
+            <material>Steel</material>
+            <material>Silver</material>
+          </materials>
+        </rareness>
+        <rareness value="Uncommon">
+          <blocks-damage min="10" max="14"/>
+          <protect-chance min="40" max="50"/>
+          <hit-chance-penalty min="5" max="10"/>
+          <bonuses min="1" max="2"/>
+          <materials>
+            <material>Steel</material>
+            <material>Silver</material>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+          </materials>
+        </rareness>
+        <rareness value="Rare">
+          <blocks-damage min="12" max="17"/>
+          <protect-chance min="45" max="55"/>
+          <hit-chance-penalty min="5" max="7"/>
+          <bonuses min="2" max="3"/>
+          <materials>
+            <material>ElvesMetal</material>
+            <material>DwarfsMetal</material>
+            <material>Mythril</material>
+          </materials>
+        </rareness>
+      </rareness-configuration>
+    </big>
+
+    <description>
+      <material-description>
+        <material value="Wood">
+          <text>It is made from wood and will not last long.</text>
+          <text>It is made from wood. Hope it won't break from attack.</text>
+          <text>It consists of several wooden planks.</text>
+        </material>
+        <material value="Iron">
+          <text>It is made from iron, strong enough for a shield.</text>
+          <text>There is some rust on it.</text>
+        </material>
+        <material value="Steel">
+          <text>It is made from steel, a durable material.</text>
+          <text>It will not break easily.</text>
+        </material>
+        <material value="Silver">
+          <text>It is made from silver. Shiny but heavy.</text>
+          <text>Not so hard as steel. But it is still metal.</text>
+          <text>It shines a bit in light.</text>
+        </material>
+        <material value="ElvesMetal">
+          <text>It is made from strange green metal.</text>
+          <text>It's material is very light.</text>
+          <text>It smells like grass.</text>
+        </material>
+        <material value="DwarfsMetal">
+          <text>It is made from strange yellow metal.</text>
+          <text>It is extraordinary heavy.</text>
+          <text>The material is super hard and super heavy.</text>
+        </material>
+        <material value="Mythril">
+          <text>It is made from unknown metal.</text>
+          <text>It's material is extraordinary light.</text>
+          <text>I can barely feel it's weight.</text>
+          <text>It is super durable but super light.</text>
+        </material>
+      </material-description>
+      <rareness-description>
+        <rareness value="Trash">
+          <text>It's quality is poor.</text>
+          <text>It is almost falling apart.</text>
+          <text>It can barely be used.</text>
+          <text>I bet it won't stop any attack.</text>
+        </rareness>
+        <rareness value="Common">
+          <text>It's quality is common.</text>
+          <text>This item has normal quality.</text>
+          <text>Not good, not bad, just normal.</text>
+        </rareness>
+        <rareness value="Uncommon">
+          <text>It's quality is quite good.</text>
+          <text>It was definitely created by a master.</text>
+        </rareness>
+        <rareness value="Rare">
+          <text>It's quality is great.</text>
+          <text>You can use it easily.</text>
+        </rareness>
+      </rareness-description>
+    </description>
+  </shields>
 
   <spell-book>
     <template>SpellBook_Template</template>
@@ -2720,7 +3031,30 @@
       </rareness>
     </group>
 
-    <group type="Weapon" inherit-from="Durable">
+    <group type="Holdable" inherit-from="Durable">
+      <rareness value="Trash">
+        <bonus type="LightBonus">
+          <value key="Power">Dusk1</value>
+        </bonus>
+      </rareness>
+      <rareness value="Common">
+        <bonus type="LightBonus">
+          <value key="Power">Dusk1,Dusk2</value>
+        </bonus>
+      </rareness>
+      <rareness value="Uncommon">
+        <bonus type="LightBonus">
+          <value key="Power">Dim1,Dim2</value>
+        </bonus>
+      </rareness>
+      <rareness value="Rare">
+        <bonus type="LightBonus">
+          <value key="Power">Dim2,Medium</value>
+        </bonus>
+      </rareness>
+    </group>
+
+    <group type="Weapon" inherit-from="Holdable">
       <rareness value="Trash">
         <bonus type="DamageBonus">
           <value key="Min">0</value>
@@ -2730,9 +3064,6 @@
         <bonus type="AccuracyBonus">
           <value key="Min">3</value>
           <value key="Max">5</value>
-        </bonus>
-        <bonus type="LightBonus">
-          <value key="Power">Dusk1</value>
         </bonus>
       </rareness>
       <rareness value="Common">
@@ -2745,9 +3076,6 @@
           <value key="Min">5</value>
           <value key="Max">8</value>
         </bonus>
-        <bonus type="LightBonus">
-          <value key="Power">Dusk1,Dusk2</value>
-        </bonus>
       </rareness>
       <rareness value="Uncommon">
         <bonus type="DamageBonus">
@@ -2758,9 +3086,6 @@
         <bonus type="AccuracyBonus">
           <value key="Min">8</value>
           <value key="Max">12</value>
-        </bonus>
-        <bonus type="LightBonus">
-          <value key="Power">Dim1,Dim2</value>
         </bonus>
       </rareness>
       <rareness value="Rare">
@@ -2773,10 +3098,11 @@
           <value key="Min">12</value>
           <value key="Max">15</value>
         </bonus>
-        <bonus type="LightBonus">
-          <value key="Power">Dim2,Medium</value>
-        </bonus>
       </rareness>
+    </group>
+
+    <group type="Shield" inherit-from="Holdable">
+
     </group>
 
     <group type="Armor" inherit-from="Durable">

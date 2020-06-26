@@ -14,6 +14,7 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses
         private const string GroupNameEquipable = "Equipable";
         private const string GroupNameWeapon = "Weapon";
         private const string GroupNameArmor = "Armor";
+        private const string GroupNameShield = "Shield";
 
         private static readonly Dictionary<string, IBonusApplier> BonusAppliers = new Dictionary<string, IBonusApplier>
         {
@@ -80,6 +81,8 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Bonuses
             {
                 case WeaponItemConfiguration _:
                     return GroupNameWeapon;
+                case ShieldItemConfiguration _:
+                    return GroupNameShield;
                 case ArmorItemConfiguration _:
                     return GroupNameArmor;
                 case EquipableItemConfiguration _:

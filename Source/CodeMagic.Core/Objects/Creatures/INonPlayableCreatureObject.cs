@@ -4,6 +4,6 @@ namespace CodeMagic.Core.Objects.Creatures
 {
     public interface INonPlayableCreatureObject : ICreatureObject
     {
-        void Attack(Point position, IDestroyableObject target);
+        void Attack(Point position, Point targetPosition, IDestroyableObject target);
     }
 }

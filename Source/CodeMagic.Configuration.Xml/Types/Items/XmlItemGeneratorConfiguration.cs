@@ -1,11 +1,13 @@
 ﻿using System.Xml.Serialization;
 using CodeMagic.Configuration.Xml.Types.Items.Armor;
 using CodeMagic.Configuration.Xml.Types.Items.Bonuses;
+using CodeMagic.Configuration.Xml.Types.Items.Shield;
 using CodeMagic.Configuration.Xml.Types.Items.SpellBook;
 using CodeMagic.Configuration.Xml.Types.Items.Weapon;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.Armor;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.Bonuses;
+using CodeMagic.Game.Items.ItemsGeneration.Configuration.Shield;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.SpellBook;
 using CodeMagic.Game.Items.ItemsGeneration.Configuration.Weapon;
 
@@ -25,6 +27,12 @@ namespace CodeMagic.Configuration.Xml.Types.Items
 
         [XmlElement("armor")]
         public XmlArmorConfiguration ArmorConfigurationData { get; set; }
+
+        [XmlIgnore]
+        public IShieldsConfiguration ShieldsConfiguration => ShieldsConfigurationData;
+
+        [XmlElement("shields")]
+        public XmlShieldsConfiguration ShieldsConfigurationData { get; set; }
 
         [XmlIgnore]
         public ISpellBooksConfiguration SpellBooksConfiguration => SpellBooksConfigurationData;

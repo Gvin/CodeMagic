@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
@@ -14,7 +16,7 @@ namespace CodeMagic.Game.Objects.Creatures
     public abstract class MonsterCreatureObject : NonPlayableCreatureObject
     {
         private readonly ILootConfiguration lootConfiguration;
-        private readonly MonsterDamageValue[] damage;
+        private readonly MonsterDamageValue[] attackDamage;
         private readonly int hitChance;
         private readonly MonsterCreatureObjectConfiguration configuration;
 
@@ -22,7 +24,7 @@ namespace CodeMagic.Game.Objects.Creatures
             : base(data)
         {
             this.configuration = configuration;
-            damage = configuration.Damage.ToArray();
+            attackDamage = configuration.Damage.ToArray();
             hitChance = configuration.Accuracy;
             lootConfiguration = configuration.LootConfiguration;
         }
@@ -32,7 +34,7 @@ namespace CodeMagic.Game.Objects.Creatures
         {
             this.configuration = configuration;
 
-            damage = configuration.Damage.ToArray();
+            attackDamage = configuration.Damage.ToArray();
             hitChance = configuration.Accuracy;
             lootConfiguration = configuration.LootConfiguration;
 
@@ -50,6 +52,19 @@ namespace CodeMagic.Game.Objects.Creatures
             }
         }
 
+        protected override int TryBlockMeleeDamage(Direction damageDirection, int damage, Element element)
+        {
+            if (!RandomHelper.CheckChance(configuration.ShieldBlockChance))
+                return damage;
+
+            var blockedDamage = Math.Min(configuration.ShieldBlocksDamage, damage);
+            if (blockedDamage == 0)
+                return damage;
+
+            CurrentGame.Journal.Write(new ShieldBlockedDamageMessage(this, blockedDamage, element));
+            return damage - blockedDamage;
+        }
+
         public override int DodgeChance => configuration.DodgeChance;
 
         public sealed override ObjectSize Size => configuration.Size;
@@ -64,9 +79,9 @@ namespace CodeMagic.Game.Objects.Creatures
 
         protected sealed override float NormalSpeed => configuration.Speed / 1;
 
-        public override void Attack(Point position, IDestroyableObject target)
+        public override void Attack(Point position, Point targetPosition, IDestroyableObject target)
         {
-            base.Attack(position, target);
+            base.Attack(position, targetPosition, target);
 
             var currentHitChance = CalculateHitChance(hitChance);
             if (!RandomHelper.CheckChance(currentHitChance))
@@ -81,10 +96,14 @@ namespace CodeMagic.Game.Objects.Creatures
                 return;
             }
 
-            foreach (var damageValue in damage)
+            var attackDirection = Point.GetAdjustedPointRelativeDirection(targetPosition, position);
+            if (!attackDirection.HasValue)
+                throw new ApplicationException("Can only attack adjusted target");
+
+            foreach (var damageValue in attackDamage)
             {
                 var value = RandomHelper.GetRandomValue(damageValue.MinValue, damageValue.MaxValue);
-                target.Damage(position, value, damageValue.Element);
+                target.MeleeDamage(targetPosition, attackDirection.Value, value, damageValue.Element);
                 CurrentGame.Journal.Write(new DealDamageMessage(this, target, value, damageValue.Element), this);
             }
         }
@@ -159,6 +178,10 @@ namespace CodeMagic.Game.Objects.Creatures
         public Dictionary<Element, int> BaseProtection { get; set; }
 
         public List<string> StatusesImmunity { get; set; }
+
+        public int ShieldBlockChance { get; set; }
+
+        public int ShieldBlocksDamage { get; set; }
     }
 
     public class MonsterDamageValue

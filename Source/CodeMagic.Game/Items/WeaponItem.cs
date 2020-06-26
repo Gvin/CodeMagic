@@ -3,30 +3,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Logging;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
-using CodeMagic.Game.Saving;
-using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items
 {
-    public class WeaponItem : DurableItem, IWeaponItem, IDescriptionProvider, IInventoryImageProvider, IWorldImageProvider, IEquippedImageProvider
+    public class WeaponItem : HoldableDurableItemBase, IWeaponItem
     {
-        private static readonly ILog Log = LogManager.GetLog<WeaponItem>();
-
-        private const string SaveKeyInventoryImage = "InventoryImage";
-        private const string SaveKeyWorldImage = "WorldImage";
-        private const string SaveKeyEquippedImageRight = "EquippedImageRight";
-        private const string SaveKeyEquippedImageLeft = "EquippedImageLeft";
         private const string SaveKeyAccuracy = "Accuracy";
         private const string SaveKeyMinDamage = "MinDamage";
         private const string SaveKeyMaxDamage = "MaxDamage";
-
-        private readonly SymbolsImage inventoryImage;
-        private readonly SymbolsImage worldImage;
-        private readonly SymbolsImage equippedImageRight;
-        private readonly SymbolsImage equippedImageLeft;
 
         public WeaponItem(SaveData data) : base(data)
         {
@@ -36,11 +22,6 @@ namespace CodeMagic.Game.Items
                 .ToDictionary(pair => (Element)int.Parse((string)pair.Key), pair => int.Parse((string)pair.Value));
 
             Accuracy = data.GetIntValue(SaveKeyAccuracy);
-
-            inventoryImage = data.GetObject<SymbolsImageSaveable>(SaveKeyInventoryImage)?.GetImage();
-            worldImage = data.GetObject<SymbolsImageSaveable>(SaveKeyWorldImage)?.GetImage();
-            equippedImageRight = data.GetObject<SymbolsImageSaveable>(SaveKeyEquippedImageRight)?.GetImage();
-            equippedImageLeft = data.GetObject<SymbolsImageSaveable>(SaveKeyEquippedImageLeft)?.GetImage();
         }
 
         public WeaponItem(WeaponItemConfiguration configuration) 
@@ -50,21 +31,11 @@ namespace CodeMagic.Game.Items
             MaxDamage = configuration.MaxDamage.ToDictionary(pair => pair.Key, pair => pair.Value);
 
             Accuracy = configuration.HitChance;
-
-            inventoryImage = configuration.InventoryImage;
-            worldImage = configuration.WorldImage;
-            equippedImageRight = configuration.EquippedImageRight;
-            equippedImageLeft = configuration.EquippedImageLeft;
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
         {
             var data = base.GetSaveDataContent();
-
-            data.Add(SaveKeyInventoryImage, inventoryImage != null ? new SymbolsImageSaveable(inventoryImage) : null);
-            data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
-            data.Add(SaveKeyEquippedImageRight, equippedImageRight != null ? new SymbolsImageSaveable(equippedImageRight) : null);
-            data.Add(SaveKeyEquippedImageLeft, equippedImageLeft != null ? new SymbolsImageSaveable(equippedImageLeft) : null);
 
             data.Add(SaveKeyAccuracy, Accuracy);
             data.Add(SaveKeyMinDamage,
@@ -75,8 +46,6 @@ namespace CodeMagic.Game.Items
                     pair => (object)pair.Value)));
             return data;
         }
-
-        public int EquippedImageOrder => 999;
 
         public Dictionary<Element, int> MaxDamage { get; }
 
@@ -94,7 +63,7 @@ namespace CodeMagic.Game.Items
 
         public override bool Stackable => false;
 
-        public virtual StyledLine[] GetDescription(Player player)
+        public override StyledLine[] GetDescription(Player player)
         {
             var result = GetCharacteristicsDescription(player).ToList();
 
@@ -106,15 +75,18 @@ namespace CodeMagic.Game.Items
 
         private StyledLine[] GetCharacteristicsDescription(Player player)
         {
+            var rightHandWeapon = player.Equipment.RightHandItem as IWeaponItem;
+            var leftHandWeapon = player.Equipment.LeftHandItem as IWeaponItem;
+
             var result = new List<StyledLine>();
 
-            if (Equals(player.Equipment.RightWeapon) || Equals(player.Equipment.LeftWeapon))
+            if (Equals(rightHandWeapon) || Equals(leftHandWeapon) || rightHandWeapon == null)
             {
                 result.Add(TextHelper.GetWeightLine(Weight));
             }
             else
             {
-                result.Add(TextHelper.GetCompareWeightLine(Weight, player.Equipment.RightWeapon.Weight));
+                result.Add(TextHelper.GetCompareWeightLine(Weight, rightHandWeapon.Weight));
             }
 
             result.Add(StyledLine.Empty);
@@ -123,27 +95,27 @@ namespace CodeMagic.Game.Items
 
             result.Add(StyledLine.Empty);
 
-            AddDamageDescription(result, player.Equipment.LeftWeapon, player.Equipment.RightWeapon);
+            AddDamageDescription(result, leftHandWeapon, rightHandWeapon);
 
             var hitChanceLine = new StyledLine { "Accuracy: " };
-            if (Equals(player.Equipment.RightWeapon) || Equals(player.Equipment.LeftWeapon))
+            if (Equals(rightHandWeapon) || Equals(leftHandWeapon) || rightHandWeapon == null)
             {
                 hitChanceLine.Add(TextHelper.GetValueString(Accuracy, "%", false));
             }
             else
             {
-                hitChanceLine.Add(TextHelper.GetCompareValueString(Accuracy, player.Equipment.RightWeapon.Accuracy, "%", false));
+                hitChanceLine.Add(TextHelper.GetCompareValueString(Accuracy, rightHandWeapon.Accuracy, "%", false));
             }
             result.Add(hitChanceLine);
 
             result.Add(StyledLine.Empty);
-            if (Equals(player.Equipment.RightWeapon) || Equals(player.Equipment.LeftWeapon))
+            if (Equals(rightHandWeapon) || Equals(leftHandWeapon) || rightHandWeapon == null)
             {
                 TextHelper.AddBonusesDescription(this, null, result);
             }
             else
             {
-                TextHelper.AddBonusesDescription(this, player.Equipment.RightWeapon, result);
+                TextHelper.AddBonusesDescription(this, rightHandWeapon, result);
             }
             result.Add(StyledLine.Empty);
             TextHelper.AddLightBonusDescription(this, result);
@@ -151,15 +123,15 @@ namespace CodeMagic.Game.Items
             return result.ToArray();
         }
 
-        private void AddDamageDescription(List<StyledLine> descriptionResult, IWeaponItem equipedWeaponLeft, IWeaponItem equipedWeaponRight)
+        private void AddDamageDescription(List<StyledLine> descriptionResult, IWeaponItem equippedWeaponLeft, IWeaponItem equippedWeaponRight)
         {
             foreach (Element element in Enum.GetValues(typeof(Element)))
             {
                 var maxDamage = GetMaxDamage(this, element);
                 var minDamage = GetMinDamage(this, element);
 
-                var otherMaxDamage = GetMaxDamage(equipedWeaponRight, element);
-                var otherMinDamage = GetMinDamage(equipedWeaponRight, element);
+                var otherMaxDamage = GetMaxDamage(equippedWeaponRight, element);
+                var otherMinDamage = GetMinDamage(equippedWeaponRight, element);
 
                 if (maxDamage == 0 && minDamage == 0 && otherMaxDamage == 0 && otherMinDamage == 0)
                     continue;
@@ -171,7 +143,7 @@ namespace CodeMagic.Game.Items
                     " Damage: "
                 };
 
-                if (Equals(equipedWeaponRight) || Equals(equipedWeaponLeft))
+                if (Equals(equippedWeaponRight) || Equals(equippedWeaponLeft) || equippedWeaponRight == null)
                 {
                     damageLine.Add($"{minDamage} - {maxDamage}");
                 }
@@ -219,53 +191,10 @@ namespace CodeMagic.Game.Items
 
             return item.MinDamage.ContainsKey(element) ? item.MinDamage[element] : 0;
         }
-
-        public virtual SymbolsImage GetWorldImage(IImagesStorage storage)
-        {
-            return worldImage;
-        }
-
-        public virtual SymbolsImage GetInventoryImage(IImagesStorage storage)
-        {
-            return inventoryImage;
-        }
-
-        public SymbolsImage GetEquippedImage(Player player, IImagesStorage imagesStorage)
-        {
-            if (Equals(player.Equipment.RightWeapon))
-                return GetRightEquippedImage(imagesStorage);
-            if (Equals(player.Equipment.LeftWeapon))
-                return GetLeftEquippedImage(imagesStorage);
-
-            Log.Warning($"Trying to render item \"{Name}\" that not equipped on both left and right hand.");
-#if DEBUG
-            throw new ApplicationException($"Trying to render item \"{Name}\" that not equipped on both left and right hand.");
-#else
-            return null;
-#endif
-        }
-
-        protected virtual SymbolsImage GetRightEquippedImage(IImagesStorage storage)
-        {
-            return equippedImageRight;
-        }
-
-        protected virtual SymbolsImage GetLeftEquippedImage(IImagesStorage storage)
-        {
-            return equippedImageLeft;
-        }
     }
 
-    public class WeaponItemConfiguration : DurableItemConfiguration
+    public class WeaponItemConfiguration : HoldableItemConfiguration
     {
-        public SymbolsImage InventoryImage { get; set; }
-
-        public SymbolsImage WorldImage { get; set; }
-
-        public SymbolsImage EquippedImageRight { get; set; }
-
-        public SymbolsImage EquippedImageLeft { get; set; }
-
         public Dictionary<Element, int> MaxDamage { get; set; }
 
         public Dictionary<Element, int> MinDamage { get; set; }

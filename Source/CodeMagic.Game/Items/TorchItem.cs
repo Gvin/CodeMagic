@@ -5,7 +5,6 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects;
-using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game.Items

@@ -7,6 +7,8 @@ namespace CodeMagic.Game.Configuration
     {
         IStandardLootConfiguration Weapon { get; }
 
+        IStandardLootConfiguration Shield { get; }
+
         IArmorLootConfiguration Armor { get; }
 
         IStandardLootConfiguration SpellBook { get; }

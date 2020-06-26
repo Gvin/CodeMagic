@@ -2,7 +2,7 @@
 {
     public interface IWeaponConfiguration
     {
-        IWeaponImagesConfiguration Images { get; }
+        ILayersImagesConfiguration Images { get; }
 
         string EquippedImageRight { get; }
 

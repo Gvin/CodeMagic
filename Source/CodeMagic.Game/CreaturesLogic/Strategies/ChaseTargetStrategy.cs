@@ -91,7 +91,7 @@ namespace CodeMagic.Game.CreaturesLogic.Strategies
             if (target == null)
                 return;
 
-            creature.Attack(targetPosition, target);
+            creature.Attack(position, targetPosition, target);
         }
 
         private void TryMoveToTarget(INonPlayableCreatureObject creature, Point position, Point playerPosition)

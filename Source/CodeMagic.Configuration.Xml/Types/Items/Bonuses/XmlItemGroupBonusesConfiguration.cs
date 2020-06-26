@@ -15,7 +15,7 @@ namespace CodeMagic.Configuration.Xml.Types.Items.Bonuses
         public string InheritFrom { get; set; }
 
         [XmlIgnore]
-        public IBonusRarenessConfiguration[] Configuration => ConfigurationData.ToArray<IBonusRarenessConfiguration>();
+        public IBonusRarenessConfiguration[] Configuration => ConfigurationData?.ToArray<IBonusRarenessConfiguration>() ?? new IBonusRarenessConfiguration[0];
 
         [XmlElement("rareness")]
         public XmlBonusRarenessConfiguration[] ConfigurationData { get; set; }

@@ -92,6 +92,8 @@ namespace CodeMagic.Game.Objects.Creatures.NonPlayable
             LootConfiguration = config.Loot;
             VisibilityRange = config.Stats.VisibilityRange;
             Speed = config.Stats.Speed;
+            ShieldBlockChance = config.Stats.ShieldBlockChance;
+            ShieldBlocksDamage = config.Stats.ShieldBlocksDamage;
             Damage.AddRange(config.Stats.Damage.Select(conf => new MonsterDamageValue(conf.Element, conf.MinValue, conf.MaxValue)));
             foreach (var protectionConfiguration in config.Stats.Protection)
             {

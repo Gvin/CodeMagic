@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Gvin</Authors>
-    <AssemblyVersion>1.5.0.0</AssemblyVersion>
-    <Version>1.5.0</Version>
+    <AssemblyVersion>1.6.0.0</AssemblyVersion>
+    <Version>1.6.0</Version>
     <PackageProjectUrl>https://github.com/Gvin/CodeMagic</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Gvin/CodeMagic</RepositoryUrl>
   </PropertyGroup>

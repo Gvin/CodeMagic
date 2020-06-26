@@ -17,6 +17,12 @@ namespace CodeMagic.Configuration.Xml.Types
         public XmlStandardLootConfiguration WeaponData { get; set; }
 
         [XmlIgnore]
+        public IStandardLootConfiguration Shield => ShieldData;
+
+        [XmlElement("shield")]
+        public XmlStandardLootConfiguration ShieldData { get; set; }
+
+        [XmlIgnore]
         public IArmorLootConfiguration Armor => ArmorData;
 
         [XmlElement("armor")]

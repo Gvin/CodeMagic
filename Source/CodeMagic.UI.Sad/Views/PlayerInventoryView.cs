@@ -26,8 +26,8 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton useItemButton;
 
         private StandardButton equipItemButton;
-        private StandardButton equipRightWeaponButton;
-        private StandardButton equipLeftWeaponButton;
+        private StandardButton equipRightHoldableButton;
+        private StandardButton equipLeftHoldableButton;
         private StandardButton takeOffItemButton;
 
         private StandardButton dropItemButton;
@@ -45,7 +45,7 @@ namespace CodeMagic.UI.Sad.Views
 
         protected override IEnumerable<InventoryStack> GetStacks()
         {
-            return game.Player.Inventory.Stacks.OrderByDescending(stack => PlayerInventoryItem.GetIfEquiped(game.Player, stack));
+            return game.Player.Inventory.Stacks.OrderByDescending(stack => PlayerInventoryItem.GetIfEquipped(game.Player, stack));
         }
 
         private void InitializeControls()
@@ -74,21 +74,21 @@ namespace CodeMagic.UI.Sad.Views
             equipItemButton.Click += (sender, args) => EquipSelectedItem();
             Add(equipItemButton);
 
-            equipLeftWeaponButton = new StandardButton(20)
+            equipLeftHoldableButton = new StandardButton(20)
             {
                 Position = new Point(Width - 52, 40),
                 Text = "[Z] Equip Left"
             };
-            equipLeftWeaponButton.Click += (sender, args) => EquipSelectedWeapon(false);
-            Add(equipLeftWeaponButton);
+            equipLeftHoldableButton.Click += (sender, args) => EquipSelectedHoldable(false);
+            Add(equipLeftHoldableButton);
 
-            equipRightWeaponButton = new StandardButton(20)
+            equipRightHoldableButton = new StandardButton(20)
             {
                 Position = new Point(Width - 31, 40),
                 Text = "[X] Equip Right"
             };
-            equipRightWeaponButton.Click += (sender, args) => EquipSelectedWeapon(true);
-            Add(equipRightWeaponButton);
+            equipRightHoldableButton.Click += (sender, args) => EquipSelectedHoldable(true);
+            Add(equipRightHoldableButton);
 
             takeOffItemButton = new StandardButton(20)
             {
@@ -164,22 +164,22 @@ namespace CodeMagic.UI.Sad.Views
             if (game.Player.Equipment.IsEquiped(equipableItem))
                 return;
 
-            if (equipableItem is WeaponItem)
+            if (equipableItem is IHoldableItem)
                 return;
 
             game.PerformPlayerAction(new EquipItemPlayerAction(equipableItem));
             Close();
         }
 
-        private void EquipSelectedWeapon(bool isRight)
+        private void EquipSelectedHoldable(bool isRight)
         {
-            if (!(SelectedStack?.TopItem is WeaponItem weaponItem))
+            if (!(SelectedStack?.TopItem is IHoldableItem holdableItem))
                 return;
 
-            if (game.Player.Equipment.IsEquiped(weaponItem))
+            if (game.Player.Equipment.IsEquiped(holdableItem))
                 return;
 
-            game.PerformPlayerAction(new EquipWeaponPlayerAction(weaponItem, isRight));
+            game.PerformPlayerAction(new EquipHoldablePlayerAction(holdableItem, isRight));
             Close();
         }
 
@@ -212,18 +212,18 @@ namespace CodeMagic.UI.Sad.Views
                 var equiped = game.Player.Equipment.IsEquiped(equipable);
                 takeOffItemButton.IsVisible = equiped;
 
-                var isWeapon = equipable is WeaponItem;
+                var isHoldable = equipable is IHoldableItem;
 
-                equipItemButton.IsVisible = !equiped && !isWeapon;
-                equipLeftWeaponButton.IsVisible = !equiped && isWeapon;
-                equipRightWeaponButton.IsVisible = !equiped && isWeapon;
+                equipItemButton.IsVisible = !equiped && !isHoldable;
+                equipLeftHoldableButton.IsVisible = !equiped && isHoldable;
+                equipRightHoldableButton.IsVisible = !equiped && isHoldable;
             }
             else
             {
                 takeOffItemButton.IsVisible = false;
                 equipItemButton.IsVisible = false;
-                equipLeftWeaponButton.IsVisible = false;
-                equipRightWeaponButton.IsVisible = false;
+                equipLeftHoldableButton.IsVisible = false;
+                equipRightHoldableButton.IsVisible = false;
             }
         }
 
@@ -238,10 +238,10 @@ namespace CodeMagic.UI.Sad.Views
                     EquipSelectedItem();
                     return true;
                 case Keys.Z:
-                    EquipSelectedWeapon(false);
+                    EquipSelectedHoldable(false);
                     return true;
                 case Keys.X:
-                    EquipSelectedWeapon(true);
+                    EquipSelectedHoldable(true);
                     return true;
                 case Keys.T:
                     TakeOffSelectedItem();
@@ -276,10 +276,10 @@ namespace CodeMagic.UI.Sad.Views
 
     public class PlayerInventoryItem : InventoryStackItem
     {
-        private const string EquipedText = "[Eq]";
-        private const string EquipedLeftText = "[EL]";
-        private const string EquipedRightText = "[ER]";
-        private static readonly Color EquipedTextColor = Color.Red;
+        private const string EquippedText = "[Eq]";
+        private const string EquippedLeftText = "[EL]";
+        private const string EquippedRightText = "[ER]";
+        private static readonly Color EquippedTextColor = Color.Red;
 
         private readonly Player player;
 
@@ -298,16 +298,16 @@ namespace CodeMagic.UI.Sad.Views
                 result.Add(new ColoredString($" ({Stack.Count})", new Cell(StackCountColor, backColor)));
             }
 
-            var equipedText = GetEquipedText(player, Stack);
-            if (!string.IsNullOrEmpty(equipedText))
+            var equippedText = GetEquippedText(player, Stack);
+            if (!string.IsNullOrEmpty(equippedText))
             {
-                result.Add(new ColoredString($" {equipedText}", new Cell(EquipedTextColor, backColor)));
+                result.Add(new ColoredString($" {equippedText}", new Cell(EquippedTextColor, backColor)));
             }
 
             return result.ToArray();
         }
 
-        private static string GetEquipedText(Player player, InventoryStack stack)
+        private static string GetEquippedText(Player player, InventoryStack stack)
         {
             if (!(stack.TopItem is IEquipableItem equipable))
                 return null;
@@ -315,16 +315,16 @@ namespace CodeMagic.UI.Sad.Views
             if (!player.Equipment.IsEquiped(equipable))
                 return null;
 
-            if (!(equipable is WeaponItem weapon))
-                return EquipedText;
+            if (!(equipable is IHoldableItem holdableItem))
+                return EquippedText;
 
-            if (player.Equipment.LeftWeapon.Equals(weapon))
-                return EquipedLeftText;
+            if (player.Equipment.LeftHandItem.Equals(holdableItem))
+                return EquippedLeftText;
 
-            return EquipedRightText;
+            return EquippedRightText;
         }
 
-        public static bool GetIfEquiped(Player player, InventoryStack stack)
+        public static bool GetIfEquipped(Player player, InventoryStack stack)
         {
             if (!(stack.TopItem is IEquipableItem equipable))
                 return false;
