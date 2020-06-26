@@ -126,13 +126,6 @@ namespace CodeMagic.UI.Sad.GameProcess
 
 #if DEBUG
             player.Inventory.AddItem(CreateBanHammer());
-
-            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
-            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
-            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
-            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
-            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
-            player.Inventory.AddItem(itemsGenerator.GenerateShield(ItemRareness.Rare));
 #endif
 
             return player;

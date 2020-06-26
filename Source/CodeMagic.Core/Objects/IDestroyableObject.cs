@@ -18,7 +18,7 @@ namespace CodeMagic.Core.Objects
 
         void OnDeath(Point position);
 
-        void MeleDamage(Point position, Direction attackDirection, int damage, Element element);
+        void MeleeDamage(Point position, Direction attackDirection, int damage, Element element);
 
         void Damage(Point position, int damage, Element element);
 

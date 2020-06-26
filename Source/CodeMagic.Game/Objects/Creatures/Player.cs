@@ -48,6 +48,8 @@ namespace CodeMagic.Game.Objects.Creatures
         private const string ImageBodyLeftWeapon = "Player_Body_LeftWeapon";
         private const string ImageBodyRightWeapon = "Player_Body_RightWeapon";
 
+        private const int StaminaLooseOnBlock = 5;
+
         private const int DefaultStatValue = 1;
 
         private const int MaxProtection = 75;
@@ -241,29 +243,35 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public int MaxMana => 80 + 20 * GetStat(PlayerStats.Intelligence) + Equipment.GetBonus(EquipableBonusType.Mana);
 
-        public override void MeleDamage(Point position, Direction attackDirection, int damage, Element element)
+        protected override int TryBlockMeleeDamage(Direction damageDirection, int damage, Element element)
         {
-            var remainingDamage = damage;
-            if (Direction == attackDirection)
-            {
-                var shields = Equipment.GetEquippedItems().OfType<ShieldItem>().ToArray();
-                foreach (var shield in shields)
-                {
-                    if (RandomHelper.CheckChance(shield.ProtectChance))
-                    {
-                        var damageBlocked = Math.Min(shield.BlocksDamage, remainingDamage);
-                        if (damageBlocked > 0)
-                        {
-                            CurrentGame.Journal.Write(new ShieldBlockedDamageMessage(this, damageBlocked, element));
-                        }
+            if (Direction != damageDirection)
+                return damage;
 
-                        remainingDamage -= damageBlocked;
-                        shield.Durability--;
-                    }
+            var remainingDamage = damage;
+
+            var shields = Equipment.GetEquippedItems().OfType<ShieldItem>().ToArray();
+            foreach (var shield in shields)
+            {
+                if (!RandomHelper.CheckChance(shield.ProtectChance)) 
+                    continue;
+
+                if (Stamina < StaminaLooseOnBlock) 
+                    continue;
+
+                Stamina -= StaminaLooseOnBlock;
+
+                var damageBlocked = Math.Min(shield.BlocksDamage, remainingDamage);
+                if (damageBlocked > 0)
+                {
+                    CurrentGame.Journal.Write(new ShieldBlockedDamageMessage(this, damageBlocked, element));
                 }
+
+                remainingDamage -= damageBlocked;
+                shield.Durability--;
             }
 
-            base.MeleDamage(position, attackDirection, remainingDamage, element);
+            return remainingDamage;
         }
 
         protected override void ApplyRealDamage(int damage, Element element, Point position)

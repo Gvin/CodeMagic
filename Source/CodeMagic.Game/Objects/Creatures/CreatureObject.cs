@@ -49,6 +49,14 @@ namespace CodeMagic.Game.Objects.Creatures
             }
         }
 
+        protected abstract int TryBlockMeleeDamage(Direction damageDirection, int damage, Element element);
+
+        public sealed override void MeleeDamage(Point position, Direction attackDirection, int damage, Element element)
+        {
+            var remainingDamage = TryBlockMeleeDamage(attackDirection, damage, element);
+            base.MeleeDamage(position, attackDirection, remainingDamage, element);
+        }
+
         public override ZIndex ZIndex => ZIndex.Creature;
 
         protected virtual double ParalyzedChanceMultiplier => 5;

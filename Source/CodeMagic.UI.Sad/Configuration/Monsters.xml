@@ -147,6 +147,8 @@
       <visibility-range>2</visibility-range>
       <accuracy>50</accuracy>
       <dodge-chance>10</dodge-chance>
+      <shield-block-chance>20</shield-block-chance>
+      <shield-blocks-damage>5</shield-blocks-damage>
       <protection>
         <element type="Slashing">50</element>
         <element type="Piercing">50</element>
@@ -345,6 +347,8 @@
       <visibility-range>3</visibility-range>
       <accuracy>65</accuracy>
       <dodge-chance>15</dodge-chance>
+      <shield-block-chance>15</shield-block-chance>
+      <shield-blocks-damage>5</shield-blocks-damage>
       <damage>
         <value element="Piercing" min="5" max="8"/>
       </damage>
@@ -645,6 +649,8 @@
       <visibility-range>4</visibility-range>
       <accuracy>70</accuracy>
       <dodge-chance>20</dodge-chance>
+      <shield-block-chance>50</shield-block-chance>
+      <shield-blocks-damage>10</shield-blocks-damage>
       <protection>
         <element type="Piercing">30</element>
         <element type="Slashing">30</element>

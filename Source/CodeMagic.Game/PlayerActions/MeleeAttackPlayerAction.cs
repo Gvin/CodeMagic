@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
@@ -9,12 +10,12 @@ using CodeMagic.Game.Statuses;
 
 namespace CodeMagic.Game.PlayerActions
 {
-    public class MeleAttackPlayerAction : PlayerActionBase
+    public class MeleeAttackPlayerAction : PlayerActionBase
     {
         private const int StaminaToAttack = 10;
         private readonly bool useRightHand;
 
-        public MeleAttackPlayerAction(bool useRightHand)
+        public MeleeAttackPlayerAction(bool useRightHand)
         {
             this.useRightHand = useRightHand;
         }
@@ -57,8 +58,7 @@ namespace CodeMagic.Game.PlayerActions
             game.Player.Stamina -= StaminaToAttack;
 
             var holdableItem = useRightHand ? game.Player.Equipment.RightHandItem : game.Player.Equipment.LeftHandItem;
-            var weapon = holdableItem as IWeaponItem;
-            if (weapon == null)
+            if (!(holdableItem is IWeaponItem weapon))
             {
                 game.Journal.Write(new CantAttackWithItemMessage(holdableItem));
                 return false;
@@ -78,10 +78,14 @@ namespace CodeMagic.Game.PlayerActions
                 return true;
             }
 
+            var attackDirection = Point.GetAdjustedPointRelativeDirection(targetPoint, game.PlayerPosition);
+            if (attackDirection == null)
+                throw new ApplicationException("Can only attack adjusted target");
+
             var damage = GenerateDamage(game.Player, weapon);
             foreach (var damageValue in damage)
             {
-                target.Damage(targetPoint, damageValue.Value, damageValue.Key);
+                target.MeleeDamage(targetPoint, attackDirection.Value, damageValue.Value, damageValue.Key);
                 game.Journal.Write(new DealDamageMessage(game.Player, target, damageValue.Value, damageValue.Key));
             }
 

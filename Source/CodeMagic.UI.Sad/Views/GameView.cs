@@ -240,9 +240,9 @@ namespace CodeMagic.UI.Sad.Views
                 case Keys.Space:
                     return new EmptyPlayerAction();
                 case Keys.F:
-                    return new MeleAttackPlayerAction(true);
+                    return new MeleeAttackPlayerAction(true);
                 case Keys.R:
-                    return new MeleAttackPlayerAction(false);
+                    return new MeleeAttackPlayerAction(false);
                 case Keys.E:
                     return new UseObjectPlayerAction();
                 default:

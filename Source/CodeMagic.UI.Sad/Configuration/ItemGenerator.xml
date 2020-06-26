@@ -2521,7 +2521,6 @@
     </description>
   </armor>
 
-  <!-- TODO: Change data for medium and big shields -->
   <shields>
     <small>
       <name>Buckler</name>
@@ -2637,8 +2636,8 @@
 
       <rareness-configuration>
         <rareness value="Trash">
-          <blocks-damage min="3" max="5"/>
-          <protect-chance min="10" max="20"/>
+          <blocks-damage min="4" max="6"/>
+          <protect-chance min="20" max="30"/>
           <hit-chance-penalty min="10" max="15"/>
           <bonuses min="0" max="0"/>
           <materials>
@@ -2647,8 +2646,8 @@
           </materials>
         </rareness>
         <rareness value="Common">
-          <blocks-damage min="4" max="7"/>
-          <protect-chance min="15" max="25"/>
+          <blocks-damage min="6" max="9"/>
+          <protect-chance min="25" max="35"/>
           <hit-chance-penalty min="7" max="12"/>
           <bonuses min="0" max="1"/>
           <materials>
@@ -2658,8 +2657,8 @@
           </materials>
         </rareness>
         <rareness value="Uncommon">
-          <blocks-damage min="6" max="10"/>
-          <protect-chance min="20" max="30"/>
+          <blocks-damage min="8" max="12"/>
+          <protect-chance min="30" max="40"/>
           <hit-chance-penalty min="5" max="10"/>
           <bonuses min="1" max="2"/>
           <materials>
@@ -2670,8 +2669,8 @@
           </materials>
         </rareness>
         <rareness value="Rare">
-          <blocks-damage min="8" max="12"/>
-          <protect-chance min="25" max="30"/>
+          <blocks-damage min="10" max="15"/>
+          <protect-chance min="35" max="45"/>
           <hit-chance-penalty min="5" max="7"/>
           <bonuses min="2" max="3"/>
           <materials>
@@ -2719,8 +2718,8 @@
 
       <rareness-configuration>
         <rareness value="Trash">
-          <blocks-damage min="3" max="5"/>
-          <protect-chance min="10" max="20"/>
+          <blocks-damage min="6" max="8"/>
+          <protect-chance min="30" max="40"/>
           <hit-chance-penalty min="10" max="15"/>
           <bonuses min="0" max="0"/>
           <materials>
@@ -2729,8 +2728,8 @@
           </materials>
         </rareness>
         <rareness value="Common">
-          <blocks-damage min="4" max="7"/>
-          <protect-chance min="15" max="25"/>
+          <blocks-damage min="8" max="11"/>
+          <protect-chance min="35" max="45"/>
           <hit-chance-penalty min="7" max="12"/>
           <bonuses min="0" max="1"/>
           <materials>
@@ -2740,8 +2739,8 @@
           </materials>
         </rareness>
         <rareness value="Uncommon">
-          <blocks-damage min="6" max="10"/>
-          <protect-chance min="20" max="30"/>
+          <blocks-damage min="10" max="14"/>
+          <protect-chance min="40" max="50"/>
           <hit-chance-penalty min="5" max="10"/>
           <bonuses min="1" max="2"/>
           <materials>
@@ -2752,8 +2751,8 @@
           </materials>
         </rareness>
         <rareness value="Rare">
-          <blocks-damage min="8" max="12"/>
-          <protect-chance min="25" max="30"/>
+          <blocks-damage min="12" max="17"/>
+          <protect-chance min="45" max="55"/>
           <hit-chance-penalty min="5" max="7"/>
           <bonuses min="2" max="3"/>
           <materials>

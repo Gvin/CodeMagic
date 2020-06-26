@@ -107,7 +107,7 @@ namespace CodeMagic.Game.Objects
 
         protected virtual double CatchFireChanceMultiplier => 1;
 
-        public virtual void MeleDamage(Point position, Direction attackDirection, int damage, Element element)
+        public virtual void MeleeDamage(Point position, Direction attackDirection, int damage, Element element)
         {
             Damage(position, damage, element);
         }
