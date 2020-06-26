@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeMagic.Core.Area;
+using CodeMagic.Core.Game;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
 using CodeMagic.UI.Images;
@@ -9,25 +11,30 @@ namespace CodeMagic.Game.Objects.Floor
     public class FloorObject : MapObjectBase, IWorldImageProvider
     {
         private const string SaveKeyFloorType = "FloorType";
+        private const string SaveKeyImageName = "ImageName";
 
         private readonly Type floorType;
+        private readonly string imageName;
 
         public FloorObject(SaveData data) 
             : base(data)
         {
             floorType = (Type) data.GetIntValue(SaveKeyFloorType);
+            imageName = data.GetStringValue(SaveKeyImageName);
         }
 
         public FloorObject(Type floorType)
             : base(GetName(floorType))
         {
             this.floorType = floorType;
+            imageName = GetWorldImageName(floorType);
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
         {
             var data = base.GetSaveDataContent();
             data.Add(SaveKeyFloorType, (int) floorType);
+            data.Add(SaveKeyImageName, imageName);
             return data;
         }
 
@@ -35,14 +42,8 @@ namespace CodeMagic.Game.Objects.Floor
         {
             switch (type)
             {
-                case Type.Grass:
-                    return "Grass";
                 case Type.Stone:
                     return "Stone";
-                case Type.Dirt:
-                    return "Dirt";
-                case Type.Wood:
-                    return "Wood";
                 default:
                     throw new ArgumentException($"Unknown floor type: {type}");
             }
@@ -54,21 +55,15 @@ namespace CodeMagic.Game.Objects.Floor
 
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
-            return storage.GetImage(GetWorldImageName());
+            return storage.GetImage(imageName);
         }
 
-        private string GetWorldImageName()
+        private static string GetWorldImageName(Type floorType)
         {
             switch (floorType)
             {
-                case Type.Grass:
-                    return "Floor_Grass";
                 case Type.Stone:
-                    return "Floor_Stone";
-                case Type.Dirt:
-                    return "Floor_Dirt";
-                case Type.Wood:
-                    return "Floor_Wood";
+                    return RandomHelper.GetRandomElement("Floor_Stone_V1", "Floor_Stone_V2", "Floor_Stone_V3");
                 default:
                     throw new ArgumentException($"Unknown floor type: {floorType}");
             }
@@ -76,10 +71,7 @@ namespace CodeMagic.Game.Objects.Floor
 
         public enum Type
         {
-            Grass,
-            Stone,
-            Dirt,
-            Wood
+            Stone
         }
     }
 }
