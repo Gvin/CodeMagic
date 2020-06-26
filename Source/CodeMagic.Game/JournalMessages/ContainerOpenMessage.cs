@@ -11,7 +11,7 @@
 
         public override StyledLine GetDescription()
         {
-            return new StyledLine{$"{PlayerName} opened {name}."};
+            return new StyledLine{$"{PlayerName} opened {name}"};
         }
     }
 }

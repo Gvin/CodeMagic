@@ -2,7 +2,6 @@
 <symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="7" height="7">
   <row>
     <pixel />
-    <pixel />
     <pixel glyph="176">
       <color>
         <R>183</R>
@@ -10,6 +9,7 @@
         <B>183</B>
       </color>
     </pixel>
+    <pixel />
     <pixel />
     <pixel />
     <pixel />
@@ -17,92 +17,11 @@
   </row>
   <row>
     <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
-    <pixel />
-    <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
-    <pixel />
-    <pixel />
-  </row>
-  <row>
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
     <pixel />
     <pixel />
     <pixel />
     <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
     <pixel />
-  </row>
-  <row>
-    <pixel />
-    <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
-    <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
-    <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
-  </row>
-  <row>
-    <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
     <pixel />
   </row>
   <row>
@@ -116,6 +35,24 @@
         <B>183</B>
       </color>
     </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
     <pixel />
     <pixel />
     <pixel glyph="176">
@@ -135,13 +72,6 @@
       </color>
     </pixel>
     <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
     <pixel />
     <pixel glyph="176">
       <color>
@@ -150,6 +80,16 @@
         <B>183</B>
       </color>
     </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
     <pixel />
     <pixel />
   </row>

@@ -9,36 +9,6 @@
       </color>
     </pixel>
     <pixel />
-    <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
-    <pixel />
-    <pixel />
-    <pixel glyph="176">
-      <color>
-        <R>183</R>
-        <G>255</G>
-        <B>183</B>
-      </color>
-    </pixel>
-  </row>
-  <row>
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-  </row>
-  <row>
-    <pixel />
-    <pixel />
     <pixel glyph="176">
       <color>
         <R>183</R>
@@ -64,10 +34,15 @@
     <pixel />
     <pixel />
     <pixel />
-    <pixel />
+    <pixel glyph="176">
+      <color>
+        <R>183</R>
+        <G>255</G>
+        <B>183</B>
+      </color>
+    </pixel>
   </row>
   <row>
-    <pixel />
     <pixel />
     <pixel glyph="176">
       <color>
@@ -86,15 +61,13 @@
     </pixel>
     <pixel />
     <pixel />
-  </row>
-  <row>
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
-    <pixel />
+    <pixel glyph="176">
+      <color>
+        <R>183</R>
+        <G>255</G>
+        <B>183</B>
+      </color>
+    </pixel>
   </row>
   <row>
     <pixel glyph="176">
@@ -104,6 +77,63 @@
         <B>183</B>
       </color>
     </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="176">
+      <color>
+        <R>183</R>
+        <G>255</G>
+        <B>183</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel glyph="176">
+      <color>
+        <R>183</R>
+        <G>255</G>
+        <B>183</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel glyph="176">
+      <color>
+        <R>183</R>
+        <G>255</G>
+        <B>183</B>
+      </color>
+    </pixel>
+  </row>
+  <row>
+    <pixel />
+    <pixel glyph="176">
+      <color>
+        <R>183</R>
+        <G>255</G>
+        <B>183</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+    <pixel glyph="176">
+      <color>
+        <R>183</R>
+        <G>255</G>
+        <B>183</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
     <pixel />
     <pixel />
     <pixel glyph="176">

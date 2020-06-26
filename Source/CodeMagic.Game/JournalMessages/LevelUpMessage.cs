@@ -13,7 +13,7 @@
         {
             return new StyledLine
             {
-                $"You reached level {level}."
+                $"You reached level {level}"
             };
         }
     }

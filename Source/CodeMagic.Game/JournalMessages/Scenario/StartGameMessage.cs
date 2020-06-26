@@ -4,7 +4,7 @@
     {
         public override StyledLine GetDescription()
         {
-            return new StyledLine{$"{PlayerName} wake up on cold stone floor in strange room."};
+            return new StyledLine{$"{PlayerName} wake up on cold stone floor in strange room"};
         }
     }
 }
