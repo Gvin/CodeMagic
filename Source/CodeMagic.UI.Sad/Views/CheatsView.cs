@@ -70,10 +70,23 @@ namespace CodeMagic.UI.Sad.Views
             };
             Add(restoreMana);
 
+            var restoreStamina = new StandardButton(20)
+            {
+                Text = "Restore Stamina",
+                Position = new Point(2, 15)
+            };
+            restoreStamina.Click += (sender, args) =>
+            {
+                Log.Info("Used Cheat \"Restore Stamina\"");
+                Close();
+                ((Player)CurrentGame.Player).Stamina = ((Player)CurrentGame.Player).MaxStamina;
+            };
+            Add(restoreStamina);
+
             var restoreStats = new StandardButton(20)
             {
                 Text = "Restore Stats",
-                Position = new Point(2, 15)
+                Position = new Point(2, 19)
             };
             restoreStats.Click += (sender, args) =>
             {
@@ -81,6 +94,7 @@ namespace CodeMagic.UI.Sad.Views
                 Close();
                 CurrentGame.Player.Health = CurrentGame.Player.MaxHealth;
                 CurrentGame.Player.Mana = CurrentGame.Player.MaxMana;
+                ((Player) CurrentGame.Player).Stamina = ((Player) CurrentGame.Player).MaxStamina;
             };
             Add(restoreStats);
         }
