@@ -296,10 +296,10 @@ namespace CodeMagic.Core.Area
                 {
                     var position = new Point(x, y);
                     var cell = GetOriginalCell(x, y);
-                    cell.PostUpdate(this, position);
-                    cell.ResetDynamicObjectsState();
                     cell.Environment.Update(position, cell);
                     MergeCellEnvironment(position, cell, mergedCells);
+                    cell.PostUpdate(this, position);
+                    cell.ResetDynamicObjectsState();
                 }
             }
         }
