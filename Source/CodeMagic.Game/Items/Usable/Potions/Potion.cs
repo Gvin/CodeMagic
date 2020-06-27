@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Saving;
@@ -110,131 +111,88 @@ namespace CodeMagic.Game.Items.Usable.Potions
         
         public SymbolsImage GetWorldImage(IImagesStorage storage)
         {
+            var templateImage = storage.GetImage("ItemsOnGround_Potion");
+            var palette = GetPotionPalette();
+            return SymbolsImage.Recolor(templateImage, palette);
+        }
+
+        public SymbolsImage GetInventoryImage(IImagesStorage storage)
+        {
+            var imageTemplateName = GetInventoryImageTemplateName();
+            var templateImage = storage.GetImage(imageTemplateName);
+            var palette = GetPotionPalette();
+            return SymbolsImage.Recolor(templateImage, palette);
+        }
+
+        private Dictionary<Color, Color> GetPotionPalette()
+        {
             switch (color)
             {
                 case PotionColor.Red:
-                    return storage.GetImage("ItemsOnGround_Potion_Red");
+                    return new Dictionary<Color, Color>
+                    {
+                        {Color.FromArgb(255, 0, 0), Color.FromArgb(255, 0, 0)},
+                        {Color.FromArgb(0, 255, 0), Color.FromArgb(196, 0, 0)}
+                    };
                 case PotionColor.Blue:
-                    return storage.GetImage("ItemsOnGround_Potion_Blue");
+                    return new Dictionary<Color, Color>
+                    {
+                        {Color.FromArgb(255, 0, 0), Color.FromArgb(79, 79, 255)},
+                        {Color.FromArgb(0, 255, 0), Color.FromArgb(0, 0, 255)}
+                    };
                 case PotionColor.Purple:
-                    return storage.GetImage("ItemsOnGround_Potion_Purple");
+                    return new Dictionary<Color, Color>
+                    {
+                        {Color.FromArgb(255, 0, 0), Color.FromArgb(230, 0, 230)},
+                        {Color.FromArgb(0, 255, 0), Color.FromArgb(128, 0, 128)}
+                    };
                 case PotionColor.Green:
-                    return storage.GetImage("ItemsOnGround_Potion_Green");
+                    return new Dictionary<Color, Color>
+                    {
+                        {Color.FromArgb(255, 0, 0), Color.FromArgb(0, 210, 0)},
+                        {Color.FromArgb(0, 255, 0), Color.FromArgb(0, 128, 0)}
+                    };
                 case PotionColor.Orange:
-                    return storage.GetImage("ItemsOnGround_Potion_Orange");
+                    return new Dictionary<Color, Color>
+                    {
+                        {Color.FromArgb(255, 0, 0), Color.FromArgb(255, 128, 0)},
+                        {Color.FromArgb(0, 255, 0), Color.FromArgb(150, 70, 0)}
+                    };
                 case PotionColor.Yellow:
-                    return storage.GetImage("ItemsOnGround_Potion_Yellow");
+                    return new Dictionary<Color, Color>
+                    {
+                        {Color.FromArgb(255, 0, 0), Color.FromArgb(255, 255, 0)},
+                        {Color.FromArgb(0, 255, 0), Color.FromArgb(150, 150, 0)}
+                    };
                 case PotionColor.White:
-                    return storage.GetImage("ItemsOnGround_Potion_White");
+                    return new Dictionary<Color, Color>
+                    {
+                        {Color.FromArgb(255, 0, 0), Color.FromArgb(255, 255, 255)},
+                        {Color.FromArgb(0, 255, 0), Color.FromArgb(192, 192, 192)}
+                    };
                 case PotionColor.Gray:
-                    return storage.GetImage("ItemsOnGround_Potion_Gray");
+                    return new Dictionary<Color, Color>
+                    {
+                        {Color.FromArgb(255, 0, 0), Color.FromArgb(192, 192, 192)},
+                        {Color.FromArgb(0, 255, 0), Color.FromArgb(128, 128, 128)}
+                    };
                 default:
                     throw new ArgumentException($"Unknown potion color: {color}");
             }
         }
 
-        public SymbolsImage GetInventoryImage(IImagesStorage storage)
+        private string GetInventoryImageTemplateName()
         {
-            switch (color)
+            switch (size)
             {
-                case PotionColor.Red:
-                    switch (size)
-                    {
-                        case PotionSize.Small:
-                            return storage.GetImage("Item_Potion_Red_Small");
-                        case PotionSize.Medium:
-                            return storage.GetImage("Item_Potion_Red");
-                        case PotionSize.Big:
-                            return storage.GetImage("Item_Potion_Red_Big");
-                        default:
-                            throw new ArgumentException($"Unknown potion size: {size}");
-                    }
-                case PotionColor.Blue:
-                    switch (size)
-                    {
-                        case PotionSize.Small:
-                            return storage.GetImage("Item_Potion_Blue_Small");
-                        case PotionSize.Medium:
-                            return storage.GetImage("Item_Potion_Blue");
-                        case PotionSize.Big:
-                            return storage.GetImage("Item_Potion_Blue_Big");
-                        default:
-                            throw new ArgumentException($"Unknown potion size: {size}");
-                    }
-                case PotionColor.Purple:
-                    switch (size)
-                    {
-                        case PotionSize.Small:
-                            return storage.GetImage("Item_Potion_Purple_Small");
-                        case PotionSize.Medium:
-                            return storage.GetImage("Item_Potion_Purple");
-                        case PotionSize.Big:
-                            return storage.GetImage("Item_Potion_Purple_Big");
-                        default:
-                            throw new ArgumentException($"Unknown potion size: {size}");
-                    }
-                case PotionColor.Green:
-                    switch (size)
-                    {
-                        case PotionSize.Small:
-                            return storage.GetImage("Item_Potion_Green_Small");
-                        case PotionSize.Medium:
-                            return storage.GetImage("Item_Potion_Green");
-                        case PotionSize.Big:
-                            return storage.GetImage("Item_Potion_Green_Big");
-                        default:
-                            throw new ArgumentException($"Unknown potion size: {size}");
-                    }
-                case PotionColor.Orange:
-                    switch (size)
-                    {
-                        case PotionSize.Small:
-                            return storage.GetImage("Item_Potion_Orange_Small");
-                        case PotionSize.Medium:
-                            return storage.GetImage("Item_Potion_Orange");
-                        case PotionSize.Big:
-                            return storage.GetImage("Item_Potion_Orange_Big");
-                        default:
-                            throw new ArgumentException($"Unknown potion size: {size}");
-                    }
-                case PotionColor.Yellow:
-                    switch (size)
-                    {
-                        case PotionSize.Small:
-                            return storage.GetImage("Item_Potion_Yellow_Small");
-                        case PotionSize.Medium:
-                            return storage.GetImage("Item_Potion_Yellow");
-                        case PotionSize.Big:
-                            return storage.GetImage("Item_Potion_Yellow_Big");
-                        default:
-                            throw new ArgumentException($"Unknown potion size: {size}");
-                    }
-                case PotionColor.White:
-                    switch (size)
-                    {
-                        case PotionSize.Small:
-                            return storage.GetImage("Item_Potion_White_Small");
-                        case PotionSize.Medium:
-                            return storage.GetImage("Item_Potion_White");
-                        case PotionSize.Big:
-                            return storage.GetImage("Item_Potion_White_Big");
-                        default:
-                            throw new ArgumentException($"Unknown potion size: {size}");
-                    }
-                case PotionColor.Gray:
-                    switch (size)
-                    {
-                        case PotionSize.Small:
-                            return storage.GetImage("Item_Potion_Gray_Small");
-                        case PotionSize.Medium:
-                            return storage.GetImage("Item_Potion_Gray");
-                        case PotionSize.Big:
-                            return storage.GetImage("Item_Potion_Gray_Big");
-                        default:
-                            throw new ArgumentException($"Unknown potion size: {size}");
-                    }
+                case PotionSize.Small:
+                    return "Item_Potion_Small";
+                case PotionSize.Medium:
+                    return "Item_Potion";
+                case PotionSize.Big:
+                    return "Item_Potion_Big";
                 default:
-                    throw new ArgumentException($"Unknown potion color: {color}");
+                    throw new ArgumentException($"Unknown potion size: {size}");
             }
         }
 

@@ -15,6 +15,7 @@
   </row>
   <row>
     <pixel />
+    <pixel />
     <pixel>
       <background-color>
         <R>255</R>
@@ -22,24 +23,12 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
+    <pixel />
     <pixel />
   </row>
   <row>
     <pixel />
+    <pixel />
     <pixel>
       <background-color>
         <R>255</R>
@@ -47,45 +36,20 @@
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>255</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
+    <pixel />
     <pixel />
   </row>
   <row>
     <pixel />
+    <pixel />
     <pixel>
       <background-color>
-        <R>196</R>
-        <G>0</G>
+        <R>0</R>
+        <G>255</G>
         <B>0</B>
       </background-color>
     </pixel>
-    <pixel>
-      <background-color>
-        <R>196</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
-    <pixel>
-      <background-color>
-        <R>196</R>
-        <G>0</G>
-        <B>0</B>
-      </background-color>
-    </pixel>
+    <pixel />
     <pixel />
   </row>
   <row>

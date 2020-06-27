@@ -16,111 +16,111 @@
   <row>
     <pixel glyph="170">
       <color>
-        <R>192</R>
-        <G>192</G>
-        <B>192</B>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
       </color>
     </pixel>
     <pixel>
       <background-color>
-        <R>192</R>
-        <G>192</G>
-        <B>192</B>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel>
       <background-color>
-        <R>192</R>
-        <G>192</G>
-        <B>192</B>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel>
       <background-color>
-        <R>192</R>
-        <G>192</G>
-        <B>192</B>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel glyph="166">
       <color>
-        <R>192</R>
-        <G>192</G>
-        <B>192</B>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
       </color>
     </pixel>
   </row>
   <row>
     <pixel>
       <background-color>
-        <R>192</R>
-        <G>192</G>
-        <B>192</B>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel>
       <background-color>
-        <R>192</R>
-        <G>192</G>
-        <B>192</B>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel>
       <background-color>
-        <R>192</R>
-        <G>192</G>
-        <B>192</B>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel>
       <background-color>
-        <R>192</R>
-        <G>192</G>
-        <B>192</B>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel>
       <background-color>
-        <R>192</R>
-        <G>192</G>
-        <B>192</B>
+        <R>255</R>
+        <G>0</G>
+        <B>0</B>
       </background-color>
     </pixel>
   </row>
   <row>
     <pixel>
       <background-color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel>
       <background-color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel>
       <background-color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel>
       <background-color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
       </background-color>
     </pixel>
     <pixel>
       <background-color>
-        <R>128</R>
-        <G>128</G>
-        <B>128</B>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
       </background-color>
     </pixel>
   </row>
