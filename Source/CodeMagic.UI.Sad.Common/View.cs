@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CodeMagic.UI.Sad.Views;
 using Microsoft.Xna.Framework;
 using SadConsole;
@@ -16,10 +17,14 @@ namespace CodeMagic.UI.Sad.Common
 
         public event EventHandler<ViewClosedEventArgs> Closed;
 
+        private readonly List<IVisualControl> visualControls;
+
         protected View(ILog log, int width, int height, Font font)
             : base(width, height, font)
         {
             Log = log;
+
+            visualControls = new List<IVisualControl>();
 
             DefaultForeground = Color.White;
             DefaultBackground = Color.Black;
@@ -39,6 +44,16 @@ namespace CodeMagic.UI.Sad.Common
                 UseKeyboard = false
             };
             Add(surface);
+        }
+
+        protected void AddVisualControl(IVisualControl control)
+        {
+            visualControls.Add(control);
+        }
+
+        protected void RemoveVisualControl(IVisualControl control)
+        {
+            visualControls.Remove(control);
         }
 
         public void Show()
@@ -124,6 +139,15 @@ namespace CodeMagic.UI.Sad.Common
         protected virtual void DrawView(CellSurface surface)
         {
             DrawFrame(surface);
+
+            foreach (var control in visualControls)
+            {
+                if (!control.IsVisible)
+                    continue;
+
+                var controlSurface = surface.GetSubSurface(control.Position);
+                control.Draw(controlSurface);
+            }
         }
     }
 

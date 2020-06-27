@@ -8,6 +8,7 @@ using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
+using CodeMagic.UI.Sad.Controls.VisualControls;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using SadConsole;
@@ -26,7 +27,6 @@ namespace CodeMagic.UI.Sad.Views
 
         private readonly GameCore<Player> game;
 
-        private PlayerStatsControl playerStats;
         private GameAreaControl gameArea;
 
         private ScrollBar journalScroll;
@@ -72,17 +72,16 @@ namespace CodeMagic.UI.Sad.Views
             var cheatsButton = new StandardButton(3)
             {
                 Text = "*",
-                Position = new Point(Width - 39, 35)
+                Position = new Point(Width - 39, 37)
             };
             cheatsButton.Click += (sender, args) => { new CheatsView().Show(); };
             Add(cheatsButton);
 #endif
 
-            playerStats = new PlayerStatsControl(40, 65, game)
-            {
-                Position = new Point(Width - 40, 0)
-            };
-            Add(playerStats);
+            var playerStatsControl = new PlayerStatsVisualControl(
+                new Rectangle(Width - 40, 1, 39, 65), 
+                game);
+            AddVisualControl(playerStatsControl);
 
             gameArea = new GameAreaControl(game)
             {
@@ -110,7 +109,7 @@ namespace CodeMagic.UI.Sad.Views
 
             openInventoryButton = new StandardButton(30)
             {
-                Position = new Point(Width - 39, 16),
+                Position = new Point(Width - 39, 22),
                 Text = "[I] Inventory"
             };
             openInventoryButton.Click += openInventoryButton_Click;
@@ -118,7 +117,7 @@ namespace CodeMagic.UI.Sad.Views
 
             openSpellBookButton = new StandardButton(30)
             {
-                Position = new Point(Width - 39, 19),
+                Position = new Point(Width - 39, 25),
                 Text = "[C] Spell Book"
             };
             openSpellBookButton.Click += openSpellBookButton_Click;
@@ -127,7 +126,7 @@ namespace CodeMagic.UI.Sad.Views
 
             showItemsOnFloorButton = new StandardButton(30)
             {
-                Position = new Point(Width - 39, 22),
+                Position = new Point(Width - 39, 28),
                 Text = "[G] Check Floor"
             };
             showItemsOnFloorButton.Click += showItemsOnFloorButton_Click;
@@ -135,7 +134,7 @@ namespace CodeMagic.UI.Sad.Views
 
             openPlayerStatsButton = new StandardButton(30)
             {
-                Position = new Point(Width - 39, 25),
+                Position = new Point(Width - 39, 31),
                 Text = "[V] Player Status"
             };
             openPlayerStatsButton.Click += (sender, args) => OpenPlayerStats();
@@ -280,9 +279,15 @@ namespace CodeMagic.UI.Sad.Views
         {
             base.DrawView(surface);
 
+            // Journal box frame
             surface.Print(0, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
             surface.Print(1, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('─'), FrameColor, DefaultBackground));
             surface.Print(Width - 1, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+
+            // Player stats frame
+            surface.Print(Width - 40, 0, new ColoredGlyph(Glyphs.GetGlyph('╤'), FrameColor, DefaultBackground));
+            surface.Print(Width - 1, 3, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+
         }
 
         public override void Update(TimeSpan time)
