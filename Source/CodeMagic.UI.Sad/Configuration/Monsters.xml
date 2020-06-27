@@ -180,6 +180,17 @@
           <value chance="30">Uncommon</value>
         </rareness-configuration>
       </weapon>
+      <shield>
+        <count-configuration>
+          <value chance="50">0</value>
+          <value chance="50">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="5">Trash</value>
+          <value chance="65">Common</value>
+          <value chance="30">Uncommon</value>
+        </rareness-configuration>
+      </shield>
       <armor>
         <count-configuration>
           <value chance="60">0</value>
@@ -375,6 +386,17 @@
           <value chance="30">Uncommon</value>
         </rareness-configuration>
       </weapon>
+      <shield>
+        <count-configuration>
+          <value chance="50">0</value>
+          <value chance="50">1</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="5">Trash</value>
+          <value chance="65">Common</value>
+          <value chance="30">Uncommon</value>
+        </rareness-configuration>
+      </shield>
       <armor>
         <count-configuration>
           <value chance="60">0</value>
@@ -678,6 +700,17 @@
           <value chance="40">Uncommon</value>
         </rareness-configuration>
       </weapon>
+      <shield>
+        <count-configuration>
+          <value chance="20">0</value>
+          <value chance="60">1</value>
+          <value chance="20">2</value>
+        </count-configuration>
+        <rareness-configuration>
+          <value chance="60">Common</value>
+          <value chance="40">Uncommon</value>
+        </rareness-configuration>
+      </shield>
       <armor>
         <count-configuration>
           <value chance="40">0</value>

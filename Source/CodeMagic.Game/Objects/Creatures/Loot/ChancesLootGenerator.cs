@@ -27,6 +27,9 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
         private readonly Chance<int>[] resourcesCountSettings;
         private readonly Chance<ItemRareness>[] resourcesRarenessSettings;
 
+        private readonly Chance<int>[] shieldCountSettings;
+        private readonly Chance<ItemRareness>[] shieldRarenessSettings;
+
         private readonly Chance<int>[] foodCountSettings;
 
         public ChancesLootGenerator(ILootConfiguration lootConfiguration)
@@ -46,6 +49,9 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
 
             resourcesCountSettings = GetChanceConfiguration(lootConfiguration.Resource?.Count);
             resourcesRarenessSettings = GetChanceConfiguration(lootConfiguration.Resource?.Rareness);
+
+            shieldCountSettings = GetChanceConfiguration(lootConfiguration.Shield?.Count);
+            shieldRarenessSettings = GetChanceConfiguration(lootConfiguration.Shield?.Rareness);
 
             foodCountSettings = GetChanceConfiguration(lootConfiguration.Food?.Count);
         }
@@ -97,6 +103,15 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
                     resourcesCountSettings,
                     resourcesRarenessSettings,
                     generator.GenerateResource);
+                result.AddRange(items);
+            }
+
+            if (shieldCountSettings != null)
+            {
+                var items = GenerateItems(
+                    shieldCountSettings,
+                    shieldRarenessSettings,
+                    generator.GenerateShield);
                 result.AddRange(items);
             }
 
