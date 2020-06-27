@@ -105,7 +105,7 @@ namespace CodeMagic.UI.Sad.Views
             loadFromLibraryButton.Click += (sender, args) => LoadSpellFromLibrary();
             Add(loadFromLibraryButton);
 
-            spellDetails = new SpellDetailsControl(57, Height - 10)
+            spellDetails = new SpellDetailsControl(57, Height - 10, game.Player)
             {
                 Position = new Point(Width - 58, 3)
             };

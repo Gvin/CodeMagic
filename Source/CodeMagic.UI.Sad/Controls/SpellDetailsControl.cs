@@ -1,4 +1,6 @@
 ﻿using System;
+using CodeMagic.Core.Game;
+using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.Spells;
 using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
@@ -10,6 +12,10 @@ namespace CodeMagic.UI.Sad.Controls
 {
     public class SpellDetailsControl : ControlBase
     {
+        private static readonly Color EnoughManaColor = Color.Lime;
+        private static readonly Color NotEnoughManaColor = Color.Red;
+        private static readonly Color DefaultManaColor = Color.Blue;
+
         private static readonly Color FrameColor = Color.Gray;
 
         static SpellDetailsControl()
@@ -17,10 +23,13 @@ namespace CodeMagic.UI.Sad.Controls
             Library.Default.SetControlTheme(typeof(SpellDetailsControl), new DrawingSurfaceTheme());
         }
 
-        public SpellDetailsControl(int width, int height) 
+        private readonly Player player;
+
+        public SpellDetailsControl(int width, int height, Player player = null) 
             : base(width, height)
         {
             CanFocus = false;
+            this.player = player;
         }
 
         public BookSpell Spell { get; set; }
@@ -39,8 +48,14 @@ namespace CodeMagic.UI.Sad.Controls
             }
             else
             {
+                var manaColor = DefaultManaColor;
+                if (player != null)
+                {
+                    manaColor = player.Mana >= Spell.ManaCost ? EnoughManaColor : NotEnoughManaColor;
+                }
+                
                 Surface.Print(1, 3, new ColoredString("Mana cost:", Color.White, Color.Black));
-                Surface.Print(12, 3, new ColoredString(Spell.ManaCost.ToString(), Color.Blue, Color.Black));
+                Surface.Print(12, 3, new ColoredString(Spell.ManaCost.ToString(), manaColor, Color.Black));
             }
         }
     }
