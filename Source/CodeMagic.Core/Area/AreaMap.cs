@@ -259,14 +259,21 @@ namespace CodeMagic.Core.Area
 
         private void UpdateCells(UpdateOrder order)
         {
+            var cellCoordinates = new List<Point>();
             for (var y = 0; y < Height; y++)
             {
-                var row = cells[y];
                 for (var x = 0; x < Width; x++)
                 {
-                    var cell = row[x];
-                    cell.Update(new Point(x, y), order);
+                    cellCoordinates.Add(new Point(x, y));
                 }
+            }
+
+            while (cellCoordinates.Count > 0)
+            {
+                var position = RandomHelper.GetRandomElement<Point>(cellCoordinates);
+                cellCoordinates.Remove(position);
+                var cell = GetOriginalCell(position.X, position.Y);
+                cell.Update(position, order);
             }
         }
 
