@@ -43,7 +43,6 @@ namespace CodeMagic.UI.Sad
 
                 log.Info("Closing game");
 
-                ImagesStorage.Dispose();
                 CurrentGame.Load(null);
 
                 GC.Collect();
