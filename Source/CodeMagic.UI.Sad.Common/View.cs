@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeMagic.UI.Sad.Views;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Controls;
@@ -60,8 +60,11 @@ namespace CodeMagic.UI.Sad.Common
         {
             Log.Debug($"Opening view of type {GetType().Name}");
 
-            ViewsManager.Current.AddView(this);
-            Global.CurrentScreen = this;
+
+            //IsFocused = true;
+            Global.CurrentScreen.Children.Add(this);
+            Global.FocusedConsoles.Set(this);
+
             OnShown();
 
             Log.Debug($"Opened view of type {GetType().Name}");
@@ -76,8 +79,12 @@ namespace CodeMagic.UI.Sad.Common
         {
             Log.Debug($"Closing view of type {GetType().Name}");
 
-            ViewsManager.Current.RemoveView(this);
-            Global.CurrentScreen = ViewsManager.Current.CurrentView;
+            Global.CurrentScreen.Children.Remove(this);
+            var activeView = Global.CurrentScreen.Children.OfType<View>().LastOrDefault();
+            if (activeView != null)
+            {
+                Global.FocusedConsoles.Set(activeView);
+            }
 
             OnClosed(result);
             Closed?.Invoke(this, new ViewClosedEventArgs(result));

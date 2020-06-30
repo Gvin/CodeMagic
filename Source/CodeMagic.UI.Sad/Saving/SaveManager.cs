@@ -25,7 +25,7 @@ namespace CodeMagic.UI.Sad.Saving
 
         public Task SaveGameAsync()
         {
-            return Task.Run(() => SaveGame());
+            return Task.Run(SaveGame);
         }
 
         public void SaveGame()

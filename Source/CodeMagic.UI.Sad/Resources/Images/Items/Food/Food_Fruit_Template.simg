@@ -12,7 +12,7 @@
     <pixel glyph="17">
       <color>
         <R>0</R>
-        <G>128</G>
+        <G>255</G>
         <B>0</B>
       </color>
     </pixel>
@@ -20,21 +20,21 @@
   <row>
     <pixel glyph="170">
       <color>
-        <R>170</R>
+        <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
     <pixel glyph="219">
       <color>
-        <R>170</R>
+        <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
     <pixel glyph="166">
       <color>
-        <R>170</R>
+        <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
@@ -43,21 +43,21 @@
   <row>
     <pixel glyph="219">
       <color>
-        <R>170</R>
+        <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
     <pixel glyph="219">
       <color>
-        <R>170</R>
+        <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
     </pixel>
     <pixel glyph="219">
       <color>
-        <R>170</R>
+        <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
@@ -66,7 +66,7 @@
   <row>
     <pixel glyph="167">
       <color>
-        <R>170</R>
+        <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>
@@ -74,18 +74,18 @@
     <pixel glyph="46">
       <color>
         <R>0</R>
-        <G>128</G>
+        <G>255</G>
         <B>0</B>
       </color>
       <background-color>
-        <R>170</R>
+        <R>255</R>
         <G>0</G>
         <B>0</B>
       </background-color>
     </pixel>
     <pixel glyph="169">
       <color>
-        <R>170</R>
+        <R>255</R>
         <G>0</G>
         <B>0</B>
       </color>

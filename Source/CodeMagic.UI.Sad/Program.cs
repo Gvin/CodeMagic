@@ -5,6 +5,7 @@ using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.Saving;
 using CodeMagic.UI.Sad.Views;
+using ILog = CodeMagic.Core.Logging.ILog;
 
 namespace CodeMagic.UI.Sad
 {
@@ -14,6 +15,14 @@ namespace CodeMagic.UI.Sad
 
         public const int MapCellImageSize = 7;
 
+        private class GameExitException : Exception
+        {
+            public GameExitException()
+                : base("Game exit")
+            {
+            }
+        }
+
         [STAThread]
         internal static void Main()
         {
@@ -22,18 +31,28 @@ namespace CodeMagic.UI.Sad
                 GameConfigurator.Configure();
                 log = LogManager.GetLog(nameof(Program));
 
-                // Setup the engine and create the main window.
                 var gameWidth = FontProvider.GetScreenWidth(FontTarget.Game);
                 var gameHeight = FontProvider.GetScreenHeight(FontTarget.Game) / 2;
                 SadConsole.Game.Create(gameWidth, gameHeight);
 
-                // Hook the start event so we can add consoles to the system.
                 SadConsole.Game.OnInitialize = Init;
-                // Start the game.
+
                 SadConsole.Game.Instance.Run();
+
                 SadConsole.Game.Instance.Dispose();
 
                 log.Info("Closing game");
+
+                ImagesStorage.Dispose();
+                CurrentGame.Load(null);
+
+                GC.Collect();
+                
+                throw new GameExitException();
+            }
+            catch (GameExitException)
+            {
+                throw;
             }
             catch (Exception e)
             {

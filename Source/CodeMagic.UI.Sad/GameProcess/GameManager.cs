@@ -94,7 +94,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             if (turnsSinceLastSaving >= Settings.Current.SavingInterval)
             {
                 saveGameTask?.Wait();
-                saveGameTask = null;
                 saveGameTask = new SaveManager().SaveGameAsync();
                 turnsSinceLastSaving = 0;
             }
@@ -102,7 +101,6 @@ namespace CodeMagic.UI.Sad.GameProcess
             if (CurrentGame.Player.Health <= 0)
             {
                 saveGameTask?.Wait();
-                saveGameTask = null;
                 ((GameCore<Player>)CurrentGame.Game).TurnEnded -= game_TurnEnded;
                 CurrentGame.Load(null);
                 new SaveManager().DeleteSave();
