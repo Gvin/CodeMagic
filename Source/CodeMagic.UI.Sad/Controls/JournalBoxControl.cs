@@ -3,11 +3,11 @@ using System.Linq;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
-using Microsoft.Xna.Framework;
 using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Input;
-using SadConsole.Themes;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Controls
 {
@@ -40,9 +40,9 @@ namespace CodeMagic.UI.Sad.Controls
             messageFormatter = new JournalMessageFormatter();
         }
 
-        public override bool ProcessMouse(MouseConsoleState mouseState)
+        public override bool ProcessMouse(MouseScreenObjectState mouseState)
         {
-            if (isMouseOver)
+            if (_isMouseOver)
             {
                 var scrollValue = mouseState.Mouse.ScrollWheelValueChange;
                 if (scrollValue > 0)
@@ -63,8 +63,8 @@ namespace CodeMagic.UI.Sad.Controls
         {
             base.Update(time);
 
-            Surface.DrawBox(new Rectangle(0, 0, Width, Height), new Cell(Color.White, BackColor),
-                new Cell(Color.White, BackColor));
+            Surface.DrawBox(new Rectangle(0, 0, Width, Height), new ColoredGlyph(Color.White, BackColor),
+                new ColoredGlyph(Color.White, BackColor));
 
             DrawFrame();
 
@@ -112,7 +112,7 @@ namespace CodeMagic.UI.Sad.Controls
         private void DrawFrame()
         {
             Surface.Fill(0, 0, Width, FrameColor, BackColor, Glyphs.GetGlyph('─'));
-            Surface.Print(Width - 39, 0, new ColoredGlyph(Glyphs.GetGlyph('┴'), FrameColor, BackColor));
+            Surface.Print(Width - 39, 0, new ColoredGlyph(FrameColor, BackColor, Glyphs.GetGlyph('┴')));
         }
     }
 }

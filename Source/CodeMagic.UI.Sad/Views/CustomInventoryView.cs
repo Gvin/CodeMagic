@@ -7,11 +7,10 @@ using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using SadConsole;
 using SadConsole.Input;
-using Point = Microsoft.Xna.Framework.Point;
+using SadRogue.Primitives;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -50,7 +49,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[O] Pick Up One"
             };
             pickUpOneItemButton.Click += pickUpOneItemButton_Click;
-            Add(pickUpOneItemButton);
+            ControlHostComponent.Add(pickUpOneItemButton);
 
             pickUpStackButton = new StandardButton(20)
             {
@@ -58,7 +57,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[P] Pick Up"
             };
             pickUpStackButton.Click += pickUpStackButton_Click;
-            Add(pickUpStackButton);
+            ControlHostComponent.Add(pickUpStackButton);
 
             pickUpAllButton = new StandardButton(20)
             {
@@ -66,7 +65,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[A] Pick Up All"
             };
             pickUpAllButton.Click += pickUpAllButton_Click;
-            Add(pickUpAllButton);
+            ControlHostComponent.Add(pickUpAllButton);
         }
 
         private void pickUpAllButton_Click(object sender, EventArgs e)
@@ -100,7 +99,7 @@ namespace CodeMagic.UI.Sad.Views
             }
             else
             {
-                Close();
+                Hide();
             }
         }
 
@@ -123,7 +122,7 @@ namespace CodeMagic.UI.Sad.Views
             }
             else
             {
-                Close();
+                Hide();
             }
         }
 
@@ -139,7 +138,7 @@ namespace CodeMagic.UI.Sad.Views
                     game.Player.Inventory.AddItem(item);
                 }
             }
-            Close();
+            Hide();
         }
 
         public override void Update(TimeSpan time)
@@ -178,9 +177,9 @@ namespace CodeMagic.UI.Sad.Views
             return new CustomInventoryItem(stack);
         }
 
-        protected override void OnClosed(DialogResult result)
+        protected override void OnHidden()
         {
-            base.OnClosed(result);
+            base.OnHidden();
 
             if (actionPerformed)
             {
@@ -202,7 +201,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 return new[]
                 {
-                    new ColoredString($" ({Stack.Count})", new Cell(StackCountColor, backColor))
+                    new ColoredString($" ({Stack.Count})", StackCountColor, backColor)
                 };
             }
 

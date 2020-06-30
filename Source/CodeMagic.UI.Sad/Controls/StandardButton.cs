@@ -1,8 +1,8 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using SadConsole;
-using SadConsole.Controls;
-using SadConsole.Themes;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Controls
 {
@@ -14,8 +14,8 @@ namespace CodeMagic.UI.Sad.Controls
         {
             var theme = new ButtonLinesTheme
             {
-                Disabled = new Cell(Color.Gray, DefaultBackground),
-                Normal = new Cell(Color.White, DefaultBackground)
+                Disabled = new ColoredGlyph(Color.Gray, DefaultBackground),
+                Normal = new ColoredGlyph(Color.White, DefaultBackground)
             };
             Library.Default.SetControlTheme(typeof(StandardButton), theme);
         }
@@ -39,17 +39,17 @@ namespace CodeMagic.UI.Sad.Controls
             {
                 ThemeColors = new Colors
                 {
-                    Appearance_ControlNormal = new Cell(EnabledColor, DefaultBackground),
-                    Appearance_ControlDisabled = new Cell(DisabledColor, DefaultBackground)
+                    Appearance_ControlNormal = new ColoredGlyph(EnabledColor, DefaultBackground),
+                    Appearance_ControlDisabled = new ColoredGlyph(DisabledColor, DefaultBackground)
                 };
             }
             else
             {
                 ThemeColors = new Colors
                 {
-                    Appearance_ControlNormal = new Cell(DisabledColor, DefaultBackground),
-                    Appearance_ControlDisabled = new Cell(DisabledColor, DefaultBackground),
-                    Appearance_ControlOver = new Cell(DisabledColor, DefaultBackground)
+                    Appearance_ControlNormal = new ColoredGlyph(DisabledColor, DefaultBackground),
+                    Appearance_ControlDisabled = new ColoredGlyph(DisabledColor, DefaultBackground),
+                    Appearance_ControlOver = new ColoredGlyph(DisabledColor, DefaultBackground)
                 };
             }
         }

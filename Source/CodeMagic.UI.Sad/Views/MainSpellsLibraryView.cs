@@ -1,5 +1,5 @@
 ﻿using CodeMagic.UI.Sad.Controls;
-using Microsoft.Xna.Framework;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -19,8 +19,8 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 17, Height - 4),
                 Text = "[ESC] Close"
             };
-            closeButton.Click += (sender, args) => Close();
-            Add(closeButton);
+            closeButton.Click += (sender, args) => Hide();
+            ControlHostComponent.Add(closeButton);
         }
     }
 }

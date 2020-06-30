@@ -5,6 +5,8 @@ using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.Saving;
 using CodeMagic.UI.Sad.Views;
+using SadConsole.UI;
+using SadRogue.Primitives;
 using ILog = CodeMagic.Core.Logging.ILog;
 
 namespace CodeMagic.UI.Sad
@@ -33,13 +35,16 @@ namespace CodeMagic.UI.Sad
 
                 var gameWidth = FontProvider.GetScreenWidth(FontTarget.Game);
                 var gameHeight = FontProvider.GetScreenHeight(FontTarget.Game) / 2;
-                SadConsole.Game.Create(gameWidth, gameHeight);
 
-                SadConsole.Game.OnInitialize = Init;
+                SadConsole.GameHost.Instance.OnStart = Init; //.Game.Create(gameWidth, gameHeight);
 
-                SadConsole.Game.Instance.Run();
+                //SadConsole.Game.OnInitialize = Init;
 
-                SadConsole.Game.Instance.Dispose();
+                SadConsole.GameHost.Instance.Run();
+                //SadConsole.Game.Instance.Run();
+
+                SadConsole.GameHost.Instance.Dispose();
+                //SadConsole.Game.Instance.Dispose();
 
                 log.Info("Closing game");
 
@@ -47,7 +52,7 @@ namespace CodeMagic.UI.Sad
 
                 GC.Collect();
                 
-                throw new GameExitException();
+                //throw new GameExitException();
             }
             catch (GameExitException)
             {
@@ -62,9 +67,13 @@ namespace CodeMagic.UI.Sad
 
         private static void Init()
         {
-            SadConsole.Game.Instance.Window.Title = "C0de Mag1c";
-            SadConsole.Game.Instance.Window.AllowUserResizing = false;
-            SadConsole.Game.Instance.Window.AllowAltF4 = true;
+            var gameWidth = FontProvider.GetScreenWidth(FontTarget.Game);
+            var gameHeight = FontProvider.GetScreenHeight(FontTarget.Game) / 2;
+
+            SadConsole.GameHost.Instance.Screen = new Window(gameWidth, gameHeight);
+            // SadConsole.Game.Instance.Window.Title = "C0de Mag1c";
+            // SadConsole.Game.Instance.Window.AllowUserResizing = false;
+            // SadConsole.Game.Instance.Window.AllowAltF4 = true;
 
             TryLoadGame();
 
@@ -84,7 +93,7 @@ namespace CodeMagic.UI.Sad
                 new SaveManager().SaveGame();
             }
 
-            SadConsole.Game.Instance.Exit();
+            SadConsole.GameHost.Instance.Dispose();
         }
     }
 }

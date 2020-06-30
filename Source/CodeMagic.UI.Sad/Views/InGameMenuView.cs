@@ -3,9 +3,8 @@ using CodeMagic.Core.Game;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
-using Microsoft.Xna.Framework.Input;
 using SadConsole.Input;
-using Point = Microsoft.Xna.Framework.Point;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -34,7 +33,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 Position = new Point(xPosition, 4)
             };
-            Add(gameLabel);
+            ControlHostComponent.Add(gameLabel);
 
             continueGameButton = new StandardButton(20)
             {
@@ -42,7 +41,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "C0nt1nue Game"
             };
             continueGameButton.Click += continueGameButton_Click;
-            Add(continueGameButton);
+            ControlHostComponent.Add(continueGameButton);
 
             startGameButton = new StandardButton(20)
             {
@@ -50,7 +49,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Start New Game"
             };
             startGameButton.Click += startGameButton_Click;
-            Add(startGameButton);
+            ControlHostComponent.Add(startGameButton);
 
             exitToMenuButton = new StandardButton(20)
             {
@@ -58,7 +57,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Ex1t t0 Menu"
             };
             exitToMenuButton.Click += exitToMenuButton_Click;
-            Add(exitToMenuButton);
+            ControlHostComponent.Add(exitToMenuButton);
 
             exitButton = new StandardButton(20)
             {
@@ -66,12 +65,12 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Ex1t"
             };
             exitButton.Click += exitButton_Click;
-            Add(exitButton);
+            ControlHostComponent.Add(exitButton);
         }
 
         private void exitToMenuButton_Click(object sender, EventArgs e)
         {
-            Close();
+            Hide();
 
             new MainMenuView().Show();
         }
@@ -93,7 +92,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void ContinueCurrentGame()
         {
-            Close();
+            Hide();
 
             new GameView(currentGame).Show();
         }
@@ -107,7 +106,7 @@ namespace CodeMagic.UI.Sad.Views
         {
             currentGame.Dispose();
 
-            Close();
+            Hide();
 
             var generatingView = new WaitMessageView("Starting new game...", () =>
             {

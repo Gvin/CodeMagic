@@ -3,8 +3,8 @@ using CodeMagic.Core.Game;
 using CodeMagic.Game.Area.EnvironmentData;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
-using Microsoft.Xna.Framework;
 using SadConsole;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Controls.VisualControls
 {
@@ -34,8 +34,8 @@ namespace CodeMagic.UI.Sad.Controls.VisualControls
                 Max = game.Player.MaxHealth,
                 Min = 0,
                 Value = game.Player.Health,
-                FillCell = new Cell(Color.Black, Color.Red, '.'),
-                EmptyCell = new Cell(healthBackColor, healthBackColor)
+                FillCell = new ColoredGlyph(Color.Black, Color.Red, '.'),
+                EmptyCell = new ColoredGlyph(healthBackColor, healthBackColor)
             };
             Add(healthBar);
 
@@ -45,8 +45,8 @@ namespace CodeMagic.UI.Sad.Controls.VisualControls
                 Max = game.Player.MaxMana,
                 Min = 0,
                 Value = game.Player.Mana,
-                FillCell = new Cell(Color.Black, Color.Blue, '.'),
-                EmptyCell = new Cell(Color.DarkBlue, Color.DarkBlue)
+                FillCell = new ColoredGlyph(Color.Black, Color.Blue, '.'),
+                EmptyCell = new ColoredGlyph(Color.DarkBlue, Color.DarkBlue)
             };
             Add(manaBar);
 
@@ -57,8 +57,8 @@ namespace CodeMagic.UI.Sad.Controls.VisualControls
                 Max = game.Player.MaxStamina,
                 Min = 0,
                 Value = game.Player.Stamina,
-                FillCell = new Cell(Color.Black, Color.Gold, '.'),
-                EmptyCell = new Cell(staminaBackColor, staminaBackColor)
+                FillCell = new ColoredGlyph(Color.Black, Color.Gold, '.'),
+                EmptyCell = new ColoredGlyph(staminaBackColor, staminaBackColor)
             };
             Add(staminaBar);
 
@@ -69,8 +69,8 @@ namespace CodeMagic.UI.Sad.Controls.VisualControls
                 Max = 100,
                 Min = 0,
                 Value = game.Player.HungerPercent,
-                FillCell = new Cell(Color.Black, Color.Lime, '.'),
-                EmptyCell = new Cell(hungerBackColor, hungerBackColor)
+                FillCell = new ColoredGlyph(Color.Black, Color.Lime, '.'),
+                EmptyCell = new ColoredGlyph(hungerBackColor, hungerBackColor)
             };
             Add(hungerBar);
         }
@@ -79,7 +79,7 @@ namespace CodeMagic.UI.Sad.Controls.VisualControls
 
         private int Height => Position.Height;
 
-        public override void Draw(CellSurface surface)
+        public override void Draw(ICellSurface surface)
         {
             healthBar.Max = game.Player.MaxHealth;
             healthBar.Value = game.Player.Health;
@@ -98,7 +98,7 @@ namespace CodeMagic.UI.Sad.Controls.VisualControls
             DrawCellManaLevel(surface);
         }
 
-        private void DrawCellManaLevel(CellSurface surface)
+        private void DrawCellManaLevel(ICellSurface surface)
         {
             const int yPos = 15;
 
@@ -118,29 +118,29 @@ namespace CodeMagic.UI.Sad.Controls.VisualControls
 
             for (int i = 0; i < disturbanceLevelLength; i++)
             {
-                surface.Print(shiftX + i, yPos + 1, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.BlueViolet));
+                surface.Print(shiftX + i, yPos + 1, new ColoredGlyph(Color.Black, Color.BlueViolet, Glyphs.GetGlyph('.')));
             }
 
             shiftX += disturbanceLevelLength;
             for (int i = 0; i < leftLength; i++)
             {
-                surface.Print(shiftX + i, yPos + 1, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.DarkBlue));
+                surface.Print(shiftX + i, yPos + 1, new ColoredGlyph(Color.Black, Color.DarkBlue, Glyphs.GetGlyph('.')));
             }
 
             shiftX += leftLength;
             for (int i = 0; i < manaLevelLength; i++)
             {
-                surface.Print(shiftX + i, yPos + 1, new ColoredGlyph(Glyphs.GetGlyph('.'), Color.Black, Color.DeepSkyBlue));
+                surface.Print(shiftX + i, yPos + 1, new ColoredGlyph(Color.Black, Color.DeepSkyBlue, Glyphs.GetGlyph('.')));
             }
         }
 
-        private void DrawStats(CellSurface surface)
+        private void DrawStats(ICellSurface surface)
         {
             surface.Print(2, 1, "Player Status");
             surface.Fill(1, 2, Width - 1, FrameColor, BackgroundColor, Glyphs.GetGlyph('─'));
             surface.DrawVerticalLine(0, 0, Height,
-                new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, BackgroundColor));
-            surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, BackgroundColor));
+                new ColoredGlyph(FrameColor, BackgroundColor, Glyphs.GetGlyph('│')));
+            surface.Print(0, 2, new ColoredGlyph(FrameColor, BackgroundColor, Glyphs.GetGlyph('├')));
 
             surface.Print(2, 3, $"Health [{game.Player.Health} / {game.Player.MaxHealth}]");
 

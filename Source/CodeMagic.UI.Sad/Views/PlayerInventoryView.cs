@@ -9,11 +9,10 @@ using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using SadConsole;
 using SadConsole.Input;
-using Point = Microsoft.Xna.Framework.Point;
+using SadRogue.Primitives;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -56,7 +55,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[C] Check Scroll"
             };
             checkScrollButton.Click += (sender, args) => CheckSelectedScrollCode();
-            Add(checkScrollButton);
+            ControlHostComponent.Add(checkScrollButton);
 
             useItemButton = new StandardButton(20)
             {
@@ -64,7 +63,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[U] Use"
             };
             useItemButton.Click += (sender, args) => UseSelectedItem();
-            Add(useItemButton);
+            ControlHostComponent.Add(useItemButton);
 
             equipItemButton = new StandardButton(20)
             {
@@ -72,7 +71,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[E] Equip"
             };
             equipItemButton.Click += (sender, args) => EquipSelectedItem();
-            Add(equipItemButton);
+            ControlHostComponent.Add(equipItemButton);
 
             equipLeftHoldableButton = new StandardButton(20)
             {
@@ -80,7 +79,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[Z] Equip Left"
             };
             equipLeftHoldableButton.Click += (sender, args) => EquipSelectedHoldable(false);
-            Add(equipLeftHoldableButton);
+            ControlHostComponent.Add(equipLeftHoldableButton);
 
             equipRightHoldableButton = new StandardButton(20)
             {
@@ -88,7 +87,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[X] Equip Right"
             };
             equipRightHoldableButton.Click += (sender, args) => EquipSelectedHoldable(true);
-            Add(equipRightHoldableButton);
+            ControlHostComponent.Add(equipRightHoldableButton);
 
             takeOffItemButton = new StandardButton(20)
             {
@@ -96,7 +95,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[T] Take Off"
             };
             takeOffItemButton.Click += (sender, args) => TakeOffSelectedItem();
-            Add(takeOffItemButton);
+            ControlHostComponent.Add(takeOffItemButton);
 
             dropItemButton = new StandardButton(20)
             {
@@ -104,7 +103,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[D] Drop"
             };
             dropItemButton.Click += (sender, args) => DropSelectedItem();
-            Add(dropItemButton);
+            ControlHostComponent.Add(dropItemButton);
 
             dropAllItemsButton = new StandardButton(20)
             {
@@ -112,7 +111,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[A] Drop All"
             };
             dropAllItemsButton.Click += (sender, args) => DropAllItemsInStack();
-            Add(dropAllItemsButton);
+            ControlHostComponent.Add(dropAllItemsButton);
         }
 
         private void CheckSelectedScrollCode()
@@ -132,7 +131,7 @@ namespace CodeMagic.UI.Sad.Views
                 return;
 
             game.PerformPlayerAction(new DropItemsPlayerAction(SelectedStack.Items));
-            Close();
+            Hide();
         }
 
         private void DropSelectedItem()
@@ -141,7 +140,7 @@ namespace CodeMagic.UI.Sad.Views
                 return;
 
             game.PerformPlayerAction(new DropItemsPlayerAction(SelectedStack.TopItem));
-            Close();
+            Hide();
         }
 
         private void TakeOffSelectedItem()
@@ -153,7 +152,7 @@ namespace CodeMagic.UI.Sad.Views
                 return;
 
             game.PerformPlayerAction(new UnequipItemPlayerAction(equipableItem));
-            Close();
+            Hide();
         }
 
         private void EquipSelectedItem()
@@ -168,7 +167,7 @@ namespace CodeMagic.UI.Sad.Views
                 return;
 
             game.PerformPlayerAction(new EquipItemPlayerAction(equipableItem));
-            Close();
+            Hide();
         }
 
         private void EquipSelectedHoldable(bool isRight)
@@ -180,7 +179,7 @@ namespace CodeMagic.UI.Sad.Views
                 return;
 
             game.PerformPlayerAction(new EquipHoldablePlayerAction(holdableItem, isRight));
-            Close();
+            Hide();
         }
 
         private void UseSelectedItem()
@@ -189,7 +188,7 @@ namespace CodeMagic.UI.Sad.Views
                 return;
 
             game.PerformPlayerAction(new UseItemPlayerAction(usableItem));
-            Close();
+            Hide();
         }
 
         protected override void ProcessSelectedItemChanged()
@@ -295,13 +294,13 @@ namespace CodeMagic.UI.Sad.Views
 
             if (Stack.TopItem.Stackable)
             {
-                result.Add(new ColoredString($" ({Stack.Count})", new Cell(StackCountColor, backColor)));
+                result.Add(new ColoredString($" ({Stack.Count})", StackCountColor, backColor));
             }
 
             var equippedText = GetEquippedText(player, Stack);
             if (!string.IsNullOrEmpty(equippedText))
             {
-                result.Add(new ColoredString($" {equippedText}", new Cell(EquippedTextColor, backColor)));
+                result.Add(new ColoredString($" {equippedText}", EquippedTextColor, backColor));
             }
 
             return result.ToArray();

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Input;
-using SadConsole.Themes;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
 
 namespace CodeMagic.UI.Sad.Controls
 {
@@ -88,19 +88,21 @@ namespace CodeMagic.UI.Sad.Controls
             DrawItems();
         }
 
-        public override bool ProcessMouse(MouseConsoleState mouseState)
+
+
+        public override bool ProcessMouse(MouseScreenObjectState mouseState)
         {
-            if (isMouseOver && CustomProcessMouse(mouseState))
+            if (_isMouseOver && CustomProcessMouse(mouseState))
                 return true;
 
             return base.ProcessMouse(mouseState);
         }
 
-        private bool CustomProcessMouse(MouseConsoleState mouseState)
+        private bool CustomProcessMouse(MouseScreenObjectState mouseState)
         {
             if (mouseState.Mouse.LeftClicked)
             {
-                var relativeY = mouseState.ConsoleCellPosition.Y - Position.Y;
+                var relativeY = mouseState.CellPosition.Y - Position.Y;
                 var index = relativeY + scroll.Value;
                 if (index < 0 || index > items.Count - 1)
                     return false;
@@ -169,6 +171,6 @@ namespace CodeMagic.UI.Sad.Controls
     {
         bool Equals(ICustomListBoxItem other);
 
-        void Draw(CellSurface surface, int y, int maxWidth, bool selected);
+        void Draw(ICellSurface surface, int y, int maxWidth, bool selected);
     }
 }

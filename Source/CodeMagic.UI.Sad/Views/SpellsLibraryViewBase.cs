@@ -5,14 +5,13 @@ using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.SpellsLibrary;
-using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
-using SadConsole.Themes;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
 using Orientation = SadConsole.Orientation;
-using ScrollBar = SadConsole.Controls.ScrollBar;
-using TextBox = SadConsole.Controls.TextBox;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -48,7 +47,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[R] Remove from Library"
             };
             removeSpellButton.Click += (sender, args) => RemoveSpellFromLibrary();
-            Add(removeSpellButton);
+            ControlHostComponent.Add(removeSpellButton);
 
             editSpellButton = new StandardButton(25)
             {
@@ -56,35 +55,35 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[E] Edit Spell"
             };
             editSpellButton.Click += (sender, args) => EditSelectedSpell();
-            Add(editSpellButton);
+            ControlHostComponent.Add(editSpellButton);
 
             spellDetails = new SpellDetailsControl(57, Height - 10)
             {
                 Position = new Point(Width - 58, 3)
             };
-            Add(spellDetails);
+            ControlHostComponent.Add(spellDetails);
 
             var scrollBarTheme = new ScrollBarTheme
             {
-                Normal = new Cell(DefaultForeground, DefaultBackground)
+                Normal = new ColoredGlyph(DefaultForeground, DefaultBackground)
             };
             var scrollBar = new ScrollBar(Orientation.Vertical, Height - 6)
             {
                 Position = new Point(Width - 60, 5),
                 Theme = scrollBarTheme
             };
-            Add(scrollBar);
+            ControlHostComponent.Add(scrollBar);
             spellsList = new CustomListBox<SpellListBoxItem>(Width - 61, Height - 6, scrollBar)
             {
                 Position = new Point(1, 5)
             };
             spellsList.SelectionChanged += spellsListBox_SelectedItemChanged;
-            Add(spellsList);
+            ControlHostComponent.Add(spellsList);
 
             var textBoxTheme = new TextBoxTheme
             {
-                Normal = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255)),
-                Focused = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255))
+                Normal = new ColoredGlyph(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255)),
+                Focused = new ColoredGlyph(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255))
             };
             filterTextBox = new TextBox(Width - 69)
             {
@@ -92,7 +91,7 @@ namespace CodeMagic.UI.Sad.Views
                 Theme = textBoxTheme,
                 MaxLength = Width - 70
             };
-            Add(filterTextBox);
+            ControlHostComponent.Add(filterTextBox);
 
             RefreshSpells();
 
@@ -114,7 +113,7 @@ namespace CodeMagic.UI.Sad.Views
             };
             editSpellView.Closed += (sender, args) =>
             {
-                if (args.Result == DialogResult.Cancel)
+                if (!editSpellView.DialogResult)
                     return;
 
                 var code = EditSpellHelper.ReadSpellCodeFromFile(spellFilePath);
@@ -143,7 +142,7 @@ namespace CodeMagic.UI.Sad.Views
             spellsList.SelectedItemIndex = 0;
         }
 
-        protected override void DrawView(CellSurface surface)
+        protected override void DrawView(ICellSurface surface)
         {
             base.DrawView(surface);
 
@@ -152,17 +151,17 @@ namespace CodeMagic.UI.Sad.Views
             surface.Print(2, 1, "Spells Library");
 
             surface.Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Print(0, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╟')));
+            surface.Print(Width - 1, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
 
-            surface.Print(Width - 59, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
-            surface.Print(Width - 59, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
-            surface.DrawVerticalLine(Width - 59, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
+            surface.Print(Width - 59, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('┬')));
+            surface.Print(Width - 59, Height - 1, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╧')));
+            surface.DrawVerticalLine(Width - 59, 3, Height - 4, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('│')));
 
             if (spellDetails.IsVisible)
             {
-                surface.Print(Width - 59, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
-                surface.Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+                surface.Print(Width - 59, 4, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('├')));
+                surface.Print(Width - 1, 4, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
             }
         }
 
@@ -248,7 +247,7 @@ namespace CodeMagic.UI.Sad.Views
                     MoveSelectionDown();
                     return true;
                 case Keys.Escape:
-                    Close();
+                    Hide();
                     return true;
             }
 

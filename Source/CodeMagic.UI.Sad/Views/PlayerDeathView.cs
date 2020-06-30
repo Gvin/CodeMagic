@@ -1,8 +1,8 @@
 ﻿using System;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
-using Microsoft.Xna.Framework;
 using SadConsole;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -27,7 +27,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Start New Game"
             };
             startNewGameButton.Click += startNewGameButton_Click;
-            Add(startNewGameButton);
+            ControlHostComponent.Add(startNewGameButton);
 
             backToMenuButton = new StandardButton(20)
             {
@@ -35,7 +35,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Back t0 Menu"
             };
             backToMenuButton.Click += backToMenuButton_Click;
-            Add(backToMenuButton);
+            ControlHostComponent.Add(backToMenuButton);
 
             exitGameButton = new StandardButton(20)
             {
@@ -43,10 +43,10 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Ex1t Game"
             };
             exitGameButton.Click += exitGameButton_Click;
-            Add(exitGameButton);
+            ControlHostComponent.Add(exitGameButton);
         }
 
-        protected override void DrawView(CellSurface surface)
+        protected override void DrawView(ICellSurface surface)
         {
             base.DrawView(surface);
 
@@ -56,7 +56,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void startNewGameButton_Click(object sender, EventArgs e)
         {
-            Close();
+            Hide();
 
             var game = GameManager.Current.StartGame();
             var gameView = new GameView(game);
@@ -65,7 +65,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void backToMenuButton_Click(object sender, EventArgs e)
         {
-            Close();
+            Hide();
 
             new MainMenuView().Show();
         }

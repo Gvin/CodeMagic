@@ -4,7 +4,7 @@ using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
-using Point = Microsoft.Xna.Framework.Point;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -30,7 +30,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 Position = new Point(xPosition, 4)
             };
-            Add(gameLabel);
+            ControlHostComponent.Add(gameLabel);
 
             startGameButton = new StandardButton(20)
             {
@@ -38,7 +38,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Start Game"
             };
             startGameButton.Click += startGameButton_Click;
-            Add(startGameButton);
+            ControlHostComponent.Add(startGameButton);
 
             continueGameButton = new StandardButton(20)
             {
@@ -53,7 +53,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 continueGameButton.Click += continueGameButton_Click;
             }
-            Add(continueGameButton);
+            ControlHostComponent.Add(continueGameButton);
 
             spellsLibraryButton = new StandardButton(20)
             {
@@ -61,7 +61,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Spells L1brary"
             };
             spellsLibraryButton.Click += (sender, args) => OpenSpellsLibrary();
-            Add(spellsLibraryButton);
+            ControlHostComponent.Add(spellsLibraryButton);
 
             settingsButton = new StandardButton(20)
             {
@@ -69,7 +69,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Sett1ngs"
             };
             settingsButton.Click += (sender, args) => OpenSettingsDialog();
-            Add(settingsButton);
+            ControlHostComponent.Add(settingsButton);
 
             exitButton = new StandardButton(20)
             {
@@ -77,7 +77,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Ex1t"
             };
             exitButton.Click += exitButton_Click;
-            Add(exitButton);
+            ControlHostComponent.Add(exitButton);
         }
 
         private void OpenSettingsDialog()
@@ -100,7 +100,7 @@ namespace CodeMagic.UI.Sad.Views
             if (CurrentGame.Game == null)
                 return;
 
-            Close();
+            Hide();
 
             var game = (GameCore<Player>) CurrentGame.Game;
             var gameView = new GameView(game);
@@ -109,7 +109,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void startGameButton_Click(object sender, EventArgs args)
         {
-            Close();
+            Hide();
 
             var generatingView = new WaitMessageView("Starting new game...", () =>
             {

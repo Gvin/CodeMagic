@@ -1,7 +1,7 @@
 ﻿using System;
 using CodeMagic.UI.Sad.Common;
-using Microsoft.Xna.Framework;
 using SadConsole;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Controls.VisualControls
 {
@@ -16,8 +16,8 @@ namespace CodeMagic.UI.Sad.Controls.VisualControls
             Min = 0;
             Value = 50;
 
-            FillCell = new Cell(Color.Lime, Color.Lime, ' ');
-            EmptyCell = new Cell(Color.Green, Color.Green, ' ');
+            FillCell = new ColoredGlyph(Color.Lime, Color.Lime, ' ');
+            EmptyCell = new ColoredGlyph(Color.Green, Color.Green, ' ');
         }
 
         public Rectangle Position { get; }
@@ -30,11 +30,11 @@ namespace CodeMagic.UI.Sad.Controls.VisualControls
 
         public int Value { get; set; }
 
-        public Cell FillCell { get; set; }
+        public ColoredGlyph FillCell { get; set; }
 
-        public Cell EmptyCell { get; set; }
+        public ColoredGlyph EmptyCell { get; set; }
 
-        public void Draw(CellSurface surface)
+        public void Draw(ICellSurface surface)
         {
             surface.Fill(
                 new Rectangle(0, 0, Position.Width, Position.Height), 

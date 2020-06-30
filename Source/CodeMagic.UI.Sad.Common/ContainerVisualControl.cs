@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using SadConsole;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Common
 {
@@ -34,7 +34,7 @@ namespace CodeMagic.UI.Sad.Common
             controls.Remove(control);
         }
 
-        public virtual void Draw(CellSurface surface)
+        public virtual void Draw(ICellSurface surface)
         {
             surface.Clear(new Rectangle(0, 0, Position.Width, Position.Height));
 

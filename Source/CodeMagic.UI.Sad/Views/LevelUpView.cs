@@ -4,8 +4,8 @@ using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using Microsoft.Xna.Framework;
 using SadConsole;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -41,10 +41,10 @@ namespace CodeMagic.UI.Sad.Views
                 if (selectedStat.HasValue)
                 {
                     player.IncreaseStat(selectedStat.Value);
-                    Close();
+                    Hide();
                 }
             };
-            Add(okButton);
+            ControlHostComponent.Add(okButton);
 
             DoForAllStats((y, stat) =>
             {
@@ -52,7 +52,7 @@ namespace CodeMagic.UI.Sad.Views
             });
         }
 
-        protected override void DrawView(CellSurface surface)
+        protected override void DrawView(ICellSurface surface)
         {
             base.DrawView(surface);
 
@@ -95,7 +95,7 @@ namespace CodeMagic.UI.Sad.Views
             }
         }
 
-        private void PrintStatStatus(int x, int y, PlayerStats stat, CellSurface surface)
+        private void PrintStatStatus(int x, int y, PlayerStats stat, ICellSurface surface)
         {
             int symbol = ' ';
             if (selectedStat.HasValue && selectedStat.Value == stat)
@@ -103,7 +103,7 @@ namespace CodeMagic.UI.Sad.Views
                 symbol = Glyphs.GetGlyph('▲');
                 
             }
-            surface.Print(x + maxStatNameLength + 5, y, new ColoredGlyph(symbol, TextHelper.PositiveValueColor.ToXna(), DefaultBackground));
+            surface.Print(x + maxStatNameLength + 5, y, new ColoredGlyph(TextHelper.PositiveValueColor.ToSad(), DefaultBackground, symbol));
         }
 
         private void AddStatSelector(int x, int y, PlayerStats stat)
@@ -117,7 +117,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 selectedStat = stat;
             };
-            Add(button);
+            ControlHostComponent.Add(button);
         }
 
         public override void Update(TimeSpan time)

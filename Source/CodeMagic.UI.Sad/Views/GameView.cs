@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Core.Items;
@@ -10,14 +9,14 @@ using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Controls.VisualControls;
 using CodeMagic.UI.Sad.Drawing;
-using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
-using SadConsole.Themes;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
+using Direction = CodeMagic.Core.Common.Direction;
 using Orientation = SadConsole.Orientation;
-using Point = Microsoft.Xna.Framework.Point;
-using ScrollBar = SadConsole.Controls.ScrollBar;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -61,7 +60,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void Player_Died(object sender, EventArgs e)
         {
-            Close();
+            Hide();
 
             new PlayerDeathView().Show();
         }
@@ -75,7 +74,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 39, 37)
             };
             cheatsButton.Click += (sender, args) => { new CheatsView().Show(); };
-            Add(cheatsButton);
+            ControlHostComponent.Add(cheatsButton);
 #endif
 
             var playerStatsControl = new PlayerStatsVisualControl(
@@ -87,7 +86,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 Position = new Point(1, 1)
             };
-            Add(gameArea);
+            ControlHostComponent.Add(gameArea);
 
             journalScroll = new ScrollBar(Orientation.Vertical, 9)
             {
@@ -95,16 +94,16 @@ namespace CodeMagic.UI.Sad.Views
                 CanFocus = false,
                 Theme = new ScrollBarTheme
                 {
-                    Normal = new Cell(Color.White, Color.Black)
+                    Normal = new ColoredGlyph(Color.White, Color.Black)
                 }
             };
-            Add(journalScroll);
+            ControlHostComponent.Add(journalScroll);
 
             journalBox = new JournalBoxControl(Width - 3, 10, journalScroll, game.Journal)
             {
                 Position = new Point(2, Height - 11)
             };
-            Add(journalBox);
+            ControlHostComponent.Add(journalBox);
 
 
             openInventoryButton = new StandardButton(30)
@@ -113,7 +112,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[I] Inventory"
             };
             openInventoryButton.Click += openInventoryButton_Click;
-            Add(openInventoryButton);
+            ControlHostComponent.Add(openInventoryButton);
 
             openSpellBookButton = new StandardButton(30)
             {
@@ -122,7 +121,7 @@ namespace CodeMagic.UI.Sad.Views
             };
             openSpellBookButton.Click += openSpellBookButton_Click;
             openSpellBookButton.IsEnabled = true;
-            Add(openSpellBookButton);
+            ControlHostComponent.Add(openSpellBookButton);
 
             showItemsOnFloorButton = new StandardButton(30)
             {
@@ -130,7 +129,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[G] Check Floor"
             };
             showItemsOnFloorButton.Click += showItemsOnFloorButton_Click;
-            Add(showItemsOnFloorButton);
+            ControlHostComponent.Add(showItemsOnFloorButton);
 
             openPlayerStatsButton = new StandardButton(30)
             {
@@ -138,7 +137,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[V] Player Status"
             };
             openPlayerStatsButton.Click += (sender, args) => OpenPlayerStats();
-            Add(openPlayerStatsButton);
+            ControlHostComponent.Add(openPlayerStatsButton);
         }
 
         private void showItemsOnFloorButton_Click(object sender, EventArgs e)
@@ -256,7 +255,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void OpenMainMenu()
         {
-            Close();
+            Hide();
 
             new InGameMenuView(game).Show();
         }
@@ -275,18 +274,18 @@ namespace CodeMagic.UI.Sad.Views
             spellBookView.Show();
         }
 
-        protected override void DrawView(CellSurface surface)
+        protected override void DrawView(ICellSurface surface)
         {
             base.DrawView(surface);
 
             // Journal box frame
-            surface.Print(0, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            surface.Print(1, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('─'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, Height - 11, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Print(0, Height - 11, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╟')));
+            surface.Print(1, Height - 11, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('─')));
+            surface.Print(Width - 1, Height - 11, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
 
             // Player stats frame
-            surface.Print(Width - 40, 0, new ColoredGlyph(Glyphs.GetGlyph('╤'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, 3, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Print(Width - 40, 0, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╤')));
+            surface.Print(Width - 1, 3, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
 
         }
 
@@ -303,9 +302,9 @@ namespace CodeMagic.UI.Sad.Views
             showItemsOnFloorButton.IsEnabled = game.Map.GetCell(game.PlayerPosition).Objects.OfType<IItem>().Any();
         }
 
-        protected override void OnClosed(DialogResult result)
+        protected override void OnHidden()
         {
-            base.OnClosed(result);
+            base.OnHidden();
 
             game.Player.Died -= Player_Died;
             game.Player.LeveledUp -= Player_LeveledUp;

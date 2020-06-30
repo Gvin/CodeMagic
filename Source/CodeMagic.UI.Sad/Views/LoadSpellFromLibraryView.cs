@@ -1,9 +1,7 @@
 ﻿using CodeMagic.Game.Spells;
-using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using Microsoft.Xna.Framework;
 using SadConsole.Input;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -26,16 +24,24 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 17, Height - 4),
                 Text = "[ESC] Cancel"
             };
-            closeButton.Click += (sender, args) => Close(DialogResult.Cancel);
-            Add(closeButton);
+            closeButton.Click += (sender, args) =>
+            {
+                DialogResult = false;
+                Hide();
+            };
+            ControlHostComponent.Add(closeButton);
 
             okButton = new StandardButton(15)
             {
                 Position = new Point(Width - 37, Height - 4),
                 Text = "[ENTER] OK"
             };
-            okButton.Click += (sender, args) => Close(DialogResult.Ok);
-            Add(okButton);
+            okButton.Click += (sender, args) =>
+            {
+                DialogResult = true;
+                Hide();
+            };
+            ControlHostComponent.Add(okButton);
         }
 
         protected override bool ProcessKeyPressed(AsciiKey key)
@@ -43,7 +49,8 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Enter:
-                    Close(DialogResult.Ok);
+                    DialogResult = true;
+                    Hide();
                     return true;
             }
 

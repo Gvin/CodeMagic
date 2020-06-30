@@ -6,10 +6,11 @@ using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.Drawing.ImageProviding;
-using Microsoft.Xna.Framework;
 using SadConsole;
-using SadConsole.Controls;
-using SadConsole.Themes;
+using SadConsole.Readers;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Controls
 {
@@ -72,10 +73,10 @@ namespace CodeMagic.UI.Sad.Controls
             const int initialYShift = 3;
             var maxWidth = Width - 6;
 
-            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem).ToXna();
+            var itemColor = ItemDrawingHelper.GetItemColor(Stack.TopItem).ToSad();
             if (Stack.TopItem.Name.Length <= maxWidth)
             {
-                Surface.Print(1, initialYShift, new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, BackColor)));
+                Surface.Print(1, initialYShift, new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), itemColor, BackColor));
                 return;
             }
 
@@ -83,7 +84,7 @@ namespace CodeMagic.UI.Sad.Controls
             for (int yShift = 0; yShift < cuttedName.Length; yShift++)
             {
                 var line = cuttedName[yShift];
-                Surface.Print(1, initialYShift + yShift, new ColoredString(line.ConvertGlyphs(), new Cell(itemColor, BackColor)));
+                Surface.Print(1, initialYShift + yShift, new ColoredString(line.ConvertGlyphs(), itemColor, BackColor));
             }
         }
 

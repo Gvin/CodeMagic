@@ -12,14 +12,14 @@ using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.SpellsLibrary;
-using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
-using SadConsole.Themes;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
+using SadConsole.Readers;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
 using Orientation = SadConsole.Orientation;
-using Point = Microsoft.Xna.Framework.Point;
-using ScrollBar = SadConsole.Controls.ScrollBar;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -55,7 +55,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[ESC] Close"
             };
             closeButton.Click += closeButton_Click;
-            Add(closeButton);
+            ControlHostComponent.Add(closeButton);
 
             editSpellButton = new StandardButton(25)
             {
@@ -63,7 +63,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[E] Edit Spell"
             };
             editSpellButton.Click += editSpellButton_Click;
-            Add(editSpellButton);
+            ControlHostComponent.Add(editSpellButton);
 
             castSpellButton = new StandardButton(25)
             {
@@ -71,7 +71,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[C] Cast Spell"
             };
             castSpellButton.Click += castSpellButton_Click;
-            Add(castSpellButton);
+            ControlHostComponent.Add(castSpellButton);
 
             removeSpellButton = new StandardButton(25)
             {
@@ -79,7 +79,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[R] Remove Spell"
             };
             removeSpellButton.Click += removeSpellButton_Click;
-            Add(removeSpellButton);
+            ControlHostComponent.Add(removeSpellButton);
 
             scribeSpellButton = new StandardButton(25)
             {
@@ -87,7 +87,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[G] Write Scroll"
             };
             scribeSpellButton.Click += scribeSpellButton_Click;
-            Add(scribeSpellButton);
+            ControlHostComponent.Add(scribeSpellButton);
 
             saveToLibraryButton = new StandardButton(25)
             {
@@ -95,7 +95,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[T] Save to Library"
             };
             saveToLibraryButton.Click += (sender, args) => SaveSpellToLibrary();
-            Add(saveToLibraryButton);
+            ControlHostComponent.Add(saveToLibraryButton);
 
             loadFromLibraryButton = new StandardButton(25)
             {
@@ -103,30 +103,30 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[L] Load from Library"
             };
             loadFromLibraryButton.Click += (sender, args) => LoadSpellFromLibrary();
-            Add(loadFromLibraryButton);
+            ControlHostComponent.Add(loadFromLibraryButton);
 
             spellDetails = new SpellDetailsControl(57, Height - 10, game.Player)
             {
                 Position = new Point(Width - 58, 3)
             };
-            Add(spellDetails);
+            ControlHostComponent.Add(spellDetails);
 
             var scrollBarTheme = new ScrollBarTheme
             {
-                Normal = new Cell(DefaultForeground, DefaultBackground)
+                Normal = new ColoredGlyph(DefaultForeground, DefaultBackground)
             };
             var scrollBar = new ScrollBar(Orientation.Vertical, Height - 4)
             {
                 Position = new Point(Width - 60, 3),
                 Theme = scrollBarTheme
             };
-            Add(scrollBar);
+            ControlHostComponent.Add(scrollBar);
             spellsListBox = new CustomListBox<SpellListBoxItem>(Width - 61, Height - 4, scrollBar)
             {
                 Position = new Point(1, 3)
             };
             spellsListBox.SelectionChanged += spellsListBox_SelectedItemChanged;
-            Add(spellsListBox);
+            ControlHostComponent.Add(spellsListBox);
 
             RefreshSpells();
 
@@ -147,7 +147,7 @@ namespace CodeMagic.UI.Sad.Views
             var view = new LoadSpellFromLibraryView();
             view.Closed += (sender, args) =>
             {
-                if (args.Result == DialogResult.Ok && view.SelectedSpell != null)
+                if (view.DialogResult && view.SelectedSpell != null)
                 {
                     Book.Spells[spellsListBox.SelectedItem.BookIndex] = view.SelectedSpell;
                     RefreshSpells();
@@ -193,7 +193,7 @@ namespace CodeMagic.UI.Sad.Views
             });
             game.Player.Inventory.AddItem(newScroll);
 
-            Close();
+            Hide();
             game.PerformPlayerAction(new EmptyPlayerAction());
         }
 
@@ -227,7 +227,7 @@ namespace CodeMagic.UI.Sad.Views
             };
             editSpellView.Closed += (sender, args) =>
             {
-                if (args.Result == DialogResult.Cancel)
+                if (!editSpellView.DialogResult)
                     return;
 
                 var code = EditSpellHelper.ReadSpellCodeFromFile(spellFilePath);
@@ -260,7 +260,7 @@ namespace CodeMagic.UI.Sad.Views
             if (selectedSpellItem?.Spell == null)
                 return;
 
-            Close();
+            Hide();
             game.PerformPlayerAction(new CastSpellPlayerAction(selectedSpellItem.Spell));
         }
 
@@ -307,25 +307,25 @@ namespace CodeMagic.UI.Sad.Views
 
         private SpellBook Book => game.Player.Equipment.SpellBook;
 
-        protected override void DrawView(CellSurface surface)
+        protected override void DrawView(ICellSurface surface)
         {
             base.DrawView(surface);
 
             surface.Print(2, 1, "Spell Book:");
-            surface.Print(14, 1, new ColoredString(Book.Name, ItemDrawingHelper.GetItemColor(Book).ToXna(), DefaultBackground));
+            surface.Print(14, 1, new ColoredString(Book.Name, ItemDrawingHelper.GetItemColor(Book).ToSad(), DefaultBackground));
 
             surface.Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Print(0, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╟')));
+            surface.Print(Width - 1, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
 
-            surface.Print(Width - 59, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
-            surface.Print(Width - 59, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
-            surface.DrawVerticalLine(Width - 59, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
+            surface.Print(Width - 59, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('┬')));
+            surface.Print(Width - 59, Height - 1, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╧')));
+            surface.DrawVerticalLine(Width - 59, 3, Height - 4, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('│')));
 
             if (spellDetails.IsVisible)
             {
-                surface.Print(Width - 59, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
-                surface.Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+                surface.Print(Width - 59, 4, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('├')));
+                surface.Print(Width - 1, 4, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
             }
         }
 
@@ -334,7 +334,7 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Escape:
-                    Close();
+                    Hide();
                     return true;
                 case Keys.E:
                     PerformSpellEdit();
@@ -379,7 +379,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void closeButton_Click(object sender, EventArgs args)
         {
-            Close();
+            Hide();
         }
     }
 
@@ -407,21 +407,21 @@ namespace CodeMagic.UI.Sad.Views
             return ReferenceEquals(this, other);
         }
 
-        public void Draw(CellSurface surface, int y, int maxWidth, bool selected)
+        public void Draw(ICellSurface surface, int y, int maxWidth, bool selected)
         {
             var backColor = selected ? SelectedItemBackColor : DefaultBackColor;
 
             surface.Fill(0, y, maxWidth, null, backColor, null);
 
             var indexText = BookIndex < 9 ? $"0{BookIndex + 1}" : $"{BookIndex + 1}";
-            surface.Print(1, y, indexText, new Cell(SpellIndexColor, backColor));
+            surface.Print(1, y, indexText, SpellIndexColor, backColor);
 
             var spellName = Spell?.Name ?? EmptySpellName;
             var spellNameColor = Spell == null ? EmptySpellNameColor : SpellNameColor;
-            surface.Print(4, y, spellName, new Cell(spellNameColor, backColor));
+            surface.Print(4, y, spellName, spellNameColor, backColor);
 
             var manaCost = GetManaCostText();
-            surface.Print(maxWidth - 5, y, manaCost, new Cell(TextHelper.ManaColor.ToXna(), backColor));
+            surface.Print(maxWidth - 5, y, manaCost, TextHelper.ManaColor.ToSad(), backColor);
         }
 
         private string GetManaCostText()

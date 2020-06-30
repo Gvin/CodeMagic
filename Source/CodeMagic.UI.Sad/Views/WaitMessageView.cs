@@ -15,7 +15,7 @@ namespace CodeMagic.UI.Sad.Views
             this.message = message;
         }
 
-        protected override void DrawView(CellSurface surface)
+        protected override void DrawView(ICellSurface surface)
         {
             base.DrawView(surface);
 
@@ -29,7 +29,7 @@ namespace CodeMagic.UI.Sad.Views
             Task.Run(() =>
             {
                 waitAction();
-                Close();
+                Hide();
             });
         }
     }

@@ -1,11 +1,12 @@
 ﻿using System;
-using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.GameProcess;
-using Microsoft.Xna.Framework;
 using SadConsole;
-using SadConsole.Themes;
-using TextBox = SadConsole.Controls.TextBox;
+using SadConsole.Readers;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -36,7 +37,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "OK"
             };
             okButton.Click += okButton_Click;
-            Add(okButton);
+            ControlHostComponent.Add(okButton);
 
             cancelButton = new StandardButton(20)
             {
@@ -44,7 +45,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Cancel"
             };
             cancelButton.Click += cancelButton_Click;
-            Add(cancelButton);
+            ControlHostComponent.Add(cancelButton);
 
             launchEditorButton = new StandardButton(40)
             {
@@ -52,12 +53,12 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Launch Code Editor"
             };
             launchEditorButton.Click += launchEditorButton_Click;
-            Add(launchEditorButton);
+            ControlHostComponent.Add(launchEditorButton);
 
             var textBoxTheme = new TextBoxTheme
             {
-                Normal = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255)),
-                Focused = new Cell(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255))
+                Normal = new ColoredGlyph(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255)),
+                Focused = new ColoredGlyph(Color.White, Color.FromNonPremultiplied(66, 66, 66, 255))
             };
             spellNameTextBox = new TextBox(60)
             {
@@ -65,7 +66,7 @@ namespace CodeMagic.UI.Sad.Views
                 Theme = textBoxTheme,
                 MaxLength = 50
             };
-            Add(spellNameTextBox);
+            ControlHostComponent.Add(spellNameTextBox);
 
             manaCostTextBox = new TextBox(15)
             {
@@ -75,7 +76,7 @@ namespace CodeMagic.UI.Sad.Views
                 Theme = textBoxTheme,
                 MaxLength = 10
             };
-            Add(manaCostTextBox);
+            ControlHostComponent.Add(manaCostTextBox);
         }
 
         private void launchEditorButton_Click(object sender, EventArgs e)
@@ -95,16 +96,18 @@ namespace CodeMagic.UI.Sad.Views
         {
             Name = spellNameTextBox.EditingText;
             ManaCost = int.Parse(manaCostTextBox.EditingText ?? manaCostTextBox.Text);
-            Close(DialogResult.Ok);
+            DialogResult = true;
+            Hide();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            Close(DialogResult.Cancel);
+            DialogResult = false;
+            Hide();
         }
 
 
-        protected override void DrawView(CellSurface surface)
+        protected override void DrawView(ICellSurface surface)
         {
             base.DrawView(surface);
 
@@ -114,7 +117,7 @@ namespace CodeMagic.UI.Sad.Views
 
             surface.Print(3, Height - 5,
                 new ColoredString("Don't forget to save spell file changes before pressing OK.",
-                    new Cell(Color.Red, DefaultBackground)));
+                    Color.Red, DefaultBackground));
         }
 
         public string Name { get; set; }

@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using SadConsole;
+﻿using SadConsole;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Common
 {
@@ -9,6 +9,6 @@ namespace CodeMagic.UI.Sad.Common
 
         bool IsVisible { get; set; }
 
-        void Draw(CellSurface surface);
+        void Draw(ICellSurface surface);
     }
 }

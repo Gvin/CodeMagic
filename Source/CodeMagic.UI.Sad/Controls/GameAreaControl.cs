@@ -9,10 +9,9 @@ using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
-using Microsoft.Xna.Framework;
 using SadConsole;
-using SadConsole.Controls;
-using SadConsole.Themes;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Controls
 {

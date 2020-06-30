@@ -4,8 +4,8 @@ using System.Linq;
 using CodeMagic.Core.Game.Journaling;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.UI.Sad.Common;
-using Microsoft.Xna.Framework;
 using SadConsole;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Drawing
 {
@@ -30,7 +30,11 @@ namespace CodeMagic.UI.Sad.Drawing
             {
                 return selfDescribingMessage.GetDescription().Parts.Select(styledString =>
                         new ColoredString(styledString.String.ConvertGlyphs(),
-                            new Cell(styledString.TextColor.ToXna(), BackgroundColor)))
+                            new ColoredString.ColoredGlyphEffect()
+                            {
+                                Foreground = styledString.TextColor.ToSad(),
+                                Background = BackgroundColor
+                            }))
                     .ToArray();
             }
 

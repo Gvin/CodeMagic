@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using SadConsole;
-using SadConsole.Controls;
-using SadConsole.Themes;
+﻿using SadConsole;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Controls
 {
@@ -13,12 +12,12 @@ namespace CodeMagic.UI.Sad.Controls
         {
             ThemeColors = new Colors
             {
-                Appearance_ControlNormal = new Cell(Color.White, Color.Black),
-                Appearance_ControlDisabled = new Cell(Color.White, Color.Black)
+                Appearance_ControlNormal = new ColoredGlyph(Color.White, Color.Black),
+                Appearance_ControlDisabled = new ColoredGlyph(Color.White, Color.Black)
             };
             Theme = new DrawingSurfaceTheme
             {
-                Normal = new Cell(Color.White, Color.Black)
+                Normal = new ColoredGlyph(Color.White, Color.Black)
             };
         }
     }

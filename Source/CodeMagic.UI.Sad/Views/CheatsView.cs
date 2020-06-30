@@ -3,10 +3,10 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Logging;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Controls;
+using SadConsole;
 using SadConsole.Input;
 using ILog = CodeMagic.UI.Sad.Common.ILog;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
-using Point = Microsoft.Xna.Framework.Point;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -20,7 +20,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void InitializeControls()
         {
-            Print(2, 1, "Cheats");
+            Surface.Print(2, 1, "Cheats");
 
             var closeButton = new StandardButton(15)
             {
@@ -28,7 +28,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[ESC] Close",
             };
             closeButton.Click += closeButton_Click;
-            Add(closeButton);
+            ControlHostComponent.Add(closeButton);
 
             var levelUp = new StandardButton(20)
             {
@@ -38,11 +38,12 @@ namespace CodeMagic.UI.Sad.Views
             levelUp.Click += (sender, args) =>
             {
                 Log.Info("Used Cheat \"Level Up\"");
-                Close();
+
+                Hide();
                 var exp = ((Player) CurrentGame.Player).GetXpToLevelUp() - CurrentGame.Player.Experience;
                 CurrentGame.Player.AddExperience(exp);
             };
-            Add(levelUp);
+            ControlHostComponent.Add(levelUp);
 
             var heal = new StandardButton(20)
             {
@@ -52,10 +53,10 @@ namespace CodeMagic.UI.Sad.Views
             heal.Click += (sender, args) =>
             {
                 Log.Info("Used Cheat \"Heal\"");
-                Close();
+                Hide();
                 CurrentGame.Player.Health = CurrentGame.Player.MaxHealth;
             };
-            Add(heal);
+            ControlHostComponent.Add(heal);
 
             var restoreMana = new StandardButton(20)
             {
@@ -65,10 +66,10 @@ namespace CodeMagic.UI.Sad.Views
             restoreMana.Click += (sender, args) =>
             {
                 Log.Info("Used Cheat \"Restore Mana\"");
-                Close();
+                Hide();
                 CurrentGame.Player.Mana = CurrentGame.Player.MaxMana;
             };
-            Add(restoreMana);
+            ControlHostComponent.Add(restoreMana);
 
             var restoreStamina = new StandardButton(20)
             {
@@ -78,10 +79,10 @@ namespace CodeMagic.UI.Sad.Views
             restoreStamina.Click += (sender, args) =>
             {
                 Log.Info("Used Cheat \"Restore Stamina\"");
-                Close();
+                Hide();
                 ((Player)CurrentGame.Player).Stamina = ((Player)CurrentGame.Player).MaxStamina;
             };
-            Add(restoreStamina);
+            ControlHostComponent.Add(restoreStamina);
 
             var restoreStats = new StandardButton(20)
             {
@@ -91,12 +92,12 @@ namespace CodeMagic.UI.Sad.Views
             restoreStats.Click += (sender, args) =>
             {
                 Log.Info("Used Cheat \"Restore Stats\"");
-                Close();
+                Hide();
                 CurrentGame.Player.Health = CurrentGame.Player.MaxHealth;
                 CurrentGame.Player.Mana = CurrentGame.Player.MaxMana;
                 ((Player) CurrentGame.Player).Stamina = ((Player) CurrentGame.Player).MaxStamina;
             };
-            Add(restoreStats);
+            ControlHostComponent.Add(restoreStats);
         }
 
         protected override bool ProcessKeyPressed(AsciiKey key)
@@ -104,7 +105,7 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Escape:
-                    Close();
+                    Hide();
                     return true;
             }
 
@@ -113,7 +114,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            Close();
+            Hide();
         }
     }
 }

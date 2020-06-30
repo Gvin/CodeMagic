@@ -1,9 +1,9 @@
 ﻿using System;
 using CodeMagic.UI.Sad.Common;
-using Microsoft.Xna.Framework;
 using SadConsole;
-using SadConsole.Controls;
-using SadConsole.Themes;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Controls
 {
@@ -28,17 +28,13 @@ namespace CodeMagic.UI.Sad.Controls
             Surface.Print(0, 0, "<- C0de Mag1c ->", Color.BlueViolet);
 
             Surface.Print(4, +1,
-                new ColoredGlyph(Glyphs.GetGlyph('│'), Color.Red,
-                    DefaultBackground));
+                new ColoredGlyph(Color.Red, DefaultBackground, Glyphs.GetGlyph('│')));
             Surface.Print(6, 1,
-                new ColoredGlyph('\'', Color.Red,
-                    DefaultBackground));
+                new ColoredGlyph(Color.Red, DefaultBackground, '\''));
             Surface.Print(10, 1,
-                new ColoredGlyph(Glyphs.GetGlyph('│'), Color.Red,
-                    DefaultBackground));
+                new ColoredGlyph(Color.Red, DefaultBackground, Glyphs.GetGlyph('│')));
             Surface.Print(12, 1,
-                new ColoredGlyph('`', Color.Red,
-                    DefaultBackground));
+                new ColoredGlyph(Color.Red, DefaultBackground, '`'));
         }
     }
 }

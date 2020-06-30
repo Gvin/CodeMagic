@@ -7,10 +7,9 @@ using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using Microsoft.Xna.Framework.Input;
 using SadConsole;
 using SadConsole.Input;
-using Point = Microsoft.Xna.Framework.Point;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -27,22 +26,22 @@ namespace CodeMagic.UI.Sad.Views
             InitializeControls();
         }
 
-        protected override void DrawView(CellSurface surface)
+        protected override void DrawView(ICellSurface surface)
         {
             base.DrawView(surface);
 
             surface.Print(2, 1, "Player Status");
 
             surface.Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Print(0, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╟')));
+            surface.Print(Width - 1, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
 
             PrintProtection(2, 4, surface);
             PrintPlayerStats(25, 4, surface);
             PrintWeapon(2, 20, surface);
         }
 
-        private void PrintPlayerStats(int dX, int dY, CellSurface surface)
+        private void PrintPlayerStats(int dX, int dY, ICellSurface surface)
         {
             surface.Print(dX, dY, "Stats:");
 
@@ -84,11 +83,11 @@ namespace CodeMagic.UI.Sad.Views
             surface.PrintStyledText(dX, dY + 5 + stats.Length, new StyledLine {"XP:    ", new StyledString($"{player.Experience} / {player.GetXpToLevelUp()}", TextHelper.XpColor)}.ToColoredString(DefaultBackground));
         }
 
-        private void PrintWeapon(int dX, int dY, CellSurface surface)
+        private void PrintWeapon(int dX, int dY, ICellSurface surface)
         {
             surface.Fill(1, dY, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
-            surface.Print(0, dY, new ColoredGlyph(Glyphs.GetGlyph('╠'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, dY, new ColoredGlyph(Glyphs.GetGlyph('╣'), FrameColor, DefaultBackground));
+            surface.Print(0, dY, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╠')));
+            surface.Print(Width - 1, dY, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╣')));
 
             surface.PrintStyledText(dX, dY + 1, new StyledLine
             {
@@ -97,8 +96,8 @@ namespace CodeMagic.UI.Sad.Views
             }.ToColoredString(DefaultBackground));
 
             surface.Fill(1, dY + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            surface.Print(0, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Print(0, dY + 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╟')));
+            surface.Print(Width - 1, dY + 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
 
             var rightWeaponDetails = GetHoldableDetails(player.Equipment.RightHandItem);
             for (int yShift = 0; yShift < rightWeaponDetails.Length; yShift++)
@@ -109,8 +108,8 @@ namespace CodeMagic.UI.Sad.Views
 
             var leftDy = dY + rightWeaponDetails.Length + 4;
             surface.Fill(1, leftDy, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
-            surface.Print(0, leftDy, new ColoredGlyph(Glyphs.GetGlyph('╠'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, leftDy, new ColoredGlyph(Glyphs.GetGlyph('╣'), FrameColor, DefaultBackground));
+            surface.Print(0, leftDy, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╠')));
+            surface.Print(Width - 1, leftDy, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╣')));
 
             surface.PrintStyledText(dX, leftDy + 1, new StyledLine
             {
@@ -119,8 +118,8 @@ namespace CodeMagic.UI.Sad.Views
             }.ToColoredString(DefaultBackground));
 
             surface.Fill(1, leftDy + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            surface.Print(0, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Print(0, leftDy + 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╟')));
+            surface.Print(Width - 1, leftDy + 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
 
             var leftWeaponDetails = GetHoldableDetails(player.Equipment.LeftHandItem);
             for (int yShift = 0; yShift < leftWeaponDetails.Length; yShift++)
@@ -175,7 +174,7 @@ namespace CodeMagic.UI.Sad.Views
             return result.ToArray();
         }
 
-        private void PrintProtection(int dX, int dY, CellSurface surface)
+        private void PrintProtection(int dX, int dY, ICellSurface surface)
         {
             surface.Print(dX, dY, "Protection:");
 
@@ -186,7 +185,7 @@ namespace CodeMagic.UI.Sad.Views
                 var element = elements[index];
 
                 var protection = player.GetProtection(element);
-                var color = TextHelper.GetElementColor(element).ToXna();
+                var color = TextHelper.GetElementColor(element).ToSad();
                 var name = TextHelper.GetElementName(element);
 
                 var y = dY + 2 + index;
@@ -203,12 +202,12 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[ESC] Close"
             };
             closeButton.Click += closeButton_Click;
-            Add(closeButton);
+            ControlHostComponent.Add(closeButton);
         }
 
         private void closeButton_Click(object sender, EventArgs args)
         {
-            Close();
+            Hide();
         }
 
         protected override bool ProcessKeyPressed(AsciiKey key)
@@ -216,7 +215,7 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Escape:
-                    Close();
+                    Hide();
                     return true;
             }
 

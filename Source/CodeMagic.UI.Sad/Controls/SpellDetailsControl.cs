@@ -1,12 +1,12 @@
 ﻿using System;
-using CodeMagic.Core.Game;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.Spells;
 using CodeMagic.UI.Sad.Common;
-using Microsoft.Xna.Framework;
 using SadConsole;
-using SadConsole.Controls;
-using SadConsole.Themes;
+using SadConsole.Readers;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Controls
 {
@@ -44,7 +44,7 @@ namespace CodeMagic.UI.Sad.Controls
             Surface.Fill(1, 3, 15, Color.Black, Color.Black, null);
             if (Spell == null)
             {
-                Surface.Print(1, 3, new ColoredString("Spell is empty", new Cell(Color.Gray, Color.Black)));
+                Surface.Print(1, 3, new ColoredString("Spell is empty", Color.Gray, Color.Black));
             }
             else
             {

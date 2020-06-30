@@ -2,11 +2,12 @@
 using System.Linq;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Drawing;
-using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
-using Button = SadConsole.Controls.Button;
+using SadConsole.Readers;
+using SadConsole.UI.Controls;
+using SadRogue.Primitives;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -31,15 +32,15 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[B] Browse"
             };
             browseForLauncherButton.Click += (sender, args) => BrowseForCodeEditor();
-            Add(browseForLauncherButton);
+            ControlHostComponent.Add(browseForLauncherButton);
 
             closeButton = new StandardButton(20)
             {
                 Position = new Point(2, Height - 4),
                 Text = "[ESC] Close"
             };
-            closeButton.Click += (sender, args) => Close();
-            Add(closeButton);
+            closeButton.Click += (sender, args) => Hide();
+            ControlHostComponent.Add(closeButton);
 
             prevFontSizeButton = new Button(1)
             {
@@ -48,7 +49,7 @@ namespace CodeMagic.UI.Sad.Views
                 CanFocus = false,
             };
             prevFontSizeButton.Click += (sender, args) => SwitchFontSize(false);
-            Add(prevFontSizeButton);
+            ControlHostComponent.Add(prevFontSizeButton);
 
             nextFontSizeButton = new Button(1)
             {
@@ -57,7 +58,7 @@ namespace CodeMagic.UI.Sad.Views
                 CanFocus = false
             };
             nextFontSizeButton.Click += (sender, args) => SwitchFontSize(true);
-            Add(nextFontSizeButton);
+            ControlHostComponent.Add(nextFontSizeButton);
         }
 
         private void SwitchFontSize(bool forward)
@@ -113,14 +114,14 @@ namespace CodeMagic.UI.Sad.Views
             // }
         }
 
-        protected override void DrawView(CellSurface surface)
+        protected override void DrawView(ICellSurface surface)
         {
             base.DrawView(surface);
 
             surface.Print(2, 1, "Game Settings");
 
             surface.Print(2, 4, "Spell Editor Application:");
-            surface.Print(2, 5, new ColoredString(Settings.Current.SpellEditorPath, new Cell(Color.Gray, DefaultBackground)));
+            surface.Print(2, 5, new ColoredString(Settings.Current.SpellEditorPath, Color.Gray, DefaultBackground));
 
             surface.Print(2, 10, "Font Size:");
             surface.Clear(15, 10, 10);
@@ -135,7 +136,7 @@ namespace CodeMagic.UI.Sad.Views
                     BrowseForCodeEditor();
                     return true;
                 case Keys.Escape:
-                    Close();
+                    Hide();
                     return true;
             }
 

@@ -4,9 +4,9 @@ namespace CodeMagic.UI.Sad.Common
 {
     public static class SystemColorExtension
     {
-        public static Microsoft.Xna.Framework.Color ToXna(this Color color)
+        public static SadRogue.Primitives.Color ToSad(this Color color)
         {
-            return Microsoft.Xna.Framework.Color.FromNonPremultiplied(color.R, color.G, color.B, color.A);
+            return SadRogue.Primitives.Color.FromNonPremultiplied(color.R, color.G, color.B, color.A);
         }
     }
 }

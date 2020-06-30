@@ -2,8 +2,8 @@
 using System.Linq;
 using CodeMagic.Game;
 using CodeMagic.UI.Sad.Common;
-using Microsoft.Xna.Framework;
 using SadConsole;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Drawing
 {
@@ -13,7 +13,7 @@ namespace CodeMagic.UI.Sad.Drawing
         {
             return text.Select(line =>
                 line.Select(part => 
-                        new ColoredString(part.String.ConvertGlyphs(), part.TextColor.ToXna(), backgroundColor))
+                        new ColoredString(part.String.ConvertGlyphs(), part.TextColor.ToSad(), backgroundColor))
                     .ToArray())
                 .SelectMany(line => SplitText(line, width)).ToArray();
         }
@@ -41,7 +41,15 @@ namespace CodeMagic.UI.Sad.Drawing
             }
             result.Add(accumulator.ToArray());
 
-            return result.Select(line => new ColoredString(line)).ToArray();
+            return result
+                .Select(line => 
+                    line.Select(glyph => new ColoredString.ColoredGlyphEffect
+                    {
+                        Glyph =  glyph.Glyph, 
+                        Foreground = glyph.Foreground, 
+                        Background = glyph.Background
+                    }).ToArray())
+                .Select(line => new ColoredString(line)).ToArray();
         }
     }
 }

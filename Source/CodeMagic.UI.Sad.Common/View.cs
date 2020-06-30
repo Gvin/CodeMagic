@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Input;
-using SadConsole.Themes;
+using SadConsole.UI;
+using SadConsole.UI.Controls;
+using SadRogue.Primitives;
 
 namespace CodeMagic.UI.Sad.Common
 {
-    public abstract class View : ControlsConsole
+    public abstract class View : Window
     {
         protected readonly ILog Log;
 
         protected static readonly Color FrameColor = Color.Gray;
 
-        public event EventHandler<ViewClosedEventArgs> Closed;
-
         private readonly List<IVisualControl> visualControls;
 
         protected View(ILog log, int width, int height, Font font)
-            : base(width, height, font)
+            : base(width, height)
         {
+            Font = font;
             Log = log;
 
             visualControls = new List<IVisualControl>();
@@ -29,21 +26,15 @@ namespace CodeMagic.UI.Sad.Common
             DefaultForeground = Color.White;
             DefaultBackground = Color.Black;
 
-            ThemeColors = new Colors
-            {
-                Appearance_ControlNormal = new Cell(Color.White, Color.Black),
-                Appearance_ControlDisabled = new Cell(Color.White, Color.Black)
-            };
-
             var surface = new DrawingSurface(Width, Height)
             {
                 Position = new Point(0, 0),
-                OnDraw = s => DrawView(s.Surface),
+                OnDraw = (s, time) => DrawView(s.Surface),
                 CanFocus = false,
                 UseMouse = false,
                 UseKeyboard = false
             };
-            Add(surface);
+            ControlHostComponent.Add(surface);
         }
 
         protected void AddVisualControl(IVisualControl control)
@@ -56,45 +47,9 @@ namespace CodeMagic.UI.Sad.Common
             visualControls.Remove(control);
         }
 
-        public void Show()
+        protected override void OnShown()
         {
-            Log.Debug($"Opening view of type {GetType().Name}");
-
-
-            //IsFocused = true;
-            Global.CurrentScreen.Children.Add(this);
-            Global.FocusedConsoles.Set(this);
-
-            OnShown();
-
             Log.Debug($"Opened view of type {GetType().Name}");
-        }
-
-        protected virtual void OnShown()
-        {
-            // Do nothing
-        }
-
-        public void Close(DialogResult result = DialogResult.None)
-        {
-            Log.Debug($"Closing view of type {GetType().Name}");
-
-            Global.CurrentScreen.Children.Remove(this);
-            var activeView = Global.CurrentScreen.Children.OfType<View>().LastOrDefault();
-            if (activeView != null)
-            {
-                Global.FocusedConsoles.Set(activeView);
-            }
-
-            OnClosed(result);
-            Closed?.Invoke(this, new ViewClosedEventArgs(result));
-
-            Log.Debug($"Closed view of type {GetType().Name}");
-        }
-
-        protected virtual void OnClosed(DialogResult result)
-        {
-            // Do nothing
         }
 
         public override bool ProcessKeyboard(Keyboard info)
@@ -124,26 +79,26 @@ namespace CodeMagic.UI.Sad.Common
             return false;
         }
 
-        private void DrawFrame(CellSurface surface)
+        private void DrawFrame(ICellSurface surface)
         {
             surface.Fill(DefaultForeground, DefaultBackground, null);
 
             surface.Fill(1, 0, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
             surface.Fill(1, Height - 1, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('═'));
-            surface.Print(0, 0, new ColoredGlyph(Glyphs.GetGlyph('╔'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, 0, new ColoredGlyph(Glyphs.GetGlyph('╗'), FrameColor, DefaultBackground));
+            surface.Print(0, 0, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╔')));
+            surface.Print(Width - 1, 0, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╗')));
 
-            surface.Print(0, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╚'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╝'), FrameColor, DefaultBackground));
+            surface.Print(0, Height - 1, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╚')));
+            surface.Print(Width - 1, Height - 1, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╝')));
 
             for (var y = 1; y < Height - 1; y++)
             {
-                surface.Print(0, y, new ColoredGlyph(Glyphs.GetGlyph('║'), FrameColor, DefaultBackground));
-                surface.Print(Width - 1, y, new ColoredGlyph(Glyphs.GetGlyph('║'), FrameColor, DefaultBackground));
+                surface.Print(0, y, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('║')));
+                surface.Print(Width - 1, y, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('║')));
             }
         }
 
-        protected virtual void DrawView(CellSurface surface)
+        protected virtual void DrawView(ICellSurface surface)
         {
             DrawFrame(surface);
 
@@ -156,22 +111,5 @@ namespace CodeMagic.UI.Sad.Common
                 control.Draw(controlSurface);
             }
         }
-    }
-
-    public class ViewClosedEventArgs : EventArgs
-    {
-        public ViewClosedEventArgs(DialogResult result = DialogResult.Ok)
-        {
-            Result = result;
-        }
-
-        public DialogResult Result { get; }
-    }
-
-    public enum DialogResult
-    {
-        None,
-        Cancel,
-        Ok
     }
 }

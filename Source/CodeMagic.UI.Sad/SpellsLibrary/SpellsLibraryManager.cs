@@ -10,7 +10,7 @@ namespace CodeMagic.UI.Sad.SpellsLibrary
 {
     public class SpellsLibraryManager
     {
-        private const string FilePath = ".\\Library\\SpellsLibrary.xml";
+        private const string FilePath = ".\\Profile\\SpellsLibrary.xml";
 
         public void SaveSpell(BookSpell spell)
         {

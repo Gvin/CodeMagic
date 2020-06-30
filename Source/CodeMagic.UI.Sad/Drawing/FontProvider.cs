@@ -89,13 +89,13 @@ namespace CodeMagic.UI.Sad.Drawing
             switch (size)
             {
                 case FontSize.X050:
-                    return Global.LoadFont(FontX050Path).GetFont(Font.FontSizes.One);
+                    return GameHost.Instance.LoadFont(FontX050Path);
                 case FontSize.X075:
-                    return Global.LoadFont(FontX075Path).GetFont(Font.FontSizes.One);
+                    return GameHost.Instance.LoadFont(FontX075Path);
                 case FontSize.X1:
-                    return Global.LoadFont(FontX1Path).GetFont(Font.FontSizes.One);
+                    return GameHost.Instance.LoadFont(FontX1Path);
                 case FontSize.X2:
-                    return Global.LoadFont(FontX1Path).GetFont(Font.FontSizes.Two);
+                    return GameHost.Instance.LoadFont(FontX1Path);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(size), size, null);
             }

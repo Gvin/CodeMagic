@@ -6,13 +6,12 @@ using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Input;
-using SadConsole.Themes;
-using Point = Microsoft.Xna.Framework.Point;
+using SadConsole.UI.Controls;
+using SadConsole.UI.Themes;
+using SadRogue.Primitives;
+using Point = SadRogue.Primitives.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
@@ -50,13 +49,13 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "[ESC] Close"
             };
             closeButton.Click += closeButton_Click;
-            Add(closeButton);
+            ControlHostComponent.Add(closeButton);
 
             itemDetails = new ItemDetailsControl(52, Height - 10, player)
             {
                 Position = new Point(Width - 53, 3)
             };
-            Add(itemDetails);
+            ControlHostComponent.Add(itemDetails);
 
             filterAllButton = new StandardButton(5)
             {
@@ -65,7 +64,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "All"
             };
             filterAllButton.Click += (sender, args) => ChangeFilter(FilterType.All);
-            Add(filterAllButton);
+            ControlHostComponent.Add(filterAllButton);
 
             filterWeaponButton = new StandardButton(5)
             {
@@ -74,7 +73,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "─┼ ".ConvertGlyphs()
             };
             filterWeaponButton.Click += (sender, args) => ChangeFilter(FilterType.Weapon);
-            Add(filterWeaponButton);
+            ControlHostComponent.Add(filterWeaponButton);
             
             filterArmorButton = new StandardButton(5)
             {
@@ -83,7 +82,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "╭█╮".ConvertGlyphs()
             };
             filterArmorButton.Click += (sender, args) => ChangeFilter(FilterType.Armor);
-            Add(filterArmorButton);
+            ControlHostComponent.Add(filterArmorButton);
 
             filterUsableButton = new StandardButton(5)
             {
@@ -92,7 +91,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = " ▲ ".ConvertGlyphs()
             };
             filterUsableButton.Click += (sender, args) => ChangeFilter(FilterType.Usable);
-            Add(filterUsableButton);
+            ControlHostComponent.Add(filterUsableButton);
 
             filterOtherButton = new StandardButton(5)
             {
@@ -101,11 +100,11 @@ namespace CodeMagic.UI.Sad.Views
                 Text = " ? ".ConvertGlyphs()
             };
             filterOtherButton.Click += (sender, args) => ChangeFilter(FilterType.Other);
-            Add(filterOtherButton);
+            ControlHostComponent.Add(filterOtherButton);
 
             var scrollBarTheme = new ScrollBarTheme
             {
-                Normal = new Cell(DefaultForeground, DefaultBackground)
+                Normal = new ColoredGlyph(DefaultForeground, DefaultBackground)
             };
             var itemListScroll = new ScrollBar(Orientation.Vertical, Height - 4)
             {
@@ -113,13 +112,13 @@ namespace CodeMagic.UI.Sad.Views
                 Theme = scrollBarTheme,
                 CanFocus = false
             };
-            Add(itemListScroll);
+            ControlHostComponent.Add(itemListScroll);
             itemsList = new CustomListBox<InventoryStackItem>(Width - 56, Height - 4, itemListScroll)
             {
                 Position = new Point(1, 6)
             };
             itemsList.SelectionChanged += itemsListBox_SelectedItemChanged;
-            Add(itemsList);
+            ControlHostComponent.Add(itemsList);
 
             RefreshFilterButtonsState();
         }
@@ -135,7 +134,7 @@ namespace CodeMagic.UI.Sad.Views
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            Close();
+            Hide();
         }
 
         private void itemsListBox_SelectedItemChanged(object sender, EventArgs e)
@@ -194,7 +193,7 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Escape:
-                    Close();
+                    Hide();
                     return true;
                 case Keys.Up:
                 case Keys.W:
@@ -249,22 +248,22 @@ namespace CodeMagic.UI.Sad.Views
             }
         }
 
-        protected override void DrawView(CellSurface surface)
+        protected override void DrawView(ICellSurface surface)
         {
             base.DrawView(surface);
 
             surface.Print(2, 1, inventoryName);
 
             surface.Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
-            surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Print(0, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╟')));
+            surface.Print(Width - 1, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
 
-            surface.Print(Width - 54, 2, new ColoredGlyph(Glyphs.GetGlyph('┬'), FrameColor, DefaultBackground));
-            surface.Print(Width - 54, Height - 1, new ColoredGlyph(Glyphs.GetGlyph('╧'), FrameColor, DefaultBackground));
-            surface.DrawVerticalLine(Width - 54, 3, Height - 4, new ColoredGlyph(Glyphs.GetGlyph('│'), FrameColor, DefaultBackground));
+            surface.Print(Width - 54, 2, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('┬')));
+            surface.Print(Width - 54, Height - 1, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╧')));
+            surface.DrawVerticalLine(Width - 54, 3, Height - 4, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('│')));
 
-            surface.Print(Width - 54, 4, new ColoredGlyph(Glyphs.GetGlyph('├'), FrameColor, DefaultBackground));
-            surface.Print(Width - 1, 4, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
+            surface.Print(Width - 54, 4, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('├')));
+            surface.Print(Width - 1, 4, new ColoredGlyph(FrameColor, DefaultBackground, Glyphs.GetGlyph('╢')));
         }
 
         protected abstract InventoryStackItem CreateListBoxItem(InventoryStack stack);
@@ -301,17 +300,17 @@ namespace CodeMagic.UI.Sad.Views
 
         private ColoredString[] GetNameText(bool selected, Color backColor)
         {
-            var itemColor = selected ? SelectedItemTextColor : ItemDrawingHelper.GetItemColor(Stack.TopItem).ToXna();
+            var itemColor = selected ? SelectedItemTextColor : ItemDrawingHelper.GetItemColor(Stack.TopItem).ToSad();
 
             return new[]
             {
-                new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), new Cell(itemColor, backColor))
+                new ColoredString(Stack.TopItem.Name.ConvertGlyphs(), itemColor, backColor)
             };
         }
 
         protected abstract ColoredString[] GetAfterNameText(Color backColor);
 
-        public void Draw(CellSurface surface, int y, int maxWidth, bool selected)
+        public void Draw(ICellSurface surface, int y, int maxWidth, bool selected)
         {
             var backColor = selected ? SelectedItemBackColor : DefaultBackColor;
             surface.Fill(0, y, maxWidth, null, backColor, null);
@@ -322,8 +321,12 @@ namespace CodeMagic.UI.Sad.Views
             if (Stack.TopItem is DurableItem durableItem)
             {
                 var durabilityColor = TextHelper.GetDurabilityColor(durableItem.Durability, durableItem.MaxDurability);
-                afterNameText.Add(new ColoredString(
-                    new ColoredGlyph(Glyphs.GetGlyph('•'), durabilityColor.ToXna(), backColor)));
+                afterNameText.Add(new ColoredString(new ColoredString.ColoredGlyphEffect()
+                {
+                    Glyph = Glyphs.GetGlyph('•'),
+                    Foreground = durabilityColor.ToSad(),
+                    Background = backColor
+                }));
             }
             afterNameText.AddRange(GetAfterNameText(backColor));
             var formattedText = FormatText(text, afterNameText.ToArray(), backColor, maxWidth - 1);
@@ -357,11 +360,16 @@ namespace CodeMagic.UI.Sad.Views
                 var result = new List<ColoredGlyph>(textPart);
                 result.AddRange(new[]
                 {
-                        new ColoredGlyph('.', WeightColor, backColor),
-                        new ColoredGlyph('.', WeightColor, backColor),
-                        new ColoredGlyph('.', WeightColor, backColor)
+                        new ColoredGlyph(WeightColor, backColor, '.'),
+                        new ColoredGlyph(WeightColor, backColor, '.'),
+                        new ColoredGlyph(WeightColor, backColor, '.')
                     });
-                textPart = result.ToArray();
+                textPart = result.Select(glyph => new ColoredString.ColoredGlyphEffect()
+                {
+                    Glyph = glyph.Glyph,
+                    Foreground = glyph.Foreground,
+                    Background = glyph.Background
+                }).ToArray();
             }
             return new ColoredString(textPart);
         }
