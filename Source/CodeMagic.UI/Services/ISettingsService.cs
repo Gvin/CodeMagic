@@ -2,27 +2,27 @@
 {
     public interface ISettingsService
     {
-        public float Brightness { get; }
+        float Brightness { get; }
 
-        public bool DebugDrawTemperature { get; }
+        bool DebugDrawTemperature { get; }
 
-        public bool DebugDrawLightLevel { get; }
+        bool DebugDrawLightLevel { get; }
 
-        public bool DebugDrawMagicEnergy { get; }
+        bool DebugDrawMagicEnergy { get; }
 
-        public FontSizeMultiplier FontSize { get; set; }
+        FontSizeMultiplier FontSize { get; set; }
 
-        public string SpellEditorPath { get; set; }
+        string SpellEditorPath { get; set; }
 
-        public int MinActionsInterval { get; }
+        int MinActionsInterval { get; }
 
-        public int SavingInterval { get; }
+        int SavingInterval { get; }
 
-        public bool DebugWriteMapToFile { get; }
+        bool DebugWriteMapToFile { get; }
 
-        public string LogLevel { get; }
+        string LogLevel { get; }
 
-        public void Save();
+        void Save();
     }
 
     public enum FontSizeMultiplier

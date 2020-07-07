@@ -4,11 +4,11 @@ namespace CodeMagic.Game.Items.ItemsGeneration.Configuration.Shield
 {
     public interface IShieldsConfiguration
     {
-        public IShieldConfiguration SmallShieldConfiguration { get; }
+        IShieldConfiguration SmallShieldConfiguration { get; }
 
-        public IShieldConfiguration MediumShieldConfiguration { get; }
+        IShieldConfiguration MediumShieldConfiguration { get; }
 
-        public IShieldConfiguration BigShieldConfiguration { get; }
+        IShieldConfiguration BigShieldConfiguration { get; }
 
         IDescriptionConfiguration DescriptionConfiguration { get; }
     }

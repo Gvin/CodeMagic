@@ -11,7 +11,6 @@ using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Drawing;
 using Microsoft.Xna.Framework;
 using SadConsole;
-using SadConsole.Controls;
 using SadConsole.Themes;
 
 namespace CodeMagic.UI.Sad.Controls
