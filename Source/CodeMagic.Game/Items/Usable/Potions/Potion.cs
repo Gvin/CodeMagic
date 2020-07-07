@@ -198,7 +198,14 @@ namespace CodeMagic.Game.Items.Usable.Potions
 
         public StyledLine[] GetDescription(Player player)
         {
-            return potionData.GetDescription(player, color);
+            var description = new List<StyledLine>
+            {
+                TextHelper.GetWeightLine(Weight),
+                StyledLine.Empty
+            };
+            description.AddRange(potionData.GetDescription(player, color));
+
+            return description.ToArray();
         }
     }
 
