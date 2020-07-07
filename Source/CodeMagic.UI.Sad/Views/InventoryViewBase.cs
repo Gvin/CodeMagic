@@ -18,7 +18,7 @@ namespace CodeMagic.UI.Sad.Views
 {
     public abstract class InventoryViewBase : GameViewBase
     {
-        private readonly string inventoryName;
+        public event EventHandler Exit;
 
         private CustomListBox<InventoryStackItem> itemsList;
         private ItemDetailsControl itemDetails;
@@ -32,27 +32,33 @@ namespace CodeMagic.UI.Sad.Views
 
         private FilterType filter;
 
-        protected InventoryViewBase(string inventoryName, Player player)
+        public InventoryViewBase()
         {
-            this.inventoryName = inventoryName;
-
             filter = FilterType.All;
-            InitializeControls(player);
         }
 
-        protected InventoryStack SelectedStack => itemsList.SelectedItem?.Stack;
+        protected abstract string InventoryName { get; }
 
-        private void InitializeControls(Player player)
+        public Player Player { protected get; set; }
+
+        public InventoryStack SelectedStack => itemsList.SelectedItem?.Stack;
+
+        public virtual void Initialize()
         {
-            closeButton = new StandardButton(15, 3)
+            InitializeControls();
+        }
+
+        private void InitializeControls()
+        {
+            closeButton = new StandardButton(15)
             {
                 Position = new Point(Width - 17, Height - 4),
                 Text = "[ESC] Close"
             };
-            closeButton.Click += closeButton_Click;
+            closeButton.Click += (sender, args) => Exit?.Invoke(this, EventArgs.Empty);
             Add(closeButton);
 
-            itemDetails = new ItemDetailsControl(52, Height - 10, player)
+            itemDetails = new ItemDetailsControl(52, Height - 10, Player)
             {
                 Position = new Point(Width - 53, 3)
             };
@@ -131,11 +137,10 @@ namespace CodeMagic.UI.Sad.Views
             RefreshItems(false);
         }
 
-        protected abstract IEnumerable<InventoryStack> GetStacks();
-
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            Close();
+        public InventoryStack[] Stacks 
+        { 
+            private get;
+            set;
         }
 
         private void itemsListBox_SelectedItemChanged(object sender, EventArgs e)
@@ -172,7 +177,7 @@ namespace CodeMagic.UI.Sad.Views
             var selectionIndex = itemsList.SelectedItemIndex;
             itemsList.ClearItems();
 
-            foreach (var inventoryStack in GetStacks().Where(stack => CheckFilter(stack.TopItem)))
+            foreach (var inventoryStack in Stacks.Where(stack => CheckFilter(stack.TopItem)))
             {
                 itemsList.AddItem(CreateListBoxItem(inventoryStack));
             }
@@ -194,7 +199,7 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Escape:
-                    Close();
+                    Exit?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.Up:
                 case Keys.W:
@@ -253,7 +258,7 @@ namespace CodeMagic.UI.Sad.Views
         {
             base.DrawView(surface);
 
-            surface.Print(2, 1, inventoryName);
+            surface.Print(2, 1, InventoryName);
 
             surface.Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
             surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));

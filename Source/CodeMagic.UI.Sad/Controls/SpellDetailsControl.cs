@@ -1,6 +1,4 @@
 ﻿using System;
-using CodeMagic.Core.Game;
-using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.Spells;
 using CodeMagic.UI.Sad.Common;
 using Microsoft.Xna.Framework;
@@ -23,13 +21,13 @@ namespace CodeMagic.UI.Sad.Controls
             Library.Default.SetControlTheme(typeof(SpellDetailsControl), new DrawingSurfaceTheme());
         }
 
-        private readonly Player player;
+        private readonly int? playerMana;
 
-        public SpellDetailsControl(int width, int height, Player player = null) 
+        public SpellDetailsControl(int width, int height, int? playerMana = null) 
             : base(width, height)
         {
             CanFocus = false;
-            this.player = player;
+            this.playerMana = playerMana;
         }
 
         public BookSpell Spell { get; set; }
@@ -49,9 +47,9 @@ namespace CodeMagic.UI.Sad.Controls
             else
             {
                 var manaColor = DefaultManaColor;
-                if (player != null)
+                if (playerMana.HasValue)
                 {
-                    manaColor = player.Mana >= Spell.ManaCost ? EnoughManaColor : NotEnoughManaColor;
+                    manaColor = playerMana.Value >= Spell.ManaCost ? EnoughManaColor : NotEnoughManaColor;
                 }
                 
                 Surface.Print(1, 3, new ColoredString("Mana cost:", Color.White, Color.Black));

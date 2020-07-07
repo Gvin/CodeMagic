@@ -1,36 +1,23 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using CodeMagic.UI.Presenters;
+using CodeMagic.UI.Sad.Common;
 using SadConsole;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class WaitMessageView : GameViewBase
+    public class WaitMessageView : GameViewBase, IWaitMessageView
     {
-        private readonly Action waitAction;
-        private readonly string message;
-
-        public WaitMessageView(string message, Action waitAction)
-        {
-            this.waitAction = waitAction;
-            this.message = message;
-        }
-
         protected override void DrawView(CellSurface surface)
         {
             base.DrawView(surface);
 
-            surface.Print(5, 5, message);
+            surface.Print(5, 5, Message);
         }
 
-        protected override void OnShown()
+        public void Close()
         {
-            base.OnShown();
-
-            Task.Run(() =>
-            {
-                waitAction();
-                Close();
-            });
+            Close(DialogResult.None);
         }
+
+        public string Message { private get; set; }
     }
 }

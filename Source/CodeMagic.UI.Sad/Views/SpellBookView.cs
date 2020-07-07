@@ -1,17 +1,9 @@
 ﻿using System;
-using CodeMagic.Core.Game;
-using CodeMagic.Core.Items;
 using CodeMagic.Game.Items;
-using CodeMagic.Game.Items.Materials;
-using CodeMagic.Game.Items.Usable;
-using CodeMagic.Game.JournalMessages;
-using CodeMagic.Game.Objects.Creatures;
-using CodeMagic.Game.PlayerActions;
 using CodeMagic.Game.Spells;
+using CodeMagic.UI.Presenters;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using CodeMagic.UI.Sad.GameProcess;
-using CodeMagic.UI.Sad.SpellsLibrary;
 using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
@@ -23,12 +15,8 @@ using ScrollBar = SadConsole.Controls.ScrollBar;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class SpellBookView : GameViewBase
+    public class SpellBookView : GameViewBase, ISpellBookView
     {
-        private const string DefaultSpellName = "New Spell";
-
-        private readonly GameCore<Player> game;
-
         private StandardButton closeButton;
         private CustomListBox<SpellListBoxItem> spellsListBox;
         private SpellDetailsControl spellDetails;
@@ -40,21 +28,14 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton saveToLibraryButton;
         private StandardButton loadFromLibraryButton;
 
-        public SpellBookView(GameCore<Player> game)
-        {
-            this.game = game;
-
-            InitializeControls();
-        }
-
-        private void InitializeControls()
+        public void Initialize()
         {
             closeButton = new StandardButton(15)
             {
                 Position = new Point(Width - 17, Height - 4),
                 Text = "[ESC] Close"
             };
-            closeButton.Click += closeButton_Click;
+            closeButton.Click += (sender, args) => Exit?.Invoke(this, EventArgs.Empty);
             Add(closeButton);
 
             editSpellButton = new StandardButton(25)
@@ -62,7 +43,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 57, 13),
                 Text = "[E] Edit Spell"
             };
-            editSpellButton.Click += editSpellButton_Click;
+            editSpellButton.Click += (sender, args) => EditSpell?.Invoke(this, EventArgs.Empty);
             Add(editSpellButton);
 
             castSpellButton = new StandardButton(25)
@@ -70,7 +51,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 57, 16),
                 Text = "[C] Cast Spell"
             };
-            castSpellButton.Click += castSpellButton_Click;
+            castSpellButton.Click += (sender, args) => CastSpell?.Invoke(this, EventArgs.Empty);
             Add(castSpellButton);
 
             removeSpellButton = new StandardButton(25)
@@ -78,7 +59,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 57, 19),
                 Text = "[R] Remove Spell"
             };
-            removeSpellButton.Click += removeSpellButton_Click;
+            removeSpellButton.Click += (sender, args) => RemoveSpell?.Invoke(this, EventArgs.Empty);
             Add(removeSpellButton);
 
             scribeSpellButton = new StandardButton(25)
@@ -86,7 +67,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 57, 22),
                 Text = "[G] Write Scroll"
             };
-            scribeSpellButton.Click += scribeSpellButton_Click;
+            scribeSpellButton.Click += (sender, args) => ScribeSpell?.Invoke(this, EventArgs.Empty);
             Add(scribeSpellButton);
 
             saveToLibraryButton = new StandardButton(25)
@@ -94,7 +75,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 30, 16),
                 Text = "[T] Save to Library"
             };
-            saveToLibraryButton.Click += (sender, args) => SaveSpellToLibrary();
+            saveToLibraryButton.Click += (sender, args) => SaveToLibrary?.Invoke(this, EventArgs.Empty);
             Add(saveToLibraryButton);
 
             loadFromLibraryButton = new StandardButton(25)
@@ -102,10 +83,10 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 30, 13),
                 Text = "[L] Load from Library"
             };
-            loadFromLibraryButton.Click += (sender, args) => LoadSpellFromLibrary();
+            loadFromLibraryButton.Click += (sender, args) => LoadFromLibrary?.Invoke(this, EventArgs.Empty);
             Add(loadFromLibraryButton);
 
-            spellDetails = new SpellDetailsControl(57, Height - 10, game.Player)
+            spellDetails = new SpellDetailsControl(57, Height - 10, PlayerMana)
             {
                 Position = new Point(Width - 58, 3)
             };
@@ -133,159 +114,6 @@ namespace CodeMagic.UI.Sad.Views
             UpdateSpellDetails();
         }
 
-        private void SaveSpellToLibrary()
-        {
-            var selectedSpell = spellsListBox.SelectedItem?.Spell;
-            if (selectedSpell == null)
-                return;
-
-            new SpellsLibraryManager().SaveSpell(selectedSpell);
-        }
-
-        private void LoadSpellFromLibrary()
-        {
-            var view = new LoadSpellFromLibraryView();
-            view.Closed += (sender, args) =>
-            {
-                if (args.Result == DialogResult.Ok && view.SelectedSpell != null)
-                {
-                    Book.Spells[spellsListBox.SelectedItem.BookIndex] = view.SelectedSpell;
-                    RefreshSpells();
-                }
-            };
-            view.Show();
-        }
-
-        private void scribeSpellButton_Click(object sender, EventArgs e)
-        {
-            WriteSpellToScroll();
-        }
-
-        private void WriteSpellToScroll()
-        {
-            var selectedSpell = spellsListBox.SelectedItem?.Spell;
-            if (selectedSpell == null)
-                return;
-
-            var blankScroll = game.Player.Inventory.GetItem(BlankScroll.ItemKey);
-            if (blankScroll == null)
-                return;
-
-            var scrollCreationCost = selectedSpell.ManaCost * 2;
-            if (game.Player.Mana < scrollCreationCost)
-            {
-                game.Journal.Write(new NotEnoughManaToScrollMessage());
-                return;
-            }
-
-            game.Player.Mana -= scrollCreationCost;
-
-            game.Player.Inventory.RemoveItem(blankScroll);
-            var newScroll = new Scroll(new ScrollItemConfiguration
-            {
-                Name = $"{selectedSpell.Name} Scroll ({selectedSpell.ManaCost})",
-                Key = Guid.NewGuid().ToString(),
-                Weight = 1,
-                Code = selectedSpell.Code,
-                SpellName = selectedSpell.Name,
-                Mana = selectedSpell.ManaCost,
-                Rareness = ItemRareness.Uncommon
-            });
-            game.Player.Inventory.AddItem(newScroll);
-
-            Close();
-            game.PerformPlayerAction(new EmptyPlayerAction());
-        }
-
-        private void castSpellButton_Click(object sender, EventArgs args)
-        {
-            CastSelectedSpell();
-        }
-
-        private void removeSpellButton_Click(object sender, EventArgs args)
-        {
-            RemoveSelectedSpell();
-        }
-
-        private void editSpellButton_Click(object sender, EventArgs args)
-        {
-            PerformSpellEdit();
-        }
-
-        private void PerformSpellEdit()
-        {
-            var selectedSpellItem = spellsListBox.SelectedItem;
-            if (selectedSpellItem == null)
-                return;
-
-            var spellFilePath = EditSpellHelper.PrepareSpellTemplate(selectedSpellItem.Spell?.Code);
-
-            var editSpellView = new EditSpellView(spellFilePath)
-            {
-                Name = selectedSpellItem.Spell?.Name,
-                InitialManaCost = selectedSpellItem.Spell?.ManaCost
-            };
-            editSpellView.Closed += (sender, args) =>
-            {
-                if (args.Result == DialogResult.Cancel)
-                    return;
-
-                var code = EditSpellHelper.ReadSpellCodeFromFile(spellFilePath);
-                var newSpell = new BookSpell
-                {
-                    Code = code,
-                    Name = string.IsNullOrEmpty(editSpellView.Name) ? DefaultSpellName : editSpellView.Name,
-                    ManaCost = editSpellView.ManaCost
-                };
-                Book.Spells[selectedSpellItem.BookIndex] = newSpell;
-                RefreshSpells();
-            };
-
-            editSpellView.Show();
-        }
-
-        private void RemoveSelectedSpell()
-        {
-            var selectedSpellItem = spellsListBox.SelectedItem;
-            if (selectedSpellItem?.Spell == null)
-                return;
-
-            Book.Spells[selectedSpellItem.BookIndex] = null;
-            RefreshSpells();
-        }
-
-        private void CastSelectedSpell()
-        {
-            var selectedSpellItem = spellsListBox.SelectedItem;
-            if (selectedSpellItem?.Spell == null)
-                return;
-
-            Close();
-            game.PerformPlayerAction(new CastSpellPlayerAction(selectedSpellItem.Spell));
-        }
-
-        private void RefreshSpells()
-        {
-            var selectedIndex = spellsListBox.SelectedItemIndex;
-
-            spellsListBox.ClearItems();
-
-            for (var index = 0; index < Book.Spells.Length; index++)
-            {
-                var spell = Book.Spells[index];
-                spellsListBox.AddItem(new SpellListBoxItem(spell, index));
-            }
-
-            if (selectedIndex != -1)
-            {
-                spellsListBox.SelectedItemIndex = selectedIndex;
-            }
-            else
-            {
-                spellsListBox.SelectedItemIndex = 0;
-            }
-        }
-
         private void spellsListBox_SelectedItemChanged(object sender, EventArgs args)
         {
             UpdateSpellDetails();
@@ -302,17 +130,15 @@ namespace CodeMagic.UI.Sad.Views
             saveToLibraryButton.IsVisible = spellExists;
             removeSpellButton.IsVisible = spellExists;
             castSpellButton.IsVisible = spellExists;
-            scribeSpellButton.IsVisible = spellExists && game.Player.Inventory.Contains(BlankScroll.ItemKey);
+            scribeSpellButton.IsVisible = spellExists && CanScribe;
         }
-
-        private SpellBook Book => game.Player.Equipment.SpellBook;
 
         protected override void DrawView(CellSurface surface)
         {
             base.DrawView(surface);
 
             surface.Print(2, 1, "Spell Book:");
-            surface.Print(14, 1, new ColoredString(Book.Name, ItemDrawingHelper.GetItemColor(Book).ToXna(), DefaultBackground));
+            surface.Print(14, 1, new ColoredString(SpellBook.Name, ItemDrawingHelper.GetItemColor(SpellBook).ToXna(), DefaultBackground));
 
             surface.Fill(1, 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
             surface.Print(0, 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
@@ -334,25 +160,25 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Escape:
-                    Close();
+                    Exit?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.E:
-                    PerformSpellEdit();
+                    EditSpell?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.R:
-                    RemoveSelectedSpell();
+                    RemoveSpell?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.C:
-                    CastSelectedSpell();
+                    CastSpell?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.G:
-                    WriteSpellToScroll();
+                    ScribeSpell?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.T:
-                    SaveSpellToLibrary();
+                    SaveToLibrary?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.L:
-                    LoadSpellFromLibrary();
+                    LoadFromLibrary?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.Up:
                 case Keys.W:
@@ -377,9 +203,49 @@ namespace CodeMagic.UI.Sad.Views
             spellsListBox.SelectedItemIndex = Math.Min(spellsListBox.Items.Length - 1, spellsListBox.SelectedItemIndex + 1);
         }
 
-        private void closeButton_Click(object sender, EventArgs args)
+        public void Close()
         {
-            Close();
+            Close(DialogResult.None);
+        }
+
+        public event EventHandler Exit;
+        public event EventHandler SaveToLibrary;
+        public event EventHandler LoadFromLibrary;
+        public event EventHandler RemoveSpell;
+        public event EventHandler CastSpell;
+        public event EventHandler ScribeSpell;
+        public event EventHandler EditSpell;
+
+        public int SelectedSpellIndex => spellsListBox.SelectedItem.BookIndex;
+
+        public SpellBook SpellBook { private get; set; }
+
+        public BookSpell SelectedSpell => spellsListBox.SelectedItem?.Spell;
+
+        public int? PlayerMana { private get; set; }
+
+        public bool CanScribe { private get; set; }
+
+        public void RefreshSpells()
+        {
+            var selectedIndex = spellsListBox.SelectedItemIndex;
+
+            spellsListBox.ClearItems();
+
+            for (var index = 0; index < SpellBook.Spells.Length; index++)
+            {
+                var spell = SpellBook.Spells[index];
+                spellsListBox.AddItem(new SpellListBoxItem(spell, index));
+            }
+
+            if (selectedIndex != -1)
+            {
+                spellsListBox.SelectedItemIndex = selectedIndex;
+            }
+            else
+            {
+                spellsListBox.SelectedItemIndex = 0;
+            }
         }
     }
 

@@ -37,6 +37,8 @@ namespace CodeMagic.Game.Items
 
         public int MaxDurability { get; }
 
+        public sealed override bool Stackable => false;
+
         public int Durability
         {
             get => durability;

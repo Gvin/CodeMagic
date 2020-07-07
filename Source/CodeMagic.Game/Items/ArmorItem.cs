@@ -15,7 +15,7 @@ namespace CodeMagic.Game.Items
         private const string SaveKeyWorldImage = "WorldImage";
         private const string SaveKeyEquippedImage = "EquippedImage";
         private const string SaveKeyProtection = "Protection";
-        private const string SaveKetArmorType = "ArmorType";
+        private const string SaveKeyArmorType = "ArmorType";
 
         private readonly SymbolsImage inventoryImage;
         private readonly SymbolsImage worldImage;
@@ -30,7 +30,7 @@ namespace CodeMagic.Game.Items
 
             protection = data.GetObject<DictionarySaveable>(SaveKeyProtection).Data.ToDictionary(pair =>
                 (Element) int.Parse((string) pair.Key), pair => int.Parse((string) pair.Value));
-            ArmorType = (ArmorType) data.GetIntValue(SaveKetArmorType);
+            ArmorType = (ArmorType) data.GetIntValue(SaveKeyArmorType);
         }
 
         public ArmorItem(ArmorItemConfiguration configuration) 
@@ -50,7 +50,7 @@ namespace CodeMagic.Game.Items
             data.Add(SaveKeyInventoryImage, inventoryImage !=null ? new SymbolsImageSaveable(inventoryImage) : null);
             data.Add(SaveKeyWorldImage, worldImage != null ? new SymbolsImageSaveable(worldImage) : null);
             data.Add(SaveKeyEquippedImage, equippedImage != null ? new SymbolsImageSaveable(equippedImage) : null);
-            data.Add(SaveKetArmorType, (int) ArmorType);
+            data.Add(SaveKeyArmorType, (int) ArmorType);
             data.Add(SaveKeyProtection,
                 new DictionarySaveable(protection.ToDictionary(pair => (object) (int) pair.Key,
                     pair => (object) pair.Value)));
@@ -65,8 +65,6 @@ namespace CodeMagic.Game.Items
         {
             return protection.ContainsKey(element) ? protection[element] : 0;
         }
-
-        public override bool Stackable => false;
 
         public SymbolsImage GetInventoryImage(IImagesStorage storage)
         {

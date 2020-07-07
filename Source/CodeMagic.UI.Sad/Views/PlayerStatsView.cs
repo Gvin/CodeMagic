@@ -5,6 +5,7 @@ using CodeMagic.Core.Game;
 using CodeMagic.Game;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.UI.Presenters;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework.Input;
@@ -14,16 +15,12 @@ using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class PlayerStatsView : GameViewBase
+    public class PlayerStatsView : GameViewBase, IPlayerStatsView
     {
-        private readonly Player player;
-
         private StandardButton closeButton;
 
-        public PlayerStatsView(Player player)
+        public PlayerStatsView()
         {
-            this.player = player;
-            
             InitializeControls();
         }
 
@@ -52,8 +49,8 @@ namespace CodeMagic.UI.Sad.Views
             {
                 var stat = stats[index];
 
-                var pureValue = player.GetPureStat(stat);
-                var bonusValue = player.Equipment.GetStatsBonus(stat);
+                var pureValue = Player.GetPureStat(stat);
+                var bonusValue = Player.Equipment.GetStatsBonus(stat);
                 
                 var name = TextHelper.GetStatName(stat);
 
@@ -75,13 +72,13 @@ namespace CodeMagic.UI.Sad.Views
             }
 
             var xPos = dX + maxLength + 10;
-            surface.PrintStyledText(xPos, dY + 2, new StyledLine { "Max Health           ", new StyledString(player.MaxHealth.ToString(), TextHelper.HealthColor) }.ToColoredString(DefaultBackground));
-            surface.PrintStyledText(xPos, dY + 3, new StyledLine { "Max Mana             ", new StyledString(player.MaxMana.ToString(), TextHelper.ManaColor) }.ToColoredString(DefaultBackground));
-            surface.PrintStyledText(xPos, dY + 4, new StyledLine { "Mana Regeneration    ", new StyledString(player.ManaRegeneration.ToString(), TextHelper.ManaRegenerationColor) }.ToColoredString(DefaultBackground));
-            surface.PrintStyledText(xPos, dY + 5, new StyledLine { "Dodge Chance         ", $"{player.DodgeChance}%"}.ToColoredString(DefaultBackground));
+            surface.PrintStyledText(xPos, dY + 2, new StyledLine { "Max Health           ", new StyledString(Player.MaxHealth.ToString(), TextHelper.HealthColor) }.ToColoredString(DefaultBackground));
+            surface.PrintStyledText(xPos, dY + 3, new StyledLine { "Max Mana             ", new StyledString(Player.MaxMana.ToString(), TextHelper.ManaColor) }.ToColoredString(DefaultBackground));
+            surface.PrintStyledText(xPos, dY + 4, new StyledLine { "Mana Regeneration    ", new StyledString(Player.ManaRegeneration.ToString(), TextHelper.ManaRegenerationColor) }.ToColoredString(DefaultBackground));
+            surface.PrintStyledText(xPos, dY + 5, new StyledLine { "Dodge Chance         ", $"{Player.DodgeChance}%"}.ToColoredString(DefaultBackground));
 
-            surface.PrintStyledText(dX, dY + 4 + stats.Length, new StyledLine {$"Level: {player.Level}"}.ToColoredString(DefaultBackground));
-            surface.PrintStyledText(dX, dY + 5 + stats.Length, new StyledLine {"XP:    ", new StyledString($"{player.Experience} / {player.GetXpToLevelUp()}", TextHelper.XpColor)}.ToColoredString(DefaultBackground));
+            surface.PrintStyledText(dX, dY + 4 + stats.Length, new StyledLine {$"Level: {Player.Level}"}.ToColoredString(DefaultBackground));
+            surface.PrintStyledText(dX, dY + 5 + stats.Length, new StyledLine {"XP:    ", new StyledString($"{Player.Experience} / {Player.GetXpToLevelUp()}", TextHelper.XpColor)}.ToColoredString(DefaultBackground));
         }
 
         private void PrintWeapon(int dX, int dY, CellSurface surface)
@@ -93,14 +90,14 @@ namespace CodeMagic.UI.Sad.Views
             surface.PrintStyledText(dX, dY + 1, new StyledLine
             {
                 "Right Hand: ",
-                new StyledString(player.Equipment.RightHandItem.Name, ItemDrawingHelper.GetItemColor(player.Equipment.RightHandItem))
+                new StyledString(Player.Equipment.RightHandItem.Name, ItemDrawingHelper.GetItemColor(Player.Equipment.RightHandItem))
             }.ToColoredString(DefaultBackground));
 
             surface.Fill(1, dY + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
             surface.Print(0, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
             surface.Print(Width - 1, dY + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
-            var rightWeaponDetails = GetHoldableDetails(player.Equipment.RightHandItem);
+            var rightWeaponDetails = GetHoldableDetails(Player.Equipment.RightHandItem);
             for (int yShift = 0; yShift < rightWeaponDetails.Length; yShift++)
             {
                 var y = dY + 3 + yShift;
@@ -115,14 +112,14 @@ namespace CodeMagic.UI.Sad.Views
             surface.PrintStyledText(dX, leftDy + 1, new StyledLine
             {
                 "Left Hand:  ",
-                new StyledString(player.Equipment.LeftHandItem.Name, ItemDrawingHelper.GetItemColor(player.Equipment.LeftHandItem))
+                new StyledString(Player.Equipment.LeftHandItem.Name, ItemDrawingHelper.GetItemColor(Player.Equipment.LeftHandItem))
             }.ToColoredString(DefaultBackground));
 
             surface.Fill(1, leftDy + 2, Width - 2, FrameColor, DefaultBackground, Glyphs.GetGlyph('─'));
             surface.Print(0, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╟'), FrameColor, DefaultBackground));
             surface.Print(Width - 1, leftDy + 2, new ColoredGlyph(Glyphs.GetGlyph('╢'), FrameColor, DefaultBackground));
 
-            var leftWeaponDetails = GetHoldableDetails(player.Equipment.LeftHandItem);
+            var leftWeaponDetails = GetHoldableDetails(Player.Equipment.LeftHandItem);
             for (int yShift = 0; yShift < leftWeaponDetails.Length; yShift++)
             {
                 var y = leftDy + 3 + yShift;
@@ -145,7 +142,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 new StyledLine
                 {
-                    $"Accuracy: {weapon.Accuracy + player.AccuracyBonus}%"
+                    $"Accuracy: {weapon.Accuracy + Player.AccuracyBonus}%"
                 },
                 StyledLine.Empty
             };
@@ -155,8 +152,8 @@ namespace CodeMagic.UI.Sad.Views
                 var maxDamage = WeaponItem.GetMaxDamage(weapon, element);
                 var minDamage = WeaponItem.GetMinDamage(weapon, element);
 
-                maxDamage = AttackHelper.CalculateDamage(maxDamage, element, player);
-                minDamage = AttackHelper.CalculateDamage(minDamage, element, player);
+                maxDamage = AttackHelper.CalculateDamage(maxDamage, element, Player);
+                minDamage = AttackHelper.CalculateDamage(minDamage, element, Player);
 
                 if (maxDamage == 0 && minDamage == 0)
                     continue;
@@ -185,7 +182,7 @@ namespace CodeMagic.UI.Sad.Views
             {
                 var element = elements[index];
 
-                var protection = player.GetProtection(element);
+                var protection = Player.GetProtection(element);
                 var color = TextHelper.GetElementColor(element).ToXna();
                 var name = TextHelper.GetElementName(element);
 
@@ -202,13 +199,8 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 17, Height - 4),
                 Text = "[ESC] Close"
             };
-            closeButton.Click += closeButton_Click;
+            closeButton.Click += (sender, args) => Exit?.Invoke(this, EventArgs.Empty);
             Add(closeButton);
-        }
-
-        private void closeButton_Click(object sender, EventArgs args)
-        {
-            Close();
         }
 
         protected override bool ProcessKeyPressed(AsciiKey key)
@@ -216,11 +208,19 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Escape:
-                    Close();
+                    Exit?.Invoke(this, EventArgs.Empty);
                     return true;
             }
 
             return false;
         }
+
+        public void Close()
+        {
+            Close(DialogResult.None);
+        }
+
+        public event EventHandler Exit;
+        public Player Player { private get; set; }
     }
 }

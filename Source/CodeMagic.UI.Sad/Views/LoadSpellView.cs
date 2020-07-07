@@ -1,4 +1,5 @@
-﻿using CodeMagic.Game.Spells;
+﻿using System;
+using CodeMagic.UI.Presenters;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
@@ -7,17 +8,15 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class LoadSpellFromLibraryView : SpellsLibraryViewBase
+    public class LoadSpellView : SpellsLibraryViewBase, ILoadSpellView
     {
         private StandardButton closeButton;
         private StandardButton okButton;
 
-        public LoadSpellFromLibraryView()
+        public LoadSpellView()
         {
             InitializeControls();
         }
-
-        public BookSpell SelectedSpell => SelectedItem?.Spell;
 
         private void InitializeControls()
         {
@@ -26,7 +25,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 17, Height - 4),
                 Text = "[ESC] Cancel"
             };
-            closeButton.Click += (sender, args) => Close(DialogResult.Cancel);
+            closeButton.Click += (sender, args) => OnExit();
             Add(closeButton);
 
             okButton = new StandardButton(15)
@@ -34,7 +33,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 37, Height - 4),
                 Text = "[ENTER] OK"
             };
-            okButton.Click += (sender, args) => Close(DialogResult.Ok);
+            okButton.Click += (sender, args) => Ok?.Invoke(this, EventArgs.Empty);
             Add(okButton);
         }
 
@@ -43,11 +42,18 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Enter:
-                    Close(DialogResult.Ok);
+                    Ok?.Invoke(this, EventArgs.Empty);
                     return true;
             }
 
             return base.ProcessKeyPressed(key);
         }
+
+        public void Close()
+        {
+            Close(DialogResult.None);
+        }
+
+        public event EventHandler Ok;
     }
 }

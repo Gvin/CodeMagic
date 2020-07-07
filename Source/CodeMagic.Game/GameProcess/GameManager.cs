@@ -1,31 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Game;
-using CodeMagic.Game.Items;
+using CodeMagic.Game.Items.Custom;
 using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.JournalMessages.Scenario;
 using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.Game.Objects.Creatures;
-using CodeMagic.UI.Sad.Drawing;
-using CodeMagic.UI.Sad.Saving;
 
-namespace CodeMagic.UI.Sad.GameProcess
+namespace CodeMagic.Game.GameProcess
 {
-    public class GameManager
+    public interface IGameManager
     {
-        public static GameManager Current { get; } = new GameManager();
+        GameCore<Player> StartGame();
 
+        void LoadGame();
+    }
+
+    public class GameManager : IGameManager
+    {
         private Task saveGameTask;
         private int turnsSinceLastSaving;
+        private readonly ISaveService saveService;
+        private readonly int savingInterval;
 
-        private GameManager()
+        public GameManager(ISaveService saveService, int savingInterval)
         {
-            DungeonMapGenerator.Initialize(ImagesStorage.Current, Settings.Current.DebugWriteMapToFile);
+            this.saveService = saveService;
+            this.savingInterval = savingInterval;
         }
 
         public GameCore<Player> StartGame()
@@ -56,7 +59,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             game.Journal.Write(new StartGameMessage());
 
             game.TurnEnded += game_TurnEnded;
-            new SaveManager().SaveGame();
+            saveService.SaveGame();
 
             turnsSinceLastSaving = 0;
 
@@ -65,7 +68,7 @@ namespace CodeMagic.UI.Sad.GameProcess
 
         public void LoadGame()
         {
-            var (game, data) = new SaveManager().LoadGame();
+            var (game, data) = saveService.LoadGame();
 
             GameData.Initialize(data);
             CurrentGame.Load(game);
@@ -91,10 +94,10 @@ namespace CodeMagic.UI.Sad.GameProcess
         {
             turnsSinceLastSaving++;
 
-            if (turnsSinceLastSaving >= Settings.Current.SavingInterval)
+            if (turnsSinceLastSaving >= savingInterval)
             {
                 saveGameTask?.Wait();
-                saveGameTask = new SaveManager().SaveGameAsync();
+                saveGameTask = saveService.SaveGameAsync();
                 turnsSinceLastSaving = 0;
             }
 
@@ -103,7 +106,7 @@ namespace CodeMagic.UI.Sad.GameProcess
                 saveGameTask?.Wait();
                 ((GameCore<Player>)CurrentGame.Game).TurnEnded -= game_TurnEnded;
                 CurrentGame.Load(null);
-                new SaveManager().DeleteSave();
+                saveService.DeleteSave();
             }
         }
 
@@ -125,7 +128,7 @@ namespace CodeMagic.UI.Sad.GameProcess
             player.Inventory.AddItem(GenerateStartingUsable());
 
 #if DEBUG
-            player.Inventory.AddItem(CreateBanHammer());
+            player.Inventory.AddItem(new BanHammer());
 #endif
 
             return player;
@@ -140,51 +143,6 @@ namespace CodeMagic.UI.Sad.GameProcess
                     return usable;
             }
 
-        }
-
-        private IItem CreateBanHammer()
-        {
-            return new WeaponItem(new WeaponItemConfiguration
-            {
-                Name = "Ban Hammer",
-                MaxDurability = 100000000,
-                Description = new []
-                {
-                    "Powerful weapon designed to give his owner",
-                    "the power of God. For testing purpose mostly."
-                },
-                HitChance = 100,
-                Key = "weapon_ban_hammer",
-                Weight = 0,
-                LightPower = LightLevel.Medium,
-                InventoryImage = ImagesStorage.Current.GetImage("Weapon_BanHammer"),
-                WorldImage = ImagesStorage.Current.GetImage("ItemsOnGround_Weapon_Mace"),
-                EquippedImageRight = ImagesStorage.Current.GetImage("ItemOnPlayer_Weapon_Right_Mace"),
-                EquippedImageLeft = ImagesStorage.Current.GetImage("ItemOnPlayer_Weapon_Left_Mace"),
-                Rareness = ItemRareness.Epic,
-                MinDamage = new Dictionary<Element, int>
-                {
-                    {Element.Acid, 100},
-                    {Element.Blunt, 100},
-                    {Element.Electricity, 100},
-                    {Element.Fire, 100},
-                    {Element.Frost, 100},
-                    {Element.Piercing, 100},
-                    {Element.Slashing, 100},
-                    {Element.Magic, 100}
-                },
-                MaxDamage = new Dictionary<Element, int>
-                {
-                    {Element.Acid, 200},
-                    {Element.Blunt, 200},
-                    {Element.Electricity, 200},
-                    {Element.Fire, 200},
-                    {Element.Frost, 200},
-                    {Element.Piercing, 200},
-                    {Element.Slashing, 200},
-                    {Element.Magic, 200}
-                }
-            });
         }
     }
 }

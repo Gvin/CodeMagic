@@ -5,9 +5,14 @@ using CodeMagic.Core.Common;
 using CodeMagic.Core.Logging;
 using CodeMagic.Game;
 using CodeMagic.Game.Configuration;
+using CodeMagic.Game.GameProcess;
 using CodeMagic.Game.Items.ItemsGeneration;
+using CodeMagic.Game.MapGeneration.Dungeon;
+using CodeMagic.UI.Presenters;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.Logger;
+using CodeMagic.UI.Sad.Saving;
+using CodeMagic.UI.Sad.Views;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
@@ -24,12 +29,16 @@ namespace CodeMagic.UI.Sad.GameProcess
 
             ImagesStorage.Current.Load();
 
-            DialogsManager.Initialize(new DialogsProvider());
+            IoC.Configure();
+
+            DialogsManager.Initialize(new DialogsProvider(IoC.Container.Resolve<IApplicationController>()));
 
             ItemsGeneratorManager.Initialize(new ItemsGenerator(
                 config.ItemGenerator,
                 ImagesStorage.Current, 
                 new AncientSpellsProvider()));
+
+            DungeonMapGenerator.Initialize(ImagesStorage.Current, Settings.Current.DebugWriteMapToFile);
 
 #if DEBUG
             PerformanceMeter.Initialize(@".\Performance.log");

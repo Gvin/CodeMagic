@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.UI.Presenters;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
@@ -9,20 +11,15 @@ using SadConsole;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class LevelUpView : GameViewBase
+    public class LevelUpView : GameViewBase, ILevelUpView
     {
-        private readonly Player player;
-        private PlayerStats? selectedStat;
-
         private readonly int maxStatNameLength;
-        private readonly PlayerStats[] stats;
         private StandardButton okButton;
+        private readonly PlayerStats[] stats;
 
-        public LevelUpView(Player player)
+        public LevelUpView()
         {
-            this.player = player;
-            selectedStat = null;
-
+            StatsValue = new Dictionary<PlayerStats, int>();
             stats = Enum.GetValues(typeof(PlayerStats)).Cast<PlayerStats>().ToArray();
             maxStatNameLength = stats.Select(TextHelper.GetStatName).Select(name => name.Length).Max() + 1;
             
@@ -36,14 +33,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(3, Height - 4),
                 Text = "OK"
             };
-            okButton.Click += (sender, args) =>
-            {
-                if (selectedStat.HasValue)
-                {
-                    player.IncreaseStat(selectedStat.Value);
-                    Close();
-                }
-            };
+            okButton.Click += (sender, args) => Ok?.Invoke(this, EventArgs.Empty);
             Add(okButton);
 
             DoForAllStats((y, stat) =>
@@ -58,7 +48,7 @@ namespace CodeMagic.UI.Sad.Views
 
             const int dX = 5;
 
-            surface.Print(dX, 2, $"You has reached level {player.Level}!");
+            surface.Print(dX, 2, $"You has reached level {Level}!");
             surface.Print(dX, 3, "Please select stat you want to increase:");
 
             DoForAllStats((y, stat) =>
@@ -71,7 +61,7 @@ namespace CodeMagic.UI.Sad.Views
                 }
 
                 surface.Print(dX, y, name);
-                surface.Print(dX + maxStatNameLength + 2, y, player.GetPureStat(stat).ToString());
+                surface.Print(dX + maxStatNameLength + 2, y, StatsValue[stat].ToString());
             });
 
             const int dY = 6;
@@ -98,7 +88,7 @@ namespace CodeMagic.UI.Sad.Views
         private void PrintStatStatus(int x, int y, PlayerStats stat, CellSurface surface)
         {
             int symbol = ' ';
-            if (selectedStat.HasValue && selectedStat.Value == stat)
+            if (SelectedStat.HasValue && SelectedStat.Value == stat)
             {
                 symbol = Glyphs.GetGlyph('▲');
                 
@@ -115,16 +105,27 @@ namespace CodeMagic.UI.Sad.Views
             };
             button.Click += (sender, args) =>
             {
-                selectedStat = stat;
+                SelectedStat = stat;
+                StatSelected?.Invoke(this, EventArgs.Empty);
             };
             Add(button);
         }
 
-        public override void Update(TimeSpan time)
+        public void Close()
         {
-            base.Update(time);
+            Close(DialogResult.None);
+        }
 
-            okButton.IsEnabled = selectedStat.HasValue;
+        public event EventHandler Ok;
+        public event EventHandler StatSelected;
+        public int Level { get; set; }
+        public Dictionary<PlayerStats, int> StatsValue { get; }
+        public PlayerStats? SelectedStat { get; set; }
+
+        public bool OkButtonEnabled
+        {
+            get => okButton.IsEnabled;
+            set => okButton.IsEnabled = value;
         }
     }
 }

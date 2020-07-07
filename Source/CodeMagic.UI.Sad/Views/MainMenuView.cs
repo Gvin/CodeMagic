@@ -1,14 +1,12 @@
 ﻿using System;
-using CodeMagic.Core.Game;
-using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.UI.Presenters;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using CodeMagic.UI.Sad.GameProcess;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class MainMenuView : GameViewBase
+    public class MainMenuView : GameViewBase, IMainMenuView
     {
         private GameLogoControl gameLabel;
         private StandardButton startGameButton;
@@ -17,9 +15,20 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton exitButton;
         private StandardButton settingsButton;
 
+        public event EventHandler StartGame;
+        public event EventHandler ContinueGame;
+        public event EventHandler ShowSpellLibrary;
+        public event EventHandler ShowSettings;
+        public event EventHandler Exit;
+
         public MainMenuView()
         {
             InitializeControls();
+        }
+
+        public void SetContinueOptionState(bool canContinue)
+        {
+            continueGameButton.IsEnabled = canContinue;
         }
 
         private void InitializeControls()
@@ -37,7 +46,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(xPosition - 2, 9),
                 Text = "Start Game"
             };
-            startGameButton.Click += startGameButton_Click;
+            startGameButton.Click += (sender, args) => StartGame?.Invoke(this, EventArgs.Empty);
             Add(startGameButton);
 
             continueGameButton = new StandardButton(20)
@@ -45,14 +54,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(xPosition - 2, 13),
                 Text = "C0nt1nue Game"
             };
-            if (CurrentGame.Game == null)
-            {
-                continueGameButton.IsEnabled = false;
-            }
-            else
-            {
-                continueGameButton.Click += continueGameButton_Click;
-            }
+            continueGameButton.Click += (sender, args) => ContinueGame?.Invoke(this, EventArgs.Empty);
             Add(continueGameButton);
 
             spellsLibraryButton = new StandardButton(20)
@@ -60,7 +62,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(xPosition - 2, 17),
                 Text = "Spells L1brary"
             };
-            spellsLibraryButton.Click += (sender, args) => OpenSpellsLibrary();
+            spellsLibraryButton.Click += (sender, args) => ShowSpellLibrary?.Invoke(this, EventArgs.Empty);
             Add(spellsLibraryButton);
 
             settingsButton = new StandardButton(20)
@@ -68,7 +70,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(xPosition - 2, 21),
                 Text = "Sett1ngs"
             };
-            settingsButton.Click += (sender, args) => OpenSettingsDialog();
+            settingsButton.Click += (sender, args) => ShowSettings?.Invoke(this, EventArgs.Empty);
             Add(settingsButton);
 
             exitButton = new StandardButton(20)
@@ -76,53 +78,18 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(xPosition - 2, 25),
                 Text = "Ex1t"
             };
-            exitButton.Click += exitButton_Click;
+            exitButton.Click += (sender, args) => Exit?.Invoke(this, EventArgs.Empty);
             Add(exitButton);
-        }
-
-        private void OpenSettingsDialog()
-        {
-            new SettingsView().Show();
-        }
-
-        private void OpenSpellsLibrary()
-        {
-            new MainSpellsLibraryView().Show();
-        }
-
-        private void exitButton_Click(object sender, EventArgs args)
-        {
-            Program.Exit();
-        }
-
-        private void continueGameButton_Click(object sender, EventArgs args)
-        {
-            if (CurrentGame.Game == null)
-                return;
-
-            Close();
-
-            var game = (GameCore<Player>) CurrentGame.Game;
-            var gameView = new GameView(game);
-            gameView.Show();
-        }
-
-        private void startGameButton_Click(object sender, EventArgs args)
-        {
-            Close();
-
-            var generatingView = new WaitMessageView("Starting new game...", () =>
-            {
-                var game = GameManager.Current.StartGame();
-                var gameView = new GameView(game);
-                gameView.Show();
-            });
-            generatingView.Show();
         }
 
         private int GetLabelPosition()
         {
             return (int)Math.Floor(Width / 2d) - 8;
+        }
+
+        public void Close()
+        {
+            Close(DialogResult.None);
         }
     }
 }

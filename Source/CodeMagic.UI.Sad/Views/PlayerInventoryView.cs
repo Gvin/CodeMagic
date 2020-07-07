@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CodeMagic.Core.Game;
+﻿using System;
+using System.Collections.Generic;
 using CodeMagic.Core.Items;
 using CodeMagic.Core.Objects;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.Objects.Creatures;
-using CodeMagic.Game.PlayerActions;
+using CodeMagic.UI.Presenters;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -17,14 +16,11 @@ using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class PlayerInventoryView : InventoryViewBase
+    public class PlayerInventoryView : InventoryViewBase, IPlayerInventoryView
     {
         private const string Title = "Player Inventory";
 
-        private readonly GameCore<Player> game;
-
         private StandardButton useItemButton;
-
         private StandardButton equipItemButton;
         private StandardButton equipRightHoldableButton;
         private StandardButton equipLeftHoldableButton;
@@ -34,18 +30,23 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton dropAllItemsButton;
         private StandardButton checkScrollButton;
 
-        public PlayerInventoryView(GameCore<Player> game) 
-            : base(GetTitleWithWeight(game.Player), game.Player)
-        {
-            this.game = game;
+        protected override string InventoryName => GetTitleWithWeight(Player);
 
+        public event EventHandler UseItem;
+        public event EventHandler EquipItem;
+        public event EventHandler EquipHoldableItemLeft;
+        public event EventHandler EquipHoldableItemRight;
+        public event EventHandler DropItem;
+        public event EventHandler DropStack;
+        public event EventHandler TakeOffItem;
+        public event EventHandler CheckScroll;
+
+        public override void Initialize()
+        {
+            base.Initialize();
             InitializeControls();
-            RefreshItems(false);
-        }
 
-        protected override IEnumerable<InventoryStack> GetStacks()
-        {
-            return game.Player.Inventory.Stacks.OrderByDescending(stack => PlayerInventoryItem.GetIfEquipped(game.Player, stack));
+            RefreshItems(false);
         }
 
         private void InitializeControls()
@@ -55,7 +56,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 30, 40),
                 Text = "[C] Check Scroll"
             };
-            checkScrollButton.Click += (sender, args) => CheckSelectedScrollCode();
+            checkScrollButton.Click += (sender, args) => CheckScroll?.Invoke(this, EventArgs.Empty);
             Add(checkScrollButton);
 
             useItemButton = new StandardButton(20)
@@ -63,7 +64,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 52, 40),
                 Text = "[U] Use"
             };
-            useItemButton.Click += (sender, args) => UseSelectedItem();
+            useItemButton.Click += (sender, args) => UseItem?.Invoke(this, EventArgs.Empty);
             Add(useItemButton);
 
             equipItemButton = new StandardButton(20)
@@ -71,7 +72,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 52, 40),
                 Text = "[E] Equip"
             };
-            equipItemButton.Click += (sender, args) => EquipSelectedItem();
+            equipItemButton.Click += (sender, args) => EquipItem?.Invoke(this, EventArgs.Empty);
             Add(equipItemButton);
 
             equipLeftHoldableButton = new StandardButton(20)
@@ -79,7 +80,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 52, 40),
                 Text = "[Z] Equip Left"
             };
-            equipLeftHoldableButton.Click += (sender, args) => EquipSelectedHoldable(false);
+            equipLeftHoldableButton.Click += (sender, args) => EquipHoldableItemLeft?.Invoke(this, EventArgs.Empty);
             Add(equipLeftHoldableButton);
 
             equipRightHoldableButton = new StandardButton(20)
@@ -87,7 +88,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 31, 40),
                 Text = "[X] Equip Right"
             };
-            equipRightHoldableButton.Click += (sender, args) => EquipSelectedHoldable(true);
+            equipRightHoldableButton.Click += (sender, args) => EquipHoldableItemRight?.Invoke(this, EventArgs.Empty);
             Add(equipRightHoldableButton);
 
             takeOffItemButton = new StandardButton(20)
@@ -95,7 +96,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 52, 40),
                 Text = "[T] Take Off"
             };
-            takeOffItemButton.Click += (sender, args) => TakeOffSelectedItem();
+            takeOffItemButton.Click += (sender, args) => TakeOffItem?.Invoke(this, EventArgs.Empty);
             Add(takeOffItemButton);
 
             dropItemButton = new StandardButton(20)
@@ -103,7 +104,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 52, 43),
                 Text = "[D] Drop"
             };
-            dropItemButton.Click += (sender, args) => DropSelectedItem();
+            dropItemButton.Click += (sender, args) => DropItem?.Invoke(this, EventArgs.Empty);
             Add(dropItemButton);
 
             dropAllItemsButton = new StandardButton(20)
@@ -111,85 +112,8 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 52, 46),
                 Text = "[A] Drop All"
             };
-            dropAllItemsButton.Click += (sender, args) => DropAllItemsInStack();
+            dropAllItemsButton.Click += (sender, args) => DropStack?.Invoke(this, EventArgs.Empty);
             Add(dropAllItemsButton);
-        }
-
-        private void CheckSelectedScrollCode()
-        {
-            var selectedScroll = SelectedStack?.TopItem as ScrollBase;
-            if (selectedScroll == null)
-                return;
-
-            var code = selectedScroll.GetSpellCode();
-            var filePath = EditSpellHelper.PrepareSpellTemplate(code);
-            EditSpellHelper.LaunchSpellFileEditor(filePath);
-        }
-
-        private void DropAllItemsInStack()
-        {
-            if (SelectedStack == null)
-                return;
-
-            game.PerformPlayerAction(new DropItemsPlayerAction(SelectedStack.Items));
-            Close();
-        }
-
-        private void DropSelectedItem()
-        {
-            if (SelectedStack == null)
-                return;
-
-            game.PerformPlayerAction(new DropItemsPlayerAction(SelectedStack.TopItem));
-            Close();
-        }
-
-        private void TakeOffSelectedItem()
-        {
-            if (!(SelectedStack?.TopItem is IEquipableItem equipableItem))
-                return;
-
-            if (!game.Player.Equipment.IsEquiped(equipableItem))
-                return;
-
-            game.PerformPlayerAction(new UnequipItemPlayerAction(equipableItem));
-            Close();
-        }
-
-        private void EquipSelectedItem()
-        {
-            if (!(SelectedStack?.TopItem is IEquipableItem equipableItem))
-                return;
-
-            if (game.Player.Equipment.IsEquiped(equipableItem))
-                return;
-
-            if (equipableItem is IHoldableItem)
-                return;
-
-            game.PerformPlayerAction(new EquipItemPlayerAction(equipableItem));
-            Close();
-        }
-
-        private void EquipSelectedHoldable(bool isRight)
-        {
-            if (!(SelectedStack?.TopItem is IHoldableItem holdableItem))
-                return;
-
-            if (game.Player.Equipment.IsEquiped(holdableItem))
-                return;
-
-            game.PerformPlayerAction(new EquipHoldablePlayerAction(holdableItem, isRight));
-            Close();
-        }
-
-        private void UseSelectedItem()
-        {
-            if (!(SelectedStack?.TopItem is IUsableItem usableItem))
-                return;
-
-            game.PerformPlayerAction(new UseItemPlayerAction(usableItem));
-            Close();
         }
 
         protected override void ProcessSelectedItemChanged()
@@ -209,14 +133,14 @@ namespace CodeMagic.UI.Sad.Views
 
             if (SelectedStack?.TopItem is IEquipableItem equipable)
             {
-                var equiped = game.Player.Equipment.IsEquiped(equipable);
-                takeOffItemButton.IsVisible = equiped;
+                var isEquipped = Player.Equipment.IsEquiped(equipable);
+                takeOffItemButton.IsVisible = isEquipped;
 
                 var isHoldable = equipable is IHoldableItem;
 
-                equipItemButton.IsVisible = !equiped && !isHoldable;
-                equipLeftHoldableButton.IsVisible = !equiped && isHoldable;
-                equipRightHoldableButton.IsVisible = !equiped && isHoldable;
+                equipItemButton.IsVisible = !isEquipped && !isHoldable;
+                equipLeftHoldableButton.IsVisible = !isEquipped && isHoldable;
+                equipRightHoldableButton.IsVisible = !isEquipped && isHoldable;
             }
             else
             {
@@ -232,28 +156,28 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.U:
-                    UseSelectedItem();
+                    UseItem?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.E:
-                    EquipSelectedItem();
+                    EquipItem?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.Z:
-                    EquipSelectedHoldable(false);
+                    EquipHoldableItemLeft?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.X:
-                    EquipSelectedHoldable(true);
+                    EquipHoldableItemRight?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.T:
-                    TakeOffSelectedItem();
+                    TakeOffItem?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.D:
-                    DropSelectedItem();
+                    DropItem?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.A:
-                    DropAllItemsInStack();
+                    DropStack?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.C:
-                    CheckSelectedScrollCode();
+                    CheckScroll?.Invoke(this, EventArgs.Empty);
                     return true;
             }
             return base.ProcessKeyPressed(key);
@@ -270,7 +194,12 @@ namespace CodeMagic.UI.Sad.Views
 
         protected override InventoryStackItem CreateListBoxItem(InventoryStack stack)
         {
-            return new PlayerInventoryItem(stack, game.Player);
+            return new PlayerInventoryItem(stack, Player);
+        }
+
+        public void Close()
+        {
+            Close(DialogResult.None);
         }
     }
 

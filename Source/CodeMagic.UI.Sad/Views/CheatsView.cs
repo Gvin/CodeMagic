@@ -1,7 +1,7 @@
 ﻿using System;
-using CodeMagic.Core.Game;
 using CodeMagic.Core.Logging;
-using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.UI.Presenters;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using SadConsole.Input;
 using ILog = CodeMagic.UI.Sad.Common.ILog;
@@ -10,7 +10,7 @@ using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class CheatsView : GameViewBase
+    public class CheatsView : GameViewBase, ICheatsView
     {
         public CheatsView()
             : base((ILog) LogManager.GetLog<CheatsView>())
@@ -27,7 +27,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 17, Height - 4),
                 Text = "[ESC] Close",
             };
-            closeButton.Click += closeButton_Click;
+            closeButton.Click += (sender, args) => Exit?.Invoke(this, EventArgs.Empty);
             Add(closeButton);
 
             var levelUp = new StandardButton(20)
@@ -35,13 +35,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Level Up",
                 Position = new Point(2, 3)
             };
-            levelUp.Click += (sender, args) =>
-            {
-                Log.Info("Used Cheat \"Level Up\"");
-                Close();
-                var exp = ((Player) CurrentGame.Player).GetXpToLevelUp() - CurrentGame.Player.Experience;
-                CurrentGame.Player.AddExperience(exp);
-            };
+            levelUp.Click += (sender, args) => CheatLevelUp?.Invoke(this, EventArgs.Empty);
             Add(levelUp);
 
             var heal = new StandardButton(20)
@@ -49,12 +43,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Heal",
                 Position = new Point(2, 7)
             };
-            heal.Click += (sender, args) =>
-            {
-                Log.Info("Used Cheat \"Heal\"");
-                Close();
-                CurrentGame.Player.Health = CurrentGame.Player.MaxHealth;
-            };
+            heal.Click += (sender, args) => CheatHeal?.Invoke(this, EventArgs.Empty);
             Add(heal);
 
             var restoreMana = new StandardButton(20)
@@ -62,12 +51,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Restore Mana",
                 Position = new Point(2, 11)
             };
-            restoreMana.Click += (sender, args) =>
-            {
-                Log.Info("Used Cheat \"Restore Mana\"");
-                Close();
-                CurrentGame.Player.Mana = CurrentGame.Player.MaxMana;
-            };
+            restoreMana.Click += (sender, args) => CheatRestoreMana?.Invoke(this, EventArgs.Empty);
             Add(restoreMana);
 
             var restoreStamina = new StandardButton(20)
@@ -75,12 +59,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Restore Stamina",
                 Position = new Point(2, 15)
             };
-            restoreStamina.Click += (sender, args) =>
-            {
-                Log.Info("Used Cheat \"Restore Stamina\"");
-                Close();
-                ((Player)CurrentGame.Player).Stamina = ((Player)CurrentGame.Player).MaxStamina;
-            };
+            restoreStamina.Click += (sender, args) => CheatRestoreStamina?.Invoke(this, EventArgs.Empty);
             Add(restoreStamina);
 
             var restoreStats = new StandardButton(20)
@@ -88,14 +67,7 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "Restore Stats",
                 Position = new Point(2, 19)
             };
-            restoreStats.Click += (sender, args) =>
-            {
-                Log.Info("Used Cheat \"Restore Stats\"");
-                Close();
-                CurrentGame.Player.Health = CurrentGame.Player.MaxHealth;
-                CurrentGame.Player.Mana = CurrentGame.Player.MaxMana;
-                ((Player) CurrentGame.Player).Stamina = ((Player) CurrentGame.Player).MaxStamina;
-            };
+            restoreStats.Click += (sender, args) => CheatRestoreStats?.Invoke(this, EventArgs.Empty);
             Add(restoreStats);
         }
 
@@ -104,16 +76,23 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.Escape:
-                    Close();
+                    Exit?.Invoke(this, EventArgs.Empty);
                     return true;
             }
 
             return base.ProcessKeyPressed(key);
         }
 
-        private void closeButton_Click(object sender, EventArgs e)
+        public void Close()
         {
-            Close();
+            Close(DialogResult.None);
         }
+
+        public event EventHandler Exit;
+        public event EventHandler CheatLevelUp;
+        public event EventHandler CheatHeal;
+        public event EventHandler CheatRestoreMana;
+        public event EventHandler CheatRestoreStamina;
+        public event EventHandler CheatRestoreStats;
     }
 }

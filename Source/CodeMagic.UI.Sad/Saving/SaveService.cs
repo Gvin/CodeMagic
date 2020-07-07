@@ -7,18 +7,19 @@ using CodeMagic.Core.Game;
 using CodeMagic.Core.Logging;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game;
+using CodeMagic.Game.GameProcess;
 using CodeMagic.Game.Objects.Creatures;
 using Newtonsoft.Json;
 
 namespace CodeMagic.UI.Sad.Saving
 {
-    public class SaveManager
+    public class SaveService : ISaveService
     {
-        private static readonly ILog Log = LogManager.GetLog<SaveManager>();
+        private static readonly ILog Log = LogManager.GetLog<SaveService>();
 
         private const string SaveFilePath = ".\\save.json";
 
-        static SaveManager()
+        static SaveService()
         {
             SaveData.Init(new JsonDataSerializer());
         }

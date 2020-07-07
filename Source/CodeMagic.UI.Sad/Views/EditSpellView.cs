@@ -1,7 +1,7 @@
 ﻿using System;
+using CodeMagic.UI.Presenters;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Themes;
@@ -9,7 +9,7 @@ using TextBox = SadConsole.Controls.TextBox;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class EditSpellView : GameViewBase
+    public class EditSpellView : GameViewBase, IEditSpellView
     {
         private StandardButton okButton;
         private StandardButton cancelButton;
@@ -19,12 +19,8 @@ namespace CodeMagic.UI.Sad.Views
 
         private StandardButton launchEditorButton;
 
-        private readonly string spellFilePath;
-
-        public EditSpellView(string spellFilePath)
+        public EditSpellView()
         {
-            this.spellFilePath = spellFilePath;
-
             InitializeControls();
         }
 
@@ -35,7 +31,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(3, Height - 4),
                 Text = "OK"
             };
-            okButton.Click += okButton_Click;
+            okButton.Click += (sender, args) => Ok?.Invoke(this, EventArgs.Empty);
             Add(okButton);
 
             cancelButton = new StandardButton(20)
@@ -43,7 +39,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(27, Height - 4),
                 Text = "Cancel"
             };
-            cancelButton.Click += cancelButton_Click;
+            cancelButton.Click += (sender, args) => Cancel?.Invoke(this, EventArgs.Empty);
             Add(cancelButton);
 
             launchEditorButton = new StandardButton(40)
@@ -51,7 +47,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(3, 12),
                 Text = "Launch Code Editor"
             };
-            launchEditorButton.Click += launchEditorButton_Click;
+            launchEditorButton.Click += (sender, args) => LaunchEditor?.Invoke(this, EventArgs.Empty);
             Add(launchEditorButton);
 
             var textBoxTheme = new TextBoxTheme
@@ -78,32 +74,6 @@ namespace CodeMagic.UI.Sad.Views
             Add(manaCostTextBox);
         }
 
-        private void launchEditorButton_Click(object sender, EventArgs e)
-        {
-            EditSpellHelper.LaunchSpellFileEditor(spellFilePath);
-        }
-
-        protected override void OnShown()
-        {
-            base.OnShown();
-
-            spellNameTextBox.Text = Name ?? string.Empty;
-            manaCostTextBox.Text = InitialManaCost.HasValue ? InitialManaCost.Value.ToString() : 0.ToString();
-        }
-
-        private void okButton_Click(object sender, EventArgs e)
-        {
-            Name = spellNameTextBox.EditingText;
-            ManaCost = int.Parse(manaCostTextBox.EditingText ?? manaCostTextBox.Text);
-            Close(DialogResult.Ok);
-        }
-
-        private void cancelButton_Click(object sender, EventArgs e)
-        {
-            Close(DialogResult.Cancel);
-        }
-
-
         protected override void DrawView(CellSurface surface)
         {
             base.DrawView(surface);
@@ -117,10 +87,26 @@ namespace CodeMagic.UI.Sad.Views
                     new Cell(Color.Red, DefaultBackground)));
         }
 
-        public string Name { get; set; }
+        public void Close()
+        {
+            Close(DialogResult.None);
+        }
 
-        public int? InitialManaCost { get; set; }
+        public event EventHandler Ok;
+        public event EventHandler Cancel;
+        public event EventHandler LaunchEditor;
 
-        public int ManaCost { get; private set; }
+        public string SpellName
+        {
+            get => spellNameTextBox.EditingText;
+            set => spellNameTextBox.Text = value;
+
+        }
+
+        public int ManaCost
+        {
+            get => int.Parse(manaCostTextBox.EditingText ?? manaCostTextBox.Text);
+            set => manaCostTextBox.Text = value.ToString();
+        }
     }
 }

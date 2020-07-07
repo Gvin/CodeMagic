@@ -1,25 +1,26 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using CodeMagic.UI.Services;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {
-    public static class EditSpellHelper
+    public class EditSpellService : IEditSpellService
     {
         private const string TemplateSpellFilePath = @".\Resources\Templates\SpellTemplate.js";
         private const string SpellFileExtension = ".js";
 
-        public static void LaunchSpellFileEditor(string filePath)
+        public void LaunchSpellFileEditor(string filePath)
         {
             var editorPath = Settings.Current.SpellEditorPath;
             Process.Start(editorPath, filePath);
         }
 
-        public static string ReadSpellCodeFromFile(string filePath)
+        public string ReadSpellCodeFromFile(string filePath)
         {
             return File.ReadAllText(filePath);
         }
 
-        public static string PrepareSpellTemplate(string initialSpellCode)
+        public string PrepareSpellTemplate(string initialSpellCode)
         {
             var filePath = GenerateSpellFileName();
             if (string.IsNullOrEmpty(initialSpellCode))

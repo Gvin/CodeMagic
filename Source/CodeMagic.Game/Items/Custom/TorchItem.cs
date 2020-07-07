@@ -7,7 +7,7 @@ using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects;
 using CodeMagic.UI.Images;
 
-namespace CodeMagic.Game.Items
+namespace CodeMagic.Game.Items.Custom
 {
     public class TorchItem : WeaponItem
     {

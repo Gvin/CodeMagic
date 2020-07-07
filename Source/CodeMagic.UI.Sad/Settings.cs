@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using CodeMagic.UI.Sad.Drawing;
+using CodeMagic.UI.Services;
 using Newtonsoft.Json;
 
 namespace CodeMagic.UI.Sad
 {
-    public class Settings
+    public class Settings : ISettingsService
     {
         private const string SettingsFilePath = @"./Settings.json";
 

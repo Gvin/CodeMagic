@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
-using CodeMagic.Core.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
+using CodeMagic.UI.Presenters;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using CodeMagic.UI.Sad.Controls.VisualControls;
@@ -21,11 +20,9 @@ using ScrollBar = SadConsole.Controls.ScrollBar;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class GameView : GameViewBase
+    public class GameView : GameViewBase, IGameView
     {
         private static readonly TimeSpan KeyProcessFrequency = TimeSpan.FromMilliseconds(Settings.Current.MinActionsInterval);
-
-        private readonly GameCore<Player> game;
 
         private GameAreaControl gameArea;
 
@@ -39,31 +36,17 @@ namespace CodeMagic.UI.Sad.Views
 
         private DateTime lastKeyProcessed;
 
-        public GameView(GameCore<Player> game) 
+        public GameView() 
             : base(FontTarget.Game)
         {
             lastKeyProcessed = DateTime.Now;
 
             UseKeyboard = true;
+        }
 
-            this.game = game;
-
+        public void Initialize()
+        {
             InitializeControls();
-
-            game.Player.Died += Player_Died;
-            game.Player.LeveledUp += Player_LeveledUp;
-        }
-
-        private void Player_LeveledUp(object sender, EventArgs e)
-        {
-            new LevelUpView(game.Player).Show();
-        }
-
-        private void Player_Died(object sender, EventArgs e)
-        {
-            Close();
-
-            new PlayerDeathView().Show();
         }
 
         private void InitializeControls()
@@ -74,16 +57,16 @@ namespace CodeMagic.UI.Sad.Views
                 Text = "*",
                 Position = new Point(Width - 39, 37)
             };
-            cheatsButton.Click += (sender, args) => { new CheatsView().Show(); };
+            cheatsButton.Click += (sender, args) => OpenCheats?.Invoke(this, EventArgs.Empty);
             Add(cheatsButton);
 #endif
 
             var playerStatsControl = new PlayerStatsVisualControl(
                 new Rectangle(Width - 40, 1, 39, 65), 
-                game);
+                Game);
             AddVisualControl(playerStatsControl);
 
-            gameArea = new GameAreaControl(game)
+            gameArea = new GameAreaControl(Game)
             {
                 Position = new Point(1, 1)
             };
@@ -100,7 +83,7 @@ namespace CodeMagic.UI.Sad.Views
             };
             Add(journalScroll);
 
-            journalBox = new JournalBoxControl(Width - 3, 10, journalScroll, game.Journal)
+            journalBox = new JournalBoxControl(Width - 3, 10, journalScroll, Game.Journal)
             {
                 Position = new Point(2, Height - 11)
             };
@@ -112,7 +95,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 39, 22),
                 Text = "[I] Inventory"
             };
-            openInventoryButton.Click += openInventoryButton_Click;
+            openInventoryButton.Click += (sender, args) => OpenInventory?.Invoke(this, EventArgs.Empty);
             Add(openInventoryButton);
 
             openSpellBookButton = new StandardButton(30)
@@ -120,7 +103,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 39, 25),
                 Text = "[C] Spell Book"
             };
-            openSpellBookButton.Click += openSpellBookButton_Click;
+            openSpellBookButton.Click += (sender, args) => OpenSpellBook?.Invoke(this, EventArgs.Empty);
             openSpellBookButton.IsEnabled = true;
             Add(openSpellBookButton);
 
@@ -129,7 +112,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 39, 28),
                 Text = "[G] Check Floor"
             };
-            showItemsOnFloorButton.Click += showItemsOnFloorButton_Click;
+            showItemsOnFloorButton.Click += (sender, args) => OpenGroundView?.Invoke(this, EventArgs.Empty);
             Add(showItemsOnFloorButton);
 
             openPlayerStatsButton = new StandardButton(30)
@@ -137,36 +120,8 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 39, 31),
                 Text = "[V] Player Status"
             };
-            openPlayerStatsButton.Click += (sender, args) => OpenPlayerStats();
+            openPlayerStatsButton.Click += (sender, args) => OpenPlayerStats?.Invoke(this, EventArgs.Empty);
             Add(openPlayerStatsButton);
-        }
-
-        private void showItemsOnFloorButton_Click(object sender, EventArgs e)
-        {
-            ShowItemsOnFloor();
-        }
-
-        private void ShowItemsOnFloor()
-        {
-            var cell = game.Map.GetCell(game.PlayerPosition);
-            var itemsOnFloor = cell.Objects.OfType<IItem>().ToArray();
-            if (itemsOnFloor.Length == 0)
-                return;
-            
-            var floorInventory = new Inventory(itemsOnFloor);
-            floorInventory.ItemRemoved += (sender, args) => game.Map.RemoveObject(game.PlayerPosition, args.Item);
-
-            new CustomInventoryView(game, "Items On Floor", floorInventory).Show();
-        }
-
-        private void openInventoryButton_Click(object sender, EventArgs e)
-        {
-            OpenInventory();
-        }
-
-        private void OpenInventory()
-        {
-            new PlayerInventoryView(game).Show();
         }
 
         protected override bool ProcessKeyPressed(AsciiKey key)
@@ -174,19 +129,19 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.C:
-                    OpenSpellBook();
+                    OpenSpellBook?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.I:
-                    OpenInventory();
+                    OpenInventory?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.G:
-                    ShowItemsOnFloor();
+                    OpenGroundView?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.V:
-                    OpenPlayerStats();
+                    OpenPlayerStats?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.Escape:
-                    OpenMainMenu();
+                    OpenInGameMenu?.Invoke(this, EventArgs.Empty);
                     return true;
             }
 
@@ -216,7 +171,7 @@ namespace CodeMagic.UI.Sad.Views
                 return false;
 
             lastKeyProcessed = DateTime.Now;
-            game.PerformPlayerAction(action);
+            Game.PerformPlayerAction(action);
             return true;
         }
 
@@ -249,32 +204,6 @@ namespace CodeMagic.UI.Sad.Views
             }
         }
 
-        private void OpenPlayerStats()
-        {
-            new PlayerStatsView(game.Player).Show();
-        }
-
-        private void OpenMainMenu()
-        {
-            Close();
-
-            new InGameMenuView(game).Show();
-        }
-
-        private void openSpellBookButton_Click(object sender, EventArgs args)
-        {
-            OpenSpellBook();
-        }
-
-        private void OpenSpellBook()
-        {
-            if (game.Player.Equipment.SpellBook == null)
-                return;
-
-            var spellBookView = new SpellBookView(game);
-            spellBookView.Show();
-        }
-
         protected override void DrawView(CellSurface surface)
         {
             base.DrawView(surface);
@@ -290,25 +219,28 @@ namespace CodeMagic.UI.Sad.Views
 
         }
 
-        public override void Update(TimeSpan time)
+        public void Close()
         {
-            base.Update(time);
-
-            UpdateButtonsState();
+            Close(DialogResult.None);
         }
 
-        private void UpdateButtonsState()
+        public event EventHandler OpenInGameMenu;
+        public event EventHandler OpenSpellBook;
+        public event EventHandler OpenInventory;
+        public event EventHandler OpenPlayerStats;
+        public event EventHandler OpenGroundView;
+        public event EventHandler OpenCheats;
+
+        public bool SpellBookEnabled
         {
-            openSpellBookButton.IsEnabled = game.Player.Equipment.SpellBook != null;
-            showItemsOnFloorButton.IsEnabled = game.Map.GetCell(game.PlayerPosition).Objects.OfType<IItem>().Any();
+            set => openSpellBookButton.IsEnabled = value;
         }
 
-        protected override void OnClosed(DialogResult result)
+        public bool OpenGroundEnabled
         {
-            base.OnClosed(result);
-
-            game.Player.Died -= Player_Died;
-            game.Player.LeveledUp -= Player_LeveledUp;
+            set => showItemsOnFloorButton.IsEnabled = value;
         }
+
+        public GameCore<Player> Game { get; set; }
     }
 }

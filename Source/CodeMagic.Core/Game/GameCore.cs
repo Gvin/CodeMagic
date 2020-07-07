@@ -94,6 +94,7 @@ namespace CodeMagic.Core.Game
         }
 
         public event EventHandler TurnEnded;
+        public event EventHandler MapUpdated;
 
         public int CurrentTurn { get; private set; }
 
@@ -113,6 +114,8 @@ namespace CodeMagic.Core.Game
             Map = newMap;
             Map.AddObject(playerPosition, Player);
             PlayerPosition = playerPosition;
+
+            MapUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         public void PerformPlayerAction(IPlayerAction action)
@@ -143,6 +146,7 @@ namespace CodeMagic.Core.Game
         {
             CurrentTurn++;
             Map.Update(this);
+            MapUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         private bool GetIfPlayerIsFrozen()

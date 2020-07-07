@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeMagic.Core\CodeMagic.Core.csproj" />
+    <ProjectReference Include="..\CodeMagic.Game\CodeMagic.Game.csproj" />
+  </ItemGroup>
+
+</Project>

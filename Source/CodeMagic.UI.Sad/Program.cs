@@ -1,10 +1,11 @@
 ﻿using System;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Logging;
+using CodeMagic.Game.GameProcess;
+using CodeMagic.UI.Presenters;
 using CodeMagic.UI.Sad.Drawing;
 using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Sad.Saving;
-using CodeMagic.UI.Sad.Views;
 using ILog = CodeMagic.Core.Logging.ILog;
 
 namespace CodeMagic.UI.Sad
@@ -29,6 +30,7 @@ namespace CodeMagic.UI.Sad
             try
             {
                 GameConfigurator.Configure();
+
                 log = LogManager.GetLog(nameof(Program));
 
                 var gameWidth = FontProvider.GetScreenWidth(FontTarget.Game);
@@ -47,7 +49,7 @@ namespace CodeMagic.UI.Sad
 
                 GC.Collect();
                 
-                throw new GameExitException();
+                //throw new GameExitException();
             }
             catch (GameExitException)
             {
@@ -68,20 +70,19 @@ namespace CodeMagic.UI.Sad
 
             TryLoadGame();
 
-            var mainMenu = new MainMenuView();
-            mainMenu.Show();
+            IoC.Container.Resolve<IApplicationController>().CreatePresenter<MainMenuPresenter>().Run();
         }
 
         private static void TryLoadGame()
         {
-            GameManager.Current.LoadGame();
+            IoC.Container.Resolve<IGameManager>().LoadGame();
         }
 
         public static void Exit()
         {
             if (CurrentGame.Game != null)
             {
-                new SaveManager().SaveGame();
+                new SaveService().SaveGame();
             }
 
             SadConsole.Game.Instance.Exit();

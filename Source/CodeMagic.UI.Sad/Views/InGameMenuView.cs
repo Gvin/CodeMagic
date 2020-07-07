@@ -1,15 +1,14 @@
 ﻿using System;
-using CodeMagic.Core.Game;
-using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.UI.Presenters;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework.Input;
 using SadConsole.Input;
 using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class InGameMenuView : GameViewBase
+    public class InGameMenuView : GameViewBase, IInGameMenuView
     {
         private GameLogoControl gameLabel;
         private StandardButton continueGameButton;
@@ -17,12 +16,8 @@ namespace CodeMagic.UI.Sad.Views
         private StandardButton exitToMenuButton;
         private StandardButton exitButton;
 
-        private readonly GameCore<Player> currentGame;
-
-        public InGameMenuView(GameCore<Player> currentGame) : base()
+        public InGameMenuView()
         {
-            this.currentGame = currentGame;
-
             InitializeControls();
         }
 
@@ -41,7 +36,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(xPosition - 2, 9),
                 Text = "C0nt1nue Game"
             };
-            continueGameButton.Click += continueGameButton_Click;
+            continueGameButton.Click += (sender, args) => ContinueGame?.Invoke(this, EventArgs.Empty);
             Add(continueGameButton);
 
             startGameButton = new StandardButton(20)
@@ -49,7 +44,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(xPosition - 2, 13),
                 Text = "Start New Game"
             };
-            startGameButton.Click += startGameButton_Click;
+            startGameButton.Click += (sender, args) => StartNewGame?.Invoke(this, EventArgs.Empty);
             Add(startGameButton);
 
             exitToMenuButton = new StandardButton(20)
@@ -57,7 +52,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(xPosition - 2, 17),
                 Text = "Ex1t t0 Menu"
             };
-            exitToMenuButton.Click += exitToMenuButton_Click;
+            exitToMenuButton.Click += (sender, args) => ExitToMenu?.Invoke(this, EventArgs.Empty);
             Add(exitToMenuButton);
 
             exitButton = new StandardButton(20)
@@ -65,62 +60,33 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(xPosition - 2, 21),
                 Text = "Ex1t"
             };
-            exitButton.Click += exitButton_Click;
+            exitButton.Click += (sender, args) => Exit?.Invoke(this, EventArgs.Empty);
             Add(exitButton);
-        }
-
-        private void exitToMenuButton_Click(object sender, EventArgs e)
-        {
-            Close();
-
-            new MainMenuView().Show();
         }
 
         protected override bool ProcessKeyPressed(AsciiKey key)
         {
             if (key.Key == Keys.Escape)
             {
-                ContinueCurrentGame();
+                ContinueGame?.Invoke(this, EventArgs.Empty);
                 return true;
             }
             return base.ProcessKeyPressed(key);
-        }
-
-        private void continueGameButton_Click(object sender, EventArgs e)
-        {
-            ContinueCurrentGame();
-        }
-
-        private void ContinueCurrentGame()
-        {
-            Close();
-
-            new GameView(currentGame).Show();
-        }
-
-        private void exitButton_Click(object sender, EventArgs args)
-        {
-            Program.Exit();
-        }
-
-        private void startGameButton_Click(object sender, EventArgs args)
-        {
-            currentGame.Dispose();
-
-            Close();
-
-            var generatingView = new WaitMessageView("Starting new game...", () =>
-            {
-                var game = GameManager.Current.StartGame();
-                var gameView = new GameView(game);
-                gameView.Show();
-            });
-            generatingView.Show();
         }
 
         private int GetLabelPosition()
         {
             return (int)Math.Floor(Width / 2d) - 8;
         }
+
+        public void Close()
+        {
+            Close(DialogResult.None);
+        }
+
+        public event EventHandler ContinueGame;
+        public event EventHandler StartNewGame;
+        public event EventHandler Exit;
+        public event EventHandler ExitToMenu;
     }
 }

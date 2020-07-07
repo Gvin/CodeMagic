@@ -6,11 +6,11 @@ using System.Xml;
 using System.Xml.Serialization;
 using CodeMagic.Game.Spells;
 
-namespace CodeMagic.UI.Sad.SpellsLibrary
+namespace CodeMagic.UI.Sad.GameProcess
 {
-    public class SpellsLibraryManager
+    public class SpellsLibraryService : ISpellsLibraryService
     {
-        private const string FilePath = ".\\Library\\SpellsLibrary.xml";
+        private const string FilePath = ".\\Profile\\SpellsLibrary.xml";
 
         public void SaveSpell(BookSpell spell)
         {

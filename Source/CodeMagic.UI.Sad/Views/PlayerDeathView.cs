@@ -1,12 +1,15 @@
 ﻿using System;
+using CodeMagic.Game;
+using CodeMagic.Game.GameProcess;
+using CodeMagic.UI.Presenters;
+using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using CodeMagic.UI.Sad.GameProcess;
 using Microsoft.Xna.Framework;
 using SadConsole;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class PlayerDeathView : GameViewBase
+    public class PlayerDeathView : GameViewBase, IPlayerDeathView
     {
         private StandardButton startNewGameButton;
         private StandardButton backToMenuButton;
@@ -26,7 +29,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(buttonsX, 16),
                 Text = "Start New Game"
             };
-            startNewGameButton.Click += startNewGameButton_Click;
+            startNewGameButton.Click += (sender, args) => StartNewGame?.Invoke(this, EventArgs.Empty);
             Add(startNewGameButton);
 
             backToMenuButton = new StandardButton(20)
@@ -34,7 +37,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(buttonsX, 20),
                 Text = "Back t0 Menu"
             };
-            backToMenuButton.Click += backToMenuButton_Click;
+            backToMenuButton.Click += (sender, args) => ExitToMenu?.Invoke(this, EventArgs.Empty);
             Add(backToMenuButton);
 
             exitGameButton = new StandardButton(20)
@@ -42,7 +45,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(buttonsX, 24),
                 Text = "Ex1t Game"
             };
-            exitGameButton.Click += exitGameButton_Click;
+            exitGameButton.Click += (sender, args) => Exit?.Invoke(this, EventArgs.Empty);
             Add(exitGameButton);
         }
 
@@ -54,25 +57,13 @@ namespace CodeMagic.UI.Sad.Views
             surface.Print(labelX, 12, new ColoredString("You have died!", Color.Red, DefaultBackground));
         }
 
-        private void startNewGameButton_Click(object sender, EventArgs e)
+        public void Close()
         {
-            Close();
-
-            var game = GameManager.Current.StartGame();
-            var gameView = new GameView(game);
-            gameView.Show();
+            Close(DialogResult.None);
         }
 
-        private void backToMenuButton_Click(object sender, EventArgs e)
-        {
-            Close();
-
-            new MainMenuView().Show();
-        }
-
-        private void exitGameButton_Click(object sender, EventArgs e)
-        {
-            Program.Exit();
-        }
+        public event EventHandler StartNewGame;
+        public event EventHandler ExitToMenu;
+        public event EventHandler Exit;
     }
 }

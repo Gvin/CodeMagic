@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Game.Objects.Creatures;
-using CodeMagic.Game.PlayerActions;
+using CodeMagic.UI.Presenters;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
 using Microsoft.Xna.Framework;
@@ -15,31 +11,35 @@ using Point = Microsoft.Xna.Framework.Point;
 
 namespace CodeMagic.UI.Sad.Views
 {
-    public class CustomInventoryView : InventoryViewBase
+    public class CustomInventoryView : InventoryViewBase, ICustomInventoryView
     {
-        private readonly IGameCore game;
-        private readonly Inventory inventory;
-        private bool actionPerformed;
-
         private StandardButton pickUpStackButton;
         private StandardButton pickUpOneItemButton;
         private StandardButton pickUpAllButton;
+        private string inventoryName;
 
-        public CustomInventoryView(GameCore<Player> game, string inventoryName, Inventory inventory) 
-            : base(inventoryName, game.Player)
+        public event EventHandler PickUpOne;
+        public event EventHandler PickUpStack;
+        public event EventHandler PickUpAll;
+
+        string ICustomInventoryView.InventoryName
         {
-            this.game = game;
-            this.inventory = inventory;
-            actionPerformed = false;
+            set => inventoryName = value;
+        }
 
+        protected override string InventoryName => inventoryName;
+
+        public override void Initialize()
+        {
+            base.Initialize();
             InitializeControls();
 
             RefreshItems(false);
         }
 
-        protected override IEnumerable<InventoryStack> GetStacks()
+        void ICustomInventoryView.RefreshItems(bool keepSelection)
         {
-            return inventory.Stacks;
+            RefreshItems(keepSelection);
         }
 
         private void InitializeControls()
@@ -49,7 +49,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 52, 40),
                 Text = "[O] Pick Up One"
             };
-            pickUpOneItemButton.Click += pickUpOneItemButton_Click;
+            pickUpOneItemButton.Click += (sender, args) => PickUpOne?.Invoke(this, EventArgs.Empty);
             Add(pickUpOneItemButton);
 
             pickUpStackButton = new StandardButton(20)
@@ -57,7 +57,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 52, 43),
                 Text = "[P] Pick Up"
             };
-            pickUpStackButton.Click += pickUpStackButton_Click;
+            pickUpStackButton.Click += (sender, args) => PickUpStack?.Invoke(this, EventArgs.Empty);
             Add(pickUpStackButton);
 
             pickUpAllButton = new StandardButton(20)
@@ -65,81 +65,8 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 52, 46),
                 Text = "[A] Pick Up All"
             };
-            pickUpAllButton.Click += pickUpAllButton_Click;
+            pickUpAllButton.Click += (sender, args) => PickUpAll?.Invoke(this, EventArgs.Empty);
             Add(pickUpAllButton);
-        }
-
-        private void pickUpAllButton_Click(object sender, EventArgs e)
-        {
-            PickUpAll();
-        }
-
-        private void pickUpStackButton_Click(object sender, EventArgs e)
-        {
-            PickUpStack();
-        }
-
-        private void pickUpOneItemButton_Click(object sender, EventArgs e)
-        {
-            PickUpOneItem();
-        }
-
-        private void PickUpOneItem()
-        {
-            if (SelectedStack == null)
-                return;
-
-            actionPerformed = true;
-            var item = SelectedStack.TopItem;
-            inventory.RemoveItem(item);
-            game.Player.Inventory.AddItem(item);
-
-            if (inventory.ItemsCount > 0)
-            {
-                RefreshItems(true);
-            }
-            else
-            {
-                Close();
-            }
-        }
-
-        private void PickUpStack()
-        {
-            if (SelectedStack == null)
-                return;
-
-            actionPerformed = true;
-            var items = SelectedStack.Items.ToArray();
-            foreach (var item in items)
-            {
-                inventory.RemoveItem(item);
-                game.Player.Inventory.AddItem(item);
-            }
-
-            if (inventory.ItemsCount > 0)
-            {
-                RefreshItems(false);
-            }
-            else
-            {
-                Close();
-            }
-        }
-
-        private void PickUpAll()
-        {
-            actionPerformed = true;
-            foreach (var stack in inventory.Stacks)
-            {
-                var items = stack.Items.ToArray();
-                foreach (var item in items)
-                {
-                    inventory.RemoveItem(item);
-                    game.Player.Inventory.AddItem(item);
-                }
-            }
-            Close();
         }
 
         public override void Update(TimeSpan time)
@@ -160,13 +87,13 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.A:
-                    PickUpAll();
+                    PickUpAll?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.P:
-                    PickUpStack();
+                    PickUpStack?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.O:
-                    PickUpOneItem();
+                    PickUpOne?.Invoke(this, EventArgs.Empty);
                     return true;
             }
 
@@ -178,14 +105,9 @@ namespace CodeMagic.UI.Sad.Views
             return new CustomInventoryItem(stack);
         }
 
-        protected override void OnClosed(DialogResult result)
+        public void Close()
         {
-            base.OnClosed(result);
-
-            if (actionPerformed)
-            {
-                game.PerformPlayerAction(new EmptyPlayerAction());
-            }
+            Close(DialogResult.None);
         }
     }
 

@@ -61,8 +61,6 @@ namespace CodeMagic.Game.Items
 
         public int Accuracy { get; }
 
-        public override bool Stackable => false;
-
         public override StyledLine[] GetDescription(Player player)
         {
             var result = GetCharacteristicsDescription(player).ToList();

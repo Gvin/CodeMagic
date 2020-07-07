@@ -3,8 +3,6 @@ using System.Linq;
 using CodeMagic.Game.Spells;
 using CodeMagic.UI.Sad.Common;
 using CodeMagic.UI.Sad.Controls;
-using CodeMagic.UI.Sad.GameProcess;
-using CodeMagic.UI.Sad.SpellsLibrary;
 using Microsoft.Xna.Framework;
 using SadConsole;
 using SadConsole.Input;
@@ -18,27 +16,26 @@ namespace CodeMagic.UI.Sad.Views
 {
     public abstract class SpellsLibraryViewBase : GameViewBase
     {
-        private const string DefaultSpellName = "New Spell";
-
         private CustomListBox<SpellListBoxItem> spellsList;
         private SpellDetailsControl spellDetails;
         private TextBox filterTextBox;
 
         private StandardButton removeSpellButton;
         private StandardButton editSpellButton;
-
-        private string oldFilter;
-
-        private readonly SpellsLibraryManager libraryManager;
+        private string filter;
 
         protected SpellsLibraryViewBase()
         {
-            libraryManager = new SpellsLibraryManager();
-
             InitializeControls();
         }
 
-        protected SpellListBoxItem SelectedItem => spellsList.SelectedItem;
+        public BookSpell SelectedSpell => SelectedItem?.Spell;
+
+        private SpellListBoxItem SelectedItem => spellsList.SelectedItem;
+
+        public BookSpell[] Spells { get; set; }
+
+        public event EventHandler RemoveSpell;
 
         private void InitializeControls()
         {
@@ -47,7 +44,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 57, 16),
                 Text = "[R] Remove from Library"
             };
-            removeSpellButton.Click += (sender, args) => RemoveSpellFromLibrary();
+            removeSpellButton.Click += (sender, args) => RemoveSpell?.Invoke(this, EventArgs.Empty);
             Add(removeSpellButton);
 
             editSpellButton = new StandardButton(25)
@@ -55,7 +52,7 @@ namespace CodeMagic.UI.Sad.Views
                 Position = new Point(Width - 57, 13),
                 Text = "[E] Edit Spell"
             };
-            editSpellButton.Click += (sender, args) => EditSelectedSpell();
+            editSpellButton.Click += (sender, args) => EditSpell?.Invoke(this, EventArgs.Empty);
             Add(editSpellButton);
 
             spellDetails = new SpellDetailsControl(57, Height - 10)
@@ -94,54 +91,10 @@ namespace CodeMagic.UI.Sad.Views
             };
             Add(filterTextBox);
 
-            RefreshSpells();
-
             UpdateSpellDetails();
         }
 
-        private void EditSelectedSpell()
-        {
-            var selectedSpell = spellsList.SelectedItem?.Spell;
-            if (selectedSpell == null)
-                return;
-
-            var spellFilePath = EditSpellHelper.PrepareSpellTemplate(selectedSpell.Code);
-
-            var editSpellView = new EditSpellView(spellFilePath)
-            {
-                Name = selectedSpell.Name,
-                InitialManaCost = selectedSpell.ManaCost
-            };
-            editSpellView.Closed += (sender, args) =>
-            {
-                if (args.Result == DialogResult.Cancel)
-                    return;
-
-                var code = EditSpellHelper.ReadSpellCodeFromFile(spellFilePath);
-                var newSpell = new BookSpell
-                {
-                    Code = code,
-                    Name = string.IsNullOrEmpty(editSpellView.Name) ? DefaultSpellName : editSpellView.Name,
-                    ManaCost = editSpellView.ManaCost
-                };
-                libraryManager.RemoveSpell(selectedSpell);
-                libraryManager.SaveSpell(newSpell);
-                RefreshSpells();
-            };
-
-            editSpellView.Show();
-        }
-
-        private void RemoveSpellFromLibrary()
-        {
-            var selectedSpell = spellsList.SelectedItem?.Spell;
-            if (selectedSpell == null)
-                return;
-
-            libraryManager.RemoveSpell(selectedSpell);
-            RefreshSpells();
-            spellsList.SelectedItemIndex = 0;
-        }
+        public event EventHandler EditSpell;
 
         protected override void DrawView(CellSurface surface)
         {
@@ -171,36 +124,30 @@ namespace CodeMagic.UI.Sad.Views
             base.Update(time);
 
             var newFilter = filterTextBox.EditingText ?? filterTextBox.Text;
-            if (!string.Equals(newFilter, oldFilter))
+            if (!string.Equals(newFilter, filter))
             {
-                oldFilter = newFilter;
-                RefreshSpells();
+                filter = newFilter;
+                RefreshSpells(false);
             }
         }
 
         private BookSpell[] GetFilteredSpells()
         {
-            if (string.IsNullOrEmpty(oldFilter))
-                return GetSpells();
+            if (string.IsNullOrEmpty(filter))
+                return Spells;
 
-            return GetSpells().Where(spell => spell.Name.Contains(oldFilter)).ToArray();
+            return Spells.Where(spell => spell.Name.Contains(filter)).ToArray();
         }
 
-        private BookSpell[] GetSpells()
+        public void RefreshSpells(bool keepSelection)
         {
-            return libraryManager.ReadSpells();
-        }
-
-        private void RefreshSpells()
-        {
-            var selectedIndex = spellsList.SelectedItemIndex;
+            var selectedIndex = keepSelection ? spellsList.SelectedItemIndex : 0;
 
             spellsList.ClearItems();
 
-            var spells = GetFilteredSpells();
-            for (var index = 0; index < spells.Length; index++)
+            for (var index = 0; index < GetFilteredSpells().Length; index++)
             {
-                var spell = spells[index];
+                var spell = Spells[index];
                 spellsList.AddItem(new SpellListBoxItem(spell, index));
             }
 
@@ -234,10 +181,10 @@ namespace CodeMagic.UI.Sad.Views
             switch (key.Key)
             {
                 case Keys.R:
-                    RemoveSpellFromLibrary();
+                    RemoveSpell?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.E:
-                    EditSelectedSpell();
+                    EditSpell?.Invoke(this, EventArgs.Empty);
                     return true;
                 case Keys.Up:
                 case Keys.W:
@@ -248,11 +195,18 @@ namespace CodeMagic.UI.Sad.Views
                     MoveSelectionDown();
                     return true;
                 case Keys.Escape:
-                    Close();
+                    OnExit();
                     return true;
             }
 
             return base.ProcessKeyPressed(key);
+        }
+
+        public event EventHandler Exit;
+
+        protected void OnExit()
+        {
+            Exit?.Invoke(this, EventArgs.Empty);
         }
 
         private void MoveSelectionUp()

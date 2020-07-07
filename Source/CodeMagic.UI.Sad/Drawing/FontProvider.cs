@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeMagic.UI.Services;
 using SadConsole;
 
 namespace CodeMagic.UI.Sad.Drawing
@@ -131,11 +132,5 @@ namespace CodeMagic.UI.Sad.Drawing
     {
         Game,
         Interface
-    }
-
-    public enum FontSizeMultiplier
-    {
-        X1,
-        X2
     }
 }
