@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<liquids-configuration>
+  <liquid type="WaterLiquid">
+    <freezing-point>0</freezing-point>
+    <boiling-point>100</boiling-point>
+    <min-volume-for-effect>30</min-volume-for-effect>
+    <max-volume-before-spread>50</max-volume-before-spread>
+    <max-spread-volume>3</max-spread-volume>
+    <evaporation-multiplier>10</evaporation-multiplier>
+    <freezing-temperature-multiplier>1</freezing-temperature-multiplier>
+    <melting-temperature-multiplier>1</melting-temperature-multiplier>
+    <evaporation-temperature-multiplier>0.3</evaporation-temperature-multiplier>
+    <condensation-temperature-multiplier>3</condensation-temperature-multiplier>
+    <steam>
+      <pressure-multiplier>3</pressure-multiplier>
+      <thickness-multiplier>0.05</thickness-multiplier>
+      <max-volume-before-spread>200</max-volume-before-spread>
+      <max-spread-volume>50</max-spread-volume>
+    </steam>
+    <custom>
+      <value key="WetStatus.LifeTime">5</value>
+      <value key="WetStatus.CatchFireChanceModifier">-30</value>
+      <value key="WetStatus.SelfExtinguishChanceModifier">30</value>
+    </custom>
+  </liquid>
+  <liquid type="AcidLiquid">
+    <freezing-point>-10</freezing-point>
+    <boiling-point>337</boiling-point>
+    <min-volume-for-effect>30</min-volume-for-effect>
+    <max-volume-before-spread>50</max-volume-before-spread>
+    <max-spread-volume>3</max-spread-volume>
+    <evaporation-multiplier>10</evaporation-multiplier>
+    <freezing-temperature-multiplier>1</freezing-temperature-multiplier>
+    <melting-temperature-multiplier>1</melting-temperature-multiplier>
+    <evaporation-temperature-multiplier>0.3</evaporation-temperature-multiplier>
+    <condensation-temperature-multiplier>3</condensation-temperature-multiplier>
+    <steam>
+      <pressure-multiplier>3</pressure-multiplier>
+      <thickness-multiplier>0.05</thickness-multiplier>
+      <max-volume-before-spread>200</max-volume-before-spread>
+      <max-spread-volume>50</max-spread-volume>
+    </steam>
+    <custom>
+      <value key="DamageToVolumeMultiplier">0.3</value>
+      <value key="SteamDamageToVolumeMultiplier">0.1</value>
+    </custom>
+  </liquid>
+  <liquid type="OilLiquid">
+    <min-volume-for-effect>30</min-volume-for-effect>
+    <max-volume-before-spread>50</max-volume-before-spread>
+    <max-spread-volume>1</max-spread-volume>
+    <custom>
+      <value key="IgnitionTemperature">230</value>
+      <value key="BurningTemperature">950</value>
+      <value key="BurningRate">0.02</value>
+      <value key="HeatSpeed">300</value>
+      <value key="OilyStatus.LifeTime">8</value>
+      <value key="OilyStatus.CatchFireChanceModifier">50</value>
+      <value key="OilyStatus.SelfExtinguishChanceModifier">-30</value>
+    </custom>
+  </liquid>
+</liquids-configuration>

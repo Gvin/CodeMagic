@@ -19,7 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeMagic.UI.Images", "Code
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeMagic.Configuration.Xml", "CodeMagic.Configuration.Xml\CodeMagic.Configuration.Xml.csproj", "{A0B37CE4-6C21-4911-A685-DC09E4963563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.UI", "CodeMagic.UI\CodeMagic.UI.csproj", "{AAF2FBFC-6770-4BAE-96C1-FEC6743BB44D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeMagic.UI", "CodeMagic.UI\CodeMagic.UI.csproj", "{AAF2FBFC-6770-4BAE-96C1-FEC6743BB44D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeMagic.UI.Mono", "CodeMagic.UI.Mono\CodeMagic.UI.Mono.csproj", "{2CF24242-C7F5-4033-9E29-2AC7D9700D8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.UI.Mono.Extension", "CodeMagic.UI.Mono.Extension\CodeMagic.UI.Mono.Extension.csproj", "{C7F1D4E8-982E-4EDF-A538-0C0A679BA513}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeMagic.UI.Mono.Extension.Tests", "CodeMagic.UI.Mono.Extension.Tests\CodeMagic.UI.Mono.Extension.Tests.csproj", "{B87860D5-1AEE-4D90-84C6-F713EC9240DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,12 +65,25 @@ Global
 		{AAF2FBFC-6770-4BAE-96C1-FEC6743BB44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAF2FBFC-6770-4BAE-96C1-FEC6743BB44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAF2FBFC-6770-4BAE-96C1-FEC6743BB44D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CF24242-C7F5-4033-9E29-2AC7D9700D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF24242-C7F5-4033-9E29-2AC7D9700D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF24242-C7F5-4033-9E29-2AC7D9700D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF24242-C7F5-4033-9E29-2AC7D9700D8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7F1D4E8-982E-4EDF-A538-0C0A679BA513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F1D4E8-982E-4EDF-A538-0C0A679BA513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F1D4E8-982E-4EDF-A538-0C0A679BA513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F1D4E8-982E-4EDF-A538-0C0A679BA513}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B87860D5-1AEE-4D90-84C6-F713EC9240DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B87860D5-1AEE-4D90-84C6-F713EC9240DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B87860D5-1AEE-4D90-84C6-F713EC9240DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B87860D5-1AEE-4D90-84C6-F713EC9240DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{905F6EDB-4CC0-4044-A422-78F1E36C963C} = {760CD6FD-9541-47FD-9978-7B683ED43AA0}
+		{B87860D5-1AEE-4D90-84C6-F713EC9240DA} = {760CD6FD-9541-47FD-9978-7B683ED43AA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {662A9124-7E0E-492A-B405-C1C9896E2250}

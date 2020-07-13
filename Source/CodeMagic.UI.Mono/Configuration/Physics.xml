@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<physics-configuration>
+  <temperature>
+    <min-value>-200</min-value>
+    <max-value>4000</max-value>
+    <normal-value>25</normal-value>
+    <max-transfer-value>50</max-transfer-value>
+    <transfer-value-difference-multiplier>0.07</transfer-value-difference-multiplier>
+    <normalize-speed-inside>3</normalize-speed-inside>
+    <normalize-speed-outside>20</normalize-speed-outside>
+    <cold-damage>
+      <temperature-level>-70</temperature-level>
+      <damage-multiplier>0.2</damage-multiplier>
+    </cold-damage>
+    <heat-damage>
+      <temperature-level>100</temperature-level>
+      <damage-multiplier>0.03</damage-multiplier>
+    </heat-damage>
+  </temperature>
+  <pressure>
+    <min-value>0</min-value>
+    <max-value>4000</max-value>
+    <normal-value>100</normal-value>
+    <normalize-speed>50</normalize-speed>
+    <low-pressure-damage>
+      <pressure-level>50</pressure-level>
+      <damage-multiplier>0.1</damage-multiplier>
+    </low-pressure-damage>
+    <high-pressure-damage>
+      <pressure-level>500</pressure-level>
+      <damage-multiplier>0.01</damage-multiplier>
+    </high-pressure-damage>
+    <change-pressure-damage>
+      <pressure-level>100</pressure-level>
+      <damage-multiplier>0.1</damage-multiplier>
+    </change-pressure-damage>
+  </pressure>
+  <magic-energy>
+    <max-value>100</max-value>
+    <max-transfer-value>2</max-transfer-value>
+    <regeneration-value>1</regeneration-value>
+    <disturbance-start-level>20</disturbance-start-level>
+    <disturbance-damage-start-level>20</disturbance-damage-start-level>
+    <disturbance-increment>1</disturbance-increment>
+  </magic-energy>
+</physics-configuration>

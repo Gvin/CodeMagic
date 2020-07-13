@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<levels>
+  <player-levels>
+    <xp-multiplier>20</xp-multiplier>
+    <xp-level-power>1</xp-level-power>
+  </player-levels>
+</levels>

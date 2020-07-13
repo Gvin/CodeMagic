@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<symbols-image xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" width="6" height="6">
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel glyph="69">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="61">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel glyph="109">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="99">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel glyph="94">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel glyph="50">
+      <color>
+        <R>0</R>
+        <G>255</G>
+        <B>0</B>
+      </color>
+    </pixel>
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+  <row>
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+    <pixel />
+  </row>
+</symbols-image>
