@@ -233,7 +233,7 @@ namespace CodeMagic.UI.Mono.Views
         private static readonly Color EmptySpellNameColor = Color.Gray;
         private static readonly Color SpellNameColor = Color.White;
         private static readonly Color SpellIndexColor = Color.Green;
-        private static readonly Color SelectedItemBackColor = Color.Yellow;
+        private static readonly Color SelectedItemBackColor = Color.FromNonPremultiplied(255, 128, 0, 255);
         private static readonly Color DefaultBackColor = Color.Black;
 
         public SpellListBoxItem(BookSpell spell, int bookIndex)
