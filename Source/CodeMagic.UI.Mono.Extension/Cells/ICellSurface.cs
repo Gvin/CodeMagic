@@ -14,7 +14,10 @@ namespace CodeMagic.UI.Mono.Extension.Cells
 
         Cell GetCell(int x, int y);
 
-        void SetCell(int x, int y, Cell cell);
+        void SetCell(int x, int y, Cell cell, bool useConversion = true);
+
+        void SetCell(int x, int y, int? glyph = null, Color? foreColor = null, Color? backColor = null,
+            bool useConversion = true);
 
         bool ContainsPoint(int x, int y);
 

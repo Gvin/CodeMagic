@@ -21,7 +21,7 @@ namespace CodeMagic.UI.Mono
                 Component.For<IApplicationController>().ImplementedBy<ApplicationController>().LifestyleSingleton(),
 
                 // Views
-                // Component.For<ICheatsView>().ImplementedBy<CheatsView>().LifestyleTransient(),
+                Component.For<ICheatsView>().ImplementedBy<CheatsView>().LifestyleTransient(),
                 // Component.For<ICustomInventoryView>().ImplementedBy<CustomInventoryView>().LifestyleTransient(),
                 // Component.For<IEditSpellView>().ImplementedBy<EditSpellView>().LifestyleTransient(),
                 Component.For<IGameView>().ImplementedBy<GameView>().LifestyleTransient(),
@@ -30,7 +30,7 @@ namespace CodeMagic.UI.Mono
                 // Component.For<ILoadSpellView>().ImplementedBy<LoadSpellView>().LifestyleTransient(),
                 Component.For<IMainMenuView>().ImplementedBy<MainMenuView>().LifestyleTransient(),
                 // Component.For<IMainSpellsLibraryView>().ImplementedBy<MainSpellsLibraryView>().LifestyleTransient(),
-                // Component.For<IPlayerDeathView>().ImplementedBy<PlayerDeathView>().LifestyleTransient(),
+                Component.For<IPlayerDeathView>().ImplementedBy<PlayerDeathView>().LifestyleTransient(),
                 // Component.For<IPlayerInventoryView>().ImplementedBy<PlayerInventoryView>().LifestyleTransient(),
                 // Component.For<IPlayerStatsView>().ImplementedBy<PlayerStatsView>().LifestyleTransient(),
                 // Component.For<ISettingsView>().ImplementedBy<SettingsView>().LifestyleTransient(),

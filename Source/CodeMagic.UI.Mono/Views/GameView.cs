@@ -5,6 +5,7 @@ using CodeMagic.Core.Game.PlayerActions;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Mono.ActivePlanes;
+using CodeMagic.UI.Mono.Controls;
 using CodeMagic.UI.Mono.Extension.Cells;
 using CodeMagic.UI.Mono.Extension.Windows.Controls;
 using CodeMagic.UI.Mono.Fonts;
@@ -30,6 +31,7 @@ namespace CodeMagic.UI.Mono.Views
         private readonly FramedButton showItemsOnFloorButton;
 
         private DateTime lastKeyProcessed;
+        private int journalBoxY;
 
         public GameView() : base(FontTarget.Interface)
         {
@@ -145,7 +147,17 @@ namespace CodeMagic.UI.Mono.Views
             };
             Controls.Add(hungerBar);
 
-            ActivePlanes.Add(new GameAreaActivePlane(new Point(Font.GlyphWidth, Font.GlyphHeight), Game));
+            var gameArea = new GameAreaActivePlane(new Point(Font.GlyphWidth, Font.GlyphHeight), Game);
+            ActivePlanes.Add(gameArea);
+
+            journalBoxY = (int) Math.Ceiling(gameArea.PixelHeight / (double) Font.GlyphHeight) + 2;
+            var journalBoxHeight = Height - journalBoxY - 1;
+            var journalScroll = new VerticalScrollBar(new Point(1, journalBoxY), journalBoxHeight);
+            Controls.Add(journalScroll);
+            Controls.Add(new JournalBoxControl(
+                new Rectangle(1, journalBoxY, Width - 2, journalBoxHeight),
+                Game.Journal, 
+                journalScroll));
         }
 
         public override void Draw(ICellSurface surface)
@@ -154,12 +166,26 @@ namespace CodeMagic.UI.Mono.Views
 
             var rightPanelX = Width - RightPanelWidth;
 
+            DrawJournalBoxFrame(surface);
+            DrawPlayerStatus(surface, rightPanelX);
+        }
+
+        private void DrawJournalBoxFrame(ICellSurface surface)
+        {
+            surface.Fill(new Rectangle(1, journalBoxY - 1, Width - 2, 1), new Cell('─', FrameColor));
+            surface.SetCell(0, journalBoxY - 1, new Cell('╟', FrameColor));
+            surface.SetCell(Width - 1, journalBoxY - 1, new Cell('╢', FrameColor));
+        }
+
+        private void DrawPlayerStatus(ICellSurface surface, int rightPanelX)
+        {
             surface.Write(rightPanelX, 1, "Player Status");
-            surface.Write(rightPanelX - 1, 0, "╤", FrameColor);
+            surface.SetCell(rightPanelX - 1, 0, new Cell('╤', FrameColor));
             surface.Fill(new Rectangle(rightPanelX, 2, RightPanelWidth - 1, 1), new Cell('─', FrameColor));
-            surface.Write(Width - 1, 2, "╢", FrameColor);
-            surface.Fill(new Rectangle(rightPanelX - 1, 1, 1, Height - 2), new Cell('│', FrameColor));
-            surface.Write(rightPanelX - 1, 2, "├", FrameColor);
+            surface.SetCell(Width - 1, 2, new Cell('╢', FrameColor));
+            surface.Fill(new Rectangle(rightPanelX - 1, 1, 1, journalBoxY - 1), new Cell('│', FrameColor));
+            surface.SetCell(rightPanelX - 1, journalBoxY - 1, new Cell('┴', FrameColor));
+            surface.SetCell(rightPanelX - 1, 2, new Cell('├', FrameColor));
 
             surface.Write(rightPanelX, 3, $"Health [{Game.Player.Health} / {Game.Player.MaxHealth}]");
 

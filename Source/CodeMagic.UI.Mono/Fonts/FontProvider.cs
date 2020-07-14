@@ -9,7 +9,7 @@ namespace CodeMagic.UI.Mono.Fonts
     public class FontProvider
     {
         private const int BaseScreenWidth = 140;
-        private const int BaseScreenHeight = 76;
+        private const int BaseScreenHeight = 80;
 
         private const int FontX2Size = 32;
         private const int FontX1Size = 16;

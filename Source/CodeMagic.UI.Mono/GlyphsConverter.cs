@@ -5,17 +5,9 @@ namespace CodeMagic.UI.Mono
 {
     public class GlyphsConverter : IGlyphsConverter
     {
-        public int ConvertGlyph(int glyph)
-        {
-            return Glyphs.GetGlyph((char)glyph);
-        }
-    }
-
-    public static class Glyphs
-    {
         private static readonly Dictionary<char, int> GlyphsMapping;
 
-        static Glyphs()
+        static GlyphsConverter()
         {
             GlyphsMapping = new Dictionary<char, int>
             {
@@ -77,6 +69,7 @@ namespace CodeMagic.UI.Mono
                 {'♠', 6},
                 {'☺', 1},
                 {'☻', 2},
+                {'↕', 18},
                 {'❄', 22},
                 {'♨', 28},
                 {'←', 27},
@@ -152,8 +145,9 @@ namespace CodeMagic.UI.Mono
             };
         }
 
-        public static int GetGlyph(char symbol)
+        public int ConvertGlyph(int glyph)
         {
+            var symbol = (char) glyph;
             if (GlyphsMapping.ContainsKey(symbol))
                 return GlyphsMapping[symbol];
 

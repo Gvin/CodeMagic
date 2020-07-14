@@ -1,5 +1,4 @@
-﻿using CodeMagic.UI.Mono.Extension.Glyphs;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Extension.Cells
 {
@@ -15,7 +14,13 @@ namespace CodeMagic.UI.Mono.Extension.Cells
 
         public abstract Cell GetCell(int x, int y);
 
-        public abstract void SetCell(int x, int y, Cell cell);
+        public abstract void SetCell(int x, int y, Cell cell, bool useConversion = true);
+
+        public void SetCell(int x, int y, int? glyph = null, Color? foreColor = null, Color? backColor = null,
+            bool useConversion = true)
+        {
+            SetCell(x, y, new Cell(glyph, foreColor, backColor), useConversion);
+        }
 
         public bool ContainsPoint(int x, int y)
         {
@@ -31,8 +36,7 @@ namespace CodeMagic.UI.Mono.Extension.Cells
         {
             for (int index = 0; index < text.Length; index++)
             {
-                var glyph = GlyphsConverterManager.ConvertGlyph(text[index]);
-                SetCell(x + index, y, new Cell(glyph, foreColor, backColor));
+                SetCell(x + index, y, new Cell(text[index], foreColor, backColor));
             }
         }
 
@@ -42,15 +46,16 @@ namespace CodeMagic.UI.Mono.Extension.Cells
 
             foreach (var coloredString in strings)
             {
-                Write(x + dX, y, coloredString.Text, coloredString.ForeColor, coloredString.BackColor);
-                dX += coloredString.Text.Length;
+                foreach (var cell in coloredString.Cells)
+                {
+                    SetCell(x + dX, y, cell);
+                    dX++;
+                }
             }
         }
 
         public void Fill(Rectangle area, Cell cell)
         {
-            var glyph = cell.Glyph.HasValue ? GlyphsConverterManager.ConvertGlyph(cell.Glyph.Value) : (int?)null;
-
             for (int x = 0; x < area.Width; x++)
             {
                 for (int y = 0; y < area.Height; y++)
@@ -59,7 +64,7 @@ namespace CodeMagic.UI.Mono.Extension.Cells
                     var realY = area.Y + y;
 
                     
-                    SetCell(realX, realY, new Cell(glyph, cell.ForeColor, cell.BackColor));
+                    SetCell(realX, realY, cell);
                 }
             }
         }

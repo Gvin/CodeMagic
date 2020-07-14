@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeMagic.UI.Mono.Extension.Glyphs;
 using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Extension.Cells
@@ -55,14 +56,19 @@ namespace CodeMagic.UI.Mono.Extension.Cells
             return cells[x, y];
         }
 
-        public override void SetCell(int x, int y, Cell cell)
+        public override void SetCell(int x, int y, Cell cell, bool useConversion = true)
         {
             if (!ContainsPoint(x, y))
                 throw new IndexOutOfRangeException($"Coordinates are out of range: X={x}; Y={y}; Width={Width}; Height={Height}");
             if (cell == null)
                 throw new ArgumentNullException(nameof(cell));
 
-            cells[x, y] = cell;
+            var glyph = cell.Glyph;
+            if (useConversion)
+            {
+                glyph = cell.Glyph.HasValue ? GlyphsConverterManager.ConvertGlyph(cell.Glyph.Value) : (int?) null;
+            }
+            cells[x, y] = new Cell(glyph, cell.ForeColor, cell.BackColor);
         }
     }
 }

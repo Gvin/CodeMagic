@@ -1,35 +1,20 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Linq;
+using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Extension.Cells
 {
     public class ColoredString
     {
-        public ColoredString()
+        public ColoredString(params Cell[] cells)
         {
+            Cells = cells.ToArray();
         }
 
-        public ColoredString(string text)
+        public ColoredString(string text, Color? foreColor = null, Color? backColor = null)
         {
-            Text = text;
+            Cells = text.Select(ch => new Cell(ch, foreColor, backColor)).ToArray();
         }
 
-        public ColoredString(string text, Color? foreColor)
-        {
-            Text = text;
-            ForeColor = foreColor;
-        }
-
-        public ColoredString(string text, Color? foreColor, Color? backColor)
-        {
-            Text = text;
-            ForeColor = foreColor;
-            BackColor = backColor;
-        }
-
-        public string Text { get; set; }
-
-        public Color? ForeColor { get; set; }
-
-        public Color? BackColor { get; set; }
+        public Cell[] Cells { get; }
     }
 }

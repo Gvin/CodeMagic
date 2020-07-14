@@ -30,15 +30,15 @@ namespace CodeMagic.UI.Mono.Views
         {
             base.Draw(surface);
 
-            surface.Fill(new Rectangle(1, 0, Width - 2, 1), new Cell(Glyphs.GetGlyph('═'), FrameColor));
-            surface.Fill(new Rectangle(1, Height - 1, Width - 2, 1), new Cell(Glyphs.GetGlyph('═'), FrameColor));
-            surface.Fill(new Rectangle(0, 1, 1, Height - 2), new Cell(Glyphs.GetGlyph('║'), FrameColor));
-            surface.Fill(new Rectangle(Width - 1, 1, 1, Height - 2), new Cell(Glyphs.GetGlyph('║'), FrameColor));
+            surface.Fill(new Rectangle(1, 0, Width - 2, 1), new Cell('═', FrameColor));
+            surface.Fill(new Rectangle(1, Height - 1, Width - 2, 1), new Cell('═', FrameColor));
+            surface.Fill(new Rectangle(0, 1, 1, Height - 2), new Cell('║', FrameColor));
+            surface.Fill(new Rectangle(Width - 1, 1, 1, Height - 2), new Cell('║', FrameColor));
 
-            surface.Write(0, 0, "╔", FrameColor);
-            surface.Write(Width - 1, 0, "╗", FrameColor);
-            surface.Write(0, Height - 1, "╚", FrameColor);
-            surface.Write(Width - 1, Height - 1, "╝", FrameColor);
+            surface.SetCell(0, 0, '╔', FrameColor);
+            surface.SetCell(Width - 1, 0, '╗', FrameColor);
+            surface.SetCell(0, Height - 1, '╚', FrameColor);
+            surface.SetCell(Width - 1, Height - 1, '╝', FrameColor);
         }
 
         public override void Update(TimeSpan elapsedTime)

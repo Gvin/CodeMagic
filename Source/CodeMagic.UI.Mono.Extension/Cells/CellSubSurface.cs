@@ -46,7 +46,7 @@ namespace CodeMagic.UI.Mono.Extension.Cells
             return underlyingSurface.GetCell(underlyingX, underlyingY);
         }
 
-        public override void SetCell(int x, int y, Cell cell)
+        public override void SetCell(int x, int y, Cell cell, bool useConversion = true)
         {
             if (!ContainsPoint(x, y))
                 throw new IndexOutOfRangeException($"Coordinates are out of range: X={x}; Y={y}; Width={Width}; Height={Height}");
@@ -55,7 +55,7 @@ namespace CodeMagic.UI.Mono.Extension.Cells
 
             var underlyingX = x + location.X;
             var underlyingY = y + location.Y;
-            underlyingSurface.SetCell(underlyingX, underlyingY, cell);
+            underlyingSurface.SetCell(underlyingX, underlyingY, cell, useConversion);
         }
     }
 }

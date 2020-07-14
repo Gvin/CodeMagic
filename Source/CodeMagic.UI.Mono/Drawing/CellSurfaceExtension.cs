@@ -21,11 +21,11 @@ namespace CodeMagic.UI.Mono.Drawing
                     if (pixel.Symbol.HasValue)
                     {
                         var foreColor = pixel.Color?.ToXna() ?? defaultFore;
-                        surface.SetCell(printX, printY, new Cell(pixel.Symbol.Value, foreColor, backColor));
+                        surface.SetCell(printX, printY, new Cell(pixel.Symbol.Value, foreColor, backColor), false);
                     }
                     else
                     {
-                        surface.SetCell(printX, printY, new Cell(' ', defaultFore, backColor));
+                        surface.SetCell(printX, printY, new Cell(' ', defaultFore, backColor), false);
                     }
                 }
             }
