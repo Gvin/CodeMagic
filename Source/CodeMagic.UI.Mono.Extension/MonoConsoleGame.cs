@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using CodeMagic.UI.Mono.Extension.Cells;
@@ -14,6 +15,7 @@ namespace CodeMagic.UI.Mono.Extension
 {
     public class MonoConsoleGame : Game
     {
+        private readonly Dictionary<Keys, TimeSpan> keysPressTime;
         private GraphicsDeviceManager graphicsDeviceManager;
         private SpriteBatch spriteBatch;
         private readonly int width;
@@ -34,11 +36,15 @@ namespace CodeMagic.UI.Mono.Extension
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            keysPressTime = new Dictionary<Keys, TimeSpan>();
         }
 
         protected virtual Color DefaultForeColor => Color.White;
 
         protected virtual Color DefaultBackColor => Color.Black;
+
+        protected virtual int KeyPressedDelay => 100;
 
         protected override void LoadContent()
         {
@@ -57,6 +63,8 @@ namespace CodeMagic.UI.Mono.Extension
                 window.Update(gameTime.ElapsedGameTime);
             }
 
+            UpdateKeyboardState(gameTime);
+
             var mouseState = Mouse.GetState();
             var topWindow = WindowsManager.Instance.Windows.LastOrDefault();
             if (topWindow != null)
@@ -72,6 +80,63 @@ namespace CodeMagic.UI.Mono.Extension
             }
 
             base.Update(gameTime);
+        }
+
+        private void UpdateKeyboardState(GameTime gameTime)
+        {
+            var keyboard = Keyboard.GetState();
+            var keysPressed = keyboard.GetPressedKeys();
+
+            foreach (var key in keysPressTime.Keys.ToArray())
+            {
+                if (!keysPressed.Contains(key))
+                {
+                    keysPressTime.Remove(key);
+                }
+            }
+
+            foreach (var keyPressed in keysPressed)
+            {
+                if (keysPressTime.ContainsKey(keyPressed))
+                {
+                    keysPressTime[keyPressed] += gameTime.ElapsedGameTime;
+                }
+                else
+                {
+                    keysPressTime.Add(keyPressed, TimeSpan.Zero);
+                }
+            }
+
+            foreach (var key in keysPressTime.Keys.ToArray())
+            {
+                if (keysPressTime[key] >= TimeSpan.FromMilliseconds(KeyPressedDelay))
+                {
+                    keysPressTime.Remove(key);
+                    ProcessKeyPressed(key);
+                }
+            }
+        }
+
+        private void ProcessKeyPressed(Keys key)
+        {
+            var topWindow = WindowsManager.Instance.Windows.LastOrDefault();
+            if (topWindow != null && topWindow.Enabled)
+            {
+                var activePlanes = new List<IActivePlane>
+                {
+                    topWindow
+                };
+                activePlanes.AddRange(topWindow.GetActivePlanes());
+
+                activePlanes = activePlanes.Where(p => p.Enabled).ToList();
+                var processed = false;
+                while (!processed && activePlanes.Count > 0)
+                {
+                    var plane = activePlanes[0];
+                    processed = plane.ProcessKeyPressed(key);
+                    activePlanes.Remove(plane);
+                }
+            }
         }
 
         private void ProcessMouseForActivePlane(IActivePlane plane, Microsoft.Xna.Framework.Input.MouseState mouseState, int shiftX, int shiftY)

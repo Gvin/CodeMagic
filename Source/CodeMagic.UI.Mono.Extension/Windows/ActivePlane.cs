@@ -5,6 +5,7 @@ using CodeMagic.UI.Mono.Extension.Cells;
 using CodeMagic.UI.Mono.Extension.Fonts;
 using CodeMagic.UI.Mono.Extension.Windows.Controls;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace CodeMagic.UI.Mono.Extension.Windows
 {
@@ -58,12 +59,22 @@ namespace CodeMagic.UI.Mono.Extension.Windows
             }
         }
 
-        public virtual void ProcessMouse(IMouseState mouseState)
+        public virtual bool ProcessMouse(IMouseState mouseState)
         {
             foreach (var control in Controls.Where(c => c.Enabled && c.Visible))
             {
-                control.ProcessMouse(mouseState);
+                if (control.ProcessMouse(mouseState))
+                {
+                    return true;
+                }
             }
+
+            return false;
+        }
+
+        public virtual bool ProcessKeyPressed(Keys key)
+        {
+            return false;
         }
     }
 }

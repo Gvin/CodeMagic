@@ -88,10 +88,10 @@ namespace CodeMagic.UI.Mono.Controls
             scroll.MaxValue = scrollMax;
         }
 
-        public void ProcessMouse(IMouseState mouseState)
+        public bool ProcessMouse(IMouseState mouseState)
         {
             if (!Location.Contains(mouseState.Position))
-                return;
+                return false;
 
             if (mouseState.ScrollChange > 0)
             {
@@ -102,6 +102,8 @@ namespace CodeMagic.UI.Mono.Controls
             {
                 scroll.Value++;
             }
+
+            return true;
         }
     }
 }

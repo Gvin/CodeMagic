@@ -59,16 +59,16 @@ namespace CodeMagic.UI.Mono.Views
             Controls.Add(restoreStats);
         }
 
-        protected override void ProcessKeyPressed(Keys key)
+        public override bool ProcessKeyPressed(Keys key)
         {
-            base.ProcessKeyPressed(key);
-
             switch (key)
             {
                 case Keys.Escape:
                     Exit?.Invoke(this, EventArgs.Empty);
-                    break;
+                    return true;
             }
+
+            return base.ProcessKeyPressed(key);
         }
 
         public event EventHandler Exit;

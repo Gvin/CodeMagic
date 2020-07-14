@@ -93,12 +93,12 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
             // Do nothing
         }
 
-        public void ProcessMouse(IMouseState mouseState)
+        public bool ProcessMouse(IMouseState mouseState)
         {
             isHover = Location.Contains(mouseState.Position);
 
             if (!isHover)
-                return;
+                return false;
 
             if (mouseState.ScrollChange > 0)
             {
@@ -122,6 +122,8 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
                     Value++;
                 }
             }
+
+            return true;
         }
     }
 

@@ -56,9 +56,9 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
             // Do nothing
         }
 
-        public void ProcessMouse(IMouseState mouseState)
+        public bool ProcessMouse(IMouseState mouseState)
         {
-            // Do nothing
+            return false;
         }
     }
 

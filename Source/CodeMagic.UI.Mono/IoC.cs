@@ -32,9 +32,9 @@ namespace CodeMagic.UI.Mono
                 // Component.For<IMainSpellsLibraryView>().ImplementedBy<MainSpellsLibraryView>().LifestyleTransient(),
                 Component.For<IPlayerDeathView>().ImplementedBy<PlayerDeathView>().LifestyleTransient(),
                 // Component.For<IPlayerInventoryView>().ImplementedBy<PlayerInventoryView>().LifestyleTransient(),
-                // Component.For<IPlayerStatsView>().ImplementedBy<PlayerStatsView>().LifestyleTransient(),
+                Component.For<IPlayerStatsView>().ImplementedBy<PlayerStatsView>().LifestyleTransient(),
                 // Component.For<ISettingsView>().ImplementedBy<SettingsView>().LifestyleTransient(),
-                // Component.For<ISpellBookView>().ImplementedBy<SpellBookView>().LifestyleTransient(),
+                Component.For<ISpellBookView>().ImplementedBy<SpellBookView>().LifestyleTransient(),
                 Component.For<IWaitMessageView>().ImplementedBy<WaitMessageView>().LifestyleTransient(),
 
                 // Services

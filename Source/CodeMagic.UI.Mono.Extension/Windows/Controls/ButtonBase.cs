@@ -33,7 +33,7 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
             // Do nothing
         }
 
-        public virtual void ProcessMouse(IMouseState mouseState)
+        public virtual bool ProcessMouse(IMouseState mouseState)
         {
             if (Location.Contains(mouseState.Position))
             {
@@ -46,11 +46,12 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
                     IsHoldingClick = false;
                     Click?.Invoke(this, EventArgs.Empty);
                 }
+
+                return true;
             }
-            else
-            {
-                IsHoldingClick = false;
-            }
+
+            IsHoldingClick = false;
+            return false;
         }
     }
 }

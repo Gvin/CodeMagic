@@ -71,11 +71,13 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
             return Theme.Enabled;
         }
 
-        public override void ProcessMouse(IMouseState mouseState)
+        public override bool ProcessMouse(IMouseState mouseState)
         {
-            base.ProcessMouse(mouseState);
+            var result = base.ProcessMouse(mouseState);
 
             isHover = Location.Contains(mouseState.Position);
+
+            return result;
         }
     }
 

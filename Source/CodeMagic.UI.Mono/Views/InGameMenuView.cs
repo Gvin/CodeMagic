@@ -55,16 +55,16 @@ namespace CodeMagic.UI.Mono.Views
             return (int)Math.Floor(Width / 2d) - 8;
         }
 
-        protected override void ProcessKeyPressed(Keys key)
+        public override bool ProcessKeyPressed(Keys key)
         {
-            base.ProcessKeyPressed(key);
-
             switch (key)
             {
                 case Keys.Escape:
                     ContinueGame?.Invoke(this, EventArgs.Empty);
-                    break;
+                    return true;
             }
+
+            return base.ProcessKeyPressed(key);
         }
     }
 }
