@@ -7,7 +7,7 @@ namespace CodeMagic.UI.Mono.Views
 {
     public class BaseWindow : Window
     {
-        protected static Color FrameColor = Color.Gray;
+        public static Color FrameColor = Color.Gray;
 
         public BaseWindow(FontTarget font) 
             : base(
