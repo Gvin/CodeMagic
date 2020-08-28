@@ -23,7 +23,7 @@ namespace CodeMagic.UI.Mono
                 // Views
                 Component.For<ICheatsView>().ImplementedBy<CheatsView>().LifestyleTransient(),
                 Component.For<ICustomInventoryView>().ImplementedBy<CustomInventoryView>().LifestyleTransient(),
-                // Component.For<IEditSpellView>().ImplementedBy<EditSpellView>().LifestyleTransient(),
+                Component.For<IEditSpellView>().ImplementedBy<EditSpellView>().LifestyleTransient(),
                 Component.For<IGameView>().ImplementedBy<GameView>().LifestyleTransient(),
                 Component.For<IInGameMenuView>().ImplementedBy<InGameMenuView>().LifestyleTransient(),
                 Component.For<ILevelUpView>().ImplementedBy<LevelUpView>().LifestyleTransient(),

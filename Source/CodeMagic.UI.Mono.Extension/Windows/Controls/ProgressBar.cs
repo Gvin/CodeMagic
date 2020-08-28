@@ -4,22 +4,17 @@ using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 {
-    public class ProgressBar : IControl
+    public class ProgressBar : Control
     {
         public ProgressBar(Rectangle location)
+            : base(location)
         {
-            Location = location;
-            Enabled = true;
-            Visible = true;
-
             Theme = new ProgressBarTheme();
+
+            MaxValue = 100;
+            MinValue = 0;
+            Value = 50;
         }
-
-        public Rectangle Location { get; set; }
-
-        public bool Enabled { get; set; }
-
-        public bool Visible { get; set; }
 
         public int MaxValue { get; set; }
 
@@ -29,7 +24,7 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 
         public ProgressBarTheme Theme { get; set; }
 
-        public void Draw(ICellSurface surface)
+        public override void Draw(ICellSurface surface)
         {
             surface.Fill(
                 new Rectangle(0, 0, Location.Width, Location.Height), Theme.EmptyBar);
@@ -49,16 +44,6 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 
             surface.Fill(
                 new Rectangle(0, 0, fillWidth, Location.Height), Theme.FilledBar);
-        }
-
-        public void Update(TimeSpan elapsedTime)
-        {
-            // Do nothing
-        }
-
-        public bool ProcessMouse(IMouseState mouseState)
-        {
-            return false;
         }
     }
 

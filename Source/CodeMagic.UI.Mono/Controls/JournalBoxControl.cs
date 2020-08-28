@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Controls
 {
-    public class JournalBoxControl : IControl
+    public class JournalBoxControl : Control
     {
         private const int MaxMessagesToDraw = 100;
 
@@ -19,13 +19,10 @@ namespace CodeMagic.UI.Mono.Controls
         private readonly JournalMessageFormatter messageFormatter;
 
         public JournalBoxControl(Rectangle location, Journal journal, VerticalScrollBar scroll)
+            : base(location)
         {
             this.journal = journal;
-            Location = location;
-
-            Enabled = true;
-            Visible = true;
-
+            
             this.scroll = scroll;
             messageFormatter = new JournalMessageFormatter();
             maxMessagesCount = Location.Height - 2;
@@ -33,13 +30,7 @@ namespace CodeMagic.UI.Mono.Controls
             UpdateScrollMax();
         }
 
-        public Rectangle Location { get; set; }
-
-        public bool Enabled { get; set; }
-
-        public bool Visible { get; set; }
-
-        public void Draw(ICellSurface surface)
+        public override void Draw(ICellSurface surface)
         {
            DrawMessages(surface, journal.Messages.Reverse().Take(MaxMessagesToDraw).ToArray());
         }
@@ -75,7 +66,7 @@ namespace CodeMagic.UI.Mono.Controls
             return TextFormatHelper.SplitText(formattedMessage, width);
         }
 
-        public void Update(TimeSpan elapsedTime)
+        public override void Update(TimeSpan elapsedTime)
         {
             UpdateScrollMax();
         }
@@ -88,7 +79,7 @@ namespace CodeMagic.UI.Mono.Controls
             scroll.MaxValue = scrollMax;
         }
 
-        public bool ProcessMouse(IMouseState mouseState)
+        public override bool ProcessMouse(IMouseState mouseState)
         {
             if (!Location.Contains(mouseState.Position))
                 return false;

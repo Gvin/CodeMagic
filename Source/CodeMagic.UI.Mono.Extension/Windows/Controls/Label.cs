@@ -1,18 +1,15 @@
-﻿using System;
-using CodeMagic.UI.Mono.Extension.Cells;
+﻿using CodeMagic.UI.Mono.Extension.Cells;
 using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 {
-    public class Label : IControl
+    public class Label : Control
     {
         private string text;
 
         public Label(int x, int y)
+            : base(new Rectangle(x, y, 1, 1))
         {
-            Location = new Rectangle(x, y, 1, 1);
-            Enabled = false;
-            Visible = true;
         }
 
         public string Text
@@ -29,25 +26,9 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 
         public Color? BackColor { get; set; }
 
-        public Rectangle Location { get; set; }
-
-        public bool Enabled { get; set; }
-
-        public bool Visible { get; set; }
-
-        public void Draw(ICellSurface surface)
+        public override void Draw(ICellSurface surface)
         {
             surface.Write(0, 0, Text, ForeColor, BackColor);
-        }
-
-        public void Update(TimeSpan elapsedTime)
-        {
-            // Do nothing
-        }
-
-        public bool ProcessMouse(IMouseState mouseState)
-        {
-            return false;
         }
     }
 }

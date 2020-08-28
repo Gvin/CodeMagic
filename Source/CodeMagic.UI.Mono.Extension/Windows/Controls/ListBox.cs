@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 {
-    public class ListBox<TItem> : IControl where TItem : class, IListBoxItem
+    public class ListBox<TItem> : Control where TItem : class, IListBoxItem
     {
         public event EventHandler SelectionChanged;
 
@@ -14,6 +14,7 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
         private readonly List<ItemWrapper> items;
 
         public ListBox(Rectangle location, VerticalScrollBar scroll)
+            : base(location)
         {
             Location = location;
             this.scroll = scroll;
@@ -24,12 +25,6 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 
             UpdateScrollValue();
         }
-
-        public Rectangle Location { get; set; }
-
-        public bool Enabled { get; set; }
-
-        public bool Visible { get; set; }
 
         public TItem[] Items => items.Select(wrapper => wrapper.Item).ToArray();
 
@@ -79,12 +74,12 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
             SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        public void Draw(ICellSurface surface)
+        public override void Draw(ICellSurface surface)
         {
             DrawItems(surface);
         }
 
-        public void Update(TimeSpan elapsedTime)
+        public override void Update(TimeSpan elapsedTime)
         {
             UpdateScrollValue();
         }
@@ -94,7 +89,7 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
             scroll.MaxValue = Math.Max(0, items.Count - Location.Height);
         }
 
-        public bool ProcessMouse(IMouseState mouseState)
+        public override bool ProcessMouse(IMouseState mouseState)
         {
             if (!Location.Contains(mouseState.Position))
                 return false;

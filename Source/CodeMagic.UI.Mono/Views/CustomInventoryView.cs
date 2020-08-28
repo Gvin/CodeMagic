@@ -76,22 +76,25 @@ namespace CodeMagic.UI.Mono.Views
             pickUpStackButton.Visible = SelectedStack != null;
         }
 
-        public override bool ProcessKeyPressed(Keys key)
+        public override bool ProcessKeysPressed(Keys[] keys)
         {
-            switch (key)
+            if (keys.Length == 1)
             {
-                case Keys.A:
-                    PickUpAll?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.P:
-                    PickUpStack?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.O:
-                    PickUpOne?.Invoke(this, EventArgs.Empty);
-                    return true;
+                switch (keys[0])
+                {
+                    case Keys.A:
+                        PickUpAll?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.P:
+                        PickUpStack?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.O:
+                        PickUpOne?.Invoke(this, EventArgs.Empty);
+                        return true;
+                }
             }
 
-            return base.ProcessKeyPressed(key);
+            return base.ProcessKeysPressed(keys);
         }
 
         protected override InventoryStackItem CreateListBoxItem(InventoryStack stack)

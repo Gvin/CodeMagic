@@ -29,7 +29,5 @@ namespace CodeMagic.UI.Mono.Extension.Windows
         void Update(TimeSpan elapsedTime);
 
         bool ProcessMouse(IMouseState mouseState);
-
-        bool ProcessKeyPressed(Keys key);
     }
 }

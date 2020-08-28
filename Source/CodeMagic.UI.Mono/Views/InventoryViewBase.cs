@@ -166,24 +166,27 @@ namespace CodeMagic.UI.Mono.Views
             ProcessSelectedItemChanged();
         }
 
-        public override bool ProcessKeyPressed(Keys key)
+        public override bool ProcessKeysPressed(Keys[] keys)
         {
-            switch (key)
+            if (keys.Length == 1)
             {
-                case Keys.Escape:
-                    Exit?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.Up:
-                case Keys.W:
-                    MoveSelectionUp();
-                    return true;
-                case Keys.Down:
-                case Keys.S:
-                    MoveSelectionDown();
-                    return true;
+                switch (keys[0])
+                {
+                    case Keys.Escape:
+                        Exit?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.Up:
+                    case Keys.W:
+                        MoveSelectionUp();
+                        return true;
+                    case Keys.Down:
+                    case Keys.S:
+                        MoveSelectionDown();
+                        return true;
+                }
             }
 
-            return base.ProcessKeyPressed(key);
+            return base.ProcessKeysPressed(keys);
         }
 
         private void MoveSelectionUp()

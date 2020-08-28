@@ -27,16 +27,19 @@ namespace CodeMagic.UI.Mono.Views
             Controls.Add(okButton);
         }
 
-        public override bool ProcessKeyPressed(Keys key)
+        public override bool ProcessKeysPressed(Keys[] keys)
         {
-            switch (key)
+            if (keys.Length == 1)
             {
-                case Keys.Enter:
-                    Ok?.Invoke(this, EventArgs.Empty);
-                    return true;
+                switch (keys[0])
+                {
+                    case Keys.Enter:
+                        Ok?.Invoke(this, EventArgs.Empty);
+                        return true;
+                }
             }
 
-            return base.ProcessKeyPressed(key);
+            return base.ProcessKeysPressed(keys);
         }
     }
 }

@@ -136,36 +136,39 @@ namespace CodeMagic.UI.Mono.Views
             }
         }
 
-        public override bool ProcessKeyPressed(Keys key)
+        public override bool ProcessKeysPressed(Keys[] keys)
         {
-            switch (key)
+            if (keys.Length == 1)
             {
-                case Keys.U:
-                    UseItem?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.E:
-                    EquipItem?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.Z:
-                    EquipHoldableItemLeft?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.X:
-                    EquipHoldableItemRight?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.T:
-                    TakeOffItem?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.D:
-                    DropItem?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.A:
-                    DropStack?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.C:
-                    CheckScroll?.Invoke(this, EventArgs.Empty);
-                    return true;
+                switch (keys[0])
+                {
+                    case Keys.U:
+                        UseItem?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.E:
+                        EquipItem?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.Z:
+                        EquipHoldableItemLeft?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.X:
+                        EquipHoldableItemRight?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.T:
+                        TakeOffItem?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.D:
+                        DropItem?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.A:
+                        DropStack?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.C:
+                        CheckScroll?.Invoke(this, EventArgs.Empty);
+                        return true;
+                }
             }
-            return base.ProcessKeyPressed(key);
+            return base.ProcessKeysPressed(keys);
         }
 
         protected override InventoryStackItem CreateListBoxItem(InventoryStack stack)

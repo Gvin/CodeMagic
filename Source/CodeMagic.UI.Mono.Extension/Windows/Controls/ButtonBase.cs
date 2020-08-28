@@ -1,12 +1,12 @@
 ﻿using System;
-using CodeMagic.UI.Mono.Extension.Cells;
 using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 {
-    public abstract class ButtonBase : IControl
+    public abstract class ButtonBase : Control
     {
         protected ButtonBase(Rectangle location)
+            : base(location)
         {
             Location = location;
             Enabled = true;
@@ -20,20 +20,7 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 
         public string Text { get; set; }
 
-        public Rectangle Location { get; set; }
-
-        public bool Enabled { get; set; }
-
-        public bool Visible { get; set; }
-
-        public abstract void Draw(ICellSurface surface);
-
-        public void Update(TimeSpan elapsedTime)
-        {
-            // Do nothing
-        }
-
-        public virtual bool ProcessMouse(IMouseState mouseState)
+        public override bool ProcessMouse(IMouseState mouseState)
         {
             if (Location.Contains(mouseState.Position))
             {

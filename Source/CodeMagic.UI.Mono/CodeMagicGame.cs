@@ -18,7 +18,5 @@ namespace CodeMagic.UI.Mono
 
             IoC.Container.Resolve<IApplicationController>().CreatePresenter<MainMenuPresenter>().Run();
         }
-
-        protected override int KeyPressedDelay => 100;
     }
 }

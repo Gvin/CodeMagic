@@ -217,28 +217,31 @@ namespace CodeMagic.UI.Mono.Views
             PerformKeyPlayerAction(keyboard);
         }
 
-        public override bool ProcessKeyPressed(Keys key)
+        public override bool ProcessKeysPressed(Keys[] keys)
         {
-            switch (key)
+            if (keys.Length == 1)
             {
-                case Keys.Escape:
-                    OpenInGameMenu?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.C:
-                    OpenSpellBook?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.I:
-                    OpenInventory?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.G:
-                    OpenGroundView?.Invoke(this, EventArgs.Empty);
-                    return true;
-                case Keys.V:
-                    OpenPlayerStats?.Invoke(this, EventArgs.Empty);
-                    return true;
+                switch (keys[0])
+                {
+                    case Keys.Escape:
+                        OpenInGameMenu?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.C:
+                        OpenSpellBook?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.I:
+                        OpenInventory?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.G:
+                        OpenGroundView?.Invoke(this, EventArgs.Empty);
+                        return true;
+                    case Keys.V:
+                        OpenPlayerStats?.Invoke(this, EventArgs.Empty);
+                        return true;
+                }
             }
 
-            return base.ProcessKeyPressed(key);
+            return base.ProcessKeysPressed(keys);
         }
 
         private void PerformKeyPlayerAction(KeyboardState keyboardState)

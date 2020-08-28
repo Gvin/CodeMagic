@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CodeMagic.Core.Items;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Mono.Drawing;
 using CodeMagic.UI.Mono.Drawing.ImageProviding;
-using CodeMagic.UI.Mono.Extension;
 using CodeMagic.UI.Mono.Extension.Cells;
 using CodeMagic.UI.Mono.Extension.Windows.Controls;
 using CodeMagic.UI.Mono.Views;
@@ -13,28 +11,20 @@ using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Controls
 {
-    public class ItemDetailsControl : IControl
+    public class ItemDetailsControl : Control
     {
         private readonly InventoryImagesFactory imagesFactory;
         private readonly Player player;
 
         public ItemDetailsControl(Rectangle location, Player player)
+            : base(location)
         {
-            Location = location;
             this.player = player;
-            Enabled = true;
-            Visible = true;
 
             imagesFactory = new InventoryImagesFactory(ImagesStorage.Current);
         }
 
-        public Rectangle Location { get; set; }
-
-        public bool Enabled { get; set; }
-
-        public bool Visible { get; set; }
-
-        public void Draw(ICellSurface surface)
+        public override void Draw(ICellSurface surface)
         {
             surface.Write(1, 0, "Selected Item Details");
             surface.Fill(new Rectangle(0, 1, Location.Width, 1), new Cell('─', BaseWindow.FrameColor));
@@ -56,16 +46,6 @@ namespace CodeMagic.UI.Mono.Controls
                 var descriptionY = 6 + 1 + imageHeight;
                 DrawDescription(surface, descriptionY, descriptionProvider);
             }
-        }
-
-        public void Update(TimeSpan elapsedTime)
-        {
-            // Do nothing
-        }
-
-        public bool ProcessMouse(IMouseState mouseState)
-        {
-            return false;
         }
 
         public InventoryStack Stack { get; set; }

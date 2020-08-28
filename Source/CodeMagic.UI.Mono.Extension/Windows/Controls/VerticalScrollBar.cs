@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 {
-    public class VerticalScrollBar : IControl
+    public class VerticalScrollBar : Control
     {
         private bool isHover;
         private int value;
@@ -12,23 +12,14 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
         private int minValue;
 
         public VerticalScrollBar(Point position, int height)
+            : base(new Rectangle(position.X, position.Y, 1, height))
         {
-            Location = new Rectangle(position.X, position.Y, 1, height);
-            Enabled = true;
-            Visible = true;
-
             Theme = new ScrollBarTheme();
 
             MaxValue = 100;
             MinValue = 0;
             Value = 50;
         }
-
-        public Rectangle Location { get; set; }
-
-        public bool Enabled { get; set; }
-
-        public bool Visible { get; set; }
 
         public int MaxValue
         {
@@ -58,7 +49,7 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
 
         public ScrollBarTheme Theme { get; set; }
 
-        public void Draw(ICellSurface surface)
+        public override void Draw(ICellSurface surface)
         {
             var theme = GetThemeColors();
 
@@ -88,12 +79,7 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
             return Theme.Enabled;
         }
 
-        public void Update(TimeSpan elapsedTime)
-        {
-            // Do nothing
-        }
-
-        public bool ProcessMouse(IMouseState mouseState)
+        public override bool ProcessMouse(IMouseState mouseState)
         {
             isHover = Location.Contains(mouseState.Position);
 

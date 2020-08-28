@@ -71,10 +71,5 @@ namespace CodeMagic.UI.Mono.Extension.Windows
 
             return false;
         }
-
-        public virtual bool ProcessKeyPressed(Keys key)
-        {
-            return false;
-        }
     }
 }

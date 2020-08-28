@@ -45,16 +45,19 @@ namespace CodeMagic.UI.Mono.Views
         public event EventHandler ExitToMenu;
         public event EventHandler Exit;
 
-        public override bool ProcessKeyPressed(Keys key)
+        public override bool ProcessKeysPressed(Keys[] keys)
         {
-            switch (key)
+            if (keys.Length == 1)
             {
-                case Keys.Escape:
-                    ExitToMenu?.Invoke(this, EventArgs.Empty);
-                    return true;
+                switch (keys[0])
+                {
+                    case Keys.Escape:
+                        ExitToMenu?.Invoke(this, EventArgs.Empty);
+                        return true;
+                }
             }
 
-            return base.ProcessKeyPressed(key);
+            return base.ProcessKeysPressed(keys);
         }
     }
 }
