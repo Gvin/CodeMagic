@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using CodeMagic.Game;
 using CodeMagic.UI.Mono.Extension.Cells;
-using Microsoft.Xna.Framework;
 
 namespace CodeMagic.UI.Mono.Drawing
 {

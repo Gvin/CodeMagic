@@ -1,4 +1,6 @@
-﻿namespace CodeMagic.UI.Presenters
+﻿using CodeMagic.UI.Services;
+
+namespace CodeMagic.UI.Presenters
 {
     public interface IMainSpellsLibraryView : ISpellLibraryView
     {

@@ -18,6 +18,7 @@ namespace CodeMagic.UI.Mono.Views
 
         private readonly FramedButton removeSpellButton;
         private readonly FramedButton editSpellButton;
+        private readonly Input filterInput;
         private string filter;
 
         public BookSpell SelectedSpell => SelectedItem?.Spell;
@@ -55,13 +56,8 @@ namespace CodeMagic.UI.Mono.Views
             spellsList.SelectionChanged += spellsListBox_SelectedItemChanged;
             Controls.Add(spellsList);
 
-            // filterTextBox = new TextBox(Width - 69)
-            // {
-            //     Position = new Point(10, 3),
-            //     Theme = textBoxTheme,
-            //     MaxLength = Width - 70
-            // };
-            // Add(filterTextBox);
+            filterInput = new Input(new Rectangle(10, 3, Width - 69, 1));
+            Controls.Add(filterInput);
 
             UpdateSpellDetails();
         }
@@ -71,7 +67,7 @@ namespace CodeMagic.UI.Mono.Views
             if (string.IsNullOrEmpty(filter))
                 return Spells;
 
-            return Spells.Where(spell => spell.Name.Contains(filter)).ToArray();
+            return Spells.Where(spell => spell.Name.Contains(filter, StringComparison.OrdinalIgnoreCase)).ToArray();
         }
 
         public void RefreshSpells(bool keepSelection)
@@ -80,9 +76,10 @@ namespace CodeMagic.UI.Mono.Views
 
             spellsList.ClearItems();
 
-            for (var index = 0; index < GetFilteredSpells().Length; index++)
+            var spells = GetFilteredSpells();
+            for (var index = 0; index < spells.Length; index++)
             {
-                var spell = Spells[index];
+                var spell = spells[index];
                 spellsList.AddItem(new SpellListBoxItem(spell, index));
             }
 
@@ -138,12 +135,12 @@ namespace CodeMagic.UI.Mono.Views
         {
             base.Update(elapsedTime);
 
-            // var newFilter = filterTextBox.EditingText ?? filterTextBox.Text;
-            // if (!string.Equals(newFilter, filter))
-            // {
-            //     filter = newFilter;
-            //     RefreshSpells(false);
-            // }
+            var newFilter = filterInput.Text;
+            if (!string.Equals(newFilter, filter))
+            {
+                filter = newFilter;
+                RefreshSpells(false);
+            }
         }
 
         public override bool ProcessKeysPressed(Keys[] keys)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using CodeMagic.Game.Spells;
+using CodeMagic.UI.Services;
 
 namespace CodeMagic.UI.Sad.GameProcess
 {

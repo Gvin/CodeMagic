@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using CodeMagic.UI.Mono.Extension.Cells;
@@ -16,17 +15,12 @@ namespace CodeMagic.UI.Mono.Extension
     public class MonoConsoleGame : Game
     {
         private Keys[] oldPushedKeys;
-        private GraphicsDeviceManager graphicsDeviceManager;
+        private readonly GraphicsDeviceManager graphicsDeviceManager;
         private SpriteBatch spriteBatch;
-        private readonly int width;
-        private readonly int height;
         private int lastMouseScrollWheelValue;
 
         public MonoConsoleGame(int width, int height)
         {
-            this.width = width;
-            this.height = height;
-
             graphicsDeviceManager = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferWidth = width, 

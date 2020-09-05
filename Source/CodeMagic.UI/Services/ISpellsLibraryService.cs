@@ -1,6 +1,6 @@
 ﻿using CodeMagic.Game.Spells;
 
-namespace CodeMagic.UI
+namespace CodeMagic.UI.Services
 {
     public interface ISpellsLibraryService
     {

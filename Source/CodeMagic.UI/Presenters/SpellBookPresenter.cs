@@ -8,6 +8,7 @@ using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.Game.Spells;
+using CodeMagic.UI.Services;
 
 namespace CodeMagic.UI.Presenters
 {

@@ -19,11 +19,6 @@ namespace CodeMagic.UI.Sad.Saving
 
         private const string SaveFilePath = ".\\save.json";
 
-        static SaveService()
-        {
-            SaveData.Init(new JsonDataSerializer());
-        }
-
         public Task SaveGameAsync()
         {
             return Task.Run(SaveGame);

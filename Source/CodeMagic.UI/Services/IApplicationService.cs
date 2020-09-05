@@ -1,4 +1,4 @@
-﻿namespace CodeMagic.UI
+﻿namespace CodeMagic.UI.Services
 {
     public interface IApplicationService
     {

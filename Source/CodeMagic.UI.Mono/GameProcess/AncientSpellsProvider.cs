@@ -3,7 +3,7 @@ using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.Spells;
 using Path = System.IO.Path;
 
-namespace CodeMagic.UI.Sad.GameProcess
+namespace CodeMagic.UI.Mono.GameProcess
 {
     public class AncientSpellsProvider : IAncientSpellsProvider
     {

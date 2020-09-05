@@ -5,7 +5,6 @@ using CodeMagic.UI.Mono.GameProcess;
 using CodeMagic.UI.Mono.Saving;
 using CodeMagic.UI.Mono.Views;
 using CodeMagic.UI.Presenters;
-using CodeMagic.UI.Sad.GameProcess;
 using CodeMagic.UI.Services;
 
 namespace CodeMagic.UI.Mono
@@ -33,7 +32,7 @@ namespace CodeMagic.UI.Mono
                 Component.For<IPlayerDeathView>().ImplementedBy<PlayerDeathView>().LifestyleTransient(),
                 Component.For<IPlayerInventoryView>().ImplementedBy<PlayerInventoryView>().LifestyleTransient(),
                 Component.For<IPlayerStatsView>().ImplementedBy<PlayerStatsView>().LifestyleTransient(),
-                // Component.For<ISettingsView>().ImplementedBy<SettingsView>().LifestyleTransient(),
+                Component.For<ISettingsView>().ImplementedBy<SettingsView>().LifestyleTransient(),
                 Component.For<ISpellBookView>().ImplementedBy<SpellBookView>().LifestyleTransient(),
                 Component.For<IWaitMessageView>().ImplementedBy<WaitMessageView>().LifestyleTransient(),
 

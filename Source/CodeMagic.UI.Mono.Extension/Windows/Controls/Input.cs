@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 using CodeMagic.UI.Mono.Extension.Cells;
 using Microsoft.Xna.Framework;
@@ -25,8 +24,7 @@ namespace CodeMagic.UI.Mono.Extension.Windows.Controls
             cursorPhaseTime = TimeSpan.Zero;
             drawCursor = true;
 
-            Enabled = true;
-            Visible = true;
+            text = string.Empty;
         }
 
         public string Text

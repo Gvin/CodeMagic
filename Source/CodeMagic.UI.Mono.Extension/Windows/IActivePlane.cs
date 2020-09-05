@@ -2,7 +2,6 @@
 using CodeMagic.UI.Mono.Extension.Cells;
 using CodeMagic.UI.Mono.Extension.Fonts;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace CodeMagic.UI.Mono.Extension.Windows
 {

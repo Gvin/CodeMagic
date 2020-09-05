@@ -2,6 +2,7 @@
 using CodeMagic.Core.Game;
 using CodeMagic.Game.GameProcess;
 using CodeMagic.Game.Objects.Creatures;
+using CodeMagic.UI.Services;
 
 namespace CodeMagic.UI.Presenters
 {

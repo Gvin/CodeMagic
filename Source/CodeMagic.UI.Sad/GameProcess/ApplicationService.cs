@@ -1,4 +1,6 @@
-﻿namespace CodeMagic.UI.Sad.GameProcess
+﻿using CodeMagic.UI.Services;
+
+namespace CodeMagic.UI.Sad.GameProcess
 {
     public class ApplicationService : IApplicationService
     {

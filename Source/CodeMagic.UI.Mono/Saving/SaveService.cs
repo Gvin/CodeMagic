@@ -19,11 +19,6 @@ namespace CodeMagic.UI.Mono.Saving
 
         private const string SaveFilePath = ".\\save.json";
 
-        static SaveService()
-        {
-            SaveData.Init(new JsonDataSerializer());
-        }
-
         public Task SaveGameAsync()
         {
             return Task.Run(SaveGame);
@@ -35,14 +30,15 @@ namespace CodeMagic.UI.Mono.Saving
 
             Log.Debug($"Saving started on turn {turn}");
 
+            var dataSerializer = new JsonDataSerializer();
             SaveData gameData;
             SaveData dataData;
             using (PerformanceMeter.Start($"Saving_GetSaveData[{turn}]"))
             {
                 var gameDataBuilder = CurrentGame.Game.GetSaveData();
-                gameData = gameDataBuilder.ConvertRawData(new JsonDataSerializer());
+                gameData = gameDataBuilder.ConvertRawData(dataSerializer);
                 var dataDataBuilder = GameData.Current.GetSaveData();
-                dataData = dataDataBuilder.ConvertRawData(new JsonDataSerializer());
+                dataData = dataDataBuilder.ConvertRawData(dataSerializer);
             }
 
             var gameSaveData = new GameSaveData

@@ -9,10 +9,7 @@ using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.UI.Mono.Drawing;
 using CodeMagic.UI.Mono.Extension.Glyphs;
-using CodeMagic.UI.Mono.Fonts;
 using CodeMagic.UI.Mono.Logger;
-using CodeMagic.UI.Sad.GameProcess;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace CodeMagic.UI.Mono.GameProcess
 {

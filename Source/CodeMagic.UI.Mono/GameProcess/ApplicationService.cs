@@ -1,4 +1,6 @@
-﻿namespace CodeMagic.UI.Mono.GameProcess
+﻿using CodeMagic.UI.Services;
+
+namespace CodeMagic.UI.Mono.GameProcess
 {
     public class ApplicationService : IApplicationService
     {

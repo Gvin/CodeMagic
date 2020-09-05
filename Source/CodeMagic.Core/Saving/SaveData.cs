@@ -6,13 +6,6 @@ namespace CodeMagic.Core.Saving
 {
     public class SaveData
     {
-        private static IDataSerializer serializer;
-
-        public static void Init(IDataSerializer dataSerializer)
-        {
-            serializer = dataSerializer;
-        }
-
         public SaveData()
         {
             Values = new Dictionary<string, string>();
@@ -56,12 +49,6 @@ namespace CodeMagic.Core.Saving
             if (data == null)
                 return null;
             return DeserializeObject(data);
-        }
-
-        public T GetSerializedObject<T>(string key) where T : class
-        {
-            var rawData = Values[key];
-            return serializer.Deserialize<T>(rawData);
         }
 
         private object DeserializeObject(SaveData dataBuilder)

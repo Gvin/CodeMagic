@@ -26,6 +26,7 @@ namespace CodeMagic.UI.Mono.Views
         private ProgressBar manaBar;
         private ProgressBar staminaBar;
         private ProgressBar hungerBar;
+        private AreaManaControl areaManaBar;
 
         private readonly FramedButton openSpellBookButton;
         private readonly FramedButton showItemsOnFloorButton;
@@ -147,6 +148,9 @@ namespace CodeMagic.UI.Mono.Views
             };
             Controls.Add(hungerBar);
 
+            areaManaBar = new AreaManaControl(new Rectangle(rightPanelX, 12, RightPanelWidth - 1, 1));
+            Controls.Add(areaManaBar);
+
             var gameArea = new GameAreaActivePlane(new Point(Font.GlyphWidth, Font.GlyphHeight), Game);
             ActivePlanes.Add(gameArea);
 
@@ -213,14 +217,16 @@ namespace CodeMagic.UI.Mono.Views
 
             hungerBar.Value = Game.Player.HungerPercent;
 
-            var keyboard = Keyboard.GetState();
-            PerformKeyPlayerAction(keyboard);
+            areaManaBar.Cell = Game.Map.GetCell(Game.PlayerPosition);
         }
 
         public override bool ProcessKeysPressed(Keys[] keys)
         {
             if (keys.Length == 1)
             {
+                if (PerformKeyPlayerAction(keys[0]))
+                    return true;
+
                 switch (keys[0])
                 {
                     case Keys.Escape:
@@ -244,21 +250,18 @@ namespace CodeMagic.UI.Mono.Views
             return base.ProcessKeysPressed(keys);
         }
 
-        private void PerformKeyPlayerAction(KeyboardState keyboardState)
+        private bool PerformKeyPlayerAction(Keys key)
         {
             if (DateTime.Now - lastKeyProcessed < KeyProcessFrequency)
-                return;
+                return false;
 
-            var pressedKeys = keyboardState.GetPressedKeys();
-            if (pressedKeys.Length == 0 || pressedKeys.Length > 1)
-                return;
-
-            var action = GetPlayerAction(pressedKeys[0]);
+            var action = GetPlayerAction(key);
             if (action == null)
-                return;
+                return false;
 
             lastKeyProcessed = DateTime.Now;
             Game.PerformPlayerAction(action);
+            return true;
         }
 
         private IPlayerAction GetPlayerAction(Keys key)

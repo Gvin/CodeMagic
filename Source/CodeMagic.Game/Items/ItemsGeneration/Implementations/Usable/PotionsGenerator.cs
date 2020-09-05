@@ -1,7 +1,6 @@
 ﻿using System;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Game.Items.Usable;
 using CodeMagic.Game.Items.Usable.Potions;
 
 namespace CodeMagic.Game.Items.ItemsGeneration.Implementations.Usable
