@@ -98,6 +98,8 @@ namespace CodeMagic.UI.Presenters
 
         private void View_OpenInGameMenu(object sender, EventArgs e)
         {
+            CloseView();
+
             controller.CreatePresenter<InGameMenuPresenter>().Run(game);
         }
 
