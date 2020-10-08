@@ -390,7 +390,7 @@ namespace CodeMagic.Game.Objects.Creatures
         private SymbolsImage GetDirectionImage(IImagesStorage storage)
         {
             var facingPosition = Point.GetPointInDirection(CurrentGame.PlayerPosition, Direction);
-            var facingUsable = CurrentGame.Map.TryGetCell(facingPosition)?.Objects.OfType<IUsableObject>().Any() ?? false;
+            var facingUsable = (CurrentGame.Map.TryGetCell(facingPosition)?.Objects.OfType<IUsableObject>())?.Any(usable => usable.CanUse) ?? false;
 
             switch (Direction)
             {

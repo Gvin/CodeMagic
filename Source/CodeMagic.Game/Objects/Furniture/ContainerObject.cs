@@ -37,6 +37,8 @@ namespace CodeMagic.Game.Objects.Furniture
             return data;
         }
 
+        public bool CanUse => true;
+
         public void Use(GameCore<Player> game, Point position)
         {
             game.Journal.Write(new ContainerOpenMessage(Name));

@@ -29,6 +29,8 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         public override ObjectSize Size => ObjectSize.Huge;
 
+        public bool CanUse => true;
+
         public void Use(GameCore<Player> game, Point position)
         {
             DialogsManager.Provider.OpenWaitDialog("Descending...", () =>

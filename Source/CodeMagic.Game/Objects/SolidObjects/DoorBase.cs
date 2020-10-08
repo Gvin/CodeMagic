@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
@@ -40,12 +39,14 @@ namespace CodeMagic.Game.Objects.SolidObjects
 
         public override bool BlocksEnvironment => Closed;
 
+        public bool CanUse => Closed;
+
         public void Use(GameCore<Player> game, Point position)
         {
-            if (!Closed && game.Map.GetCell(position).Objects.Any(obj => !obj.Equals(this) && obj.BlocksMovement))
+            if (!Closed)
                 return;
 
-            Closed = !Closed;
+            Closed = false;
         }
     }
 }
