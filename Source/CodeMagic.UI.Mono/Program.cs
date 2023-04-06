@@ -4,6 +4,7 @@ using System.Reflection;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Game;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.GameProcess;
 using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.UI.Mono.Drawing;
@@ -84,9 +85,11 @@ namespace CodeMagic.UI.Mono
             services.AddSingleton<ISettingsService>(_ => Settings.Current);
             services.AddTransient<IApplicationService, ApplicationService>();
             services.AddSingleton<ISaveService, SaveService>();
-            services.AddSingleton<IGameManager>(provider => new GameManager(
-                    provider.GetRequiredService<ISaveService>(),
-                    provider.GetRequiredService<ISettingsService>().SavingInterval));
+            services.AddSingleton<IGameManager, GameManager>();
+            services.Configure<BasicGameConfiguration>(config =>
+                {
+                    config.SavingInterval = Settings.Current.SavingInterval;
+                });
 
             services.AddSingleton<CodeMagicGame>();
 

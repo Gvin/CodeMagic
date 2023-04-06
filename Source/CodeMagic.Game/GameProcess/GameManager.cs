@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
+using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Items.Custom;
 using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.JournalMessages;
 using CodeMagic.Game.JournalMessages.Scenario;
 using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.Game.Objects.Creatures;
+using Microsoft.Extensions.Options;
 
 namespace CodeMagic.Game.GameProcess
 {
@@ -23,12 +25,12 @@ namespace CodeMagic.Game.GameProcess
         private Task _saveGameTask;
         private int _turnsSinceLastSaving;
         private readonly ISaveService _saveService;
-        private readonly int _savingInterval;
+        private readonly IOptions<BasicGameConfiguration> _config;
 
-        public GameManager(ISaveService saveService, int savingInterval)
+        public GameManager(ISaveService saveService, IOptions<BasicGameConfiguration> config)
         {
             _saveService = saveService;
-            _savingInterval = savingInterval;
+            _config = config;
         }
 
         public GameCore<Player> StartGame()
@@ -95,7 +97,7 @@ namespace CodeMagic.Game.GameProcess
         {
             _turnsSinceLastSaving++;
 
-            if (_turnsSinceLastSaving >= _savingInterval)
+            if (_turnsSinceLastSaving >= _config.Value.SavingInterval)
             {
                 _saveGameTask?.Wait();
                 _saveGameTask = _saveService.SaveGameAsync(CurrentGame.Game, GameData.Current);
