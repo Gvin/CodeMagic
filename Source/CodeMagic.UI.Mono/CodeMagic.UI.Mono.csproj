@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>Gvin</Authors>
     <Version>1.7.0</Version>
     <RepositoryUrl>https://github.com/Gvin/CodeMagic</RepositoryUrl>
@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Castle.Windsor" Version="5.0.1" />
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1375-develop" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
     <PackageReference Include="Serilog" Version="2.9.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
   </ItemGroup>
