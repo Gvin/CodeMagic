@@ -1,45 +1,144 @@
 ﻿using System;
-using CodeMagic.Core.Logging;
+using System.Linq;
+using System.Reflection;
+using CodeMagic.Core.Common;
+using CodeMagic.Core.Game;
+using CodeMagic.Game;
+using CodeMagic.Game.GameProcess;
+using CodeMagic.Game.MapGeneration.Dungeon;
+using CodeMagic.UI.Mono.Drawing;
+using CodeMagic.UI.Mono.Extension.Glyphs;
 using CodeMagic.UI.Mono.GameProcess;
+using CodeMagic.UI.Mono.Saving;
+using CodeMagic.UI.Mono.Views;
+using CodeMagic.UI.Presenters;
+using CodeMagic.UI.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace CodeMagic.UI.Mono
 {
-    internal static class Program
+    internal class Program
     {
+        private const string LogFilePath = @".\log_.txt";
+        private const LogEventLevel DefaultLogLevel = LogEventLevel.Information;
+
         public const int MapCellImageSize = 7;
 
-        private static CodeMagicGame game;
+        private static CodeMagicGame _game;
 
-        private static ILog log;
+        private static ILogger<Program> _logger;
 
         [STAThread]
         internal static void Main()
         {
-            try
+            var services = new ServiceCollection();
+
+            services.AddLogging(builder =>
             {
-                GameConfigurator.Configure();
+                builder.AddSerilog(new LoggerConfiguration()
+                    .MinimumLevel.Debug()
+                    .Enrich.FromLogContext()
+                    .WriteTo.File(LogFilePath, GetLogLevel(),
+                        "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] [{Context}] {Message:lj}{NewLine}{Exception}",
+                        rollingInterval: RollingInterval.Day, fileSizeLimitBytes: 5242880, retainedFileCountLimit: 5)
+                    .CreateLogger());
+            });
 
-                log = LogManager.GetLog(nameof(Program));
+            // Views
+            services.AddTransient<ICheatsView, CheatsView>();
+            services.AddTransient<ICustomInventoryView, CustomInventoryView>();
+            services.AddTransient<IEditSpellView, EditSpellView>();
+            services.AddTransient<IGameView, GameView>();
+            services.AddTransient<IInGameMenuView, InGameMenuView>();
+            services.AddTransient<ILevelUpView, LevelUpView>();
+            services.AddTransient<ILoadSpellView, LoadSpellView>();
+            services.AddTransient<IMainMenuView, MainMenuView>();
+            services.AddTransient<IMainSpellsLibraryView, MainSpellsLibraryView>();
+            services.AddTransient<IPlayerDeathView, PlayerDeathView>();
+            services.AddTransient<IPlayerInventoryView, PlayerInventoryView>();
+            services.AddTransient<IPlayerStatsView, PlayerStatsView>();
+            services.AddTransient<ISettingsView, SettingsView>();
+            services.AddTransient<ISpellBookView, SpellBookView>();
+            services.AddTransient<IWaitMessageView, WaitMessageView>();
 
-                log.Info("Starting game");
-
-                using (game = new CodeMagicGame())
+            // Presenters
+            foreach (var presenterType in typeof(MainMenuPresenter).Assembly.GetTypes().Where(type => 
+                         type.IsClass && !type.IsAbstract && type.IsAssignableTo(typeof(IPresenter))))
+            {
+                if (services.Any(registration => registration.ServiceType == presenterType))
                 {
-                    game.Run();
+                    continue;
                 }
 
-                log.Info("Closing game");
+                services.AddTransient(presenterType);
+            }
+
+            // Services
+            services.AddSingleton<IApplicationController, ApplicationController>();
+            services.AddSingleton<IDialogsProvider, DialogsProvider>();
+            services.AddTransient<IEditSpellService, EditSpellService>();
+            services.AddSingleton<ISpellsLibraryService, SpellsLibraryService>();
+            services.AddSingleton<ISettingsService>(_ => Settings.Current);
+            services.AddTransient<IApplicationService, ApplicationService>();
+            services.AddSingleton<ISaveService, SaveService>();
+            services.AddSingleton<IGameManager>(provider => new GameManager(
+                    provider.GetRequiredService<ISaveService>(),
+                    provider.GetRequiredService<ISettingsService>().SavingInterval));
+
+            services.AddSingleton<CodeMagicGame>();
+
+            using var provider = services.BuildServiceProvider();
+
+            try
+            {
+                _logger = provider.GetRequiredService<ILogger<Program>>();
+
+                _logger.LogInformation($"Initializing game. Version {Assembly.GetExecutingAssembly().GetName().Version}");
+
+#if DEBUG
+                PerformanceMeter.Initialize(@".\Performance.log");
+#endif
+
+                DialogsManager.Initialize(provider.GetRequiredService<IDialogsProvider>());
+
+                GlyphsConverterManager.Initialize(new GlyphsConverter());
+
+                GameConfigurator.Configure();
+
+                DungeonMapGenerator.Initialize(ImagesStorage.Current, provider.GetRequiredService<ILoggerFactory>(), Settings.Current.DebugWriteMapToFile);
+
+                _logger.LogInformation("Starting the game.");
+
+                CurrentGame.Initialize(provider.GetRequiredService<ILoggerFactory>());
+
+                _game = provider.GetRequiredService<CodeMagicGame>();
+                _game.Run();
+
+                _logger.LogInformation("Closing the game.");
             }
             catch (Exception exception)
             {
-                log.Fatal(exception);
-                throw;
+                _logger.LogCritical(exception, "Unexpected error.");
             }
         }
 
         internal static void Exit()
         {
-            game.Exit();
+            _game.Exit();
+        }
+
+        private static LogEventLevel GetLogLevel()
+        {
+            var stringValue = Settings.Current.LogLevel;
+            if (Enum.TryParse(stringValue, true, out LogEventLevel level))
+            {
+                return level;
+            }
+
+            return DefaultLogLevel;
         }
     }
 }

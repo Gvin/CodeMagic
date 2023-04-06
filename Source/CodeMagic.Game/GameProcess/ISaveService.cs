@@ -6,11 +6,11 @@ namespace CodeMagic.Game.GameProcess
 {
     public interface ISaveService
     {
-        void SaveGame();
+        void SaveGame(IGameCore game, GameData gameData);
 
         (GameCore<Player>, GameData) LoadGame();
 
-        Task SaveGameAsync();
+        Task SaveGameAsync(IGameCore game, GameData gameData);
 
         void DeleteSave();
     }

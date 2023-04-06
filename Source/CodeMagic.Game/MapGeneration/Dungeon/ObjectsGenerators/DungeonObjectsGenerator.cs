@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
 {
     internal partial class DungeonObjectsGenerator : IObjectsGenerator
     {
-        private static readonly ILog Log = LogManager.GetLog<DungeonObjectsGenerator>();
+        private readonly ILogger<DungeonObjectsGenerator> _logger;
+        private readonly ObjectsPattern[] _patterns;
 
-        private readonly ObjectsPattern[] patterns;
-
-        public DungeonObjectsGenerator(IImagesStorage storage)
+        public DungeonObjectsGenerator(IImagesStorage storage, ILogger<DungeonObjectsGenerator> logger)
         {
-            patterns = GetPatterns(storage);
+            _logger = logger;
+            _patterns = GetPatterns(storage);
         }
 
         private static ObjectsPattern[] GetPatterns(IImagesStorage storage)
@@ -49,7 +49,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
         {
             var stopwatch = Stopwatch.StartNew();
 
-            foreach (var pattern in patterns)
+            foreach (var pattern in _patterns)
             {
                 var count = (int)Math.Floor(map.Width * map.Height * pattern.MaxCountMultiplier);
                 for (int counter = 0; counter < count; counter++)
@@ -59,7 +59,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators
             }
 
             stopwatch.Stop();
-            Log.Debug($"GenerateObjects took {stopwatch.ElapsedMilliseconds} milliseconds.");
+            _logger.LogDebug($"GenerateObjects took {stopwatch.ElapsedMilliseconds} milliseconds.");
         }
 
         private void AddPattern(IAreaMap map, Point playerPosition, ObjectsPattern pattern)

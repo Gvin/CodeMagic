@@ -4,47 +4,54 @@ using System.Reflection;
 using System.Threading.Tasks;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Logging;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game;
 using CodeMagic.Game.GameProcess;
 using CodeMagic.Game.Objects.Creatures;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace CodeMagic.UI.Mono.Saving
 {
     public class SaveService : ISaveService
     {
-        private static readonly ILog Log = LogManager.GetLog<SaveService>();
-
         private const string SaveFilePath = ".\\save.json";
 
-        public Task SaveGameAsync()
+        private readonly ILoggerFactory _loggerFactory;
+        private readonly ILogger<SaveService> _logger;
+
+        public SaveService(ILoggerFactory loggerFactory)
         {
-            return Task.Run(SaveGame);
+            _logger = loggerFactory.CreateLogger<SaveService>();
+            _loggerFactory = loggerFactory;
         }
 
-        public void SaveGame()
+        public Task SaveGameAsync(IGameCore game, GameData gameData)
         {
-            var turn = CurrentGame.Game.CurrentTurn;
+            return Task.Run(() => SaveGame(game, gameData));
+        }
 
-            Log.Debug($"Saving started on turn {turn}");
+        public void SaveGame(IGameCore game, GameData gameData)
+        {
+            var turn = game.CurrentTurn;
+
+            _logger.LogDebug($"Saving started on turn {turn}");
 
             var dataSerializer = new JsonDataSerializer();
-            SaveData gameData;
+            SaveData gameDataToSave;
             SaveData dataData;
             using (PerformanceMeter.Start($"Saving_GetSaveData[{turn}]"))
             {
-                var gameDataBuilder = CurrentGame.Game.GetSaveData();
-                gameData = gameDataBuilder.ConvertRawData(dataSerializer);
-                var dataDataBuilder = GameData.Current.GetSaveData();
+                var gameDataBuilder = game.GetSaveData();
+                gameDataToSave = gameDataBuilder.ConvertRawData(dataSerializer);
+                var dataDataBuilder = gameData.GetSaveData();
                 dataData = dataDataBuilder.ConvertRawData(dataSerializer);
             }
 
             var gameSaveData = new GameSaveData
             {
                 Version = GetGameVersion(),
-                Game = gameData,
+                Game = gameDataToSave,
                 Data = dataData
             };
 
@@ -59,12 +66,12 @@ namespace CodeMagic.UI.Mono.Saving
                 WriteSaveFile(json);
             }
 
-            Log.Debug("Saving finished");
+            _logger.LogDebug("Saving finished");
         }
 
         public (GameCore<Player>, GameData) LoadGame()
         {
-            Log.Debug("Trying to load game");
+            _logger.LogDebug("Trying to load game");
 
             if (!File.Exists(SaveFilePath))
                 return (null, null);
@@ -79,17 +86,17 @@ namespace CodeMagic.UI.Mono.Saving
                 var currentVersion = GetGameVersion();
                 if (!string.Equals(currentVersion, gameSaveData.Version))
                 {
-                    Log.Warning($"Throwing away existing save because of versions mismatch. Game version: {currentVersion}. Save version: {gameSaveData.Version}.");
+                    _logger.LogWarning($"Throwing away existing save because of versions mismatch. Game version: {currentVersion}. Save version: {gameSaveData.Version}.");
                     return (null, null);
                 }
 
-                var game = new GameCore<Player>(gameSaveData.Game);
+                var game = new GameCore<Player>(gameSaveData.Game, _loggerFactory.CreateLogger<GameCore<Player>>());
                 var data = new GameData(gameSaveData.Data);
                 return (game, data);
             }
             catch (Exception ex)
             {
-                Log.Warning("Error while loading save file", ex);
+                _logger.LogWarning("Error while loading save file", ex);
 #if DEBUG
                 throw;
 #else
@@ -98,13 +105,13 @@ namespace CodeMagic.UI.Mono.Saving
             }
             finally
             {
-                Log.Debug("Loading finished");
+                _logger.LogDebug("Loading finished");
             }
         }
 
         public void DeleteSave()
         {
-            Log.Debug("Deleting game save");
+            _logger.LogDebug("Deleting game save");
             File.Delete(SaveFilePath);
         }
 

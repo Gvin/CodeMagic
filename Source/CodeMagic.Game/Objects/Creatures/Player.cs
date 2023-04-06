@@ -4,7 +4,6 @@ using System.Linq;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Items;
-using CodeMagic.Core.Logging;
 using CodeMagic.Core.Objects;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Area.EnvironmentData;
@@ -21,8 +20,6 @@ namespace CodeMagic.Game.Objects.Creatures
 {
     public class Player : CreatureObject, IPlayer, ILightObject, IWorldImageProvider
     {
-        private static readonly ILog Log = LogManager.GetLog<Player>();
-
         private const string SaveKeyInventory = "Inventory";
         private const string SaveKeyEquipment = "Equipment";
         private const string SaveKeyStats = "Stats";
@@ -147,7 +144,6 @@ namespace CodeMagic.Game.Objects.Creatures
             var xpToLevelUp = GetXpToLevelUp();
             if (Experience >= xpToLevelUp)
             {
-                Log.Debug($"Leveled Up. EXP: {Experience}, EXP to LVL: {GetXpToLevelUp()}");
                 Level++;
                 Experience -= xpToLevelUp;
                 CurrentGame.Journal.Write(new LevelUpMessage(Level));
@@ -358,8 +354,6 @@ namespace CodeMagic.Game.Objects.Creatures
 
         public override void OnDeath(Point position)
         {
-            Log.Debug("Player is dead");
-
             base.OnDeath(position);
 
             Died?.Invoke(this, EventArgs.Empty);

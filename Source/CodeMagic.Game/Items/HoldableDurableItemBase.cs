@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CodeMagic.Core.Logging;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.Saving;
@@ -10,8 +9,6 @@ namespace CodeMagic.Game.Items
 {
     public abstract class HoldableDurableItemBase : DurableItem, IHoldableItem, IWorldImageProvider, IInventoryImageProvider, IEquippedImageProvider, IDescriptionProvider
     {
-        private static readonly ILog Log = LogManager.GetLog<HoldableDurableItemBase>();
-
         private const string SaveKeyInventoryImage = "InventoryImage";
         private const string SaveKeyWorldImage = "WorldImage";
         private const string SaveKeyEquippedImageRight = "EquippedImageRight";
@@ -67,8 +64,6 @@ namespace CodeMagic.Game.Items
                 return GetRightEquippedImage(imagesStorage);
             if (Equals(player.Equipment.LeftHandItem))
                 return GetLeftEquippedImage(imagesStorage);
-
-            Log.Warning($"Trying to render item \"{Name}\" that not equipped on both left and right hand.");
 #if DEBUG
             throw new ApplicationException($"Trying to render item \"{Name}\" that not equipped on both left and right hand.");
 #else

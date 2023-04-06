@@ -5,39 +5,40 @@ using System.IO;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Logging;
 using CodeMagic.Game.Objects.SolidObjects;
 using CodeMagic.Game.MapGeneration.Dungeon.MapGenerators;
 using CodeMagic.Game.MapGeneration.Dungeon.MapObjectFactories;
 using CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators;
+using Microsoft.Extensions.Logging;
 using Point = CodeMagic.Core.Game.Point;
+using CodeMagic.Game.MapGeneration.Dungeon.ObjectsGenerators;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon
 {
     public class DungeonMapGenerator
     {
-        private static readonly ILog Log = LogManager.GetLog<DungeonMapGenerator>();
-
         public static DungeonMapGenerator Current { get; private set; }
 
-        public static void Initialize(IImagesStorage imagesStorage, bool writeMapFile)
+        public static void Initialize(IImagesStorage imagesStorage, ILoggerFactory loggerFactory, bool writeMapFile)
         {
-            Current = new DungeonMapGenerator(imagesStorage, writeMapFile);
+            Current = new DungeonMapGenerator(imagesStorage, loggerFactory, writeMapFile);
         }
 
         private readonly Dictionary<MapType, IMapAreaGenerator> generators;
         private readonly bool writeMapFile;
+        private readonly ILogger<DungeonMapGenerator> _logger;
 
-        private DungeonMapGenerator(IImagesStorage imagesStorage, bool writeMapFile = false)
+        private DungeonMapGenerator(IImagesStorage imagesStorage, ILoggerFactory loggerFactory, bool writeMapFile = false)
         {
+            _logger = loggerFactory.CreateLogger<DungeonMapGenerator>();
             this.writeMapFile = writeMapFile;
 
             generators = new Dictionary<MapType, IMapAreaGenerator>
             {
                 {MapType.Dungeon, new DungeonRoomsMapGenerator(
                     new DungeonMapObjectsFactory(), 
-                    new ObjectsGenerators.DungeonObjectsGenerator(imagesStorage), 
-                    new DungeonMonstersGenerator())},
+                    new DungeonObjectsGenerator(imagesStorage, loggerFactory.CreateLogger<DungeonObjectsGenerator>()), 
+                    new DungeonMonstersGenerator(loggerFactory.CreateLogger<DungeonMonstersGenerator>()))},
                 {MapType.Labyrinth, new LabyrinthMapGenerator(new DungeonMapObjectsFactory())},
                 {MapType.Cave, new CaveDungeonMapGenerator(new CaveMapObjectsFactory())}
             };
@@ -45,7 +46,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
 
         public IAreaMap GenerateNewMap(int level, out Point playerPosition)
         {
-            Log.Debug($"Generating map for level {level}.");
+            _logger.LogDebug($"Generating map for level {level}.");
             var stopwatch = Stopwatch.StartNew();
 
             try
@@ -55,7 +56,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
             finally
             {
                 stopwatch.Stop();
-                Log.Debug($"Map generation took {stopwatch.ElapsedMilliseconds} milliseconds total.");
+                _logger.LogDebug($"Map generation took {stopwatch.ElapsedMilliseconds} milliseconds total.");
             }
         }
 
@@ -67,12 +68,12 @@ namespace CodeMagic.Game.MapGeneration.Dungeon
                 {
                     var size = GenerateMapSize();
                     var map = GenerateMap(level, size, out playerPosition);
-                    Log.Info($"Map was generated for {attempt + 1} attempts.");
+                    _logger.LogInformation($"Map was generated for {attempt + 1} attempts.");
                     return map;
                 }
                 catch (MapGenerationException ex)
                 {
-                    Log.Debug("Error when generating map.", ex);
+                    _logger.LogDebug(ex, "Error when generating map.");
                 }
             }
 

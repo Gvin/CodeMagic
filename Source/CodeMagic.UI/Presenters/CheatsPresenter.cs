@@ -1,7 +1,7 @@
 ﻿using System;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Logging;
 using CodeMagic.Game.Objects.Creatures;
+using Microsoft.Extensions.Logging;
 
 namespace CodeMagic.UI.Presenters
 {
@@ -17,25 +17,26 @@ namespace CodeMagic.UI.Presenters
 
     public class CheatsPresenter : IPresenter
     {
-        private static readonly ILog Log = LogManager.GetLog<CheatsPresenter>();
+        private readonly ILogger<CheatsPresenter> _logger;
+        private readonly ICheatsView _view;
 
-        private readonly ICheatsView view;
-
-        public CheatsPresenter(ICheatsView view)
+        public CheatsPresenter(ICheatsView view, ILogger<CheatsPresenter> logger)
         {
-            this.view = view;
-            this.view.Exit += View_Exit;
-            this.view.CheatLevelUp += View_CheatLevelUp;
-            this.view.CheatHeal += View_CheatHeal;
-            this.view.CheatRestoreMana += View_CheatRestoreMana;
-            this.view.CheatRestoreStamina += View_CheatRestoreStamina;
-            this.view.CheatRestoreStats += View_CheatRestoreStats;
+            _view = view;
+            _logger = logger;
+
+            _view.Exit += View_Exit;
+            _view.CheatLevelUp += View_CheatLevelUp;
+            _view.CheatHeal += View_CheatHeal;
+            _view.CheatRestoreMana += View_CheatRestoreMana;
+            _view.CheatRestoreStamina += View_CheatRestoreStamina;
+            _view.CheatRestoreStats += View_CheatRestoreStats;
         }
 
         private void View_CheatRestoreStats(object sender, EventArgs e)
         {
-            Log.Info("Used Cheat \"Restore Stats\"");
-            view.Close();
+            _logger.LogInformation("Used Cheat \"Restore Stats\"");
+            _view.Close();
             CurrentGame.Player.Health = CurrentGame.Player.MaxHealth;
             CurrentGame.Player.Mana = CurrentGame.Player.MaxMana;
             ((Player)CurrentGame.Player).Stamina = ((Player)CurrentGame.Player).MaxStamina;
@@ -43,41 +44,41 @@ namespace CodeMagic.UI.Presenters
 
         private void View_CheatRestoreStamina(object sender, EventArgs e)
         {
-            Log.Info("Used Cheat \"Restore Stamina\"");
-            view.Close();
+            _logger.LogInformation("Used Cheat \"Restore Stamina\"");
+            _view.Close();
             ((Player)CurrentGame.Player).Stamina = ((Player)CurrentGame.Player).MaxStamina;
         }
 
         private void View_CheatRestoreMana(object sender, EventArgs e)
         {
-            Log.Info("Used Cheat \"Restore Mana\"");
-            view.Close();
+            _logger.LogInformation("Used Cheat \"Restore Mana\"");
+            _view.Close();
             CurrentGame.Player.Mana = CurrentGame.Player.MaxMana;
         }
 
         private void View_CheatHeal(object sender, EventArgs e)
         {
-            Log.Info("Used Cheat \"Heal\"");
-            view.Close();
+            _logger.LogInformation("Used Cheat \"Heal\"");
+            _view.Close();
             CurrentGame.Player.Health = CurrentGame.Player.MaxHealth;
         }
 
         private void View_CheatLevelUp(object sender, EventArgs e)
         {
-            Log.Info("Used Cheat \"Level Up\"");
-            view.Close();
+            _logger.LogInformation("Used Cheat \"Level Up\"");
+            _view.Close();
             var exp = ((Player)CurrentGame.Player).GetXpToLevelUp() - CurrentGame.Player.Experience;
             CurrentGame.Player.AddExperience(exp);
         }
 
         private void View_Exit(object sender, EventArgs e)
         {
-            view.Close();
+            _view.Close();
         }
 
         public void Run()
         {
-            view.Show();
+            _view.Show();
         }
     }
 }

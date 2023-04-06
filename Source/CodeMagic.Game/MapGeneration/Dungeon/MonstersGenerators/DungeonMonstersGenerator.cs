@@ -5,21 +5,26 @@ using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Logging;
 using CodeMagic.Core.Objects.Creatures;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.Configuration.Monsters;
 using CodeMagic.Game.Objects.Creatures.NonPlayable;
+using Microsoft.Extensions.Logging;
 
 namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
 {
     internal class DungeonMonstersGenerator : IMonstersGenerator
     {
-        private static readonly ILog Log = LogManager.GetLog<DungeonMonstersGenerator>();
-
         private const int SquadForceMultiplier = 2;
         private const double SquadForceVariation = 0.2d;
         private const double SquadsCountMultiplier = 0.01d;
+
+        private readonly ILogger<DungeonMonstersGenerator> _logger;
+
+        public DungeonMonstersGenerator(ILogger<DungeonMonstersGenerator> logger)
+        {
+            _logger = logger;
+        }
 
         public void GenerateMonsters(IAreaMap map, Point playerPosition)
         {
@@ -47,7 +52,7 @@ namespace CodeMagic.Game.MapGeneration.Dungeon.MonstersGenerators
             }
 
             stopwatch.Stop();
-            Log.Debug($"GenerateMonsters took {stopwatch.ElapsedMilliseconds} milliseconds.");
+            _logger.LogDebug($"GenerateMonsters took {stopwatch.ElapsedMilliseconds} milliseconds.");
         }
 
         private static void PlaceSquad(IAreaMap map, IMonsterConfiguration[] monsters, string group,

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Game;
-using CodeMagic.Core.Logging;
 using CodeMagic.Core.Saving;
 using CodeMagic.Game.Items.Usable.Potions;
 
@@ -10,13 +9,10 @@ namespace CodeMagic.Game
 {
     public class GameData : ISaveable
     {
-        private static readonly ILog Log = LogManager.GetLog<GameData>();
-
         public static GameData Current { get; private set; }
 
         public static void Initialize(GameData data)
         {
-            Log.Debug("Initializing GameData");
             Current = data;
         }
 
@@ -52,7 +48,6 @@ namespace CodeMagic.Game
 
         private void InitializePotionTypes()
         {
-            Log.Debug("Initializing potion types");
             PotionsPattern.Clear();
 
             var colors = Enum.GetValues(typeof(PotionColor)).Cast<PotionColor>().ToList();
