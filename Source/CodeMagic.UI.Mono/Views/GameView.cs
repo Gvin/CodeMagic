@@ -2,10 +2,12 @@
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Core.Game.PlayerActions;
+using CodeMagic.Game;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.Game.PlayerActions;
 using CodeMagic.UI.Mono.ActivePlanes;
 using CodeMagic.UI.Mono.Controls;
+using CodeMagic.UI.Mono.Drawing;
 using CodeMagic.UI.Mono.Extension.Cells;
 using CodeMagic.UI.Mono.Extension.Windows.Controls;
 using CodeMagic.UI.Mono.Fonts;
@@ -20,22 +22,26 @@ namespace CodeMagic.UI.Mono.Views
     {
         private static readonly TimeSpan KeyProcessFrequency = TimeSpan.FromMilliseconds(Settings.Current.MinActionsInterval);
 
-        const int RightPanelWidth = 30;
+        private const int RightPanelWidth = 30;
 
-        private ProgressBar healthBar;
-        private ProgressBar manaBar;
-        private ProgressBar staminaBar;
-        private ProgressBar hungerBar;
-        private AreaManaControl areaManaBar;
+        private ProgressBar _healthBar;
+        private ProgressBar _manaBar;
+        private ProgressBar _staminaBar;
+        private ProgressBar _hungerBar;
+        private AreaManaControl _areaManaBar;
 
-        private readonly FramedButton openSpellBookButton;
-        private readonly FramedButton showItemsOnFloorButton;
+        private readonly FramedButton _openSpellBookButton;
+        private readonly FramedButton _showItemsOnFloorButton;
+        private readonly IImagesStorage _imagesStorage;
+        private readonly ICellImageService _cellImageService;
 
-        private DateTime lastKeyProcessed;
-        private int journalBoxY;
+        private DateTime _lastKeyProcessed;
+        private int _journalBoxY;
 
-        public GameView() : base(FontTarget.Interface)
+        public GameView(IImagesStorage imagesStorage, ICellImageService cellImageService) : base(FontTarget.Interface)
         {
+            _imagesStorage = imagesStorage;
+            _cellImageService = cellImageService;
             var menuButtonsPosition = Width - RightPanelWidth;
             var menuButtonsWidth = RightPanelWidth - 1;
 
@@ -44,7 +50,7 @@ namespace CodeMagic.UI.Mono.Views
             {
                 Text = "*",
             };
-            cheatsButton.Click += (sender, args) => OpenCheats?.Invoke(this, EventArgs.Empty);
+            cheatsButton.Click += (_, _) => OpenCheats?.Invoke(this, EventArgs.Empty);
             Controls.Add(cheatsButton);
 #endif
 
@@ -52,28 +58,28 @@ namespace CodeMagic.UI.Mono.Views
             {
                 Text = "[I] Inventory"
             };
-            openInventoryButton.Click += (sender, args) => OpenInventory?.Invoke(this, EventArgs.Empty);
+            openInventoryButton.Click += (_, _) => OpenInventory?.Invoke(this, EventArgs.Empty);
             Controls.Add(openInventoryButton);
 
-            openSpellBookButton = new FramedButton(new Rectangle(menuButtonsPosition, 25, menuButtonsWidth, 3))
+            _openSpellBookButton = new FramedButton(new Rectangle(menuButtonsPosition, 25, menuButtonsWidth, 3))
             {
                 Text = "[C] Spell Book"
             };
-            openSpellBookButton.Click += (sender, args) => OpenSpellBook?.Invoke(this, EventArgs.Empty);
-            Controls.Add(openSpellBookButton);
+            _openSpellBookButton.Click += (_, _) => OpenSpellBook?.Invoke(this, EventArgs.Empty);
+            Controls.Add(_openSpellBookButton);
 
-            showItemsOnFloorButton = new FramedButton(new Rectangle(menuButtonsPosition, 28, menuButtonsWidth, 3))
+            _showItemsOnFloorButton = new FramedButton(new Rectangle(menuButtonsPosition, 28, menuButtonsWidth, 3))
             {
                 Text = "[G] Check Floor"
             };
-            showItemsOnFloorButton.Click += (sender, args) => OpenGroundView?.Invoke(this, EventArgs.Empty);
-            Controls.Add(showItemsOnFloorButton);
+            _showItemsOnFloorButton.Click += (_, _) => OpenGroundView?.Invoke(this, EventArgs.Empty);
+            Controls.Add(_showItemsOnFloorButton);
 
             var openPlayerStatsButton = new FramedButton(new Rectangle(menuButtonsPosition, 31, menuButtonsWidth, 3))
             {
                 Text = "[V] Player Status"
             };
-            openPlayerStatsButton.Click += (sender, args) => OpenPlayerStats?.Invoke(this, EventArgs.Empty);
+            openPlayerStatsButton.Click += (_, _) => OpenPlayerStats?.Invoke(this, EventArgs.Empty);
             Controls.Add(openPlayerStatsButton);
         }
 
@@ -86,12 +92,12 @@ namespace CodeMagic.UI.Mono.Views
 
         public bool SpellBookEnabled
         {
-            set => openSpellBookButton.Enabled = value;
+            set => _openSpellBookButton.Enabled = value;
         }
 
         public bool OpenGroundEnabled
         {
-            set => showItemsOnFloorButton.Enabled = value;
+            set => _showItemsOnFloorButton.Enabled = value;
         }
 
         public GameCore<Player> Game { private get; set; }
@@ -100,7 +106,7 @@ namespace CodeMagic.UI.Mono.Views
         {
             var rightPanelX = Width - RightPanelWidth;
 
-            healthBar = new ProgressBar(new Rectangle(rightPanelX, 4, RightPanelWidth - 1, 1))
+            _healthBar = new ProgressBar(new Rectangle(rightPanelX, 4, RightPanelWidth - 1, 1))
             {
                 MaxValue = Game.Player.MaxHealth,
                 Value = Game.Player.Health,
@@ -110,9 +116,9 @@ namespace CodeMagic.UI.Mono.Views
                     FilledBar = new Cell('.', Color.Black, Color.Red)
                 }
             };
-            Controls.Add(healthBar);
+            Controls.Add(_healthBar);
 
-            manaBar = new ProgressBar(new Rectangle(rightPanelX, 6, RightPanelWidth - 1, 1))
+            _manaBar = new ProgressBar(new Rectangle(rightPanelX, 6, RightPanelWidth - 1, 1))
             {
                 MaxValue = Game.Player.MaxMana,
                 Value = Game.Player.Mana,
@@ -122,9 +128,9 @@ namespace CodeMagic.UI.Mono.Views
                     FilledBar = new Cell('.', Color.Black, Color.Blue)
                 }
             };
-            Controls.Add(manaBar);
+            Controls.Add(_manaBar);
 
-            staminaBar = new ProgressBar(new Rectangle(rightPanelX, 8, RightPanelWidth - 1, 1))
+            _staminaBar = new ProgressBar(new Rectangle(rightPanelX, 8, RightPanelWidth - 1, 1))
             {
                 MaxValue = Game.Player.MaxStamina,
                 Value = Game.Player.Stamina,
@@ -134,9 +140,9 @@ namespace CodeMagic.UI.Mono.Views
                     FilledBar = new Cell('.', Color.Black, Color.Gold)
                 }
             };
-            Controls.Add(staminaBar);
+            Controls.Add(_staminaBar);
 
-            hungerBar = new ProgressBar(new Rectangle(rightPanelX, 10, RightPanelWidth - 1, 1))
+            _hungerBar = new ProgressBar(new Rectangle(rightPanelX, 10, RightPanelWidth - 1, 1))
             {
                 MaxValue = 100,
                 Value = Game.Player.HungerPercent,
@@ -146,20 +152,20 @@ namespace CodeMagic.UI.Mono.Views
                     FilledBar = new Cell('.', Color.Black, Color.Lime)
                 }
             };
-            Controls.Add(hungerBar);
+            Controls.Add(_hungerBar);
 
-            areaManaBar = new AreaManaControl(new Rectangle(rightPanelX, 12, RightPanelWidth - 1, 1));
-            Controls.Add(areaManaBar);
+            _areaManaBar = new AreaManaControl(new Rectangle(rightPanelX, 12, RightPanelWidth - 1, 1));
+            Controls.Add(_areaManaBar);
 
-            var gameArea = new GameAreaActivePlane(new Point(Font.GlyphWidth, Font.GlyphHeight), Game);
+            var gameArea = new GameAreaActivePlane(new Point(Font.GlyphWidth, Font.GlyphHeight), Game, _imagesStorage, _cellImageService);
             ActivePlanes.Add(gameArea);
 
-            journalBoxY = (int) Math.Ceiling(gameArea.PixelHeight / (double) Font.GlyphHeight) + 2;
-            var journalBoxHeight = Height - journalBoxY - 1;
-            var journalScroll = new VerticalScrollBar(new Point(1, journalBoxY), journalBoxHeight);
+            _journalBoxY = (int) Math.Ceiling(gameArea.PixelHeight / (double) Font.GlyphHeight) + 2;
+            var journalBoxHeight = Height - _journalBoxY - 1;
+            var journalScroll = new VerticalScrollBar(new Point(1, _journalBoxY), journalBoxHeight);
             Controls.Add(journalScroll);
             Controls.Add(new JournalBoxControl(
-                new Rectangle(1, journalBoxY, Width - 2, journalBoxHeight),
+                new Rectangle(1, _journalBoxY, Width - 2, journalBoxHeight),
                 Game.Journal, 
                 journalScroll));
         }
@@ -176,9 +182,9 @@ namespace CodeMagic.UI.Mono.Views
 
         private void DrawJournalBoxFrame(ICellSurface surface)
         {
-            surface.Fill(new Rectangle(1, journalBoxY - 1, Width - 2, 1), new Cell('─', FrameColor));
-            surface.SetCell(0, journalBoxY - 1, new Cell('╟', FrameColor));
-            surface.SetCell(Width - 1, journalBoxY - 1, new Cell('╢', FrameColor));
+            surface.Fill(new Rectangle(1, _journalBoxY - 1, Width - 2, 1), new Cell('─', FrameColor));
+            surface.SetCell(0, _journalBoxY - 1, new Cell('╟', FrameColor));
+            surface.SetCell(Width - 1, _journalBoxY - 1, new Cell('╢', FrameColor));
         }
 
         private void DrawPlayerStatus(ICellSurface surface, int rightPanelX)
@@ -187,8 +193,8 @@ namespace CodeMagic.UI.Mono.Views
             surface.SetCell(rightPanelX - 1, 0, new Cell('╤', FrameColor));
             surface.Fill(new Rectangle(rightPanelX, 2, RightPanelWidth - 1, 1), new Cell('─', FrameColor));
             surface.SetCell(Width - 1, 2, new Cell('╢', FrameColor));
-            surface.Fill(new Rectangle(rightPanelX - 1, 1, 1, journalBoxY - 1), new Cell('│', FrameColor));
-            surface.SetCell(rightPanelX - 1, journalBoxY - 1, new Cell('┴', FrameColor));
+            surface.Fill(new Rectangle(rightPanelX - 1, 1, 1, _journalBoxY - 1), new Cell('│', FrameColor));
+            surface.SetCell(rightPanelX - 1, _journalBoxY - 1, new Cell('┴', FrameColor));
             surface.SetCell(rightPanelX - 1, 2, new Cell('├', FrameColor));
 
             surface.Write(rightPanelX, 3, $"Health [{Game.Player.Health} / {Game.Player.MaxHealth}]");
@@ -206,18 +212,18 @@ namespace CodeMagic.UI.Mono.Views
         {
             base.Update(elapsedTime);
 
-            healthBar.MaxValue = Game.Player.MaxHealth;
-            healthBar.Value = Game.Player.Health;
+            _healthBar.MaxValue = Game.Player.MaxHealth;
+            _healthBar.Value = Game.Player.Health;
 
-            manaBar.MaxValue = Game.Player.MaxMana;
-            manaBar.Value = Game.Player.Mana;
+            _manaBar.MaxValue = Game.Player.MaxMana;
+            _manaBar.Value = Game.Player.Mana;
 
-            staminaBar.MaxValue = Game.Player.MaxStamina;
-            staminaBar.Value = Game.Player.Stamina;
+            _staminaBar.MaxValue = Game.Player.MaxStamina;
+            _staminaBar.Value = Game.Player.Stamina;
 
-            hungerBar.Value = Game.Player.HungerPercent;
+            _hungerBar.Value = Game.Player.HungerPercent;
 
-            areaManaBar.Cell = Game.Map.GetCell(Game.PlayerPosition);
+            _areaManaBar.Cell = Game.Map.GetCell(Game.PlayerPosition);
         }
 
         public override bool ProcessKeysPressed(Keys[] keys)
@@ -252,14 +258,14 @@ namespace CodeMagic.UI.Mono.Views
 
         private bool PerformKeyPlayerAction(Keys key)
         {
-            if (DateTime.Now - lastKeyProcessed < KeyProcessFrequency)
+            if (DateTime.Now - _lastKeyProcessed < KeyProcessFrequency)
                 return false;
 
             var action = GetPlayerAction(key);
             if (action == null)
                 return false;
 
-            lastKeyProcessed = DateTime.Now;
+            _lastKeyProcessed = DateTime.Now;
             Game.PerformPlayerAction(action);
             return true;
         }

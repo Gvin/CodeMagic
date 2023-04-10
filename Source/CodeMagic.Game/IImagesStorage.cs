@@ -1,4 +1,5 @@
-﻿using CodeMagic.UI.Images;
+﻿using System.Threading.Tasks;
+using CodeMagic.UI.Images;
 
 namespace CodeMagic.Game
 {
@@ -7,5 +8,7 @@ namespace CodeMagic.Game
         SymbolsImage GetImage(string name);
 
         SymbolsImage[] GetAnimation(string name);
+
+        Task Load();
     }
 }

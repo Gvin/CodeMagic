@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using CodeMagic.UI.Images.Saving.Xml;
 
 namespace CodeMagic.UI.Images
@@ -105,6 +106,12 @@ namespace CodeMagic.UI.Images
         {
             var savingManager = new XmlSavingManager();
             return savingManager.LoadFromFile(fileStream);
+        }
+
+        public static Task<SymbolsImage> LoadFromFileAsync(Stream fileStream)
+        {
+            var savingManager = new XmlSavingManager();
+            return savingManager.LoadFromFileAsync(fileStream);
         }
 
         public static SymbolsImage Combine(SymbolsImage bottom, SymbolsImage top)

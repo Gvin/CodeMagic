@@ -2,87 +2,83 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using CodeMagic.Game;
 using CodeMagic.UI.Images;
 
-namespace CodeMagic.UI.Mono.Drawing
+namespace CodeMagic.UI.Mono.Drawing;
+
+public class ImagesStorage : IImagesStorage
 {
-    public class ImagesStorage : IImagesStorage
+    private const string ImagesFolder = @".\Resources\Images\";
+    private const string ImagesExtensionFilter = "*.simg";
+    private const string BatchesRegex = "(.*)(?:_\\d*)$";
+
+    private readonly Dictionary<string, SymbolsImage> _images;
+    private readonly Dictionary<string, List<SymbolsImage>> _animations;
+
+    public ImagesStorage()
     {
-        private const string ImagesFolder = @".\Resources\Images\";
-        private const string ImagesExtensionFilter = "*.simg";
-        private const string BatchesRegex = "(.*)(?:_\\d*)$";
+        _images = new Dictionary<string, SymbolsImage>();
+        _animations = new Dictionary<string, List<SymbolsImage>>();
+    }
 
-        public static ImagesStorage Current { get; } = new ImagesStorage();
-
-        private readonly Dictionary<string, SymbolsImage> images;
-        private readonly Dictionary<string, List<SymbolsImage>> animations;
-
-        private ImagesStorage()
+    public async Task Load()
+    {
+        var imageFiles = Directory.GetFiles(ImagesFolder, ImagesExtensionFilter, SearchOption.AllDirectories);
+        foreach (var imageFile in imageFiles)
         {
-            images = new Dictionary<string, SymbolsImage>();
-            animations = new Dictionary<string, List<SymbolsImage>>();
+            var nameWithoutExtension = Path.GetFileNameWithoutExtension(imageFile);
+            if (string.IsNullOrEmpty(nameWithoutExtension))
+                throw new ApplicationException($"Invalid image file name format: {imageFile}");
+
+            var fileName = nameWithoutExtension.ToLower();
+            await AddImage(fileName, imageFile);
+        }
+    }
+
+    private async Task AddImage(string fileName, string filePath)
+    {
+        var image = await LoadImage(filePath);
+
+        var batchRegex = new Regex(BatchesRegex);
+        var match = batchRegex.Match(fileName);
+
+        if (!match.Success)
+        {
+            _images.Add(fileName, image);
+            return;
         }
 
-        public void Load()
+        var batchName = match.Groups[1].Value.ToLower();
+        if (!_animations.ContainsKey(batchName))
         {
-            var imageFiles = Directory.GetFiles(ImagesFolder, ImagesExtensionFilter, SearchOption.AllDirectories);
-            foreach (var imageFile in imageFiles)
-            {
-                var nameWithoutExtension = Path.GetFileNameWithoutExtension(imageFile);
-                if (string.IsNullOrEmpty(nameWithoutExtension))
-                    throw new ApplicationException($"Invalid image file name format: {imageFile}");
-
-                var fileName = nameWithoutExtension.ToLower();
-                AddImage(fileName, imageFile);
-            }
+            _animations.Add(batchName, new List<SymbolsImage>());
         }
+        _animations[batchName].Add(image);
+    }
 
-        private void AddImage(string fileName, string filePath)
-        {
-            var image = LoadImage(filePath);
+    public SymbolsImage GetImage(string name)
+    {
+        var unifiedKey = name.ToLower();
+        if (_images.ContainsKey(unifiedKey))
+            return _images[unifiedKey];
 
-            var batchRegex = new Regex(BatchesRegex);
-            var match = batchRegex.Match(fileName);
+        throw new ApplicationException($"Image not found for key {name}");
+    }
 
-            if (!match.Success)
-            {
-                images.Add(fileName, image);
-                return;
-            }
+    public SymbolsImage[] GetAnimation(string name)
+    {
+        var unifiedKey = name.ToLower();
+        if (_animations.ContainsKey(unifiedKey))
+            return _animations[unifiedKey].ToArray();
 
-            var batchName = match.Groups[1].Value.ToLower();
-            if (!animations.ContainsKey(batchName))
-            {
-                animations.Add(batchName, new List<SymbolsImage>());
-            }
-            animations[batchName].Add(image);
-        }
+        throw new ApplicationException($"Animation not found for key {name}");
+    }
 
-        private SymbolsImage LoadImage(string filePath)
-        {
-            using (var fileStream = File.OpenRead(filePath))
-            {
-                return SymbolsImage.LoadFromFile(fileStream);
-            }
-        }
-
-        public SymbolsImage GetImage(string name)
-        {
-            var unifiedKey = name.ToLower();
-            if (images.ContainsKey(unifiedKey))
-                return images[unifiedKey];
-
-            throw new ApplicationException($"Image not found for key {name}");
-        }
-
-        public SymbolsImage[] GetAnimation(string name)
-        {
-            var unifiedKey = name.ToLower();
-            if (animations.ContainsKey(unifiedKey))
-                return animations[unifiedKey].ToArray();
-
-            throw new ApplicationException($"Animation not found for key {name}");
-        }
+    private static async Task<SymbolsImage> LoadImage(string filePath)
+    {
+        await using var fileStream = File.OpenRead(filePath);
+        return await SymbolsImage.LoadFromFileAsync(fileStream);
     }
 }

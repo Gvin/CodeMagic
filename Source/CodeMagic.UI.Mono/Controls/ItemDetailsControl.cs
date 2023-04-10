@@ -13,16 +13,17 @@ namespace CodeMagic.UI.Mono.Controls
 {
     public class ItemDetailsControl : Control
     {
-        private readonly InventoryImagesFactory imagesFactory;
-        private readonly Player player;
+        private readonly IInventoryImagesFactory _imagesFactory;
+        private readonly Player _player;
 
-        public ItemDetailsControl(Rectangle location, Player player)
+        public ItemDetailsControl(Rectangle location, Player player, IInventoryImagesFactory imagesFactory)
             : base(location)
         {
-            this.player = player;
-
-            imagesFactory = new InventoryImagesFactory(ImagesStorage.Current);
+            _player = player;
+            _imagesFactory = imagesFactory;
         }
+
+        public InventoryStack Stack { get; set; }
 
         public override void Draw(ICellSurface surface)
         {
@@ -34,7 +35,7 @@ namespace CodeMagic.UI.Mono.Controls
 
             DrawName(surface);
 
-            var itemImage = imagesFactory.GetImage(Stack.TopItem);
+            var itemImage = _imagesFactory.GetImage(Stack.TopItem);
             if (itemImage != null)
             {
                 surface.DrawImage(3, 6, itemImage, Color.White, Color.Black);
@@ -47,8 +48,6 @@ namespace CodeMagic.UI.Mono.Controls
                 DrawDescription(surface, descriptionY, descriptionProvider);
             }
         }
-
-        public InventoryStack Stack { get; set; }
 
         private void DrawName(ICellSurface surface)
         {
@@ -93,7 +92,7 @@ namespace CodeMagic.UI.Mono.Controls
         private void DrawDescription(ICellSurface surface, int initialY, IDescriptionProvider descriptionProvider)
         {
             const int initialX = 1;
-            var descriptionLines = TextFormatHelper.SplitText(descriptionProvider.GetDescription(player),
+            var descriptionLines = TextFormatHelper.SplitText(descriptionProvider.GetDescription(_player),
                 Location.Width - initialX - 1, Color.Black);
 
             for (int yShift = 0; yShift < descriptionLines.Length; yShift++)

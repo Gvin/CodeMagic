@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 using CodeMagic.UI.Images.Saving.Xml.Types;
 
@@ -36,6 +37,11 @@ namespace CodeMagic.UI.Images.Saving.Xml
             }
 
             return image;
+        }
+
+        public Task<SymbolsImage> LoadFromFileAsync(Stream fileStream)
+        {
+            return Task.FromResult(LoadFromFile(fileStream));
         }
     }
 }

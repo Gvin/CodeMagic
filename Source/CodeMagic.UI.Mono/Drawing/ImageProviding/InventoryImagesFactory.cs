@@ -2,23 +2,29 @@
 using CodeMagic.Game;
 using CodeMagic.UI.Images;
 
-namespace CodeMagic.UI.Mono.Drawing.ImageProviding
+namespace CodeMagic.UI.Mono.Drawing.ImageProviding;
+
+public interface IInventoryImagesFactory
 {
-    public class InventoryImagesFactory
+    SymbolsImage GetImage(IItem item);
+}
+
+public class InventoryImagesFactory : IInventoryImagesFactory
+{
+    private readonly IImagesStorage _imagesStorage;
+
+    public InventoryImagesFactory(IImagesStorage imagesStorage)
     {
-        private readonly IImagesStorage imagesStorage;
+        _imagesStorage = imagesStorage;
+    }
 
-        public InventoryImagesFactory(IImagesStorage imagesStorage)
+    public SymbolsImage GetImage(IItem item)
+    {
+        if (item is not IInventoryImageProvider imageProvider)
         {
-            this.imagesStorage = imagesStorage;
+            return null;
         }
 
-        public SymbolsImage GetImage(IItem item)
-        {
-            if (!(item is IInventoryImageProvider imageProvider))
-                return null;
-
-            return imageProvider.GetInventoryImage(imagesStorage);
-        }
+        return imageProvider.GetInventoryImage(_imagesStorage);
     }
 }

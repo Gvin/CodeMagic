@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using CodeMagic.Core.Common;
 using CodeMagic.Core.Game;
 using CodeMagic.Game;
 using CodeMagic.Game.Configuration;
 using CodeMagic.Game.GameProcess;
+using CodeMagic.Game.Items.ItemsGeneration;
 using CodeMagic.Game.MapGeneration.Dungeon;
 using CodeMagic.UI.Mono.Drawing;
+using CodeMagic.UI.Mono.Drawing.ImageProviding;
 using CodeMagic.UI.Mono.Extension.Glyphs;
 using CodeMagic.UI.Mono.GameProcess;
 using CodeMagic.UI.Mono.Saving;
@@ -33,7 +36,7 @@ namespace CodeMagic.UI.Mono
         private static ILogger<Program> _logger;
 
         [STAThread]
-        internal static void Main()
+        internal static async Task Main()
         {
             var services = new ServiceCollection();
 
@@ -78,6 +81,11 @@ namespace CodeMagic.UI.Mono
             }
 
             // Services
+            services.AddSingleton<IImagesStorage, ImagesStorage>();
+            services.AddSingleton<IInventoryImagesFactory, InventoryImagesFactory>();
+            services.AddSingleton<IWorldImagesFactory, WorldImagesFactory>();
+            services.AddSingleton<ILightLevelManager>(_ => new LightLevelManager(Settings.Current.Brightness));
+            services.AddSingleton<ICellImageService, CellImageService>();
             services.AddSingleton<IApplicationController, ApplicationController>();
             services.AddSingleton<IDialogsProvider, DialogsProvider>();
             services.AddTransient<IEditSpellService, EditSpellService>();
@@ -93,7 +101,7 @@ namespace CodeMagic.UI.Mono
 
             services.AddSingleton<CodeMagicGame>();
 
-            using var provider = services.BuildServiceProvider();
+            await using var provider = services.BuildServiceProvider();
 
             try
             {
@@ -101,17 +109,26 @@ namespace CodeMagic.UI.Mono
 
                 _logger.LogInformation($"Initializing game. Version {Assembly.GetExecutingAssembly().GetName().Version}");
 
+                var imageStorage = provider.GetRequiredService<IImagesStorage>();
+                await imageStorage.Load();
+
 #if DEBUG
                 PerformanceMeter.Initialize(@".\Performance.log");
 #endif
+
+                var config = GameConfigurator.LoadConfiguration();
+                ConfigurationManager.InitializeConfiguration(config);
+
+                ItemsGeneratorManager.Initialize(new ItemsGenerator(
+                    config.ItemGenerator,
+                    imageStorage,
+                    new AncientSpellsProvider()));
 
                 DialogsManager.Initialize(provider.GetRequiredService<IDialogsProvider>());
 
                 GlyphsConverterManager.Initialize(new GlyphsConverter());
 
-                GameConfigurator.Configure();
-
-                DungeonMapGenerator.Initialize(ImagesStorage.Current, provider.GetRequiredService<ILoggerFactory>(), Settings.Current.DebugWriteMapToFile);
+                DungeonMapGenerator.Initialize(imageStorage, provider.GetRequiredService<ILoggerFactory>(), Settings.Current.DebugWriteMapToFile);
 
                 _logger.LogInformation("Starting the game.");
 

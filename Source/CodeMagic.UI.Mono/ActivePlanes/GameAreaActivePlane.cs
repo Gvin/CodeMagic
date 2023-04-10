@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeMagic.Core.Area;
 using CodeMagic.Core.Game;
+using CodeMagic.Game;
 using CodeMagic.Game.Items;
 using CodeMagic.Game.Objects.Creatures;
 using CodeMagic.UI.Images;
@@ -19,18 +20,26 @@ namespace CodeMagic.UI.Mono.ActivePlanes
     {
         private const int DurabilityIconPercent = 30;
         private const int DurabilityIconValue = 4;
-
         private const int PlayerFieldOfView = 4;
-        private readonly GameCore<Player> game;
-        private AreaMapFragment cachedVisibleArea;
 
-        public GameAreaActivePlane(Point position, GameCore<Player> game)
+        private readonly GameCore<Player> _game;
+        private readonly IImagesStorage _imagesStorage;
+        private readonly ICellImageService _cellImageService;
+        private AreaMapFragment _cachedVisibleArea;
+
+        public GameAreaActivePlane(
+            Point position,
+            GameCore<Player> game,
+            IImagesStorage imagesStorage,
+            ICellImageService cellImageService)
             : base(position, 
                 Program.MapCellImageSize * (PlayerFieldOfView * 2 + 1), 
                 Program.MapCellImageSize * (PlayerFieldOfView * 2 + 1), 
                 FontProvider.Instance.GetFont(FontTarget.Game))
         {
-            this.game = game;
+            _game = game;
+            _imagesStorage = imagesStorage;
+            _cellImageService = cellImageService;
             Position = position;
         }
 
@@ -38,12 +47,12 @@ namespace CodeMagic.UI.Mono.ActivePlanes
         {
             base.Draw(surface);
 
-            var currentVisibleArea = game.GetVisibleArea() ?? cachedVisibleArea;
+            var currentVisibleArea = _game.GetVisibleArea() ?? _cachedVisibleArea;
 
             DrawMap(surface, currentVisibleArea);
             DrawDamagedIcons(surface);
 
-            cachedVisibleArea = currentVisibleArea;
+            _cachedVisibleArea = currentVisibleArea;
         }
 
         private void DrawMap(ICellSurface surface, AreaMapFragment map)
@@ -60,7 +69,7 @@ namespace CodeMagic.UI.Mono.ActivePlanes
 
         private void DrawCell(ICellSurface surface, int mapX, int mapY, IAreaMapCell cell)
         {
-            var image = CellImageHelper.GetCellImage(cell);
+            var image = _cellImageService.GetCellImage(cell);
 
             var realX = mapX * Program.MapCellImageSize;
             var realY = mapY * Program.MapCellImageSize;
@@ -72,7 +81,7 @@ namespace CodeMagic.UI.Mono.ActivePlanes
         {
             var image = new SymbolsImage(3, 7);
 
-            var images = game.Player.Equipment.GetEquippedItems().OfType<DurableItem>().Where(ItemDamaged)
+            var images = _game.Player.Equipment.GetEquippedItems().OfType<DurableItem>().Where(ItemDamaged)
                 .Select(GetDamagedIcon);
             foreach (var damagedImage in images)
             {
@@ -86,7 +95,7 @@ namespace CodeMagic.UI.Mono.ActivePlanes
         {
             var damageColor = TextHelper.GetDurabilityColor(item.Durability, item.MaxDurability);
             var iconName = GetDamagedIconName(item);
-            var image = ImagesStorage.Current.GetImage(iconName);
+            var image = _imagesStorage.GetImage(iconName);
             return SymbolsImage.Recolor(image, new Dictionary<System.Drawing.Color, System.Drawing.Color>{
             {
                 System.Drawing.Color.FromArgb(255, 0, 0),
@@ -113,7 +122,7 @@ namespace CodeMagic.UI.Mono.ActivePlanes
 
             if (item is WeaponItem weapon)
             {
-                if (game.Player.Equipment.RightHandItem.Equals(weapon))
+                if (_game.Player.Equipment.RightHandItem.Equals(weapon))
                 {
                     return "DamagedEquipment_Weapon_Right";
                 }
