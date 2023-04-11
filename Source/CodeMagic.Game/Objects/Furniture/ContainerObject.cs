@@ -13,12 +13,12 @@ namespace CodeMagic.Game.Objects.Furniture
     {
         private const string SaveKeyInventory = "Inventory";
 
-        private readonly Inventory inventory;
+        private readonly Inventory _inventory;
 
         public ContainerObject(SaveData data) 
             : base(data)
         {
-            inventory = data.GetObject<Inventory>(SaveKeyInventory);
+            _inventory = data.GetObject<Inventory>(SaveKeyInventory);
         }
 
         public ContainerObject(ContainerObjectConfiguration configuration, int level) 
@@ -27,13 +27,13 @@ namespace CodeMagic.Game.Objects.Furniture
             var lootLevel = level + configuration.LootLevelIncrement;
             var loot = new TreasureLootGenerator(lootLevel, configuration.ContainerType).GenerateLoot();
 
-            inventory = new Inventory(loot);
+            _inventory = new Inventory(loot);
         }
 
         protected override Dictionary<string, object> GetSaveDataContent()
         {
             var data = base.GetSaveDataContent();
-            data.Add(SaveKeyInventory, inventory);
+            data.Add(SaveKeyInventory, _inventory);
             return data;
         }
 
@@ -42,14 +42,14 @@ namespace CodeMagic.Game.Objects.Furniture
         public void Use(GameCore<Player> game, Point position)
         {
             game.Journal.Write(new ContainerOpenMessage(Name));
-            DialogsManager.Provider.OpenInventoryDialog(Name, inventory);
+            DialogsManager.Provider.OpenInventoryDialog(Name, _inventory);
         }
 
         public override void OnDeath(Point position)
         {
             base.OnDeath(position);
 
-            foreach (var stack in inventory.Stacks)
+            foreach (var stack in _inventory.Stacks)
             {
                 foreach (var item in stack.Items)
                 {
@@ -60,7 +60,7 @@ namespace CodeMagic.Game.Objects.Furniture
 
         public void Update(Point position)
         {
-            inventory.Update();
+            _inventory.Update();
         }
 
         public bool Updated { get; set; }

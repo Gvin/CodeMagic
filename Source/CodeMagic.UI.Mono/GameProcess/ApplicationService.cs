@@ -1,12 +1,18 @@
 ﻿using CodeMagic.UI.Services;
 
-namespace CodeMagic.UI.Mono.GameProcess
+namespace CodeMagic.UI.Mono.GameProcess;
+
+public class ApplicationService : IApplicationService
 {
-    public class ApplicationService : IApplicationService
+    private readonly ICodeMagicGame _game;
+
+    public ApplicationService(ICodeMagicGame game)
     {
-        public void Exit()
-        {
-            Program.Exit();
-        }
+        _game = game;
+    }
+
+    public void Exit()
+    {
+        _game.Exit();
     }
 }

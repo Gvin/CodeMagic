@@ -11,49 +11,49 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
 {
     public class ChancesLootGenerator : ILootGenerator
     {
-        private readonly Chance<int>[] weaponCountSettings;
-        private readonly Chance<ItemRareness>[] weaponRarenessSettings;
+        private readonly Chance<int>[] _weaponCountSettings;
+        private readonly Chance<ItemRareness>[] _weaponRarenessSettings;
 
-        private readonly Chance<int>[] armorCountSettings;
-        private readonly Chance<ItemRareness>[] armorRarenessSettings;
-        private readonly Chance<ArmorClass>[] armorClassSettings;
+        private readonly Chance<int>[] _armorCountSettings;
+        private readonly Chance<ItemRareness>[] _armorRarenessSettings;
+        private readonly Chance<ArmorClass>[] _armorClassSettings;
 
-        private readonly Chance<int>[] spellBookCountSettings;
-        private readonly Chance<ItemRareness>[] spellBookRarenessSettings;
+        private readonly Chance<int>[] _spellBookCountSettings;
+        private readonly Chance<ItemRareness>[] _spellBookRarenessSettings;
 
-        private readonly Chance<int>[] usableCountSettings;
-        private readonly Chance<ItemRareness>[] usableRarenessSettings;
+        private readonly Chance<int>[] _usableCountSettings;
+        private readonly Chance<ItemRareness>[] _usableRarenessSettings;
 
-        private readonly Chance<int>[] resourcesCountSettings;
-        private readonly Chance<ItemRareness>[] resourcesRarenessSettings;
+        private readonly Chance<int>[] _resourcesCountSettings;
+        private readonly Chance<ItemRareness>[] _resourcesRarenessSettings;
 
-        private readonly Chance<int>[] shieldCountSettings;
-        private readonly Chance<ItemRareness>[] shieldRarenessSettings;
+        private readonly Chance<int>[] _shieldCountSettings;
+        private readonly Chance<ItemRareness>[] _shieldRarenessSettings;
 
-        private readonly Chance<int>[] foodCountSettings;
+        private readonly Chance<int>[] _foodCountSettings;
 
         public ChancesLootGenerator(ILootConfiguration lootConfiguration)
         {
-            weaponCountSettings = GetChanceConfiguration(lootConfiguration.Weapon?.Count);
-            weaponRarenessSettings = GetChanceConfiguration(lootConfiguration.Weapon?.Rareness);
+            _weaponCountSettings = GetChanceConfiguration(lootConfiguration.Weapon?.Count);
+            _weaponRarenessSettings = GetChanceConfiguration(lootConfiguration.Weapon?.Rareness);
 
-            armorCountSettings = GetChanceConfiguration(lootConfiguration.Armor?.Count);
-            armorRarenessSettings = GetChanceConfiguration(lootConfiguration.Armor?.Rareness);
-            armorClassSettings = GetChanceConfiguration(lootConfiguration.Armor?.Class);
+            _armorCountSettings = GetChanceConfiguration(lootConfiguration.Armor?.Count);
+            _armorRarenessSettings = GetChanceConfiguration(lootConfiguration.Armor?.Rareness);
+            _armorClassSettings = GetChanceConfiguration(lootConfiguration.Armor?.Class);
 
-            spellBookCountSettings = GetChanceConfiguration(lootConfiguration.SpellBook?.Count);
-            spellBookRarenessSettings = GetChanceConfiguration(lootConfiguration.SpellBook?.Rareness);
+            _spellBookCountSettings = GetChanceConfiguration(lootConfiguration.SpellBook?.Count);
+            _spellBookRarenessSettings = GetChanceConfiguration(lootConfiguration.SpellBook?.Rareness);
 
-            usableCountSettings = GetChanceConfiguration(lootConfiguration.Usable?.Count);
-            usableRarenessSettings = GetChanceConfiguration(lootConfiguration.Usable?.Rareness);
+            _usableCountSettings = GetChanceConfiguration(lootConfiguration.Usable?.Count);
+            _usableRarenessSettings = GetChanceConfiguration(lootConfiguration.Usable?.Rareness);
 
-            resourcesCountSettings = GetChanceConfiguration(lootConfiguration.Resource?.Count);
-            resourcesRarenessSettings = GetChanceConfiguration(lootConfiguration.Resource?.Rareness);
+            _resourcesCountSettings = GetChanceConfiguration(lootConfiguration.Resource?.Count);
+            _resourcesRarenessSettings = GetChanceConfiguration(lootConfiguration.Resource?.Rareness);
 
-            shieldCountSettings = GetChanceConfiguration(lootConfiguration.Shield?.Count);
-            shieldRarenessSettings = GetChanceConfiguration(lootConfiguration.Shield?.Rareness);
+            _shieldCountSettings = GetChanceConfiguration(lootConfiguration.Shield?.Count);
+            _shieldRarenessSettings = GetChanceConfiguration(lootConfiguration.Shield?.Rareness);
 
-            foodCountSettings = GetChanceConfiguration(lootConfiguration.Food?.Count);
+            _foodCountSettings = GetChanceConfiguration(lootConfiguration.Food?.Count);
         }
 
         public IItem[] GenerateLoot()
@@ -61,61 +61,61 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
             var generator = ItemsGeneratorManager.Generator;
             var result = new List<IItem>();
 
-            if (weaponCountSettings != null)
+            if (_weaponCountSettings != null)
             {
                 var items = GenerateItems(
-                    weaponCountSettings, 
-                    weaponRarenessSettings, 
+                    _weaponCountSettings, 
+                    _weaponRarenessSettings, 
                     generator.GenerateWeapon);
                 result.AddRange(items);
             }
 
-            if (armorCountSettings != null)
+            if (_armorCountSettings != null)
             {
                 var items = GenerateItems(
-                    armorCountSettings, 
-                    armorRarenessSettings, 
-                    rareness => GenerateArmor(generator, rareness, armorClassSettings));
+                    _armorCountSettings, 
+                    _armorRarenessSettings, 
+                    rareness => GenerateArmor(generator, rareness, _armorClassSettings));
                 result.AddRange(items);
             }
 
-            if (spellBookCountSettings != null)
+            if (_spellBookCountSettings != null)
             {
                 var items = GenerateItems(
-                    spellBookCountSettings, 
-                    spellBookRarenessSettings, 
+                    _spellBookCountSettings, 
+                    _spellBookRarenessSettings, 
                     generator.GenerateSpellBook);
                 result.AddRange(items);
             }
 
-            if (usableCountSettings != null)
+            if (_usableCountSettings != null)
             {
                 var items = GenerateItems(
-                    usableCountSettings, 
-                    usableRarenessSettings, 
+                    _usableCountSettings, 
+                    _usableRarenessSettings, 
                     generator.GenerateUsable);
                 result.AddRange(items);
             }
 
-            if (resourcesCountSettings != null)
+            if (_resourcesCountSettings != null)
             {
                 var items = GenerateItems(
-                    resourcesCountSettings,
-                    resourcesRarenessSettings,
+                    _resourcesCountSettings,
+                    _resourcesRarenessSettings,
                     generator.GenerateResource);
                 result.AddRange(items);
             }
 
-            if (shieldCountSettings != null)
+            if (_shieldCountSettings != null)
             {
                 var items = GenerateItems(
-                    shieldCountSettings,
-                    shieldRarenessSettings,
+                    _shieldCountSettings,
+                    _shieldRarenessSettings,
                     generator.GenerateShield);
                 result.AddRange(items);
             }
 
-            if (foodCountSettings != null)
+            if (_foodCountSettings != null)
             {
                 var items = GenerateFood(generator);
                 result.AddRange(items);
@@ -126,7 +126,7 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
 
         private IItem[] GenerateFood(IItemsGenerator generator)
         {
-            var count = GenerateValue(foodCountSettings);
+            var count = GenerateValue(_foodCountSettings);
             var result = new List<IItem>();
             for (int counter = 0; counter < count; counter++)
             {
@@ -186,18 +186,18 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
         {
             return configuration?.Select(c => new Chance<T>(c.Chance, c.Value)).ToArray();
         }
-    }
 
-    public class Chance<T>
-    {
-        public Chance(int chanceValue, T setting)
+        private sealed class Chance<T>
         {
-            ChanceValue = chanceValue;
-            Setting = setting;
+            public Chance(int chanceValue, T setting)
+            {
+                ChanceValue = chanceValue;
+                Setting = setting;
+            }
+
+            public int ChanceValue { get; }
+
+            public T Setting { get; }
         }
-
-        public int ChanceValue { get; }
-
-        public T Setting { get; }
     }
 }

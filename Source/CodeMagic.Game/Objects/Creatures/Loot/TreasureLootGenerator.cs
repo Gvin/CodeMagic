@@ -18,10 +18,14 @@ namespace CodeMagic.Game.Objects.Creatures.Loot
                 level >= range.StartLevel && level <= range.EndLevel);
 
             if (levelConfig == null)
+            {
                 throw new ApplicationException($"Unable to find treasure configuration for level {level}.");
+            }
 
             if (!levelConfig.Loot.ContainsKey(containerType))
+            {
                 throw new ApplicationException($"Unable to find loot for container {containerType} on level {level}.");
+            }
 
             return levelConfig.Loot[containerType];
         }

@@ -25,12 +25,14 @@ namespace CodeMagic.Game.GameProcess
         private Task _saveGameTask;
         private int _turnsSinceLastSaving;
         private readonly ISaveService _saveService;
+        private readonly IItemsGenerator _itemsGenerator;
         private readonly IOptions<BasicGameConfiguration> _config;
 
-        public GameManager(ISaveService saveService, IOptions<BasicGameConfiguration> config)
+        public GameManager(ISaveService saveService, IOptions<BasicGameConfiguration> config, IItemsGenerator itemsGenerator)
         {
             _saveService = saveService;
             _config = config;
+            _itemsGenerator = itemsGenerator;
         }
 
         public GameCore<Player> StartGame()
@@ -117,13 +119,11 @@ namespace CodeMagic.Game.GameProcess
         {
             var player = new Player();
 
-            var itemsGenerator = ItemsGeneratorManager.Generator;
-
             var weapon = new TorchItem();
             player.Inventory.AddItem(weapon);
             player.Equipment.EquipHoldable(weapon, true);
 
-            var spellBook = itemsGenerator.GenerateSpellBook(ItemRareness.Trash);
+            var spellBook = _itemsGenerator.GenerateSpellBook(ItemRareness.Trash);
             player.Inventory.AddItem(spellBook);
             player.Equipment.EquipItem(spellBook);
 
@@ -141,7 +141,7 @@ namespace CodeMagic.Game.GameProcess
         {
             while (true)
             {
-                var usable = ItemsGeneratorManager.Generator.GenerateUsable(ItemRareness.Common);
+                var usable = _itemsGenerator.GenerateUsable(ItemRareness.Common);
                 if (usable != null)
                     return usable;
             }

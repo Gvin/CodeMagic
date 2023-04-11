@@ -35,19 +35,19 @@ namespace CodeMagic.Game.Items.ItemsGeneration
         private const string WorldImageNameMace = "ItemsOnGround_Weapon_Mace";
         private const string WorldImageNameStaff = "ItemsOnGround_Weapon_Staff";
 
-        private readonly Dictionary<WeaponType, IWeaponGenerator> weaponGenerators;
-        private readonly ArmorGenerator armorGenerator;
-        private readonly SpellBookGenerator spellBookGenerator;
-        private readonly UsableItemsGenerator usableItemsGenerator;
-        private readonly ResourceItemsGenerator resourceItemsGenerator;
-        private readonly FoodItemsGenerator foodItemsGenerator;
-        private readonly ShieldGenerator shieldGenerator;
+        private readonly Dictionary<WeaponType, IWeaponGenerator> _weaponGenerators;
+        private readonly ArmorGenerator _armorGenerator;
+        private readonly SpellBookGenerator _spellBookGenerator;
+        private readonly UsableItemsGenerator _usableItemsGenerator;
+        private readonly ResourceItemsGenerator _resourceItemsGenerator;
+        private readonly FoodItemsGenerator _foodItemsGenerator;
+        private readonly ShieldGenerator _shieldGenerator;
 
         public ItemsGenerator(IItemGeneratorConfiguration configuration, IImagesStorage imagesStorage, IAncientSpellsProvider spellsProvider)
         {
             var bonusesGenerator = new BonusesGenerator(configuration.BonusesConfiguration);
 
-            weaponGenerators = new Dictionary<WeaponType, IWeaponGenerator>
+            _weaponGenerators = new Dictionary<WeaponType, IWeaponGenerator>
             {
                 {
                     WeaponType.Sword,
@@ -95,67 +95,79 @@ namespace CodeMagic.Game.Items.ItemsGeneration
                         imagesStorage)
                 }
             };
-            armorGenerator = new ArmorGenerator(configuration.ArmorConfiguration, bonusesGenerator, imagesStorage);
-            shieldGenerator = new ShieldGenerator(configuration.ShieldsConfiguration, bonusesGenerator, imagesStorage);
-            spellBookGenerator = new SpellBookGenerator(configuration.SpellBooksConfiguration, bonusesGenerator, imagesStorage);
-            usableItemsGenerator = new UsableItemsGenerator(imagesStorage, spellsProvider);
-            resourceItemsGenerator = new ResourceItemsGenerator();
-            foodItemsGenerator = new FoodItemsGenerator(imagesStorage);
+            _armorGenerator = new ArmorGenerator(configuration.ArmorConfiguration, bonusesGenerator, imagesStorage);
+            _shieldGenerator = new ShieldGenerator(configuration.ShieldsConfiguration, bonusesGenerator, imagesStorage);
+            _spellBookGenerator = new SpellBookGenerator(configuration.SpellBooksConfiguration, bonusesGenerator, imagesStorage);
+            _usableItemsGenerator = new UsableItemsGenerator(imagesStorage, spellsProvider);
+            _resourceItemsGenerator = new ResourceItemsGenerator();
+            _foodItemsGenerator = new FoodItemsGenerator(imagesStorage);
         }
 
         public WeaponItem GenerateWeapon(ItemRareness rareness)
         {
             if (GetIfRarenessExceedMax(rareness))
+            {
                 throw new ArgumentException("Item generator cannot generate epic items.");
+            }
 
             var weaponType = GetRandomWeaponType();
-            var generator = weaponGenerators[weaponType];
+            var generator = _weaponGenerators[weaponType];
             return generator.GenerateWeapon(rareness);
         }
 
         public ShieldItem GenerateShield(ItemRareness rareness)
         {
             if (GetIfRarenessExceedMax(rareness))
+            {
                 throw new ArgumentException("Item generator cannot generate epic items.");
+            }
 
-            return shieldGenerator.GenerateShield(rareness);
+            return _shieldGenerator.GenerateShield(rareness);
         }
 
         public ArmorItem GenerateArmor(ItemRareness rareness, ArmorClass armorClass)
         {
             if (GetIfRarenessExceedMax(rareness))
+            {
                 throw new ArgumentException("Item generator cannot generate epic items.");
+            }
 
-            return armorGenerator.GenerateArmor(rareness, armorClass);
+            return _armorGenerator.GenerateArmor(rareness, armorClass);
         }
 
         public SpellBook GenerateSpellBook(ItemRareness rareness)
         {
             if (GetIfRarenessExceedMax(rareness))
+            {
                 throw new ArgumentException("Item generator cannot generate epic items.");
+            }
 
-            return spellBookGenerator.GenerateSpellBook(rareness);
+            return _spellBookGenerator.GenerateSpellBook(rareness);
         }
 
         public IItem GenerateUsable(ItemRareness rareness)
         {
             if (GetIfRarenessExceedMax(rareness))
+            {
                 throw new ArgumentException("Item generator cannot generate epic items.");
+            }
 
-            return usableItemsGenerator.GenerateUsableItem(rareness);
+            return _usableItemsGenerator.GenerateUsableItem(rareness);
         }
 
         public IItem GenerateResource(ItemRareness rareness)
         {
             if (GetIfRarenessExceedMax(rareness))
+            {
                 throw new ArgumentException("Item generator cannot generate epic items.");
+            }
 
-            return resourceItemsGenerator.GenerateResourceItem(rareness);
+            return _resourceItemsGenerator.GenerateResourceItem(rareness);
         }
 
         public IItem GenerateFood()
         {
-            return foodItemsGenerator.GenerateFood();
+            return _foodItemsGenerator.GenerateFood();
         }
 
         private static bool GetIfRarenessExceedMax(ItemRareness rareness)
